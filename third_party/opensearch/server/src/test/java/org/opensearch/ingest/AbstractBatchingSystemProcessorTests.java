@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 
-public class AbstractBatchingSystemProcessorTests extends OpenSearchTestCase {
+public class AbstractBatchingSystemProcessorTests extends DensityTestCase {
     public void testSystemFactory_shouldNotModifyConfig() throws Exception {
         Map<String, Object> config = mock(Map.class);
 

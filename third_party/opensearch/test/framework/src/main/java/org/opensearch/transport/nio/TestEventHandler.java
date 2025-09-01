@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
-import org.opensearch.nio.ChannelContext;
-import org.opensearch.nio.EventHandler;
-import org.opensearch.nio.NioSelector;
-import org.opensearch.nio.ServerChannelContext;
-import org.opensearch.nio.SocketChannelContext;
+import org.density.nio.ChannelContext;
+import org.density.nio.EventHandler;
+import org.density.nio.NioSelector;
+import org.density.nio.ServerChannelContext;
+import org.density.nio.SocketChannelContext;
 
 import java.io.IOException;
 import java.util.Collections;

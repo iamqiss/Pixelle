@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -42,7 +42,7 @@ import java.util.Map;
 import static java.util.Collections.singletonMap;
 import static org.hamcrest.Matchers.equalTo;
 
-public class NamedFormatterTests extends OpenSearchTestCase {
+public class NamedFormatterTests extends DensityTestCase {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

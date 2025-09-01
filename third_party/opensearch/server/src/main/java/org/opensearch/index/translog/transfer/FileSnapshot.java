@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.Nullable;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.util.io.IOUtils;
 
 import java.io.BufferedInputStream;
 import java.io.Closeable;
@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * Snapshot of a single file that gets transferred
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileSnapshot implements Closeable {
 
@@ -102,7 +102,7 @@ public class FileSnapshot implements Closeable {
     /**
      * Snapshot of a single file with primary term that gets transferred
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TransferFileSnapshot extends FileSnapshot {
 
@@ -158,7 +158,7 @@ public class FileSnapshot implements Closeable {
     /**
      * Snapshot of a single .tlg file that gets transferred
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class TranslogFileSnapshot extends TransferFileSnapshot {
 
@@ -193,7 +193,7 @@ public class FileSnapshot implements Closeable {
     /**
      * Snapshot of a single .ckp file that gets transferred
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class CheckpointFileSnapshot extends TransferFileSnapshot {
 

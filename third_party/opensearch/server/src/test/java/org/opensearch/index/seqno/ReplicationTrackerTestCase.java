@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.SafeCommitInfo;
-import org.opensearch.index.remote.RemoteStoreTestsHelper;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.SafeCommitInfo;
+import org.density.index.remote.RemoteStoreTestsHelper;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.Set;
@@ -51,9 +51,9 @@ import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
-public abstract class ReplicationTrackerTestCase extends OpenSearchTestCase {
+public abstract class ReplicationTrackerTestCase extends DensityTestCase {
 
     ReplicationTracker newTracker(
         final AllocationId allocationId,

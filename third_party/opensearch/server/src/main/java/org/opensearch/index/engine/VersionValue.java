@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.Nullable;
-import org.opensearch.index.translog.Translog;
+import org.density.common.Nullable;
+import org.density.index.translog.Translog;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -43,7 +43,7 @@ import java.util.Collections;
 /**
  * Represents the version of a document in the index
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class VersionValue implements Accountable {
 

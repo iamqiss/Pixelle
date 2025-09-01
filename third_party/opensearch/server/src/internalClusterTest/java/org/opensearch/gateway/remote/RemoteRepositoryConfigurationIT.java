@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.remotemigration.MigrationBaseTestCase;
-import org.opensearch.remotestore.multipart.mocks.MockFsRepositoryPlugin;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.remotemigration.MigrationBaseTestCase;
+import org.density.remotestore.multipart.mocks.MockFsRepositoryPlugin;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -27,12 +27,12 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /**
  * Tests the compatibility between types of nodes based on the configured repositories
@@ -41,7 +41,7 @@ import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
  *  Remote Node [Cluster State + Segment + Translog]
  *  Remote Node With Routing Table [Cluster State + Segment + Translog + Routing Table]
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteRepositoryConfigurationIT extends MigrationBaseTestCase {
     private final String REMOTE_PRI_DOCREP_REP = "remote-primary-docrep-replica";
 

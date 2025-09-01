@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc;
+package org.density.transport.grpc;
 
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.plugins.ExtensiblePlugin;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.grpc.proto.request.search.query.QueryBuilderProtoConverter;
-import org.opensearch.transport.grpc.ssl.SecureNetty4GrpcServerTransport;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.plugins.ExtensiblePlugin;
+import org.density.protobufs.QueryContainer;
+import org.density.telemetry.tracing.Tracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.client.Client;
+import org.density.transport.grpc.proto.request.search.query.QueryBuilderProtoConverter;
+import org.density.transport.grpc.ssl.SecureNetty4GrpcServerTransport;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -34,24 +34,24 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.GRPC_TRANSPORT_SETTING_KEY;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_BIND_HOST;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_HOST;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_KEEPALIVE_TIMEOUT;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONCURRENT_CONNECTION_CALLS;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONNECTION_AGE;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONNECTION_IDLE;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_MSG_SIZE;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PORT;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PUBLISH_HOST;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PUBLISH_PORT;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_WORKER_COUNT;
-import static org.opensearch.transport.grpc.ssl.SecureNetty4GrpcServerTransport.GRPC_SECURE_TRANSPORT_SETTING_KEY;
-import static org.opensearch.transport.grpc.ssl.SecureNetty4GrpcServerTransport.SETTING_GRPC_SECURE_PORT;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.GRPC_TRANSPORT_SETTING_KEY;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_BIND_HOST;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_HOST;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_KEEPALIVE_TIMEOUT;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONCURRENT_CONNECTION_CALLS;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONNECTION_AGE;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_CONNECTION_IDLE;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_MAX_MSG_SIZE;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PORT;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PUBLISH_HOST;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_PUBLISH_PORT;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.SETTING_GRPC_WORKER_COUNT;
+import static org.density.transport.grpc.ssl.SecureNetty4GrpcServerTransport.GRPC_SECURE_TRANSPORT_SETTING_KEY;
+import static org.density.transport.grpc.ssl.SecureNetty4GrpcServerTransport.SETTING_GRPC_SECURE_PORT;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
 import static org.mockito.Mockito.when;
 
-public class GrpcPluginTests extends OpenSearchTestCase {
+public class GrpcPluginTests extends DensityTestCase {
 
     private GrpcPlugin plugin;
 

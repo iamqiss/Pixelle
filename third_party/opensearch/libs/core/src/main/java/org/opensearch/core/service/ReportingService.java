@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.service;
+package org.density.core.service;
 
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContent;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContent;
 
 /**
  * Node reporting service
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ReportingService<I extends ReportingService.Info> {
     I info();
@@ -46,7 +46,7 @@ public interface ReportingService<I extends ReportingService.Info> {
     /**
      * Information interface.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Info extends Writeable, ToXContent {
 

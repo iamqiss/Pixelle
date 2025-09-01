@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,17 +23,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.InjectorImpl.MethodInvoker;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.InternalContext;
-import org.opensearch.common.inject.spi.InjectionPoint;
+import org.density.common.inject.InjectorImpl.MethodInvoker;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.InternalContext;
+import org.density.common.inject.spi.InjectionPoint;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,7 +42,7 @@ import java.lang.reflect.Modifier;
 /**
  * Invokes an injectable method.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SingleMethodInjector implements SingleMemberInjector {
     final MethodInvoker methodInvoker;

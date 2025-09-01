@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule.sync;
+package org.density.plugin.wlm.rule.sync;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.plugin.wlm.WlmClusterSettingValuesProvider;
-import org.opensearch.plugin.wlm.rule.sync.detect.RuleEvent;
-import org.opensearch.plugin.wlm.rule.sync.detect.RuleEventClassifier;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.WlmMode;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.index.IndexNotFoundException;
+import org.density.plugin.wlm.WlmClusterSettingValuesProvider;
+import org.density.plugin.wlm.rule.sync.detect.RuleEvent;
+import org.density.plugin.wlm.rule.sync.detect.RuleEventClassifier;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.WlmMode;
 
 import java.io.IOException;
 import java.util.Collections;

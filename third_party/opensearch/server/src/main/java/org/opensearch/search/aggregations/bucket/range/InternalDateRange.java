@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.support.ValueType;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.support.ValueType;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * Implementation of date range bucket
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalDateRange extends InternalRange<InternalDateRange.Bucket, InternalDateRange> {
     public static final Factory FACTORY = new Factory();
@@ -54,7 +54,7 @@ public class InternalDateRange extends InternalRange<InternalDateRange.Bucket, I
     /**
      * Bucket for a date range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Bucket extends InternalRange.Bucket {
 
@@ -121,7 +121,7 @@ public class InternalDateRange extends InternalRange<InternalDateRange.Bucket, I
     /**
      * Factory to create a date range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Factory extends InternalRange.Factory<InternalDateRange.Bucket, InternalDateRange> {
         @Override

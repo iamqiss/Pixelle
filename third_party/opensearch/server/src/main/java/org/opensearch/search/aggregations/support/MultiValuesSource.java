@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.AggregationExecutionException;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.AggregationExecutionException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import java.util.Objects;
 /**
  * Class to encapsulate a set of ValuesSource objects labeled by field name
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MultiValuesSource<VS extends ValuesSource> {
     protected Map<String, VS> values;
@@ -52,7 +52,7 @@ public abstract class MultiValuesSource<VS extends ValuesSource> {
     /**
      * Numeric format
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NumericMultiValuesSource extends MultiValuesSource<ValuesSource.Numeric> {
         public NumericMultiValuesSource(Map<String, ValuesSourceConfig> valuesSourceConfigs, QueryShardContext context) {

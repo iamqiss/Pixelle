@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.InstantiatingObjectParser;
-import org.opensearch.core.xcontent.ParserConstructor;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.ParseField;
+import org.density.core.xcontent.InstantiatingObjectParser;
+import org.density.core.xcontent.ParserConstructor;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class InstantiatingObjectParserTests extends OpenSearchTestCase {
+public class InstantiatingObjectParserTests extends DensityTestCase {
 
     public static class NoAnnotations {
         final int a;

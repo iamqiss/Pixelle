@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.concurrent.CompletableContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TransportException;
+import org.density.ExceptionsHelper;
+import org.density.common.Nullable;
+import org.density.common.concurrent.CompletableContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.transport.TcpChannel;
+import org.density.transport.TransportException;
 
 import java.net.InetSocketAddress;
 import java.util.Optional;

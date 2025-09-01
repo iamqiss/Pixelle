@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,19 +27,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import org.opensearch.gradle.info.BuildParams
+import org.density.gradle.info.BuildParams
 
-apply plugin: 'opensearch.build'
-apply plugin: 'opensearch.publish'
+apply plugin: 'density.build'
+apply plugin: 'density.publish'
 apply from: "$rootDir/gradle/fips.gradle"
 
 dependencies {
   api project(":client:rest")
   api project(":client:sniffer")
-  api project(':libs:opensearch-nio')
+  api project(':libs:density-nio')
   api project(":server")
-  api project(":libs:opensearch-cli")
-  api project(":libs:opensearch-telemetry")
+  api project(":libs:density-cli")
+  api project(":libs:density-telemetry")
   api project(":test:telemetry")
   api "com.carrotsearch.randomizedtesting:randomizedtesting-runner:${versions.randomizedrunner}"
   api "junit:junit:${versions.junit}"
@@ -69,7 +69,7 @@ compileTestJava.options.compilerArgs -= '-Xlint:rawtypes'
 
 // the main files are actually test files, so use the appropriate forbidden api sigs
 tasks.named('forbiddenApisMain').configure {
-  replaceSignatureFiles 'jdk-signatures', 'opensearch-all-signatures', 'opensearch-test-signatures'
+  replaceSignatureFiles 'jdk-signatures', 'density-all-signatures', 'density-test-signatures'
 }
 
 // TODO: should we have licenses for our test deps?
@@ -91,7 +91,7 @@ thirdPartyAudit.ignoreMissingClasses(
   'net.bytebuddy.agent.ByteBuddyAgent',
   'net.bytebuddy.agent.Installer'
 )
-// TODO - OpenSearch remove this violation. Issue: https://github.com/opensearch-project/OpenSearch/issues/420
+// TODO - Density remove this violation. Issue: https://github.com/density-project/Density/issues/420
 thirdPartyAudit.ignoreViolations(
   'org.objenesis.instantiator.sun.UnsafeFactoryInstantiator',
   'org.objenesis.instantiator.util.UnsafeUtils'

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.SimulateDocumentBaseResult;
-import org.opensearch.action.ingest.SimulateDocumentResult;
-import org.opensearch.action.ingest.SimulateDocumentVerboseResult;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineResponse;
-import org.opensearch.action.ingest.SimulateProcessorResult;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.ingest.PipelineConfiguration;
+import org.density.action.LatchedActionListener;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.SimulateDocumentBaseResult;
+import org.density.action.ingest.SimulateDocumentResult;
+import org.density.action.ingest.SimulateDocumentVerboseResult;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.ingest.SimulatePipelineResponse;
+import org.density.action.ingest.SimulateProcessorResult;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.RequestOptions;
+import org.density.client.RestHighLevelClient;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.ingest.PipelineConfiguration;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -78,7 +78,7 @@ import java.util.concurrent.TimeUnit;
  * than 84, the line will be cut and a horizontal scroll bar will be displayed.
  * (the code indentation of the tag is not included in the width)
  */
-public class IngestClientDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class IngestClientDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     public void testPutPipeline() throws IOException {
         RestHighLevelClient client = highLevelClient();

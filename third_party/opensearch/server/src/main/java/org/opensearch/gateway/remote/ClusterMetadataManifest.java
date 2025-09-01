@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.Version;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.Version;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 /**
  * Manifest file which contains the details of the uploaded entity metadata
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
 
@@ -53,7 +53,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     private static final ParseField STATE_VERSION_FIELD = new ParseField("state_version");
     private static final ParseField CLUSTER_UUID_FIELD = new ParseField("cluster_uuid");
     private static final ParseField STATE_UUID_FIELD = new ParseField("state_uuid");
-    private static final ParseField OPENSEARCH_VERSION_FIELD = new ParseField("opensearch_version");
+    private static final ParseField DENSITY_VERSION_FIELD = new ParseField("density_version");
     private static final ParseField NODE_ID_FIELD = new ParseField("node_id");
     private static final ParseField COMMITTED_FIELD = new ParseField("committed");
     private static final ParseField CODEC_VERSION_FIELD = new ParseField("codec_version");
@@ -84,7 +84,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             .stateVersion(version(fields))
             .clusterUUID(clusterUUID(fields))
             .stateUUID(stateUUID(fields))
-            .opensearchVersion(opensearchVersion(fields))
+            .densityVersion(densityVersion(fields))
             .nodeId(nodeId(fields))
             .committed(committed(fields))
             .codecVersion(CODEC_V0)
@@ -138,7 +138,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         return (String) fields[3];
     }
 
-    private static Version opensearchVersion(Object[] fields) {
+    private static Version densityVersion(Object[] fields) {
         return Version.fromId((int) fields[4]);
     }
 
@@ -293,7 +293,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         parser.declareLong(ConstructingObjectParser.constructorArg(), STATE_VERSION_FIELD);
         parser.declareString(ConstructingObjectParser.constructorArg(), CLUSTER_UUID_FIELD);
         parser.declareString(ConstructingObjectParser.constructorArg(), STATE_UUID_FIELD);
-        parser.declareInt(ConstructingObjectParser.constructorArg(), OPENSEARCH_VERSION_FIELD);
+        parser.declareInt(ConstructingObjectParser.constructorArg(), DENSITY_VERSION_FIELD);
         parser.declareString(ConstructingObjectParser.constructorArg(), NODE_ID_FIELD);
         parser.declareBoolean(ConstructingObjectParser.constructorArg(), COMMITTED_FIELD);
         parser.declareObjectArray(
@@ -387,7 +387,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     private final long stateVersion;
     private final String clusterUUID;
     private final String stateUUID;
-    private final Version opensearchVersion;
+    private final Version densityVersion;
     private final String nodeId;
     private final boolean committed;
     private final String previousClusterUUID;
@@ -424,7 +424,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     }
 
     public Version getOpensearchVersion() {
-        return opensearchVersion;
+        return densityVersion;
     }
 
     public String getNodeId() {
@@ -519,7 +519,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         long version,
         String clusterUUID,
         String stateUUID,
-        Version opensearchVersion,
+        Version densityVersion,
         String nodeId,
         boolean committed,
         int codecVersion,
@@ -546,7 +546,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         this.stateVersion = version;
         this.clusterUUID = clusterUUID;
         this.stateUUID = stateUUID;
-        this.opensearchVersion = opensearchVersion;
+        this.densityVersion = densityVersion;
         this.nodeId = nodeId;
         this.committed = committed;
         this.codecVersion = codecVersion;
@@ -579,7 +579,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         this.stateVersion = in.readVLong();
         this.clusterUUID = in.readString();
         this.stateUUID = in.readString();
-        this.opensearchVersion = Version.fromId(in.readInt());
+        this.densityVersion = Version.fromId(in.readInt());
         this.nodeId = in.readString();
         this.committed = in.readBoolean();
         this.indices = Collections.unmodifiableList(in.readList(UploadedIndexMetadata::new));
@@ -667,7 +667,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             .field(STATE_VERSION_FIELD.getPreferredName(), getStateVersion())
             .field(CLUSTER_UUID_FIELD.getPreferredName(), getClusterUUID())
             .field(STATE_UUID_FIELD.getPreferredName(), getStateUUID())
-            .field(OPENSEARCH_VERSION_FIELD.getPreferredName(), getOpensearchVersion().id)
+            .field(DENSITY_VERSION_FIELD.getPreferredName(), getOpensearchVersion().id)
             .field(NODE_ID_FIELD.getPreferredName(), getNodeId())
             .field(COMMITTED_FIELD.getPreferredName(), isCommitted());
         builder.startArray(INDICES_FIELD.getPreferredName());
@@ -764,7 +764,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         out.writeVLong(stateVersion);
         out.writeString(clusterUUID);
         out.writeString(stateUUID);
-        out.writeInt(opensearchVersion.id);
+        out.writeInt(densityVersion.id);
         out.writeString(nodeId);
         out.writeBoolean(committed);
         out.writeCollection(indices);
@@ -838,7 +838,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             && stateVersion == that.stateVersion
             && Objects.equals(clusterUUID, that.clusterUUID)
             && Objects.equals(stateUUID, that.stateUUID)
-            && Objects.equals(opensearchVersion, that.opensearchVersion)
+            && Objects.equals(densityVersion, that.densityVersion)
             && Objects.equals(nodeId, that.nodeId)
             && Objects.equals(committed, that.committed)
             && Objects.equals(previousClusterUUID, that.previousClusterUUID)
@@ -871,7 +871,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             stateVersion,
             clusterUUID,
             stateUUID,
-            opensearchVersion,
+            densityVersion,
             nodeId,
             committed,
             previousClusterUUID,
@@ -925,7 +925,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     /**
      * Builder for ClusterMetadataManifest
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
 
@@ -940,7 +940,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
         private long stateVersion;
         private String clusterUUID;
         private String stateUUID;
-        private Version opensearchVersion;
+        private Version densityVersion;
         private String nodeId;
         private String previousClusterUUID;
         private boolean committed;
@@ -1026,8 +1026,8 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             return this;
         }
 
-        public Builder opensearchVersion(Version opensearchVersion) {
-            this.opensearchVersion = opensearchVersion;
+        public Builder densityVersion(Version densityVersion) {
+            this.densityVersion = densityVersion;
             return this;
         }
 
@@ -1111,7 +1111,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
             this.stateVersion = manifest.stateVersion;
             this.clusterUUID = manifest.clusterUUID;
             this.stateUUID = manifest.stateUUID;
-            this.opensearchVersion = manifest.opensearchVersion;
+            this.densityVersion = manifest.densityVersion;
             this.nodeId = manifest.nodeId;
             this.committed = manifest.committed;
             this.globalMetadataFileName = manifest.globalMetadataFileName;
@@ -1140,7 +1140,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
                 stateVersion,
                 clusterUUID,
                 stateUUID,
-                opensearchVersion,
+                densityVersion,
                 nodeId,
                 committed,
                 codecVersion,
@@ -1189,7 +1189,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     /**
      * Metadata for uploaded index metadata
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class UploadedIndexMetadata implements UploadedMetadata, Writeable, ToXContentFragment {
 
@@ -1362,7 +1362,7 @@ public class ClusterMetadataManifest implements Writeable, ToXContentFragment {
     /**
      * Metadata for uploaded metadata attribute
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class UploadedMetadataAttribute implements UploadedMetadata, Writeable, ToXContentFragment {
         private static final ParseField UPLOADED_FILENAME_FIELD = new ParseField("uploaded_filename");

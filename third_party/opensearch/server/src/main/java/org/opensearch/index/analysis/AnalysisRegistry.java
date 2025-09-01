@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.indices.analysis.PreBuiltAnalyzers;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.indices.analysis.PreBuiltAnalyzers;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -68,7 +68,7 @@ import static java.util.Collections.unmodifiableMap;
  * An internal registry for tokenizer, token filter, char filter and analyzer.
  * This class exists per node and allows to create per-index {@link IndexAnalyzers} via {@link #build(IndexSettings)}
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class AnalysisRegistry implements Closeable {
@@ -210,7 +210,7 @@ public final class AnalysisRegistry implements Closeable {
                 try {
                     return provider.get(environment, key).get();
                 } catch (IOException ex) {
-                    throw new OpenSearchException("failed to load analyzer for name " + key, ex);
+                    throw new DensityException("failed to load analyzer for name " + key, ex);
                 }
             });
         } else if ("standard_html_strip".equals(analyzer)) {
@@ -572,7 +572,7 @@ public final class AnalysisRegistry implements Closeable {
     /**
      * Internal prebuilt analysis class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PrebuiltAnalysis implements Closeable {
 
@@ -781,7 +781,7 @@ public final class AnalysisRegistry implements Closeable {
     }
 
     // Some analysis components emit deprecation warnings or throw exceptions when used
-    // with the wrong version of opensearch. These exceptions and warnings are
+    // with the wrong version of density. These exceptions and warnings are
     // normally thrown when tokenstreams are constructed, which unless we build a
     // tokenstream up-front does not happen until a document is indexed. In order to
     // surface these warnings or exceptions as early as possible, we build an empty

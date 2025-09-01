@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@ x * Licensed to Elasticsearch under one or more contributor
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -57,27 +57,27 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.search.AssertingIndexSearcher;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.SearchSortValuesAndFormats;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.SearchSortValuesAndFormats;
+import org.density.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -88,9 +88,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.opensearch.search.sort.FieldSortBuilder.getMinMaxOrNull;
-import static org.opensearch.search.sort.FieldSortBuilder.getPrimaryFieldSortOrNull;
-import static org.opensearch.search.sort.NestedSortBuilderTests.createRandomNestedSort;
+import static org.density.search.sort.FieldSortBuilder.getMinMaxOrNull;
+import static org.density.search.sort.FieldSortBuilder.getPrimaryFieldSortOrNull;
+import static org.density.search.sort.NestedSortBuilderTests.createRandomNestedSort;
 import static org.hamcrest.Matchers.instanceOf;
 
 public class FieldSortBuilderTests extends AbstractSortTestCase<FieldSortBuilder> {

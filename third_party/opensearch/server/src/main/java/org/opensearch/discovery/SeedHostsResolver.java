@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.PeerFinder.ConfiguredHostsResolver;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.common.SetOnce;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.PeerFinder.ConfiguredHostsResolver;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +68,7 @@ import java.util.stream.Collectors;
 /**
  * Resolves seed hosts listed in the config
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SeedHostsResolver extends AbstractLifecycleComponent implements ConfiguredHostsResolver {
     public static final Setting<Integer> LEGACY_DISCOVERY_ZEN_PING_UNICAST_CONCURRENT_CONNECTS_SETTING = Setting.intSetting(
@@ -228,9 +228,9 @@ public class SeedHostsResolver extends AbstractLifecycleComponent implements Con
     @Override
     protected void doStart() {
         logger.debug("using max_concurrent_resolvers [{}], resolver timeout [{}]", concurrentConnects, resolveTimeout);
-        final ThreadFactory threadFactory = OpenSearchExecutors.daemonThreadFactory(settings, "[unicast_configured_hosts_resolver]");
+        final ThreadFactory threadFactory = DensityExecutors.daemonThreadFactory(settings, "[unicast_configured_hosts_resolver]");
         executorService.set(
-            OpenSearchExecutors.newScaling(
+            DensityExecutors.newScaling(
                 nodeName + "/" + "unicast_configured_hosts_resolver",
                 0,
                 concurrentConnects,

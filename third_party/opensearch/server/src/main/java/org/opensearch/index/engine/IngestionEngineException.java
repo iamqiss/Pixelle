@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchWrapperException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.DensityWrapperException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * Exception thrown when there is an error in the ingestion engine.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class IngestionEngineException extends OpenSearchException implements OpenSearchWrapperException {
+public class IngestionEngineException extends DensityException implements DensityWrapperException {
     public IngestionEngineException(String message) {
         super(message);
     }

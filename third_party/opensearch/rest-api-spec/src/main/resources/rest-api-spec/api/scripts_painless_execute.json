@@ -1,7 +1,7 @@
 {
   "scripts_painless_execute":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/script-apis/exec-stored-script/",
+      "url":"https://density.org/docs/latest/api-reference/script-apis/exec-stored-script/",
       "description":"Allows an arbitrary script to be executed and a result to be returned"
     },
     "stability":"experimental",

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.collect.Tuple;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +27,7 @@ import java.util.function.Function;
  * Definition of Script for DerivedField.
  * It will be used to execute scripts defined against derived fields of any type
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class DerivedFieldScript {
 
@@ -136,7 +136,7 @@ public abstract class DerivedFieldScript {
     /**
      * A factory to construct {@link DerivedFieldScript} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface LeafFactory {
         DerivedFieldScript newInstance(LeafReaderContext ctx) throws IOException;
@@ -144,7 +144,7 @@ public abstract class DerivedFieldScript {
 
     /**
      * A factory to construct stateful {@link DerivedFieldScript} factories for a specific index.
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         LeafFactory newFactory(Map<String, Object> params, SearchLookup lookup);

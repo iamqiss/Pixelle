@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.LifecycleAware;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.translog.listener.TranslogEventListener;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.LifecycleAware;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.translog.listener.TranslogEventListener;
 
 import java.io.IOException;
 import java.util.function.BooleanSupplier;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 /***
  * The implementation of {@link TranslogManager} that only orchestrates writes to the underlying {@link Translog}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WriteOnlyTranslogManager extends InternalTranslogManager {
 

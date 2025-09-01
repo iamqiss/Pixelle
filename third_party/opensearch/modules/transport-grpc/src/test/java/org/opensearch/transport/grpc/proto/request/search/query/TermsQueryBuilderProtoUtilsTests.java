@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.protobufs.StringArray;
-import org.opensearch.protobufs.TermsLookupField;
-import org.opensearch.protobufs.TermsLookupFieldStringArrayMap;
-import org.opensearch.protobufs.TermsQueryField;
-import org.opensearch.protobufs.ValueType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.protobufs.StringArray;
+import org.density.protobufs.TermsLookupField;
+import org.density.protobufs.TermsLookupFieldStringArrayMap;
+import org.density.protobufs.TermsQueryField;
+import org.density.protobufs.ValueType;
+import org.density.test.DensityTestCase;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TermsQueryBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class TermsQueryBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithStringValues() {
         // Create a StringArray

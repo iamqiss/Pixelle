@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rule.action.GetRuleAction;
-import org.opensearch.rule.rest.RestCreateRuleAction;
-import org.opensearch.rule.rest.RestDeleteRuleAction;
-import org.opensearch.rule.rest.RestGetRuleAction;
-import org.opensearch.rule.rest.RestUpdateRuleAction;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequest;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionResponse;
+import org.density.plugins.ActionPlugin;
+import org.density.rest.RestHandler;
+import org.density.rule.action.GetRuleAction;
+import org.density.rule.rest.RestCreateRuleAction;
+import org.density.rule.rest.RestDeleteRuleAction;
+import org.density.rule.rest.RestGetRuleAction;
+import org.density.rule.rest.RestUpdateRuleAction;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 
-public class RuleFrameworkPluginTests extends OpenSearchTestCase {
+public class RuleFrameworkPluginTests extends DensityTestCase {
     RuleFrameworkPlugin plugin = new RuleFrameworkPlugin();;
 
     public void testGetActions() {
@@ -39,7 +39,7 @@ public class RuleFrameworkPluginTests extends OpenSearchTestCase {
         Settings settings = Settings.EMPTY;
         List<RestHandler> handlers = plugin.getRestHandlers(
             settings,
-            mock(org.opensearch.rest.RestController.class),
+            mock(org.density.rest.RestController.class),
             null,
             null,
             null,

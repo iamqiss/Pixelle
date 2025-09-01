@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.index.IndexSettings;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.update.UpdateResponse;
+import org.density.index.IndexSettings;
 
 /**
  * Interface implemented by responses for actions that modify the documents in an index like {@link IndexResponse}, {@link UpdateResponse},
  * and {@link BulkResponse}. Rather than implement this directly most implementers should extend {@link DocWriteResponse}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface WriteResponse {
     /**

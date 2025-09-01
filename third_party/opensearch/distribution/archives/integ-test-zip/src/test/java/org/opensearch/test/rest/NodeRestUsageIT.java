@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -50,7 +50,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class NodeRestUsageIT extends OpenSearchRestTestCase {
+public class NodeRestUsageIT extends DensityRestTestCase {
 
     @SuppressWarnings("unchecked")
     public void testWithRestUsage() throws IOException {

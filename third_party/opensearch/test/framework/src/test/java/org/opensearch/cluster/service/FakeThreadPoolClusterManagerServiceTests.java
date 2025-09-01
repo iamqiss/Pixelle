@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,14 +61,14 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FakeThreadPoolClusterManagerServiceTests extends OpenSearchTestCase {
+public class FakeThreadPoolClusterManagerServiceTests extends DensityTestCase {
 
     public void testFakeClusterManagerService() {
         List<Runnable> runnableTasks = new ArrayList<>();
         AtomicReference<ClusterState> lastClusterStateRef = new AtomicReference<>();
         DiscoveryNode discoveryNode = new DiscoveryNode(
             "node",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             Collections.emptyMap(),
             new HashSet<>(DiscoveryNodeRole.BUILT_IN_ROLES),
             Version.CURRENT

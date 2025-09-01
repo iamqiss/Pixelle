@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.support.IndicesOptions;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.test.VersionUtils.randomCompatibleVersion;
+import static org.density.test.VersionUtils.randomCompatibleVersion;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class OriginalIndicesTests extends OpenSearchTestCase {
+public class OriginalIndicesTests extends DensityTestCase {
 
     private static final IndicesOptions[] indicesOptionsValues = new IndicesOptions[] {
         IndicesOptions.lenientExpandOpen(),

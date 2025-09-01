@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
 
 import java.io.IOException;
 import java.util.Map;

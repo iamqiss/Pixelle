@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.indices.cluster.IndicesClusterStateService;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.indices.replication.common.ReplicationState;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.annotation.PublicApi;
+import org.density.indices.cluster.IndicesClusterStateService;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.indices.replication.common.ReplicationState;
 
 /**
  * Listener that runs on changes in Recovery state
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "2.2.0")
 public class RecoveryListener implements ReplicationListener {

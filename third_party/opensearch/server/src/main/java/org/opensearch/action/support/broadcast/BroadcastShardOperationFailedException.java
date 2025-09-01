@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.broadcast;
+package org.density.action.support.broadcast;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchWrapperException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.DensityException;
+import org.density.DensityWrapperException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 
 /**
  * An exception indicating that a failure occurred performing an operation on the shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class BroadcastShardOperationFailedException extends OpenSearchException implements OpenSearchWrapperException {
+public class BroadcastShardOperationFailedException extends DensityException implements DensityWrapperException {
 
     public BroadcastShardOperationFailedException(ShardId shardId, String msg) {
         this(shardId, msg, null);

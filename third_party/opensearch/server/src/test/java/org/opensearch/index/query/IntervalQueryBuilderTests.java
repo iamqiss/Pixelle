@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.intervals.IntervalQuery;
@@ -44,25 +44,25 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.common.util.BigArrays;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 

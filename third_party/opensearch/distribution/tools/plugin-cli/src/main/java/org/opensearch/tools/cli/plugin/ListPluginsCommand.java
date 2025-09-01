@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import joptsimple.OptionSet;
-import org.opensearch.Version;
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginsService;
+import org.density.Version;
+import org.density.cli.Terminal;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.env.Environment;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginsService;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -49,12 +49,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A command for the plugin cli to list plugins installed in opensearch.
+ * A command for the plugin cli to list plugins installed in density.
  */
 class ListPluginsCommand extends EnvironmentAwareCommand {
 
     ListPluginsCommand() {
-        super("Lists installed opensearch plugins");
+        super("Lists installed density plugins");
     }
 
     @Override
@@ -84,8 +84,8 @@ class ListPluginsCommand extends EnvironmentAwareCommand {
             terminal.errorPrintln(
                 "WARNING: plugin ["
                     + info.getName()
-                    + "] was built for OpenSearch version "
-                    + info.getOpenSearchVersionRangesString()
+                    + "] was built for Density version "
+                    + info.getDensityVersionRangesString()
                     + " and is not compatible with "
                     + Version.CURRENT
             );

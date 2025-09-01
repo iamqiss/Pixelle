@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import org.apache.http.client.fluent.Request;
-import org.opensearch.packaging.util.Installation;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.Shell;
+import org.density.packaging.util.Installation;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.Shell;
 import org.junit.Before;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.ServerUtils.makeRequest;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assume.assumeFalse;
@@ -89,7 +89,7 @@ public class PluginCliTests extends PackagingTestCase {
         Files.delete(stashedPluginsDir); // delete so we can replace it
         Files.move(pluginsDir, stashedPluginsDir);
         Path linkedPlugins = createTempDir("symlinked-plugins");
-        Platforms.onLinux(() -> sh.run("chown opensearch:opensearch " + linkedPlugins.toString()));
+        Platforms.onLinux(() -> sh.run("chown density:density " + linkedPlugins.toString()));
         Files.createSymbolicLink(pluginsDir, linkedPlugins);
         assertWithExamplePlugin(installResult -> {
             assertWhileRunning(() -> {
@@ -116,21 +116,21 @@ public class PluginCliTests extends PackagingTestCase {
         assertWithPlugin(installation.executables().pluginTool, plugin, EXAMPLE_PLUGIN_NAME, installResult -> {});
     }
 
-    public void test23OpenSearchWithSpace() throws Exception {
+    public void test23DensityWithSpace() throws Exception {
         assumeTrue(distribution.isArchive());
 
         Path spacedDir = createTempDir("spaced dir");
-        Path opensearch = spacedDir.resolve("opensearch");
-        Files.move(installation.home, opensearch);
-        Installation spacedInstallation = Installation.ofArchive(sh, distribution, opensearch);
+        Path density = spacedDir.resolve("density");
+        Files.move(installation.home, density);
+        Installation spacedInstallation = Installation.ofArchive(sh, distribution, density);
 
         assertWithPlugin(spacedInstallation.executables().pluginTool, EXAMPLE_PLUGIN_ZIP, EXAMPLE_PLUGIN_NAME, installResult -> {});
 
-        Files.move(opensearch, installation.home);
+        Files.move(density, installation.home);
     }
 
     public void test24JavaOpts() throws Exception {
-        sh.getEnv().put("OPENSEARCH_JAVA_OPTS", "-XX:+PrintFlagsFinal");
+        sh.getEnv().put("DENSITY_JAVA_OPTS", "-XX:+PrintFlagsFinal");
         assertWithExamplePlugin(installResult -> assertThat(installResult.stdout, containsString("MaxHeapSize")));
     }
 

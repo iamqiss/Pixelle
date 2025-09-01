@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.AbstractAllocateAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommands;
-import org.opensearch.cluster.routing.allocation.command.CancelAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.snapshots.SnapshotShardSizeInfo;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.AbstractAllocateAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommands;
+import org.density.cluster.routing.allocation.command.CancelAllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexNotFoundException;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.snapshots.SnapshotShardSizeInfo;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -81,17 +81,17 @@ import java.util.Set;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
-import static org.opensearch.cluster.routing.ShardRoutingState.RELOCATING;
-import static org.opensearch.cluster.routing.ShardRoutingState.STARTED;
-import static org.opensearch.cluster.routing.ShardRoutingState.UNASSIGNED;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.RELOCATING;
+import static org.density.cluster.routing.ShardRoutingState.STARTED;
+import static org.density.cluster.routing.ShardRoutingState.UNASSIGNED;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
+public class AllocationCommandsTests extends DensityAllocationTestCase {
     private final Logger logger = LogManager.getLogger(AllocationCommandsTests.class);
 
     public void testMoveShardCommand() {
@@ -104,7 +104,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
             .put(IndexMetadata.builder("test").settings(settings(Version.CURRENT)).numberOfShards(1).numberOfReplicas(0))
             .build();
         RoutingTable routingTable = RoutingTable.builder().addAsNew(metadata.index("test")).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -175,7 +175,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
         // shard routing is added as "from recovery" instead of "new index creation" so that we can test below that allocating an empty
         // primary with accept_data_loss flag set to false fails
         RoutingTable routingTable = RoutingTable.builder().addAsRecovery(metadata.index(index)).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -347,7 +347,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
         // shard routing is added as "from recovery" instead of "new index creation" so that we can test below that allocating an empty
         // primary with accept_data_loss flag set to false fails
         RoutingTable routingTable = RoutingTable.builder().addAsRecovery(metadata.index(index)).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -396,7 +396,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
             .put(IndexMetadata.builder("test").settings(settings(Version.CURRENT)).numberOfShards(1).numberOfReplicas(1))
             .build();
         RoutingTable routingTable = RoutingTable.builder().addAsNew(metadata.index("test")).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -722,7 +722,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
             .put(IndexMetadata.builder("test").settings(settings(Version.CURRENT)).numberOfShards(1).numberOfReplicas(0))
             .build();
         RoutingTable routingTable = RoutingTable.builder().addAsNew(metadata.index("test")).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -793,7 +793,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
             .put(IndexMetadata.builder("test").settings(settings(Version.CURRENT)).numberOfShards(1).numberOfReplicas(0))
             .build();
         RoutingTable routingTable = RoutingTable.builder().addAsNew(metadata.index("test")).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -896,7 +896,7 @@ public class AllocationCommandsTests extends OpenSearchAllocationTestCase {
             .addAsRecovery(metadata.index(index2))
             .addAsRecovery(metadata.index(index3))
             .build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();

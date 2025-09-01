@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.cli.CommandTestCase;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
+import org.density.cli.CommandTestCase;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
 import org.junit.After;
 import org.junit.Before;
 
@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base test case for manipulating the OpenSearch keystore.
+ * Base test case for manipulating the Density keystore.
  */
 @LuceneTestCase.SuppressFileSystems("*") // we do our own mocking
 public abstract class KeyStoreCommandTestCase extends CommandTestCase {
@@ -82,7 +82,7 @@ public abstract class KeyStoreCommandTestCase extends CommandTestCase {
         }
         FileSystem fs = Jimfs.newFileSystem(configuration);
         fileSystems.add(fs);
-        PathUtilsForTesting.installMock(fs); // restored by restoreFileSystem in OpenSearchTestCase
+        PathUtilsForTesting.installMock(fs); // restored by restoreFileSystem in DensityTestCase
         Path home = fs.getPath("/", "test-home");
         Files.createDirectories(home.resolve("config"));
         return TestEnvironment.newEnvironment(Settings.builder().put("path.home", home).build());

@@ -1,53 +1,53 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.service;
+package org.density.rule.service;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.DocumentMissingException;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rule.RuleEntityParser;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.RuleQueryMapper;
-import org.opensearch.rule.RuleUtils;
-import org.opensearch.rule.action.CreateRuleRequest;
-import org.opensearch.rule.action.CreateRuleResponse;
-import org.opensearch.rule.action.DeleteRuleRequest;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.action.UpdateRuleRequest;
-import org.opensearch.rule.action.UpdateRuleResponse;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.utils.RuleTestUtils;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.ResourceNotFoundException;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.DocumentMissingException;
+import org.density.index.query.QueryBuilder;
+import org.density.rule.RuleEntityParser;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.RuleQueryMapper;
+import org.density.rule.RuleUtils;
+import org.density.rule.action.CreateRuleRequest;
+import org.density.rule.action.CreateRuleResponse;
+import org.density.rule.action.DeleteRuleRequest;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.action.UpdateRuleRequest;
+import org.density.rule.action.UpdateRuleResponse;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.utils.RuleTestUtils;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,15 +66,15 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.rule.XContentRuleParserTests.VALID_JSON;
-import static org.opensearch.rule.utils.RuleTestUtils.ATTRIBUTE_MAP;
-import static org.opensearch.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.DESCRIPTION_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.DESCRIPTION_TWO;
-import static org.opensearch.rule.utils.RuleTestUtils.FEATURE_VALUE_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.MockRuleAttributes.MOCK_RULE_ATTRIBUTE_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.TEST_INDEX_NAME;
-import static org.opensearch.rule.utils.RuleTestUtils._ID_ONE;
+import static org.density.rule.XContentRuleParserTests.VALID_JSON;
+import static org.density.rule.utils.RuleTestUtils.ATTRIBUTE_MAP;
+import static org.density.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_ONE;
+import static org.density.rule.utils.RuleTestUtils.DESCRIPTION_ONE;
+import static org.density.rule.utils.RuleTestUtils.DESCRIPTION_TWO;
+import static org.density.rule.utils.RuleTestUtils.FEATURE_VALUE_ONE;
+import static org.density.rule.utils.RuleTestUtils.MockRuleAttributes.MOCK_RULE_ATTRIBUTE_ONE;
+import static org.density.rule.utils.RuleTestUtils.TEST_INDEX_NAME;
+import static org.density.rule.utils.RuleTestUtils._ID_ONE;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.any;
@@ -84,7 +84,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-public class IndexStoredRulePersistenceServiceTests extends OpenSearchTestCase {
+public class IndexStoredRulePersistenceServiceTests extends DensityTestCase {
 
     private static final int MAX_VALUES_PER_PAGE = 50;
     private Client client;
@@ -167,7 +167,7 @@ public class IndexStoredRulePersistenceServiceTests extends OpenSearchTestCase {
         ActionListener<CreateRuleResponse> listener = mock(ActionListener.class);
         rulePersistenceService.createRule(createRuleRequest, listener);
 
-        ArgumentCaptor<Exception> exceptionCaptor = ArgumentCaptor.forClass(OpenSearchRejectedExecutionException.class);
+        ArgumentCaptor<Exception> exceptionCaptor = ArgumentCaptor.forClass(DensityRejectedExecutionException.class);
         verify(listener).onFailure(exceptionCaptor.capture());
         assertNotNull(exceptionCaptor.getValue());
     }
@@ -343,7 +343,7 @@ public class IndexStoredRulePersistenceServiceTests extends OpenSearchTestCase {
         when(threadPool.getThreadContext()).thenReturn(new ThreadContext(Settings.EMPTY));
 
         ArgumentCaptor<DeleteRequest> requestCaptor = ArgumentCaptor.forClass(DeleteRequest.class);
-        ArgumentCaptor<ActionListener<org.opensearch.action.delete.DeleteResponse>> listenerCaptor = ArgumentCaptor.forClass(
+        ArgumentCaptor<ActionListener<org.density.action.delete.DeleteResponse>> listenerCaptor = ArgumentCaptor.forClass(
             ActionListener.class
         );
 
@@ -354,7 +354,7 @@ public class IndexStoredRulePersistenceServiceTests extends OpenSearchTestCase {
         verify(client).delete(requestCaptor.capture(), listenerCaptor.capture());
         assertEquals(ruleId, requestCaptor.getValue().id());
 
-        org.opensearch.action.delete.DeleteResponse deleteResponse = mock(org.opensearch.action.delete.DeleteResponse.class);
+        org.density.action.delete.DeleteResponse deleteResponse = mock(org.density.action.delete.DeleteResponse.class);
         when(deleteResponse.getResult()).thenReturn(DocWriteResponse.Result.DELETED);
 
         listenerCaptor.getValue().onResponse(deleteResponse);
@@ -370,7 +370,7 @@ public class IndexStoredRulePersistenceServiceTests extends OpenSearchTestCase {
         when(threadPool.getThreadContext()).thenReturn(new ThreadContext(Settings.EMPTY));
 
         ArgumentCaptor<DeleteRequest> requestCaptor = ArgumentCaptor.forClass(DeleteRequest.class);
-        ArgumentCaptor<ActionListener<org.opensearch.action.delete.DeleteResponse>> listenerCaptor = ArgumentCaptor.forClass(
+        ArgumentCaptor<ActionListener<org.density.action.delete.DeleteResponse>> listenerCaptor = ArgumentCaptor.forClass(
             ActionListener.class
         );
 

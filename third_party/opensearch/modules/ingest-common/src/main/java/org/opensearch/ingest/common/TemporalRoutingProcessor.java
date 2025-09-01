@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.core.common.Strings;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
+import org.density.common.Nullable;
+import org.density.common.hash.MurmurHash3;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.core.common.Strings;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.ConfigurationUtils;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
@@ -26,7 +26,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Processor that sets document routing based on temporal structure.
@@ -35,7 +35,7 @@ import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException
  * to a configurable granularity (hour/day/week/month), and uses the resulting
  * temporal bucket to compute a routing value for improved temporal locality.
  *
- * Introduced in OpenSearch 3.2.0 to enable intelligent document co-location
+ * Introduced in Density 3.2.0 to enable intelligent document co-location
  * based on time-based patterns for log and metrics workloads.
  */
 public final class TemporalRoutingProcessor extends AbstractProcessor {

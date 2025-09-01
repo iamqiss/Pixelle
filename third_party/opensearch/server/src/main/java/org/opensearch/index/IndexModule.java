@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.FilterDirectoryReader;
@@ -39,62 +39,62 @@ import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.util.Constants;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.cache.query.DisabledQueryCache;
-import org.opensearch.index.cache.query.IndexQueryCache;
-import org.opensearch.index.cache.query.QueryCache;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexingOperationListener;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.store.DefaultCompositeDirectoryFactory;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.SetOnce;
+import org.density.common.TriFunction;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.NodeEnvironment;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.cache.query.DisabledQueryCache;
+import org.density.index.cache.query.IndexQueryCache;
+import org.density.index.cache.query.QueryCache;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.EngineFactory;
+import org.density.index.mapper.MapperService;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexingOperationListener;
+import org.density.index.shard.SearchOperationListener;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.store.DefaultCompositeDirectoryFactory;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.translog.TranslogFactory;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.plugins.IndexStorePlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -128,7 +128,7 @@ import java.util.function.Supplier;
  *      {@link #addSettingsUpdateConsumer(Setting, Consumer)}</li>
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexModule {
@@ -278,7 +278,7 @@ public final class IndexModule {
 
     /**
      * Construct the index module for the index with the specified index settings. The index module contains extension points for plugins
-     * via {@link org.opensearch.plugins.PluginsService#onIndexModule(IndexModule)}.
+     * via {@link org.density.plugins.PluginsService#onIndexModule(IndexModule)}.
      *
      * @param indexSettings      the index settings
      * @param analysisRegistry   the analysis registry
@@ -461,7 +461,7 @@ public final class IndexModule {
      * Registers the given {@link Similarity} with the given name.
      * The function takes as parameters:<ul>
      *   <li>settings for this similarity
-     *   <li>version of OpenSearch when the index was created
+     *   <li>version of Density when the index was created
      *   <li>ScriptService, for script-based similarities
      * </ul>
      *
@@ -511,7 +511,7 @@ public final class IndexModule {
     /**
      * Type of file system
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Type {

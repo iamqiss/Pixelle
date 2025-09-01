@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,13 +52,13 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.index.query.QueryBuilders.scriptQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchTimeoutIT.ScriptedTimeoutPlugin.SCRIPT_NAME;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.index.query.QueryBuilders.scriptQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchTimeoutIT.ScriptedTimeoutPlugin.SCRIPT_NAME;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class SearchTimeoutIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE)
+public class SearchTimeoutIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public SearchTimeoutIT(Settings settings) {
         super(settings);
     }
@@ -116,8 +116,8 @@ public class SearchTimeoutIT extends ParameterizedStaticSettingsOpenSearchIntegT
     public void testPartialResultsIntolerantTimeout() throws Exception {
         client().prepareIndex("test").setId("1").setSource("field", "value").setRefreshPolicy(IMMEDIATE).get();
         indexRandomForConcurrentSearch("test");
-        OpenSearchException ex = expectThrows(
-            OpenSearchException.class,
+        DensityException ex = expectThrows(
+            DensityException.class,
             () -> client().prepareSearch("test")
                 .setTimeout(new TimeValue(10, TimeUnit.MILLISECONDS))
                 .setQuery(scriptQuery(new Script(ScriptType.INLINE, "mockscript", SCRIPT_NAME, Collections.emptyMap())))

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AbstractTokenFilterFactory;
-import org.opensearch.index.analysis.AnalysisMode;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.CustomAnalyzer;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AbstractTokenFilterFactory;
+import org.density.index.analysis.AnalysisMode;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.CustomAnalyzer;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.index.analysis.AnalysisRegistry.DEFAULT_ANALYZER_NAME;
+import static org.density.index.analysis.AnalysisRegistry.DEFAULT_ANALYZER_NAME;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TextFieldAnalyzerModeTests extends OpenSearchTestCase {
+public class TextFieldAnalyzerModeTests extends DensityTestCase {
     ParametrizedFieldMapper.TypeParser getTypeParser() {
         return TextFieldMapper.PARSER;
     }

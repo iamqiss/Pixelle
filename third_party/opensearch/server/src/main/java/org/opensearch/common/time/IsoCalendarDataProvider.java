@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -42,7 +42,7 @@ import java.util.spi.CalendarDataProvider;
  * Java SPI mechanism requires java.locale.providers to contain SPI value (i.e. java.locale.providers=SPI,COMPAT)
  * @see <a href="https://en.wikipedia.org/wiki/ISO_week_date">ISO week date</a>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IsoCalendarDataProvider extends CalendarDataProvider {
 

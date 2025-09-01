@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.snapshots.SnapshotShardSizeInfo;
+import org.density.Version;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.snapshots.SnapshotShardSizeInfo;
 
 import java.util.Collections;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
-import static org.opensearch.cluster.routing.allocation.RoutingNodesUtils.numberOfShardsOfType;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.allocation.RoutingNodesUtils.numberOfShardsOfType;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SameShardRoutingTests extends OpenSearchAllocationTestCase {
+public class SameShardRoutingTests extends DensityAllocationTestCase {
     private final Logger logger = LogManager.getLogger(SameShardRoutingTests.class);
 
     public void testSameHost() {

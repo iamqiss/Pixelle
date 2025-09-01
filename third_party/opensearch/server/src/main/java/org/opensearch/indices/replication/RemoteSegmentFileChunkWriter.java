@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.FileChunkRequest;
-import org.opensearch.indices.recovery.FileChunkWriter;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RetryableTransportClient;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.DensityException;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.FileChunkRequest;
+import org.density.indices.recovery.FileChunkWriter;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RetryableTransportClient;
+import org.density.transport.TransportRequestOptions;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,7 +30,7 @@ import java.util.function.Supplier;
 /**
  * This class handles sending file chunks over the transport layer to a target shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteSegmentFileChunkWriter implements FileChunkWriter {
 
@@ -90,7 +90,7 @@ public final class RemoteSegmentFileChunkWriter implements FileChunkWriter {
                     throttleTimeInNanos = rl.pause(bytes);
                     onSourceThrottle.accept(throttleTimeInNanos);
                 } catch (IOException e) {
-                    throw new OpenSearchException("failed to pause recovery", e);
+                    throw new DensityException("failed to pause recovery", e);
                 }
             } else {
                 throttleTimeInNanos = 0;

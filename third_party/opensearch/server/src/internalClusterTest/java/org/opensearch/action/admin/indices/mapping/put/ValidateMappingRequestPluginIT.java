@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.put;
+package org.density.action.admin.indices.mapping.put;
 
-import org.opensearch.action.RequestValidators;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.index.Index;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.RequestValidators;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.index.Index;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,11 +45,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ValidateMappingRequestPluginIT extends OpenSearchSingleNodeTestCase {
+public class ValidateMappingRequestPluginIT extends DensitySingleNodeTestCase {
     static final Map<String, Collection<String>> allowedOrigins = ConcurrentCollections.newConcurrentMap();
 
     public static class TestPlugin extends Plugin implements ActionPlugin {

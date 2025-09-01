@@ -1,46 +1,46 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.replication;
+package org.density.action.admin.indices.replication;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportSegmentReplicationStatsActionTests extends OpenSearchTestCase {
+public class TransportSegmentReplicationStatsActionTests extends DensityTestCase {
     @Mock
     private ClusterService clusterService;
     @Mock

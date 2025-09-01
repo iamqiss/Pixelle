@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.codecs.Codec;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.CopyStateTests;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.ReplicationGroup;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.CopyStateTests;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_REPLICATION_TYPE_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_REPLICATION_TYPE_SETTING;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SegmentReplicationSourceServiceTests extends OpenSearchTestCase {
+public class SegmentReplicationSourceServiceTests extends DensityTestCase {
 
     private ReplicationCheckpoint testCheckpoint;
     private TestThreadPool testThreadPool;

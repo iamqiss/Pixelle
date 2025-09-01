@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.FieldComparator;
@@ -28,7 +28,7 @@ import java.util.Comparator;
  * Sorted numeric field for wider sort types, to help sorting two different numeric types.
  * NOTE: the unsigned_long is not supported by widening sort since the unsigned_long could not be used with other types
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SortedWiderNumericSortField extends SortedNumericSortField {
     private final int byteCounts;

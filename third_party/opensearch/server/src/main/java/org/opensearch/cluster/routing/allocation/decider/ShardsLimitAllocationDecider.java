@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
 
 import java.util.function.BiPredicate;
 
@@ -65,7 +65,7 @@ import java.util.function.BiPredicate;
  * trigger relocation and significant additional load on the clusters nodes.
  * </p>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardsLimitAllocationDecider extends AllocationDecider {
 
@@ -75,7 +75,7 @@ public class ShardsLimitAllocationDecider extends AllocationDecider {
     private volatile int clusterPrimaryShardLimit;
 
     /**
-     * Controls the maximum number of shards per index on a single OpenSearch
+     * Controls the maximum number of shards per index on a single Density
      * node. Negative values are interpreted as unlimited.
      */
     public static final Setting<Integer> INDEX_TOTAL_SHARDS_PER_NODE_SETTING = Setting.intSetting(
@@ -87,7 +87,7 @@ public class ShardsLimitAllocationDecider extends AllocationDecider {
     );
 
     /**
-     * Controls the maximum number of primary shards per index on a single OpenSearch
+     * Controls the maximum number of primary shards per index on a single Density
      * node for segment replication enabled indices. Negative values are interpreted as unlimited.
      */
     public static final Setting<Integer> INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING = Setting.intSetting(

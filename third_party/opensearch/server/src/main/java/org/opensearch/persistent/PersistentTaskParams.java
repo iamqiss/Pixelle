@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.core.common.io.stream.VersionedNamedWriteable;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.cluster.ClusterState;
+import org.density.core.common.io.stream.VersionedNamedWriteable;
+import org.density.core.xcontent.ToXContentObject;
 
 /**
  * Parameters used to start persistent task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface PersistentTaskParams extends VersionedNamedWriteable, ToXContentObject, ClusterState.FeatureAware {
 

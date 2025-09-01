@@ -1,10 +1,10 @@
-diff --git a/modules/lang-mustache/src/main/java/org/opensearch/script/mustache/MustacheScriptEngine.java b/modules/lang-mustache/src/main/java/org/opensearch/script/mustache/MustacheScriptEngine.java
+diff --git a/modules/lang-mustache/src/main/java/org/density/script/mustache/MustacheScriptEngine.java b/modules/lang-mustache/src/main/java/org/density/script/mustache/MustacheScriptEngine.java
 index 842353fdba3..3d6dca775b7 100644
---- a/modules/lang-mustache/src/main/java/org/opensearch/script/mustache/MustacheScriptEngine.java
-+++ b/modules/lang-mustache/src/main/java/org/opensearch/script/mustache/MustacheScriptEngine.java
-@@ -47,13 +47,16 @@ import org.opensearch.script.ScriptEngine;
- import org.opensearch.script.ScriptException;
- import org.opensearch.script.TemplateScript;
+--- a/modules/lang-mustache/src/main/java/org/density/script/mustache/MustacheScriptEngine.java
++++ b/modules/lang-mustache/src/main/java/org/density/script/mustache/MustacheScriptEngine.java
+@@ -47,13 +47,16 @@ import org.density.script.ScriptEngine;
+ import org.density.script.ScriptException;
+ import org.density.script.TemplateScript;
  
 +import java.io.IOException;
  import java.io.Reader;

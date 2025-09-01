@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.replication;
+package org.density.action.admin.indices.replication;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Segment Replication stats information action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationStatsAction extends ActionType<SegmentReplicationStatsResponse> {
     public static final SegmentReplicationStatsAction INSTANCE = new SegmentReplicationStatsAction();

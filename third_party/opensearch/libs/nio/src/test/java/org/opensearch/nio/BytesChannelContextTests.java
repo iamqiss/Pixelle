@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.nio;
+package org.density.nio;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedFunction;
+import org.density.common.util.PageCacheRecycler;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class BytesChannelContextTests extends OpenSearchTestCase {
+public class BytesChannelContextTests extends DensityTestCase {
 
     private CheckedFunction<InboundChannelBuffer, Integer, IOException> readConsumer;
     private NioSocketChannel channel;

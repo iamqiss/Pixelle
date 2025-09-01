@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.Version;
+import org.density.cluster.Diff;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.NamedDiff;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -55,7 +55,7 @@ import java.util.Objects;
  * The {@link ComposableIndexTemplateMetadata} class is a custom {@link Metadata.Custom} implementation that
  * stores a map of ids to {@link ComposableIndexTemplate} templates.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ComposableIndexTemplateMetadata implements Metadata.Custom {
     public static final String TYPE = "index_template";
@@ -162,7 +162,7 @@ public class ComposableIndexTemplateMetadata implements Metadata.Custom {
     /**
      * A diff between composable metadata templates.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ComposableIndexTemplateMetadataDiff implements NamedDiff<Metadata.Custom> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TermsAggregatorFactoryTests extends OpenSearchTestCase {
+public class TermsAggregatorFactoryTests extends DensityTestCase {
     public void testPickEmpty() throws Exception {
         AggregatorFactories empty = mock(AggregatorFactories.class);
         SearchContext context = mock(SearchContext.class);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.TemplateScript;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.TemplateScript;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,12 +57,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.script.Script.DEFAULT_TEMPLATE_LANG;
+import static org.density.script.Script.DEFAULT_TEMPLATE_LANG;
 
 /**
  * Utility class for ingest processor configurations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ConfigurationUtils {
 
@@ -75,7 +75,7 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified optional property from the specified configuration map.
      * <p>
-     * If the property value isn't of type string a {@link OpenSearchParseException} is thrown.
+     * If the property value isn't of type string a {@link DensityParseException} is thrown.
      */
     public static String readOptionalStringProperty(
         String processorType,
@@ -90,8 +90,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type string an {@link OpenSearchParseException} is thrown.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type string an {@link DensityParseException} is thrown.
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static String readStringProperty(
         String processorType,
@@ -105,8 +105,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type string a {@link OpenSearchParseException} is thrown.
-     * If the property is missing and no default value has been specified a {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type string a {@link DensityParseException} is thrown.
+     * If the property is missing and no default value has been specified a {@link DensityParseException} is thrown
      */
     public static String readStringProperty(
         String processorType,
@@ -142,8 +142,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type string or int a {@link OpenSearchParseException} is thrown.
-     * If the property is missing and no default value has been specified a {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type string or int a {@link DensityParseException} is thrown.
+     * If the property is missing and no default value has been specified a {@link DensityParseException} is thrown
      */
     public static String readStringOrIntProperty(
         String processorType,
@@ -181,7 +181,7 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type string or int a {@link OpenSearchParseException} is thrown.
+     * If the property value isn't of type string or int a {@link DensityParseException} is thrown.
      */
     public static String readOptionalStringOrIntProperty(
         String processorType,
@@ -229,8 +229,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type int a {@link OpenSearchParseException} is thrown.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type int a {@link DensityParseException} is thrown.
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static Integer readIntProperty(
         String processorType,
@@ -258,8 +258,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property from the specified configuration map.
      * <p>
-     * If the property value isn't of type int a {@link OpenSearchParseException} is thrown.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type int a {@link DensityParseException} is thrown.
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static Double readDoubleProperty(
         String processorType,
@@ -286,7 +286,7 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property of type list from the specified configuration map.
      * <p>
-     * If the property value isn't of type list an {@link OpenSearchParseException} is thrown.
+     * If the property value isn't of type list an {@link DensityParseException} is thrown.
      */
     public static <T> List<T> readOptionalList(
         String processorType,
@@ -304,8 +304,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property of type list from the specified configuration map.
      * <p>
-     * If the property value isn't of type list an {@link OpenSearchParseException} is thrown.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type list an {@link DensityParseException} is thrown.
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static <T> List<T> readList(String processorType, String processorTag, Map<String, Object> configuration, String propertyName) {
         Object value = configuration.remove(propertyName);
@@ -334,8 +334,8 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property of type map from the specified configuration map.
      * <p>
-     * If the property value isn't of type map an {@link OpenSearchParseException} is thrown.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property value isn't of type map an {@link DensityParseException} is thrown.
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static <T> Map<String, T> readMap(
         String processorType,
@@ -354,7 +354,7 @@ public final class ConfigurationUtils {
     /**
      * Returns and removes the specified property of type map from the specified configuration map.
      * <p>
-     * If the property value isn't of type map an {@link OpenSearchParseException} is thrown.
+     * If the property value isn't of type map an {@link DensityParseException} is thrown.
      */
     public static <T> Map<String, T> readOptionalMap(
         String processorType,
@@ -387,7 +387,7 @@ public final class ConfigurationUtils {
 
     /**
      * Returns and removes the specified property as an {@link Object} from the specified configuration map.
-     * If the property is missing an {@link OpenSearchParseException} is thrown
+     * If the property is missing an {@link DensityParseException} is thrown
      */
     public static Object readObject(String processorType, String processorTag, Map<String, Object> configuration, String propertyName) {
         Object value = configuration.remove(propertyName);
@@ -404,7 +404,7 @@ public final class ConfigurationUtils {
         return configuration.remove(propertyName);
     }
 
-    public static OpenSearchException newConfigurationException(
+    public static DensityException newConfigurationException(
         String processorType,
         String processorTag,
         String propertyName,
@@ -416,18 +416,18 @@ public final class ConfigurationUtils {
         } else {
             msg = "[" + propertyName + "] " + reason;
         }
-        OpenSearchParseException exception = new OpenSearchParseException(msg);
+        DensityParseException exception = new DensityParseException(msg);
         addMetadataToException(exception, processorType, processorTag, propertyName);
         return exception;
     }
 
-    public static OpenSearchException newConfigurationException(
+    public static DensityException newConfigurationException(
         String processorType,
         String processorTag,
         String propertyName,
         Exception cause
     ) {
-        OpenSearchException exception = ExceptionsHelper.convertToOpenSearchException(cause);
+        DensityException exception = ExceptionsHelper.convertToDensityException(cause);
         addMetadataToException(exception, processorType, processorTag, propertyName);
         return exception;
     }
@@ -498,19 +498,19 @@ public final class ConfigurationUtils {
     }
 
     private static void addMetadataToException(
-        OpenSearchException exception,
+        DensityException exception,
         String processorType,
         String processorTag,
         String propertyName
     ) {
         if (processorType != null) {
-            exception.addMetadata("opensearch.processor_type", processorType);
+            exception.addMetadata("density.processor_type", processorType);
         }
         if (processorTag != null) {
-            exception.addMetadata("opensearch.processor_tag", processorTag);
+            exception.addMetadata("density.processor_tag", processorTag);
         }
         if (propertyName != null) {
-            exception.addMetadata("opensearch.property_name", propertyName);
+            exception.addMetadata("density.property_name", propertyName);
         }
     }
 
@@ -566,7 +566,7 @@ public final class ConfigurationUtils {
             try {
                 Processor processor = factory.create(processorFactories, tag, description, config);
                 if (config.isEmpty() == false) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "processor [{}] doesn't support one or more provided configuration parameters {}",
                         type,
                         Arrays.toString(config.keySet().toArray())

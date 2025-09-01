@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.rule.autotagging.Rule;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.rule.autotagging.Rule;
 
 /**
  * Interface to parse various string representation of Rule entity

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
@@ -44,12 +44,12 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.lucene.Lucene;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ import java.util.Objects;
  * A query that allows for a pluggable boost function / filter. If it matches
  * the filter, it will be boosted by the formula.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FunctionScoreQuery extends Query {
     public static final float DEFAULT_MAX_BOOST = Float.MAX_VALUE;
@@ -71,7 +71,7 @@ public class FunctionScoreQuery extends Query {
     /**
      * Filter score function
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FilterScoreFunction extends ScoreFunction {
         public final Query filter;
@@ -144,7 +144,7 @@ public class FunctionScoreQuery extends Query {
     /**
      * The mode of the score
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ScoreMode implements Writeable {
         FIRST,
@@ -501,7 +501,7 @@ public class FunctionScoreQuery extends Query {
     /**
      * Internal function factor scorer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FunctionFactorScorer extends FilterScorer {
         private final ScoreFunction[] functions;
@@ -550,7 +550,7 @@ public class FunctionScoreQuery extends Query {
                   These scores are invalid for score based {@link org.apache.lucene.search.TopDocsCollector}s.
                   See {@link org.apache.lucene.search.TopScoreDocCollector} for details.
                  */
-                throw new OpenSearchException("function score query returned an invalid score: " + finalScore + " for doc: " + docId);
+                throw new DensityException("function score query returned an invalid score: " + finalScore + " for doc: " + docId);
             }
             return finalScore;
         }

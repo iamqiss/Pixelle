@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test.rest;
+package org.density.gradle.test.rest;
 
-import org.opensearch.gradle.OpenSearchJavaPlugin;
-import org.opensearch.gradle.test.RestIntegTestTask;
-import org.opensearch.gradle.test.RestTestBasePlugin;
-import org.opensearch.gradle.testclusters.TestClustersPlugin;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.DensityJavaPlugin;
+import org.density.gradle.test.RestIntegTestTask;
+import org.density.gradle.test.RestTestBasePlugin;
+import org.density.gradle.testclusters.TestClustersPlugin;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -54,7 +54,7 @@ public class YamlRestTestPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
 
-        project.getPluginManager().apply(OpenSearchJavaPlugin.class);
+        project.getPluginManager().apply(DensityJavaPlugin.class);
         project.getPluginManager().apply(TestClustersPlugin.class);
         project.getPluginManager().apply(RestTestBasePlugin.class);
         project.getPluginManager().apply(RestResourcesPlugin.class);

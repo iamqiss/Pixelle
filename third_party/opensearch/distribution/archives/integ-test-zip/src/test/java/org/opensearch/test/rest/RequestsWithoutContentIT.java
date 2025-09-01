@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;
 
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.Request;
+import org.density.client.ResponseException;
+import org.density.client.Request;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class RequestsWithoutContentIT extends OpenSearchRestTestCase {
+public class RequestsWithoutContentIT extends DensityRestTestCase {
 
     public void testIndexMissingBody() throws IOException {
         ResponseException responseException = expectThrows(ResponseException.class, () ->

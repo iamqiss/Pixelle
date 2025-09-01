@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.metrics.OperationMetrics;
+import org.density.DensityException;
+import org.density.common.collect.Tuple;
+import org.density.common.metrics.OperationMetrics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
  * A Processor that executes a list of other "processors". It executes a separate list of
  * "onFailureProcessors" when any of the processors throw an {@link Exception}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompoundProcessor implements Processor {
     public static final String ON_FAILURE_MESSAGE_FIELD = "on_failure_message";
@@ -298,7 +298,7 @@ public class CompoundProcessor implements Processor {
     void executeOnFailureAsync(
         int currentOnFailureProcessor,
         IngestDocument ingestDocument,
-        OpenSearchException exception,
+        DensityException exception,
         BiConsumer<IngestDocument, Exception> handler
     ) {
         if (currentOnFailureProcessor == 0) {
@@ -327,7 +327,7 @@ public class CompoundProcessor implements Processor {
         });
     }
 
-    private void putFailureMetadata(IngestDocument ingestDocument, OpenSearchException cause) {
+    private void putFailureMetadata(IngestDocument ingestDocument, DensityException cause) {
         List<String> processorTypeHeader = cause.getHeader("processor_type");
         List<String> processorTagHeader = cause.getHeader("processor_tag");
         List<String> processorOriginHeader = cause.getHeader("pipeline_origin");

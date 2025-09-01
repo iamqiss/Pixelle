@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.Priority;
+import org.density.common.Priority;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.LongSupplier;
@@ -39,7 +39,7 @@ import java.util.function.LongSupplier;
 /**
  * A base prioritized runnable
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PrioritizedRunnable implements Runnable, Comparable<PrioritizedRunnable> {
 
@@ -90,7 +90,7 @@ public abstract class PrioritizedRunnable implements Runnable, Comparable<Priori
     /**
      * Wrapped runnable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Wrapped extends PrioritizedRunnable implements WrappedRunnable {
 

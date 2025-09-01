@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.repositories.FilterRepository;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.repositories.FilterRepository;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 import org.junit.After;
 import org.junit.Before;
 
@@ -81,13 +81,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
-import static org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
-import static org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_INITIAL_PRIMARIES_RECOVERIES_SETTING;
-import static org.opensearch.snapshots.InternalSnapshotsInfoService.INTERNAL_SNAPSHOT_INFO_MAX_CONCURRENT_FETCHES_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
+import static org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_INITIAL_PRIMARIES_RECOVERIES_SETTING;
+import static org.density.snapshots.InternalSnapshotsInfoService.INTERNAL_SNAPSHOT_INFO_MAX_CONCURRENT_FETCHES_SETTING;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -98,7 +98,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class InternalSnapshotsInfoServiceTests extends OpenSearchTestCase {
+public class InternalSnapshotsInfoServiceTests extends DensityTestCase {
 
     private TestThreadPool threadPool;
     private ClusterService clusterService;
@@ -371,7 +371,7 @@ public class InternalSnapshotsInfoServiceTests extends OpenSearchTestCase {
 
         if (randomBoolean()) {
             // simulate initialization and start of the shards
-            final AllocationService allocationService = OpenSearchAllocationTestCase.createAllocationService(
+            final AllocationService allocationService = DensityAllocationTestCase.createAllocationService(
                 Settings.builder()
                     .put(CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING.getKey(), nbShards)
                     .put(CLUSTER_ROUTING_ALLOCATION_NODE_INITIAL_PRIMARIES_RECOVERIES_SETTING.getKey(), nbShards)
@@ -380,7 +380,7 @@ public class InternalSnapshotsInfoServiceTests extends OpenSearchTestCase {
             );
             applyClusterState(
                 "starting shards for " + indexName,
-                clusterState -> OpenSearchAllocationTestCase.startInitializingShardsAndReroute(allocationService, clusterState, indexName)
+                clusterState -> DensityAllocationTestCase.startInitializingShardsAndReroute(allocationService, clusterState, indexName)
             );
             assertTrue(clusterService.state().routingTable().shardsWithState(ShardRoutingState.UNASSIGNED).isEmpty());
 
@@ -487,7 +487,7 @@ public class InternalSnapshotsInfoServiceTests extends OpenSearchTestCase {
     private ClusterState demoteClusterManagerNode(final ClusterState currentState) {
         final DiscoveryNode node = new DiscoveryNode(
             "other",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             Collections.emptyMap(),
             DiscoveryNodeRole.BUILT_IN_ROLES,
             Version.CURRENT

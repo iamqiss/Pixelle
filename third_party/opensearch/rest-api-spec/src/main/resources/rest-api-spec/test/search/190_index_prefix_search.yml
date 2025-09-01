@@ -134,7 +134,7 @@ setup:
 
   - match: {hits.total: 1}
 
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/9203
+# related issue: https://github.com/density-project/Density/issues/9203
 ---
 "search index prefixes with multiple values":
   - skip:

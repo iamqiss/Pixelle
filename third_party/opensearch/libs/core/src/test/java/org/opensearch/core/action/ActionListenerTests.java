@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.action;
+package org.density.core.action;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.CheckedConsumer;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class ActionListenerTests extends OpenSearchTestCase {
+public class ActionListenerTests extends DensityTestCase {
 
     public void testWrap() {
         AtomicReference<Boolean> reference = new AtomicReference<>();

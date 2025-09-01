@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.ingest.SimulatePipelineResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.util.Collections;

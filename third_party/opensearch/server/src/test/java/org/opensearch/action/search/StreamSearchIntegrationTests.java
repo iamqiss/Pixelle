@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.nio.MockStreamNioTransport;
+import org.density.Version;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.Max;
+import org.density.telemetry.tracing.Tracer;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.nio.MockStreamNioTransport;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
+import static org.density.common.util.FeatureFlags.STREAM_TRANSPORT;
 
 /**
  * Integration tests for streaming search functionality.
@@ -60,7 +60,7 @@ import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
  * - StreamSearchTransportService
  * - SearchStreamActionListener
  */
-public class StreamSearchIntegrationTests extends OpenSearchSingleNodeTestCase {
+public class StreamSearchIntegrationTests extends DensitySingleNodeTestCase {
 
     private static final String TEST_INDEX = "test_streaming_index";
     private static final int NUM_SHARDS = 3;

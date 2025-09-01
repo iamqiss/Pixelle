@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.upgrade.get;
+package org.density.action.admin.indices.upgrade.get;
 
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import java.util.Set;
 /**
  * Transport Response for retrieving status of upgrading an Index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class UpgradeStatusResponse extends BroadcastResponse {
@@ -210,7 +210,7 @@ public class UpgradeStatusResponse extends BroadcastResponse {
     /**
      * Fields for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String INDICES = "indices";

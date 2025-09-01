@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 /**
  * Wrapper for SearchResponseProcessor to track execution details.
  *
- *  @opensearch.internal
+ *  @density.internal
  */
 public class TrackingSearchResponseProcessorWrapper implements SearchResponseProcessor {
 

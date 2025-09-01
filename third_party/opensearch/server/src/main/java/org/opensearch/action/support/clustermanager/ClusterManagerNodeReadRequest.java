@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
 /**
  * Base request for cluster-manager based read operations that allows to read the cluster state from the local node if needed
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ClusterManagerNodeReadRequest<Request extends ClusterManagerNodeReadRequest<Request>> extends
     ClusterManagerNodeRequest<Request> {

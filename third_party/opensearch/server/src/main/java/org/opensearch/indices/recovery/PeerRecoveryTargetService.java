@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,65 +26,65 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.engine.RecoveryEngineException;
-import org.opensearch.index.mapper.MapperException;
-import org.opensearch.index.shard.IllegalIndexShardStateException;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogCorruptedException;
-import org.opensearch.indices.replication.common.ReplicationCollection;
-import org.opensearch.indices.replication.common.ReplicationCollection.ReplicationRef;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityTimeoutException;
+import org.density.action.ActionRunnable;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexNotFoundException;
+import org.density.index.engine.RecoveryEngineException;
+import org.density.index.mapper.MapperException;
+import org.density.index.shard.IllegalIndexShardStateException;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogCorruptedException;
+import org.density.indices.replication.common.ReplicationCollection;
+import org.density.indices.replication.common.ReplicationCollection.ReplicationRef;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * The recovery target handles recoveries of peer shards of the shard+node to recover to.
@@ -92,7 +92,7 @@ import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
  * Note, it can be safely assumed that there will only be a single recovery per shard (index+id) and
  * not several of them (since we don't allocate several shard replicas to the same node).
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PeerRecoveryTargetService implements IndexEventListener {
@@ -102,7 +102,7 @@ public class PeerRecoveryTargetService implements IndexEventListener {
     /**
      * The internal actions
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Actions {
         public static final String FILES_INFO = "internal:index/shard/recovery/filesInfo";
@@ -222,7 +222,7 @@ public class PeerRecoveryTargetService implements IndexEventListener {
 
     /**
      * Initiates recovery of the replica. TODO - Need to revisit it with PRRL and later. @see
-     * <a href="https://github.com/opensearch-project/OpenSearch/issues/4502">github issue</a> on it.
+     * <a href="https://github.com/density-project/Density/issues/4502">github issue</a> on it.
      * @param recoveryId recovery id
      * @param preExistingRequest start recovery request
      */
@@ -250,7 +250,7 @@ public class PeerRecoveryTargetService implements IndexEventListener {
                         // ToDo: This is a temporary mitigation to not fail the peer recovery flow in case there is
                         // an exception while downloading segments from remote store. For remote backed indexes, we
                         // plan to revamp this flow so that node-node segment copy will not happen.
-                        // GitHub Issue to track the revamp: https://github.com/opensearch-project/OpenSearch/issues/11331
+                        // GitHub Issue to track the revamp: https://github.com/density-project/Density/issues/11331
                         try {
                             indexShard.syncSegmentsFromRemoteSegmentStore(false, recoveryTarget::setLastAccessTime);
                         } catch (Exception e) {
@@ -488,14 +488,14 @@ public class PeerRecoveryTargetService implements IndexEventListener {
 
                     @Override
                     public void onClusterServiceClose() {
-                        listener.onFailure(new OpenSearchException("cluster service was closed while waiting for mapping updates"));
+                        listener.onFailure(new DensityException("cluster service was closed while waiting for mapping updates"));
                     }
 
                     @Override
                     public void onTimeout(TimeValue timeout) {
                         // note that we do not use a timeout (see comment above)
                         listener.onFailure(
-                            new OpenSearchTimeoutException("timed out waiting for mapping updates " + "(timeout [" + timeout + "])")
+                            new DensityTimeoutException("timed out waiting for mapping updates " + "(timeout [" + timeout + "])")
                         );
                     }
                 });

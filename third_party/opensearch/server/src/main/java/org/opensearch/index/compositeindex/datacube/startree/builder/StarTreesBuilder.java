@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,12 +14,12 @@ import org.apache.lucene.codecs.DocValuesConsumer;
 import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.index.SegmentWriteState;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.StarTreeMapper;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.StarTreeMapper;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Builder to construct star-trees based on multiple star-tree fields.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreesBuilder implements Closeable {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.action.shard;
+package org.density.cluster.action.shard;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.action.shard.ShardStateAction.StartedShardEntry;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.action.shard.ShardStateAction.StartedShardEntry;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,16 +55,16 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithAssignedPrimariesAndReplicas;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithNoShard;
-import static org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithAssignedPrimariesAndReplicas;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithNoShard;
+import static org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class ShardStartedClusterStateTaskExecutorTests extends OpenSearchAllocationTestCase {
+public class ShardStartedClusterStateTaskExecutorTests extends DensityAllocationTestCase {
 
     private ShardStateAction.ShardStartedClusterStateTaskExecutor executor;
 

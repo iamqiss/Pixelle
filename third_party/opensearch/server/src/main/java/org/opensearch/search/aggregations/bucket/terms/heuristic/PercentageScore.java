@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms.heuristic;
+package org.density.search.aggregations.bucket.terms.heuristic;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardException;
+import org.density.DensityParseException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardException;
 
 import java.io.IOException;
 
 /**
  * Percentage score significance heuristic for significant terms agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PercentageScore extends SignificanceHeuristic {
     public static final String NAME = "percentage";
@@ -74,7 +74,7 @@ public class PercentageScore extends SignificanceHeuristic {
     public static SignificanceHeuristic parse(XContentParser parser) throws IOException, QueryShardException {
         // move to the closing bracket
         if (!parser.nextToken().equals(XContentParser.Token.END_OBJECT)) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "failed to parse [percentage] significance heuristic. expected an empty object, " + "but got [{}] instead",
                 parser.currentToken()
             );
@@ -112,7 +112,7 @@ public class PercentageScore extends SignificanceHeuristic {
     /**
      * Builder for a Percentage Score heuristic
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PercentageScoreBuilder implements SignificanceHeuristicBuilder {
 

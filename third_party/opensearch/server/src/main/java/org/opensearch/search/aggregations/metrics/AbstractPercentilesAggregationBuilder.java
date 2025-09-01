@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.TriFunction;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.common.Nullable;
+import org.density.common.TriFunction;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ import java.util.function.Supplier;
  * It provides a set of common fields/functionality for setting the available algorithms (TDigest and HDRHistogram),
  * as well as algorithm-specific settings via a {@link PercentilesConfig} object
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractPercentilesAggregationBuilder<T extends AbstractPercentilesAggregationBuilder<T>> extends
     ValuesSourceAggregationBuilder.LeafOnly<ValuesSource, T> {

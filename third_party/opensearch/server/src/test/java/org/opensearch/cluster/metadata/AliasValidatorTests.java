@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.indices.InvalidAliasNameException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.indices.InvalidAliasNameException;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.startsWith;
 
-public class AliasValidatorTests extends OpenSearchTestCase {
+public class AliasValidatorTests extends DensityTestCase {
     public void testValidatesAliasNames() {
         AliasValidator validator = new AliasValidator();
         Exception e = expectThrows(InvalidAliasNameException.class, () -> validator.validateAliasStandalone(".", null));

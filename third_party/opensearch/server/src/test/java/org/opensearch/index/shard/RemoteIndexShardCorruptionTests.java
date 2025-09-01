@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.test.CorruptionUtils;
+import org.density.core.util.FileSystemUtils;
+import org.density.test.CorruptionUtils;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;

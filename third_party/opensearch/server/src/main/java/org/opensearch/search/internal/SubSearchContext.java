@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.collapse.CollapseContext;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.suggest.SuggestionSearchContext;
+import org.density.common.unit.TimeValue;
+import org.density.index.query.ParsedQuery;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.collapse.CollapseContext;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.suggest.SuggestionSearchContext;
 
 import java.util.List;
 
 /**
  * Context for a sub search phase
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SubSearchContext extends FilteredSearchContext {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.ActionRunnable;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
 
 /**
  * An action listener that wraps another action listener and threading its execution.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ThreadedActionListener<Response> implements ActionListener<Response> {
     private final Logger logger;

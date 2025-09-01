@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.codecs.PostingsFormat;
 import org.apache.lucene.document.FieldType;
@@ -42,23 +42,23 @@ import org.apache.lucene.search.suggest.document.FuzzyCompletionQuery;
 import org.apache.lucene.search.suggest.document.PrefixCompletionQuery;
 import org.apache.lucene.search.suggest.document.RegexCompletionQuery;
 import org.apache.lucene.search.suggest.document.SuggestField;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.NumberType;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.suggest.completion.CompletionSuggester;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextMappings;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.Fuzziness;
+import org.density.common.util.set.Sets;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.NumberType;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.suggest.completion.CompletionSuggester;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.ContextMappings;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -91,7 +91,7 @@ import java.util.Set;
  *  This field can also be extended to add search criteria to suggestions
  *  for query-time filtering and boosting (see {@link ContextMappings}
  *
- *  @opensearch.internal
+ *  @density.internal
  */
 public class CompletionFieldMapper extends ParametrizedFieldMapper {
     public static final String CONTENT_TYPE = "completion";
@@ -109,7 +109,7 @@ public class CompletionFieldMapper extends ParametrizedFieldMapper {
     /**
      * Default parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final FieldType FIELD_TYPE = new FieldType();
@@ -129,7 +129,7 @@ public class CompletionFieldMapper extends ParametrizedFieldMapper {
     /**
      * Parameter fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Fields {
         // Content field names
@@ -145,7 +145,7 @@ public class CompletionFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for {@link CompletionFieldMapper}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -270,7 +270,7 @@ public class CompletionFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for Completion Field Mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class CompletionFieldType extends TermBasedFieldType {
 
@@ -628,7 +628,7 @@ public class CompletionFieldMapper extends ParametrizedFieldMapper {
     /**
      * Metadata for completion input
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class CompletionInputMetadata {
         public final String input;

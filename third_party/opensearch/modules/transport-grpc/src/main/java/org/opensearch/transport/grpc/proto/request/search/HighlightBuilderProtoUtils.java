@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.Highlight;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.Highlight;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
 
 /**
- * Utility class for converting Highlight Protocol Buffers to OpenSearch objects.
+ * Utility class for converting Highlight Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of highlights
- * into their corresponding OpenSearch HighlightBuilder implementations for search result highlighting.
+ * into their corresponding Density HighlightBuilder implementations for search result highlighting.
  */
 public class HighlightBuilderProtoUtils {
 
@@ -23,7 +23,7 @@ public class HighlightBuilderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer Highlight to an OpenSearch HighlightBuilder.
+     * Converts a Protocol Buffer Highlight to an Density HighlightBuilder.
      * Similar to {@link HighlightBuilder#fromXContent(XContentParser)}, this method
      * would parse the Protocol Buffer representation and create a properly configured
      * HighlightBuilder with the appropriate settings.

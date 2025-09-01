@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.NodeAllocationResult;
-import org.opensearch.cluster.routing.allocation.NodeAllocationResult.ShardStoreInfo;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.Decision.Type;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.gateway.AsyncShardFetch.FetchResult;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.NodeGatewayStartedShard;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.NodeAllocationResult;
+import org.density.cluster.routing.allocation.NodeAllocationResult.ShardStoreInfo;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.Decision.Type;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.gateway.AsyncShardFetch.FetchResult;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.NodeGatewayStartedShard;
+import org.density.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,11 +72,11 @@ import java.util.stream.Stream;
  * executes the allocation deciders to chose a copy to assign the primary shard to.
  * <p>
  * Note that the PrimaryShardAllocator does *not* allocate primaries on index creation
- * (see {@link org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator}),
+ * (see {@link org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator}),
  * nor does it allocate primaries when a primary shard failed and there is a valid replica
  * copy that can immediately be promoted to primary, as this takes place in {@link RoutingNodes#failShard}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PrimaryShardAllocator extends BaseGatewayShardAllocator {
     /**

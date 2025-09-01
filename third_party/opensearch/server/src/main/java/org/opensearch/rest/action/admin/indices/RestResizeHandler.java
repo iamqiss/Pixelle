@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.shrink.ResizeAction;
-import org.opensearch.action.admin.indices.shrink.ResizeRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.tasks.LoggingTaskListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.shrink.ResizeAction;
+import org.density.action.admin.indices.shrink.ResizeRequest;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.support.ActiveShardCount;
+import org.density.common.Booleans;
+import org.density.common.logging.DeprecationLogger;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.tasks.LoggingTaskListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.action.support.clustermanager.AcknowledgedRequest.DEFAULT_TASK_EXECUTION_TIMEOUT;
-import static org.opensearch.rest.RestRequest.Method.POST;
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.action.support.clustermanager.AcknowledgedRequest.DEFAULT_TASK_EXECUTION_TIMEOUT;
+import static org.density.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /**
  * Transport handler to resize indices
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class RestResizeHandler extends BaseRestHandler {
     private static final Logger logger = LogManager.getLogger(RestResizeHandler.class);
@@ -77,7 +77,7 @@ public abstract class RestResizeHandler extends BaseRestHandler {
     public final RestChannelConsumer prepareRequest(final RestRequest request, final NodeClient client) throws IOException {
         final ResizeRequest resizeRequest = new ResizeRequest(request.param("target"), request.param("index"));
         resizeRequest.setResizeType(getResizeType());
-        // copy_settings should be removed in OpenSearch 1.0.0; cf. https://github.com/elastic/elasticsearch/issues/28347
+        // copy_settings should be removed in Density 1.0.0; cf. https://github.com/elastic/elasticsearch/issues/28347
         assert Version.CURRENT.major < 8;
         final String rawCopySettings = request.param("copy_settings");
         final Boolean copySettings;
@@ -133,7 +133,7 @@ public abstract class RestResizeHandler extends BaseRestHandler {
     /**
      * Shrink index action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RestShrinkIndexAction extends RestResizeHandler {
 
@@ -157,7 +157,7 @@ public abstract class RestResizeHandler extends BaseRestHandler {
     /**
      * Split index action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RestSplitIndexAction extends RestResizeHandler {
 
@@ -181,7 +181,7 @@ public abstract class RestResizeHandler extends BaseRestHandler {
     /**
      * Clone index action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RestCloneIndexAction extends RestResizeHandler {
 

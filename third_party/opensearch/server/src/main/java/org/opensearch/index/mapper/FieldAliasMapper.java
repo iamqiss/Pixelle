@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -47,7 +47,7 @@ import java.util.Objects;
  * A field alias has no concrete field mappings of its own, but instead points to another field by
  * its path. Once defined, an alias can be used in place of the concrete field name in search requests.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FieldAliasMapper extends Mapper {
     public static final String CONTENT_TYPE = "alias";
@@ -55,7 +55,7 @@ public final class FieldAliasMapper extends Mapper {
     /**
      * Parameter names
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Names {
         public static final String PATH = "path";
@@ -146,7 +146,7 @@ public final class FieldAliasMapper extends Mapper {
     /**
      * The type parser
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser implements Mapper.TypeParser {
         @Override
@@ -164,7 +164,7 @@ public final class FieldAliasMapper extends Mapper {
     /**
      * The bulider for the field alias field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends Mapper.Builder<FieldAliasMapper.Builder> {
         private String name;

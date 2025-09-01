@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.tests.common;
+package org.density.geo.tests.common;
 
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoHashGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.metrics.GeoBounds;
-import org.opensearch.geo.search.aggregations.metrics.GeoBoundsAggregationBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoHashGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
+import org.density.geo.search.aggregations.metrics.GeoBounds;
+import org.density.geo.search.aggregations.metrics.GeoBoundsAggregationBuilder;
 
 public class AggregationBuilders {
     /**

@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.checkpoint;
+package org.density.indices.replication.checkpoint;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ReplicationMode;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.ReplicationTask;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ReplicationMode;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.ReplicationTask;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.IndexNotFoundException;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.node.NodeClosedException;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Abstract base class for publish checkpoint.
  *
- * @opensearch.api
+ * @density.api
  */
 
 public abstract class AbstractPublishCheckpointAction<

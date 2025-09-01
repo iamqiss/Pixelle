@@ -1,51 +1,51 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.TestCapturingListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.gateway.remote.model.RemoteIndexMetadata;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.TestCapturingListener;
+import org.density.core.action.ActionListener;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.NoneCompressor;
+import org.density.gateway.remote.model.RemoteIndexMetadata;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.FORMAT_PARAMS;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.PATH_DELIMITER;
-import static org.opensearch.gateway.remote.model.RemoteIndexMetadata.INDEX;
-import static org.opensearch.gateway.remote.model.RemoteIndexMetadata.INDEX_METADATA_FORMAT;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
+import static org.density.gateway.remote.RemoteClusterStateService.FORMAT_PARAMS;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.PATH_DELIMITER;
+import static org.density.gateway.remote.model.RemoteIndexMetadata.INDEX;
+import static org.density.gateway.remote.model.RemoteIndexMetadata.INDEX_METADATA_FORMAT;
+import static org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
+import static org.density.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -55,7 +55,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RemoteIndexMetadataManagerTests extends OpenSearchTestCase {
+public class RemoteIndexMetadataManagerTests extends DensityTestCase {
 
     private RemoteIndexMetadataManager remoteIndexMetadataManager;
     private BlobStoreRepository blobStoreRepository;

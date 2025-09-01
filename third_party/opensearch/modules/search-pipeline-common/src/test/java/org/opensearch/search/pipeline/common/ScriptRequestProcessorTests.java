@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.SearchScript;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.pipeline.PipelineProcessingContext;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.SearchScript;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.pipeline.PipelineProcessingContext;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class ScriptRequestProcessorTests extends OpenSearchTestCase {
+public class ScriptRequestProcessorTests extends DensityTestCase {
 
     private ScriptService scriptService;
     private Script script;

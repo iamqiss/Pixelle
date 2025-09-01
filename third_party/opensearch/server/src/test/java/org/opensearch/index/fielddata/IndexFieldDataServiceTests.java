@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -43,30 +43,30 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.BooleanFieldMapper;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper.BuilderContext;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.cluster.IndicesClusterStateService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.SetOnce;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.BooleanFieldMapper;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper.BuilderContext;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.indices.IndicesService;
+import org.density.indices.cluster.IndicesClusterStateService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.plugins.Plugin;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.IndexSettingsModule;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -81,7 +81,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class IndexFieldDataServiceTests extends OpenSearchSingleNodeTestCase {
+public class IndexFieldDataServiceTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
@@ -303,7 +303,7 @@ public class IndexFieldDataServiceTests extends OpenSearchSingleNodeTestCase {
         writer.addDocument(doc);
         DirectoryReader open = DirectoryReader.open(writer);
         final boolean wrap = randomBoolean();
-        final IndexReader reader = wrap ? OpenSearchDirectoryReader.wrap(open, new ShardId("test", "_na_", 1)) : open;
+        final IndexReader reader = wrap ? DensityDirectoryReader.wrap(open, new ShardId("test", "_na_", 1)) : open;
         final AtomicInteger onCacheCalled = new AtomicInteger();
         final AtomicInteger onRemovalCalled = new AtomicInteger();
         ifdService.setListener(new IndexFieldDataCache.Listener() {

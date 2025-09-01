@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff;
+package org.density.client.sniff;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.client.Node;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientTestCase;
-import org.opensearch.client.sniff.Sniffer.DefaultScheduler;
-import org.opensearch.client.sniff.Sniffer.Scheduler;
+import org.density.client.Node;
+import org.density.client.RestClient;
+import org.density.client.RestClientTestCase;
+import org.density.client.sniff.Sniffer.DefaultScheduler;
+import org.density.client.sniff.Sniffer.Scheduler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -641,7 +641,7 @@ public class SnifferTests extends RestClientTestCase {
 
                     }
                 });
-                assertThat(thread.getName(), equalTo("opensearch_rest_client_sniffer[T#" + i + "]"));
+                assertThat(thread.getName(), equalTo("density_rest_client_sniffer[T#" + i + "]"));
                 assertThat(thread.isDaemon(), is(true));
             }
         } finally {

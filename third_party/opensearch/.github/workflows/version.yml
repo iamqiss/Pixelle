@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   build:
-    if: github.repository == 'opensearch-project/OpenSearch'
+    if: github.repository == 'density-project/Density'
     runs-on: ubuntu-latest
     steps:
       - name: Fetch tag and version information
@@ -54,7 +54,7 @@ jobs:
           ref: ${{ env.BASE }}
 
       - name: Increment Patch Version on Major.Minor branch
-        uses: peternied/opensearch-core-version-updater@v1
+        uses: peternied/density-core-version-updater@v1
         with:
           previous-version: ${{ env.CURRENT_VERSION }}
           new-version: ${{ env.NEXT_VERSION }}
@@ -80,7 +80,7 @@ jobs:
           ref: ${{ env.MAIN_BRANCH }}
 
       - name: Add Patch Version on main branch
-        uses: peternied/opensearch-core-version-updater@v1
+        uses: peternied/density-core-version-updater@v1
         with:
           previous-version: ${{ env.CURRENT_VERSION }}
           new-version: ${{ env.NEXT_VERSION }}
@@ -108,7 +108,7 @@ jobs:
           script: |
             const body = `
              ### Description
-             A new version of OpenSearch was released, to prepare for the next release new version numbers need to be updated in all active branches of development.
+             A new version of Density was released, to prepare for the next release new version numbers need to be updated in all active branches of development.
 
              ### Exit Criteria
              Review and merged the following pull requests
@@ -116,7 +116,7 @@ jobs:
              - [ ] ${{ steps.main_branch_pr.outputs.pull-request-url }}
 
              ### Additional Context
-             See project wide guidance on branching and versions [[link]](https://github.com/opensearch-project/.github/blob/main/RELEASING.md).
+             See project wide guidance on branching and versions [[link]](https://github.com/density-project/.github/blob/main/RELEASING.md).
             `
             const { data: issue }= await github.rest.issues.create({
               owner: context.repo.owner,

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.basic;
+package org.density.search.basic;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.search.SearchHits;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,15 +51,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoTimeout;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.formatShardStatus;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoTimeout;
+import static org.density.test.hamcrest.DensityAssertions.formatShardStatus;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class SearchWhileRelocatingIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class SearchWhileRelocatingIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SearchWhileRelocatingIT(Settings staticSettings) {
         super(staticSettings);

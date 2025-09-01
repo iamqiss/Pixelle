@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,37 +53,37 @@ import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitArray;
-import org.opensearch.common.util.BitMixer;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.common.util.ObjectArray;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.DensityStatusException;
+import org.density.common.Nullable;
+import org.density.common.hash.MurmurHash3;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitArray;
+import org.density.common.util.BitMixer;
+import org.density.common.util.LongArray;
+import org.density.common.util.ObjectArray;
+import org.density.core.rest.RestStatus;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.search.SearchService.CARDINALITY_AGGREGATION_PRUNING_THRESHOLD;
+import static org.density.search.SearchService.CARDINALITY_AGGREGATION_PRUNING_THRESHOLD;
 
 /**
  * An aggregator that computes approximate counts of unique values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue {
 
@@ -236,7 +236,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
             pruningCollector.postCollect();
             Releasables.close(pruningCollector);
         } catch (Exception e) {
-            throw new OpenSearchStatusException(
+            throw new DensityStatusException(
                 "Failed when performing dynamic pruning in cardinality aggregation. You can set cluster setting ["
                     + CARDINALITY_AGGREGATION_PRUNING_THRESHOLD.getKey()
                     + "] to 0 to disable.",
@@ -326,7 +326,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
     /**
      * Collector for the cardinality agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class Collector extends LeafBucketCollector implements Releasable {
 
@@ -465,7 +465,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
     /**
      * Empty Collector for the Cardinality agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class EmptyCollector extends Collector {
 
@@ -488,7 +488,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
     /**
      * Direct Collector for the cardinality agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class DirectCollector extends Collector {
 
@@ -525,7 +525,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
     /**
      * Ordinals Collector for the cardinality agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class OrdinalsCollector extends Collector {
 
@@ -618,7 +618,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
     /**
      * Representation of a list of hash values. There might be dups and there is no guarantee on the order.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     abstract static class MurmurHash3Values {
 
@@ -652,7 +652,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
         /**
          * Long hash value
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class Long extends MurmurHash3Values {
 
@@ -681,7 +681,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
         /**
          * Double hash value
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class Double extends MurmurHash3Values {
 
@@ -710,7 +710,7 @@ public class CardinalityAggregator extends NumericMetricsAggregator.SingleValue 
         /**
          * Byte hash value
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class Bytes extends MurmurHash3Values {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.core.index.Index;
+import org.density.core.index.Index;
 
 /**
  * Actions that can be executed on an Index Component
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface IndexComponent {
 

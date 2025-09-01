@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.core.http.policy.HttpPipelinePolicy;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.common.policy.RequestRetryPolicy;
 import com.microsoft.aad.msal4j.MsalServiceException;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.settings.SettingsModule;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 
 import java.io.IOException;
@@ -68,7 +68,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AzureStorageServiceTests extends OpenSearchTestCase {
+public class AzureStorageServiceTests extends DensityTestCase {
     @AfterClass
     public static void shutdownSchedulers() {
         HttpResources.disposeLoopsAndConnections();

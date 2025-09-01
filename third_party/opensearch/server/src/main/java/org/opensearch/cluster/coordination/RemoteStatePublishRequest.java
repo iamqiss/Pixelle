@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
+import org.density.cluster.ClusterState;
+import org.density.gateway.remote.ClusterMetadataManifest;
 
 import java.util.Objects;
 
 /**
  * PublishRequest created by downloading the accepted {@link ClusterState} from Remote Store, using  the published {@link ClusterMetadataManifest}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStatePublishRequest extends PublishRequest {
     private final ClusterMetadataManifest manifest;

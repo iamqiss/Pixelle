@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -29,20 +29,20 @@
  */
 
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.opensearch.gradle.Architecture
-import org.opensearch.gradle.OS
-import org.opensearch.gradle.info.BuildParams
+import org.density.gradle.Architecture
+import org.density.gradle.OS
+import org.density.gradle.info.BuildParams
 
-apply plugin: 'opensearch.test-with-dependencies'
-apply plugin: 'opensearch.jdk-download'
-apply plugin: 'opensearch.yaml-rest-test'
-apply plugin: 'opensearch.java-rest-test'
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.test-with-dependencies'
+apply plugin: 'density.jdk-download'
+apply plugin: 'density.yaml-rest-test'
+apply plugin: 'density.java-rest-test'
+apply plugin: 'density.internal-cluster-test'
 apply from: "$rootDir/gradle/fips.gradle"
 
-opensearchplugin {
+densityplugin {
   description = 'The Reindex module adds APIs to reindex from one index to another or update documents in place.'
-  classname = 'org.opensearch.index.reindex.ReindexModulePlugin'
+  classname = 'org.density.index.reindex.ReindexModulePlugin'
   hasClientJar = true
 }
 
@@ -60,12 +60,12 @@ test {
    * same JVM randomize processors and will step on each other if we allow them to
    * set the number of available processors as it's set-once in Netty.
    */
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 dependencies {
   api project(":client:rest")
-  api project(":libs:opensearch-ssl-config")
+  api project(":libs:density-ssl-config")
   // for http - testing reindex from remote
   testImplementation project(':modules:transport-netty4')
   testFipsRuntimeOnly "org.bouncycastle:bc-fips:${versions.bouncycastle_jce}"

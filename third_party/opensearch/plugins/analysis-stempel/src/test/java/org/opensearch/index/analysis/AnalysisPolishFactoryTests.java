@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
 import org.apache.lucene.tests.analysis.MockTokenizer;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.pl.PolishStemTokenFilterFactory;
-import org.opensearch.indices.analysis.AnalysisFactoryTestCase;
-import org.opensearch.plugin.analysis.stempel.AnalysisStempelPlugin;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.pl.PolishStemTokenFilterFactory;
+import org.density.indices.analysis.AnalysisFactoryTestCase;
+import org.density.plugin.analysis.stempel.AnalysisStempelPlugin;
 
 import java.io.IOException;
 import java.util.HashMap;

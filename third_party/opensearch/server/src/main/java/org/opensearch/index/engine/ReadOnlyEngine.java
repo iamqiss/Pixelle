@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
@@ -40,24 +40,24 @@ import org.apache.lucene.index.SoftDeletesDirectoryReaderWrapper;
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.Lock;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.DefaultTranslogDeletionPolicy;
-import org.opensearch.index.translog.NoOpTranslogManager;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogOperationHelper;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.transport.Transports;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.util.io.IOUtils;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.DefaultTranslogDeletionPolicy;
+import org.density.index.translog.NoOpTranslogManager;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogConfig;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogOperationHelper;
+import org.density.index.translog.TranslogStats;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.transport.Transports;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -69,7 +69,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
+import static org.density.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
 
 /**
  * A basic read-only engine that allows switching a shard to be true read-only temporarily or permanently.
@@ -78,7 +78,7 @@ import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
  *
  * @see #ReadOnlyEngine(EngineConfig, SeqNoStats, TranslogStats, boolean, Function, boolean)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReadOnlyEngine extends Engine {
 
@@ -88,7 +88,7 @@ public class ReadOnlyEngine extends Engine {
      */
     private final SegmentInfos lastCommittedSegmentInfos;
     private final SeqNoStats seqNoStats;
-    private final OpenSearchReaderManager readerManager;
+    private final DensityReaderManager readerManager;
     private final IndexCommit indexCommit;
     private final Lock indexWriterLock;
     private final SafeCommitInfo safeCommitInfo;
@@ -124,7 +124,7 @@ public class ReadOnlyEngine extends Engine {
         try {
             Store store = config.getStore();
             store.incRef();
-            OpenSearchDirectoryReader reader = null;
+            DensityDirectoryReader reader = null;
             Directory directory = store.directory();
             Lock indexWriterLock = null;
             boolean success = false;
@@ -140,7 +140,7 @@ public class ReadOnlyEngine extends Engine {
                 this.seqNoStats = seqNoStats;
                 this.indexCommit = Lucene.getIndexCommit(lastCommittedSegmentInfos, directory);
                 reader = wrapReader(open(indexCommit), readerWrapperFunction);
-                readerManager = new OpenSearchReaderManager(reader);
+                readerManager = new DensityReaderManager(reader);
                 assert translogStats != null || obtainLock : "mutiple translogs instances should not be opened at the same time";
                 this.translogStats = translogStats != null ? translogStats : translogStats(config, lastCommittedSegmentInfos);
                 this.indexWriterLock = indexWriterLock;
@@ -206,12 +206,12 @@ public class ReadOnlyEngine extends Engine {
         // reopened as an internal engine, which would be the path to fix the issue.
     }
 
-    protected final OpenSearchDirectoryReader wrapReader(
+    protected final DensityDirectoryReader wrapReader(
         DirectoryReader reader,
         Function<DirectoryReader, DirectoryReader> readerWrapperFunction
     ) throws IOException {
         reader = readerWrapperFunction.apply(reader);
-        return OpenSearchDirectoryReader.wrap(reader, engineConfig.getShardId());
+        return DensityDirectoryReader.wrap(reader, engineConfig.getShardId());
     }
 
     protected DirectoryReader open(IndexCommit commit) throws IOException {
@@ -277,7 +277,7 @@ public class ReadOnlyEngine extends Engine {
     }
 
     @Override
-    protected ReferenceManager<OpenSearchDirectoryReader> getReferenceManager(SearcherScope scope) {
+    protected ReferenceManager<DensityDirectoryReader> getReferenceManager(SearcherScope scope) {
         return readerManager;
     }
 

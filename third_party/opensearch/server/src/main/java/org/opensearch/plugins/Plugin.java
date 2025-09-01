@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.bootstrap.BootstrapCheck;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.SettingUpgrader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.shard.IndexSettingProvider;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ExecutorBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.bootstrap.BootstrapCheck;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Module;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.SettingUpgrader;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexModule;
+import org.density.index.shard.IndexSettingProvider;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.threadpool.ExecutorBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -73,7 +73,7 @@ import java.util.function.UnaryOperator;
 
 /**
  * An extension point allowing to plug in custom functionality. This class has a number of extension points that are available to all
- * plugins, in addition you can implement any of the following interfaces to further customize OpenSearch:
+ * plugins, in addition you can implement any of the following interfaces to further customize Density:
  * <ul>
  * <li>{@link ActionPlugin}
  * <li>{@link AnalysisPlugin}
@@ -88,7 +88,7 @@ import java.util.function.UnaryOperator;
  * <li>{@link ReloadablePlugin}
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Plugin implements Closeable {

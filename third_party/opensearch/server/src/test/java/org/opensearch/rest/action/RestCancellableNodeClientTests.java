@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksAction;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.PlainListenableActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksAction;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.PlainListenableActionFuture;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.tasks.TaskId;
+import org.density.http.HttpChannel;
+import org.density.http.HttpResponse;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
 import org.junit.After;
 import org.junit.Before;
 
@@ -68,7 +68,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class RestCancellableNodeClientTests extends OpenSearchTestCase {
+public class RestCancellableNodeClientTests extends DensityTestCase {
 
     private ThreadPool threadPool;
 

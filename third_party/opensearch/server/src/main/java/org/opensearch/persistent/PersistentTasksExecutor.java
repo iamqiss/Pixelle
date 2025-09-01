@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Assignment;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.core.tasks.TaskId;
+import org.density.persistent.PersistentTasksCustomMetadata.Assignment;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
 
 import java.util.Map;
 import java.util.function.Predicate;
@@ -46,7 +46,7 @@ import java.util.function.Predicate;
  * An executor of tasks that can survive restart of requesting or executing node.
  * These tasks are using cluster state rather than only transport service to send requests and responses.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PersistentTasksExecutor<Params extends PersistentTaskParams> {
 

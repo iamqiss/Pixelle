@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -45,47 +45,47 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicClassicHttpResponse;
 import org.apache.hc.core5.http.message.RequestLine;
 import org.apache.hc.core5.http.message.StatusLine;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.client.core.MainRequest;
-import org.opensearch.client.core.MainResponse;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.cbor.CborXContent;
-import org.opensearch.common.xcontent.smile.SmileXContent;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.rankeval.DiscountedCumulativeGain;
-import org.opensearch.index.rankeval.EvaluationMetric;
-import org.opensearch.index.rankeval.ExpectedReciprocalRank;
-import org.opensearch.index.rankeval.MeanReciprocalRank;
-import org.opensearch.index.rankeval.MetricDetail;
-import org.opensearch.index.rankeval.PrecisionAtK;
-import org.opensearch.index.rankeval.RecallAtK;
-import org.opensearch.join.aggregations.ChildrenAggregationBuilder;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.yaml.restspec.ClientYamlSuiteRestApi;
-import org.opensearch.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
+import org.density.DensityException;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.ShardSearchFailure;
+import org.density.client.core.MainRequest;
+import org.density.client.core.MainResponse;
+import org.density.common.CheckedFunction;
+import org.density.common.collect.Tuple;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.cbor.CborXContent;
+import org.density.common.xcontent.smile.SmileXContent;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.rankeval.DiscountedCumulativeGain;
+import org.density.index.rankeval.EvaluationMetric;
+import org.density.index.rankeval.ExpectedReciprocalRank;
+import org.density.index.rankeval.MeanReciprocalRank;
+import org.density.index.rankeval.MetricDetail;
+import org.density.index.rankeval.PrecisionAtK;
+import org.density.index.rankeval.RecallAtK;
+import org.density.join.aggregations.ChildrenAggregationBuilder;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
+import org.density.search.suggest.Suggest;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.yaml.restspec.ClientYamlSuiteRestApi;
+import org.density.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 
@@ -107,7 +107,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -117,7 +117,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RestHighLevelClientTests extends OpenSearchTestCase {
+public class RestHighLevelClientTests extends DensityTestCase {
 
     private static final String SUBMIT_TASK_PREFIX = "submit_";
     private static final String SUBMIT_TASK_SUFFIX = "_task";
@@ -309,7 +309,7 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
                 IllegalStateException.class,
                 () -> restHighLevelClient.parseEntity(new StringEntity("", (ContentType) null), null)
             );
-            assertEquals("OpenSearch didn't return the [Content-Type] header, unable to parse response body", ise.getMessage());
+            assertEquals("Density didn't return the [Content-Type] header, unable to parse response body", ise.getMessage());
         }
         {
             StringEntity entity = new StringEntity("", ContentType.APPLICATION_SVG_XML);
@@ -359,7 +359,7 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             ClassicHttpResponse httpResponse = new BasicClassicHttpResponse(restStatus.getStatus(), restStatus.name());
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
-            OpenSearchException openSearchException = restHighLevelClient.parseResponseException(responseException);
+            DensityException openSearchException = restHighLevelClient.parseResponseException(responseException);
             assertEquals(responseException.getMessage(), openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getCause());
@@ -375,8 +375,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             );
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
-            OpenSearchException openSearchException = restHighLevelClient.parseResponseException(responseException);
-            assertEquals("OpenSearch exception [type=exception, reason=test error message]", openSearchException.getMessage());
+            DensityException openSearchException = restHighLevelClient.parseResponseException(responseException);
+            assertEquals("Density exception [type=exception, reason=test error message]", openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getSuppressed()[0]);
         }
@@ -386,7 +386,7 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             httpResponse.setEntity(new StringEntity("{\"error\":", ContentType.APPLICATION_JSON));
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
-            OpenSearchException openSearchException = restHighLevelClient.parseResponseException(responseException);
+            DensityException openSearchException = restHighLevelClient.parseResponseException(responseException);
             assertEquals("Unable to parse response body", openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getCause());
@@ -398,7 +398,7 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             httpResponse.setEntity(new StringEntity("{\"status\":" + restStatus.getStatus() + "}", ContentType.APPLICATION_JSON));
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
-            OpenSearchException openSearchException = restHighLevelClient.parseResponseException(responseException);
+            DensityException openSearchException = restHighLevelClient.parseResponseException(responseException);
             assertEquals("Unable to parse response body", openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getCause());
@@ -450,8 +450,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(
                 mainRequest,
                 requestConverter,
@@ -476,8 +476,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(
                 mainRequest,
                 requestConverter,
@@ -486,7 +486,7 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
                 Collections.emptySet()
             )
         );
-        assertEquals("OpenSearch exception [type=exception, reason=test error message]", openSearchException.getMessage());
+        assertEquals("Density exception [type=exception, reason=test error message]", openSearchException.getMessage());
         assertEquals(restStatus, openSearchException.status());
         assertSame(responseException, openSearchException.getSuppressed()[0]);
     }
@@ -500,8 +500,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(
                 mainRequest,
                 requestConverter,
@@ -525,8 +525,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(
                 mainRequest,
                 requestConverter,
@@ -568,8 +568,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(mainRequest, requestConverter, RequestOptions.DEFAULT, response -> {
                 throw new IllegalStateException();
             }, Collections.singleton(404))
@@ -587,15 +587,15 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response mockResponse = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(mockResponse);
         when(restClient.performRequest(any(Request.class))).thenThrow(responseException);
-        OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> restHighLevelClient.performRequest(mainRequest, requestConverter, RequestOptions.DEFAULT, response -> {
                 throw new IllegalStateException();
             }, Collections.singleton(404))
         );
         assertEquals(RestStatus.NOT_FOUND, openSearchException.status());
         assertSame(responseException, openSearchException.getSuppressed()[0]);
-        assertEquals("OpenSearch exception [type=exception, reason=test error message]", openSearchException.getMessage());
+        assertEquals("Density exception [type=exception, reason=test error message]", openSearchException.getMessage());
     }
 
     public void testWrapResponseListenerOnSuccess() {
@@ -661,8 +661,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(response);
         responseListener.onFailure(responseException);
-        assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-        OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
+        assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+        DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
         assertEquals(responseException.getMessage(), openSearchException.getMessage());
         assertEquals(restStatus, openSearchException.status());
         assertSame(responseException, openSearchException.getCause());
@@ -683,9 +683,9 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(response);
         responseListener.onFailure(responseException);
-        assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-        OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
-        assertEquals("OpenSearch exception [type=exception, reason=test error message]", openSearchException.getMessage());
+        assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+        DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
+        assertEquals("Density exception [type=exception, reason=test error message]", openSearchException.getMessage());
         assertEquals(restStatus, openSearchException.status());
         assertSame(responseException, openSearchException.getSuppressed()[0]);
     }
@@ -704,8 +704,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
             responseListener.onFailure(responseException);
-            assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-            OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
+            assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+            DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
             assertEquals("Unable to parse response body", openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getCause());
@@ -724,8 +724,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
             Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
             ResponseException responseException = new ResponseException(response);
             responseListener.onFailure(responseException);
-            assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-            OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
+            assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+            DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
             assertEquals("Unable to parse response body", openSearchException.getMessage());
             assertEquals(restStatus, openSearchException.status());
             assertSame(responseException, openSearchException.getCause());
@@ -762,8 +762,8 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(response);
         responseListener.onFailure(responseException);
-        assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-        OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
+        assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+        DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
         assertEquals(RestStatus.NOT_FOUND, openSearchException.status());
         assertSame(responseException, openSearchException.getCause());
         assertEquals(responseException.getMessage(), openSearchException.getMessage());
@@ -783,11 +783,11 @@ public class RestHighLevelClientTests extends OpenSearchTestCase {
         Response response = new Response(REQUEST_LINE, new HttpHost("localhost", 9200), httpResponse);
         ResponseException responseException = new ResponseException(response);
         responseListener.onFailure(responseException);
-        assertThat(trackingActionListener.exception.get(), instanceOf(OpenSearchException.class));
-        OpenSearchException openSearchException = (OpenSearchException) trackingActionListener.exception.get();
+        assertThat(trackingActionListener.exception.get(), instanceOf(DensityException.class));
+        DensityException openSearchException = (DensityException) trackingActionListener.exception.get();
         assertEquals(RestStatus.NOT_FOUND, openSearchException.status());
         assertSame(responseException, openSearchException.getSuppressed()[0]);
-        assertEquals("OpenSearch exception [type=exception, reason=test error message]", openSearchException.getMessage());
+        assertEquals("Density exception [type=exception, reason=test error message]", openSearchException.getMessage());
     }
 
     public void testDefaultNamedXContents() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.indices.breaker;
+package org.density.core.indices.breaker;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.core.common.breaker.CircuitBreaker;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.core.common.breaker.CircuitBreaker;
 
 /**
  * Interface for Circuit Breaker services, which provide breakers to classes
  * that load field data.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class CircuitBreakerService extends AbstractLifecycleComponent {

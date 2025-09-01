@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ResourceNotFoundException;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_NONE_EXISTED;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.clusterState;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_NONE_EXISTED;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.clusterState;
 import static org.mockito.Mockito.mock;
 
-public class TransportGetWorkloadGroupActionTests extends OpenSearchTestCase {
+public class TransportGetWorkloadGroupActionTests extends DensityTestCase {
 
     /**
      * Test case for ClusterManagerOperation function

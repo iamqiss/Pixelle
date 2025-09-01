@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.index.MultiReader;
 import org.apache.lucene.index.Term;
@@ -43,27 +43,27 @@ import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.approximate.ApproximateMatchAllQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.approximate.ApproximateMatchAllQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 
-import static org.opensearch.index.mapper.FieldTypeTestCase.MOCK_QSC_ENABLE_INDEX_DOC_VALUES;
+import static org.density.index.mapper.FieldTypeTestCase.MOCK_QSC_ENABLE_INDEX_DOC_VALUES;
 
-public class NestedHelperTests extends OpenSearchSingleNodeTestCase {
+public class NestedHelperTests extends DensitySingleNodeTestCase {
 
     IndexService indexService;
     MapperService mapperService;
@@ -327,7 +327,7 @@ public class NestedHelperTests extends OpenSearchSingleNodeTestCase {
     public void testNested() throws IOException {
         QueryShardContext context = indexService.newQueryShardContext(0, new IndexSearcher(new MultiReader()), () -> 0, null);
         NestedQueryBuilder queryBuilder = new NestedQueryBuilder("nested1", new MatchAllQueryBuilder(), ScoreMode.Avg);
-        OpenSearchToParentBlockJoinQuery query = (OpenSearchToParentBlockJoinQuery) queryBuilder.toQuery(context);
+        DensityToParentBlockJoinQuery query = (DensityToParentBlockJoinQuery) queryBuilder.toQuery(context);
 
         Query expectedChildQuery = new BooleanQuery.Builder().add(
             new ApproximateScoreQuery(Queries.newMatchAllQuery(), new ApproximateMatchAllQuery()),
@@ -345,7 +345,7 @@ public class NestedHelperTests extends OpenSearchSingleNodeTestCase {
         assertTrue(new NestedHelper(mapperService).mightMatchNonNestedDocs(query, "nested_missing"));
 
         queryBuilder = new NestedQueryBuilder("nested1", new TermQueryBuilder("nested1.foo", "bar"), ScoreMode.Avg);
-        query = (OpenSearchToParentBlockJoinQuery) queryBuilder.toQuery(context);
+        query = (DensityToParentBlockJoinQuery) queryBuilder.toQuery(context);
 
         // this time we do not add a filter since the inner query only matches inner docs
         expectedChildQuery = new ConstantScoreQuery(new TermQuery(new Term("nested1.foo", "bar")));
@@ -358,7 +358,7 @@ public class NestedHelperTests extends OpenSearchSingleNodeTestCase {
         assertTrue(new NestedHelper(mapperService).mightMatchNonNestedDocs(query, "nested_missing"));
 
         queryBuilder = new NestedQueryBuilder("nested2", new TermQueryBuilder("nested2.foo", "bar"), ScoreMode.Avg);
-        query = (OpenSearchToParentBlockJoinQuery) queryBuilder.toQuery(context);
+        query = (DensityToParentBlockJoinQuery) queryBuilder.toQuery(context);
 
         // we need to add the filter again because of include_in_parent
         expectedChildQuery = new BooleanQuery.Builder().add(
@@ -374,7 +374,7 @@ public class NestedHelperTests extends OpenSearchSingleNodeTestCase {
         assertTrue(new NestedHelper(mapperService).mightMatchNonNestedDocs(query, "nested_missing"));
 
         queryBuilder = new NestedQueryBuilder("nested3", new TermQueryBuilder("nested3.foo", "bar"), ScoreMode.Avg);
-        query = (OpenSearchToParentBlockJoinQuery) queryBuilder.toQuery(context);
+        query = (DensityToParentBlockJoinQuery) queryBuilder.toQuery(context);
 
         // we need to add the filter again because of include_in_root
         expectedChildQuery = new BooleanQuery.Builder().add(

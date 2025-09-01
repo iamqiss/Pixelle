@@ -1,7 +1,7 @@
 {
   "delete_by_query_rethrottle":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/document-apis/delete-by-query/",
+      "url":"https://density.org/docs/latest/api-reference/document-apis/delete-by-query/",
       "description":"Changes the number of requests per second for a particular Delete By Query operation."
     },
     "stability":"stable",

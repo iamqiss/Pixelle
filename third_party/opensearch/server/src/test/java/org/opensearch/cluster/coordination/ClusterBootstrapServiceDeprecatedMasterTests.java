@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.discovery.DiscoveryModule;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransport;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -53,11 +53,11 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_MASTER_NODES_SETTING;
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.UNCONFIGURED_BOOTSTRAP_TIMEOUT_SETTING;
-import static org.opensearch.common.settings.Settings.builder;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_MASTER_NODES_SETTING;
+import static org.density.cluster.coordination.ClusterBootstrapService.UNCONFIGURED_BOOTSTRAP_TIMEOUT_SETTING;
+import static org.density.common.settings.Settings.builder;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -71,13 +71,13 @@ import static org.hamcrest.Matchers.not;
  * to validate ClusterBootstrapService works correctly with the deprecated node role and cluster setting.
  * Remove the class after the deprecated node role and cluster setting is removed.
  */
-public class ClusterBootstrapServiceDeprecatedMasterTests extends OpenSearchTestCase {
+public class ClusterBootstrapServiceDeprecatedMasterTests extends DensityTestCase {
 
     private DiscoveryNode localNode, otherNode1, otherNode2;
     private DeterministicTaskQueue deterministicTaskQueue;
     private TransportService transportService;
     private static final String CLUSTER_SETTING_DEPRECATED_MESSAGE =
-        "[cluster.initial_master_nodes] setting was deprecated in OpenSearch and will be removed in a future release! "
+        "[cluster.initial_master_nodes] setting was deprecated in Density and will be removed in a future release! "
             + "See the breaking changes documentation for the next major version.";
 
     @Before

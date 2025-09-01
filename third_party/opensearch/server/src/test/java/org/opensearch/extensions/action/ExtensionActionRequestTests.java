@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.action;
+package org.density.extensions.action;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.test.DensityTestCase;
 
-public class ExtensionActionRequestTests extends OpenSearchTestCase {
+public class ExtensionActionRequestTests extends DensityTestCase {
 
     public void testExtensionActionRequest() throws Exception {
         String expectedAction = "test-action";

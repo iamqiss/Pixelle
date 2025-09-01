@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.upgrade.post;
+package org.density.action.admin.indices.upgrade.post;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.common.collect.Tuple;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Request for an update index settings action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpgradeSettingsRequest extends AcknowledgedRequest<UpgradeSettingsRequest> {
 
@@ -63,7 +63,7 @@ public class UpgradeSettingsRequest extends AcknowledgedRequest<UpgradeSettingsR
     /**
      * Constructs a new request to update minimum compatible version settings for one or more indices
      *
-     * @param versions a map from index name to opensearch version, oldest lucene segment version tuple
+     * @param versions a map from index name to density version, oldest lucene segment version tuple
      */
     public UpgradeSettingsRequest(Map<String, Tuple<Version, String>> versions) {
         this.versions = versions;

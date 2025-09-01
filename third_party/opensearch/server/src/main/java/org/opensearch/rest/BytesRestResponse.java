@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.Supplier;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * REST response in bytes
  *
- * @opensearch.api
+ * @density.api
  */
 public class BytesRestResponse extends RestResponse {
 
@@ -112,8 +112,8 @@ public class BytesRestResponse extends RestResponse {
     public BytesRestResponse(RestChannel channel, RestStatus status, Exception e) throws IOException {
         ToXContent.Params params = paramsFromRequest(channel.request());
         if (params.paramAsBoolean(
-            OpenSearchException.REST_EXCEPTION_SKIP_STACK_TRACE,
-            OpenSearchException.REST_EXCEPTION_SKIP_STACK_TRACE_DEFAULT
+            DensityException.REST_EXCEPTION_SKIP_STACK_TRACE,
+            DensityException.REST_EXCEPTION_SKIP_STACK_TRACE_DEFAULT
         ) && e != null) {
             // log exception only if it is not returned in the response
             Supplier<?> messageSupplier = () -> new ParameterizedMessage(
@@ -133,8 +133,8 @@ public class BytesRestResponse extends RestResponse {
             this.content = BytesReference.bytes(builder);
             this.contentType = builder.contentType().mediaType();
         }
-        if (e instanceof OpenSearchException) {
-            copyHeaders(((OpenSearchException) e));
+        if (e instanceof DensityException) {
+            copyHeaders(((DensityException) e));
         }
     }
 
@@ -155,9 +155,9 @@ public class BytesRestResponse extends RestResponse {
 
     private ToXContent.Params paramsFromRequest(RestRequest restRequest) {
         ToXContent.Params params = restRequest;
-        if (params.paramAsBoolean("error_trace", OpenSearchException.REST_EXCEPTION_SKIP_STACK_TRACE_DEFAULT == false)
+        if (params.paramAsBoolean("error_trace", DensityException.REST_EXCEPTION_SKIP_STACK_TRACE_DEFAULT == false)
             && false == skipStackTrace()) {
-            params = new ToXContent.DelegatingMapParams(singletonMap(OpenSearchException.REST_EXCEPTION_SKIP_STACK_TRACE, "false"), params);
+            params = new ToXContent.DelegatingMapParams(singletonMap(DensityException.REST_EXCEPTION_SKIP_STACK_TRACE, "false"), params);
         }
         return params;
     }
@@ -169,7 +169,7 @@ public class BytesRestResponse extends RestResponse {
     private void build(XContentBuilder builder, ToXContent.Params params, RestStatus status, boolean detailedErrorsEnabled, Exception e)
         throws IOException {
         builder.startObject();
-        OpenSearchException.generateFailureXContent(builder, params, e, detailedErrorsEnabled);
+        DensityException.generateFailureXContent(builder, params, e, detailedErrorsEnabled);
         builder.field(STATUS, status.getStatus());
         builder.endObject();
     }
@@ -181,11 +181,11 @@ public class BytesRestResponse extends RestResponse {
         );
     }
 
-    public static OpenSearchStatusException errorFromXContent(XContentParser parser) throws IOException {
+    public static DensityStatusException errorFromXContent(XContentParser parser) throws IOException {
         XContentParser.Token token = parser.nextToken();
         ensureExpectedToken(XContentParser.Token.START_OBJECT, token, parser);
 
-        OpenSearchException exception = null;
+        DensityException exception = null;
         RestStatus status = null;
 
         String currentFieldName = null;
@@ -199,15 +199,15 @@ public class BytesRestResponse extends RestResponse {
                     status = RestStatus.fromCode(parser.intValue());
                 }
             } else {
-                exception = OpenSearchException.failureFromXContent(parser);
+                exception = DensityException.failureFromXContent(parser);
             }
         }
 
         if (exception == null) {
-            throw new IllegalStateException("Failed to parse opensearch status exception: no exception was found");
+            throw new IllegalStateException("Failed to parse density status exception: no exception was found");
         }
 
-        OpenSearchStatusException result = new OpenSearchStatusException(exception.getMessage(), status, exception.getCause());
+        DensityStatusException result = new DensityStatusException(exception.getMessage(), status, exception.getCause());
         for (String header : exception.getHeaderKeys()) {
             result.addHeader(header, exception.getHeader(header));
         }

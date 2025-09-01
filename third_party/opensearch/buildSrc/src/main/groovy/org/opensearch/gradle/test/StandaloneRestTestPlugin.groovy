@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,16 +28,16 @@
  */
 
 
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import groovy.transform.CompileStatic
-import org.opensearch.gradle.OpenSearchJavaPlugin
-import org.opensearch.gradle.ExportOpenSearchBuildResourcesTask
-import org.opensearch.gradle.RepositoriesSetupPlugin
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin
-import org.opensearch.gradle.precommit.PrecommitTasks
-import org.opensearch.gradle.testclusters.TestClustersPlugin
+import org.density.gradle.DensityJavaPlugin
+import org.density.gradle.ExportDensityBuildResourcesTask
+import org.density.gradle.RepositoriesSetupPlugin
+import org.density.gradle.info.BuildParams
+import org.density.gradle.info.GlobalBuildInfoPlugin
+import org.density.gradle.precommit.PrecommitTasks
+import org.density.gradle.testclusters.TestClustersPlugin
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -52,7 +52,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel
 import org.gradle.plugins.ide.idea.model.IdeaModel
 
 /**
- * Configures the build to compile tests against OpenSearch's test framework
+ * Configures the build to compile tests against Density's test framework
  * and run REST tests. Use BuildPlugin if you want to build main code as well
  * as tests.
  */
@@ -61,9 +61,9 @@ class StandaloneRestTestPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        if (project.pluginManager.hasPlugin('opensearch.build')) {
-            throw new InvalidUserDataException('opensearch.standalone-test '
-                + 'opensearch.standalone-rest-test, and opensearch.build '
+        if (project.pluginManager.hasPlugin('density.build')) {
+            throw new InvalidUserDataException('density.standalone-test '
+                + 'density.standalone-rest-test, and density.build '
                 + 'are mutually exclusive')
         }
         project.rootProject.pluginManager.apply(GlobalBuildInfoPlugin)
@@ -72,9 +72,9 @@ class StandaloneRestTestPlugin implements Plugin<Project> {
         project.pluginManager.apply(RepositoriesSetupPlugin)
         project.pluginManager.apply(RestTestBasePlugin)
 
-        project.getTasks().register("buildResources", ExportOpenSearchBuildResourcesTask)
-        OpenSearchJavaPlugin.configureInputNormalization(project)
-        OpenSearchJavaPlugin.configureCompile(project)
+        project.getTasks().register("buildResources", ExportDensityBuildResourcesTask)
+        DensityJavaPlugin.configureInputNormalization(project)
+        DensityJavaPlugin.configureCompile(project)
 
 
         project.extensions.getByType(JavaPluginExtension).sourceCompatibility = BuildParams.minimumRuntimeVersion

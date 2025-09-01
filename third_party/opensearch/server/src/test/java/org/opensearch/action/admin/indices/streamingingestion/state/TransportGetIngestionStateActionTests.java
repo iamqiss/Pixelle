@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.streamingingestion.state;
+package org.density.action.admin.indices.streamingingestion.state;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.indices.IndicesService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +42,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
+public class TransportGetIngestionStateActionTests extends DensityTestCase {
 
     private TestThreadPool threadPool;
     private ClusterService clusterService;
@@ -85,7 +85,7 @@ public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
         request.setShards(new int[] { 0, 1 });
         ClusterState clusterState = mock(ClusterState.class);
         ShardsIterator shardsIterator = mock(ShardsIterator.class);
-        when(clusterState.routingTable()).thenReturn(mock(org.opensearch.cluster.routing.RoutingTable.class));
+        when(clusterState.routingTable()).thenReturn(mock(org.density.cluster.routing.RoutingTable.class));
         when(clusterState.routingTable().allShardsSatisfyingPredicate(any(), any())).thenReturn(shardsIterator);
 
         ShardsIterator result = action.shards(clusterState, request, new String[] { "test-index" });
@@ -95,7 +95,7 @@ public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
     public void testCheckGlobalBlock() {
         GetIngestionStateRequest request = new GetIngestionStateRequest(new String[] { "test-index" });
         ClusterState clusterState = mock(ClusterState.class);
-        when(clusterState.blocks()).thenReturn(mock(org.opensearch.cluster.block.ClusterBlocks.class));
+        when(clusterState.blocks()).thenReturn(mock(org.density.cluster.block.ClusterBlocks.class));
         when(clusterState.blocks().globalBlockedException(ClusterBlockLevel.METADATA_READ)).thenReturn(null);
 
         ClusterBlockException result = action.checkGlobalBlock(clusterState, request);
@@ -105,7 +105,7 @@ public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
     public void testCheckRequestBlock() {
         GetIngestionStateRequest request = new GetIngestionStateRequest(new String[] { "test-index" });
         ClusterState clusterState = mock(ClusterState.class);
-        when(clusterState.blocks()).thenReturn(mock(org.opensearch.cluster.block.ClusterBlocks.class));
+        when(clusterState.blocks()).thenReturn(mock(org.density.cluster.block.ClusterBlocks.class));
         when(clusterState.blocks().indicesBlockedException(ClusterBlockLevel.METADATA_READ, request.indices())).thenReturn(null);
 
         ClusterBlockException result = action.checkRequestBlock(clusterState, request, new String[] { "test-index" });
@@ -124,7 +124,7 @@ public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
         when(shardRouting.shardId().id()).thenReturn(0);
         when(indicesService.indexServiceSafe(any())).thenReturn(indexService);
         when(indexService.getShard(0)).thenReturn(indexShard);
-        when(indexShard.routingEntry()).thenReturn(mock(org.opensearch.cluster.routing.ShardRouting.class));
+        when(indexShard.routingEntry()).thenReturn(mock(org.density.cluster.routing.ShardRouting.class));
         when(indexShard.getIngestionState()).thenReturn(expectedState);
 
         ShardIngestionState result = action.shardOperation(request, shardRouting);
@@ -158,7 +158,7 @@ public class TransportGetIngestionStateActionTests extends OpenSearchTestCase {
         when(shardRouting.shardId().id()).thenReturn(0);
         when(indicesService.indexServiceSafe(any())).thenReturn(indexService);
         when(indexService.getShard(0)).thenReturn(indexShard);
-        when(indexShard.routingEntry()).thenReturn(mock(org.opensearch.cluster.routing.ShardRouting.class));
+        when(indexShard.routingEntry()).thenReturn(mock(org.density.cluster.routing.ShardRouting.class));
         when(indexShard.getIngestionState()).thenThrow(new AlreadyClosedException("shard is closed"));
 
         expectThrows(ShardNotFoundException.class, () -> action.shardOperation(request, shardRouting));

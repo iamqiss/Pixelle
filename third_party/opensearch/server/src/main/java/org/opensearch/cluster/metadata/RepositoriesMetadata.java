@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.AbstractNamedDiffable;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.repositories.RepositoryData;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.AbstractNamedDiffable;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.repositories.RepositoryData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
+import static org.density.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
 
 /**
  * Contains metadata about registered snapshot repositories
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RepositoriesMetadata extends AbstractNamedDiffable<Custom> implements Custom {
 
@@ -69,7 +69,7 @@ public class RepositoriesMetadata extends AbstractNamedDiffable<Custom> implemen
 
     /**
      * Serialization parameter used to hide the {@link RepositoryMetadata#generation()} and {@link RepositoryMetadata#pendingGeneration()}
-     * in {@link org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse}.
+     * in {@link org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse}.
      */
     public static final String HIDE_GENERATIONS_PARAM = "hide_generations";
     public static final String HIDE_SYSTEM_REPOSITORY_SETTING = "hide_system_repository_setting";
@@ -263,7 +263,7 @@ public class RepositoriesMetadata extends AbstractNamedDiffable<Custom> implemen
             if (token == XContentParser.Token.FIELD_NAME) {
                 String name = parser.currentName();
                 if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                    throw new OpenSearchParseException("failed to parse repository [{}], expected object", name);
+                    throw new DensityParseException("failed to parse repository [{}], expected object", name);
                 }
                 String type = null;
                 Settings settings = Settings.EMPTY;
@@ -275,46 +275,46 @@ public class RepositoriesMetadata extends AbstractNamedDiffable<Custom> implemen
                         String currentFieldName = parser.currentName();
                         if ("type".equals(currentFieldName)) {
                             if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                                throw new OpenSearchParseException("failed to parse repository [{}], unknown type", name);
+                                throw new DensityParseException("failed to parse repository [{}], unknown type", name);
                             }
                             type = parser.text();
                         } else if ("settings".equals(currentFieldName)) {
                             if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                                throw new OpenSearchParseException("failed to parse repository [{}], incompatible params", name);
+                                throw new DensityParseException("failed to parse repository [{}], incompatible params", name);
                             }
                             settings = Settings.fromXContent(parser);
                         } else if ("generation".equals(currentFieldName)) {
                             if (parser.nextToken() != XContentParser.Token.VALUE_NUMBER) {
-                                throw new OpenSearchParseException("failed to parse repository [{}], unknown type", name);
+                                throw new DensityParseException("failed to parse repository [{}], unknown type", name);
                             }
                             generation = parser.longValue();
                         } else if ("pending_generation".equals(currentFieldName)) {
                             if (parser.nextToken() != XContentParser.Token.VALUE_NUMBER) {
-                                throw new OpenSearchParseException("failed to parse repository [{}], unknown type", name);
+                                throw new DensityParseException("failed to parse repository [{}], unknown type", name);
                             }
                             pendingGeneration = parser.longValue();
                         } else if (CryptoMetadata.CRYPTO_METADATA_KEY.equals(currentFieldName)) {
                             if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                                throw new OpenSearchParseException("failed to parse repository [{}], unknown type", name);
+                                throw new DensityParseException("failed to parse repository [{}], unknown type", name);
                             }
                             cryptoMetadata = CryptoMetadata.fromXContent(parser);
                         } else {
-                            throw new OpenSearchParseException(
+                            throw new DensityParseException(
                                 "failed to parse repository [{}], unknown field [{}]",
                                 name,
                                 currentFieldName
                             );
                         }
                     } else {
-                        throw new OpenSearchParseException("failed to parse repository [{}]", name);
+                        throw new DensityParseException("failed to parse repository [{}]", name);
                     }
                 }
                 if (type == null) {
-                    throw new OpenSearchParseException("failed to parse repository [{}], missing repository type", name);
+                    throw new DensityParseException("failed to parse repository [{}], missing repository type", name);
                 }
                 repository.add(new RepositoryMetadata(name, type, settings, generation, pendingGeneration, cryptoMetadata));
             } else {
-                throw new OpenSearchParseException("failed to parse repositories");
+                throw new DensityParseException("failed to parse repositories");
             }
         }
         return new RepositoriesMetadata(repository);

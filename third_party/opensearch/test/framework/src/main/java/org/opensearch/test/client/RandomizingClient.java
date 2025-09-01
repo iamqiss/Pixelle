@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.client;
+package org.density.test.client;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.routing.Preference;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.FilterClient;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchType;
+import org.density.cluster.routing.Preference;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.Client;
+import org.density.transport.client.FilterClient;
 
 import java.util.Arrays;
 import java.util.EnumSet;

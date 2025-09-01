@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.test.DensityTestCase;
 
 import java.util.Objects;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 
-public class IndexAbstractionTests extends OpenSearchTestCase {
+public class IndexAbstractionTests extends DensityTestCase {
 
     public void testHiddenAliasValidation() {
         final String hiddenAliasName = "hidden_alias";

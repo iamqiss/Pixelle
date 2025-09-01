@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.nio.MockNioTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -65,7 +65,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static org.hamcrest.Matchers.containsString;
 
-public class TransportServiceHandshakeTests extends OpenSearchTestCase {
+public class TransportServiceHandshakeTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
     private static final long timeout = Long.MAX_VALUE;
@@ -244,7 +244,7 @@ public class TransportServiceHandshakeTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "Validation Skipped",
-                    "org.opensearch.transport.TransportService",
+                    "org.density.transport.TransportService",
                     Level.INFO,
                     "Connection validation was skipped"
                 )

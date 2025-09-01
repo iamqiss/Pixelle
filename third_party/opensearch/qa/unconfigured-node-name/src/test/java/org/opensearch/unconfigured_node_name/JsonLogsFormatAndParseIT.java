@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.unconfigured_node_name;
+package org.density.unconfigured_node_name;
 
-import org.opensearch.common.logging.JsonLogsIntegTestCase;
+import org.density.common.logging.JsonLogsIntegTestCase;
 import org.hamcrest.Matcher;
 
 import java.io.BufferedReader;
@@ -49,7 +49,7 @@ public class JsonLogsFormatAndParseIT extends JsonLogsIntegTestCase {
     private static final String OS_NAME = System.getProperty("os.name");
     private static final boolean WINDOWS = OS_NAME.startsWith("Windows");
 
-    // These match the values defined in org.opensearch.gradle.testclusters.OpenSearchNode
+    // These match the values defined in org.density.gradle.testclusters.DensityNode
     private static final String COMPUTERNAME = "WindowsComputername";
     private static final String HOSTNAME = "LinuxDarwinHostname";
 

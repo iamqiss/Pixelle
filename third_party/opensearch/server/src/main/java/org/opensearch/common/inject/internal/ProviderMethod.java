@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,19 +23,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Exposed;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.PrivateBinder;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.ProviderWithDependencies;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Exposed;
+import org.density.common.inject.Key;
+import org.density.common.inject.PrivateBinder;
+import org.density.common.inject.Provider;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.ProviderWithDependencies;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -48,7 +48,7 @@ import java.util.Set;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ProviderMethod<T> implements ProviderWithDependencies<T> {
     private final Key<T> key;

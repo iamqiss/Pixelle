@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotemigration;
+package org.density.remotemigration;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.settings.Settings;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
 public class RemoteReplicaRecoveryIT extends MigrationBaseTestCase {
 
     protected int maximumNumberOfShards() {
@@ -44,7 +44,7 @@ public class RemoteReplicaRecoveryIT extends MigrationBaseTestCase {
     Brings up new replica copies on remote and docrep nodes, when primary is on a remote node
     Live indexing is happening meanwhile
     */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/13473")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/13473")
     public void testReplicaRecovery() throws Exception {
         internalCluster().setBootstrapClusterManagerNodeIndex(0);
         String primaryNode = internalCluster().startNode();
@@ -115,11 +115,11 @@ public class RemoteReplicaRecoveryIT extends MigrationBaseTestCase {
             perGroupStats.getReplicaStats().stream().forEach(e -> assertEquals(e.getCurrentReplicationLagMillis(), 0));
         }, 20, TimeUnit.SECONDS);
 
-        OpenSearchAssertions.assertHitCount(
+        DensityAssertions.assertHitCount(
             client().prepareSearch("test").setTrackTotalHits(true).get(),
             asyncIndexingService.getIndexedDocs()
         );
-        OpenSearchAssertions.assertHitCount(
+        DensityAssertions.assertHitCount(
             client().prepareSearch("test")
                 .setTrackTotalHits(true)// extra paranoia ;)
                 .setQuery(QueryBuilders.termQuery("auto", true))

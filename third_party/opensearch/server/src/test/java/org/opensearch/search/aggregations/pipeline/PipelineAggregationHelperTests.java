@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.density.search.aggregations.metrics.AvgAggregationBuilder;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import java.util.function.Function;
  * Provides helper methods and classes for use in PipelineAggregation tests,
  * such as creating mock histograms or computing simple metrics
  */
-public class PipelineAggregationHelperTests extends OpenSearchTestCase {
+public class PipelineAggregationHelperTests extends DensityTestCase {
 
     /**
      * Generates a mock histogram to use for testing.  Each MockBucket holds a doc count, key and document values

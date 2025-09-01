@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule.sync.detect;
+package org.density.plugin.wlm.rule.sync.detect;
 
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.rule.autotagging.Rule;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.rule.autotagging.Rule;
 
 /**
- * This class represents an add rule event which can be consumed by {@link org.opensearch.plugin.wlm.rule.sync.RefreshBasedSyncMechanism}
+ * This class represents an add rule event which can be consumed by {@link org.density.plugin.wlm.rule.sync.RefreshBasedSyncMechanism}
  */
 public class AddRuleEvent implements RuleEvent {
     private final Rule newRule;

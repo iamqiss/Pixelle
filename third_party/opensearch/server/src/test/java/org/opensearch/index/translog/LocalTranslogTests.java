@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -50,47 +50,47 @@ import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
 import org.apache.lucene.tests.util.LineFileDocs;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.Engine.Operation.Origin;
-import org.opensearch.index.engine.MissingHistoryOperationsException;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.LocalCheckpointTrackerTests;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.Translog.Location;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Randomness;
+import org.density.common.UUIDs;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.Assertions;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.Engine.Operation.Origin;
+import org.density.index.engine.MissingHistoryOperationsException;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.LocalCheckpointTrackerTests;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.Translog.Location;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -142,9 +142,9 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.util.BigArrays.NON_RECYCLING_INSTANCE;
-import static org.opensearch.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
-import static org.opensearch.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
+import static org.density.common.util.BigArrays.NON_RECYCLING_INSTANCE;
+import static org.density.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
+import static org.density.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -164,7 +164,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS")
-public class LocalTranslogTests extends OpenSearchTestCase {
+public class LocalTranslogTests extends DensityTestCase {
 
     protected final ShardId shardId = new ShardId("index", "_na_", 1);
 
@@ -281,7 +281,7 @@ public class LocalTranslogTests extends OpenSearchTestCase {
 
     private TranslogConfig getTranslogConfig(final Path path) {
         final Settings settings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             // only randomize between nog age retention and a long one, so failures will have a chance of reproducing
             .put(IndexSettings.INDEX_TRANSLOG_RETENTION_AGE_SETTING.getKey(), randomBoolean() ? "-1ms" : "1h")
             .put(IndexSettings.INDEX_TRANSLOG_RETENTION_SIZE_SETTING.getKey(), randomIntBetween(-1, 2048) + "b")
@@ -3482,7 +3482,7 @@ public class LocalTranslogTests extends OpenSearchTestCase {
         expectThrows(
             TranslogCorruptedException.class,
             IndexFormatTooOldException.class,
-            () -> Checkpoint.read(getDataPath("/org/opensearch/index/checkpoint/v2.ckp.binary"))
+            () -> Checkpoint.read(getDataPath("/org/density/index/checkpoint/v2.ckp.binary"))
         );
     }
 

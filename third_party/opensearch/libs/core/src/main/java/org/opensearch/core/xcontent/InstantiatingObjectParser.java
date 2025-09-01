@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.core.ParseField;
+import org.density.core.ParseField;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -74,7 +74,7 @@ import java.util.function.Consumer;
  *   }
  * }</pre>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InstantiatingObjectParser<Value, Context>
     implements
@@ -92,7 +92,7 @@ public class InstantiatingObjectParser<Value, Context>
     /**
      * Builder for the Instantiating Object Parser
      *
-     * @opensearch.internal
+     * @density.internal
      **/
     public static class Builder<Value, Context> extends AbstractObjectParser<Value, Context> {
 

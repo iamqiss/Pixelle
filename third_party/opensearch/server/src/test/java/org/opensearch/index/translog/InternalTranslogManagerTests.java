@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.listener.TranslogEventListener;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.listener.TranslogEventListener;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -23,8 +23,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
-import static org.opensearch.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
 import static org.hamcrest.Matchers.equalTo;
 
 public class InternalTranslogManagerTests extends TranslogManagerTestCase {

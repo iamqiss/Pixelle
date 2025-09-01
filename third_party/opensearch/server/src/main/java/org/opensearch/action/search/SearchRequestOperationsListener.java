@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 import java.util.List;
 
 /**
  * A listener for search, fetch and context events at the coordinator node level
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public abstract class SearchRequestOperationsListener {
@@ -68,7 +68,7 @@ public abstract class SearchRequestOperationsListener {
     /**
      * Holder of Composite Listeners
      *
-     * @opensearch.internal
+     * @density.internal
      */
 
     static final class CompositeListener extends SearchRequestOperationsListener {

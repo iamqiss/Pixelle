@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,8 +73,8 @@ import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.reactive.ReactiveResponseConsumer;
 import org.apache.hc.core5.reactor.IOReactorStatus;
 import org.apache.hc.core5.util.Args;
-import org.opensearch.client.http.HttpUriRequestProducer;
-import org.opensearch.client.http.ReactiveHttpUriRequestProducer;
+import org.density.client.http.HttpUriRequestProducer;
+import org.density.client.http.ReactiveHttpUriRequestProducer;
 
 import javax.net.ssl.SSLHandshakeException;
 
@@ -122,7 +122,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonList;
 
 /**
- * Client that connects to an OpenSearch cluster through HTTP.
+ * Client that connects to an Density cluster through HTTP.
  * <p>
  * Must be created using {@link RestClientBuilder}, which allows to set all the different options or just rely on defaults.
  * The hosts that are part of the cluster need to be provided at creation time, but can also be replaced later
@@ -218,7 +218,7 @@ public class RestClient implements Closeable {
 
         String decoded = new String(Base64.getDecoder().decode(cloudId), UTF_8);
         // once decoded the parts are separated by a $ character.
-        // they are respectively domain name and optional port, opensearch id, opensearch-dashboards id
+        // they are respectively domain name and optional port, density id, density-dashboards id
         String[] decodedParts = decoded.split("\\$");
         if (decodedParts.length != 3) {
             throw new IllegalStateException("cloudId " + cloudId + " did not decode to a cluster identifier correctly");
@@ -313,7 +313,7 @@ public class RestClient implements Closeable {
     }
 
     /**
-     * Sends a streaming request to the OpenSearch cluster that the client points to and returns streaming response. <strong>This is an experimental API</strong>.
+     * Sends a streaming request to the Density cluster that the client points to and returns streaming response. <strong>This is an experimental API</strong>.
      * @param request streaming request
      * @return streaming response
      * @throws IOException IOException
@@ -330,7 +330,7 @@ public class RestClient implements Closeable {
     }
 
     /**
-     * Sends a request to the OpenSearch cluster that the client points to.
+     * Sends a request to the Density cluster that the client points to.
      * Blocks until the request is completed and returns its response or fails
      * by throwing an exception. Selects a host out of the provided ones in a
      * round-robin fashion. Failing hosts are marked dead and retried after a
@@ -349,10 +349,10 @@ public class RestClient implements Closeable {
      * {@link Exception#getCause()}.
      *
      * @param request the request to perform
-     * @return the response returned by OpenSearch
+     * @return the response returned by Density
      * @throws IOException in case of a problem or the connection was aborted
      * @throws ClientProtocolException in case of an http protocol error
-     * @throws ResponseException in case OpenSearch responded with a status code that indicated an error
+     * @throws ResponseException in case Density responded with a status code that indicated an error
      */
     public Response performRequest(Request request) throws IOException {
         InternalRequest internalRequest = new InternalRequest(request);
@@ -544,7 +544,7 @@ public class RestClient implements Closeable {
     }
 
     /**
-     * Sends a request to the OpenSearch cluster that the client points to.
+     * Sends a request to the Density cluster that the client points to.
      * The request is executed asynchronously and the provided
      * {@link ResponseListener} gets notified upon request completion or
      * failure. Selects a host out of the provided ones in a round-robin
@@ -1334,7 +1334,7 @@ public class RestClient implements Closeable {
         }
         if (exception instanceof SSLHandshakeException) {
             SSLHandshakeException e = new SSLHandshakeException(
-                exception.getMessage() + "\nSee https://opensearch.org/docs/latest/clients/java-rest-high-level/ for troubleshooting."
+                exception.getMessage() + "\nSee https://density.org/docs/latest/clients/java-rest-high-level/ for troubleshooting."
             );
             e.initCause(exception);
             return e;

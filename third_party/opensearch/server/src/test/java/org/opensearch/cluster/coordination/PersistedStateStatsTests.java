@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class PersistedStateStatsTests extends OpenSearchTestCase {
+public class PersistedStateStatsTests extends DensityTestCase {
     private PersistedStateStats persistedStateStats;
 
     @Before

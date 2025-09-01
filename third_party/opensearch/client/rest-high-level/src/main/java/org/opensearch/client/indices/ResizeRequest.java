@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.client.TimedRequest;
-import org.opensearch.client.Validatable;
-import org.opensearch.client.ValidationException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.ActiveShardCount;
+import org.density.client.TimedRequest;
+import org.density.client.Validatable;
+import org.density.client.ValidationException;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Collections;

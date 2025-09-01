@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,44 +25,44 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.repositories.cleanup;
+package org.density.action.admin.cluster.repositories.cleanup;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.cluster.SnapshotDeletionsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryCleanupResult;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.StepListener;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.cluster.SnapshotDeletionsInProgress;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryCleanupResult;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.SnapshotsService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -84,7 +84,7 @@ import java.util.Collections;
  * and any delete/write operations. TODO: This will not work if we also want to clean up at the shard level as those will involve writes
  *                                        as well as deletes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TransportCleanupRepositoryAction extends TransportClusterManagerNodeAction<
     CleanupRepositoryRequest,

@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.awarenesshealth;
+package org.density.cluster.awarenesshealth;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.RoutingTableGenerator;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.RoutingTableGenerator;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,9 +49,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.createClusterService;
 
-public class ClusterAwarenessHealthTests extends OpenSearchTestCase {
+public class ClusterAwarenessHealthTests extends DensityTestCase {
 
     private final IndexNameExpressionResolver indexNameExpressionResolver = new IndexNameExpressionResolver(
         new ThreadContext(Settings.EMPTY)

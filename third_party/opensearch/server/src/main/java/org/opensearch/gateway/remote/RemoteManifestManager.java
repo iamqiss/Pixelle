@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.remote.RemoteWriteableEntityBlobStore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.model.RemoteClusterMetadataManifest;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.ClusterState;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.remote.RemoteWriteableEntityBlobStore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.model.RemoteClusterMetadataManifest;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,12 +42,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
 
 /**
  * A Manager which provides APIs to write and read {@link ClusterMetadataManifest} to remote store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteManifestManager {
 
@@ -108,7 +108,7 @@ public class RemoteManifestManager {
                 .stateVersion(clusterState.getVersion())
                 .clusterUUID(clusterState.metadata().clusterUUID())
                 .stateUUID(clusterState.stateUUID())
-                .opensearchVersion(Version.CURRENT)
+                .densityVersion(Version.CURRENT)
                 .nodeId(nodeId)
                 .committed(committed)
                 .codecVersion(ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION)

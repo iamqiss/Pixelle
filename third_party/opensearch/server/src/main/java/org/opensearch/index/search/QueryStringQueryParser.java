@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -58,19 +58,19 @@ import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.RegExp;
 import org.apache.lucene.util.automaton.TooComplexToDeterminizeException;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.query.ExistsQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.lucene.search.Queries;
+import org.density.common.regex.Regex;
+import org.density.common.unit.Fuzziness;
+import org.density.common.util.io.IOUtils;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.query.ExistsQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -79,12 +79,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.common.lucene.search.Queries.fixNegativeQueryIfNeeded;
-import static org.opensearch.common.lucene.search.Queries.newLenientFieldQuery;
-import static org.opensearch.common.lucene.search.Queries.newUnmappedFieldQuery;
-import static org.opensearch.index.search.QueryParserHelper.checkForTooManyFields;
-import static org.opensearch.index.search.QueryParserHelper.resolveMappingField;
-import static org.opensearch.index.search.QueryParserHelper.resolveMappingFields;
+import static org.density.common.lucene.search.Queries.fixNegativeQueryIfNeeded;
+import static org.density.common.lucene.search.Queries.newLenientFieldQuery;
+import static org.density.common.lucene.search.Queries.newUnmappedFieldQuery;
+import static org.density.index.search.QueryParserHelper.checkForTooManyFields;
+import static org.density.index.search.QueryParserHelper.resolveMappingField;
+import static org.density.index.search.QueryParserHelper.resolveMappingFields;
 
 /**
  * A {@link XQueryParser} that uses the {@link MapperService} in order to build smarter
@@ -92,7 +92,7 @@ import static org.opensearch.index.search.QueryParserHelper.resolveMappingFields
  * This class uses {@link MultiMatchQuery} to build the text query around operators and {@link XQueryParser}
  * to assemble the result logically.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QueryStringQueryParser extends XQueryParser {
     private static final String EXISTS_FIELD = "_exists_";

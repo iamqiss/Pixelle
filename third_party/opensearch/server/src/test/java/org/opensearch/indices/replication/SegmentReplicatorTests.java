@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.replication.TestReplicationSource;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.CopyState;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityCorruptionException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.ReplicationStats;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.replication.TestReplicationSource;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.CopyState;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -190,7 +190,7 @@ public class SegmentReplicatorTests extends IndexShardTestCase {
                 BiConsumer<String, Long> fileProgressTracker,
                 ActionListener<GetSegmentFilesResponse> listener
             ) {
-                OpenSearchCorruptionException corruptIndexException = new OpenSearchCorruptionException("test");
+                DensityCorruptionException corruptIndexException = new DensityCorruptionException("test");
                 try {
                     indexShard.store().markStoreCorrupted(corruptIndexException);
                 } catch (IOException e) {

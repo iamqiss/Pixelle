@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.common.settings.Setting.Property;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.RestRequest;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ import java.util.function.Consumer;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class SettingsFilterTests extends OpenSearchTestCase {
+public class SettingsFilterTests extends DensityTestCase {
     public void testAddingAndRemovingFilters() {
         HashSet<String> hashSet = new HashSet<>(Arrays.asList("foo", "bar", "baz"));
         SettingsFilter settingsFilter = new SettingsFilter(hashSet);
@@ -116,9 +116,9 @@ public class SettingsFilterTests extends OpenSearchTestCase {
         Setting<String> filteredSetting = Setting.simpleString("key", Property.Filtered);
         assertExpectedLogMessages(
             (testLogger) -> Setting.logSettingUpdate(filteredSetting, newSettings, oldSettings, testLogger),
-            new MockLogAppender.SeenEventExpectation("secure logging", "org.opensearch.test", Level.INFO, "updating [key]"),
-            new MockLogAppender.UnseenEventExpectation("unwanted old setting name", "org.opensearch.test", Level.INFO, "*old*"),
-            new MockLogAppender.UnseenEventExpectation("unwanted new setting name", "org.opensearch.test", Level.INFO, "*new*")
+            new MockLogAppender.SeenEventExpectation("secure logging", "org.density.test", Level.INFO, "updating [key]"),
+            new MockLogAppender.UnseenEventExpectation("unwanted old setting name", "org.density.test", Level.INFO, "*old*"),
+            new MockLogAppender.UnseenEventExpectation("unwanted new setting name", "org.density.test", Level.INFO, "*new*")
         );
     }
 
@@ -131,7 +131,7 @@ public class SettingsFilterTests extends OpenSearchTestCase {
             (testLogger) -> Setting.logSettingUpdate(regularSetting, newSettings, oldSettings, testLogger),
             new MockLogAppender.SeenEventExpectation(
                 "regular logging",
-                "org.opensearch.test",
+                "org.density.test",
                 Level.INFO,
                 "updating [key] from [old] to [new]"
             )
@@ -140,7 +140,7 @@ public class SettingsFilterTests extends OpenSearchTestCase {
 
     private void assertExpectedLogMessages(Consumer<Logger> consumer, MockLogAppender.LoggingExpectation... expectations)
         throws IllegalAccessException {
-        Logger testLogger = LogManager.getLogger("org.opensearch.test");
+        Logger testLogger = LogManager.getLogger("org.density.test");
         try (MockLogAppender appender = MockLogAppender.createForLoggers(testLogger)) {
             Arrays.stream(expectations).forEach(appender::addExpectation);
             consumer.accept(testLogger);

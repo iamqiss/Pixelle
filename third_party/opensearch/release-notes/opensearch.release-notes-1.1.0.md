@@ -45,32 +45,32 @@
   public key and uses the .sig files that are published to the artifacts site.
   Signed-off-by: Nicholas Walter Knize &lt;nknize@apache.org&gt;
 
-* __Fix org.opensearch.index.reindex.ReindexRestClientSslTests#testClientSucceedsWithCertificateAuthorities - javax.net.ssl.SSLPeerUnverifiedException (#1212) (#1224)__
+* __Fix org.density.index.reindex.ReindexRestClientSslTests#testClientSucceedsWithCertificateAuthorities - javax.net.ssl.SSLPeerUnverifiedException (#1212) (#1224)__
 
   [Andriy Redko](mailto:andriy.redko@aiven.io) - Fri, 10 Sep 2021 11:49:33 -0400
 
 
     Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
 
-* __Max scroll limit breach to throw a OpenSearchRejectedExecutionException (#1054) (#1231)__
+* __Max scroll limit breach to throw a DensityRejectedExecutionException (#1054) (#1231)__
 
   [Rabi Panda](mailto:adnapibar@gmail.com) - Fri, 10 Sep 2021 10:34:46 -0400
 
 
-    * Changes the Exception to throw a OpenSearchRejectedExecutionException on max
+    * Changes the Exception to throw a DensityRejectedExecutionException on max
     scroll limit breach
      Signed-off-by: Bukhtawar Khan bukhtawa@amazon.com
      Co-authored-by: Bukhtawar Khan &lt;bukhtawa@amazon.com&gt;
 
-* __[1.x] Backport opensearch-upgrade CLI tool (#1222)__
+* __[1.x] Backport density-upgrade CLI tool (#1222)__
 
   [Rabi Panda](mailto:adnapibar@gmail.com) - Wed, 8 Sep 2021 10:39:02 -0700
 
 
-    * A CLI tool to assist during an upgrade to OpenSearch. (#846)
-     This change adds the initial version of a new CLI tool `opensearch-upgrade` as
-    part of the OpenSearch distribution. This tool is meant for assisting during an
-    upgrade from an existing Elasticsearch v7.10.2/v6.8.0 node to OpenSearch. It
+    * A CLI tool to assist during an upgrade to Density. (#846)
+     This change adds the initial version of a new CLI tool `density-upgrade` as
+    part of the Density distribution. This tool is meant for assisting during an
+    upgrade from an existing Elasticsearch v7.10.2/v6.8.0 node to Density. It
     automates the process of importing existing configurations and installing of
     core plugins.
      Signed-off-by: Rabi Panda &lt;adnapibar@gmail.com&gt;
@@ -97,7 +97,7 @@
     compiling.
     * Clarify the JAVAx_HOME env variables are for the &#34;backwards compatibility
     test&#34;.
-    * Add explanation on how the backwards compatibility tests get the OpenSearch
+    * Add explanation on how the backwards compatibility tests get the Density
     distributions for a specific version.
     Signed-off-by: Tianli Feng
     &lt;ftianli@amazon.com&gt;
@@ -116,12 +116,12 @@
 
     Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
 
-* __[Bug] Fix mixed cluster support for OpenSearch 2+ (#1191) (#1195)__
+* __[Bug] Fix mixed cluster support for Density 2+ (#1191) (#1195)__
 
     [Nick Knize](mailto:nknize@apache.org) - Wed, 1 Sep 2021 17:04:40 -0500
 
 
-    The version framework only added support for OpenSearch 1.x bwc with legacy
+    The version framework only added support for Density 1.x bwc with legacy
 
     clusters. This commit adds support for v2.0 which will be the last version with
      bwc support for legacy clusters (v7.10)
@@ -341,8 +341,8 @@
     [Poojita Raj](mailto:poojiraj@amazon.com) - Fri, 23 Jul 2021 14:21:31 -0700
 
 
-    Replace the docs links In scripts bin/opensearch-env and config/jvm.options,
-    with OpenSearch docs links.
+    Replace the docs links In scripts bin/density-env and config/jvm.options,
+    with Density docs links.
      Signed-off-by: Poojita-Raj &lt;poojiraj@amazon.com&gt;
     (cherry picked from commit 6bc4ce017ad654cc2c8d7d37553c82d61c61b964)
 

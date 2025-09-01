@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.search.DocIdSetIterator;
@@ -46,7 +46,7 @@ import java.io.IOException;
  * In case when optimizations based on point values are used, the {@link #advance(int)}
  * and, optionally, {@link #cost()} have to be implemented as well.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractNumericDocValues extends NumericDocValues {
 

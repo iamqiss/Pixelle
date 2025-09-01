@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.path;
+package org.density.common.path;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Path based on a trie structure.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PathTrie<T> {
 
@@ -81,7 +81,7 @@ public class PathTrie<T> {
     /**
      * Decoder for the path
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Decoder {
         String decode(String value);
@@ -102,7 +102,7 @@ public class PathTrie<T> {
     /**
      * Node for the trie
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class TrieNode {
         private transient String key;

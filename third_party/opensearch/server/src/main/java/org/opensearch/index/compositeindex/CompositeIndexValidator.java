@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex;
+package org.density.index.compositeindex;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeValidator;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.IndexSettings;
+import org.density.index.compositeindex.datacube.startree.StarTreeValidator;
+import org.density.index.mapper.MapperService;
 
 import java.util.Locale;
 
 /**
  * Validation for composite indices as part of mappings
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class CompositeIndexValidator {

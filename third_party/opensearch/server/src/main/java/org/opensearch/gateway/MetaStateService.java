@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Manifest;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.NodeEnvironment;
+import org.density.Version;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Manifest;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.NodeEnvironment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import java.util.function.Predicate;
 /**
  * Handles writing and loading {@link Manifest}, {@link Metadata} and {@link IndexMetadata}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetaStateService {
     private static final Logger logger = LogManager.getLogger(MetaStateService.class);
@@ -154,7 +154,7 @@ public class MetaStateService {
         if (globalMetadata != null) {
             metadataBuilder = Metadata.builder(globalMetadata);
             indexGraveyard = globalMetadata.custom(IndexGraveyard.TYPE);
-            assert Version.CURRENT.major < 8 : "failed to find manifest file, which is mandatory staring with OpenSearch version 1.0.0";
+            assert Version.CURRENT.major < 8 : "failed to find manifest file, which is mandatory staring with Density version 1.0.0";
         } else {
             metadataBuilder = Metadata.builder();
             indexGraveyard = IndexGraveyard.builder().build();
@@ -166,7 +166,7 @@ public class MetaStateService {
                 namedXContentRegistry,
                 nodeEnv.resolveIndexFolder(indexFolderName)
             );
-            assert Version.CURRENT.major < 8 : "failed to find manifest file, which is mandatory staring with OpenSearch version 1.0.0";
+            assert Version.CURRENT.major < 8 : "failed to find manifest file, which is mandatory staring with Density version 1.0.0";
             IndexMetadata indexMetadata = indexMetadataAndGeneration.v1();
             long generation = indexMetadataAndGeneration.v2();
             if (indexMetadata != null) {

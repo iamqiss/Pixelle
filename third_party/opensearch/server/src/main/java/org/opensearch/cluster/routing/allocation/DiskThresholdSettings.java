@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.RatioValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.RatioValue;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * A container to keep settings for disk thresholds up to date with cluster setting changes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiskThresholdSettings {
     public static final Setting<Boolean> CLUSTER_ROUTING_ALLOCATION_DISK_THRESHOLD_ENABLED_SETTING = Setting.boolSetting(
@@ -131,7 +131,7 @@ public class DiskThresholdSettings {
 
     static {
         assert Version.CURRENT.major == Version.V_2_0_0.major + 1; // this check is unnecessary in v4
-        final String AUTO_RELEASE_INDEX_ENABLED_KEY = "opensearch.disk.auto_release_flood_stage_block";
+        final String AUTO_RELEASE_INDEX_ENABLED_KEY = "density.disk.auto_release_flood_stage_block";
 
         final String property = System.getProperty(AUTO_RELEASE_INDEX_ENABLED_KEY);
         if (property != null) {
@@ -169,7 +169,7 @@ public class DiskThresholdSettings {
     /**
      * Validates a low disk watermark.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class LowDiskWatermarkValidator implements Setting.Validator<String> {
 
@@ -199,7 +199,7 @@ public class DiskThresholdSettings {
     /**
      * Validates a high disk watermark.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class HighDiskWatermarkValidator implements Setting.Validator<String> {
 
@@ -229,7 +229,7 @@ public class DiskThresholdSettings {
     /**
      * Validates the flood stage.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class FloodStageValidator implements Setting.Validator<String> {
 
@@ -260,12 +260,12 @@ public class DiskThresholdSettings {
         try {
             doValidateAsPercentage(low, high, flood);
             return; // early return so that we do not try to parse as bytes
-        } catch (final OpenSearchParseException e) {
+        } catch (final DensityParseException e) {
             // swallow as we are now going to try to parse as bytes
         }
         try {
             doValidateAsBytes(low, high, flood);
-        } catch (final OpenSearchParseException e) {
+        } catch (final DensityParseException e) {
             final String message = String.format(
                 Locale.ROOT,
                 "unable to consistently parse [%s=%s], [%s=%s], and [%s=%s] as percentage or bytes",
@@ -451,7 +451,7 @@ public class DiskThresholdSettings {
 
     /**
      * Attempts to parse the watermark into a percentage, returning 100.0% if it can not be parsed and the specified lenient parameter is
-     * true, otherwise throwing an {@link OpenSearchParseException}.
+     * true, otherwise throwing an {@link DensityParseException}.
      *
      * @param watermark the watermark to parse as a percentage
      * @param lenient true if lenient parsing should be applied
@@ -460,7 +460,7 @@ public class DiskThresholdSettings {
     private static double thresholdPercentageFromWatermark(String watermark, boolean lenient) {
         try {
             return RatioValue.parseRatioValue(watermark).getAsPercent();
-        } catch (OpenSearchParseException ex) {
+        } catch (DensityParseException ex) {
             // NOTE: this is not end-user leniency, since up above we check that it's a valid byte or percentage, and then store the two
             // cases separately
             if (lenient) {
@@ -480,7 +480,7 @@ public class DiskThresholdSettings {
 
     /**
      * Attempts to parse the watermark into a {@link ByteSizeValue}, returning zero bytes if it can not be parsed and the specified lenient
-     * parameter is true, otherwise throwing an {@link OpenSearchParseException}.
+     * parameter is true, otherwise throwing an {@link DensityParseException}.
      *
      * @param watermark the watermark to parse as a byte size
      * @param settingName the name of the setting
@@ -490,7 +490,7 @@ public class DiskThresholdSettings {
     private static ByteSizeValue thresholdBytesFromWatermark(String watermark, String settingName, boolean lenient) {
         try {
             return ByteSizeValue.parseBytesSizeValue(watermark, settingName);
-        } catch (OpenSearchParseException ex) {
+        } catch (DensityParseException ex) {
             // NOTE: this is not end-user leniency, since up above we check that it's a valid byte or percentage, and then store the two
             // cases separately
             if (lenient) {
@@ -507,10 +507,10 @@ public class DiskThresholdSettings {
     private static String validWatermarkSetting(String watermark, String settingName) {
         try {
             RatioValue.parseRatioValue(watermark);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             try {
                 ByteSizeValue.parseBytesSizeValue(watermark, settingName);
-            } catch (OpenSearchParseException ex) {
+            } catch (DensityParseException ex) {
                 ex.addSuppressed(e);
                 throw ex;
             }

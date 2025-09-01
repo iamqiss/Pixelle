@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
@@ -49,9 +49,9 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import static java.lang.invoke.MethodHandles.Lookup;
-import static org.opensearch.painless.WriterConstants.CLASS_VERSION;
-import static org.opensearch.painless.WriterConstants.CTOR_METHOD_NAME;
-import static org.opensearch.painless.WriterConstants.DELEGATE_BOOTSTRAP_HANDLE;
+import static org.density.painless.WriterConstants.CLASS_VERSION;
+import static org.density.painless.WriterConstants.CTOR_METHOD_NAME;
+import static org.density.painless.WriterConstants.DELEGATE_BOOTSTRAP_HANDLE;
 import static org.objectweb.asm.Opcodes.ACC_FINAL;
 import static org.objectweb.asm.Opcodes.ACC_PRIVATE;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;

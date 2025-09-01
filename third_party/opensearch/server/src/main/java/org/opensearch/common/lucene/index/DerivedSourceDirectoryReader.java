@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.FilterDirectoryReader;
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.common.CheckedBiFunction;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.CheckedBiFunction;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import java.io.IOException;
  * {@link FilterDirectoryReader} that supports deriving source from lucene fields instead of directly reading from _source
  * field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DerivedSourceDirectoryReader extends FilterDirectoryReader {
     private final CheckedBiFunction<LeafReader, Integer, BytesReference, IOException> sourceProvider;

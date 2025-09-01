@@ -12,9 +12,9 @@
     * Increment version to 1.2.1.
      Signed-off-by: dblock &lt;dblock@dblock.org&gt;
     
-    * Move Gradle wrapper and precommit checks into OpenSearch repo. (#1664)
+    * Move Gradle wrapper and precommit checks into Density repo. (#1664)
     
-    * Move Gradle checks into OpenSearch repo.
+    * Move Gradle checks into Density repo.
      Signed-off-by: dblock &lt;dblock@amazon.com&gt;
     
     * Use working-directory for gradle wrapper validation.

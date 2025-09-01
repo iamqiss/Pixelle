@@ -1,8 +1,8 @@
-OpenSearch uses [jUnit](https://junit.org/junit5/) for testing, it also uses randomness in the tests, that can be set using a seed. The following is a cheatsheet of options for running the tests for OpenSearch.
+Density uses [jUnit](https://junit.org/junit5/) for testing, it also uses randomness in the tests, that can be set using a seed. The following is a cheatsheet of options for running the tests for Density.
 
 - [Requirements](#requirements)
 - [Creating packages](#creating-packages)
-  - [Running OpenSearch from a checkout](#running-opensearch-from-a-checkout)
+  - [Running Density from a checkout](#running-density-from-a-checkout)
     - [Launching and debugging from an IDE](#launching-and-debugging-from-an-ide)
     - [Other useful arguments](#other-useful-arguments)
   - [Test case filtering](#test-case-filtering)
@@ -63,19 +63,19 @@ To create a platform-specific build, use the following depending on your operati
     ./gradlew :distribution:archives:darwin-tar:assemble
     ./gradlew :distribution:archives:windows-zip:assemble
 
-## Running OpenSearch from a checkout
+## Running Density from a checkout
 
-In order to run OpenSearch from source without building a package, you can run it using Gradle:
+In order to run Density from source without building a package, you can run it using Gradle:
 
     ./gradlew run
 
 ### Launching and debugging from an IDE
 
-**NOTE:** If you have imported the project into IntelliJ according to the instructions in [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md#intellij-idea), then a debug run configuration named **Debug OpenSearch** will be created for you and configured appropriately.
+**NOTE:** If you have imported the project into IntelliJ according to the instructions in [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md#intellij-idea), then a debug run configuration named **Debug Density** will be created for you and configured appropriately.
 
-To run OpenSearch in debug mode,
+To run Density in debug mode,
 
-1. Start the `Debug OpenSearch` in IntelliJ by pressing the debug icon.
+1. Start the `Debug Density` in IntelliJ by pressing the debug icon.
 2. From a terminal run the following `./gradlew run --debug-jvm`. You can also run this task in IntelliJ.
 
 This will instruct all JVMs (including any that run cli tools such as creating the keyring or adding users) to suspend and initiate a debug connection on port incrementing from `5005`. As such, the IDE needs to be instructed to listen for connections on this port. Since we might run multiple JVMs as part of configuring and starting the cluster, it's recommended to configure the IDE to initiate multiple listening attempts. In case of IntelliJ, this option is called "Auto restart" and needs to be checked. In case of Eclipse, "Connection limit" setting needs to be configured with a greater value (ie 10 or more).
@@ -88,7 +88,7 @@ This will instruct all JVMs (including any that run cli tools such as creating t
 -   In order to preserve data in between executions: `--preserve-data`
 -   In order to remotely attach a debugger to the process: `--debug-jvm`
 -   In order to set a different keystore password: `--keystore-password yourpassword`
--   In order to set an OpenSearch setting, provide a setting with the following prefix: `-Dtests.opensearch.`
+-   In order to set an Density setting, provide a setting with the following prefix: `-Dtests.density.`
 -   In order to enable stack trace of the MockSpanData during testing, add: `-Dtests.telemetry.span.stack_traces=true` (Storing stack traces alongside span data can be useful for comprehensive debugging and performance optimization during testing, as it provides insights into the exact code paths and execution sequences, facilitating efficient issue identification and resolution. Note: Enabling this might lead to OOM issues while running ITs)
 
 ## Test case filtering
@@ -99,13 +99,13 @@ Example: `./gradlew server:test --tests "*.ReplicaShardBatchAllocatorTests.testN
 
 Run a single test case (variants)
 
-    ./gradlew module:test --tests org.opensearch.package.ClassName
-    ./gradlew module:test --tests org.opensearch.package.ClassName.testName
+    ./gradlew module:test --tests org.density.package.ClassName
+    ./gradlew module:test --tests org.density.package.ClassName.testName
     ./gradlew module:test --tests "*.ClassName"
 
 Run all tests in a package and its sub-packages
 
-    ./gradlew module:test --tests "org.opensearch.package.*"
+    ./gradlew module:test --tests "org.density.package.*"
 
 Run any test methods that contain *esi* (e.g.: .r*esi*ze.)
 
@@ -172,7 +172,7 @@ It is possible to provide a version that allows to adapt the tests' behaviour to
 
 ## Retries
 
-The goal of tests is to be completely deterministic such that any test failure can be easily and reliably reproduced. However, the reality is that many OpenSearch integration tests have non-deterministic behavior which results in rare test failures that cannot be easily reproduced even using the same random test seed. To mitigate the pain of frequent non-reproducible test failures, limited retries have been introduced using the Gradle [test-retry](https://plugins.gradle.org/plugin/org.gradle.test-retry) plugin. The known flaky tests are explicitly listed in the test-retry configuration of the build.gradle file. This is intended as a temporary mitigation for existing flakiness, and as such new tests should not be added to the retry list. Any new addition to the retry list must provide a thorough rationale as to why adding retries is the right thing to do as opposed to fixing the underlying flakiness. Existing flaky tests are tracked in GitHub with the [Flaky Random Test Failure](https://github.com/opensearch-project/OpenSearch/issues?q=is%3Aopen+is%3Aissue+label%3A%22flaky-test%22) label.
+The goal of tests is to be completely deterministic such that any test failure can be easily and reliably reproduced. However, the reality is that many Density integration tests have non-deterministic behavior which results in rare test failures that cannot be easily reproduced even using the same random test seed. To mitigate the pain of frequent non-reproducible test failures, limited retries have been introduced using the Gradle [test-retry](https://plugins.gradle.org/plugin/org.gradle.test-retry) plugin. The known flaky tests are explicitly listed in the test-retry configuration of the build.gradle file. This is intended as a temporary mitigation for existing flakiness, and as such new tests should not be added to the retry list. Any new addition to the retry list must provide a thorough rationale as to why adding retries is the right thing to do as opposed to fixing the underlying flakiness. Existing flaky tests are tracked in GitHub with the [Flaky Random Test Failure](https://github.com/density-project/Density/issues?q=is%3Aopen+is%3Aissue+label%3A%22flaky-test%22) label.
 
 ## Miscellaneous
 
@@ -188,9 +188,9 @@ Change the default suite timeout to 5 seconds for all tests (note the exclamatio
 
     ./gradlew test -Dtests.timeoutSuite=5000! ...
 
-Change the logging level of OpenSearch (not Gradle)
+Change the logging level of Density (not Gradle)
 
-    ./gradlew test -Dtests.opensearch.logger.level=DEBUG
+    ./gradlew test -Dtests.density.logger.level=DEBUG
 
 Print all the logging output from the test runs to the command line even if tests are passing.
 
@@ -221,7 +221,7 @@ Note that this will also run the unit tests and precommit tasks first. If you wa
 
 To run a specific set of tests.
 
-    ./gradlew :server:internalClusterTest --tests "org.opensearch.common.settings.FallbackSettingsIT.*"
+    ./gradlew :server:internalClusterTest --tests "org.density.common.settings.FallbackSettingsIT.*"
 
 If you want to just run the precommit checks:
 
@@ -235,7 +235,7 @@ The REST layer is tested through specific tests that are executed against a clus
 
 YAML based REST tests should be preferred since these are shared between clients. The YAML based tests describe the operations to be executed, and the obtained results that need to be tested.
 
-The YAML tests support various operators defined in the [rest-api-spec](/rest-api-spec/src/main/resources/rest-api-spec/test/README.md) and adhere to the [OpenSearch REST API JSON specification](/rest-api-spec/README.md). In order to run the YAML tests, the relevant API specification needs to be on the test classpath. Any gradle project that has support for REST tests will get the primary API on it’s class path. However, to better support Gradle incremental builds, it is recommended to explicitly declare which parts of the API the tests depend upon.
+The YAML tests support various operators defined in the [rest-api-spec](/rest-api-spec/src/main/resources/rest-api-spec/test/README.md) and adhere to the [Density REST API JSON specification](/rest-api-spec/README.md). In order to run the YAML tests, the relevant API specification needs to be on the test classpath. Any gradle project that has support for REST tests will get the primary API on it’s class path. However, to better support Gradle incremental builds, it is recommended to explicitly declare which parts of the API the tests depend upon.
 
 For example:
 
@@ -252,7 +252,7 @@ The REST tests are run automatically when executing the "./gradlew check" comman
 A specific test case can be run with the following command:
 
     ./gradlew ':rest-api-spec:yamlRestTest' \
-      --tests "org.opensearch.test.rest.ClientYamlTestSuiteIT" \
+      --tests "org.density.test.rest.ClientYamlTestSuiteIT" \
       -Dtests.method="test {p0=cat.segments/10_basic/Help}"
 
 The YAML REST tests support all the options provided by the randomized runner, plus the following:
@@ -268,7 +268,7 @@ For example :
     ./gradlew :modules:mapper-extras:javaRestTest
 
     ./gradlew ':modules:mapper-extras:javaRestTest' \
-      --tests "org.opensearch.index.mapper.TokenCountFieldMapperIntegrationIT.testSearchByTokenCount {storeCountedFields=true loadCountedFields=false}"
+      --tests "org.density.index.mapper.TokenCountFieldMapperIntegrationIT.testSearchByTokenCount {storeCountedFields=true loadCountedFields=false}"
 
 yamlRestTest’s and javaRestTest’s are easy to identify, since they are found in a respective source directory. However, there are some more specialized REST tests that use custom task names. These are usually found in "qa" projects commonly use the "integTest" task.
 
@@ -281,15 +281,15 @@ Note that the REST tests, like all the integration tests, can be run against an 
 For example :
 
     ./gradlew :rest-api-spec:yamlRestTest \
-      -Dtests.cluster=localhost:9200 -Dtests.rest.cluster=localhost:9200 -Dtests.clustername=opensearch
+      -Dtests.cluster=localhost:9200 -Dtests.rest.cluster=localhost:9200 -Dtests.clustername=density
 
 ## Debugging REST Tests
 
-You can launch a local OpenSearch cluster in debug mode following [Launching and debugging from an IDE](#launching-and-debugging-from-an-ide), and run your REST tests against that following [Running REST Tests Against An External Cluster](#running-rest-tests-against-an-external-cluster).
+You can launch a local Density cluster in debug mode following [Launching and debugging from an IDE](#launching-and-debugging-from-an-ide), and run your REST tests against that following [Running REST Tests Against An External Cluster](#running-rest-tests-against-an-external-cluster).
 
 # Testing packaging
 
-The packaging tests use Vagrant virtual machines or cloud instances to verify that installing and running OpenSearch distributions works correctly on supported operating systems. These tests should really only be run on ephemeral systems because they’re destructive; that is, these tests install and remove packages and freely modify system settings, so you will probably regret it if you execute them on your development machine.
+The packaging tests use Vagrant virtual machines or cloud instances to verify that installing and running Density distributions works correctly on supported operating systems. These tests should really only be run on ephemeral systems because they’re destructive; that is, these tests install and remove packages and freely modify system settings, so you will probably regret it if you execute them on your development machine.
 
 When you run a packaging test, Gradle will set up the target VM and mount your repository directory in the VM. Once this is done, a Gradle task will issue a Vagrant command to run a **nested** Gradle task on the VM. This nested Gradle runs the actual "destructive" test classes.
 
@@ -384,15 +384,15 @@ Because our packaging tests are capable of testing many combinations of OS (e.g.
 
 These test tasks can use the `--tests`, `--info`, and `--debug` parameters just like non-OS tests can. For example:
 
-    ./gradlew :qa:os:fedora-28:distroTest.linux-archive --tests "com.opensearch.packaging.test.ArchiveTests"
+    ./gradlew :qa:os:fedora-28:distroTest.linux-archive --tests "com.density.packaging.test.ArchiveTests"
 
 # Testing backwards compatibility
 
 Backwards compatibility tests exist to test upgrading from each supported version to the current version.
 
-The test can be run for any versions which the current version will be compatible with. Tests are run for released versions download the distributions from the artifact repository, see [DistributionDownloadPlugin](./buildSrc/src/main/java/org/opensearch/gradle/DistributionDownloadPlugin.java) for the repository location. Tests are run for versions that are not yet released automatically check out the branch and build from source to get the distributions, see [BwcVersions](./buildSrc/src/main/java/org/opensearch/gradle/BwcVersions.java) and [distribution/bwc/build.gradle](./distribution/bwc/build.gradle) for more information.
+The test can be run for any versions which the current version will be compatible with. Tests are run for released versions download the distributions from the artifact repository, see [DistributionDownloadPlugin](./buildSrc/src/main/java/org/density/gradle/DistributionDownloadPlugin.java) for the repository location. Tests are run for versions that are not yet released automatically check out the branch and build from source to get the distributions, see [BwcVersions](./buildSrc/src/main/java/org/density/gradle/BwcVersions.java) and [distribution/bwc/build.gradle](./distribution/bwc/build.gradle) for more information.
 
-The minimum JDK versions for runtime and compiling need to be installed, and environment variables `JAVAx_HOME`, such as `JAVA8_HOME`, pointing to the JDK installations are required to run the tests against unreleased versions, since the distributions are created by building from source. The required JDK versions for each branch are located at [.ci/java-versions.properties](.ci/java-versions.properties), see [BwcSetupExtension](./buildSrc/src/main/java/org/opensearch/gradle/internal/BwcSetupExtension.java) for more information.
+The minimum JDK versions for runtime and compiling need to be installed, and environment variables `JAVAx_HOME`, such as `JAVA8_HOME`, pointing to the JDK installations are required to run the tests against unreleased versions, since the distributions are created by building from source. The required JDK versions for each branch are located at [.ci/java-versions.properties](.ci/java-versions.properties), see [BwcSetupExtension](./buildSrc/src/main/java/org/density/gradle/internal/BwcSetupExtension.java) for more information.
 
 To run all the backwards compatibility tests use:
 
@@ -405,7 +405,7 @@ A specific version can be tested as well. For example, to test bwc with version 
 Use -Dtest.class and -Dtests.method to run a specific bwcTest test. For example to test a rolling upgrade from 7.7.0:
 
     ./gradlew :qa:rolling-upgrade:v7.7.0#bwcTest \
-     -Dtests.class=org.opensearch.upgrades.RecoveryIT \
+     -Dtests.class=org.density.upgrades.RecoveryIT \
      -Dtests.method=testHistoryUUIDIsGenerated
 
 Use `-PcustomDistributionDownloadType=bundle` to run the bwcTest against the test cluster with latest CI distribution bundle set up for the specified version; this property is default to min and exclusive choices between `bundle` and `min`:
@@ -428,26 +428,26 @@ Say you need to make a change to `main` and have a BWC layer in `5.x`. You will 
 
 ## BWC Testing with security
 
-You may want to run BWC tests for a secure OpenSearch cluster. In order to do this, you will need to follow a few additional steps:
+You may want to run BWC tests for a secure Density cluster. In order to do this, you will need to follow a few additional steps:
 
-1. Clone the OpenSearch Security repository from https://github.com/opensearch-project/security.
-2. Get both the old version of the Security plugin (the version you wish to come from) and the new version of the Security plugin (the version you wish to go to). This can be done either by fetching the maven artifact with a command like `wget https://repo1.maven.org/maven2/org/opensearch/plugin/opensearch-security/<TARGET_VERSION>.0/opensearch-security-<TARGET_VERSION>.0.zip` or by running `./gradlew assemble` from the base of the Security repository.
+1. Clone the Density Security repository from https://github.com/density-project/security.
+2. Get both the old version of the Security plugin (the version you wish to come from) and the new version of the Security plugin (the version you wish to go to). This can be done either by fetching the maven artifact with a command like `wget https://repo1.maven.org/maven2/org/density/plugin/density-security/<TARGET_VERSION>.0/density-security-<TARGET_VERSION>.0.zip` or by running `./gradlew assemble` from the base of the Security repository.
 3. Move both of the Security artifacts into new directories at the path `/security/bwc-test/src/test/resources/<TARGET_VERSION>.0`. You should end up with two different directories in `/security/bwc-test/src/test/resources/`, one named the old version and one the new version.
 4. Run the following command from the base of the Security repository:
 
 ```
   ./gradlew -p bwc-test clean bwcTestSuite \
   -Dtests.security.manager=false \
-  -Dtests.opensearch.http.protocol=https \
-  -Dtests.opensearch.username=admin \
-  -Dtests.opensearch.password=admin \
-  -PcustomDistributionUrl="/OpenSearch/distribution/archives/linux-tar/build/distributions/opensearch-min-<TARGET_VERSION>-SNAPSHOT-linux-x64.tar.gz" \
+  -Dtests.density.http.protocol=https \
+  -Dtests.density.username=admin \
+  -Dtests.density.password=admin \
+  -PcustomDistributionUrl="/Density/distribution/archives/linux-tar/build/distributions/density-min-<TARGET_VERSION>-SNAPSHOT-linux-x64.tar.gz" \
   -i
 ```
 
 `-Dtests.security.manager=false` handles access issues when attempting to read the certificates from the file system.
-`-Dtests.opensearch.http.protocol=https` tells the wait for cluster startup task to do the right thing.
-`-PcustomDistributionUrl=...` uses a custom build of the distribution of OpenSearch. This is unnecessary when running against standard/unmodified OpenSearch core distributions.
+`-Dtests.density.http.protocol=https` tells the wait for cluster startup task to do the right thing.
+`-PcustomDistributionUrl=...` uses a custom build of the distribution of Density. This is unnecessary when running against standard/unmodified Density core distributions.
 
 ### Skip fetching latest
 
@@ -459,11 +459,11 @@ For some BWC testing scenarios, you want to use the local clone of the repositor
 
 There are multiple base classes for tests:
 
--   **`OpenSearchTestCase`**: The base class of all tests. It is typically extended directly by unit tests.
--   **`OpenSearchSingleNodeTestCase`**: This test case sets up a cluster that has a single node.
--   **`OpenSearchIntegTestCase`**: An integration test case that creates a cluster that might have multiple nodes.
--   **`OpenSearchRestTestCase`**: An integration tests that interacts with an external cluster via the REST API. This is used for Java based REST tests.
--   **`OpenSearchClientYamlSuiteTestCase`** : A subclass of `OpenSearchRestTestCase` used to run YAML based REST tests.
+-   **`DensityTestCase`**: The base class of all tests. It is typically extended directly by unit tests.
+-   **`DensitySingleNodeTestCase`**: This test case sets up a cluster that has a single node.
+-   **`DensityIntegTestCase`**: An integration test case that creates a cluster that might have multiple nodes.
+-   **`DensityRestTestCase`**: An integration tests that interacts with an external cluster via the REST API. This is used for Java based REST tests.
+-   **`DensityClientYamlSuiteTestCase`** : A subclass of `DensityRestTestCase` used to run YAML based REST tests.
 
 ## Good practices
 
@@ -471,11 +471,11 @@ There are multiple base classes for tests:
 
 Unit tests are the preferred way to test some functionality: most of the time they are simpler to understand, more likely to reproduce, and unlikely to be affected by changes that are unrelated to the piece of functionality that is being tested.
 
-The reason why `OpenSearchSingleNodeTestCase` exists is that all our components used to be very hard to set up in isolation, which had led us to having a number of integration tests but close to no unit tests. `OpenSearchSingleNodeTestCase` is a workaround for this issue which provides an easy way to spin up a node and get access to components that are hard to instantiate like `IndicesService`. Whenever practical, you should prefer unit tests.
+The reason why `DensitySingleNodeTestCase` exists is that all our components used to be very hard to set up in isolation, which had led us to having a number of integration tests but close to no unit tests. `DensitySingleNodeTestCase` is a workaround for this issue which provides an easy way to spin up a node and get access to components that are hard to instantiate like `IndicesService`. Whenever practical, you should prefer unit tests.
 
 Finally, if the functionality under test needs to be run in a cluster, there are two test classes to consider:
-  * `OpenSearchRestTestCase` will connect to an external cluster. This is a good option if the tests cases don't rely on a specific configuration of the test cluster. A test cluster is set up as part of the Gradle task running integration tests, and test cases using this class can connect to it. The configuration of the cluster is provided in the Gradle files.
-  * `OpenSearchIntegTestCase` will create a local cluster as part of each test case. The configuration of the cluster is controlled by the test class. This is a good option if different tests cases depend on different cluster configurations, as it would be impractical (and limit parallelization) to keep re-configuring (and re-starting) the external cluster for each test case. A good example of when this class might come in handy is for testing security features, where different cluster configurations are needed to fully test each one.
+  * `DensityRestTestCase` will connect to an external cluster. This is a good option if the tests cases don't rely on a specific configuration of the test cluster. A test cluster is set up as part of the Gradle task running integration tests, and test cases using this class can connect to it. The configuration of the cluster is provided in the Gradle files.
+  * `DensityIntegTestCase` will create a local cluster as part of each test case. The configuration of the cluster is controlled by the test class. This is a good option if different tests cases depend on different cluster configurations, as it would be impractical (and limit parallelization) to keep re-configuring (and re-starting) the external cluster for each test case. A good example of when this class might come in handy is for testing security features, where different cluster configurations are needed to fully test each one.
 
 In short, most new functionality should come with unit tests, and optionally integration tests using either an external cluster or a local one if there's a need for more specific cluster configurations, as those are more costly and harder to maintain/debug.
 
@@ -500,21 +500,21 @@ Multi-threaded tests are often not reproducible due to the fact that there is no
 `Thread.sleep()` is almost always a bad idea because it is very difficult to know that you've waited long enough. Using primitives like `waitUntil` or `assertBusy`, which use Thread.sleep internally, is okay to wait for a specific condition. However, it is almost always better to instrument your code with concurrency primitives like a `CountDownLatch` that will allow you to deterministically wait for a specific condition, without waiting longer than necessary that will happen with a polling approach used by `assertBusy`.
 
 Example:
-- [PrimaryShardAllocatorIT](https://github.com/opensearch-project/OpenSearch/blob/7ffcd6500e0bd5956cef5c289ee66d9f99d533fc/server/src/internalClusterTest/java/org/opensearch/gateway/ReplicaShardAllocatorIT.java#L208-L235): This test is using two latches: one to wait for a recovery to start and one to block that recovery so that it can deterministically test things that happen during a recovery.
+- [PrimaryShardAllocatorIT](https://github.com/density-project/Density/blob/7ffcd6500e0bd5956cef5c289ee66d9f99d533fc/server/src/internalClusterTest/java/org/density/gateway/ReplicaShardAllocatorIT.java#L208-L235): This test is using two latches: one to wait for a recovery to start and one to block that recovery so that it can deterministically test things that happen during a recovery.
 
 ### Expect a specific segment topology
 
-By design, OpenSearch integration tests will vary how the merge policy works because in almost all scenarios you should not depend on a specific segment topology (in the real world your code will see a huge diversity of indexing workloads with OpenSearch merging things in the background all the time!). If you do in fact need to care about the segment topology (e.g. for testing statistics that might vary slightly depending on number of segments), then you must take care to ensure that segment topology is deterministic by doing things like disabling background refreshes, force merging after indexing data, etc.
+By design, Density integration tests will vary how the merge policy works because in almost all scenarios you should not depend on a specific segment topology (in the real world your code will see a huge diversity of indexing workloads with Density merging things in the background all the time!). If you do in fact need to care about the segment topology (e.g. for testing statistics that might vary slightly depending on number of segments), then you must take care to ensure that segment topology is deterministic by doing things like disabling background refreshes, force merging after indexing data, etc.
 
 Example:
-- [SegmentReplicationResizeRequestIT](https://github.com/opensearch-project/OpenSearch/blob/f715ee1a485e550802accc1c2e3d8101208d4f0b/server/src/internalClusterTest/java/org/opensearch/indices/replication/SegmentReplicationResizeRequestIT.java#L102-L109): This test disables refreshes to prevent interfering with the segment replication behavior under test.
+- [SegmentReplicationResizeRequestIT](https://github.com/density-project/Density/blob/f715ee1a485e550802accc1c2e3d8101208d4f0b/server/src/internalClusterTest/java/org/density/indices/replication/SegmentReplicationResizeRequestIT.java#L102-L109): This test disables refreshes to prevent interfering with the segment replication behavior under test.
 
 ### Leave environment in an unstable state after test
 
 The default test case will ensure that no open file handles or running threads are left after tear down. You must ensure that all resources are cleaned up at the end of each test case, or else the cleanup may end up racing with the tear down logic in the base test class in a way that is very difficult to reproduce.
 
 Example:
-- [AwarenessAttributeDecommissionIT](https://github.com/opensearch-project/OpenSearch/blob/main/server/src/internalClusterTest/java/org/opensearch/cluster/coordination/AwarenessAttributeDecommissionIT.java#L951): Recommissions any decommissioned nodes at the end of the test to ensure the after-test checks succeed.
+- [AwarenessAttributeDecommissionIT](https://github.com/density-project/Density/blob/main/server/src/internalClusterTest/java/org/density/cluster/coordination/AwarenessAttributeDecommissionIT.java#L951): Recommissions any decommissioned nodes at the end of the test to ensure the after-test checks succeed.
 
 # Test coverage analysis
 
@@ -532,7 +532,7 @@ For unit test inside a specific module:
 
 For specific unit test inside a specific module:
 
-    ./gradlew :server:test --tests "org.opensearch.search.approximate.ApproximatePointRangeQueryTests.testNycTaxiDataDistribution"
+    ./gradlew :server:test --tests "org.density.search.approximate.ApproximatePointRangeQueryTests.testNycTaxiDataDistribution"
     ./gradlew :server:jacocoTestReport -Dtests.coverage.report.html=true
 
 For integration test:
@@ -547,7 +547,7 @@ For integration test inside a specific module:
 
 For specific integration test inside a specific module:
 
-    ./gradlew :server:internalClusterTest --tests "org.opensearch.action.admin.ClientTimeoutIT.testNodesInfoTimeout"
+    ./gradlew :server:internalClusterTest --tests "org.density.action.admin.ClientTimeoutIT.testNodesInfoTimeout"
     ./gradlew :server:jacocoTestReport
 
 For modules with javaRestTest:
@@ -577,20 +577,20 @@ Please read your IDE documentation for how to attach a debugger to a JVM process
 
 # Testing with plugins
 
-To test a plugin with a custom build of OpenSearch, build OpenSearch and use the `customDistributionUrl` setting supported by each plugin to override the OpenSearch distribution.
+To test a plugin with a custom build of Density, build Density and use the `customDistributionUrl` setting supported by each plugin to override the Density distribution.
 
-For example, in your OpenSearch repository assemble a custom distribution.
+For example, in your Density repository assemble a custom distribution.
 
     ./gradlew :distribution:archives:linux-tar:assemble
 
-Then in your plugin repository, substitute in your OpenSearch build
+Then in your plugin repository, substitute in your Density build
 
-    ./gradlew run -PcustomDistributionUrl="<OPENSEARCH-REPO-PATH>/distribution/archives/linux-tar/build/distributions/opensearch-min-3.0.0-SNAPSHOT-linux-x64.tar.gz"
+    ./gradlew run -PcustomDistributionUrl="<DENSITY-REPO-PATH>/distribution/archives/linux-tar/build/distributions/density-min-3.0.0-SNAPSHOT-linux-x64.tar.gz"
 
 # Environment misc
 
 There is a known issue with macOS localhost resolve strategy that can cause some integration tests to fail. This is because integration tests have timings for cluster formation, discovery, etc. that can be exceeded if name resolution takes a long time. To fix this, make sure you have your computer name (as returned by `hostname`) inside `/etc/hosts`, e.g.:
 
-    127.0.0.1       localhost OpenSearchMBP.local
+    127.0.0.1       localhost DensityMBP.local
     255.255.255.255 broadcasthost
-    ::1             localhost OpenSearchMBP.local`
+    ::1             localhost DensityMBP.local`

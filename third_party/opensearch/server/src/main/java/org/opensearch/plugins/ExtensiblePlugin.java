@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import java.util.List;
 
@@ -40,14 +40,14 @@ import java.util.List;
  * This class provides a callback for extensible plugins to be informed of other plugins
  * which extend them.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface ExtensiblePlugin {
 
     /**
      * Extension point for external plugins to be extendable
      *
-     * @opensearch.api
+     * @density.api
      */
     interface ExtensionLoader {
         /**

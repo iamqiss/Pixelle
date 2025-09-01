@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.explain;
+package org.density.action.explain;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.internal.AliasFilter;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ValidateActions;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.internal.AliasFilter;
 
 import java.io.IOException;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Explain request encapsulating the explain query and document identifier to get an explanation for.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ExplainRequest extends SingleShardRequest<ExplainRequest> implements ToXContentObject {

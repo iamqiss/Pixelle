@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.rule.action.UpdateRuleRequest;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.autotagging.RuleTests;
-import org.opensearch.rule.utils.RuleTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.rule.action.UpdateRuleRequest;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.autotagging.RuleTests;
+import org.density.rule.utils.RuleTestUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.rule.utils.RuleTestUtils.ATTRIBUTE_MAP;
-import static org.opensearch.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_TWO;
-import static org.opensearch.rule.utils.RuleTestUtils.DESCRIPTION_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.DESCRIPTION_TWO;
-import static org.opensearch.rule.utils.RuleTestUtils.FEATURE_VALUE_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils.FEATURE_VALUE_TWO;
-import static org.opensearch.rule.utils.RuleTestUtils.MockRuleAttributes;
-import static org.opensearch.rule.utils.RuleTestUtils.TIMESTAMP_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils._ID_ONE;
-import static org.opensearch.rule.utils.RuleTestUtils._ID_TWO;
-import static org.opensearch.rule.utils.RuleTestUtils.ruleOne;
-import static org.opensearch.rule.utils.RuleTestUtils.ruleTwo;
+import static org.density.rule.utils.RuleTestUtils.ATTRIBUTE_MAP;
+import static org.density.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_ONE;
+import static org.density.rule.utils.RuleTestUtils.ATTRIBUTE_VALUE_TWO;
+import static org.density.rule.utils.RuleTestUtils.DESCRIPTION_ONE;
+import static org.density.rule.utils.RuleTestUtils.DESCRIPTION_TWO;
+import static org.density.rule.utils.RuleTestUtils.FEATURE_VALUE_ONE;
+import static org.density.rule.utils.RuleTestUtils.FEATURE_VALUE_TWO;
+import static org.density.rule.utils.RuleTestUtils.MockRuleAttributes;
+import static org.density.rule.utils.RuleTestUtils.TIMESTAMP_ONE;
+import static org.density.rule.utils.RuleTestUtils._ID_ONE;
+import static org.density.rule.utils.RuleTestUtils._ID_TWO;
+import static org.density.rule.utils.RuleTestUtils.ruleOne;
+import static org.density.rule.utils.RuleTestUtils.ruleTwo;
 
-public class RuleUtilsTests extends OpenSearchTestCase {
+public class RuleUtilsTests extends DensityTestCase {
 
     public void testDuplicateRuleFound() {
         Rule testRule = Rule.builder()

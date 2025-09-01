@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
-import org.opensearch.action.get.MultiGetItemResponse;
-import org.opensearch.action.get.MultiGetRequestBuilder;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.action.get.MultiGetItemResponse;
+import org.density.action.get.MultiGetRequestBuilder;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -56,7 +56,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -65,7 +65,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class BulkProcessorIT extends OpenSearchIntegTestCase {
+public class BulkProcessorIT extends DensityIntegTestCase {
     public void testThatBulkProcessorCountIsCorrect() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
         BulkProcessorTestListener listener = new BulkProcessorTestListener(latch);

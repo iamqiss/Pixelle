@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.rest.DensityRestTestCase;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -43,12 +43,12 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.core.rest.RestStatus.NOT_FOUND;
-import static org.opensearch.core.rest.RestStatus.OK;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.core.rest.RestStatus.NOT_FOUND;
+import static org.density.core.rest.RestStatus.OK;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class ReactorNetty4HeadBodyIsEmptyIT extends OpenSearchRestTestCase {
+public class ReactorNetty4HeadBodyIsEmptyIT extends DensityRestTestCase {
     public void testHeadRoot() throws IOException {
         headTestCase("/", emptyMap(), greaterThan(0));
         headTestCase("/", singletonMap("pretty", ""), greaterThan(0));

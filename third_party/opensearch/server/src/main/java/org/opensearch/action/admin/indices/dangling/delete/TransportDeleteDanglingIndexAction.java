@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.delete;
+package org.density.action.admin.indices.dangling.delete;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.indices.dangling.DanglingIndexInfo;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesAction;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
-import org.opensearch.action.admin.indices.dangling.list.NodeListDanglingIndicesResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.indices.dangling.DanglingIndexInfo;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesAction;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
+import org.density.action.admin.indices.dangling.list.NodeListDanglingIndicesResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_DANGLING_INDEX;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_DANGLING_INDEX;
 
 /**
  * Implements the deletion of a dangling index. When handling a {@link DeleteDanglingIndexAction},
  * this class first checks that such a dangling index exists. It then submits a cluster state update
  * to add the index to the index graveyard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportDeleteDanglingIndexAction extends TransportClusterManagerNodeAction<
     DeleteDanglingIndexRequest,
@@ -232,7 +232,7 @@ public class TransportDeleteDanglingIndexAction extends TransportClusterManagerN
                             .stream()
                             .map(FailedNodeException::nodeId)
                             .collect(Collectors.joining(","));
-                        OpenSearchException e = new OpenSearchException("Failed to query nodes [" + nodeIds + "]");
+                        DensityException e = new DensityException("Failed to query nodes [" + nodeIds + "]");
 
                         for (FailedNodeException failure : response.failures()) {
                             logger.error("Failed to query node [" + failure.nodeId() + "]", failure);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;
 
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.AbstractRestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
+import org.density.core.rest.RestStatus;
+import org.density.rest.AbstractRestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;

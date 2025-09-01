@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,9 +51,9 @@ import org.junit.BeforeClass;
 import java.util.function.Predicate;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.createClusterService;
 
-public abstract class PersistentTasksDecidersTestCase extends OpenSearchTestCase {
+public abstract class PersistentTasksDecidersTestCase extends DensityTestCase {
 
     /** Needed by {@link ClusterService} **/
     private static ThreadPool threadPool;

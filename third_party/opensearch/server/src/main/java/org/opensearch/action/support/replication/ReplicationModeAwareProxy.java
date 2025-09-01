@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.action.support.replication.ReplicationOperation.ReplicaResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.support.replication.ReplicationOperation.ReplicaResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.core.action.ActionListener;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  * This implementation of {@link ReplicationProxy} fans out the replication request to current shard routing basis
  * the shard routing's replication mode and replication override policy.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationModeAwareProxy<ReplicaRequest extends ReplicationRequest<ReplicaRequest>> extends ReplicationProxy<ReplicaRequest> {
 

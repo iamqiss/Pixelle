@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.io.Streams;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class StreamsUtils {
         if (is == null) {
             throw new FileNotFoundException("Resource [" + path + "] not found in classpath with class loader [" + classLoader + "]");
         }
-        return org.opensearch.common.io.Streams.copyToString(new InputStreamReader(is, StandardCharsets.UTF_8));
+        return org.density.common.io.Streams.copyToString(new InputStreamReader(is, StandardCharsets.UTF_8));
     }
 
     public static String copyToStringFromClasspath(String path) throws IOException {
@@ -57,7 +57,7 @@ public class StreamsUtils {
         if (is == null) {
             throw new FileNotFoundException("Resource [" + path + "] not found in classpath");
         }
-        return org.opensearch.common.io.Streams.copyToString(new InputStreamReader(is, StandardCharsets.UTF_8));
+        return org.density.common.io.Streams.copyToString(new InputStreamReader(is, StandardCharsets.UTF_8));
     }
 
     public static byte[] copyToBytesFromClasspath(String path) throws IOException {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.common.unit.TimeValue;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +43,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 
-public class BulkIndexByScrollResponseTests extends OpenSearchTestCase {
+public class BulkIndexByScrollResponseTests extends DensityTestCase {
     public void testMergeConstructor() {
         int mergeCount = between(2, 10);
         List<BulkByScrollResponse> responses = new ArrayList<>(mergeCount);

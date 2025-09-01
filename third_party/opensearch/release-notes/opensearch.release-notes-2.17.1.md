@@ -2,8 +2,8 @@
 
 ## [2.17.1]
 ### Added
-- Add path prefix support to hashed prefix snapshots ([#15664](https://github.com/opensearch-project/OpenSearch/pull/15664))
-- Memory optimisations in _cluster/health API ([#15492](https://github.com/opensearch-project/OpenSearch/pull/15492))
+- Add path prefix support to hashed prefix snapshots ([#15664](https://github.com/density-project/Density/pull/15664))
+- Memory optimisations in _cluster/health API ([#15492](https://github.com/density-project/Density/pull/15492))
 
 ### Dependencies
 

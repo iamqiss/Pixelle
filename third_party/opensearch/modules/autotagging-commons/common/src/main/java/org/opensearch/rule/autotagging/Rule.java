@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rule.RuleUtils;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.rule.RuleUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ import java.util.Set;
  *     "workload_group": "dev_workload_group_id",
  *     "updated_at": "01-10-2025T21:23:21.456Z"
  * }
- * @opensearch.experimental
+ * @density.experimental
  */
 public class Rule implements Writeable, ToXContentObject {
     private final String id;
@@ -213,7 +213,7 @@ public class Rule implements Writeable, ToXContentObject {
 
     /**
      * Builder class for {@link Rule}
-     * @opensearch.experimental
+     * @density.experimental
      */
     public static class Builder {
         private String id;

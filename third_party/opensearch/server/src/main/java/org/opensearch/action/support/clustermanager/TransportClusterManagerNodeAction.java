@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.RetryableAction;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionAction;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionRequest;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionResponse;
-import org.opensearch.cluster.ClusterManagerNodeChangePredicate;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterManagerThrottlingException;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.ActionRunnable;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.RetryableAction;
+import org.density.action.support.clustermanager.term.GetTermVersionAction;
+import org.density.action.support.clustermanager.term.GetTermVersionRequest;
+import org.density.action.support.clustermanager.term.GetTermVersionResponse;
+import org.density.cluster.ClusterManagerNodeChangePredicate;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterManagerThrottlingException;
+import org.density.cluster.service.ClusterService;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.node.NodeClosedException;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -82,12 +82,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static org.opensearch.Version.V_2_13_0;
+import static org.density.Version.V_2_13_0;
 
 /**
  * A base class for operations that needs to be performed on the cluster-manager node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportClusterManagerNodeAction<Request extends ClusterManagerNodeRequest<Request>, Response extends ActionResponse>
     extends HandledTransportAction<Request, Response> {
@@ -190,7 +190,7 @@ public abstract class TransportClusterManagerNodeAction<Request extends ClusterM
     /**
      * Asynchronous single action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class AsyncSingleAction extends RetryableAction {
 

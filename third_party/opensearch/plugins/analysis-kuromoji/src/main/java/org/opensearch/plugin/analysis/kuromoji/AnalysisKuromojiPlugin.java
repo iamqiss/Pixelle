@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.analysis.kuromoji;
+package org.density.plugin.analysis.kuromoji;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.JapaneseStopTokenFilterFactory;
-import org.opensearch.index.analysis.KuromojiAnalyzerProvider;
-import org.opensearch.index.analysis.KuromojiBaseFormFilterFactory;
-import org.opensearch.index.analysis.KuromojiCompletionAnalyzerProvider;
-import org.opensearch.index.analysis.KuromojiCompletionFilterFactory;
-import org.opensearch.index.analysis.KuromojiIterationMarkCharFilterFactory;
-import org.opensearch.index.analysis.KuromojiKatakanaStemmerFactory;
-import org.opensearch.index.analysis.KuromojiNumberFilterFactory;
-import org.opensearch.index.analysis.KuromojiPartOfSpeechFilterFactory;
-import org.opensearch.index.analysis.KuromojiReadingFormFilterFactory;
-import org.opensearch.index.analysis.KuromojiTokenizerFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.JapaneseStopTokenFilterFactory;
+import org.density.index.analysis.KuromojiAnalyzerProvider;
+import org.density.index.analysis.KuromojiBaseFormFilterFactory;
+import org.density.index.analysis.KuromojiCompletionAnalyzerProvider;
+import org.density.index.analysis.KuromojiCompletionFilterFactory;
+import org.density.index.analysis.KuromojiIterationMarkCharFilterFactory;
+import org.density.index.analysis.KuromojiKatakanaStemmerFactory;
+import org.density.index.analysis.KuromojiNumberFilterFactory;
+import org.density.index.analysis.KuromojiPartOfSpeechFilterFactory;
+import org.density.index.analysis.KuromojiReadingFormFilterFactory;
+import org.density.index.analysis.KuromojiTokenizerFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;

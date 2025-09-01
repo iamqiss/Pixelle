@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.SystemIndexDescriptor;
+import org.density.common.settings.Settings;
+import org.density.indices.SystemIndexDescriptor;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +42,7 @@ import java.util.Collections;
  * Plugin for defining system indices. Extends {@link ActionPlugin} because system indices must be accessed via APIs
  * added by the plugin that owns the system index, rather than standard APIs.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface SystemIndexPlugin extends ActionPlugin {
 

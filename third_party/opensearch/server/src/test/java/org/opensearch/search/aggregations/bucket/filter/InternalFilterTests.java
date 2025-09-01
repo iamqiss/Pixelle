@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.filter;
+package org.density.search.aggregations.bucket.filter;
 
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalSingleBucketAggregationTestCase;
-import org.opensearch.search.aggregations.bucket.ParsedSingleBucketAggregation;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalSingleBucketAggregationTestCase;
+import org.density.search.aggregations.bucket.ParsedSingleBucketAggregation;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
 
 import java.util.Collections;
 import java.util.List;

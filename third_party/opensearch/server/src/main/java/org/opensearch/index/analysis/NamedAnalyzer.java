@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.DelegatingAnalyzerWrapper;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.mapper.MapperException;
+import org.density.common.annotation.PublicApi;
+import org.density.index.mapper.MapperException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.Objects;
  * Named analyzer is an analyzer wrapper around an actual analyzer ({@link #analyzer} that is associated
  * with a name ({@link #name()}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NamedAnalyzer extends DelegatingAnalyzerWrapper {
@@ -70,8 +70,8 @@ public class NamedAnalyzer extends DelegatingAnalyzerWrapper {
         this.scope = scope;
         this.analyzer = analyzer;
         this.positionIncrementGap = positionIncrementGap;
-        if (analyzer instanceof org.opensearch.index.analysis.AnalyzerComponentsProvider) {
-            this.analysisMode = ((org.opensearch.index.analysis.AnalyzerComponentsProvider) analyzer).getComponents().analysisMode();
+        if (analyzer instanceof org.density.index.analysis.AnalyzerComponentsProvider) {
+            this.analysisMode = ((org.density.index.analysis.AnalyzerComponentsProvider) analyzer).getComponents().analysisMode();
         } else {
             this.analysisMode = AnalysisMode.ALL;
         }

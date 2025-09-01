@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,16 +23,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.spi.InjectionListener;
-import org.opensearch.common.inject.spi.Message;
-import org.opensearch.common.inject.spi.TypeEncounter;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.spi.InjectionListener;
+import org.density.common.inject.spi.Message;
+import org.density.common.inject.spi.TypeEncounter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class EncounterImpl<T> implements TypeEncounter<T> {
 

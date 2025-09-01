@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -44,7 +44,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class FailProcessorFactoryTests extends OpenSearchTestCase {
+public class FailProcessorFactoryTests extends DensityTestCase {
 
     private FailProcessor.Factory factory;
 
@@ -67,7 +67,7 @@ public class FailProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[message] required property is missing"));
         }
     }
@@ -77,8 +77,8 @@ public class FailProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("message", "{{error}}");
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(OpenSearchException.class, () -> factory.create(null, processorTag, null, config));
+        DensityException exception = expectThrows(DensityException.class, () -> factory.create(null, processorTag, null, config));
         assertThat(exception.getMessage(), equalTo("java.lang.RuntimeException: could not compile script"));
-        assertThat(exception.getMetadata("opensearch.processor_tag").get(0), equalTo(processorTag));
+        assertThat(exception.getMetadata("density.processor_tag").get(0), equalTo(processorTag));
     }
 }

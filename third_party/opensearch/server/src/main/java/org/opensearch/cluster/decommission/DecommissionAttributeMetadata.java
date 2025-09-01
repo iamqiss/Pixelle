@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.AbstractNamedDiffable;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.AbstractNamedDiffable;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * Contains metadata about decommission attribute
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class DecommissionAttributeMetadata extends AbstractNamedDiffable<Custom> implements Custom {
@@ -194,7 +194,7 @@ public class DecommissionAttributeMetadata extends AbstractNamedDiffable<Custom>
                 String currentFieldName = parser.currentName();
                 if (attributeType.equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse decommission attribute type [{}], expected object",
                             attributeType
                         );
@@ -208,7 +208,7 @@ public class DecommissionAttributeMetadata extends AbstractNamedDiffable<Custom>
                             if (token == XContentParser.Token.VALUE_STRING) {
                                 value = parser.text();
                             } else {
-                                throw new OpenSearchParseException(
+                                throw new DensityParseException(
                                     "failed to parse attribute [{}], expected string for attribute value",
                                     fieldName
                                 );
@@ -216,27 +216,27 @@ public class DecommissionAttributeMetadata extends AbstractNamedDiffable<Custom>
                             decommissionAttribute = new DecommissionAttribute(fieldName, value);
                             parser.nextToken();
                         } else {
-                            throw new OpenSearchParseException("failed to parse attribute type [{}], unexpected type", attributeType);
+                            throw new DensityParseException("failed to parse attribute type [{}], unexpected type", attributeType);
                         }
                     } else {
-                        throw new OpenSearchParseException("failed to parse attribute type [{}]", attributeType);
+                        throw new DensityParseException("failed to parse attribute type [{}]", attributeType);
                     }
                 } else if ("status".equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse status of decommissioning, expected string but found unknown type"
                         );
                     }
                     status = DecommissionStatus.fromString(parser.text());
                 } else if ("requestID".equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse status of decommissioning, expected string but found unknown type"
                         );
                     }
                     requestID = parser.text();
                 } else {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "unknown field found [{}], failed to parse the decommission attribute",
                         currentFieldName
                     );

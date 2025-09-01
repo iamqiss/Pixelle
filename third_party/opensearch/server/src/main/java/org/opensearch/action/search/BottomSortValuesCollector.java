@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.FieldComparator;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.Pruning;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopFieldDocs;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchSortValuesAndFormats;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchSortValuesAndFormats;
 
 /**
  * Utility class to keep track of the bottom doc's sort values in a distributed search.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class BottomSortValuesCollector {
     private final int topNSize;

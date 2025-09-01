@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
@@ -42,10 +42,10 @@ import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.mapper.ICUCollationKeywordFieldMapper.CollationFieldType;
-import org.opensearch.index.mapper.MappedFieldType.Relation;
+import org.density.DensityException;
+import org.density.common.unit.Fuzziness;
+import org.density.index.mapper.ICUCollationKeywordFieldMapper.CollationFieldType;
+import org.density.index.mapper.MappedFieldType.Relation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -174,8 +174,8 @@ public class CollationFieldTypeTests extends FieldTypeTestCase {
 
         assertEquals(expected, ft.rangeQuery("a", "b", false, false, null, null, null, MOCK_QSC));
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.rangeQuery("a", "b", true, true, null, null, null, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals(

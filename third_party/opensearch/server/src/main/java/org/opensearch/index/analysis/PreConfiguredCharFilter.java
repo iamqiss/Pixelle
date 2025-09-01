@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.CharFilter;
 import org.apache.lucene.analysis.TokenFilter;
-import org.opensearch.Version;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.Version;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
 
 import java.io.Reader;
 import java.util.function.BiFunction;
@@ -44,7 +44,7 @@ import java.util.function.Function;
 /**
  * Provides pre-configured, shared {@link CharFilter}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PreConfiguredCharFilter extends PreConfiguredAnalysisComponent<CharFilterFactory> {
     /**
@@ -65,7 +65,7 @@ public class PreConfiguredCharFilter extends PreConfiguredAnalysisComponent<Char
     public static PreConfiguredCharFilter singletonWithVersion(
         String name,
         boolean useFilterForMultitermQueries,
-        BiFunction<Reader, org.opensearch.Version, Reader> create
+        BiFunction<Reader, org.density.Version, Reader> create
     ) {
         return new PreConfiguredCharFilter(
             name,
@@ -92,14 +92,14 @@ public class PreConfiguredCharFilter extends PreConfiguredAnalysisComponent<Char
     }
 
     /**
-     * Create a pre-configured token filter that may vary based on the OpenSearch version.
+     * Create a pre-configured token filter that may vary based on the Density version.
      */
     public static PreConfiguredCharFilter openSearchVersion(
         String name,
         boolean useFilterForMultitermQueries,
-        BiFunction<Reader, org.opensearch.Version, Reader> create
+        BiFunction<Reader, org.density.Version, Reader> create
     ) {
-        return new PreConfiguredCharFilter(name, CachingStrategy.OPENSEARCH, useFilterForMultitermQueries, create);
+        return new PreConfiguredCharFilter(name, CachingStrategy.DENSITY, useFilterForMultitermQueries, create);
     }
 
     private final boolean useFilterForMultitermQueries;
@@ -109,7 +109,7 @@ public class PreConfiguredCharFilter extends PreConfiguredAnalysisComponent<Char
         String name,
         CachingStrategy cache,
         boolean useFilterForMultitermQueries,
-        BiFunction<Reader, org.opensearch.Version, Reader> create
+        BiFunction<Reader, org.density.Version, Reader> create
     ) {
         super(name, cache);
         this.useFilterForMultitermQueries = useFilterForMultitermQueries;

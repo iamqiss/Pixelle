@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.IndexShardStats;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.get.GetStats;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.recovery.RecoveryStats;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.shard.IndexingStats;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.index.warmer.WarmerStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.Version;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.IndexShardStats;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.search.SearchRequestStats;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.get.GetStats;
+import org.density.index.merge.MergeStats;
+import org.density.index.recovery.RecoveryStats;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.search.stats.SearchStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.shard.IndexingStats;
+import org.density.index.store.StoreStats;
+import org.density.index.translog.TranslogStats;
+import org.density.index.warmer.WarmerStats;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ import java.util.Optional;
 /**
  * Global information on indices stats running on a specific node.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NodeIndicesStats implements Writeable, ToXContentFragment {
@@ -408,7 +408,7 @@ public class NodeIndicesStats implements Writeable, ToXContentFragment {
     /**
      * Fields used for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "3.0.0")
     public enum StatsLevel {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.http.HttpPipelinedRequest;
+import org.density.ExceptionsHelper;
+import org.density.http.HttpPipelinedRequest;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.hashing;
+package org.density.common.hashing;
 
-import org.opensearch.common.hash.FNV1a;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.hash.FNV1a;
+import org.density.test.DensityTestCase;
 
-public class FNV1aTests extends OpenSearchTestCase {
+public class FNV1aTests extends DensityTestCase {
 
     public void testHash32WithKnownValues() {
         assertEquals(-1114940029532279145L, FNV1a.hash32("1sH3kJO5TyeskNekv2YTbA0segmentsdata"));

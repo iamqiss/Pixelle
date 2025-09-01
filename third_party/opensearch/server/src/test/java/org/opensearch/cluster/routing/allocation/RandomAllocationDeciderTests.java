@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.EmptyClusterInfoService;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.Metadata.Builder;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
-import org.opensearch.test.gateway.TestGatewayAllocator;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.EmptyClusterInfoService;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.Metadata.Builder;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.snapshots.EmptySnapshotsInfoService;
+import org.density.test.gateway.TestGatewayAllocator;
 import org.hamcrest.Matchers;
 
 import java.util.Arrays;
@@ -61,10 +61,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 import static org.hamcrest.Matchers.equalTo;
 
-public class RandomAllocationDeciderTests extends OpenSearchAllocationTestCase {
+public class RandomAllocationDeciderTests extends DensityAllocationTestCase {
     /* This test will make random allocation decision on a growing and shrinking
      * cluster leading to a random distribution of the shards. After a certain
      * amount of iterations the test allows allocation unless the same shard is
@@ -111,7 +111,7 @@ public class RandomAllocationDeciderTests extends OpenSearchAllocationTestCase {
         }
 
         RoutingTable initialRoutingTable = routingTableBuilder.build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(initialRoutingTable)
             .build();

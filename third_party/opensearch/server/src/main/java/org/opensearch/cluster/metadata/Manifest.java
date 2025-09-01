@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.MetadataStateFormat;
+import org.density.core.ParseField;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.MetadataStateFormat;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
  * Global metadata generation could be obtained by calling {@link #getGlobalGeneration()}.
  * Index metadata generation could be obtained by calling {@link #getIndexGenerations()}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Manifest implements ToXContentFragment {
     // TODO revisit missing and unknown constants once Zen2 BWC is ready
@@ -236,7 +236,7 @@ public class Manifest implements ToXContentFragment {
     /**
      * An index entry.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class IndexEntry implements ToXContentFragment {
         private static final ParseField INDEX_GENERATION_PARSE_FIELD = new ParseField("generation");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.test.GradleUnitTestCase;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
@@ -152,7 +152,7 @@ public class JdkDownloadPluginTests extends GradleUnitTestCase {
     private Project createProject() {
         final String name = UUID.randomUUID().toString();
         Project project = ProjectBuilder.builder().withName(name).withParent(rootProject).build();
-        project.getPlugins().apply("opensearch.jdk-download");
+        project.getPlugins().apply("density.jdk-download");
         return project;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,14 +23,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.spi.PrivateElements;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.spi.PrivateElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class PrivateElementProcessor extends AbstractProcessor {
 

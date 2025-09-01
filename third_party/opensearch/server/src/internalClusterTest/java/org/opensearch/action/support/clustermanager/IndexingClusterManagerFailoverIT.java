@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.DocWriteResponse;
+import org.density.action.index.IndexResponse;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,8 +47,8 @@ import java.util.concurrent.CyclicBarrier;
 
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class IndexingClusterManagerFailoverIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+public class IndexingClusterManagerFailoverIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.index.MergePolicy;
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 /**
- * A provider for obtaining merge policies used by OpenSearch indexes.
+ * A provider for obtaining merge policies used by Density indexes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 @InternalApi

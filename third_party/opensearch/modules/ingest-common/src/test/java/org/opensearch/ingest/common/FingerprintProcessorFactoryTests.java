@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class FingerprintProcessorFactoryTests extends OpenSearchTestCase {
+public class FingerprintProcessorFactoryTests extends DensityTestCase {
 
     private FingerprintProcessor.Factory factory;
 
@@ -66,7 +66,7 @@ public class FingerprintProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[fields] either fields or exclude_fields can be set"));
         }
 
@@ -81,7 +81,7 @@ public class FingerprintProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[fields] field name cannot be null nor empty"));
         }
 
@@ -96,7 +96,7 @@ public class FingerprintProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[exclude_fields] field name cannot be null nor empty"));
         }
     }
@@ -109,7 +109,7 @@ public class FingerprintProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(
                 e.getMessage(),
                 equalTo("[hash_method] hash method must be MD5@2.16.0, SHA-1@2.16.0, SHA-256@2.16.0 or SHA3-256@2.16.0")

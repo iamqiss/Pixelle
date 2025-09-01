@@ -1,7 +1,7 @@
 {
   "get":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/document-apis/get-documents/",
+      "url":"https://density.org/docs/latest/api-reference/document-apis/get-documents/",
       "description":"Returns a document."
     },
     "stability":"stable",

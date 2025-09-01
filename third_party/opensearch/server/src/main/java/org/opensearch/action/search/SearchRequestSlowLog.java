@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.logging.OpenSearchLogMessage;
-import org.opensearch.common.logging.SlowLogLevel;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.tasks.Task;
+import org.density.cluster.service.ClusterService;
+import org.density.common.logging.Loggers;
+import org.density.common.logging.DensityLogMessage;
+import org.density.common.logging.SlowLogLevel;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.ToXContent;
+import org.density.tasks.Task;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The request-level search slow log implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchRequestSlowLog extends SearchRequestOperationsListener {
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
@@ -163,9 +163,9 @@ public final class SearchRequestSlowLog extends SearchRequestOperationsListener 
     /**
      * Search request slow log message
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    static final class SearchRequestSlowLogMessage extends OpenSearchLogMessage {
+    static final class SearchRequestSlowLogMessage extends DensityLogMessage {
 
         SearchRequestSlowLogMessage(SearchPhaseContext context, long tookInNanos, SearchRequestContext searchRequestContext) {
             super(prepareMap(context, tookInNanos, searchRequestContext), message(context, tookInNanos, searchRequestContext));

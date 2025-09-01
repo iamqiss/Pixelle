@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.ssl;
+package org.density.transport.grpc.ssl;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SecureAuxTransportSettingsProvider;
-import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
-import org.opensearch.plugins.SecureSettingsFactory;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.grpc.GrpcPlugin;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SecureAuxTransportSettingsProvider;
+import org.density.plugins.SecureHttpTransportSettingsProvider;
+import org.density.plugins.SecureSettingsFactory;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.grpc.GrpcPlugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,13 +28,13 @@ import java.util.Optional;
 
 import io.grpc.health.v1.HealthCheckResponse;
 
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
-import static org.opensearch.transport.grpc.ssl.SecureNetty4GrpcServerTransport.GRPC_SECURE_TRANSPORT_SETTING_KEY;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthOptional;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthRequired;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
+import static org.density.transport.grpc.ssl.SecureNetty4GrpcServerTransport.GRPC_SECURE_TRANSPORT_SETTING_KEY;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthOptional;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthRequired;
 
-public abstract class SecureNetty4GrpcServerTransportIT extends OpenSearchIntegTestCase {
+public abstract class SecureNetty4GrpcServerTransportIT extends DensityIntegTestCase {
 
     public static class MockSecurityPlugin extends Plugin implements NetworkPlugin {
         public MockSecurityPlugin() {}

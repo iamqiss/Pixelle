@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.taskdefs.condition.Os;
-import org.opensearch.gradle.BwcVersions;
-import org.opensearch.gradle.LoggedExec;
+import org.density.gradle.BwcVersions;
+import org.density.gradle.LoggedExec;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gradle.util.JavaUtil.getJavaHome;
+import static org.density.gradle.util.JavaUtil.getJavaHome;
 
 /**
  * By registering bwc tasks via this extension we can support declaring custom bwc tasks from the build script
@@ -99,9 +99,9 @@ public class BwcSetupExtension {
                                 Integer.parseInt(
                                     Arrays.asList(javaVersionsString.split("\n"))
                                         .stream()
-                                        .filter(l -> l.trim().startsWith("OPENSEARCH_BUILD_JAVA="))
-                                        .map(l -> l.replace("OPENSEARCH_BUILD_JAVA=java", "").trim())
-                                        .map(l -> l.replace("OPENSEARCH_BUILD_JAVA=openjdk", "").trim())
+                                        .filter(l -> l.trim().startsWith("DENSITY_BUILD_JAVA="))
+                                        .map(l -> l.replace("DENSITY_BUILD_JAVA=java", "").trim())
+                                        .map(l -> l.replace("DENSITY_BUILD_JAVA=openjdk", "").trim())
                                         .collect(Collectors.joining("!!"))
                                 )
                             )
@@ -112,9 +112,9 @@ public class BwcSetupExtension {
                                 Integer.parseInt(
                                     Arrays.asList(javaVersionsString.split("\n"))
                                         .stream()
-                                        .filter(l -> l.trim().startsWith("OPENSEARCH_RUNTIME_JAVA="))
-                                        .map(l -> l.replace("OPENSEARCH_RUNTIME_JAVA=java", "").trim())
-                                        .map(l -> l.replace("OPENSEARCH_RUNTIME_JAVA=openjdk", "").trim())
+                                        .filter(l -> l.trim().startsWith("DENSITY_RUNTIME_JAVA="))
+                                        .map(l -> l.replace("DENSITY_RUNTIME_JAVA=java", "").trim())
+                                        .map(l -> l.replace("DENSITY_RUNTIME_JAVA=openjdk", "").trim())
                                         .collect(Collectors.joining("!!"))
                                 )
                             )
@@ -132,9 +132,9 @@ public class BwcSetupExtension {
                     loggedExec.args("--offline");
                 }
                 // TODO resolve
-                String buildCacheUrl = System.getProperty("org.opensearch.build.cache.url");
+                String buildCacheUrl = System.getProperty("org.density.build.cache.url");
                 if (buildCacheUrl != null) {
-                    loggedExec.args("-Dorg.opensearch.build.cache.url=" + buildCacheUrl);
+                    loggedExec.args("-Dorg.density.build.cache.url=" + buildCacheUrl);
                 }
 
                 loggedExec.args("-Dbuild.snapshot=true");

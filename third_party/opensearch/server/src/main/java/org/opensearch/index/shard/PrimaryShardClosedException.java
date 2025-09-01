@@ -1,12 +1,12 @@
 /*
- * Copyright OpenSearch Contributors
+ * Copyright Density Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
  * Exception to indicate failures are caused due to the closure of the primary
  * shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PrimaryShardClosedException extends IndexShardClosedException {
     public PrimaryShardClosedException(ShardId shardId) {

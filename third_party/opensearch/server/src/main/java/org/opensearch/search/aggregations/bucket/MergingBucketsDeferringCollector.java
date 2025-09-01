@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import org.apache.lucene.util.packed.PackedInts;
 import org.apache.lucene.util.packed.PackedLongValues;
-import org.opensearch.search.internal.SearchContext;
+import org.density.search.internal.SearchContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.function.LongUnaryOperator;
  * mergeBuckets, which can be invoked by the aggregator when increasing the
  * rounding interval.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MergingBucketsDeferringCollector extends BestBucketsDeferringCollector {
     public MergingBucketsDeferringCollector(SearchContext context, boolean isGlobal) {

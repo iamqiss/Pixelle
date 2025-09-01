@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStoreException;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.AbstractBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStoreException;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.AbstractBlobContainer;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.view;
+package org.density.action.admin.indices.view;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.View;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.ResourceNotFoundException;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.View;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionListener;
+import org.density.transport.client.node.NodeClient;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.any;

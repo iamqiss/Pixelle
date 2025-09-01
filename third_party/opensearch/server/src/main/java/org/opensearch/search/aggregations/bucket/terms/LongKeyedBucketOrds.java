@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.LongLongHash;
-import org.opensearch.common.util.ReorganizingLongHash;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
+import org.density.common.lease.Releasable;
+import org.density.common.util.BigArrays;
+import org.density.common.util.LongLongHash;
+import org.density.common.util.ReorganizingLongHash;
+import org.density.search.aggregations.CardinalityUpperBound;
 
 /**
  * Maps long bucket keys to bucket ordinals.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class LongKeyedBucketOrds implements Releasable {
     /**
@@ -101,7 +101,7 @@ public abstract class LongKeyedBucketOrds implements Releasable {
     /**
      * An iterator for buckets inside a particular {@code owningBucketOrd}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface BucketOrdsEnum {
         /**
@@ -145,7 +145,7 @@ public abstract class LongKeyedBucketOrds implements Releasable {
     /**
      * Implementation that only works if it is collecting from a single bucket.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FromSingle extends LongKeyedBucketOrds {
         private final ReorganizingLongHash ords;
@@ -226,7 +226,7 @@ public abstract class LongKeyedBucketOrds implements Releasable {
     /**
      * Implementation that works properly when collecting from many buckets.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FromMany extends LongKeyedBucketOrds {
         private final LongLongHash ords;

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -31,7 +31,7 @@ import java.util.Objects;
 
 import org.roaringbitmap.RoaringBitmap;
 
-import static org.opensearch.search.query.BitmapIndexQuery.checkArgs;
+import static org.density.search.query.BitmapIndexQuery.checkArgs;
 
 /**
  * Filter with bitmap

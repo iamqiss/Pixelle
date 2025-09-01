@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.ingestion.fs;
+package org.density.plugin.ingestion.fs;
 
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.streamingingestion.pause.PauseIngestionResponse;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
-import org.opensearch.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.streamingingestion.pause.PauseIngestionResponse;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
+import org.density.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.transport.client.Requests;
 import org.junit.Before;
 
 import java.io.BufferedWriter;
@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-public class FileBasedIngestionSingleNodeTests extends OpenSearchSingleNodeTestCase {
+public class FileBasedIngestionSingleNodeTests extends DensitySingleNodeTestCase {
     private Path ingestionDir;
     private final String stream = "test_stream";
     private final String index = "test_index";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.io.IOException;
 import java.util.ArrayList;

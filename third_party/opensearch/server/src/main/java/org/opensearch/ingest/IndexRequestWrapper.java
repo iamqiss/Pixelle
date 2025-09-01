@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
 
 import java.util.List;
 

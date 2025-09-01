@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query.rewriters;
+package org.density.search.query.rewriters;
 
 import org.apache.lucene.tests.util.LuceneTestCase.AwaitsFix;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.mock;
 
-public class BooleanFlatteningRewriterTests extends OpenSearchTestCase {
+public class BooleanFlatteningRewriterTests extends DensityTestCase {
 
     private final BooleanFlatteningRewriter rewriter = BooleanFlatteningRewriter.INSTANCE;
     private final QueryShardContext context = mock(QueryShardContext.class);
@@ -102,7 +102,7 @@ public class BooleanFlatteningRewriterTests extends OpenSearchTestCase {
         assertThat(rewrittenBool.mustNot().get(0), instanceOf(BoolQueryBuilder.class));
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/18906")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/18906")
     public void testDeepNesting() {
         // TODO: This test expects complete flattening of deeply nested bool queries
         // where intermediate bool wrappers are removed entirely. Our current implementation

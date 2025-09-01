@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.DensityException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
@@ -120,7 +120,7 @@ public class MultiSearchTemplateResponseTests extends AbstractXContentTestCase<M
                 searchTemplateResponse.setResponse(searchResponse);
                 items[i] = new MultiSearchTemplateResponse.Item(searchTemplateResponse, null);
             } else {
-                items[i] = new MultiSearchTemplateResponse.Item(null, new OpenSearchException("an error"));
+                items[i] = new MultiSearchTemplateResponse.Item(null, new DensityException("an error"));
             }
         }
         return new MultiSearchTemplateResponse(items, overallTookInMillis);

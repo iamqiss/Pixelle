@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cli;
+package org.density.cli;
 
 import joptsimple.OptionSet;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -42,7 +42,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
-public class EvilCommandTests extends OpenSearchTestCase {
+public class EvilCommandTests extends DensityTestCase {
 
     public void testCommandShutdownHook() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
@@ -74,7 +74,7 @@ public class EvilCommandTests extends OpenSearchTestCase {
             // ensure that we dump the exception
             assertThat(output, containsString("java.io.IOException: fail"));
             // ensure that we dump the stack trace too
-            assertThat(output, containsString("\tat org.opensearch.cli.EvilCommandTests$1.close"));
+            assertThat(output, containsString("\tat org.density.cli.EvilCommandTests$1.close"));
         } else {
             assertThat(output, is(emptyString()));
         }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,14 +23,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Binding;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Binding;
 
 /**
  * Visit elements.
@@ -39,7 +39,7 @@ import org.opensearch.common.inject.Binding;
  *            {@code return null} if no return type is needed.
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ElementVisitor<V> {
@@ -86,7 +86,7 @@ public interface ElementVisitor<V> {
     V visit(Message message);
 
     /**
-     * Visit a collection of configuration elements for a {@linkplain org.opensearch.common.inject.PrivateBinder
+     * Visit a collection of configuration elements for a {@linkplain org.density.common.inject.PrivateBinder
      * private binder}.
      */
     V visit(PrivateElements elements);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.open;
+package org.density.action.admin.indices.open;
 
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ack.IndicesClusterStateUpdateRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ack.IndicesClusterStateUpdateRequest;
 
 /**
  * Cluster state update request that allows to open one or more indices
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class OpenIndexClusterStateUpdateRequest extends IndicesClusterStateUpdateRequest<OpenIndexClusterStateUpdateRequest> {
 

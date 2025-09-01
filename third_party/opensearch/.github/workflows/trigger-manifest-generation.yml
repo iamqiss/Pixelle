@@ -8,10 +8,10 @@ on:
 
 jobs:
   trigger-manifest-workflow:
-    if: github.repository == 'opensearch-project/OpenSearch'
+    if: github.repository == 'density-project/Density'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger manifest-update workflow
         run: |
-            echo "Triggering manifest-update workflow at https://build.ci.opensearch.org/job/manifest-update/"
-            curl -f -X POST https://build.ci.opensearch.org/job/manifest-update/build --user ${{ secrets.JENKINS_GITHUB_USER}}:${{ secrets.JENKINS_GITHUB_USER_TOKEN}}
+            echo "Triggering manifest-update workflow at https://build.ci.density.org/job/manifest-update/"
+            curl -f -X POST https://build.ci.density.org/job/manifest-update/build --user ${{ secrets.JENKINS_GITHUB_USER}}:${{ secrets.JENKINS_GITHUB_USER_TOKEN}}

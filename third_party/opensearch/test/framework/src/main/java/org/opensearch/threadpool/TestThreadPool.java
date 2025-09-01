@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.node.Node;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.node.Node;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -115,8 +115,8 @@ public class TestThreadPool extends ThreadPool {
         if (rejectingExecutor != null) {
             return;
         }
-        ThreadFactory factory = OpenSearchExecutors.daemonThreadFactory("reject_thread");
-        rejectingExecutor = OpenSearchExecutors.newFixed("rejecting", 1, 0, factory, getThreadContext());
+        ThreadFactory factory = DensityExecutors.daemonThreadFactory("reject_thread");
+        rejectingExecutor = DensityExecutors.newFixed("rejecting", 1, 0, factory, getThreadContext());
 
         CountDownLatch startedLatch = new CountDownLatch(1);
         rejectingExecutor.execute(() -> {

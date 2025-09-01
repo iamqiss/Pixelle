@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import java.util.function.Predicate;
 
 /**
  * Defines different constraints definitions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ConstraintTypes {
     public final static long CONSTRAINT_WEIGHT = 1000000L;

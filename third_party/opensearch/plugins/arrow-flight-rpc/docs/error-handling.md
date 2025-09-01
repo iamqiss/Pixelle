@@ -2,9 +2,9 @@
 
 ## Overview
 
-This document describes the error handling model for the Arrow Flight RPC transport in OpenSearch. The model is inspired by gRPC's error handling approach and provides a consistent way to handle errors across the transport boundary.
+This document describes the error handling model for the Arrow Flight RPC transport in Density. The model is inspired by gRPC's error handling approach and provides a consistent way to handle errors across the transport boundary.
 
-At the OpenSearch layer, `FlightRuntimeException` isn't directly exposed. Instead, `StreamException` is used, which is converted to and from `FlightRuntimeException` at the flight transport layer.
+At the Density layer, `FlightRuntimeException` isn't directly exposed. Instead, `StreamException` is used, which is converted to and from `FlightRuntimeException` at the flight transport layer.
 
 ## Error Codes
 

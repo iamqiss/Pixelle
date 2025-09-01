@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.forcemerge;
+package org.density.action.admin.indices.forcemerge;
 
-import org.opensearch.action.support.broadcast.BroadcastOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.broadcast.BroadcastOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * A request to force merge one or more indices. In order to force merge all
@@ -43,7 +43,7 @@ import org.opensearch.transport.client.OpenSearchClient;
  * merge down to. By default, will cause the force merge process to merge down
  * to half the configured number of segments.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ForceMergeRequestBuilder extends BroadcastOperationRequestBuilder<
@@ -51,7 +51,7 @@ public class ForceMergeRequestBuilder extends BroadcastOperationRequestBuilder<
     ForceMergeResponse,
     ForceMergeRequestBuilder> {
 
-    public ForceMergeRequestBuilder(OpenSearchClient client, ForceMergeAction action) {
+    public ForceMergeRequestBuilder(DensityClient client, ForceMergeAction action) {
         super(client, action, new ForceMergeRequest());
     }
 

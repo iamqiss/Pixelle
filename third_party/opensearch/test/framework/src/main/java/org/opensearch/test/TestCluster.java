@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.datastream.DeleteDataStreamAction;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.IndexTemplateMissingException;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.datastream.DeleteDataStreamAction;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.IndexTemplateMissingException;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -59,7 +59,7 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Base test cluster that exposes the basis to run tests against any opensearch cluster, whose layout
+ * Base test cluster that exposes the basis to run tests against any density cluster, whose layout
  * (e.g. number of nodes) is predefined and cannot be changed during the tests execution
  */
 public abstract class TestCluster implements Closeable {
@@ -147,13 +147,13 @@ public abstract class TestCluster implements Closeable {
      * Deletes all data streams from the test cluster.
      */
     public void wipeAllDataStreams() {
-        // Feature flag may not be enabled in all gradle modules that use OpenSearchIntegTestCase
+        // Feature flag may not be enabled in all gradle modules that use DensityIntegTestCase
         if (size() > 0) {
             AcknowledgedResponse response = client().admin()
                 .indices()
                 .deleteDataStream(new DeleteDataStreamAction.Request(new String[] { "*" }))
                 .actionGet();
-            OpenSearchAssertions.assertAcked(response);
+            DensityAssertions.assertAcked(response);
         }
     }
 
@@ -166,7 +166,7 @@ public abstract class TestCluster implements Closeable {
         if (size() > 0) {
             try {
                 // include wiping hidden indices!
-                OpenSearchAssertions.assertAcked(
+                DensityAssertions.assertAcked(
                     client().admin()
                         .indices()
                         .prepareDelete(indices)
@@ -184,7 +184,7 @@ public abstract class TestCluster implements Closeable {
                         concreteIndices.add(indexMetadata.getIndex().getName());
                     }
                     if (!concreteIndices.isEmpty()) {
-                        OpenSearchAssertions.assertAcked(
+                        DensityAssertions.assertAcked(
                             client().admin().indices().prepareDelete(concreteIndices.toArray(new String[concreteIndices.size()]))
                         );
                     }

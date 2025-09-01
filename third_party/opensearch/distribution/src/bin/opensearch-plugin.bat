@@ -3,9 +3,9 @@
 setlocal enabledelayedexpansion
 setlocal enableextensions
 
-set OPENSEARCH_MAIN_CLASS=org.opensearch.tools.cli.plugin.PluginCli
-set OPENSEARCH_ADDITIONAL_CLASSPATH_DIRECTORIES=lib/tools/plugin-cli
-call "%~dp0opensearch-cli.bat" ^
+set DENSITY_MAIN_CLASS=org.density.tools.cli.plugin.PluginCli
+set DENSITY_ADDITIONAL_CLASSPATH_DIRECTORIES=lib/tools/plugin-cli
+call "%~dp0density-cli.bat" ^
   %%* ^
   || goto exit
 

@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.utils.iterator;
+package org.density.index.compositeindex.datacube.startree.utils.iterator;
 
 import org.apache.lucene.search.DocIdSetIterator;
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
  * This is needed since star tree values are different from segment documents and number of star tree values
  * can even exceed segment docs in the worst cases.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public abstract class StarTreeValuesIterator {

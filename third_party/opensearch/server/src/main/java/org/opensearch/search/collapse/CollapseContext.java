@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.collapse;
+package org.density.search.collapse;
 
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.grouping.CollapsingTopDocsCollector;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.InnerHitBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.InnerHitBuilder;
 
 import java.util.List;
 
 /**
  * Context used for field collapsing
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CollapseContext {

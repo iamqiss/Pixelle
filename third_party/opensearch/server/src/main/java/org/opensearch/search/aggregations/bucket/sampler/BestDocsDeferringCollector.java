@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.sampler;
+package org.density.search.aggregations.bucket.sampler;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.CollectionTerminatedException;
@@ -41,15 +41,15 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopDocsCollector;
 import org.apache.lucene.search.TopScoreDocCollectorManager;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.ObjectArray;
-import org.opensearch.search.aggregations.BucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.MultiBucketCollector;
-import org.opensearch.search.aggregations.bucket.DeferringBucketCollector;
+import org.density.DensityException;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.ObjectArray;
+import org.density.search.aggregations.BucketCollector;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.MultiBucketCollector;
+import org.density.search.aggregations.bucket.DeferringBucketCollector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ import java.util.function.Consumer;
  * be overridden and allows subclasses to choose a custom collector
  * implementation for determining the top N matches.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BestDocsDeferringCollector extends DeferringBucketCollector implements Releasable {
     private final List<PerSegmentCollects> entries = new ArrayList<>();
@@ -174,7 +174,7 @@ public class BestDocsDeferringCollector extends DeferringBucketCollector impleme
                     perSegDocs.replayRelatedMatches(allDocs);
                 }
             } catch (IOException e) {
-                throw new OpenSearchException("IOException collecting best scoring results", e);
+                throw new DensityException("IOException collecting best scoring results", e);
             }
         } finally {
             // done with allDocs now, reclaim some memory
@@ -200,7 +200,7 @@ public class BestDocsDeferringCollector extends DeferringBucketCollector impleme
                 currentLeafCollector = tdc.getLeafCollector(readerContext);
                 setScorer(scorer);
             } catch (IOException e) {
-                throw new OpenSearchException("IO error creating collector", e);
+                throw new DensityException("IO error creating collector", e);
             }
         }
 
@@ -325,7 +325,7 @@ public class BestDocsDeferringCollector extends DeferringBucketCollector impleme
     }
 
     @Override
-    public void close() throws OpenSearchException {
+    public void close() throws DensityException {
         Releasables.close(perBucketSamples);
     }
 

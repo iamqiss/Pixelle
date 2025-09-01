@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache;
+package org.density.cache;
 
-import org.opensearch.cache.store.disk.EhcacheDiskCache;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cache.store.disk.EhcacheDiskCache;
+import org.density.common.cache.ICache;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
-public class EhcachePluginTests extends OpenSearchTestCase {
+public class EhcachePluginTests extends DensityTestCase {
 
     private EhcacheCachePlugin ehcacheCachePlugin = new EhcacheCachePlugin();
 

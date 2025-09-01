@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.update.UpdateRequest;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static org.apache.lucene.tests.util.TestUtil.randomSimpleString;
 
-public class BulkShardRequestTests extends OpenSearchTestCase {
+public class BulkShardRequestTests extends DensityTestCase {
     public void testToString() {
         String index = randomSimpleString(random(), 10);
         int count = between(2, 100);

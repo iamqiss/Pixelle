@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.Location;
@@ -14,23 +14,23 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.util.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.api.flightinfo.NodeFlightInfo;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoAction;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoRequest;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoResponse;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.arrow.flight.api.flightinfo.NodeFlightInfo;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoAction;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoRequest;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoResponse;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.util.FeatureFlags;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.TransportAddress;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.Map;
 import java.util.Objects;
@@ -43,10 +43,10 @@ import java.util.concurrent.TimeUnit;
 
 import io.netty.channel.EventLoopGroup;
 
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS_SETTING;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS_SETTING;
 
 /**
- * Manages Flight client connections to OpenSearch nodes in a cluster.
+ * Manages Flight client connections to Density nodes in a cluster.
  * This class maintains a pool of Flight clients for internode communication,
  * handles client lifecycle, and responds to cluster state changes.
  *
@@ -71,7 +71,7 @@ public class FlightClientManager implements ClusterStateListener, AutoCloseable 
      * @param sslContextProvider Provider for SSL/TLS context configuration
      * @param elg                Event loop group for network operations
      * @param threadPool         Thread pool for executing tasks asynchronously
-     * @param client             OpenSearch client
+     * @param client             Density client
      */
     public FlightClientManager(
         BufferAllocator allocator,
@@ -97,7 +97,7 @@ public class FlightClientManager implements ClusterStateListener, AutoCloseable 
      * Returns a Flight client for a given node ID.
      *
      * @param nodeId The ID of the node for which to retrieve the Flight client
-     * @return An OpenSearchFlightClient instance for the specified node
+     * @return An DensityFlightClient instance for the specified node
      */
     public Optional<FlightClient> getFlightClient(String nodeId) {
         ClientHolder clientHolder = flightClients.get(nodeId);

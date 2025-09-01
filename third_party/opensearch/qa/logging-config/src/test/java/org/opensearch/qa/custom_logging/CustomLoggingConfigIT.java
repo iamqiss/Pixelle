@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.qa.custom_logging;
+package org.density.qa.custom_logging;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.test.hamcrest.RegexMatcher;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.test.hamcrest.RegexMatcher;
+import org.density.test.rest.DensityRestTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -48,11 +48,11 @@ import java.security.PrivilegedAction;
 import java.util.List;
 
 /**
- * This test verifies that OpenSearch can startup successfully with a custom logging config using variables introduced in
- * <code>OpenSearchJsonLayout</code>
- * The intention is to confirm that users can still run their OpenSearch instances with previous configurations.
+ * This test verifies that Density can startup successfully with a custom logging config using variables introduced in
+ * <code>DensityJsonLayout</code>
+ * The intention is to confirm that users can still run their Density instances with previous configurations.
  */
-public class CustomLoggingConfigIT extends OpenSearchRestTestCase {
+public class CustomLoggingConfigIT extends DensityRestTestCase {
     private static final String NODE_STARTED = ".*integTest-0.*cluster.uuid.*node.id.*recovered.*cluster_state.*";
 
     public void testSuccessfulStartupWithCustomConfig() throws Exception {

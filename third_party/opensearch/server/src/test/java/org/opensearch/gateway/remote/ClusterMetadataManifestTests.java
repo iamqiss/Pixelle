@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.TemplatesMetadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.TemplatesMetadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 
 import java.io.IOException;
@@ -49,23 +49,23 @@ import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V0;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V1;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V2;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V3;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V4;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.DISCOVERY_NODES;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V0;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V1;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V2;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V3;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V4;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.DISCOVERY_NODES;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
 
-public class ClusterMetadataManifestTests extends OpenSearchTestCase {
+public class ClusterMetadataManifestTests extends DensityTestCase {
 
     private final ThreadPool threadPool = new TestThreadPool(getClass().getName());
 
@@ -82,7 +82,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V0)
@@ -108,7 +108,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V1)
@@ -135,7 +135,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V2)
@@ -182,7 +182,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(7L)
             .clusterUUID("HrYF3kP5SmSPWtKlWhnNSA")
             .stateUUID("6By9p9G0Rv2MmFYJcPAOgA")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("B10RX1f5RJenMQvYccCgSQ")
             .committed(true)
             .codecVersion(ClusterMetadataManifest.CODEC_V4)
@@ -230,7 +230,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate Cluster Term
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -245,7 +245,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate State Version
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -260,7 +260,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate Cluster UUID
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -275,7 +275,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate State UUID
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -287,17 +287,17 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
                 }
             );
         }
-        {  // Mutate OpenSearch Version
+        {  // Mutate Density Version
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
                 ),
                 manifest -> {
                     ClusterMetadataManifest.Builder builder = ClusterMetadataManifest.builder(manifest);
-                    builder.opensearchVersion(Version.V_EMPTY);
+                    builder.densityVersion(Version.V_EMPTY);
                     return builder.build();
                 }
             );
@@ -305,7 +305,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate Committed State
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -320,7 +320,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         {  // Mutate Indices
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -335,7 +335,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         { // Mutate Previous cluster UUID
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -351,7 +351,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         { // Mutate cluster uuid committed
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -367,7 +367,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate Coordination metadata
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -383,7 +383,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate setting metadata
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -399,7 +399,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate template metadata
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -415,7 +415,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate custom metadata
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -431,7 +431,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate discovery nodes
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -447,7 +447,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate cluster blocks
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -463,7 +463,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate transient settings metadata
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -479,7 +479,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate diff manifest
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -495,7 +495,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate hashes of consistent settings
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -511,7 +511,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             // Mutate checksum
             EqualsHashCodeTestUtils.checkEqualsAndHashCode(
                 initialManifest,
-                orig -> OpenSearchTestCase.copyWriteable(
+                orig -> DensityTestCase.copyWriteable(
                     orig,
                     new NamedWriteableRegistry(Collections.emptyList()),
                     ClusterMetadataManifest::new
@@ -533,7 +533,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V2)
@@ -598,7 +598,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V3)
@@ -664,7 +664,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(ClusterMetadataManifest.CODEC_V4)
@@ -735,7 +735,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
             .stateVersion(1L)
             .clusterUUID("test-cluster-uuid")
             .stateUUID("test-state-uuid")
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId("test-node-id")
             .committed(false)
             .codecVersion(CODEC_V2)
@@ -797,7 +797,7 @@ public class ClusterMetadataManifestTests extends OpenSearchTestCase {
         UploadedIndexMetadata uploadedIndexMetadata = new UploadedIndexMetadata("test-index", "test-uuid", "/test/upload/path");
         EqualsHashCodeTestUtils.checkEqualsAndHashCode(
             uploadedIndexMetadata,
-            orig -> OpenSearchTestCase.copyWriteable(orig, new NamedWriteableRegistry(Collections.emptyList()), UploadedIndexMetadata::new),
+            orig -> DensityTestCase.copyWriteable(orig, new NamedWriteableRegistry(Collections.emptyList()), UploadedIndexMetadata::new),
             metadata -> randomlyChangingUploadedIndexMetadata(uploadedIndexMetadata)
         );
     }

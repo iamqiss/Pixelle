@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BytesRefHash;
-import org.opensearch.common.util.IntArray;
-import org.opensearch.common.util.LongArray;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BytesRefHash;
+import org.density.common.util.IntArray;
+import org.density.common.util.LongArray;
 
 import java.io.IOException;
 
 /**
  * A frequency terms enum that maintains a cache of docFreq, totalTermFreq, or both for repeated term lookup.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FreqTermsEnum extends FilterableTermsEnum implements Releasable {
 

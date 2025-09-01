@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,33 +25,33 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
-import org.opensearch.index.store.remote.filecache.FileCacheStats;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
+import org.density.index.store.remote.filecache.FileCacheStats;
+import org.density.node.NodeResourceUsageStats;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClusterInfoTests extends OpenSearchTestCase {
+public class ClusterInfoTests extends DensityTestCase {
 
     public void testSerialization() throws Exception {
         ClusterInfo clusterInfo = new ClusterInfo(

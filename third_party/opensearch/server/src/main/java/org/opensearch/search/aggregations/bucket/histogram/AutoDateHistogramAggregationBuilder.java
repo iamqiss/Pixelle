@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.common.Rounding;
+import org.density.common.settings.Settings;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -62,7 +62,7 @@ import java.util.Objects;
 /**
  * Aggregation Builder for auto_gate_histogram agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AutoDateHistogramAggregationBuilder extends ValuesSourceAggregationBuilder<AutoDateHistogramAggregationBuilder> {
 
@@ -284,7 +284,7 @@ public class AutoDateHistogramAggregationBuilder extends ValuesSourceAggregation
     /**
      * Round off information
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RoundingInfo implements Writeable {
         final Rounding rounding;

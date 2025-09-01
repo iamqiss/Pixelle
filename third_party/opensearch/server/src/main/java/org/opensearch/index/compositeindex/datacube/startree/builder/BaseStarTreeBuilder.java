@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,28 +30,28 @@ import org.apache.lucene.util.Counter;
 import org.apache.lucene.util.LongValues;
 import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.packed.PackedInts;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.ValueAggregator;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNodeType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.CompensatedSumType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.FieldValueConverter;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.compositeindex.datacube.startree.aggregators.ValueAggregator;
+import org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNodeType;
+import org.density.index.compositeindex.datacube.startree.utils.CompensatedSumType;
+import org.density.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.FieldValueConverter;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,19 +67,19 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.SEGMENT_DOCS_COUNT;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.getFieldInfo;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.LONG;
+import static org.density.index.compositeindex.CompositeIndexConstants.SEGMENT_DOCS_COUNT;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.getFieldInfo;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.LONG;
 
 /**
  * Builder for star tree. Defines the algorithm to construct star-tree
  * See {@link StarTreesBuilder} for information around the construction of star-trees based on star-tree fields
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public abstract class BaseStarTreeBuilder implements StarTreeBuilder {
 

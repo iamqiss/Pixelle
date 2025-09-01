@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.global;
+package org.density.search.aggregations.bucket.global;
 
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregation;
+import org.density.search.aggregations.bucket.SingleBucketAggregation;
 
 /**
  * A {@code global} aggregation. Defines a single bucket the holds all the documents in the search context.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Global extends SingleBucketAggregation {}

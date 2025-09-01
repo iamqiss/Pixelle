@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.memory.breaker;
+package org.density.indices.memory.breaker;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.settings.Settings;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.aggregations.AggregationBuilders.cardinality;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.aggregations.AggregationBuilders.cardinality;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /** Tests for the noop breakers, which are non-dynamic settings */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 0)
-public class CircuitBreakerNoopIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 0)
+public class CircuitBreakerNoopIT extends DensityIntegTestCase {
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {
         return Settings.builder()

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.Priority;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.Priority;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.Strings;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -52,13 +52,13 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.transport.client.Requests.clusterHealthRequest;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.transport.client.Requests.clusterHealthRequest;
 
 /**
  * Transport action to get cluster health
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestClusterHealthAction extends BaseRestHandler {
 

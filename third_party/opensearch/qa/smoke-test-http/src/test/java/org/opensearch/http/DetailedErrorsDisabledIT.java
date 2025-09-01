@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
 import java.io.IOException;
 
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;

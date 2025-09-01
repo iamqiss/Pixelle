@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.suggest.stats;
+package org.density.index.suggest.stats;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.index.search.stats.SearchStats;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class SuggestStatsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class SuggestStatsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SuggestStatsIT(Settings staticSettings) {
         super(staticSettings);

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.common.util.FeatureFlags.FEATURE_FLAG_PREFIX;
+import static org.density.common.util.FeatureFlags.FEATURE_FLAG_PREFIX;
 
-public class FeatureFlagTests extends OpenSearchTestCase {
+public class FeatureFlagTests extends DensityTestCase {
     // Evergreen test flag
     private static final String TEST_FLAG = "test.flag.enabled";
 

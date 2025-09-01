@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -41,65 +41,65 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.client.core.CountRequest;
-import org.opensearch.client.core.GetSourceRequest;
-import org.opensearch.client.core.MultiTermVectorsRequest;
-import org.opensearch.client.core.TermVectorsRequest;
-import org.opensearch.client.indices.AnalyzeRequest;
-import org.opensearch.client.tasks.TaskId;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.rankeval.RankEvalRequest;
-import org.opensearch.index.reindex.AbstractBulkByScrollRequest;
-import org.opensearch.index.reindex.DeleteByQueryRequest;
-import org.opensearch.index.reindex.ReindexRequest;
-import org.opensearch.index.reindex.UpdateByQueryRequest;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.rest.action.search.RestCreatePitAction;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.script.mustache.MultiSearchTemplateRequest;
-import org.opensearch.script.mustache.SearchTemplateRequest;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.action.DocWriteRequest;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.get.GetRequest;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.WriteRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.client.core.CountRequest;
+import org.density.client.core.GetSourceRequest;
+import org.density.client.core.MultiTermVectorsRequest;
+import org.density.client.core.TermVectorsRequest;
+import org.density.client.indices.AnalyzeRequest;
+import org.density.client.tasks.TaskId;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.SuppressForbidden;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
+import org.density.index.rankeval.RankEvalRequest;
+import org.density.index.reindex.AbstractBulkByScrollRequest;
+import org.density.index.reindex.DeleteByQueryRequest;
+import org.density.index.reindex.ReindexRequest;
+import org.density.index.reindex.UpdateByQueryRequest;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.rest.action.search.RestCreatePitAction;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.script.mustache.MultiSearchTemplateRequest;
+import org.density.script.mustache.SearchTemplateRequest;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -114,9 +114,9 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 /**
- * Converts OpenSearch writeable requests to an HTTP Request
+ * Converts Density writeable requests to an HTTP Request
  *
- * @opensearch.api
+ * @density.api
  */
 final class RequestConverters {
     static final MediaType REQUEST_BODY_CONTENT_TYPE = MediaTypeRegistry.JSON;
@@ -273,7 +273,7 @@ final class RequestConverters {
                     }
                 }
             } else if (opType == DocWriteRequest.OpType.UPDATE) {
-                source = org.opensearch.core.xcontent.XContentHelper.toXContent(
+                source = org.density.core.xcontent.XContentHelper.toXContent(
                     (UpdateRequest) action,
                     bulkContentType,
                     ToXContent.EMPTY_PARAMS,
@@ -460,7 +460,7 @@ final class RequestConverters {
         params.withSearchType(searchRequest.searchType().name().toLowerCase(Locale.ROOT));
         /*
           Merging search responses as part of CCS flow to reduce roundtrips is not supported for point in time -
-          refer to org.opensearch.action.search.SearchResponseMerger
+          refer to org.density.action.search.SearchResponseMerger
          */
         if (searchRequest.pointInTimeBuilder() != null) {
             params.putParam("ccs_minimize_roundtrips", "false");
@@ -832,7 +832,7 @@ final class RequestConverters {
     }
 
     static HttpEntity createEntity(ToXContent toXContent, MediaType mediaType, ToXContent.Params toXContentParams) throws IOException {
-        BytesRef source = org.opensearch.core.xcontent.XContentHelper.toXContent(toXContent, mediaType, toXContentParams, false)
+        BytesRef source = org.density.core.xcontent.XContentHelper.toXContent(toXContent, mediaType, toXContentParams, false)
             .toBytesRef();
         return new ByteArrayEntity(source.bytes, source.offset, source.length, createContentType(mediaType));
     }
@@ -1183,14 +1183,14 @@ final class RequestConverters {
             return this;
         }
 
-        Params withTaskId(org.opensearch.core.tasks.TaskId taskId) {
+        Params withTaskId(org.density.core.tasks.TaskId taskId) {
             if (taskId != null && taskId.isSet()) {
                 return putParam("task_id", taskId.toString());
             }
             return this;
         }
 
-        Params withParentTaskId(org.opensearch.core.tasks.TaskId parentTaskId) {
+        Params withParentTaskId(org.density.core.tasks.TaskId parentTaskId) {
             if (parentTaskId != null && parentTaskId.isSet()) {
                 return putParam("parent_task_id", parentTaskId.toString());
             }

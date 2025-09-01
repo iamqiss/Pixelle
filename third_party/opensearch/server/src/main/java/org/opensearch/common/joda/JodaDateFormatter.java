@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.DateUtils;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.DateUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -49,7 +49,7 @@ import java.util.Objects;
 /**
  * Joda date formatter.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JodaDateFormatter implements DateFormatter {
 

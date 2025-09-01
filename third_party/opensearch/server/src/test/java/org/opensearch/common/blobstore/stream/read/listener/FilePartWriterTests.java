@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.read.listener;
+package org.density.common.blobstore.stream.read.listener;
 
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.InputStreamContainer;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.util.UUID;
 import java.util.function.UnaryOperator;
 
-public class FilePartWriterTests extends OpenSearchTestCase {
+public class FilePartWriterTests extends DensityTestCase {
 
     private Path path;
 

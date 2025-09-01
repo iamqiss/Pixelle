@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CharacterRunAutomaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.AutoCreateIndex;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.index.IndexNotFoundException;
+import org.density.search.builder.SearchSourceBuilder;
 
 import java.util.List;
 
@@ -119,7 +119,7 @@ class ReindexValidator {
                 "Refusing to start because allowlist "
                     + allowlist
                     + " accepts all addresses. "
-                    + "This would allow users to reindex-from-remote any URL they like effectively having OpenSearch make HTTP GETs "
+                    + "This would allow users to reindex-from-remote any URL they like effectively having Density make HTTP GETs "
                     + "for them."
             );
         }

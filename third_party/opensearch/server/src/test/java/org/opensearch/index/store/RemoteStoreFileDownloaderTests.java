@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
@@ -14,18 +14,18 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityTimeoutException;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class RemoteStoreFileDownloaderTests extends OpenSearchTestCase {
+public class RemoteStoreFileDownloaderTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private Directory source;
@@ -152,7 +152,7 @@ public class RemoteStoreFileDownloaderTests extends OpenSearchTestCase {
         fileDownloader.downloadAsync(cancellableThreads, source, blockingDestination, files.keySet(), blockingListener);
         assertThrows(
             "Expected to timeout due to blocking directory",
-            OpenSearchTimeoutException.class,
+            DensityTimeoutException.class,
             () -> blockingListener.actionGet(TimeValue.timeValueMillis(500))
         );
         cancellableThreads.cancel("test");

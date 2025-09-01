@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io.stream;
+package org.density.common.io.stream;
 
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
 
 /**
  * An bytes stream output that allows providing a {@link BigArrays} instance
@@ -47,7 +47,7 @@ import org.opensearch.common.util.PageCacheRecycler;
  * stream should only be closed after the bytes have been output or copied
  * elsewhere.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReleasableBytesStreamOutput extends BytesStreamOutput implements Releasable {
 

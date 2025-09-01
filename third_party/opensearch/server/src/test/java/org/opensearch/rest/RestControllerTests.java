@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.HttpStats;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.rest.action.admin.indices.RestCreateIndexAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpInfo;
+import org.density.http.HttpRequest;
+import org.density.http.HttpResponse;
+import org.density.http.HttpServerTransport;
+import org.density.http.HttpStats;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.rest.action.admin.indices.RestCreateIndexAction;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -88,7 +88,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RestControllerTests extends OpenSearchTestCase {
+public class RestControllerTests extends DensityTestCase {
 
     private static final ByteSizeValue BREAKER_LIMIT = new ByteSizeValue(20);
     private CircuitBreaker inFlightRequestsBreaker;

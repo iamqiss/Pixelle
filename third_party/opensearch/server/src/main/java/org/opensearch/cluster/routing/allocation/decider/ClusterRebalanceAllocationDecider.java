@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
 
 import java.util.Locale;
 
@@ -60,7 +60,7 @@ import java.util.Locale;
  * is active</li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterRebalanceAllocationDecider extends AllocationDecider {
 
@@ -79,7 +79,7 @@ public class ClusterRebalanceAllocationDecider extends AllocationDecider {
     /**
      * An enum representation for the configured re-balance type.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ClusterRebalanceType {
         /**

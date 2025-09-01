@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import java.lang.invoke.LambdaConversionException;
 import java.time.Instant;
@@ -60,14 +60,14 @@ public class FunctionRefTests extends ScriptTestCase {
     public void testQualifiedStaticMethodReference() {
         assertEquals(
             true,
-            exec("List l = [true]; l.stream().map(org.opensearch.painless.FeatureTestObject::overloadedStatic).findFirst().get()")
+            exec("List l = [true]; l.stream().map(org.density.painless.FeatureTestObject::overloadedStatic).findFirst().get()")
         );
     }
 
     public void testQualifiedStaticMethodReferenceDef() {
         assertEquals(
             true,
-            exec("def l = [true]; l.stream().map(org.opensearch.painless.FeatureTestObject::overloadedStatic).findFirst().get()")
+            exec("def l = [true]; l.stream().map(org.density.painless.FeatureTestObject::overloadedStatic).findFirst().get()")
         );
     }
 
@@ -182,7 +182,7 @@ public class FunctionRefTests extends ScriptTestCase {
             exec(
                 "String x = 'testing';"
                     + "String y = 'abcdefg';"
-                    + "org.opensearch.painless.FeatureTestObject test = new org.opensearch.painless.FeatureTestObject(2,3);"
+                    + "org.density.painless.FeatureTestObject test = new org.density.painless.FeatureTestObject(2,3);"
                     + "return test.twoFunctionsOfX(x::concat, y::substring);"
             )
         );
@@ -194,7 +194,7 @@ public class FunctionRefTests extends ScriptTestCase {
             exec(
                 "def x = 'testing';"
                     + "def y = 'abcdefg';"
-                    + "org.opensearch.painless.FeatureTestObject test = new org.opensearch.painless.FeatureTestObject(2,3);"
+                    + "org.density.painless.FeatureTestObject test = new org.density.painless.FeatureTestObject(2,3);"
                     + "return test.twoFunctionsOfX(x::concat, y::substring);"
             )
         );
@@ -206,7 +206,7 @@ public class FunctionRefTests extends ScriptTestCase {
             exec(
                 "String x = 'testing';"
                     + "String y = 'abcdefg';"
-                    + "def test = new org.opensearch.painless.FeatureTestObject(2,3);"
+                    + "def test = new org.density.painless.FeatureTestObject(2,3);"
                     + "return test.twoFunctionsOfX(x::concat, y::substring);"
             )
         );
@@ -218,7 +218,7 @@ public class FunctionRefTests extends ScriptTestCase {
             exec(
                 "def x = 'testing';"
                     + "def y = 'abcdefg';"
-                    + "def test = new org.opensearch.painless.FeatureTestObject(2,3);"
+                    + "def test = new org.density.painless.FeatureTestObject(2,3);"
                     + "return test.twoFunctionsOfX(x::concat, y::substring);"
             )
         );

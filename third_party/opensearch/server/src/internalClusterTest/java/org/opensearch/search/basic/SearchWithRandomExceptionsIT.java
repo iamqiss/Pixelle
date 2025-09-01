@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.basic;
+package org.density.search.basic;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -38,26 +38,26 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.FilterDirectoryReader;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.tests.util.English;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.MockEngineFactoryPlugin;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.engine.MockEngineSupport;
-import org.opensearch.test.engine.ThrowingLeafReaderWrapper;
+import org.density.DensityException;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.MockEngineFactoryPlugin;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.engine.MockEngineSupport;
+import org.density.test.engine.ThrowingLeafReaderWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,10 +67,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class SearchWithRandomExceptionsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SearchWithRandomExceptionsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SearchWithRandomExceptionsIT(Settings staticSettings) {
         super(staticSettings);
@@ -147,7 +147,7 @@ public class SearchWithRandomExceptionsIT extends ParameterizedStaticSettingsOpe
                     numCreated++;
                     added[i] = true;
                 }
-            } catch (OpenSearchException ex) {}
+            } catch (DensityException ex) {}
         }
         logger.info("Start Refresh");
         // don't assert on failures here
@@ -242,7 +242,7 @@ public class SearchWithRandomExceptionsIT extends ParameterizedStaticSettingsOpe
             private final double lowLevelRatio;
 
             ThrowingSubReaderWrapper(Settings settings) {
-                final long seed = OpenSearchIntegTestCase.INDEX_TEST_SEED_SETTING.get(settings);
+                final long seed = DensityIntegTestCase.INDEX_TEST_SEED_SETTING.get(settings);
                 this.topLevelRatio = settings.getAsDouble(EXCEPTION_TOP_LEVEL_RATIO_KEY, 0.1d);
                 this.lowLevelRatio = settings.getAsDouble(EXCEPTION_LOW_LEVEL_RATIO_KEY, 0.1d);
                 this.random = new Random(seed);

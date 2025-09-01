@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.Netty4ModulePlugin;
-import org.opensearch.transport.nio.MockNioTransportPlugin;
-import org.opensearch.transport.reactor.ReactorNetty4Plugin;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.Netty4ModulePlugin;
+import org.density.transport.nio.MockNioTransportPlugin;
+import org.density.transport.reactor.ReactorNetty4Plugin;
 import org.junit.BeforeClass;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public abstract class HttpSmokeTestCase extends OpenSearchIntegTestCase {
+public abstract class HttpSmokeTestCase extends DensityIntegTestCase {
 
     private static String nodeTransportTypeKey;
     private static String nodeHttpTypeKey;

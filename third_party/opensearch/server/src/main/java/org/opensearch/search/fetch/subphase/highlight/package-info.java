@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -27,12 +27,12 @@
 
 /**
  * Fetch sub phase that extracts significant portions of string fields, marking the matches. Pluggable by implementing
- * {@link org.opensearch.search.fetch.subphase.highlight.Highlighter} and
- * {@link org.opensearch.plugins.SearchPlugin#getHighlighters()}.
+ * {@link org.density.search.fetch.subphase.highlight.Highlighter} and
+ * {@link org.density.plugins.SearchPlugin#getHighlighters()}.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;

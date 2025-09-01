@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.disruption;
+package org.density.test.disruption;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.test.InternalTestCluster;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.test.InternalTestCluster;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;

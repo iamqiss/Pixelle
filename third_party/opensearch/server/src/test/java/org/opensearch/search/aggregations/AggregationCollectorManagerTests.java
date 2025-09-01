@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Collector;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregator;
-import org.opensearch.search.profile.query.CollectorResult;
+import org.density.search.aggregations.bucket.global.GlobalAggregator;
+import org.density.search.profile.query.CollectorResult;
 
 import java.util.ArrayList;
 import java.util.List;

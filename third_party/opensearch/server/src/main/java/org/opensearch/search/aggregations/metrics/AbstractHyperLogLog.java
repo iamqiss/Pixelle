@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 /**
  * Hyperloglog counter, implemented based on pseudo code from
@@ -39,7 +39,7 @@ package org.opensearch.search.aggregations.metrics;
  * <p>
  * Trying to understand what this class does without having read the paper is considered adventurous.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractHyperLogLog extends AbstractCardinalityAlgorithm {
 
@@ -5955,7 +5955,7 @@ public abstract class AbstractHyperLogLog extends AbstractCardinalityAlgorithm {
     /**
      * Iterator over a HyperLogLog register
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface RunLenIterator {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.PersistedClusterStateService;
+import org.density.DensityException;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.gateway.PersistedClusterStateService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -53,14 +53,14 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
 
 /**
  * Tool to run an unsafe bootstrap
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class UnsafeBootstrapClusterManagerCommand extends OpenSearchNodeCommand {
+public class UnsafeBootstrapClusterManagerCommand extends DensityNodeCommand {
 
     static final String CLUSTER_STATE_TERM_VERSION_MSG_FORMAT = "Current node cluster state (term, version) pair is (%s, %s)";
     static final String CONFIRMATION_MSG = DELIMITER
@@ -87,7 +87,7 @@ public class UnsafeBootstrapClusterManagerCommand extends OpenSearchNodeCommand 
         "Unsafe bootstrap cannot be performed when remote cluster state is enabled. The cluster state in the remote store is considered the source of truth. "
             + "In case, you still wish to do best effort recovery with unsafe-bootstrap, then please disable the "
             + REMOTE_CLUSTER_STATE_ENABLED_SETTING.getKey()
-            + ". For more details, please check the OpenSearch documentation.";
+            + ". For more details, please check the Density documentation.";
     private OptionSpec<Boolean> applyClusterReadOnlyBlockOption;
 
     UnsafeBootstrapClusterManagerCommand() {
@@ -105,14 +105,14 @@ public class UnsafeBootstrapClusterManagerCommand extends OpenSearchNodeCommand 
         terminal.println(Terminal.Verbosity.VERBOSE, "Checking node.roles setting");
         Boolean clusterManager = DiscoveryNode.isClusterManagerNode(settings);
         if (clusterManager == false) {
-            throw new OpenSearchException(NOT_CLUSTER_MANAGER_NODE_MSG);
+            throw new DensityException(NOT_CLUSTER_MANAGER_NODE_MSG);
         }
         // During unsafe bootstrap, node will form a cluster with a new cluster UUID but with the existing metadata.
         // This new state will not know about the previous cluster UUIDs and so we will not able to construct
         // the cluster UUID chain to get the last known cluster UUID to restore from.
         // Blocking unsafe-bootstrap below for this reason.
         if (REMOTE_CLUSTER_STATE_ENABLED_SETTING.get(settings) == true) {
-            throw new OpenSearchException(REMOTE_CLUSTER_STATE_ENABLED_NODE);
+            throw new DensityException(REMOTE_CLUSTER_STATE_ENABLED_NODE);
         }
 
         return true;
@@ -131,7 +131,7 @@ public class UnsafeBootstrapClusterManagerCommand extends OpenSearchNodeCommand 
         if (coordinationMetadata == null
             || coordinationMetadata.getLastCommittedConfiguration() == null
             || coordinationMetadata.getLastCommittedConfiguration().isEmpty()) {
-            throw new OpenSearchException(EMPTY_LAST_COMMITTED_VOTING_CONFIG_MSG);
+            throw new DensityException(EMPTY_LAST_COMMITTED_VOTING_CONFIG_MSG);
         }
         terminal.println(
             String.format(Locale.ROOT, CLUSTER_STATE_TERM_VERSION_MSG_FORMAT, coordinationMetadata.term(), metadata.version())

@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.metadata;
+package org.density.action.admin.cluster.remotestore.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.index.translog.RemoteFsTranslog;
-import org.opensearch.index.translog.transfer.FileTransferTracker;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.index.translog.RemoteFsTranslog;
+import org.density.index.translog.transfer.FileTransferTracker;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Map;
  * Transport action responsible for collecting segment and translog metadata
  * from all shards of a given index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportRemoteStoreMetadataAction extends TransportAction<RemoteStoreMetadataRequest, RemoteStoreMetadataResponse> {
 

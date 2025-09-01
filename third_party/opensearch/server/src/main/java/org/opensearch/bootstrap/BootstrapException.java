@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import java.nio.file.Path;
 
@@ -39,10 +39,10 @@ import java.nio.file.Path;
  * during bootstrap should explicitly declare the checked exceptions that they can throw, rather
  * than declaring the top-level checked exception {@link Exception}. This exception exists to wrap
  * these checked exceptions so that
- * {@link Bootstrap#init(boolean, Path, boolean, org.opensearch.env.Environment)}
+ * {@link Bootstrap#init(boolean, Path, boolean, org.density.env.Environment)}
  * does not have to declare all of these checked exceptions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class BootstrapException extends Exception {
 

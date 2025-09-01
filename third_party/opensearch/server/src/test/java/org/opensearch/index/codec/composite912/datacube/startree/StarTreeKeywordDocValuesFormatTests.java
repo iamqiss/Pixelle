@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite912.datacube.startree;
+package org.density.index.codec.composite912.datacube.startree;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -25,17 +25,17 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.mapper.NumberFieldMapper;
+import org.density.common.lucene.Lucene;
+import org.density.common.network.InetAddresses;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.StarTreeTestUtils;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.mapper.NumberFieldMapper;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -46,8 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.STAR_TREE_DOCS_COUNT;
-import static org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils.assertStarTreeDocuments;
+import static org.density.index.compositeindex.CompositeIndexConstants.STAR_TREE_DOCS_COUNT;
+import static org.density.index.compositeindex.datacube.startree.StarTreeTestUtils.assertStarTreeDocuments;
 
 /**
  * Star tree doc values Lucene tests

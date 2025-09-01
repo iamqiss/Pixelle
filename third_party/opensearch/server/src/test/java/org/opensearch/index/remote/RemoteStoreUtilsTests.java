@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShardTestUtils;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShardTestUtils;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.test.DensityTestCase;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -51,28 +51,28 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.REMOTE_STORE_CUSTOM_KEY;
-import static org.opensearch.index.remote.RemoteMigrationIndexMetadataUpdaterTests.createIndexMetadataWithDocrepSettings;
-import static org.opensearch.index.remote.RemoteStoreUtils.URL_BASE64_CHARSET;
-import static org.opensearch.index.remote.RemoteStoreUtils.determineTranslogMetadataEnabled;
-import static org.opensearch.index.remote.RemoteStoreUtils.finalizeMigration;
-import static org.opensearch.index.remote.RemoteStoreUtils.isSwitchToStrictCompatibilityMode;
-import static org.opensearch.index.remote.RemoteStoreUtils.longToCompositeBase64AndBinaryEncoding;
-import static org.opensearch.index.remote.RemoteStoreUtils.longToUrlBase64;
-import static org.opensearch.index.remote.RemoteStoreUtils.urlBase64ToLong;
-import static org.opensearch.index.remote.RemoteStoreUtils.verifyNoMultipleWriters;
-import static org.opensearch.index.shard.IndexShardTestUtils.MOCK_SEGMENT_REPO_NAME;
-import static org.opensearch.index.shard.IndexShardTestUtils.MOCK_TLOG_REPO_NAME;
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.METADATA_PREFIX;
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.SEPARATOR;
-import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.REMOTE_STORE_CUSTOM_KEY;
+import static org.density.index.remote.RemoteMigrationIndexMetadataUpdaterTests.createIndexMetadataWithDocrepSettings;
+import static org.density.index.remote.RemoteStoreUtils.URL_BASE64_CHARSET;
+import static org.density.index.remote.RemoteStoreUtils.determineTranslogMetadataEnabled;
+import static org.density.index.remote.RemoteStoreUtils.finalizeMigration;
+import static org.density.index.remote.RemoteStoreUtils.isSwitchToStrictCompatibilityMode;
+import static org.density.index.remote.RemoteStoreUtils.longToCompositeBase64AndBinaryEncoding;
+import static org.density.index.remote.RemoteStoreUtils.longToUrlBase64;
+import static org.density.index.remote.RemoteStoreUtils.urlBase64ToLong;
+import static org.density.index.remote.RemoteStoreUtils.verifyNoMultipleWriters;
+import static org.density.index.shard.IndexShardTestUtils.MOCK_SEGMENT_REPO_NAME;
+import static org.density.index.shard.IndexShardTestUtils.MOCK_TLOG_REPO_NAME;
+import static org.density.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.METADATA_PREFIX;
+import static org.density.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.SEPARATOR;
+import static org.density.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
 
-public class RemoteStoreUtilsTests extends OpenSearchTestCase {
+public class RemoteStoreUtilsTests extends DensityTestCase {
 
     private static Map<Character, Integer> BASE64_CHARSET_IDX_MAP;
     private static String index = "test-index";

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.example.mappingtransformer;
+package org.density.example.mappingtransformer;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.PlainActionFuture;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.example.mappingtransformer.ExampleMappingTransformer.AUTO_ADDED_FIELD_NAME;
-import static org.opensearch.example.mappingtransformer.ExampleMappingTransformer.DOC;
-import static org.opensearch.example.mappingtransformer.ExampleMappingTransformer.PROPERTIES;
-import static org.opensearch.example.mappingtransformer.ExampleMappingTransformer.TRIGGER_FIELD_NAME;
+import static org.density.example.mappingtransformer.ExampleMappingTransformer.AUTO_ADDED_FIELD_NAME;
+import static org.density.example.mappingtransformer.ExampleMappingTransformer.DOC;
+import static org.density.example.mappingtransformer.ExampleMappingTransformer.PROPERTIES;
+import static org.density.example.mappingtransformer.ExampleMappingTransformer.TRIGGER_FIELD_NAME;
 
-public class ExampleMappingTransformerTests extends OpenSearchTestCase {
+public class ExampleMappingTransformerTests extends DensityTestCase {
     private final ExampleMappingTransformer transformer = new ExampleMappingTransformer();
 
     public void testExampleMappingTransformer_whenMappingWithoutDocLayer() {

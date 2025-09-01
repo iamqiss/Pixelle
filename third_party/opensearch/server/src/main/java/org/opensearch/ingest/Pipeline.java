@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.metrics.OperationMetrics;
-import org.opensearch.script.ScriptService;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.metrics.OperationMetrics;
+import org.density.script.ScriptService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ import reactor.util.annotation.NonNull;
 /**
  * A pipeline is a list of {@link Processor} instances grouped under a unique id.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Pipeline {
 
@@ -107,7 +107,7 @@ public final class Pipeline {
             processorFactories
         );
         if (config.isEmpty() == false) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "pipeline ["
                     + id
                     + "] doesn't support one or more provided configuration parameters "
@@ -115,7 +115,7 @@ public final class Pipeline {
             );
         }
         if (onFailureProcessorConfigs != null && onFailureProcessors.isEmpty()) {
-            throw new OpenSearchParseException("pipeline [" + id + "] cannot have an empty on_failure option defined");
+            throw new DensityParseException("pipeline [" + id + "] cannot have an empty on_failure option defined");
         }
         CompoundProcessor compoundProcessor = new CompoundProcessor(
             false,

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.serializer;
+package org.density.common.cache.serializer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
+import org.density.DensityException;
+import org.density.common.cache.ICacheKey;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ICacheKeySerializer<K> implements Serializer<ICacheKey<K>, byte[]> 
             return finalBytes;
         } catch (IOException e) {
             logger.debug("Could not write ICacheKey to byte[]");
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class ICacheKeySerializer<K> implements Serializer<ICacheKey<K>, byte[]> 
             return new ICacheKey<>(keySerializer.deserialize(serializedKey), dimensionList);
         } catch (IOException e) {
             logger.debug("Could not write byte[] to ICacheKey");
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 

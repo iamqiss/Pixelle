@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.Version;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.telemetry.metrics.Counter;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.FailedNodeException;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.core.index.shard.ShardId;
+import org.density.telemetry.metrics.Counter;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -64,7 +64,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AsyncShardFetchTests extends OpenSearchTestCase {
+public class AsyncShardFetchTests extends DensityTestCase {
     private final DiscoveryNode node1 = new DiscoveryNode(
         "node1",
         buildNewFakeTransportAddress(),

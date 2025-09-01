@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @ThreadLeakFilters(filters = HdfsClientThreadLeakFilter.class)
 // Ony using a single node here since the TestingFs only supports the single-node case
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 1, supportsDedicatedMasters = false)
-public class HdfsBlobStoreRepositoryTests extends OpenSearchBlobStoreRepositoryIntegTestCase {
+@DensityIntegTestCase.ClusterScope(numDataNodes = 1, supportsDedicatedMasters = false)
+public class HdfsBlobStoreRepositoryTests extends DensityBlobStoreRepositoryIntegTestCase {
 
     @Override
     protected String repositoryType() {

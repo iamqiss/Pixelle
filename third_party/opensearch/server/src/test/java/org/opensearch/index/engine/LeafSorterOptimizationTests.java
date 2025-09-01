@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.LeafReader;
@@ -15,19 +15,19 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogConfig;
+import org.density.Version;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.VersionType;
+import org.density.index.codec.CodecService;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogConfig;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.resync.ResyncReplicationRequest;
-import org.opensearch.action.resync.ResyncReplicationResponse;
-import org.opensearch.action.resync.TransportResyncReplicationAction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.resync.ResyncReplicationRequest;
+import org.density.action.resync.ResyncReplicationResponse;
+import org.density.action.resync.TransportResyncReplicationAction;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.Translog;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Syncer for Primary replica
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PrimaryReplicaSyncer {
 
@@ -230,7 +230,7 @@ public class PrimaryReplicaSyncer {
     /**
      * Synchronous action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface SyncAction {
         void sync(
@@ -245,7 +245,7 @@ public class PrimaryReplicaSyncer {
     /**
      * Sends a snapshot
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class SnapshotSender extends AbstractRunnable implements ActionListener<ResyncReplicationResponse> {
         private final Logger logger;
@@ -363,7 +363,7 @@ public class PrimaryReplicaSyncer {
     /**
      * Request to resync primary and replica
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ResyncRequest extends ActionRequest {
 
@@ -399,7 +399,7 @@ public class PrimaryReplicaSyncer {
     /**
      * Task to resync primary and replica
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ResyncTask extends Task {
@@ -467,7 +467,7 @@ public class PrimaryReplicaSyncer {
         /**
          * Status for primary replica syncer
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public static class Status implements Task.Status {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,61 +26,61 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.index.IndexAction;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.DocWriteRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.index.IndexAction;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.AutoCreateIndex;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.metadata.Template;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.collect.MapBuilder;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.index.IndexingPressureService;
+import org.density.indices.SystemIndices;
+import org.density.ingest.IngestService;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -95,7 +95,7 @@ import java.util.function.BiConsumer;
 import org.mockito.ArgumentCaptor;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.ingest.IngestServiceTests.createIngestServiceWithProcessors;
+import static org.density.ingest.IngestServiceTests.createIngestServiceWithProcessors;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Answers.RETURNS_MOCKS;
@@ -115,7 +115,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class TransportBulkActionIngestTests extends OpenSearchSingleNodeTestCase {
+public class TransportBulkActionIngestTests extends DensitySingleNodeTestCase {
 
     /**
      * Index for which mock settings contain a default pipeline.
@@ -233,7 +233,7 @@ public class TransportBulkActionIngestTests extends OpenSearchSingleNodeTestCase
     public void setupAction() {
         // initialize captors, which must be members to use @Capture because of generics
         threadPool = mock(ThreadPool.class);
-        final ExecutorService direct = OpenSearchExecutors.newDirectExecutorService();
+        final ExecutorService direct = DensityExecutors.newDirectExecutorService();
         when(threadPool.executor(anyString())).thenReturn(direct);
 
         bulkDocsItr = ArgumentCaptor.forClass(Iterable.class);

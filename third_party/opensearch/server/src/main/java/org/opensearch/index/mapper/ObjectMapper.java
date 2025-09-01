@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.CopyOnWriteHashMap;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.mapper.MapperService.MergeReason;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Explicit;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.CopyOnWriteHashMap;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.mapper.MapperService.MergeReason;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * Field mapper for object field types
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ObjectMapper extends Mapper implements Cloneable {
@@ -75,7 +75,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
     /**
      * Parameter defaults
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final boolean ENABLED = true;
@@ -86,7 +86,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
     /**
      * Dynamic field mapping specification
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Dynamic {
@@ -100,7 +100,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
     /**
      * Nested objects
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Nested {
@@ -190,7 +190,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
     /**
      * Builder for object field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @SuppressWarnings("rawtypes")
     @PublicApi(since = "1.0.0")
@@ -273,7 +273,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
     /**
      * Type parser for object field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser implements Mapper.TypeParser {
         @Override
@@ -330,14 +330,14 @@ public class ObjectMapper extends Mapper implements Cloneable {
                 } else if (fieldNode instanceof Map) {
                     parseDerived(builder, (Map<String, Object>) fieldNode, parserContext);
                 } else {
-                    throw new OpenSearchParseException("derived must be a map type");
+                    throw new DensityParseException("derived must be a map type");
                 }
                 return true;
             } else if (fieldName.equals("properties")) {
                 if (fieldNode instanceof Collection && ((Collection) fieldNode).isEmpty()) {
                     // nothing to do here, empty (to support "properties: []" case)
                 } else if (!(fieldNode instanceof Map)) {
-                    throw new OpenSearchParseException("properties must be a map type");
+                    throw new DensityParseException("properties must be a map type");
                 } else {
                     parseProperties(builder, (Map<String, Object>) fieldNode, parserContext);
                 }

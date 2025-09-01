@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequestBuilder;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.clustermanager.AcknowledgedRequestBuilder;
+import org.density.cluster.metadata.Context;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * Builder for a create index request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CreateIndexRequestBuilder extends AcknowledgedRequestBuilder<
@@ -58,11 +58,11 @@ public class CreateIndexRequestBuilder extends AcknowledgedRequestBuilder<
     CreateIndexResponse,
     CreateIndexRequestBuilder> {
 
-    public CreateIndexRequestBuilder(OpenSearchClient client, CreateIndexAction action) {
+    public CreateIndexRequestBuilder(DensityClient client, CreateIndexAction action) {
         super(client, action, new CreateIndexRequest());
     }
 
-    public CreateIndexRequestBuilder(OpenSearchClient client, CreateIndexAction action, String index) {
+    public CreateIndexRequestBuilder(DensityClient client, CreateIndexAction action, String index) {
         super(client, action, new CreateIndexRequest(index));
     }
 

@@ -434,7 +434,7 @@
   - match: {error.reason: 'compile error'}
 
 # script in update_by_query supports java.lang.String.sha1() and java.lang.String.sha256() methods
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/16423
+# related issue: https://github.com/density-project/Density/issues/16423
 ---
 "Script supports sha1() and sha256() method for strings":
   - skip:

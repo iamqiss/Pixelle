@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.OpenSearchException;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.suggest.Suggest.Suggestion;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry.Option;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.DensityException;
+import org.density.search.internal.SearchContext;
+import org.density.search.suggest.Suggest.Suggestion;
+import org.density.search.suggest.Suggest.Suggestion.Entry;
+import org.density.search.suggest.Suggest.Suggestion.Entry.Option;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * SuggestProcessor of a search request, used to collect suggestions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SuggestProcessor {
 
@@ -76,7 +76,7 @@ public class SuggestProcessor {
             }
             context.queryResult().suggest(new Suggest(suggestions));
         } catch (IOException e) {
-            throw new OpenSearchException("I/O exception during suggest phase", e);
+            throw new DensityException("I/O exception during suggest phase", e);
         }
     }
 

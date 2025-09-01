@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
 import org.apache.lucene.tests.util.TimeUnits;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ClientYamlTestCandidate;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.common.settings.Settings;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ClientYamlTestCandidate;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 
 @TimeoutSuite(millis = 5 * TimeUnits.MINUTE) // to account for slow as hell VMs
-public class UpgradeClusterClientYamlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
+public class UpgradeClusterClientYamlTestSuiteIT extends DensityClientYamlSuiteTestCase {
 
     @Override
     protected boolean preserveIndicesUponCompletion() {
@@ -73,7 +73,7 @@ public class UpgradeClusterClientYamlTestSuiteIT extends OpenSearchClientYamlSui
             // increase the timeout here to 90 seconds to handle long waits for a green
             // cluster health. the waits for green need to be longer than a minute to
             // account for delayed shards
-            .put(OpenSearchRestTestCase.CLIENT_SOCKET_TIMEOUT, "90s")
+            .put(DensityRestTestCase.CLIENT_SOCKET_TIMEOUT, "90s")
             .build();
     }
 }

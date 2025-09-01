@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.routingtable;
+package org.density.gateway.remote.routingtable;
 
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.RoutingTableIncrementalDiff;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.repositories.blobstore.ChecksumWritableBlobStoreFormat;
+import org.density.cluster.Diff;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.RoutingTableIncrementalDiff;
+import org.density.common.io.Streams;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.BlobPathParameters;
+import org.density.core.compress.Compressor;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.repositories.blobstore.ChecksumWritableBlobStoreFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
 
 /**
- * Represents a incremental difference between {@link org.opensearch.cluster.routing.RoutingTable} objects that can be serialized and deserialized.
+ * Represents a incremental difference between {@link org.density.cluster.routing.RoutingTable} objects that can be serialized and deserialized.
  * This class is responsible for writing and reading the differences between RoutingTables to and from an input/output stream.
  */
 public class RemoteRoutingTableDiff extends AbstractClusterMetadataWriteableBlobEntity<Diff<RoutingTable>> {

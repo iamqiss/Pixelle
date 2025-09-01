@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.DeleteSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineResponse;
-import org.opensearch.action.search.PutSearchPipelineRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.ingest.PipelineConfiguration;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.DeleteSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineResponse;
+import org.density.action.search.PutSearchPipelineRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.ingest.PipelineConfiguration;
+import org.density.plugins.Plugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -38,8 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class SearchPipelineCommonIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class SearchPipelineCommonIT extends DensityIntegTestCase {
 
     private static final String TEST_INDEX = "myindex";
     private static final String PIPELINE_NAME = "test_pipeline";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ReleasablesTests extends OpenSearchTestCase {
+public class ReleasablesTests extends DensityTestCase {
 
     public void testReleaseOnce() {
         AtomicInteger count = new AtomicInteger(0);

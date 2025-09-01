@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.action.ingest.SimulateProcessorResult;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ingest.SimulateProcessorResult;
+import org.density.common.settings.Settings;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -51,11 +51,11 @@ import java.util.Map;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.ingest.CompoundProcessor.ON_FAILURE_MESSAGE_FIELD;
-import static org.opensearch.ingest.CompoundProcessor.ON_FAILURE_PROCESSOR_TAG_FIELD;
-import static org.opensearch.ingest.CompoundProcessor.ON_FAILURE_PROCESSOR_TYPE_FIELD;
-import static org.opensearch.ingest.PipelineProcessorTests.createIngestService;
-import static org.opensearch.ingest.TrackingResultProcessor.decorate;
+import static org.density.ingest.CompoundProcessor.ON_FAILURE_MESSAGE_FIELD;
+import static org.density.ingest.CompoundProcessor.ON_FAILURE_PROCESSOR_TAG_FIELD;
+import static org.density.ingest.CompoundProcessor.ON_FAILURE_PROCESSOR_TYPE_FIELD;
+import static org.density.ingest.PipelineProcessorTests.createIngestService;
+import static org.density.ingest.TrackingResultProcessor.decorate;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -66,7 +66,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TrackingResultProcessorTests extends OpenSearchTestCase {
+public class TrackingResultProcessorTests extends DensityTestCase {
 
     private IngestDocument ingestDocument;
     private List<SimulateProcessorResult> resultList;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.util.CloseableThreadLocal;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.util.CollectionUtils;
+import org.density.common.settings.Settings;
+import org.density.core.common.util.CollectionUtils;
 
 import java.io.Reader;
 import java.util.Map;
@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * A custom analyzer that is reloadable
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ReloadableCustomAnalyzer extends Analyzer implements AnalyzerComponentsProvider {
 

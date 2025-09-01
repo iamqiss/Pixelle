@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite.composite912;
+package org.density.index.codec.composite.composite912;
 
 import org.apache.lucene.backward_codecs.lucene912.Lucene912Codec;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.DocValuesFormat;
 import org.apache.lucene.codecs.FilterCodec;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.mapper.MapperService;
 
 /**
  *  Extends the Codec to support new file formats for composite indices eg: star tree index
  *  based on the mappings.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class Composite912Codec extends FilterCodec {

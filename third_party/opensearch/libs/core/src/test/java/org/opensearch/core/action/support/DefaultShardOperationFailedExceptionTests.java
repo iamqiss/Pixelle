@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.action.support;
+package org.density.core.action.support;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.broadcast.BroadcastShardOperationFailedException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.action.support.broadcast.BroadcastShardOperationFailedException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
@@ -61,25 +61,25 @@ import java.util.function.Supplier;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCase {
+public class DefaultShardOperationFailedExceptionTests extends DensityTestCase {
 
     public void testToString() {
         {
             DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException(
-                new OpenSearchException("foo", new IllegalArgumentException("bar", new RuntimeException("baz")))
+                new DensityException("foo", new IllegalArgumentException("bar", new RuntimeException("baz")))
             );
             assertEquals(
-                "[null][-1] failed, reason [OpenSearchException[foo]; nested: "
+                "[null][-1] failed, reason [DensityException[foo]; nested: "
                     + "IllegalArgumentException[bar]; nested: RuntimeException[baz]; ]",
                 exception.toString()
             );
         }
         {
-            OpenSearchException openSearchException = new OpenSearchException("foo");
+            DensityException openSearchException = new DensityException("foo");
             openSearchException.setIndex(new Index("index1", "_na_"));
             openSearchException.setShard(new ShardId("index1", "_na_", 1));
             DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException(openSearchException);
-            assertEquals("[index1][1] failed, reason [OpenSearchException[foo]]", exception.toString());
+            assertEquals("[index1][1] failed, reason [DensityException[foo]]", exception.toString());
         }
         {
             DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException("index2", 2, new Exception("foo"));
@@ -89,7 +89,7 @@ public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCas
 
     public void testToXContent() throws IOException {
         {
-            DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException(new OpenSearchException("foo"));
+            DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException(new DensityException("foo"));
             assertEquals(
                 "{\"shard\":-1,\"index\":null,\"status\":\"INTERNAL_SERVER_ERROR\","
                     + "\"reason\":{\"type\":\"exception\",\"reason\":\"foo\"}}",
@@ -98,7 +98,7 @@ public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCas
         }
         {
             DefaultShardOperationFailedException exception = new DefaultShardOperationFailedException(
-                new OpenSearchException("foo", new IllegalArgumentException("bar"))
+                new DensityException("foo", new IllegalArgumentException("bar"))
             );
             assertEquals(
                 "{\"shard\":-1,\"index\":null,\"status\":\"INTERNAL_SERVER_ERROR\",\"reason\":{\"type\":\"exception\","
@@ -155,7 +155,7 @@ public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCas
         assertEquals(parsed.shardId(), 1);
         assertEquals(parsed.index(), "test");
         assertEquals(parsed.status(), RestStatus.INTERNAL_SERVER_ERROR);
-        assertEquals(parsed.getCause().getMessage(), "OpenSearch exception [type=exception, reason=foo]");
+        assertEquals(parsed.getCause().getMessage(), "Density exception [type=exception, reason=foo]");
     }
 
     public void testSerialization() throws Exception {
@@ -178,8 +178,8 @@ public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCas
 
     private static DefaultShardOperationFailedException randomInstance() {
         final Exception cause = randomException();
-        if (cause instanceof OpenSearchException) {
-            return new DefaultShardOperationFailedException((OpenSearchException) cause);
+        if (cause instanceof DensityException) {
+            return new DefaultShardOperationFailedException((DensityException) cause);
         } else {
             return new DefaultShardOperationFailedException(randomAlphaOfLengthBetween(1, 5), randomIntBetween(0, 10), cause);
         }
@@ -203,7 +203,7 @@ public class DefaultShardOperationFailedExceptionTests extends OpenSearchTestCas
             () -> new LockObtainFailedException(randomAlphaOfLengthBetween(1, 5), randomExceptionOrNull()),
             () -> new InterruptedException(randomAlphaOfLengthBetween(1, 5)),
             () -> new IOException(randomAlphaOfLengthBetween(1, 5), randomExceptionOrNull()),
-            () -> new OpenSearchRejectedExecutionException(randomAlphaOfLengthBetween(1, 5), randomBoolean()),
+            () -> new DensityRejectedExecutionException(randomAlphaOfLengthBetween(1, 5), randomBoolean()),
             () -> new IndexFormatTooNewException(randomAlphaOfLengthBetween(1, 10), randomInt(), randomInt(), randomInt()),
             () -> new IndexFormatTooOldException(randomAlphaOfLengthBetween(1, 5), randomAlphaOfLengthBetween(1, 5))
         );

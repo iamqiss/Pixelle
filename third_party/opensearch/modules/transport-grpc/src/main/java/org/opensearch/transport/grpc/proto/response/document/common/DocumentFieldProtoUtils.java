@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.document.common;
+package org.density.transport.grpc.proto.response.document.common;
 
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.transport.grpc.proto.response.common.ObjectMapProtoUtils;
+import org.density.common.document.DocumentField;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ObjectMap;
+import org.density.transport.grpc.proto.response.common.ObjectMapProtoUtils;
 
 import java.util.List;
 

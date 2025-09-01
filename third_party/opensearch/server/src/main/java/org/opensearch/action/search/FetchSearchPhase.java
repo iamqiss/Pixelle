@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.search.ScoreDoc;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.search.RescoreDocIds;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchSearchRequest;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.transport.Transport;
+import org.density.action.OriginalIndices;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.search.RescoreDocIds;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.ShardFetchSearchRequest;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.transport.Transport;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -56,7 +56,7 @@ import java.util.function.BiFunction;
  * This search phase merges the query results from the previous phase together and calculates the topN hits for this search.
  * Then it reaches out to all relevant shards to fetch the topN hits.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class FetchSearchPhase extends SearchPhase {
     private final ArraySearchPhaseResults<FetchSearchResult> fetchResults;

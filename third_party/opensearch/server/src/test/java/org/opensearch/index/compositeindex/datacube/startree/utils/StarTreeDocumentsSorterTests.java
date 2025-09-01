@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.utils;
+package org.density.index.compositeindex.datacube.startree.utils;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.Rounding;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.UnsignedLongDimension;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.Rounding;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.UnsignedLongDimension;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Tests for {@link StarTreeDocumentsSorter}.
  */
-public class StarTreeDocumentsSorterTests extends OpenSearchTestCase {
+public class StarTreeDocumentsSorterTests extends DensityTestCase {
 
     private Map<Integer, Long[]> testData;
     private List<Comparator<Long>> comparatorList;

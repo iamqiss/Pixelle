@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ConcurrentMapLong;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ConcurrentMapLong;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -61,9 +61,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * OpenSearch Transport Interface
+ * Density Transport Interface
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface Transport extends LifecycleComponent {
@@ -164,7 +164,7 @@ public interface Transport extends LifecycleComponent {
     /**
      * A unidirectional connection to a {@link DiscoveryNode}
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface Connection extends Closeable {
@@ -218,7 +218,7 @@ public interface Transport extends LifecycleComponent {
      * This class represents a response context that encapsulates the actual response handler, the action and the connection it was
      * executed on.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     final class ResponseContext<T extends TransportResponse> {
@@ -251,7 +251,7 @@ public interface Transport extends LifecycleComponent {
     /**
      * This class is a registry that allows
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     final class ResponseHandlers {
@@ -333,7 +333,7 @@ public interface Transport extends LifecycleComponent {
     /**
      * Request handler implementations
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     final class RequestHandlers {
@@ -348,7 +348,7 @@ public interface Transport extends LifecycleComponent {
         }
 
         // TODO: Only visible for testing. Perhaps move StubbableTransport from
-        // org.opensearch.test.transport to org.opensearch.transport
+        // org.density.test.transport to org.density.transport
         public synchronized <Request extends TransportRequest> void forceRegister(RequestHandlerRegistry<Request> reg) {
             requestHandlers = MapBuilder.newMapBuilder(requestHandlers).put(reg.getAction(), reg).immutableMap();
         }

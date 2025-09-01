@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.rule.action.CreateRuleRequest;
-import org.opensearch.rule.action.CreateRuleResponse;
-import org.opensearch.rule.action.DeleteRuleRequest;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.action.UpdateRuleRequest;
-import org.opensearch.rule.action.UpdateRuleResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.core.action.ActionListener;
+import org.density.rule.action.CreateRuleRequest;
+import org.density.rule.action.CreateRuleResponse;
+import org.density.rule.action.DeleteRuleRequest;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.action.UpdateRuleRequest;
+import org.density.rule.action.UpdateRuleResponse;
 
 /**
  * Interface for a service that handles rule persistence CRUD operations.
- * @opensearch.experimental
+ * @density.experimental
  */
 public interface RulePersistenceService {
 

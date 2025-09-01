@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class RemoveByPatternProcessorTests extends OpenSearchTestCase {
+public class RemoveByPatternProcessorTests extends DensityTestCase {
 
     public void testRemoveWithFieldPatterns() throws Exception {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());

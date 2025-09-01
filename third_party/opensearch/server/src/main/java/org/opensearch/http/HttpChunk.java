@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lease.Releasable;
+import org.density.core.common.bytes.BytesReference;
 
 /**
  * Represents a chunk of the HTTP request / response stream
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface HttpChunk extends Releasable {

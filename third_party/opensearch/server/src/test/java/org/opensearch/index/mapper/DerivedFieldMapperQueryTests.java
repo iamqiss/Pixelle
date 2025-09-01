@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -20,18 +20,18 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.index.Index;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.query.MatchPhrasePrefixQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.search.QueryStringQueryParser;
-import org.opensearch.script.DerivedFieldScript;
+import org.density.DensityParseException;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.Lucene;
+import org.density.core.index.Index;
+import org.density.geometry.Rectangle;
+import org.density.index.query.MatchPhrasePrefixQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.search.QueryStringQueryParser;
+import org.density.script.DerivedFieldScript;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.Set;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.query.QueryBuilders.geoShapeQuery;
+import static org.density.index.query.QueryBuilders.geoShapeQuery;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -539,7 +539,7 @@ public class DerivedFieldMapperQueryTests extends MapperServiceTestCase {
                 termQueryBuilder.caseInsensitive(true);
                 query = termQueryBuilder.toQuery(queryShardContext);
                 Query finalQuery = query;
-                assertThrows(OpenSearchParseException.class, () -> searcher.search(finalQuery, 10));
+                assertThrows(DensityParseException.class, () -> searcher.search(finalQuery, 10));
 
                 query = QueryBuilders.matchPhraseQuery("object_field.text_field", "document number 1").toQuery(queryShardContext);
                 topDocs = searcher.search(query, 10);

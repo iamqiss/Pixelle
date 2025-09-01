@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -25,7 +25,7 @@ class OTelSpan extends AbstractSpan {
      * @param span the delegate span
      * @param parentSpan the parent span
      */
-    public OTelSpan(String spanName, Span span, org.opensearch.telemetry.tracing.Span parentSpan) {
+    public OTelSpan(String spanName, Span span, org.density.telemetry.tracing.Span parentSpan) {
         super(spanName, parentSpan);
         this.delegateSpan = span;
     }

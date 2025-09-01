@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import com.carrotsearch.randomizedtesting.JUnit3MethodProvider;
 import com.carrotsearch.randomizedtesting.RandomizedContext;
@@ -42,16 +42,16 @@ import com.carrotsearch.randomizedtesting.annotations.Timeout;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.packaging.util.Archives;
-import org.opensearch.packaging.util.Distribution;
-import org.opensearch.packaging.util.Docker;
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Installation;
-import org.opensearch.packaging.util.Packages;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.Shell;
+import org.density.common.CheckedConsumer;
+import org.density.common.util.io.IOUtils;
+import org.density.packaging.util.Archives;
+import org.density.packaging.util.Distribution;
+import org.density.packaging.util.Docker;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Installation;
+import org.density.packaging.util.Packages;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.Shell;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -78,11 +78,11 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.packaging.util.Cleanup.cleanEverything;
-import static org.opensearch.packaging.util.Docker.ensureImageIsLoaded;
-import static org.opensearch.packaging.util.Docker.removeContainer;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
-import static org.opensearch.packaging.util.FileUtils.append;
+import static org.density.packaging.util.Cleanup.cleanEverything;
+import static org.density.packaging.util.Docker.ensureImageIsLoaded;
+import static org.density.packaging.util.Docker.removeContainer;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.util.FileUtils.append;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -184,8 +184,8 @@ public abstract class PackagingTestCase extends Assert {
 
         sh.reset();
         if (distribution().hasJdk == false) {
-            // Randomly switch between JAVA_HOME and OPENSEARCH_JAVA_HOME
-            final String javaHomeEnv = randomBoolean() ? "JAVA_HOME" : "OPENSEARCH_JAVA_HOME";
+            // Randomly switch between JAVA_HOME and DENSITY_JAVA_HOME
+            final String javaHomeEnv = randomBoolean() ? "JAVA_HOME" : "DENSITY_JAVA_HOME";
             logger.info("Using " + javaHomeEnv);
 
             Platforms.onLinux(() -> sh.getEnv().put(javaHomeEnv, systemJavaHome));
@@ -201,19 +201,19 @@ public abstract class PackagingTestCase extends Assert {
     public void teardown() throws Exception {
         if (installation != null && failed == false) {
             if (Files.exists(installation.logs)) {
-                Path logFile = installation.logs.resolve("opensearch.log");
+                Path logFile = installation.logs.resolve("density.log");
                 if (Files.exists(logFile)) {
-                    logger.warn("OpenSearch log:\n" + FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"));
+                    logger.warn("Density log:\n" + FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"));
                 }
 
                 // move log file so we can avoid false positives when grepping for
                 // messages in logs during test
                 String prefix = this.getClass().getSimpleName() + "." + testNameRule.getMethodName();
                 if (Files.exists(logFile)) {
-                    Path newFile = installation.logs.resolve(prefix + ".opensearch.log");
+                    Path newFile = installation.logs.resolve(prefix + ".density.log");
                     FileUtils.mv(logFile, newFile);
                 }
-                for (Path rotatedLogFile : FileUtils.lsGlob(installation.logs, "opensearch*.tar.gz")) {
+                for (Path rotatedLogFile : FileUtils.lsGlob(installation.logs, "density*.tar.gz")) {
                     Path newRotatedLogFile = installation.logs.resolve(prefix + "." + rotatedLogFile.getFileName());
                     FileUtils.mv(rotatedLogFile, newRotatedLogFile);
                 }
@@ -247,7 +247,7 @@ public abstract class PackagingTestCase extends Assert {
                 Docker.verifyContainerInstallation(installation, distribution);
                 break;
             default:
-                throw new IllegalStateException("Unknown OpenSearch packaging type.");
+                throw new IllegalStateException("Unknown Density packaging type.");
         }
     }
 
@@ -257,19 +257,19 @@ public abstract class PackagingTestCase extends Assert {
     }
 
     /**
-     * Starts and stops opensearch, and performs assertions while it is running.
+     * Starts and stops density, and performs assertions while it is running.
      */
     protected void assertWhileRunning(Platforms.PlatformAction assertions) throws Exception {
         try {
-            awaitOpenSearchStartup(runOpenSearchStartCommand(null, true, false));
+            awaitDensityStartup(runDensityStartCommand(null, true, false));
         } catch (Exception e) {
-            if (Files.exists(installation.home.resolve("opensearch.pid"))) {
-                String pid = FileUtils.slurp(installation.home.resolve("opensearch.pid")).trim();
-                logger.info("Dumping jstack of opensearch processb ({}) that failed to start", pid);
+            if (Files.exists(installation.home.resolve("density.pid"))) {
+                String pid = FileUtils.slurp(installation.home.resolve("density.pid")).trim();
+                logger.info("Dumping jstack of density processb ({}) that failed to start", pid);
                 sh.runIgnoreExitCode("jstack " + pid);
             }
-            if (Files.exists(installation.logs.resolve("opensearch.log"))) {
-                logger.warn("OpenSearch log:\n" + FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"));
+            if (Files.exists(installation.logs.resolve("density.log"))) {
+                logger.warn("Density log:\n" + FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"));
             }
             if (Files.exists(installation.logs.resolve("output.out"))) {
                 logger.warn("Stdout:\n" + FileUtils.slurpTxtorGz(installation.logs.resolve("output.out")));
@@ -283,25 +283,25 @@ public abstract class PackagingTestCase extends Assert {
         try {
             assertions.run();
         } catch (Exception e) {
-            logger.warn("OpenSearch log:\n" + FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"));
+            logger.warn("Density log:\n" + FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"));
             throw e;
         }
-        stopOpenSearch();
+        stopDensity();
     }
 
     /**
-     * Run the command to start OpenSearch, but don't wait or test for success.
+     * Run the command to start Density, but don't wait or test for success.
      * This method is useful for testing failure conditions in startup. To await success,
-     * use {@link #startOpenSearch()}.
+     * use {@link #startDensity()}.
      * @param password Password for password-protected keystore, null for no password;
      *                 this option will fail for non-archive distributions
-     * @param daemonize Run OpenSearch in the background
+     * @param daemonize Run Density in the background
      * @param useTty Use a tty for inputting the password rather than standard input;
      *               this option will fail for non-archive distributions
      * @return Shell results of the startup command.
      * @throws Exception when command fails immediately.
      */
-    public Shell.Result runOpenSearchStartCommand(String password, boolean daemonize, boolean useTty) throws Exception {
+    public Shell.Result runDensityStartCommand(String password, boolean daemonize, boolean useTty) throws Exception {
         if (password != null) {
             assertTrue("Only archives support user-entered passwords", distribution().isArchive());
         }
@@ -310,87 +310,87 @@ public abstract class PackagingTestCase extends Assert {
             case TAR:
             case ZIP:
                 if (useTty) {
-                    return Archives.startOpenSearchWithTty(installation, sh, password, daemonize);
+                    return Archives.startDensityWithTty(installation, sh, password, daemonize);
                 } else {
-                    return Archives.runOpenSearchStartCommand(installation, sh, password, daemonize);
+                    return Archives.runDensityStartCommand(installation, sh, password, daemonize);
                 }
             case DEB:
             case RPM:
-                return Packages.runOpenSearchStartCommand(sh);
+                return Packages.runDensityStartCommand(sh);
             case DOCKER:
                 // nothing, "installing" docker image is running it
                 return Shell.NO_OP;
             default:
-                throw new IllegalStateException("Unknown OpenSearch packaging type.");
+                throw new IllegalStateException("Unknown Density packaging type.");
         }
     }
 
-    public void stopOpenSearch() throws Exception {
+    public void stopDensity() throws Exception {
         switch (distribution.packaging) {
             case TAR:
             case ZIP:
-                Archives.stopOpenSearch(installation);
+                Archives.stopDensity(installation);
                 break;
             case DEB:
             case RPM:
-                Packages.stopOpenSearch(sh);
+                Packages.stopDensity(sh);
                 break;
             case DOCKER:
                 // nothing, "installing" docker image is running it
                 break;
             default:
-                throw new IllegalStateException("Unknown OpenSearch packaging type.");
+                throw new IllegalStateException("Unknown Density packaging type.");
         }
     }
 
-    public void awaitOpenSearchStartup(Shell.Result result) throws Exception {
+    public void awaitDensityStartup(Shell.Result result) throws Exception {
         assertThat("Startup command should succeed", result.exitCode, equalTo(0));
         switch (distribution.packaging) {
             case TAR:
             case ZIP:
-                Archives.assertOpenSearchStarted(installation);
+                Archives.assertDensityStarted(installation);
                 break;
             case DEB:
             case RPM:
-                Packages.assertOpenSearchStarted(sh, installation);
+                Packages.assertDensityStarted(sh, installation);
                 break;
             case DOCKER:
-                Docker.waitForOpenSearchToStart();
+                Docker.waitForDensityToStart();
                 break;
             default:
-                throw new IllegalStateException("Unknown OpenSearch packaging type.");
+                throw new IllegalStateException("Unknown Density packaging type.");
         }
     }
 
     /**
-     * Start OpenSearch and wait until it's up and running. If you just want to run
-     * the start command, use {@link #runOpenSearchStartCommand(String, boolean, boolean)}.
+     * Start Density and wait until it's up and running. If you just want to run
+     * the start command, use {@link #runDensityStartCommand(String, boolean, boolean)}.
      * @throws Exception if Opensearch can't start
      */
-    public void startOpenSearch() throws Exception {
-        awaitOpenSearchStartup(runOpenSearchStartCommand(null, true, false));
+    public void startDensity() throws Exception {
+        awaitDensityStartup(runDensityStartCommand(null, true, false));
     }
 
-    public void assertOpenSearchFailure(Shell.Result result, String expectedMessage, Packages.JournaldWrapper journaldWrapper) {
-        assertOpenSearchFailure(result, Collections.singletonList(expectedMessage), journaldWrapper);
+    public void assertDensityFailure(Shell.Result result, String expectedMessage, Packages.JournaldWrapper journaldWrapper) {
+        assertDensityFailure(result, Collections.singletonList(expectedMessage), journaldWrapper);
     }
 
-    public void assertOpenSearchFailure(Shell.Result result, List<String> expectedMessages, Packages.JournaldWrapper journaldWrapper) {
+    public void assertDensityFailure(Shell.Result result, List<String> expectedMessages, Packages.JournaldWrapper journaldWrapper) {
         @SuppressWarnings("unchecked")
         Matcher<String>[] stringMatchers = expectedMessages.stream().map(CoreMatchers::containsString).toArray(Matcher[]::new);
-        if (Files.exists(installation.logs.resolve("opensearch.log"))) {
+        if (Files.exists(installation.logs.resolve("density.log"))) {
 
             // If log file exists, then we have bootstrapped our logging and the
             // error should be in the logs
-            assertThat(installation.logs.resolve("opensearch.log"), fileExists());
-            String logfile = FileUtils.slurp(installation.logs.resolve("opensearch.log"));
+            assertThat(installation.logs.resolve("density.log"), fileExists());
+            String logfile = FileUtils.slurp(installation.logs.resolve("density.log"));
 
             assertThat(logfile, anyOf(stringMatchers));
 
         } else if (distribution().isPackage() && Platforms.isSystemd()) {
 
             // For systemd, retrieve the error from journalctl
-            assertThat(result.stderr, containsString("Job for opensearch.service failed"));
+            assertThat(result.stderr, containsString("Job for density.service failed"));
             Shell.Result error = journaldWrapper.getLogs();
             assertThat(error.stdout, anyOf(stringMatchers));
 
@@ -399,7 +399,7 @@ public abstract class PackagingTestCase extends Assert {
             // In Windows, we have written our stdout and stderr to files in order to run
             // in the background
             String wrapperPid = result.stdout.trim();
-            sh.runIgnoreExitCode("Wait-Process -Timeout " + Archives.OPENSEARCH_STARTUP_SLEEP_TIME_SECONDS + " -Id " + wrapperPid);
+            sh.runIgnoreExitCode("Wait-Process -Timeout " + Archives.DENSITY_STARTUP_SLEEP_TIME_SECONDS + " -Id " + wrapperPid);
             sh.runIgnoreExitCode(
                 "Get-EventSubscriber | "
                     + "where {($_.EventName -eq 'OutputDataReceived' -Or $_.EventName -eq 'ErrorDataReceived' |"
@@ -443,29 +443,29 @@ public abstract class PackagingTestCase extends Assert {
      * Run the given action with a temporary copy of the config directory.
      * <p>
      * Files under the path passed to the action may be modified as necessary for the
-     * test to execute, and running OpenSearch with {@link #startOpenSearch()} will
+     * test to execute, and running Density with {@link #startDensity()} will
      * use the temporary directory.
      */
     public void withCustomConfig(CheckedConsumer<Path, Exception> action) throws Exception {
         Path tempDir = createTempDir("custom-config");
-        Path tempConf = tempDir.resolve("opensearch");
+        Path tempConf = tempDir.resolve("density");
         FileUtils.copyDirectory(installation.config, tempConf);
 
-        Platforms.onLinux(() -> sh.run("chown -R opensearch:opensearch " + tempDir));
+        Platforms.onLinux(() -> sh.run("chown -R density:density " + tempDir));
 
         if (distribution.isPackage()) {
-            Files.copy(installation.envFile, tempDir.resolve("opensearch.bk"));// backup
-            append(installation.envFile, "OPENSEARCH_PATH_CONF=" + tempConf + "\n");
+            Files.copy(installation.envFile, tempDir.resolve("density.bk"));// backup
+            append(installation.envFile, "DENSITY_PATH_CONF=" + tempConf + "\n");
         } else {
-            sh.getEnv().put("OPENSEARCH_PATH_CONF", tempConf.toString());
+            sh.getEnv().put("DENSITY_PATH_CONF", tempConf.toString());
         }
 
         action.accept(tempConf);
         if (distribution.isPackage()) {
             IOUtils.rm(installation.envFile);
-            Files.copy(tempDir.resolve("opensearch.bk"), installation.envFile);
+            Files.copy(tempDir.resolve("density.bk"), installation.envFile);
         } else {
-            sh.getEnv().remove("OPENSEARCH_PATH_CONF");
+            sh.getEnv().remove("DENSITY_PATH_CONF");
         }
         IOUtils.rm(tempDir);
     }

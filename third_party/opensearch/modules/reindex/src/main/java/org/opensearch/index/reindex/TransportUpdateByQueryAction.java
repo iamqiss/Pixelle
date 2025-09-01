@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.ParentTaskAssigningClient;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -134,8 +134,8 @@ public class TransportUpdateByQueryAction extends HandledTransportAction<UpdateB
         }
 
         @Override
-        protected org.opensearch.action.bulk.BulkRequest buildBulkRequest() {
-            return new org.opensearch.action.bulk.BulkRequest().pipeline(mainRequest.getPipeline());
+        protected org.density.action.bulk.BulkRequest buildBulkRequest() {
+            return new org.density.action.bulk.BulkRequest().pipeline(mainRequest.getPipeline());
         }
 
         @Override

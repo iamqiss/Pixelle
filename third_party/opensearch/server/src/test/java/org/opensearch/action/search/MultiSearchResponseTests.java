@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.DensityException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.function.Predicate;
@@ -102,7 +102,7 @@ public class MultiSearchResponseTests extends AbstractXContentTestCase<MultiSear
                 );
                 items[i] = new MultiSearchResponse.Item(searchResponse, null);
             } else {
-                items[i] = new MultiSearchResponse.Item(null, new OpenSearchException("an error"));
+                items[i] = new MultiSearchResponse.Item(null, new DensityException("an error"));
             }
         }
         return new MultiSearchResponse(items, randomNonNegativeLong());

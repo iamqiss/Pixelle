@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateAction;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.support.ContextPreservingActionListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.cluster.state.ClusterStateAction;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.support.ContextPreservingActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -63,7 +63,7 @@ import java.util.function.Function;
  * {@link SniffConnectionStrategy#REMOTE_CONNECTIONS_PER_CLUSTER} until either all eligible nodes are exhausted or the maximum number of
  * connections per cluster has been reached.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class RemoteClusterConnection implements Closeable {
 

@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.remotestore;
+package org.density.node.remotestore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.util.FeatureFlags;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryMissingException;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.util.FeatureFlags.REMOTE_STORE_MIGRATION_EXPERIMENTAL;
+import static org.density.common.util.FeatureFlags.REMOTE_STORE_MIGRATION_EXPERIMENTAL;
 
 /**
  * Contains all the method needed for a remote store backed node lifecycle.
@@ -70,7 +70,7 @@ public class RemoteStoreNodeService {
     /**
      * Node join compatibility mode introduced with remote backed storage.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum CompatibilityMode {
         STRICT("strict"),
@@ -101,7 +101,7 @@ public class RemoteStoreNodeService {
     /**
      * Migration Direction intended for docrep to remote store migration and vice versa
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Direction {
         REMOTE_STORE("remote_store"),

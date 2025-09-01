@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test.telemetry;
+package org.density.test.telemetry;
 
-import org.opensearch.telemetry.metrics.Counter;
-import org.opensearch.telemetry.metrics.Histogram;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.TaggedMeasurement;
-import org.opensearch.telemetry.metrics.tags.Tags;
+import org.density.telemetry.metrics.Counter;
+import org.density.telemetry.metrics.Histogram;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.TaggedMeasurement;
+import org.density.telemetry.metrics.tags.Tags;
 
 import java.io.Closeable;
 import java.io.IOException;

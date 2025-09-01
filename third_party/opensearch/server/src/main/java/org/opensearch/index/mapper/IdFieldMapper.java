@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -42,28 +42,28 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.opensearch.index.fielddata.plain.PagedBytesIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.Lucene;
+import org.density.common.util.BigArrays;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
+import org.density.index.fielddata.plain.PagedBytesIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.indices.IndicesService;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -76,7 +76,7 @@ import java.util.function.Supplier;
  * stored, but we need to keep it so that its FieldType can be used to generate
  * queries.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IdFieldMapper extends MetadataFieldMapper {
@@ -93,7 +93,7 @@ public class IdFieldMapper extends MetadataFieldMapper {
     /**
      * Default parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final String NAME = IdFieldMapper.NAME;
@@ -123,7 +123,7 @@ public class IdFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for ID field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class IdFieldType extends TermBasedFieldType {
 

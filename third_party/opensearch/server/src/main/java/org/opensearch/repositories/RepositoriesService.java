@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.admin.cluster.crypto.CryptoSettings;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.SnapshotDeletionsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.blobstore.MeteredBlobStoreRepository;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.ActionRunnable;
+import org.density.action.admin.cluster.crypto.CryptoSettings;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.SnapshotDeletionsInProgress;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.blobstore.MeteredBlobStoreRepository;
+import org.density.snapshots.SnapshotsService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,16 +86,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_REPOSITORY;
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_REPOSITORY;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_REPOSITORY;
+import static org.density.cluster.service.ClusterManagerTask.PUT_REPOSITORY;
+import static org.density.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
+import static org.density.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
+import static org.density.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
 
 /**
  * Service responsible for maintaining and providing access to snapshot repositories on nodes.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RepositoriesService extends AbstractLifecycleComponent implements ClusterStateApplier {
@@ -699,7 +699,7 @@ public class RepositoriesService extends AbstractLifecycleComponent implements C
     }
 
     public static void validate(final String identifier) {
-        if (org.opensearch.core.common.Strings.hasLength(identifier) == false) {
+        if (org.density.core.common.Strings.hasLength(identifier) == false) {
             throw new RepositoryException(identifier, "cannot be empty");
         }
         if (identifier.contains("#")) {
@@ -782,7 +782,7 @@ public class RepositoriesService extends AbstractLifecycleComponent implements C
                 repositoryName,
                 "setting "
                     + SYSTEM_REPOSITORY_SETTING.getKey()
-                    + " cannot provide system repository setting; this setting is managed by OpenSearch"
+                    + " cannot provide system repository setting; this setting is managed by Density"
             );
         }
     }

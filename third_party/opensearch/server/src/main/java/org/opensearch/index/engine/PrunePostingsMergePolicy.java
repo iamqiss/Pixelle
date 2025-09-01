@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.codecs.FieldsProducer;
 import org.apache.lucene.index.CodecReader;
@@ -60,7 +60,7 @@ import java.util.Iterator;
  * before the {@link org.apache.lucene.index.SoftDeletesRetentionMergePolicy} because otherwise only documents that are deleted / removed
  * anyways will be pruned.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class PrunePostingsMergePolicy extends OneMergeWrappingMergePolicy {
 
@@ -171,7 +171,7 @@ final class PrunePostingsMergePolicy extends OneMergeWrappingMergePolicy {
     /**
      * Class holder for only live docs and the postings enumerator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class OnlyLiveDocsPostingsEnum extends PostingsEnum {
 

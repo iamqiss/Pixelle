@@ -65,8 +65,8 @@ org.apache.lucene.util.Version#parseLeniently(java.lang.String)
 java.util.concurrent.Future#cancel(boolean)
 
 @defaultMessage Don't try reading from paths that are not configured in Environment, resolve from Environment instead
-org.opensearch.common.io.PathUtils#get(java.lang.String, java.lang.String[])
-org.opensearch.common.io.PathUtils#get(java.net.URI)
+org.density.common.io.PathUtils#get(java.lang.String, java.lang.String[])
+org.density.common.io.PathUtils#get(java.net.URI)
 
 @defaultMessage Constructing a DateTime without a time zone is dangerous
 org.joda.time.DateTime#<init>()

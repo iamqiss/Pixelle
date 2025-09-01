@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.service;
+package org.density.common.cache.service;
 
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.module.CacheModule;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.store.OpenSearchOnHeapCache;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.CachePlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.module.CacheModule;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.store.DensityOnHeapCache;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.plugins.CachePlugin;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
@@ -28,15 +28,15 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CacheServiceTests extends OpenSearchTestCase {
+public class CacheServiceTests extends DensityTestCase {
     public void testWithCreateCacheForIndicesRequestCacheType() {
         CachePlugin mockPlugin1 = mock(CachePlugin.class);
         ICache.Factory factory1 = mock(ICache.Factory.class);
-        ICache.Factory onHeapCacheFactory = mock(OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.class);
+        ICache.Factory onHeapCacheFactory = mock(DensityOnHeapCache.DensityOnHeapCacheFactory.class);
         Map<String, ICache.Factory> factoryMap = Map.of(
             "cache1",
             factory1,
-            OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME,
+            DensityOnHeapCache.DensityOnHeapCacheFactory.NAME,
             onHeapCacheFactory
         );
         when(mockPlugin1.getCacheFactoryMap()).thenReturn(factoryMap);
@@ -47,9 +47,9 @@ public class CacheServiceTests extends OpenSearchTestCase {
             Settings.builder().put(indicesRequestCacheSetting.getKey(), "cache1").build()
         );
         CacheConfig<String, String> config = mock(CacheConfig.class);
-        ICache<String, String> mockOnHeapCache = mock(OpenSearchOnHeapCache.class);
+        ICache<String, String> mockOnHeapCache = mock(DensityOnHeapCache.class);
         when(factory1.create(eq(config), eq(CacheType.INDICES_REQUEST_CACHE), any(Map.class))).thenReturn(mockOnHeapCache);
-        ICache<String, String> otherMockOnHeapCache = mock(OpenSearchOnHeapCache.class);
+        ICache<String, String> otherMockOnHeapCache = mock(DensityOnHeapCache.class);
         when(onHeapCacheFactory.create(eq(config), eq(CacheType.INDICES_REQUEST_CACHE), any(Map.class))).thenReturn(otherMockOnHeapCache);
 
         ICache<String, String> ircCache = cacheService.createCache(config, CacheType.INDICES_REQUEST_CACHE);
@@ -59,18 +59,18 @@ public class CacheServiceTests extends OpenSearchTestCase {
     public void testWithCreateCacheForIndicesRequestCacheTypeWithStoreNameNull() {
         CachePlugin mockPlugin1 = mock(CachePlugin.class);
         ICache.Factory factory1 = mock(ICache.Factory.class);
-        ICache.Factory onHeapCacheFactory = mock(OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.class);
+        ICache.Factory onHeapCacheFactory = mock(DensityOnHeapCache.DensityOnHeapCacheFactory.class);
         Map<String, ICache.Factory> factoryMap = Map.of(
             "cache1",
             factory1,
-            OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME,
+            DensityOnHeapCache.DensityOnHeapCacheFactory.NAME,
             onHeapCacheFactory
         );
         when(mockPlugin1.getCacheFactoryMap()).thenReturn(factoryMap);
 
         CacheService cacheService = new CacheService(factoryMap, Settings.builder().build());
         CacheConfig<String, String> config = mock(CacheConfig.class);
-        ICache<String, String> mockOnHeapCache = mock(OpenSearchOnHeapCache.class);
+        ICache<String, String> mockOnHeapCache = mock(DensityOnHeapCache.class);
         when(onHeapCacheFactory.create(eq(config), eq(CacheType.INDICES_REQUEST_CACHE), any(Map.class))).thenReturn(mockOnHeapCache);
 
         ICache<String, String> ircCache = cacheService.createCache(config, CacheType.INDICES_REQUEST_CACHE);
@@ -87,7 +87,7 @@ public class CacheServiceTests extends OpenSearchTestCase {
             IllegalArgumentException.class,
             () -> cacheService.createCache(config, CacheType.INDICES_REQUEST_CACHE)
         );
-        assertEquals("No store name: [opensearch_onheap] is registered for cache type: INDICES_REQUEST_CACHE", ex.getMessage());
+        assertEquals("No store name: [density_onheap] is registered for cache type: INDICES_REQUEST_CACHE", ex.getMessage());
     }
 
     public void testWithCreateCacheWithDefaultStoreNameForIRC() {
@@ -104,7 +104,7 @@ public class CacheServiceTests extends OpenSearchTestCase {
 
         CacheService cacheService = cacheModule.getCacheService();
         ICache<String, String> iCache = cacheService.createCache(config, CacheType.INDICES_REQUEST_CACHE);
-        assertTrue(iCache instanceof OpenSearchOnHeapCache);
+        assertTrue(iCache instanceof DensityOnHeapCache);
     }
 
     public void testWithCreateCacheWithInvalidStoreNameAssociatedForCacheType() {
@@ -117,7 +117,7 @@ public class CacheServiceTests extends OpenSearchTestCase {
         );
 
         CacheConfig<String, String> config = mock(CacheConfig.class);
-        ICache<String, String> onHeapCache = mock(OpenSearchOnHeapCache.class);
+        ICache<String, String> onHeapCache = mock(DensityOnHeapCache.class);
         when(factory1.create(config, CacheType.INDICES_REQUEST_CACHE, factoryMap)).thenReturn(onHeapCache);
 
         IllegalArgumentException ex = assertThrows(

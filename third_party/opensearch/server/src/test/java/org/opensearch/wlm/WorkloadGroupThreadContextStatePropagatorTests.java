@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
-public class WorkloadGroupThreadContextStatePropagatorTests extends OpenSearchTestCase {
+public class WorkloadGroupThreadContextStatePropagatorTests extends DensityTestCase {
 
     public void testTransients() {
         WorkloadGroupThreadContextStatePropagator sut = new WorkloadGroupThreadContextStatePropagator();

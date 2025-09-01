@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class DiscoveryExtensionNodeTests extends OpenSearchTestCase {
+public class DiscoveryExtensionNodeTests extends DensityTestCase {
 
     public void testExtensionNode() throws UnknownHostException {
         DiscoveryExtensionNode extensionNode = new DiscoveryExtensionNode(
@@ -36,7 +36,7 @@ public class DiscoveryExtensionNodeTests extends OpenSearchTestCase {
 
     public void testIncompatibleExtensionNode() throws UnknownHostException {
         expectThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> new DiscoveryExtensionNode(
                 "firstExtension",
                 "extensionUniqueId1",

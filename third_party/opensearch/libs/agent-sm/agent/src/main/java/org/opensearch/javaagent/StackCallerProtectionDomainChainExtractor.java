@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.javaagent;
+package org.density.javaagent;
 
 import java.lang.StackWalker.StackFrame;
 import java.security.ProtectionDomain;
@@ -32,7 +32,7 @@ public final class StackCallerProtectionDomainChainExtractor implements Function
      */
     private static final Set<String> ACCESS_CONTROLLER_CLASSES = Set.of(
         "java.security.AccessController",
-        "org.opensearch.secure_sm.AccessController"
+        "org.density.secure_sm.AccessController"
     );
 
     private static final Set<String> DO_PRIVILEGED_METHODS = Set.of("doPrivileged", "doPrivilegedChecked");

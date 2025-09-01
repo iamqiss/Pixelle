@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.RemoteShardsBalancerBaseTestCase;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.RemoteShardsBalancerBaseTestCase;
+import org.density.cluster.routing.allocation.RoutingAllocation;
 
 import java.util.Collections;
 import java.util.stream.Collectors;

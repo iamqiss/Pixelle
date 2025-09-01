@@ -1,48 +1,48 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BatchRunnableExecutor;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.snapshots.SnapshotShardSizeInfo;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.gateway.TestShardBatchGatewayAllocator;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.Version;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BatchRunnableExecutor;
+import org.density.common.util.set.Sets;
+import org.density.core.index.shard.ShardId;
+import org.density.snapshots.SnapshotShardSizeInfo;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.gateway.TestShardBatchGatewayAllocator;
+import org.density.threadpool.TestThreadPool;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -55,13 +55,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gateway.ShardsBatchGatewayAllocator.PRIMARY_BATCH_ALLOCATOR_TIMEOUT_SETTING;
-import static org.opensearch.gateway.ShardsBatchGatewayAllocator.PRIMARY_BATCH_ALLOCATOR_TIMEOUT_SETTING_KEY;
-import static org.opensearch.gateway.ShardsBatchGatewayAllocator.REPLICA_BATCH_ALLOCATOR_TIMEOUT_SETTING;
-import static org.opensearch.gateway.ShardsBatchGatewayAllocator.REPLICA_BATCH_ALLOCATOR_TIMEOUT_SETTING_KEY;
+import static org.density.gateway.ShardsBatchGatewayAllocator.PRIMARY_BATCH_ALLOCATOR_TIMEOUT_SETTING;
+import static org.density.gateway.ShardsBatchGatewayAllocator.PRIMARY_BATCH_ALLOCATOR_TIMEOUT_SETTING_KEY;
+import static org.density.gateway.ShardsBatchGatewayAllocator.REPLICA_BATCH_ALLOCATOR_TIMEOUT_SETTING;
+import static org.density.gateway.ShardsBatchGatewayAllocator.REPLICA_BATCH_ALLOCATOR_TIMEOUT_SETTING_KEY;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class GatewayAllocatorTests extends OpenSearchAllocationTestCase {
+public class GatewayAllocatorTests extends DensityAllocationTestCase {
 
     private final Logger logger = LogManager.getLogger(GatewayAllocatorTests.class);
     TestShardBatchGatewayAllocator testShardsBatchGatewayAllocator = null;
@@ -566,7 +566,7 @@ public class GatewayAllocatorTests extends OpenSearchAllocationTestCase {
             IllegalArgumentException.class,
             () -> ShardsBatchGatewayAllocator.FOLLOW_UP_REROUTE_PRIORITY_SETTING.get(wrongPriority2)
         );
-        assertEquals("No enum constant org.opensearch.common.Priority.RANDOM", iae2.getMessage());
+        assertEquals("No enum constant org.density.common.Priority.RANDOM", iae2.getMessage());
     }
 
     private void createIndexAndUpdateClusterState(int count, int numberOfShards, int numberOfReplicas) {

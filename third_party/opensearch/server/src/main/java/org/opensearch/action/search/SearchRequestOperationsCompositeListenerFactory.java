@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * with the all listeners enabled at cluster-level and request-level.
  *
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchRequestOperationsCompositeListenerFactory {
     private final List<SearchRequestOperationsListener> searchRequestListenersList;

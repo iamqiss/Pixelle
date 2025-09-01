@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.SortedSetDocValues;
@@ -20,7 +20,7 @@ import java.util.List;
  * FieldValueFetcher for sorted set doc values, for a doc, values will be deduplicated and sorted while stored in
  * lucene
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SortedSetDocValuesFetcher extends FieldValueFetcher {
 

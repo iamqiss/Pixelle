@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentParser;
+import org.density.wlm.MutableWorkloadGroupFragment;
 
 import java.io.IOException;
 
 /**
  * A request for update WorkloadGroup
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class UpdateWorkloadGroupRequest extends ClusterManagerNodeRequest<UpdateWorkloadGroupRequest> {
     private final String name;

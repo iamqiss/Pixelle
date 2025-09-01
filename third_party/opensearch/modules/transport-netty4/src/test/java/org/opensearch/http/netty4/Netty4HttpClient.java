@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.NettyAllocator;
+import org.density.common.TriFunction;
+import org.density.common.collect.Tuple;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.tasks.Task;
+import org.density.transport.NettyAllocator;
 
 import java.io.Closeable;
 import java.net.SocketAddress;

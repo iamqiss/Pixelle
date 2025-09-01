@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.InputStreamWithMetadata;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogReader;
-import org.opensearch.index.translog.transfer.FileSnapshot.CheckpointFileSnapshot;
-import org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import org.opensearch.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
-import org.opensearch.index.translog.transfer.listener.TranslogTransferListener;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.common.SetOnce;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.InputStreamWithMetadata;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogReader;
+import org.density.index.translog.transfer.FileSnapshot.CheckpointFileSnapshot;
+import org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import org.density.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
+import org.density.index.translog.transfer.listener.TranslogTransferListener;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -60,10 +60,10 @@ import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
-import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
+import static org.density.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyMap;
@@ -77,7 +77,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @LuceneTestCase.SuppressFileSystems("*")
-public class TranslogTransferManagerTests extends OpenSearchTestCase {
+public class TranslogTransferManagerTests extends DensityTestCase {
 
     private TransferService transferService;
     private ShardId shardId;

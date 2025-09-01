@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.AsyncResponseConsumer;
-import org.opensearch.client.HttpAsyncResponseConsumerFactory.HeapBufferedResponseConsumerFactory;
+import org.density.client.HttpAsyncResponseConsumerFactory.HeapBufferedResponseConsumerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,8 +47,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * The portion of an HTTP request to OpenSearch that can be
- * manipulated without changing OpenSearch's behavior.
+ * The portion of an HTTP request to Density that can be
+ * manipulated without changing Density's behavior.
  */
 public final class RequestOptions {
     /**

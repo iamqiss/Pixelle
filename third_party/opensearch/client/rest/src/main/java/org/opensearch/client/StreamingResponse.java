@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpResponse;
@@ -21,7 +21,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
- * HTTP Streaming Response from OpenSearch. <strong>This is an experimental API.</strong>
+ * HTTP Streaming Response from Density. <strong>This is an experimental API.</strong>
  */
 public class StreamingResponse<T> {
     private final RequestLine requestLine;

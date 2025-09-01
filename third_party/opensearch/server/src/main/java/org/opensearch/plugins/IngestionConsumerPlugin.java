@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.IngestionConsumerFactory;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.IngestionConsumerFactory;
 
 import java.util.Map;
 
 /**
- * An extension point for {@link Plugin} implementations to add custom ingestion consumers for the {@link org.opensearch.index.engine.IngestionEngine}
+ * An extension point for {@link Plugin} implementations to add custom ingestion consumers for the {@link org.density.index.engine.IngestionEngine}
  *
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public interface IngestionConsumerPlugin {

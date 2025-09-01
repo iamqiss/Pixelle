@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.test.DensityTestCase;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -46,7 +46,7 @@ import java.util.Set;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class LongKeyedBucketOrdsTests extends OpenSearchTestCase {
+public class LongKeyedBucketOrdsTests extends DensityTestCase {
     private final MockBigArrays bigArrays = new MockBigArrays(new MockPageCacheRecycler(Settings.EMPTY), new NoneCircuitBreakerService());
 
     public void testExplicitCollectsFromSingleBucket() {
@@ -74,7 +74,7 @@ public class LongKeyedBucketOrdsTests extends OpenSearchTestCase {
             assertThat(ords.size(), equalTo(2L));
             long[] values = new long[scaledRandomIntBetween(1, 10000)];
             for (int i = 0; i < values.length; i++) {
-                values[i] = randomValueOtherThanMany(seen::contains, OpenSearchTestCase::randomLong);
+                values[i] = randomValueOtherThanMany(seen::contains, DensityTestCase::randomLong);
                 seen.add(values[i]);
             }
             for (int i = 0; i < values.length; i++) {

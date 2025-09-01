@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -41,27 +41,27 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.aggregations.metrics.StatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Sum;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
-import org.opensearch.search.aggregations.support.AggregationPath;
+import org.density.ExceptionsHelper;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.common.CheckedConsumer;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.density.search.aggregations.metrics.AvgAggregationBuilder;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.aggregations.metrics.StatsAggregationBuilder;
+import org.density.search.aggregations.metrics.Sum;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.search.aggregations.support.AggregationPath;
 
 import java.io.IOException;
 import java.util.List;

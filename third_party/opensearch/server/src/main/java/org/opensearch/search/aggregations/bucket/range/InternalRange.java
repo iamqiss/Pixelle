@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ import java.util.Objects;
 /**
  * Implementation of range bucket
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalRange<B extends InternalRange.Bucket, R extends InternalRange<B, R>> extends InternalMultiBucketAggregation<R, B>
     implements
@@ -62,7 +62,7 @@ public class InternalRange<B extends InternalRange.Bucket, R extends InternalRan
     /**
      * Bucket for a range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Bucket extends InternalMultiBucketAggregation.InternalBucket implements Range.Bucket {
 
@@ -219,7 +219,7 @@ public class InternalRange<B extends InternalRange.Bucket, R extends InternalRan
     /**
      * Factory for a range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Factory<B extends Bucket, R extends InternalRange<B, R>> {
         public ValuesSourceType getValueSourceType() {

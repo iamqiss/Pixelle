@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.noop;
+package org.density.identity.noop;
 
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.identity.NamedPrincipal;
-import org.opensearch.identity.PluginSubject;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.CheckedRunnable;
+import org.density.common.annotation.InternalApi;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.identity.NamedPrincipal;
+import org.density.identity.PluginSubject;
+import org.density.threadpool.ThreadPool;
 
 import java.security.Principal;
 
@@ -24,7 +24,7 @@ import java.security.Principal;
  *
  * This class is used by the NoopIdentityPlugin to initialize IdentityAwarePlugins
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public class NoopPluginSubject implements PluginSubject {

@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure;
+package org.density.search.backpressure;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.backpressure.settings.NodeDuressSettings;
-import org.opensearch.search.backpressure.settings.SearchBackpressureSettings;
-import org.opensearch.search.backpressure.settings.SearchShardTaskSettings;
-import org.opensearch.search.backpressure.settings.SearchTaskSettings;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchTask;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.backpressure.settings.NodeDuressSettings;
+import org.density.search.backpressure.settings.SearchBackpressureSettings;
+import org.density.search.backpressure.settings.SearchShardTaskSettings;
+import org.density.search.backpressure.settings.SearchTaskSettings;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.wlm.WorkloadGroupTask;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
@@ -55,13 +55,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class SearchBackpressureIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE)
+public class SearchBackpressureIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final TimeValue TIMEOUT = new TimeValue(10, TimeUnit.SECONDS);
     private static final int MOVING_AVERAGE_WINDOW_SIZE = 10;

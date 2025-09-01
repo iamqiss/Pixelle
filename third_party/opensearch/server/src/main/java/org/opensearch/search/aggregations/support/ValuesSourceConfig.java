@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.script.AggregationScript;
+import org.density.script.Script;
+import org.density.search.DocValueFormat;
 
 import java.time.ZoneId;
 import java.util.function.Function;
@@ -52,7 +52,7 @@ import java.util.function.LongSupplier;
  * A configuration that tells aggregations how to retrieve data from the index
  * in order to run a specific aggregation.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ValuesSourceConfig {

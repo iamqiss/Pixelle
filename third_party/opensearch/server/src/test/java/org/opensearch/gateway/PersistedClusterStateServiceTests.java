@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -42,30 +42,30 @@ import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeMetadata;
-import org.opensearch.gateway.PersistedClusterStateService.Writer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.Index;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeMetadata;
+import org.density.gateway.PersistedClusterStateService.Writer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -86,7 +86,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PersistedClusterStateServiceTests extends OpenSearchTestCase {
+public class PersistedClusterStateServiceTests extends DensityTestCase {
 
     private PersistedClusterStateService newPersistedClusterStateService(NodeEnvironment nodeEnvironment) {
         return new PersistedClusterStateService(
@@ -1026,7 +1026,7 @@ public class PersistedClusterStateServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.gateway:WARN", reason = "to ensure that we log gateway events on WARN level")
+    @TestLogging(value = "org.density.gateway:WARN", reason = "to ensure that we log gateway events on WARN level")
     public void testSlowLogging() throws IOException, IllegalAccessException {
         final long slowWriteLoggingThresholdMillis;
         final Settings settings;

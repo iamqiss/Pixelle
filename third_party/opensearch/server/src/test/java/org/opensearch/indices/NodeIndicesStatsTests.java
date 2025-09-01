@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.search.SearchRequestStats;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.ToXContent;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.object.HasToString.hasToString;
 
-public class NodeIndicesStatsTests extends OpenSearchTestCase {
+public class NodeIndicesStatsTests extends DensityTestCase {
 
     public void testInvalidLevel() {
         CommonStats oldStats = new CommonStats();

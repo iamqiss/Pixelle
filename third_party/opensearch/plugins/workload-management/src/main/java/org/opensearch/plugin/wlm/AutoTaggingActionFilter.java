@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.ActionFilterChain;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.plugin.wlm.rule.attribute_extractor.IndicesExtractor;
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.ActionRequest;
+import org.density.action.IndicesRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.ActionFilterChain;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.plugin.wlm.rule.attribute_extractor.IndicesExtractor;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.List;
 import java.util.Optional;

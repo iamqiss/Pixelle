@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.scroll;
+package org.density.search.scroll;
 
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.common.SetOnce;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.search.RestClearScrollAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.common.SetOnce;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestRequest;
+import org.density.rest.action.search.RestClearScrollAction;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-public class RestClearScrollActionTests extends OpenSearchTestCase {
+public class RestClearScrollActionTests extends DensityTestCase {
 
     public void testParseClearScrollRequestWithInvalidJsonThrowsException() throws Exception {
         RestClearScrollAction action = new RestClearScrollAction();

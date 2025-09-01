@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregatorSupplier;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryShardContext;
+import org.density.script.AggregationScript;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregatorSupplier;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 
@@ -44,7 +44,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ValuesSourceRegistryTests extends OpenSearchTestCase {
+public class ValuesSourceRegistryTests extends DensityTestCase {
 
     public void testAggregatorNotFoundException() {
         final QueryShardContext queryShardContext = mock(QueryShardContext.class);

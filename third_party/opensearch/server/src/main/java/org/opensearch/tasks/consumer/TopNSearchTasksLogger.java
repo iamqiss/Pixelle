@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks.consumer;
+package org.density.tasks.consumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.tasks.Task;
+import org.density.action.search.SearchShardTask;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.tasks.Task;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 /**
  * A simple listener that logs resource information of high memory consuming search tasks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TopNSearchTasksLogger implements Consumer<Task> {
     public static final String TASK_DETAILS_LOG_PREFIX = "task.detailslog";

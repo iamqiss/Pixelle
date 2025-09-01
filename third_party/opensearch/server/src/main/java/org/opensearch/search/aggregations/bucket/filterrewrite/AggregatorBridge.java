@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,17 +14,17 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.Weight;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector.RangeCollector;
-import org.opensearch.search.internal.SearchContext;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.aggregations.bucket.filterrewrite.rangecollector.RangeCollector;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.opensearch.search.aggregations.bucket.filterrewrite.PointTreeTraversal.createCollector;
-import static org.opensearch.search.aggregations.bucket.filterrewrite.PointTreeTraversal.multiRangesTraverse;
+import static org.density.search.aggregations.bucket.filterrewrite.PointTreeTraversal.createCollector;
+import static org.density.search.aggregations.bucket.filterrewrite.PointTreeTraversal.multiRangesTraverse;
 
 /**
  * This interface provides a bridge between an aggregator and the optimization context, allowing
@@ -38,7 +38,7 @@ import static org.opensearch.search.aggregations.bucket.filterrewrite.PointTreeT
  * and put any specific optimization business logic in it. Then implement this subclass in the aggregator
  * to provide data that is needed for doing the optimization
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AggregatorBridge {
 

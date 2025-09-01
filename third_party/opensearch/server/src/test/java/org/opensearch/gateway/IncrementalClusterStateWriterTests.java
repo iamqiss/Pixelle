@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,41 +25,41 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Manifest;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Manifest;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.NodeEnvironment;
+import org.density.test.MockLogAppender;
+import org.density.test.junit.annotations.TestLogging;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -85,14 +85,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class IncrementalClusterStateWriterTests extends OpenSearchAllocationTestCase {
+public class IncrementalClusterStateWriterTests extends DensityAllocationTestCase {
 
     private ClusterState clusterStateWithUnassignedIndex(IndexMetadata indexMetadata, boolean clusterManagerEligible) {
         Metadata metadata = Metadata.builder().put(indexMetadata, false).build();
 
         RoutingTable routingTable = RoutingTable.builder().addAsNew(metadata.index("test")).build();
 
-        return ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        return ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .nodes(generateDiscoveryNodes(clusterManagerEligible))
@@ -479,7 +479,7 @@ public class IncrementalClusterStateWriterTests extends OpenSearchAllocationTest
         }
     }
 
-    @TestLogging(value = "org.opensearch.gateway:WARN", reason = "to ensure that we log gateway events on WARN level")
+    @TestLogging(value = "org.density.gateway:WARN", reason = "to ensure that we log gateway events on WARN level")
     public void testSlowLogging() throws WriteStateException, IllegalAccessException {
         final long slowWriteLoggingThresholdMillis;
         final Settings settings;

@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.autotagging.RuleValidator;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.autotagging.RuleValidator;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -29,7 +29,7 @@ import java.util.Set;
  * curl -X GET "localhost:9200/_rules/{featureType}/" - get all rules for {featureType}
  * curl -X GET "localhost:9200/_rules/{featureType}/{_id}" - get single rule by id
  * curl -X GET "localhost:9200/_rules/{featureType}?index_pattern=a,b" - get all rules containing attribute index_pattern as a or b for {featureType}
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class GetRuleRequest extends ActionRequest {

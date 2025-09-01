@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.Transport;
+import org.density.action.StepListener;
+import org.density.action.support.GroupedActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.Transport;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
 /**
  * Main controller for clearing a scroll
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ClearScrollController implements Runnable {
     private final DiscoveryNodes nodes;

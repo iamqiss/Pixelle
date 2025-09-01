@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.DensityParseException;
+import org.density.common.CheckedConsumer;
+import org.density.common.collect.MapBuilder;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.http.HttpChannel;
+import org.density.http.HttpRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RestRequestTests extends OpenSearchTestCase {
+public class RestRequestTests extends DensityTestCase {
 
     public void testContentConsumesContent() {
         runConsumesContentTest(RestRequest::content, true);
@@ -116,12 +116,12 @@ public class RestRequestTests extends OpenSearchTestCase {
     }
 
     public void testContentParser() throws IOException {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", emptyMap()).contentParser());
+        Exception e = expectThrows(DensityParseException.class, () -> contentRestRequest("", emptyMap()).contentParser());
         assertEquals("request body is required", e.getMessage());
-        e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", singletonMap("source", "{}")).contentParser());
+        e = expectThrows(DensityParseException.class, () -> contentRestRequest("", singletonMap("source", "{}")).contentParser());
         assertEquals("request body is required", e.getMessage());
         assertEquals(emptyMap(), contentRestRequest("{}", emptyMap()).contentParser().map());
-        e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", emptyMap(), emptyMap()).contentParser());
+        e = expectThrows(DensityParseException.class, () -> contentRestRequest("", emptyMap(), emptyMap()).contentParser());
         assertEquals("request body is required", e.getMessage());
     }
 
@@ -134,7 +134,7 @@ public class RestRequestTests extends OpenSearchTestCase {
     }
 
     public void testContentOrSourceParam() throws IOException {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", emptyMap()).contentOrSourceParam());
+        Exception e = expectThrows(DensityParseException.class, () -> contentRestRequest("", emptyMap()).contentOrSourceParam());
         assertEquals("request body or source parameter is required", e.getMessage());
         assertEquals(new BytesArray("stuff"), contentRestRequest("stuff", emptyMap()).contentOrSourceParam().v2());
         assertEquals(
@@ -173,7 +173,7 @@ public class RestRequestTests extends OpenSearchTestCase {
     }
 
     public void testContentOrSourceParamParser() throws IOException {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", emptyMap()).contentOrSourceParamParser());
+        Exception e = expectThrows(DensityParseException.class, () -> contentRestRequest("", emptyMap()).contentOrSourceParamParser());
         assertEquals("request body or source parameter is required", e.getMessage());
         assertEquals(emptyMap(), contentRestRequest("{}", emptyMap()).contentOrSourceParamParser().map());
         assertEquals(emptyMap(), contentRestRequest("{}", singletonMap("source", "stuff2")).contentOrSourceParamParser().map());
@@ -252,7 +252,7 @@ public class RestRequestTests extends OpenSearchTestCase {
     }
 
     public void testRequiredContent() {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> contentRestRequest("", emptyMap()).requiredContent());
+        Exception e = expectThrows(DensityParseException.class, () -> contentRestRequest("", emptyMap()).requiredContent());
         assertEquals("request body is required", e.getMessage());
         assertEquals(new BytesArray("stuff"), contentRestRequest("stuff", emptyMap()).requiredContent());
         assertEquals(
@@ -266,7 +266,7 @@ public class RestRequestTests extends OpenSearchTestCase {
             ).requiredContent()
         );
         e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> contentRestRequest(
                 "",
                 MapBuilder.<String, String>newMapBuilder()

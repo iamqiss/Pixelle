@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.persistent.PersistentTaskParams;
-import org.opensearch.persistent.PersistentTasksCustomMetadata;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Assignment;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.remote.BlobPathParameters;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.index.Index;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.persistent.PersistentTaskParams;
+import org.density.persistent.PersistentTasksCustomMetadata;
+import org.density.persistent.PersistentTasksCustomMetadata.Assignment;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -44,9 +44,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RemoteCustomMetadataTests extends OpenSearchTestCase {
+public class RemoteCustomMetadataTests extends DensityTestCase {
     private static final String TEST_BLOB_NAME = "/test-path/test-blob-name";
     private static final String TEST_BLOB_PATH = "test-path";
     private static final String TEST_BLOB_FILE_NAME = "test-blob-name";
@@ -159,7 +159,7 @@ public class RemoteCustomMetadataTests extends OpenSearchTestCase {
     }
 
     public void testBlobPathTokens() {
-        String uploadedFile = "user/local/opensearch/customMetadata";
+        String uploadedFile = "user/local/density/customMetadata";
         RemoteCustomMetadata remoteObjectForDownload = new RemoteCustomMetadata(
             uploadedFile,
             "test-custom",
@@ -168,7 +168,7 @@ public class RemoteCustomMetadataTests extends OpenSearchTestCase {
             namedWriteableRegistry,
             Version.CURRENT
         );
-        assertThat(remoteObjectForDownload.getBlobPathTokens(), is(new String[] { "user", "local", "opensearch", "customMetadata" }));
+        assertThat(remoteObjectForDownload.getBlobPathTokens(), is(new String[] { "user", "local", "density", "customMetadata" }));
     }
 
     public void testBlobPathParameters() {

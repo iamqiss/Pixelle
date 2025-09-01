@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.lucene.store.FilterIndexOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.SingleObjectCache;
+import org.density.common.lucene.store.FilterIndexOutput;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.SingleObjectCache;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,14 +50,14 @@ import java.util.Set;
 /**
  * Caching directory sized in bytes
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class ByteSizeCachingDirectory extends FilterDirectory {
 
     /**
      * Internal caching size and modulo count
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SizeAndModCount {
         final long size;

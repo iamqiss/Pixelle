@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public class CopyToMapperIntegrationIT extends OpenSearchIntegTestCase {
+public class CopyToMapperIntegrationIT extends DensityIntegTestCase {
     public void testDynamicTemplateCopyTo() throws Exception {
         assertAcked(client().admin().indices().prepareCreate("test-idx").setMapping(createDynamicTemplateMapping()));
 

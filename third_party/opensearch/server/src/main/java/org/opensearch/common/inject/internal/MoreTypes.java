@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,15 +23,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.ConfigurationException;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.spi.Message;
+import org.density.common.inject.ConfigurationException;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.spi.Message;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -58,7 +58,7 @@ import static java.util.Collections.unmodifiableMap;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MoreTypes {
 
@@ -437,7 +437,7 @@ public class MoreTypes {
     /**
      * Implementation for a parameterized type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ParameterizedTypeImpl implements ParameterizedType, CompositeType {
         private final Type ownerType;
@@ -520,7 +520,7 @@ public class MoreTypes {
     /**
      * Implementation for a generic array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GenericArrayTypeImpl implements GenericArrayType, CompositeType {
         private final Type componentType;
@@ -560,7 +560,7 @@ public class MoreTypes {
      * lower bounds. We only support what the Java 6 language needs - at most one
      * bound. If a lower bound is set, the upper bound must be Object.class.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class WildcardTypeImpl implements WildcardType, CompositeType {
         private final Type upperBound;
@@ -632,7 +632,7 @@ public class MoreTypes {
      * our exception types. We workaround this with this serializable implementation. It includes all
      * of the API methods, plus everything we use for line numbers and messaging.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class MemberImpl implements Member {
         private final Class<?> declaringClass;
@@ -678,7 +678,7 @@ public class MoreTypes {
     /**
      * A type formed from other types, such as arrays, parameterized types or wildcard types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private interface CompositeType {
         /**

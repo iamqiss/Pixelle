@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.LeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.LeafOrdinalsFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -47,7 +47,7 @@ import java.util.function.Function;
 /**
  * Baseclass for ordinals docvalues
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractLeafOrdinalsFieldData implements LeafOrdinalsFieldData {
 

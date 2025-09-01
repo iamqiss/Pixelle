@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest.Metric;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterStateHealth;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.CommitStats;
-import org.opensearch.index.seqno.RetentionLeaseStats;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.node.NodeService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.Transports;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest.Metric;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterStateHealth;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.index.IndexService;
+import org.density.index.engine.CommitStats;
+import org.density.index.seqno.RetentionLeaseStats;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.node.NodeService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
+import org.density.transport.Transports;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ import java.util.Set;
 /**
  * Transport action for obtaining cluster state
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportClusterStatsAction extends TransportNodesAction<
     ClusterStatsRequest,
@@ -283,7 +283,7 @@ public class TransportClusterStatsAction extends TransportNodesAction<
     /**
      * Inner Cluster Stats Node Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ClusterStatsNodeRequest extends TransportRequest {
 

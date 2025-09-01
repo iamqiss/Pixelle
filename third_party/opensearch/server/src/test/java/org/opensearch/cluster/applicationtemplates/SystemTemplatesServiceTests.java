@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.applicationtemplates;
+package org.density.cluster.applicationtemplates;
 
-import org.opensearch.cluster.service.applicationtemplates.TestSystemTemplatesRepositoryPlugin;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.applicationtemplates.TestSystemTemplatesRepositoryPlugin;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.common.settings.ClusterSettings.BUILT_IN_CLUSTER_SETTINGS;
-import static org.opensearch.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
+import static org.density.common.settings.ClusterSettings.BUILT_IN_CLUSTER_SETTINGS;
+import static org.density.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
 import static org.mockito.Mockito.when;
 
-public class SystemTemplatesServiceTests extends OpenSearchTestCase {
+public class SystemTemplatesServiceTests extends DensityTestCase {
 
     private SystemTemplatesService systemTemplatesService;
 
@@ -81,7 +81,7 @@ public class SystemTemplatesServiceTests extends OpenSearchTestCase {
 
     private void setupService(boolean errorFromMockPlugin) throws IOException {
         ThreadPool mockPool = Mockito.mock(ThreadPool.class);
-        when(mockPool.generic()).thenReturn(OpenSearchExecutors.newDirectExecutorService());
+        when(mockPool.generic()).thenReturn(DensityExecutors.newDirectExecutorService());
 
         List<SystemTemplatesPlugin> plugins = new ArrayList<>();
         plugins.add(new TestSystemTemplatesRepositoryPlugin());

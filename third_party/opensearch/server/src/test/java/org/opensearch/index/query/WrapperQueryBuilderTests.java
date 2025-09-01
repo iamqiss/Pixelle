@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.memory.MemoryIndex;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.search.approximate.ApproximateMatchAllQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.search.approximate.ApproximateMatchAllQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -73,7 +73,7 @@ public class WrapperQueryBuilderTests extends AbstractQueryTestCase<WrapperQuery
         QueryBuilder wrappedQuery = RandomQueryBuilder.createQuery(random());
         BytesReference bytes;
         try {
-            bytes = org.opensearch.core.xcontent.XContentHelper.toXContent(wrappedQuery, MediaTypeRegistry.JSON, false);
+            bytes = org.density.core.xcontent.XContentHelper.toXContent(wrappedQuery, MediaTypeRegistry.JSON, false);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

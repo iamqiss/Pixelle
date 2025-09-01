@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.qa.die_with_dignity;
+package org.density.qa.die_with_dignity;
 
-import org.opensearch.client.Request;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.test.rest.DensityRestTestCase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,11 +49,11 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
-public class DieWithDignityIT extends OpenSearchRestTestCase {
+public class DieWithDignityIT extends DensityRestTestCase {
     public void testDieWithDignity() throws Exception {
         expectThrows(IOException.class, () -> client().performRequest(new Request("GET", "/_die_with_dignity")));
 
-        // the OpenSearch process should die and disappear from the output of jps
+        // the Density process should die and disappear from the output of jps
         assertBusy(() -> {
             final String jpsPath = PathUtils.get(System.getProperty("runtime.java.home"), "bin/jps").toString();
             final Process process = new ProcessBuilder().command(jpsPath, "-v").start();
@@ -66,7 +66,7 @@ public class DieWithDignityIT extends OpenSearchRestTestCase {
             }
         });
 
-        // parse the logs and ensure that OpenSearch died with the expected cause
+        // parse the logs and ensure that Density died with the expected cause
         final List<String> lines = Files.readAllLines(PathUtils.get(System.getProperty("log")));
 
         final Iterator<String> it = lines.iterator();
@@ -79,7 +79,7 @@ public class DieWithDignityIT extends OpenSearchRestTestCase {
                 if (line.matches(".*ERROR.*o\\.o\\.(Base)?ExceptionsHelper.*javaRestTest-0.*fatal error.*")) {
                     fatalError = true;
                 } else if (line.matches(
-                    ".*ERROR.*o\\.o\\.b\\.OpenSearchUncaughtExceptionHandler.*javaRestTest-0.*"
+                    ".*ERROR.*o\\.o\\.b\\.DensityUncaughtExceptionHandler.*javaRestTest-0.*"
                         + "fatal error in thread \\[Thread-\\d+\\], exiting.*"
                 )) {
                     fatalErrorInThreadExiting = true;
@@ -117,7 +117,7 @@ public class DieWithDignityIT extends OpenSearchRestTestCase {
             // increase the timeout here to 90 seconds to handle long waits for a green
             // cluster health. the waits for green need to be longer than a minute to
             // account for delayed shards
-            .put(OpenSearchRestTestCase.CLIENT_SOCKET_TIMEOUT, "1s")
+            .put(DensityRestTestCase.CLIENT_SOCKET_TIMEOUT, "1s")
             .build();
     }
 

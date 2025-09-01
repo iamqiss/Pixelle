@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.ReleasableBytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamInput;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.MissingHistoryOperationsException;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.AbstractIndexShardComponent;
-import org.opensearch.index.shard.IndexShardComponent;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.ReleasableBytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BufferedChecksumStreamInput;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.MissingHistoryOperationsException;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.Uid;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.AbstractIndexShardComponent;
+import org.density.index.shard.IndexShardComponent;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -90,11 +90,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.translog.TranslogConfig.EMPTY_TRANSLOG_BUFFER_SIZE;
+import static org.density.index.translog.TranslogConfig.EMPTY_TRANSLOG_BUFFER_SIZE;
 
 /**
  * A Translog is a per index shard component that records all non-committed index operations in a durable manner.
- * In OpenSearch there is one Translog instance per {@link org.opensearch.index.engine.InternalEngine}.
+ * In Density there is one Translog instance per {@link org.density.index.engine.InternalEngine}.
  * Additionally, the engine also records a {@link #TRANSLOG_UUID_KEY} with each commit to ensure a strong
  * association between the lucene index an the transaction log file. This UUID is used to prevent accidental recovery from a transaction
  * log that belongs to a
@@ -113,7 +113,7 @@ import static org.opensearch.index.translog.TranslogConfig.EMPTY_TRANSLOG_BUFFER
  * operation etc. are still preserved.
  * </p>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Translog extends AbstractIndexShardComponent implements IndexShardComponent, Closeable {
@@ -961,7 +961,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * Location in the translot
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Location implements Comparable<Location> {
@@ -1036,7 +1036,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * A snapshot of the transaction log, allows to iterate over all the transaction log operations.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Snapshot extends Closeable {
@@ -1066,7 +1066,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
      * shares the same underlying resources with the {@code delegate} snapshot, therefore we should not
      * use the {@code delegate} after passing it to this filtered snapshot.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class SeqNoFilterSnapshot implements Snapshot {
         private final Snapshot delegate;
@@ -1123,14 +1123,14 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
      * A generic interface representing an operation performed on the transaction log.
      * Each is associated with a type.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Operation {
         /**
          * The type of operation
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         enum Type {
@@ -1223,7 +1223,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * The source in the translog
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Source {
@@ -1241,7 +1241,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * Indexing operation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "1.0.0")
     public static class Index implements Operation {
@@ -1434,7 +1434,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * Delete operation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Delete implements Operation {
 
@@ -1570,7 +1570,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * Translog no op
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NoOp implements Operation {
 
@@ -1654,7 +1654,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * How to sync the translog
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Durability {
@@ -1927,7 +1927,7 @@ public abstract class Translog extends AbstractIndexShardComponent implements In
     /**
      * References a transaction log generation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class TranslogGeneration {

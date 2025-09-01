@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.OriginalIndices;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchHit;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.XContentTestUtils.insertRandomFields;
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class ExpectedReciprocalRankTests extends OpenSearchTestCase {
+public class ExpectedReciprocalRankTests extends DensityTestCase {
 
     private static final double DELTA = 10E-14;
 
@@ -202,7 +202,7 @@ public class ExpectedReciprocalRankTests extends OpenSearchTestCase {
 
     public void testSerialization() throws IOException {
         ExpectedReciprocalRank original = createTestItem();
-        ExpectedReciprocalRank deserialized = OpenSearchTestCase.copyWriteable(
+        ExpectedReciprocalRank deserialized = DensityTestCase.copyWriteable(
             original,
             new NamedWriteableRegistry(Collections.emptyList()),
             ExpectedReciprocalRank::new

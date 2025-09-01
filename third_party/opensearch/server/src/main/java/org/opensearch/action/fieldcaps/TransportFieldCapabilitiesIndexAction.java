@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.fieldcaps;
+package org.density.action.fieldcaps;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.FailAwareWeightedRouting;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.logging.LoggerMessageFormat;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.ActionType;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.HandledTransportAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.FailAwareWeightedRouting;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.logging.LoggerMessageFormat;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.indices.IndicesService;
+import org.density.search.SearchService;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -84,12 +84,12 @@ import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.function.Predicate;
 
-import static org.opensearch.action.support.TransportActions.isShardNotAvailableException;
+import static org.density.action.support.TransportActions.isShardNotAvailableException;
 
 /**
  * Transport action for field capabilities request in an index
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportFieldCapabilitiesIndexAction extends HandledTransportAction<
     FieldCapabilitiesIndexRequest,
@@ -218,7 +218,7 @@ public class TransportFieldCapabilitiesIndexAction extends HandledTransportActio
      * {@link FieldCapabilitiesIndexRequest#indexFilter()}. In which case the shard is used
      * to create the final {@link FieldCapabilitiesIndexResponse}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class AsyncShardsAction {
         private final FieldCapabilitiesIndexRequest request;
@@ -347,7 +347,7 @@ public class TransportFieldCapabilitiesIndexAction extends HandledTransportActio
     /**
      * Shard transport handler for field capabilities index action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class ShardTransportHandler implements TransportRequestHandler<FieldCapabilitiesIndexRequest> {
         @Override

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.TieredMergePolicy;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
 
 /**
- * A shard in opensearch is a Lucene index, and a Lucene index is broken
+ * A shard in density is a Lucene index, and a Lucene index is broken
  * down into segments. Segments are internal storage elements in the index
  * where the index data is stored, and are immutable up to delete markers.
  * Segments are, periodically, merged into larger segments to keep the
@@ -126,11 +126,11 @@ import org.opensearch.core.common.unit.ByteSizeValue;
  * possibly either increase the <code>max_merged_segment</code> or issue an optimize
  * call for the index (try and aim to issue it on a low traffic time).
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 public final class TieredMergePolicyProvider implements MergePolicyProvider {
-    private final OpenSearchTieredMergePolicy tieredMergePolicy = new OpenSearchTieredMergePolicy();
+    private final DensityTieredMergePolicy tieredMergePolicy = new DensityTieredMergePolicy();
 
     private final Logger logger;
     private final boolean mergesEnabled;

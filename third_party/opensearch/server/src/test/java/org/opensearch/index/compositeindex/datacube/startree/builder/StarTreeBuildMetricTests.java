@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.lucene.codecs.DocValuesConsumer;
 import org.apache.lucene.codecs.DocValuesProducer;
@@ -27,29 +27,29 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.InfoStream;
 import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.codec.composite.LuceneDocValuesConsumerFactory;
-import org.opensearch.index.codec.composite.composite912.Composite912DocValuesFormat;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNodeType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.common.settings.Settings;
+import org.density.index.codec.composite.LuceneDocValuesConsumerFactory;
+import org.density.index.codec.composite.composite912.Composite912DocValuesFormat;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNodeType;
+import org.density.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MappingLookup;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -64,13 +64,13 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils.validateFileFormats;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getDimensionIterators;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getMetricIterators;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.traverseStarTree;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.validateStarTree;
-import static org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
-import static org.opensearch.index.mapper.CompositeMappedFieldType.CompositeFieldType.STAR_TREE;
+import static org.density.index.compositeindex.datacube.startree.StarTreeTestUtils.validateFileFormats;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getDimensionIterators;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getMetricIterators;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.traverseStarTree;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.validateStarTree;
+import static org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
+import static org.density.index.mapper.CompositeMappedFieldType.CompositeFieldType.STAR_TREE;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -85,7 +85,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder("field2", NumberFieldMapper.NumberType.HALF_FLOAT, false, true)
             .build(new Mapper.BuilderContext(settings, new ContentPath()));
         NumberFieldMapper numberFieldMapper2 = new NumberFieldMapper.Builder("field4", NumberFieldMapper.NumberType.HALF_FLOAT, false, true)
@@ -237,7 +237,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder("field2", NumberFieldMapper.NumberType.FLOAT, false, true)
             .build(new Mapper.BuilderContext(settings, new ContentPath()));
         NumberFieldMapper numberFieldMapper2 = new NumberFieldMapper.Builder("field4", NumberFieldMapper.NumberType.FLOAT, false, true)
@@ -351,7 +351,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder("field2", NumberFieldMapper.NumberType.LONG, false, true)
             .build(new Mapper.BuilderContext(settings, new ContentPath()));
         NumberFieldMapper numberFieldMapper2 = new NumberFieldMapper.Builder("field4", NumberFieldMapper.NumberType.LONG, false, true)
@@ -449,7 +449,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder(
             "field2",
             NumberFieldMapper.NumberType.UNSIGNED_LONG,
@@ -679,7 +679,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder("fieldI", NumberFieldMapper.NumberType.DOUBLE, false, true)
             .build(new Mapper.BuilderContext(settings, new ContentPath()));
         MappingLookup fieldMappers = new MappingLookup(
@@ -969,7 +969,7 @@ public class StarTreeBuildMetricTests extends StarTreeBuilderTestCase {
         mapperService = mock(MapperService.class);
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder("fieldI", NumberFieldMapper.NumberType.DOUBLE, false, true)
             .build(new Mapper.BuilderContext(settings, new ContentPath()));
         MappingLookup fieldMappers = new MappingLookup(

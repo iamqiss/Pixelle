@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class RetryableActionTests extends OpenSearchTestCase {
+public class RetryableActionTests extends DensityTestCase {
 
     private DeterministicTaskQueue taskQueue;
 
@@ -105,9 +105,9 @@ public class RetryableActionTests extends OpenSearchTestCase {
                     listener.onResponse(true);
                 } else {
                     if (randomBoolean()) {
-                        listener.onFailure(new OpenSearchRejectedExecutionException());
+                        listener.onFailure(new DensityRejectedExecutionException());
                     } else {
-                        throw new OpenSearchRejectedExecutionException();
+                        throw new DensityRejectedExecutionException();
                     }
                 }
             }
@@ -115,7 +115,7 @@ public class RetryableActionTests extends OpenSearchTestCase {
             @Override
             public boolean shouldRetry(Exception e) {
                 retryCount.getAndIncrement();
-                return e instanceof OpenSearchRejectedExecutionException;
+                return e instanceof DensityRejectedExecutionException;
             }
         };
         retryableAction.run();
@@ -149,16 +149,16 @@ public class RetryableActionTests extends OpenSearchTestCase {
             @Override
             public void tryAction(ActionListener<Boolean> listener) {
                 if (randomBoolean()) {
-                    listener.onFailure(new OpenSearchRejectedExecutionException());
+                    listener.onFailure(new DensityRejectedExecutionException());
                 } else {
-                    throw new OpenSearchRejectedExecutionException();
+                    throw new DensityRejectedExecutionException();
                 }
             }
 
             @Override
             public boolean shouldRetry(Exception e) {
                 retryCount.getAndIncrement();
-                return e instanceof OpenSearchRejectedExecutionException;
+                return e instanceof DensityRejectedExecutionException;
             }
         };
         retryableAction.run();
@@ -174,7 +174,7 @@ public class RetryableActionTests extends OpenSearchTestCase {
         assertFalse(taskQueue.hasDeferredTasks());
         assertFalse(taskQueue.hasRunnableTasks());
 
-        expectThrows(OpenSearchRejectedExecutionException.class, future::actionGet);
+        expectThrows(DensityRejectedExecutionException.class, future::actionGet);
     }
 
     public void testTimeoutOfZeroMeansNoRetry() {
@@ -191,19 +191,19 @@ public class RetryableActionTests extends OpenSearchTestCase {
             @Override
             public void tryAction(ActionListener<Boolean> listener) {
                 executedCount.getAndIncrement();
-                throw new OpenSearchRejectedExecutionException();
+                throw new DensityRejectedExecutionException();
             }
 
             @Override
             public boolean shouldRetry(Exception e) {
-                return e instanceof OpenSearchRejectedExecutionException;
+                return e instanceof DensityRejectedExecutionException;
             }
         };
         retryableAction.run();
         taskQueue.runAllRunnableTasks();
 
         assertEquals(1, executedCount.get());
-        expectThrows(OpenSearchRejectedExecutionException.class, future::actionGet);
+        expectThrows(DensityRejectedExecutionException.class, future::actionGet);
     }
 
     public void testFailedBecauseNotRetryable() {
@@ -225,7 +225,7 @@ public class RetryableActionTests extends OpenSearchTestCase {
 
             @Override
             public boolean shouldRetry(Exception e) {
-                return e instanceof OpenSearchRejectedExecutionException;
+                return e instanceof DensityRejectedExecutionException;
             }
         };
         retryableAction.run();
@@ -249,7 +249,7 @@ public class RetryableActionTests extends OpenSearchTestCase {
             @Override
             public void tryAction(ActionListener<Boolean> listener) {
                 if (executedCount.incrementAndGet() == 1) {
-                    throw new OpenSearchRejectedExecutionException();
+                    throw new DensityRejectedExecutionException();
                 } else {
                     listener.onResponse(true);
                 }
@@ -257,7 +257,7 @@ public class RetryableActionTests extends OpenSearchTestCase {
 
             @Override
             public boolean shouldRetry(Exception e) {
-                return e instanceof OpenSearchRejectedExecutionException;
+                return e instanceof DensityRejectedExecutionException;
             }
         };
         retryableAction.run();
@@ -265,11 +265,11 @@ public class RetryableActionTests extends OpenSearchTestCase {
         assertTrue(taskQueue.hasDeferredTasks());
         taskQueue.advanceTime();
 
-        retryableAction.cancel(new OpenSearchException("Cancelled"));
+        retryableAction.cancel(new DensityException("Cancelled"));
         taskQueue.runAllRunnableTasks();
 
         // A second run will not occur because it is cancelled
         assertEquals(1, executedCount.get());
-        expectThrows(OpenSearchException.class, future::actionGet);
+        expectThrows(DensityException.class, future::actionGet);
     }
 }

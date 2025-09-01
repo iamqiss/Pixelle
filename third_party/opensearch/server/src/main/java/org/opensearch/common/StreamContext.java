@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.io.InputStreamContainer;
+import org.density.common.io.InputStreamContainer;
 
 import java.io.IOException;
 
 /**
  * StreamContext is used to supply streams to vendor plugins using {@link StreamContext#provideStream}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StreamContext {
 

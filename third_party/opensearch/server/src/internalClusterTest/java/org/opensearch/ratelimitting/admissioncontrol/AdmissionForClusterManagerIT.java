@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol;
+package org.density.ratelimitting.admissioncontrol;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesResponse;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionAction;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionResponse;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.node.IoUsageStats;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.node.resource.tracker.ResourceTrackerSettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
-import org.opensearch.rest.AbstractRestChannel;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.admin.indices.RestGetAliasesAction;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesResponse;
+import org.density.action.support.clustermanager.term.GetTermVersionAction;
+import org.density.action.support.clustermanager.term.GetTermVersionResponse;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.rest.RestStatus;
+import org.density.node.IoUsageStats;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.node.resource.tracker.ResourceTrackerSettings;
+import org.density.plugins.Plugin;
+import org.density.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
+import org.density.rest.AbstractRestChannel;
+import org.density.rest.RestResponse;
+import org.density.rest.action.admin.indices.RestGetAliasesAction;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 import org.junit.Before;
 
 import java.util.Collection;
@@ -45,13 +45,13 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.CLUSTER_ADMIN_CPU_USAGE_LIMIT;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
+import static org.density.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.CLUSTER_ADMIN_CPU_USAGE_LIMIT;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class AdmissionForClusterManagerIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class AdmissionForClusterManagerIT extends DensityIntegTestCase {
 
     private static final Logger LOGGER = LogManager.getLogger(AdmissionForClusterManagerIT.class);
 
@@ -126,7 +126,7 @@ public class AdmissionForClusterManagerIT extends OpenSearchIntegTestCase {
             dataNodeClient().admin().indices().getAliases(aliasesRequest).actionGet();
             fail("expected failure");
         } catch (Exception e) {
-            assertTrue(e instanceof OpenSearchRejectedExecutionException);
+            assertTrue(e instanceof DensityRejectedExecutionException);
             assertTrue(e.getMessage().contains("CPU usage admission controller rejected the request"));
             assertTrue(e.getMessage().contains("[indices:admin/aliases/get]"));
             assertTrue(e.getMessage().contains("action-type [CLUSTER_ADMIN]"));

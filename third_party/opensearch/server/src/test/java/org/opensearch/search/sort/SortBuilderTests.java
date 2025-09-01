@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@ x * Licensed to Elasticsearch under one or more contributor
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchModule;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -54,7 +54,7 @@ import java.util.Set;
 
 import static java.util.Collections.emptyList;
 
-public class SortBuilderTests extends OpenSearchTestCase {
+public class SortBuilderTests extends DensityTestCase {
     private static final int NUMBER_OF_RUNS = 20;
 
     private static NamedXContentRegistry xContentRegistry;

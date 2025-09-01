@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.Strings;
+import org.density.common.Nullable;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -43,7 +43,7 @@ import java.util.Objects;
 /**
  * Weight factor function
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WeightFactorFunction extends ScoreFunction {
 
@@ -127,7 +127,7 @@ public class WeightFactorFunction extends ScoreFunction {
     /**
      * A constant score of 1.0
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ScoreOne extends ScoreFunction {
         private final String functionName;

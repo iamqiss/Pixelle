@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a.java
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SortResponseProcessorTests extends OpenSearchTestCase {
+public class SortResponseProcessorTests extends DensityTestCase {
 
     private static final List<Object> PI = List.of(3, 1, 4, 1, 5, 9, 2, 6);
     private static final List<Object> E = List.of(2, 7, 1, 8, 2, 8, 1, 8);
@@ -223,7 +223,7 @@ public class SortResponseProcessorTests extends OpenSearchTestCase {
         assertEquals(SortResponseProcessor.SortOrder.DESCENDING, processor.getSortOrder());
 
         expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> factory.create(Collections.emptyMap(), null, null, false, Collections.emptyMap(), null)
         );
     }

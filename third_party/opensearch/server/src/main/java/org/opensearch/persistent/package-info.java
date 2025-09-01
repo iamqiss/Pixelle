@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -33,28 +33,28 @@
  * requests and responses. The execution is done in six phases:
  * <p>
  * 1. The coordinating node sends an ordinary transport request to the cluster-manager node to start a new persistent task. This task is handled
- * by the {@link org.opensearch.persistent.PersistentTasksService}, which is using
- * {@link org.opensearch.persistent.PersistentTasksClusterService} to update cluster state with the record about running persistent
+ * by the {@link org.density.persistent.PersistentTasksService}, which is using
+ * {@link org.density.persistent.PersistentTasksClusterService} to update cluster state with the record about running persistent
  * task.
  * <p>
- * 2. The cluster-manager node updates the {@link org.opensearch.persistent.PersistentTasksCustomMetadata} in the cluster state to indicate
+ * 2. The cluster-manager node updates the {@link org.density.persistent.PersistentTasksCustomMetadata} in the cluster state to indicate
  * that there is a new persistent task running in the system.
  * <p>
- * 3. The {@link org.opensearch.persistent.PersistentTasksNodeService} running on every node in the cluster monitors changes in
+ * 3. The {@link org.density.persistent.PersistentTasksNodeService} running on every node in the cluster monitors changes in
  * the cluster state and starts execution of all new tasks assigned to the node it is running on.
  * <p>
- * 4. If the task fails to start on the node, the {@link org.opensearch.persistent.PersistentTasksNodeService} uses the
- * {@link org.opensearch.persistent.PersistentTasksCustomMetadata} to notify the
- * {@link org.opensearch.persistent.PersistentTasksService}, which reassigns the action to another node in the cluster.
+ * 4. If the task fails to start on the node, the {@link org.density.persistent.PersistentTasksNodeService} uses the
+ * {@link org.density.persistent.PersistentTasksCustomMetadata} to notify the
+ * {@link org.density.persistent.PersistentTasksService}, which reassigns the action to another node in the cluster.
  * <p>
  * 5. If a task finishes successfully on the node and calls listener.onResponse(), the corresponding persistent action is removed from the
  * cluster state unless removeOnCompletion flag for this task is set to false.
  * <p>
- * 6. The {@link org.opensearch.persistent.RemovePersistentTaskAction} action can be also used to remove the persistent task.
+ * 6. The {@link org.density.persistent.RemovePersistentTaskAction} action can be also used to remove the persistent task.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;

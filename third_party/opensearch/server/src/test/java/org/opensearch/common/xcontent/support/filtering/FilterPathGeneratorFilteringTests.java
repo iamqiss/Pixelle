@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.support.filtering;
+package org.density.common.xcontent.support.filtering;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.filter.FilteringGeneratorDelegate;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.xcontent.filtering.FilterPathBasedFilter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.xcontent.filtering.FilterPathBasedFilter;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class FilterPathGeneratorFilteringTests extends OpenSearchTestCase {
+public class FilterPathGeneratorFilteringTests extends DensityTestCase {
 
     private final JsonFactory JSON_FACTORY = new JsonFactory();
 

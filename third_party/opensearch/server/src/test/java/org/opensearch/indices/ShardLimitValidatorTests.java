@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.cluster.shards.ShardCounts;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.cluster.shards.ShardCounts;
+import org.density.common.ValidationException;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,19 +54,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
-import static org.opensearch.cluster.metadata.MetadataIndexStateServiceTests.addClosedIndex;
-import static org.opensearch.cluster.metadata.MetadataIndexStateServiceTests.addOpenedIndex;
-import static org.opensearch.cluster.shards.ShardCounts.forDataNodeCount;
-import static org.opensearch.indices.ShardLimitValidator.SETTING_CLUSTER_IGNORE_DOT_INDEXES;
-import static org.opensearch.indices.ShardLimitValidator.SETTING_CLUSTER_MAX_SHARDS_PER_NODE;
-import static org.opensearch.indices.ShardLimitValidator.SETTING_MAX_SHARDS_PER_CLUSTER_KEY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.MetadataIndexStateServiceTests.addClosedIndex;
+import static org.density.cluster.metadata.MetadataIndexStateServiceTests.addOpenedIndex;
+import static org.density.cluster.shards.ShardCounts.forDataNodeCount;
+import static org.density.indices.ShardLimitValidator.SETTING_CLUSTER_IGNORE_DOT_INDEXES;
+import static org.density.indices.ShardLimitValidator.SETTING_CLUSTER_MAX_SHARDS_PER_NODE;
+import static org.density.indices.ShardLimitValidator.SETTING_MAX_SHARDS_PER_CLUSTER_KEY;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ShardLimitValidatorTests extends OpenSearchTestCase {
+public class ShardLimitValidatorTests extends DensityTestCase {
 
     public void testOverShardLimit() {
         int nodesInCluster = randomIntBetween(1, 90);

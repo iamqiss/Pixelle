@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,16 +23,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.assistedinject;
+package org.density.common.inject.assistedinject;
 
-import org.opensearch.common.inject.BindingAnnotation;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Provider;
+import org.density.common.inject.BindingAnnotation;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Key;
+import org.density.common.inject.Provider;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -44,7 +44,7 @@ import java.lang.reflect.Type;
  * @author jmourits@google.com (Jerome Mourits)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class Parameter {
 

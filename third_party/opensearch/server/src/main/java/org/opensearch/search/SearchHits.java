@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.TotalHits.Relation;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.action.search.RestSearchAction;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.Lucene;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.action.search.RestSearchAction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,12 +54,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Encapsulates the results of a search operation
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SearchHits implements Writeable, ToXContentFragment, Iterable<SearchHit> {
@@ -223,7 +223,7 @@ public final class SearchHits implements Writeable, ToXContentFragment, Iterable
     /**
      * Fields for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Fields {
         public static final String HITS = "hits";

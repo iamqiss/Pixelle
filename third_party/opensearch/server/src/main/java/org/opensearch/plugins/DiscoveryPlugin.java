@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ElectionStrategy;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ElectionStrategy;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.SeedHostsProvider;
+import org.density.transport.TransportService;
 
 import java.util.Collections;
 import java.util.Map;
@@ -47,7 +47,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
- * An additional extension point for {@link Plugin}s that extends OpenSearch's discovery functionality. To add an additional
+ * An additional extension point for {@link Plugin}s that extends Density's discovery functionality. To add an additional
  * {@link NetworkService.CustomNameResolver} just implement the interface and implement the {@link #getCustomNameResolver(Settings)} method:
  *
  * <pre>
@@ -59,7 +59,7 @@ import java.util.function.Supplier;
  * }
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 public interface DiscoveryPlugin {
 
@@ -70,7 +70,7 @@ public interface DiscoveryPlugin {
      * name.
      * <p>
      * For example: you could call a third party service (an API) to resolve _mycard_.
-     * Then you could define in opensearch.yml settings like:
+     * Then you could define in density.yml settings like:
      * {@code network.host: _mycard_ }
      */
     default NetworkService.CustomNameResolver getCustomNameResolver(Settings settings) {
@@ -81,11 +81,11 @@ public interface DiscoveryPlugin {
      * Returns providers of seed hosts for discovery.
      * <p>
      * The key of the returned map is the name of the host provider
-     * (see {@link org.opensearch.discovery.DiscoveryModule#DISCOVERY_SEED_PROVIDERS_SETTING}), and
+     * (see {@link org.density.discovery.DiscoveryModule#DISCOVERY_SEED_PROVIDERS_SETTING}), and
      * the value is a supplier to construct the host provider when it is selected for use.
      *
      * @param transportService Use to form the {@link TransportAddress} portion
-     *                         of a {@link org.opensearch.cluster.node.DiscoveryNode}
+     *                         of a {@link org.density.cluster.node.DiscoveryNode}
      * @param networkService Use to find the publish host address of the current node
      */
     default Map<String, Supplier<SeedHostsProvider>> getSeedHostProviders(

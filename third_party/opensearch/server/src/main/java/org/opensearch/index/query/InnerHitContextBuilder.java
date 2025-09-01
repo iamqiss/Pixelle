@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.index.IndexSettings;
-import org.opensearch.script.FieldScript;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.sort.SortBuilder;
+import org.density.index.IndexSettings;
+import org.density.script.FieldScript;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.sort.SortBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ import java.util.Optional;
 /**
  * A builder for {@link InnerHitsContext.InnerHitSubContext}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class InnerHitContextBuilder {
     protected final QueryBuilder query;
@@ -128,7 +128,7 @@ public abstract class InnerHitContextBuilder {
                 FieldScript.LeafFactory fieldScript = factory.newFactory(field.script().getParams(), innerContext.lookup());
                 innerHitsContext.scriptFields()
                     .add(
-                        new org.opensearch.search.fetch.subphase.ScriptFieldsContext.ScriptField(
+                        new org.density.search.fetch.subphase.ScriptFieldsContext.ScriptField(
                             field.fieldName(),
                             fieldScript,
                             field.ignoreFailure()

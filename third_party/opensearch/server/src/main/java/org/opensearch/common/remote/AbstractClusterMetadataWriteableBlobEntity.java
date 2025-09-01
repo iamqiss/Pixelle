@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.remote;
+package org.density.common.remote;
 
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
 
 /**
  * An extension of {@link RemoteWriteableEntity} class which caters to the use case of writing to and reading from a blob storage

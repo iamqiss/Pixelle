@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
 
 /**
  * A bit array that is implemented using a growing {@link LongArray}
@@ -41,7 +41,7 @@ import org.opensearch.common.lease.Releasables;
  * The underlying long array grows lazily based on the biggest index
  * that needs to be set.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class BitArray implements Releasable {
     private final BigArrays bigArrays;

@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
 import org.apache.lucene.document.InetAddressPoint;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.OrdinalDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.StarTreeMapper;
-import org.opensearch.index.mapper.WildcardFieldMapper;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.DimensionFilter.MatchType;
-import org.opensearch.search.startree.filter.MatchNoneFilter;
-import org.opensearch.search.startree.filter.StarTreeFilter;
-import org.opensearch.search.startree.filter.provider.DimensionFilterMapper;
-import org.opensearch.search.startree.filter.provider.StarTreeFilterProvider;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.OrdinalDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.StarTreeMapper;
+import org.density.index.mapper.WildcardFieldMapper;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.DimensionFilter.MatchType;
+import org.density.search.startree.filter.MatchNoneFilter;
+import org.density.search.startree.filter.StarTreeFilter;
+import org.density.search.startree.filter.provider.DimensionFilterMapper;
+import org.density.search.startree.filter.provider.StarTreeFilterProvider;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -50,7 +50,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DimensionFilterAndMapperTests extends OpenSearchTestCase {
+public class DimensionFilterAndMapperTests extends DensityTestCase {
 
     public void testIpMapping() throws Exception {
         MappedFieldType mappedFieldType = new IpFieldMapper.IpFieldType("ip_field");

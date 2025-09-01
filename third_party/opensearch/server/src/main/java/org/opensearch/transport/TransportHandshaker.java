@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.threadpool.ThreadPool;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -54,7 +54,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Sends and receives transport-level connection handshakes. This class will send the initial handshake,
  * manage state/timeouts while the handshake is in transit, and handle the eventual response.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public final class TransportHandshaker {

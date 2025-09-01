@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.restspec;
+package org.density.test.rest.yaml.restspec;
 
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class ClientYamlSuiteRestApiTests extends OpenSearchTestCase {
+public class ClientYamlSuiteRestApiTests extends DensityTestCase {
 
     public void testParseCommonSpec() throws IOException {
         XContentParser parser = createParser(YamlXContent.yamlXContent, COMMON_SPEC);

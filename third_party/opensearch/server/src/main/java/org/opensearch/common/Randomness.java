@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
 
 import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
@@ -47,19 +47,19 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Provides factory methods for producing reproducible sources of
  * randomness. Reproducible sources of randomness contribute to
- * reproducible tests. When running the OpenSearch test suite, the
+ * reproducible tests. When running the Density test suite, the
  * test runner will establish a global random seed accessible via the
  * system property "tests.seed". By seeding a random number generator
  * with this global seed, we ensure that instances of Random produced
  * with this class produce reproducible sources of randomness under
- * when running under the OpenSearch test suite. Alternatively,
+ * when running under the Density test suite. Alternatively,
  * a reproducible source of randomness can be produced by providing a
- * setting a reproducible seed. When running the OpenSearch server
+ * setting a reproducible seed. When running the Density server
  * process, non-reproducible sources of randomness are provided (unless
  * a setting is provided for a module that exposes a seed setting (e.g.,
  * NodeEnvironment#NODE_ID_SEED_SETTING)).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Randomness {
     private static final Method currentMethod;
@@ -100,7 +100,7 @@ public final class Randomness {
 
     /**
      * Provides a source of randomness that is reproducible when
-     * running under the OpenSearch test suite, and otherwise
+     * running under the Density test suite, and otherwise
      * produces a non-reproducible source of randomness. Reproducible
      * sources of randomness are created when the system property
      * "tests.seed" is set and the security policy allows reading this

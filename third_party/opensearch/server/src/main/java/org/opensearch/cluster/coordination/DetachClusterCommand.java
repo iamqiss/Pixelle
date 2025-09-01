@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.PersistedClusterStateService;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.env.Environment;
+import org.density.gateway.PersistedClusterStateService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -44,9 +44,9 @@ import java.nio.file.Path;
 /**
  * Command to detach a node from the cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class DetachClusterCommand extends OpenSearchNodeCommand {
+public class DetachClusterCommand extends DensityNodeCommand {
 
     static final String NODE_DETACHED_MSG = "Node was successfully detached from the cluster";
     static final String CONFIRMATION_MSG = DELIMITER
@@ -54,7 +54,7 @@ public class DetachClusterCommand extends OpenSearchNodeCommand {
         + "You should only run this tool if you have permanently lost all of the\n"
         + "cluster-manager-eligible nodes in this cluster and you cannot restore the cluster\n"
         + "from a snapshot, or you have already unsafely bootstrapped a new cluster\n"
-        + "by running `opensearch-node unsafe-bootstrap` on a cluster-manager-eligible\n"
+        + "by running `density-node unsafe-bootstrap` on a cluster-manager-eligible\n"
         + "node that belonged to the same cluster as this node. This tool can cause\n"
         + "arbitrary data loss and its use should be your last resort.\n"
         + "\n"

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.resolve;
+package org.density.action.admin.indices.resolve;
 
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedAlias;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.Response;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractSerializingTestCase;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedAlias;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.Response;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractSerializingTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream.BACKING_INDICES_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream.TIMESTAMP_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.ALIASES_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.ATTRIBUTES_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.DATA_STREAM_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndexAbstraction.NAME_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.Response.DATA_STREAMS_FIELD;
-import static org.opensearch.action.admin.indices.resolve.ResolveIndexAction.Response.INDICES_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream.BACKING_INDICES_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream.TIMESTAMP_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.ALIASES_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.ATTRIBUTES_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex.DATA_STREAM_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndexAbstraction.NAME_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.Response.DATA_STREAMS_FIELD;
+import static org.density.action.admin.indices.resolve.ResolveIndexAction.Response.INDICES_FIELD;
 
 public class ResolveIndexResponseTests extends AbstractSerializingTestCase<Response> {
 

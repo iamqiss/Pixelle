@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.Nullable;
+import org.density.common.Rounding;
+import org.density.common.lease.Releasables;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -70,7 +70,7 @@ import static java.lang.Long.min;
  *
  * @see Rounding
  *
- * @opensearch.internal
+ * @density.internal
  */
 class DateRangeHistogramAggregator extends BucketsAggregator {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,51 +25,51 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.global.Global;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.nested.Nested;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregatorFactory.ExecutionMode;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.rescore.QueryRescorerBuilder;
-import org.opensearch.search.sort.ScriptSortBuilder.ScriptSortType;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.common.document.DocumentField;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.global.Global;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.nested.Nested;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregatorFactory.ExecutionMode;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.rescore.QueryRescorerBuilder;
+import org.density.search.sort.ScriptSortBuilder.ScriptSortType;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,24 +80,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.common.xcontent.XContentFactory.smileBuilder;
-import static org.opensearch.common.xcontent.XContentFactory.yamlBuilder;
-import static org.opensearch.common.xcontent.support.XContentMapValues.extractValue;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.nestedQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.global;
-import static org.opensearch.search.aggregations.AggregationBuilders.histogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.nested;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.search.aggregations.AggregationBuilders.topHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.smileBuilder;
+import static org.density.common.xcontent.XContentFactory.yamlBuilder;
+import static org.density.common.xcontent.support.XContentMapValues.extractValue;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.nestedQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.global;
+import static org.density.search.aggregations.AggregationBuilders.histogram;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.nested;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.aggregations.AggregationBuilders.topHits;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -109,8 +109,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase()
-public class TopHitsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase()
+public class TopHitsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String TERMS_AGGS_FIELD = "terms";
     private static final String SORT_FIELD = "sort";

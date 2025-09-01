@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.explain;
+package org.density.explain;
 
 import org.apache.lucene.search.Explanation;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.explain.ExplainResponse;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,14 +54,14 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class ExplainActionIT extends OpenSearchIntegTestCase {
+public class ExplainActionIT extends DensityIntegTestCase {
     public void testSimple() throws Exception {
         assertAcked(prepareCreate("test").addAlias(new Alias("alias")).setSettings(Settings.builder().put("index.refresh_interval", -1)));
         ensureGreen("test");

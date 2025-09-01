@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.LongsRef;
@@ -47,7 +47,7 @@ import java.util.Arrays;
  * {@code 1} based monotonically increasing positive integers. {@code 0}
  * donates the missing value in this context.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class OrdinalsBuilder implements Closeable {
 
@@ -85,7 +85,7 @@ public final class OrdinalsBuilder implements Closeable {
      * In addition to these structures, there is another array which stores the current position (level + slice + offset in the slice)
      * in order to be able to append data in constant time.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class OrdinalsStore {
 

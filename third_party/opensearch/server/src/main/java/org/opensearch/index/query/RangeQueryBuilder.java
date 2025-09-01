@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -58,7 +58,7 @@ import java.util.Objects;
 /**
  * A Query that matches documents within a range of terms.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RangeQueryBuilder extends AbstractQueryBuilder<RangeQueryBuilder>
     implements

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.script.ScriptService;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -57,7 +57,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Parser for a document mapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DocumentMapperParser {

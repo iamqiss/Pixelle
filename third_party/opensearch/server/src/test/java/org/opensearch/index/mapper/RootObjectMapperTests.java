@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class RootObjectMapperTests extends OpenSearchSingleNodeTestCase {
+public class RootObjectMapperTests extends DensitySingleNodeTestCase {
 
     public void testNumericDetection() throws Exception {
         MergeReason reason = randomFrom(MergeReason.MAPPING_UPDATE, MergeReason.INDEX_TEMPLATE);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,70 +26,70 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.rollover;
+package org.density.action.admin.indices.rollover;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DataStreamTestHelper;
-import org.opensearch.cluster.metadata.AliasAction;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.AliasValidator;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.DataStreamTests;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexAliasesService;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.index.Index;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.InvalidIndexNameException;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DataStreamTestHelper;
+import org.density.cluster.metadata.AliasAction;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.AliasValidator;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.DataStreamTests;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.cluster.metadata.MetadataIndexAliasesService;
+import org.density.cluster.metadata.Template;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.UUIDs;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.index.Index;
+import org.density.env.Environment;
+import org.density.index.IndexService;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MappingLookup;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.shard.IndexEventListener;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesService;
+import org.density.indices.InvalidIndexNameException;
+import org.density.indices.ShardLimitValidator;
+import org.density.indices.SystemIndices;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -100,7 +100,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.cluster.DataStreamTestHelper.generateMapping;
+import static org.density.cluster.DataStreamTestHelper.generateMapping;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -119,7 +119,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class MetadataRolloverServiceTests extends OpenSearchTestCase {
+public class MetadataRolloverServiceTests extends DensityTestCase {
 
     public void testRolloverAliasActions() {
         String sourceAlias = randomAlphaOfLength(10);

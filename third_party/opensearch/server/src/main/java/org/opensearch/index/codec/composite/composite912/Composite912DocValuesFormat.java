@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite.composite912;
+package org.density.index.codec.composite.composite912;
 
 import org.apache.lucene.codecs.DocValuesConsumer;
 import org.apache.lucene.codecs.DocValuesFormat;
@@ -14,15 +14,15 @@ import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.codecs.lucene90.Lucene90DocValuesFormat;
 import org.apache.lucene.index.SegmentReadState;
 import org.apache.lucene.index.SegmentWriteState;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 
 /**
  * DocValues format to handle composite indices
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class Composite912DocValuesFormat extends DocValuesFormat {

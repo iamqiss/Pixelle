@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.tasks.Task;
+import org.density.action.ActionRequest;
+import org.density.common.CheckedConsumer;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.tasks.Task;
 
-import static org.opensearch.action.support.PlainActionFuture.newFuture;
+import static org.density.action.support.PlainActionFuture.newFuture;
 
 public class ActionTestUtils {
 

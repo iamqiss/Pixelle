@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;
 
-import org.opensearch.Version;
-import org.opensearch.client.WarningsHandler;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.OpenSearchRestTestCase.VersionSensitiveWarningsHandler;
+import org.density.Version;
+import org.density.client.WarningsHandler;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.DensityRestTestCase.VersionSensitiveWarningsHandler;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class VersionSensitiveWarningsHandlerTests extends OpenSearchTestCase {
+public class VersionSensitiveWarningsHandlerTests extends DensityTestCase {
 
     public void testSameVersionCluster() throws IOException {
         Set<Version> nodeVersions = new HashSet<>();
@@ -76,7 +76,7 @@ public class VersionSensitiveWarningsHandlerTests extends OpenSearchTestCase {
         Set<Version> nodeVersions,
         Consumer<VersionSensitiveWarningsHandler> expectationsSetter
     ) {
-        // Based on EsRestTestCase.expectVersionSpecificWarnings helper method but without OpenSearchRestTestCase dependency
+        // Based on EsRestTestCase.expectVersionSpecificWarnings helper method but without DensityRestTestCase dependency
         VersionSensitiveWarningsHandler warningsHandler = new VersionSensitiveWarningsHandler(nodeVersions);
         expectationsSetter.accept(warningsHandler);
         return warningsHandler;

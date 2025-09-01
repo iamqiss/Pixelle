@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.CollectionTerminatedException;
@@ -51,7 +51,7 @@ import java.util.List;
  * {@link #wrap} method filters out the {@link BucketCollector#NO_OP_COLLECTOR}s and not
  * the null ones.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiBucketCollector extends BucketCollector {
 
@@ -229,7 +229,7 @@ public class MultiBucketCollector extends BucketCollector {
     /**
      * A multi leaf bucket collector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MultiLeafBucketCollector extends LeafBucketCollector {
 

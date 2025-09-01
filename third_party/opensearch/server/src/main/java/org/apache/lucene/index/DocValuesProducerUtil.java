@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * Utility class for DocValuesProducers
- * @opensearch.internal
+ * @density.internal
  */
 public class DocValuesProducerUtil {
     /**

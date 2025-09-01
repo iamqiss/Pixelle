@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.transport.TransportRequest;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.http.HttpRequest;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull;
  * Request to execute REST actions on extension node.
  * This contains necessary portions of a {@link RestRequest} object, but does not pass the full request for security concerns.
  *
- * @opensearch.api
+ * @density.api
  */
 public class ExtensionRestRequest extends TransportRequest {
 
@@ -286,15 +286,15 @@ public class ExtensionRestRequest extends TransportRequest {
      *
      * @param xContentRegistry The extension's xContentRegistry
      * @return A parser for the given content and content type.
-     * @throws OpenSearchParseException on missing body or xContentType.
+     * @throws DensityParseException on missing body or xContentType.
      * @throws IOException on a failure creating the parser.
      */
     public final XContentParser contentParser(NamedXContentRegistry xContentRegistry) throws IOException {
         if (!hasContent() || getXContentType() == null) {
-            throw new OpenSearchParseException("There is no request body or the ContentType is invalid.");
+            throw new DensityParseException("There is no request body or the ContentType is invalid.");
         }
         if (getRequestIssuerIdentity() == null) {
-            throw new OpenSearchParseException("There is no request body or the requester identity is invalid.");
+            throw new DensityParseException("There is no request body or the requester identity is invalid.");
         }
         return getXContentType().xContent().createParser(xContentRegistry, LoggingDeprecationHandler.INSTANCE, content.streamInput());
     }

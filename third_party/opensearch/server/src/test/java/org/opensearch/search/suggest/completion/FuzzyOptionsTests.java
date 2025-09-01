@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 
-public class FuzzyOptionsTests extends OpenSearchTestCase {
+public class FuzzyOptionsTests extends DensityTestCase {
 
     private static final int NUMBER_OF_RUNS = 20;
 

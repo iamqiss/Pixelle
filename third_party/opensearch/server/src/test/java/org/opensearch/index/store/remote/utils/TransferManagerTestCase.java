@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils;
+package org.density.index.store.remote.utils;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.store.SimpleFSLockFactory;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheFactory;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-public abstract class TransferManagerTestCase extends OpenSearchTestCase {
+public abstract class TransferManagerTestCase extends DensityTestCase {
     protected static final int EIGHT_MB = 1024 * 1024 * 8;
     protected final FileCache fileCache = FileCacheFactory.createConcurrentLRUFileCache(
         EIGHT_MB * 2,

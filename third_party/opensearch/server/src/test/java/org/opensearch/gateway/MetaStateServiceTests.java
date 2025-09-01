@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Manifest;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Manifest;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.env.NodeEnvironment;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MetaStateServiceTests extends OpenSearchTestCase {
+public class MetaStateServiceTests extends DensityTestCase {
 
     private NodeEnvironment env;
     private MetaStateService metaStateService;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.LiveIndexWriterConfig;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.EngineAccess;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.settings.Settings;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.shard.EngineAccess;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.is;
 
-public class InternalEngineSettingsTests extends OpenSearchSingleNodeTestCase {
+public class InternalEngineSettingsTests extends DensitySingleNodeTestCase {
 
     public void testSettingsUpdate() {
         final IndexService service = createIndex("foo");

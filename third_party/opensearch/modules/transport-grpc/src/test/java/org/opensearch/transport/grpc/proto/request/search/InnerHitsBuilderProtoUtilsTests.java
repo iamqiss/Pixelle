@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.protobufs.FieldAndFormat;
-import org.opensearch.protobufs.InlineScript;
-import org.opensearch.protobufs.InnerHits;
-import org.opensearch.protobufs.ScriptField;
-import org.opensearch.protobufs.ScriptLanguage;
-import org.opensearch.protobufs.ScriptLanguage.BuiltinScriptLanguage;
-import org.opensearch.protobufs.SourceConfig;
-import org.opensearch.protobufs.SourceFilter;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.InnerHitBuilder;
+import org.density.protobufs.FieldAndFormat;
+import org.density.protobufs.InlineScript;
+import org.density.protobufs.InnerHits;
+import org.density.protobufs.ScriptField;
+import org.density.protobufs.ScriptLanguage;
+import org.density.protobufs.ScriptLanguage.BuiltinScriptLanguage;
+import org.density.protobufs.SourceConfig;
+import org.density.protobufs.SourceFilter;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class InnerHitsBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithBasicFields() throws IOException {
         // Create a protobuf InnerHits with basic fields
@@ -96,7 +96,7 @@ public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
         // Check field names and formats
         boolean foundField1 = false;
         boolean foundField2 = false;
-        for (org.opensearch.search.fetch.subphase.FieldAndFormat fieldAndFormat : innerHitBuilder.getDocValueFields()) {
+        for (org.density.search.fetch.subphase.FieldAndFormat fieldAndFormat : innerHitBuilder.getDocValueFields()) {
             if (fieldAndFormat.field.equals("field1")) {
                 assertEquals("Format should match for field1", "format1", fieldAndFormat.format);
                 foundField1 = true;
@@ -128,7 +128,7 @@ public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
         // Check field names and formats
         boolean foundField1 = false;
         boolean foundField2 = false;
-        for (org.opensearch.search.fetch.subphase.FieldAndFormat fieldAndFormat : innerHitBuilder.getFetchFields()) {
+        for (org.density.search.fetch.subphase.FieldAndFormat fieldAndFormat : innerHitBuilder.getFetchFields()) {
             if (fieldAndFormat.field.equals("field1")) {
                 assertEquals("Format should match for field1", "format1", fieldAndFormat.format);
                 foundField1 = true;
@@ -150,7 +150,7 @@ public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
             .setSource("doc['field1'].value * 2")
             .setLang(ScriptLanguage.newBuilder().setBuiltinScriptLanguage(BuiltinScriptLanguage.BUILTIN_SCRIPT_LANGUAGE_PAINLESS).build())
             .build();
-        org.opensearch.protobufs.Script script1 = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript1).build();
+        org.density.protobufs.Script script1 = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript1).build();
         ScriptField scriptField1 = ScriptField.newBuilder().setScript(script1).setIgnoreFailure(true).build();
         innerHitsBuilder.putScriptFields("script_field1", scriptField1);
 
@@ -159,7 +159,7 @@ public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
             .setSource("doc['field2'].value + '_suffix'")
             .setLang(ScriptLanguage.newBuilder().setBuiltinScriptLanguage(BuiltinScriptLanguage.BUILTIN_SCRIPT_LANGUAGE_PAINLESS).build())
             .build();
-        org.opensearch.protobufs.Script script2 = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript2).build();
+        org.density.protobufs.Script script2 = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript2).build();
         ScriptField scriptField2 = ScriptField.newBuilder().setScript(script2).build();
         innerHitsBuilder.putScriptFields("script_field2", scriptField2);
 
@@ -203,7 +203,7 @@ public class InnerHitsBuilderProtoUtilsTests extends OpenSearchTestCase {
 
         // Verify the result
         assertNotNull("InnerHitBuilder should not be null", innerHitBuilder);
-        org.opensearch.search.fetch.subphase.FetchSourceContext fetchSourceContext = innerHitBuilder.getFetchSourceContext();
+        org.density.search.fetch.subphase.FetchSourceContext fetchSourceContext = innerHitBuilder.getFetchSourceContext();
         assertNotNull("FetchSourceContext should not be null", fetchSourceContext);
         assertTrue("FetchSource should be true", fetchSourceContext.fetchSource());
         assertArrayEquals("Includes should match", new String[] { "include1", "include2" }, fetchSourceContext.includes());

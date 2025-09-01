@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,9 +48,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A connection profile describes how many connection are established to specific node for each of the available request types.
- * ({@link org.opensearch.transport.TransportRequestOptions.Type}). This allows to tailor a connection towards a specific usage.
+ * ({@link org.density.transport.TransportRequestOptions.Type}). This allows to tailor a connection towards a specific usage.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ConnectionProfile {
@@ -182,7 +182,7 @@ public final class ConnectionProfile {
     /**
      * A builder to build a new {@link ConnectionProfile}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private final List<ConnectionTypeHandle> handles = new ArrayList<>();
@@ -267,7 +267,7 @@ public final class ConnectionProfile {
 
         /**
          * Creates a new {@link ConnectionProfile} based on the added connections.
-         * @throws IllegalStateException if any of the {@link org.opensearch.transport.TransportRequestOptions.Type} enum is missing
+         * @throws IllegalStateException if any of the {@link org.density.transport.TransportRequestOptions.Type} enum is missing
          */
         public ConnectionProfile build() {
             EnumSet<TransportRequestOptions.Type> types = EnumSet.allOf(TransportRequestOptions.Type.class);
@@ -326,8 +326,8 @@ public final class ConnectionProfile {
     /**
      * Returns the number of connections per type for this profile. This might return a count that is shared with other types such
      * that the sum of all connections per type might be higher than {@link #getNumConnections()}. For instance if
-     * {@link org.opensearch.transport.TransportRequestOptions.Type#BULK} shares connections with
-     * {@link org.opensearch.transport.TransportRequestOptions.Type#REG} they will return both the same number of connections from
+     * {@link org.density.transport.TransportRequestOptions.Type#BULK} shares connections with
+     * {@link org.density.transport.TransportRequestOptions.Type#REG} they will return both the same number of connections from
      * this method but the connections are not distinct.
      */
     public int getNumConnectionsPerType(TransportRequestOptions.Type type) {

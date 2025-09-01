@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.script.ScriptType;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.search.SearchRequest;
+import org.density.script.ScriptType;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 public class SearchTemplateRequestBuilder extends ActionRequestBuilder<SearchTemplateRequest, SearchTemplateResponse> {
 
-    SearchTemplateRequestBuilder(OpenSearchClient client, SearchTemplateAction action) {
+    SearchTemplateRequestBuilder(DensityClient client, SearchTemplateAction action) {
         super(client, action, new SearchTemplateRequest());
     }
 
-    public SearchTemplateRequestBuilder(OpenSearchClient client) {
+    public SearchTemplateRequestBuilder(DensityClient client) {
         this(client, SearchTemplateAction.INSTANCE);
     }
 

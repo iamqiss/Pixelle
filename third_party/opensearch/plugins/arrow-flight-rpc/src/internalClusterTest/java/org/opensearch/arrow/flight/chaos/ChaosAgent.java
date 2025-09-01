@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.chaos;
+package org.density.arrow.flight.chaos;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
@@ -50,16 +50,16 @@ public class ChaosAgent {
                 CtClass ctClass = pool.get(className.replace('/', '.'));
 
                 switch (className) {
-                    case "org/opensearch/arrow/flight/transport/FlightTransport":
+                    case "org/density/arrow/flight/transport/FlightTransport":
                         // transformFlightTransport(ctClass);
                         break;
-                    case "org/opensearch/arrow/flight/transport/FlightTransportChannel":
+                    case "org/density/arrow/flight/transport/FlightTransportChannel":
                         // transformFlightTransportChannel(ctClass);
                         break;
-                    case "org/opensearch/arrow/flight/transport/FlightTransportResponse":
+                    case "org/density/arrow/flight/transport/FlightTransportResponse":
                         // transformFlightTransportResponse(ctClass);
                         break;
-                    case "org/opensearch/arrow/flight/transport/FlightServerChannel":
+                    case "org/density/arrow/flight/transport/FlightServerChannel":
                         transformFlightServerChannelWithDelay(ctClass);
                         break;
 
@@ -72,33 +72,33 @@ public class ChaosAgent {
         }
 
         private boolean shouldTransform(String className) {
-            return className.startsWith("org/opensearch/arrow/flight/transport/Flight");
+            return className.startsWith("org/density/arrow/flight/transport/Flight");
         }
 
         private void transformFlightTransport(CtClass ctClass) throws Exception {
             CtMethod method = ctClass.getDeclaredMethod("openConnection");
-            method.insertBefore("org.opensearch.arrow.flight.chaos.ChaosScenario.injectChaos();");
+            method.insertBefore("org.density.arrow.flight.chaos.ChaosScenario.injectChaos();");
         }
 
         private void transformFlightTransportChannel(CtClass ctClass) throws Exception {
             CtMethod sendBatch = ctClass.getDeclaredMethod("sendResponseBatch");
-            sendBatch.insertBefore("org.opensearch.arrow.flight.chaos.ChaosScenario.injectChaos();");
+            sendBatch.insertBefore("org.density.arrow.flight.chaos.ChaosScenario.injectChaos();");
 
             CtMethod complete = ctClass.getDeclaredMethod("completeStream");
-            complete.insertBefore("org.opensearch.arrow.flight.chaos.ChaosScenario.injectChaos();");
+            complete.insertBefore("org.density.arrow.flight.chaos.ChaosScenario.injectChaos();");
         }
 
         private void transformFlightTransportResponse(CtClass ctClass) throws Exception {
             CtMethod nextResponse = ctClass.getDeclaredMethod("nextResponse");
-            nextResponse.insertBefore("org.opensearch.arrow.flight.chaos.ChaosScenario.injectChaos();");
+            nextResponse.insertBefore("org.density.arrow.flight.chaos.ChaosScenario.injectChaos();");
 
             // CtMethod close = ctClass.getDeclaredMethod("close");
-            // close.insertBefore("org.opensearch.arrow.flight.chaos.ChaosInterceptor.beforeResponseClose();");
+            // close.insertBefore("org.density.arrow.flight.chaos.ChaosInterceptor.beforeResponseClose();");
         }
 
         private void transformFlightServerChannelWithDelay(CtClass ctClass) throws Exception {
             CtConstructor[] ctr = ctClass.getConstructors();
-            ctr[0].insertBefore("org.opensearch.arrow.flight.chaos.ChaosScenario.injectChaos();");
+            ctr[0].insertBefore("org.density.arrow.flight.chaos.ChaosScenario.injectChaos();");
         }
     }
 }

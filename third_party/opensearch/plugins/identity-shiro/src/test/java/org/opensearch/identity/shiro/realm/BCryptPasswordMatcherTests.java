@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro.realm;
+package org.density.identity.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BCryptPasswordMatcherTests extends OpenSearchTestCase {
+public class BCryptPasswordMatcherTests extends DensityTestCase {
 
     public void testCredentialMatch() {
         final UsernamePasswordToken token = mock(UsernamePasswordToken.class);

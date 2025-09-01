@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.template.put;
+package org.density.action.admin.indices.template.put;
 
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.MappingTransformerRegistry;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.MappingTransformerRegistry;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -35,7 +35,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportPutIndexTemplateActionTests extends OpenSearchTestCase {
+public class TransportPutIndexTemplateActionTests extends DensityTestCase {
     @Mock
     private TransportService transportService;
     @Mock

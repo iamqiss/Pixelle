@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.cells.CellIdSource;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.cells.GeoShapeCellIdSource;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.util.GeoShapeHashUtil;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.NonCollectingAggregator;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.geo.search.aggregations.bucket.geogrid.cells.CellIdSource;
+import org.density.geo.search.aggregations.bucket.geogrid.cells.GeoShapeCellIdSource;
+import org.density.geo.search.aggregations.bucket.geogrid.util.GeoShapeHashUtil;
+import org.density.geometry.utils.Geohash;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.NonCollectingAggregator;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -59,7 +59,7 @@ import static java.util.Collections.emptyList;
 /**
  * Aggregation Factory for geohash_grid agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 class GeoHashGridAggregatorFactory extends ValuesSourceAggregatorFactory {
 

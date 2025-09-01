@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile.fetch;
+package org.density.search.profile.fetch;
 
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.Timer;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
  * Simplified profiling tree for fetch phase operations. Each fetch phase is
  * stored as a root with a single level of child sub phases.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class FlatFetchProfileTree {
     private static final Set<String> ROOT_KEYS = Set.of(

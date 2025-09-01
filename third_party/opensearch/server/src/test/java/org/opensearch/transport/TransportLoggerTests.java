@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
 
 import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 
-@TestLogging(value = "org.opensearch.transport.TransportLogger:trace", reason = "to ensure we log network events on TRACE level")
-public abstract class TransportLoggerTests extends OpenSearchTestCase {
+@TestLogging(value = "org.density.transport.TransportLogger:trace", reason = "to ensure we log network events on TRACE level")
+public abstract class TransportLoggerTests extends DensityTestCase {
     public void testLoggingHandler() throws Exception {
         try (MockLogAppender appender = MockLogAppender.createForLoggers(LogManager.getLogger(TransportLogger.class))) {
             final String writePattern = ".*\\[length: \\d+"

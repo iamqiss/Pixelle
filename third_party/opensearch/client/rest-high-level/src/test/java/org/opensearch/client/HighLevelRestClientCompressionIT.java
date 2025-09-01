@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -41,8 +41,8 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
 
 import java.io.IOException;
 import java.net.URI;
@@ -50,7 +50,7 @@ import java.net.URISyntaxException;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class HighLevelRestClientCompressionIT extends OpenSearchRestHighLevelClientTestCase {
+public class HighLevelRestClientCompressionIT extends DensityRestHighLevelClientTestCase {
 
     private static final String GZIP_ENCODING = "gzip";
     private static final String SAMPLE_DOCUMENT = "{\"name\":{\"first name\":\"Steve\",\"last name\":\"Jobs\"}}";

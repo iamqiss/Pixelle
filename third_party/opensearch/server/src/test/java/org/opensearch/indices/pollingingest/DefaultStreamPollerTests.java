@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.engine.FakeIngestionSource;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexSettings;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.IngestionShardPointer;
+import org.density.index.engine.FakeIngestionSource;
+import org.density.index.engine.IngestionEngine;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -55,7 +55,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class DefaultStreamPollerTests extends OpenSearchTestCase {
+public class DefaultStreamPollerTests extends DensityTestCase {
     private DefaultStreamPoller poller;
     private FakeIngestionSource.FakeIngestionConsumerFactory fakeConsumerFactory;
     private MessageProcessorRunnable processorRunnable;

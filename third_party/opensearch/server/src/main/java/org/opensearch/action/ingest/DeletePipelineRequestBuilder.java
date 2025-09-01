@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder to delete a pipeline
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DeletePipelineRequestBuilder extends ActionRequestBuilder<DeletePipelineRequest, AcknowledgedResponse> {
 
-    public DeletePipelineRequestBuilder(OpenSearchClient client, DeletePipelineAction action) {
+    public DeletePipelineRequestBuilder(DensityClient client, DeletePipelineAction action) {
         super(client, action, new DeletePipelineRequest());
     }
 
-    public DeletePipelineRequestBuilder(OpenSearchClient client, DeletePipelineAction action, String id) {
+    public DeletePipelineRequestBuilder(DensityClient client, DeletePipelineAction action, String id) {
         super(client, action, new DeletePipelineRequest(id));
     }
 

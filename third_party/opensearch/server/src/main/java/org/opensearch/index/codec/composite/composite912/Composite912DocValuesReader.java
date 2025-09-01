@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite.composite912;
+package org.density.index.codec.composite.composite912;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,19 +28,19 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.store.ChecksumIndexInput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.ReadAdvice;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.codec.composite.LuceneDocValuesProducerFactory;
-import org.opensearch.index.compositeindex.CompositeIndexMetadata;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.index.CompositeIndexValues;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.util.io.IOUtils;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.codec.composite.LuceneDocValuesProducerFactory;
+import org.density.index.compositeindex.CompositeIndexMetadata;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.index.CompositeIndexValues;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.mapper.CompositeMappedFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,16 +49,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
-import static org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.getFieldInfoList;
+import static org.density.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
+import static org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.getFieldInfoList;
 
 /**
  * Reader for star tree index and star tree doc values from the segments
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class Composite912DocValuesReader extends DocValuesProducer implements CompositeIndexReader {

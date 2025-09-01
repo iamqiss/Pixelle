@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.breaker;
+package org.density.indices.breaker;
 
-import org.opensearch.common.breaker.ChildMemoryCircuitBreaker;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.breaker.ChildMemoryCircuitBreaker;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +73,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class HierarchyCircuitBreakerServiceTests extends OpenSearchTestCase {
+public class HierarchyCircuitBreakerServiceTests extends DensityTestCase {
 
     public void testThreadedUpdatesToChildBreaker() throws Exception {
         final int NUM_THREADS = scaledRandomIntBetween(3, 15);

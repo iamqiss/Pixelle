@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.repositories.put;
+package org.density.action.admin.cluster.repositories.put;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PutRepositoryRequestTests extends OpenSearchTestCase {
+public class PutRepositoryRequestTests extends DensityTestCase {
 
     @SuppressWarnings("unchecked")
     public void testCreateRepositoryToXContent() throws IOException {

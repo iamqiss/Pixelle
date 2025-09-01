@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.document.LongPoint;
@@ -65,62 +65,62 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.InfoStream;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.LoggerInfoStream;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.DerivedSourceDirectoryReader;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndSeqNo;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.KeyedLock;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.AppendOnlyIndexOperationRetryException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.fieldvisitor.IdOnlyFieldVisitor;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.merge.OnGoingMerge;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.OpenSearchMergePolicy;
-import org.opensearch.index.translog.InternalTranslogManager;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogCorruptedException;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogException;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogOperationHelper;
-import org.opensearch.index.translog.listener.CompositeTranslogEventListener;
-import org.opensearch.index.translog.listener.TranslogEventListener;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.index.IndexRequest;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.LoggerInfoStream;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DerivedSourceDirectoryReader;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndSeqNo;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.KeyedLock;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.AppendOnlyIndexOperationRetryException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.fieldvisitor.IdOnlyFieldVisitor;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.merge.MergeStats;
+import org.density.index.merge.OnGoingMerge;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.DensityMergePolicy;
+import org.density.index.translog.InternalTranslogManager;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogCorruptedException;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogException;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogOperationHelper;
+import org.density.index.translog.listener.CompositeTranslogEventListener;
+import org.density.index.translog.listener.TranslogEventListener;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -147,7 +147,7 @@ import java.util.stream.Stream;
 /**
  * The default internal engine (can be overridden by plugins)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalEngine extends Engine {
 
@@ -177,9 +177,9 @@ public class InternalEngine extends Engine {
     @Nullable
     protected final String historyUUID;
 
-    private final OpenSearchConcurrentMergeScheduler mergeScheduler;
+    private final DensityConcurrentMergeScheduler mergeScheduler;
     private final ExternalReaderManager externalReaderManager;
-    private final OpenSearchReaderManager internalReaderManager;
+    private final DensityReaderManager internalReaderManager;
 
     private final Lock flushLock = new ReentrantLock();
     private final ReentrantLock optimizeLock = new ReentrantLock();
@@ -252,7 +252,7 @@ public class InternalEngine extends Engine {
         store.incRef();
         IndexWriter writer = null;
         ExternalReaderManager externalReaderManager = null;
-        OpenSearchReaderManager internalReaderManager = null;
+        DensityReaderManager internalReaderManager = null;
         EngineMergeScheduler scheduler = null;
         TranslogManager translogManagerRef = null;
         boolean success = false;
@@ -426,17 +426,17 @@ public class InternalEngine extends Engine {
      * this specialized implementation an external refresh will immediately be reflected on the internal reader
      * and old segments can be released in the same way previous version did this (as a side-effect of _refresh)
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @SuppressForbidden(reason = "reference counting is required here")
-    private static final class ExternalReaderManager extends ReferenceManager<OpenSearchDirectoryReader> {
-        private final BiConsumer<OpenSearchDirectoryReader, OpenSearchDirectoryReader> refreshListener;
-        private final OpenSearchReaderManager internalReaderManager;
+    private static final class ExternalReaderManager extends ReferenceManager<DensityDirectoryReader> {
+        private final BiConsumer<DensityDirectoryReader, DensityDirectoryReader> refreshListener;
+        private final DensityReaderManager internalReaderManager;
         private boolean isWarmedUp; // guarded by refreshLock
 
         ExternalReaderManager(
-            OpenSearchReaderManager internalReaderManager,
-            BiConsumer<OpenSearchDirectoryReader, OpenSearchDirectoryReader> refreshListener
+            DensityReaderManager internalReaderManager,
+            BiConsumer<DensityDirectoryReader, DensityDirectoryReader> refreshListener
         ) throws IOException {
             this.refreshListener = refreshListener;
             this.internalReaderManager = internalReaderManager;
@@ -444,12 +444,12 @@ public class InternalEngine extends Engine {
         }
 
         @Override
-        protected OpenSearchDirectoryReader refreshIfNeeded(OpenSearchDirectoryReader referenceToRefresh) throws IOException {
+        protected DensityDirectoryReader refreshIfNeeded(DensityDirectoryReader referenceToRefresh) throws IOException {
             // we simply run a blocking refresh on the internal reference manager and then steal it's reader
             // it's a save operation since we acquire the reader which incs it's reference but then down the road
             // steal it by calling incRef on the "stolen" reader
             internalReaderManager.maybeRefreshBlocking();
-            final OpenSearchDirectoryReader newReader = internalReaderManager.acquire();
+            final DensityDirectoryReader newReader = internalReaderManager.acquire();
             if (isWarmedUp == false || newReader != referenceToRefresh) {
                 boolean success = false;
                 try {
@@ -472,17 +472,17 @@ public class InternalEngine extends Engine {
         }
 
         @Override
-        protected boolean tryIncRef(OpenSearchDirectoryReader reference) {
+        protected boolean tryIncRef(DensityDirectoryReader reference) {
             return reference.tryIncRef();
         }
 
         @Override
-        protected int getRefCount(OpenSearchDirectoryReader reference) {
+        protected int getRefCount(DensityDirectoryReader reference) {
             return reference.getRefCount();
         }
 
         @Override
-        protected void decRef(OpenSearchDirectoryReader reference) throws IOException {
+        protected void decRef(DensityDirectoryReader reference) throws IOException {
             reference.decRef();
         }
     }
@@ -577,14 +577,14 @@ public class InternalEngine extends Engine {
 
     private ExternalReaderManager createReaderManager(RefreshWarmerListener externalRefreshListener) throws EngineException {
         boolean success = false;
-        OpenSearchReaderManager internalReaderManager = null;
+        DensityReaderManager internalReaderManager = null;
         try {
             try {
-                final OpenSearchDirectoryReader directoryReader = OpenSearchDirectoryReader.wrap(
+                final DensityDirectoryReader directoryReader = DensityDirectoryReader.wrap(
                     DirectoryReader.open(indexWriter),
                     shardId
                 );
-                internalReaderManager = new OpenSearchReaderManager(directoryReader);
+                internalReaderManager = new DensityReaderManager(directoryReader);
                 lastCommittedSegmentInfos = store.readLastCommittedSegmentsInfo();
                 ExternalReaderManager externalReaderManager = new ExternalReaderManager(internalReaderManager, externalRefreshListener);
                 success = true;
@@ -1237,7 +1237,7 @@ public class InternalEngine extends Engine {
     /**
      * The indexing strategy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class IndexingStrategy {
         final boolean currentNotFoundOrDeleted;
@@ -1613,7 +1613,7 @@ public class InternalEngine extends Engine {
     /**
      * The deletion strategy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class DeletionStrategy {
         // of a rare double delete
@@ -1807,7 +1807,7 @@ public class InternalEngine extends Engine {
                 try {
                     // even though we maintain 2 managers we really do the heavy-lifting only once.
                     // the second refresh will only do the extra work we have to do for warming caches etc.
-                    ReferenceManager<OpenSearchDirectoryReader> referenceManager = getReferenceManager(scope);
+                    ReferenceManager<DensityDirectoryReader> referenceManager = getReferenceManager(scope);
                     // it is intentional that we never refresh both internal / external together
                     if (block) {
                         referenceManager.maybeRefreshBlocking();
@@ -2041,9 +2041,9 @@ public class InternalEngine extends Engine {
          * thread for optimize, and the 'optimizeLock' guarding this code, and (3) ConcurrentMergeScheduler
          * syncs calls to findForcedMerges.
          */
-        assert indexWriter.getConfig().getMergePolicy() instanceof OpenSearchMergePolicy : "MergePolicy is "
+        assert indexWriter.getConfig().getMergePolicy() instanceof DensityMergePolicy : "MergePolicy is "
             + indexWriter.getConfig().getMergePolicy().getClass().getName();
-        OpenSearchMergePolicy mp = (OpenSearchMergePolicy) indexWriter.getConfig().getMergePolicy();
+        DensityMergePolicy mp = (DensityMergePolicy) indexWriter.getConfig().getMergePolicy();
         optimizeLock.lock();
         try {
             ensureOpen();
@@ -2203,7 +2203,7 @@ public class InternalEngine extends Engine {
      */
     @Override
     public GatedCloseable<SegmentInfos> getSegmentInfosSnapshot() {
-        final OpenSearchDirectoryReader reader;
+        final DensityDirectoryReader reader;
         try {
             reader = internalReaderManager.acquire();
             return new GatedCloseable<>(((StandardDirectoryReader) reader.getDelegate()).getSegmentInfos(), () -> {
@@ -2300,7 +2300,7 @@ public class InternalEngine extends Engine {
     }
 
     @Override
-    protected final ReferenceManager<OpenSearchDirectoryReader> getReferenceManager(SearcherScope scope) {
+    protected final ReferenceManager<DensityDirectoryReader> getReferenceManager(SearcherScope scope) {
         switch (scope) {
             case INTERNAL:
                 return internalReaderManager;
@@ -2356,7 +2356,7 @@ public class InternalEngine extends Engine {
                 new PrunePostingsMergePolicy(mergePolicy, IdFieldMapper.NAME)
             )
         );
-        boolean shuffleForcedMerge = Booleans.parseBoolean(System.getProperty("opensearch.shuffle_forced_merge", Boolean.TRUE.toString()));
+        boolean shuffleForcedMerge = Booleans.parseBoolean(System.getProperty("density.shuffle_forced_merge", Boolean.TRUE.toString()));
         if (shuffleForcedMerge) {
             // We wrap the merge policy for all indices even though it is mostly useful for time-based indices
             // but there should be no overhead for other type of indices so it's simpler than adding a setting
@@ -2379,7 +2379,7 @@ public class InternalEngine extends Engine {
         }
 
         iwc.setCheckPendingFlushUpdate(config().getIndexSettings().isCheckPendingFlushEnabled());
-        iwc.setMergePolicy(new OpenSearchMergePolicy(mergePolicy));
+        iwc.setMergePolicy(new DensityMergePolicy(mergePolicy));
         iwc.setSimilarity(engineConfig.getSimilarity());
         iwc.setRAMBufferSizeMB(engineConfig.getIndexingBufferSize().getMbFrac());
         iwc.setCodec(engineConfig.getCodec());
@@ -2404,9 +2404,9 @@ public class InternalEngine extends Engine {
     /**
      * A listener that warms the segments if needed when acquiring a new reader
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    static final class RefreshWarmerListener implements BiConsumer<OpenSearchDirectoryReader, OpenSearchDirectoryReader> {
+    static final class RefreshWarmerListener implements BiConsumer<DensityDirectoryReader, DensityDirectoryReader> {
         private final Engine.Warmer warmer;
         private final Logger logger;
         private final AtomicBoolean isEngineClosed;
@@ -2418,7 +2418,7 @@ public class InternalEngine extends Engine {
         }
 
         @Override
-        public void accept(OpenSearchDirectoryReader reader, OpenSearchDirectoryReader previousReader) {
+        public void accept(DensityDirectoryReader reader, DensityDirectoryReader previousReader) {
             if (warmer != null) {
                 try {
                     warmer.warm(reader);
@@ -2471,7 +2471,7 @@ public class InternalEngine extends Engine {
         return indexWriter.getConfig();
     }
 
-    private final class EngineMergeScheduler extends OpenSearchConcurrentMergeScheduler {
+    private final class EngineMergeScheduler extends DensityConcurrentMergeScheduler {
         private final AtomicInteger numMergesInFlight = new AtomicInteger(0);
         private final AtomicBoolean isThrottling = new AtomicBoolean();
 
@@ -2732,8 +2732,8 @@ public class InternalEngine extends Engine {
     }
 
     private Engine.Searcher wrapSearcher(Engine.Searcher searcher) {
-        assert OpenSearchDirectoryReader.unwrap(searcher.getDirectoryReader()) != null
-            : "DirectoryReader must be an instance of OpenSearchDirectoryReader";
+        assert DensityDirectoryReader.unwrap(searcher.getDirectoryReader()) != null
+            : "DirectoryReader must be an instance of DensityDirectoryReader";
         boolean success = false;
         try {
             final Engine.Searcher newSearcher = IndexShard.wrapSearcher(
@@ -2746,7 +2746,7 @@ public class InternalEngine extends Engine {
             success = true;
             return newSearcher;
         } catch (IOException ex) {
-            throw new OpenSearchException("failed to wrap searcher", ex);
+            throw new DensityException("failed to wrap searcher", ex);
         } finally {
             if (success == false) {
                 Releasables.close(success, searcher);
@@ -2838,7 +2838,7 @@ public class InternalEngine extends Engine {
     /**
      * Internal Asserting Index Writer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class AssertingIndexWriter extends IndexWriter {
         AssertingIndexWriter(Directory d, IndexWriterConfig conf) throws IOException {

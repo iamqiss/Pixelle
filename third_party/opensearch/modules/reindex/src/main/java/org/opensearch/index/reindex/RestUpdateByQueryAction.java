@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.script.Script;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.rest.RestRequest;
+import org.density.script.Script;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import java.util.function.Consumer;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.POST;
 
 public class RestUpdateByQueryAction extends AbstractBulkByQueryRestHandler<UpdateByQueryRequest, UpdateByQueryAction> {
 

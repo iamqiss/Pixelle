@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.search.SearchHit;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.ExceptionsHelper;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.document.DocumentField;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.search.SearchHit;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.ParentTaskAssigningClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +61,13 @@ import java.util.function.Consumer;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
-import static org.opensearch.core.common.util.CollectionUtils.isEmpty;
+import static org.density.common.unit.TimeValue.timeValueNanos;
+import static org.density.core.common.util.CollectionUtils.isEmpty;
 
 /**
  * A scrollable source of hits from a {@linkplain Client} instance.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClientScrollableHitSource extends ScrollableHitSource {
     private final ParentTaskAssigningClient client;
@@ -117,7 +117,7 @@ public class ClientScrollableHitSource extends ScrollableHitSource {
 
             @Override
             public void onFailure(Exception e) {
-                if (ExceptionsHelper.unwrap(e, OpenSearchRejectedExecutionException.class) != null) {
+                if (ExceptionsHelper.unwrap(e, DensityRejectedExecutionException.class) != null) {
                     searchListener.onRejection(e);
                 } else {
                     searchListener.onFailure(e);
@@ -182,7 +182,7 @@ public class ClientScrollableHitSource extends ScrollableHitSource {
     /**
      * A Client hit
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ClientHit implements Hit {
         private final SearchHit delegate;

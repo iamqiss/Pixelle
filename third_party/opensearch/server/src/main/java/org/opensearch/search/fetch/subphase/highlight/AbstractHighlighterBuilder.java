@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.highlight.SimpleFragmenter;
 import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
-import org.opensearch.Version;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder.Order;
+import org.density.Version;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.Rewriteable;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder.Order;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -58,14 +58,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import static org.opensearch.core.xcontent.ObjectParser.fromList;
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.core.xcontent.ObjectParser.fromList;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * This abstract class holds parameters shared by {@link HighlightBuilder} and {@link HighlightBuilder.Field}
  * and provides the common setters, equality, hashCode calculation and common serialization
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractHighlighterBuilder<HB extends AbstractHighlighterBuilder<?>>
     implements

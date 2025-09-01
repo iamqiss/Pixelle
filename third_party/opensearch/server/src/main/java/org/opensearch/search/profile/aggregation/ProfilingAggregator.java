@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.aggregation;
+package org.density.search.profile.aggregation;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ScoreMode;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.support.AggregationPath.PathElement;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.search.sort.SortOrder;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.support.AggregationPath.PathElement;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.Timer;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Iterator;

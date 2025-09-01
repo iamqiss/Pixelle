@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,19 +23,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.ExposedBinding;
-import org.opensearch.common.inject.spi.PrivateElements;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Key;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.ExposedBinding;
+import org.density.common.inject.spi.PrivateElements;
 
 import java.util.Set;
 
@@ -44,7 +44,7 @@ import static java.util.Collections.singleton;
 /**
  * Exposed binding implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ExposedBindingImpl<T> extends BindingImpl<T> implements ExposedBinding<T> {
 

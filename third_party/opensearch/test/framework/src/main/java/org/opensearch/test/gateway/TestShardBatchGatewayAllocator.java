@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test.gateway;
+package org.density.test.gateway;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.util.BatchRunnableExecutor;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.AsyncShardFetch;
-import org.opensearch.gateway.PrimaryShardBatchAllocator;
-import org.opensearch.gateway.ReplicaShardBatchAllocator;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShardsBatch;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.util.BatchRunnableExecutor;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.AsyncShardFetch;
+import org.density.gateway.PrimaryShardBatchAllocator;
+import org.density.gateway.ReplicaShardBatchAllocator;
+import org.density.gateway.ShardsBatchGatewayAllocator;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper;
+import org.density.gateway.TransportNodesListGatewayStartedShardsBatch;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch;
 
 import java.util.Collections;
 import java.util.HashMap;

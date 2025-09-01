@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.annotation.InternalApi;
+import org.density.SpecialPermission;
+import org.density.common.annotation.InternalApi;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -18,7 +18,7 @@ import java.security.PrivilegedAction;
  * This class wraps the {@link ThreadContext} operations requiring access in
  * {@link AccessController#doPrivileged(PrivilegedAction)} blocks.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @SuppressWarnings("removal")
 @InternalApi

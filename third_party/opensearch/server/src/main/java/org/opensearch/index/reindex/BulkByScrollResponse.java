@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.reindex.BulkByScrollTask.Status;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.reindex.BulkByScrollTask.Status;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,13 +57,13 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.common.unit.TimeValue.timeValueNanos;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Response used for actions that index many documents using a scroll request.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BulkByScrollResponse extends ActionResponse implements ToXContentFragment {
     private TimeValue took;
@@ -246,8 +246,8 @@ public class BulkByScrollResponse extends ActionResponse implements ToXContentFr
         Integer status = null;
         Integer shardId = null;
         String nodeId = null;
-        OpenSearchException bulkExc = null;
-        OpenSearchException searchExc = null;
+        DensityException bulkExc = null;
+        DensityException searchExc = null;
         while ((token = parser.nextToken()) != Token.END_OBJECT) {
             ensureExpectedToken(Token.FIELD_NAME, token, parser);
             String name = parser.currentName();
@@ -257,10 +257,10 @@ public class BulkByScrollResponse extends ActionResponse implements ToXContentFr
             } else if (token == Token.START_OBJECT) {
                 switch (name) {
                     case SearchFailure.REASON_FIELD:
-                        searchExc = OpenSearchException.fromXContent(parser);
+                        searchExc = DensityException.fromXContent(parser);
                         break;
                     case Failure.CAUSE_FIELD:
-                        bulkExc = OpenSearchException.fromXContent(parser);
+                        bulkExc = DensityException.fromXContent(parser);
                         break;
                     default:
                         parser.skipChildren();
@@ -304,7 +304,7 @@ public class BulkByScrollResponse extends ActionResponse implements ToXContentFr
                 return new SearchFailure(searchExc, index, shardId, nodeId, RestStatus.fromCode(status));
             }
         } else {
-            throw new OpenSearchParseException("failed to parse failures array. At least one of {reason,cause} must be present");
+            throw new DensityParseException("failed to parse failures array. At least one of {reason,cause} must be present");
         }
     }
 

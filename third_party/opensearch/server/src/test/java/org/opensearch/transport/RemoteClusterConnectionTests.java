@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,52 +25,52 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsAction;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsGroup;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateAction;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsAction;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsGroup;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.admin.cluster.state.ClusterStateAction;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexNotFoundException;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -99,7 +99,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class RemoteClusterConnectionTests extends OpenSearchTestCase {
+public class RemoteClusterConnectionTests extends DensityTestCase {
 
     private final ThreadPool threadPool = new TestThreadPool(getClass().getName());
 

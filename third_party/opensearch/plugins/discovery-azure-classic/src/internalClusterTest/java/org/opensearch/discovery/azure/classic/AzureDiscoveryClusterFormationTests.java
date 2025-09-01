@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.azure.classic;
+package org.density.discovery.azure.classic;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpsConfigurator;
@@ -39,18 +39,18 @@ import com.sun.net.httpserver.HttpsServer;
 import com.microsoft.windowsazure.management.compute.models.DeploymentSlot;
 import com.microsoft.windowsazure.management.compute.models.DeploymentStatus;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.cloud.azure.classic.management.AzureComputeService;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.env.Environment;
-import org.opensearch.node.Node;
-import org.opensearch.plugin.discovery.azure.classic.AzureDiscoveryPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.TransportSettings;
+import org.density.cloud.azure.classic.management.AzureComputeService;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.util.FileSystemUtils;
+import org.density.discovery.DiscoveryModule;
+import org.density.env.Environment;
+import org.density.node.Node;
+import org.density.plugin.discovery.azure.classic.AzureDiscoveryPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.TransportSettings;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -84,9 +84,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 2, numClientNodes = 0)
+@DensityIntegTestCase.ClusterScope(numDataNodes = 2, numClientNodes = 0)
 @SuppressForbidden(reason = "use http server")
-public class AzureDiscoveryClusterFormationTests extends OpenSearchIntegTestCase {
+public class AzureDiscoveryClusterFormationTests extends DensityIntegTestCase {
 
     public static class TestPlugin extends Plugin {
         @Override
@@ -144,7 +144,7 @@ public class AzureDiscoveryClusterFormationTests extends OpenSearchIntegTestCase
             .put(AzureComputeService.Management.KEYSTORE_PATH_SETTING.getKey(), keyStoreFile.toAbsolutePath())
             .put(
                 AzureComputeService.Discovery.HOST_TYPE_SETTING.getKey(),
-                org.opensearch.discovery.azure.classic.AzureSeedHostsProvider.HostType.PUBLIC_IP.name()
+                org.density.discovery.azure.classic.AzureSeedHostsProvider.HostType.PUBLIC_IP.name()
             )
             .put(AzureComputeService.Management.KEYSTORE_PASSWORD_SETTING.getKey(), "keypass")
             .put(AzureComputeService.Management.KEYSTORE_TYPE_SETTING.getKey(), "jks")
@@ -154,7 +154,7 @@ public class AzureDiscoveryClusterFormationTests extends OpenSearchIntegTestCase
             .put(AzureComputeService.Discovery.ENDPOINT_NAME_SETTING.getKey(), "myendpoint")
             .put(
                 AzureComputeService.Discovery.DEPLOYMENT_SLOT_SETTING.getKey(),
-                org.opensearch.discovery.azure.classic.AzureSeedHostsProvider.Deployment.PRODUCTION.name()
+                org.density.discovery.azure.classic.AzureSeedHostsProvider.Deployment.PRODUCTION.name()
             )
             .build();
     }

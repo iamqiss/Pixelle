@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 public class MultiSearchTemplateRequest extends ActionRequest implements CompositeIndicesRequest {
 

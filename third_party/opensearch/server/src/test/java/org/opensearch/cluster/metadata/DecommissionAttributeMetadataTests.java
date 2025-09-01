@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.cluster.decommission.DecommissionStatus;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.test.AbstractNamedWriteableTestCase;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.cluster.decommission.DecommissionStatus;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.test.AbstractNamedWriteableTestCase;
 
 import java.io.IOException;
 import java.util.Collections;

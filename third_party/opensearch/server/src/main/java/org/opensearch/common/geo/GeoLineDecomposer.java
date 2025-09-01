@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.MultiLine;
+import org.density.geometry.Line;
+import org.density.geometry.MultiLine;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.common.geo.GeoUtils.normalizePoint;
+import static org.density.common.geo.GeoUtils.normalizePoint;
 
 /**
  * Splits lines by datelines.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoLineDecomposer {
 

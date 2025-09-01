@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.SearchService;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.regex.Regex;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.SearchService;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ import java.util.Set;
 /**
  * Helpers to extract and expand field names and boosts
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class QueryParserHelper {
     private QueryParserHelper() {}
@@ -162,7 +162,7 @@ public final class QueryParserHelper {
                 } catch (QueryShardException | UnsupportedOperationException e) {
                     // field type is never searchable with term queries (eg. geo point): ignore
                     continue;
-                } catch (IllegalArgumentException | OpenSearchParseException e) {
+                } catch (IllegalArgumentException | DensityParseException e) {
                     // other exceptions are parsing errors or not indexed fields: keep
                 }
             }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.coordination.PeersResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.coordination.PeersResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.EqualsHashCodeTestUtils.CopyFunction;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-public class PeerFinderMessagesTests extends OpenSearchTestCase {
+public class PeerFinderMessagesTests extends DensityTestCase {
     private DiscoveryNode createNode(String id) {
         return new DiscoveryNode(id, buildNewFakeTransportAddress(), Version.CURRENT);
     }
@@ -99,7 +99,7 @@ public class PeerFinderMessagesTests extends OpenSearchTestCase {
                     return new PeersResponse(
                         in.getClusterManagerNode(),
                         in.getKnownPeers(),
-                        randomValueOtherThan(term, OpenSearchTestCase::randomNonNegativeLong)
+                        randomValueOtherThan(term, DensityTestCase::randomNonNegativeLong)
                     );
                 } else {
                     if (in.getClusterManagerNode().isPresent()) {

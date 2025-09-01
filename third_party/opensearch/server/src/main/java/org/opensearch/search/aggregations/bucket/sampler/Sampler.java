@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.sampler;
+package org.density.search.aggregations.bucket.sampler;
 
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregation;
+import org.density.search.aggregations.bucket.SingleBucketAggregation;
 
 /**
  * A {@code filter} aggregation that defines a single bucket to hold a sample of
  * top-matching documents. Computation of child aggregations is deferred until
  * the top-matching documents on a shard have been determined.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Sampler extends SingleBucketAggregation {}

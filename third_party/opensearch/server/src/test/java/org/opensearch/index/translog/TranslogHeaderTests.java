@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.store.OutputStreamDataOutput;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.UUIDs;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.UUIDs;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.channels.Channels;
@@ -55,7 +55,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 
-public class TranslogHeaderTests extends OpenSearchTestCase {
+public class TranslogHeaderTests extends DensityTestCase {
 
     public void testCurrentHeaderVersion() throws Exception {
         final String translogUUID = UUIDs.randomBase64UUID();
@@ -186,16 +186,16 @@ public class TranslogHeaderTests extends OpenSearchTestCase {
     }
 
     public void testLegacyTranslogVersions() throws Exception {
-        checkFailsToOpen("/org/opensearch/index/translog/translog-v0.binary", IllegalStateException.class, "pre-1.4 translog");
-        checkFailsToOpen("/org/opensearch/index/translog/translog-v1.binary", IllegalStateException.class, "pre-2.0 translog");
-        checkFailsToOpen("/org/opensearch/index/translog/translog-v1-truncated.binary", IllegalStateException.class, "pre-2.0 translog");
+        checkFailsToOpen("/org/density/index/translog/translog-v0.binary", IllegalStateException.class, "pre-1.4 translog");
+        checkFailsToOpen("/org/density/index/translog/translog-v1.binary", IllegalStateException.class, "pre-2.0 translog");
+        checkFailsToOpen("/org/density/index/translog/translog-v1-truncated.binary", IllegalStateException.class, "pre-2.0 translog");
         checkFailsToOpen(
-            "/org/opensearch/index/translog/translog-v1-corrupted-magic.binary",
+            "/org/density/index/translog/translog-v1-corrupted-magic.binary",
             TranslogCorruptedException.class,
             "translog looks like version 1 or later, but has corrupted header"
         );
         checkFailsToOpen(
-            "/org/opensearch/index/translog/translog-v1-corrupted-body.binary",
+            "/org/density/index/translog/translog-v1-corrupted-body.binary",
             IllegalStateException.class,
             "pre-2.0 translog"
         );

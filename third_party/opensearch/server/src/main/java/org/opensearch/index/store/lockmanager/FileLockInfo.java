@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
 import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * A Class that defines Info about Remote Store File Lock.
  * This is used to provide Remote Store Lock Information and some utility methods for the Lock file.
- * @opensearch.internal
+ * @density.internal
  */
 public class FileLockInfo implements LockInfo {
     private String fileToLock;
@@ -122,7 +122,7 @@ public class FileLockInfo implements LockInfo {
 
     /**
      * A Builder Class to build an Instance of {@code FileLockInfo}
-     * @opensearch.internal
+     * @density.internal
      */
     public static class LockInfoBuilder implements LockInfo.LockInfoBuilder {
         private final FileLockInfo lockFileInfo;

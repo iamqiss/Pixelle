@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.cells;
+package org.density.geo.search.aggregations.bucket.geogrid.cells;
 
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.index.fielddata.MultiGeoPointValues;
 
 /**
  * Class representing {@link CellValues} that are unbounded by any
  * {@link GeoBoundingBox}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class UnboundedCellValues extends CellValues {
 
@@ -47,7 +47,7 @@ class UnboundedCellValues extends CellValues {
     }
 
     @Override
-    int advanceValue(org.opensearch.common.geo.GeoPoint target, int valuesIdx) {
+    int advanceValue(org.density.common.geo.GeoPoint target, int valuesIdx) {
         values[valuesIdx] = encoder.encode(target.getLon(), target.getLat(), precision);
         return valuesIdx + 1;
     }

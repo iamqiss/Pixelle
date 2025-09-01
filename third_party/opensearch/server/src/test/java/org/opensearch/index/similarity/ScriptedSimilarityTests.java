@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -54,15 +54,15 @@ import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.Version;
-import org.opensearch.script.SimilarityScript;
-import org.opensearch.script.SimilarityWeightScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.script.SimilarityScript;
+import org.density.script.SimilarityWeightScript;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ScriptedSimilarityTests extends OpenSearchTestCase {
+public class ScriptedSimilarityTests extends DensityTestCase {
 
     public void testSameNormsAsBM25CountOverlaps() {
         doTestSameNormsAsBM25(false);

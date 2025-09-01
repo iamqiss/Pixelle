@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.ServerUtils;
-import org.opensearch.packaging.util.Shell;
-import org.opensearch.packaging.util.Shell.Result;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.ServerUtils;
+import org.density.packaging.util.Shell;
+import org.density.packaging.util.Shell.Result;
 import org.junit.After;
 import org.junit.BeforeClass;
 
@@ -47,18 +47,18 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 
-import static org.opensearch.packaging.util.Archives.installArchive;
-import static org.opensearch.packaging.util.Archives.verifyArchiveInstallation;
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.FileUtils.mv;
+import static org.density.packaging.util.Archives.installArchive;
+import static org.density.packaging.util.Archives.verifyArchiveInstallation;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.FileUtils.mv;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.assumeTrue;
 
 public class WindowsServiceTests extends PackagingTestCase {
 
-    private static final String DEFAULT_ID = "opensearch-service-x64";
-    private static final String DEFAULT_DISPLAY_NAME = "OpenSearch " + FileUtils.getCurrentVersion() + " (opensearch-service-x64)";
+    private static final String DEFAULT_ID = "density-service-x64";
+    private static final String DEFAULT_DISPLAY_NAME = "Density " + FileUtils.getCurrentVersion() + " (density-service-x64)";
     private static String serviceScript;
 
     @BeforeClass
@@ -100,7 +100,7 @@ public class WindowsServiceTests extends PackagingTestCase {
             Result logs = sh.run(
                 "$files = Get-ChildItem \""
                     + installation.logs
-                    + "\\opensearch.log\"; "
+                    + "\\density.log\"; "
                     + "Write-Output $files; "
                     + "foreach ($file in $files) {"
                     + "    Write-Output \"$file\"; "
@@ -117,16 +117,16 @@ public class WindowsServiceTests extends PackagingTestCase {
     public void test10InstallArchive() throws Exception {
         installation = installArchive(sh, distribution());
         verifyArchiveInstallation(installation, distribution());
-        serviceScript = installation.bin("opensearch-service.bat").toString();
+        serviceScript = installation.bin("density-service.bat").toString();
     }
 
     public void test11InstallServiceExeMissing() throws IOException {
-        Path serviceExe = installation.bin("opensearch-service-x64.exe");
+        Path serviceExe = installation.bin("density-service-x64.exe");
         Path tmpServiceExe = serviceExe.getParent().resolve(serviceExe.getFileName() + ".tmp");
         Files.move(serviceExe, tmpServiceExe);
         Result result = sh.runIgnoreExitCode(serviceScript + " install");
         assertThat(result.exitCode, equalTo(1));
-        assertThat(result.stdout, containsString("opensearch-service-x64.exe was not found..."));
+        assertThat(result.stdout, containsString("density-service-x64.exe was not found..."));
         Files.move(tmpServiceExe, serviceExe);
     }
 
@@ -150,7 +150,7 @@ public class WindowsServiceTests extends PackagingTestCase {
     }
 
     public void test14InstallBadJavaHome() throws IOException {
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "");
         sh.getEnv().put("JAVA_HOME", "doesnotexist");
         Result result = sh.runIgnoreExitCode(serviceScript + " install");
         assertThat(result.exitCode, equalTo(1));
@@ -158,10 +158,10 @@ public class WindowsServiceTests extends PackagingTestCase {
     }
 
     public void test14InstallBadOpensearchJavaHome() throws IOException {
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "doesnotexist");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "doesnotexist");
         Result result = sh.runIgnoreExitCode(serviceScript + " install");
         assertThat(result.exitCode, equalTo(1));
-        assertThat(result.stderr, containsString("could not find java in OPENSEARCH_JAVA_HOME"));
+        assertThat(result.stderr, containsString("could not find java in DENSITY_JAVA_HOME"));
     }
 
     public void test15RemoveNotInstalled() {
@@ -172,13 +172,13 @@ public class WindowsServiceTests extends PackagingTestCase {
     public void test16InstallSpecialCharactersInJdkPath() throws IOException {
         assumeTrue("Only run this test when we know where the JDK is.", distribution().hasJdk);
         final Path relocatedJdk = installation.bundledJdk.getParent().resolve("a (special) jdk");
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "");
         sh.getEnv().put("JAVA_HOME", relocatedJdk.toString());
 
         try {
             mv(installation.bundledJdk, relocatedJdk);
             Result result = sh.run(serviceScript + " install");
-            assertThat(result.stdout, containsString("The service 'opensearch-service-x64' has been installed."));
+            assertThat(result.stdout, containsString("The service 'density-service-x64' has been installed."));
         } finally {
             sh.runIgnoreExitCode(serviceScript + " remove");
             mv(relocatedJdk, installation.bundledJdk);
@@ -186,7 +186,7 @@ public class WindowsServiceTests extends PackagingTestCase {
     }
 
     public void test20CustomizeServiceId() {
-        String serviceId = "my-opensearch-service";
+        String serviceId = "my-density-service";
         String displayName = DEFAULT_DISPLAY_NAME.replace(DEFAULT_ID, serviceId);
         sh.getEnv().put("SERVICE_ID", serviceId);
         sh.run(serviceScript + " install");
@@ -204,17 +204,17 @@ public class WindowsServiceTests extends PackagingTestCase {
 
     // NOTE: service description is not attainable through any powershell api, so checking it is not possible...
     public void assertStartedAndStop() throws Exception {
-        ServerUtils.waitForOpenSearch(installation);
-        ServerUtils.runOpenSearchTests();
+        ServerUtils.waitForDensity(installation);
+        ServerUtils.runDensityTests();
 
         assertCommand(serviceScript + " stop");
         assertService(DEFAULT_ID, "Stopped", DEFAULT_DISPLAY_NAME);
         // the process is stopped async, and can become a zombie process, so we poll for the process actually being gone
         assertCommand(
-            "$p = Get-Service -Name \"opensearch-service-x64\" -ErrorAction SilentlyContinue;"
+            "$p = Get-Service -Name \"density-service-x64\" -ErrorAction SilentlyContinue;"
                 + "$i = 0;"
                 + "do {"
-                + "  $p = Get-Process -Name \"opensearch-service-x64\" -ErrorAction SilentlyContinue;"
+                + "  $p = Get-Process -Name \"density-service-x64\" -ErrorAction SilentlyContinue;"
                 + "  echo \"$p\";"
                 + "  if ($p -eq $Null) {"
                 + "    Write-Host \"exited after $i seconds\";"
@@ -228,7 +228,7 @@ public class WindowsServiceTests extends PackagingTestCase {
 
         assertCommand(serviceScript + " remove");
         assertCommand(
-            "$p = Get-Service -Name \"opensearch-service-x64\" -ErrorAction SilentlyContinue;"
+            "$p = Get-Service -Name \"density-service-x64\" -ErrorAction SilentlyContinue;"
                 + "echo \"$p\";"
                 + "if ($p -eq $Null) {"
                 + "  exit 0;"
@@ -258,7 +258,7 @@ public class WindowsServiceTests extends PackagingTestCase {
 
     public void test33JavaChanged() throws Exception {
         final Path relocatedJdk = installation.bundledJdk.getParent().resolve("jdk.relocated");
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "");
 
         try {
             mv(installation.bundledJdk, relocatedJdk);
@@ -278,9 +278,9 @@ public class WindowsServiceTests extends PackagingTestCase {
 
         try {
             mv(installation.bundledJdk, relocatedJdk);
-            sh.getEnv().put("OPENSEARCH_JAVA_HOME", relocatedJdk.toString());
+            sh.getEnv().put("DENSITY_JAVA_HOME", relocatedJdk.toString());
             assertCommand(serviceScript + " install");
-            sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+            sh.getEnv().remove("DENSITY_JAVA_HOME");
             assertCommand(serviceScript + " start");
             assertStartedAndStop();
         } finally {
@@ -289,10 +289,10 @@ public class WindowsServiceTests extends PackagingTestCase {
     }
 
     public void test60Manager() throws IOException {
-        Path serviceMgr = installation.bin("opensearch-service-mgr.exe");
+        Path serviceMgr = installation.bin("density-service-mgr.exe");
         Path tmpServiceMgr = serviceMgr.getParent().resolve(serviceMgr.getFileName() + ".tmp");
         Files.move(serviceMgr, tmpServiceMgr);
-        Path fakeServiceMgr = serviceMgr.getParent().resolve("opensearch-service-mgr.bat");
+        Path fakeServiceMgr = serviceMgr.getParent().resolve("density-service-mgr.bat");
         Files.write(fakeServiceMgr, Arrays.asList("echo \"Fake Service Manager GUI\""));
         Shell sh = new Shell();
         Result result = sh.run(serviceScript + " manager");
@@ -313,11 +313,11 @@ public class WindowsServiceTests extends PackagingTestCase {
     }
 
     public void test80JavaOptsInEnvVar() throws Exception {
-        sh.getEnv().put("OPENSEARCH_JAVA_OPTS", "-Xmx2g -Xms2g");
+        sh.getEnv().put("DENSITY_JAVA_OPTS", "-Xmx2g -Xms2g");
         sh.run(serviceScript + " install");
         assertCommand(serviceScript + " start");
         assertStartedAndStop();
-        sh.getEnv().remove("OPENSEARCH_JAVA_OPTS");
+        sh.getEnv().remove("DENSITY_JAVA_OPTS");
     }
 
     public void test81JavaOptsInJvmOptions() throws Exception {

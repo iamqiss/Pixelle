@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,13 +37,13 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.analysis.hunspell.Dictionary;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.env.Environment;
+import org.density.DensityException;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.util.FileSystemUtils;
+import org.density.env.Environment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,9 +86,9 @@ import java.util.function.Function;
  *     strict_affix_parsing: false
  * </code></pre>
  *
- * @see org.opensearch.index.analysis.HunspellTokenFilterFactory
+ * @see org.density.index.analysis.HunspellTokenFilterFactory
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HunspellService {
 
@@ -193,7 +193,7 @@ public class HunspellService {
         }
         Path dicDir = hunspellDir.resolve(locale);
         if (FileSystemUtils.isAccessibleDirectory(dicDir, logger) == false) {
-            throw new OpenSearchException(String.format(Locale.ROOT, "Could not find hunspell dictionary [%s]", locale));
+            throw new DensityException(String.format(Locale.ROOT, "Could not find hunspell dictionary [%s]", locale));
         }
 
         // merging node settings with hunspell dictionary specific settings
@@ -204,10 +204,10 @@ public class HunspellService {
 
         Path[] affixFiles = FileSystemUtils.files(dicDir, "*.aff");
         if (affixFiles.length == 0) {
-            throw new OpenSearchException(String.format(Locale.ROOT, "Missing affix file for hunspell dictionary [%s]", locale));
+            throw new DensityException(String.format(Locale.ROOT, "Missing affix file for hunspell dictionary [%s]", locale));
         }
         if (affixFiles.length != 1) {
-            throw new OpenSearchException(String.format(Locale.ROOT, "Too many affix files exist for hunspell dictionary [%s]", locale));
+            throw new DensityException(String.format(Locale.ROOT, "Too many affix files exist for hunspell dictionary [%s]", locale));
         }
         InputStream affixStream = null;
 

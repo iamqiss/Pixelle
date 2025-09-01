@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.mapper.TextFieldMapper.TextFieldType;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.mapper.TextFieldMapper.TextFieldType;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -53,17 +53,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.StreamsUtils.copyToBytesFromClasspath;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.StreamsUtils.copyToBytesFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class MultiFieldTests extends OpenSearchSingleNodeTestCase {
+public class MultiFieldTests extends DensitySingleNodeTestCase {
 
     public void testMultiFieldMultiFields() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/test-multi-fields.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/test-multi-fields.json");
         testMultiField(mapping);
     }
 
@@ -74,7 +74,7 @@ public class MultiFieldTests extends OpenSearchSingleNodeTestCase {
         indexService.mapperService()
             .merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
-        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/opensearch/index/mapper/multifield/test-data.json"));
+        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/density/index/mapper/multifield/test-data.json"));
         Document doc = mapperService.documentMapper().parse(new SourceToParse("test", "1", json, MediaTypeRegistry.JSON)).rootDoc();
 
         IndexableField f = doc.getField("name");
@@ -153,7 +153,7 @@ public class MultiFieldTests extends OpenSearchSingleNodeTestCase {
             .documentMapperParser()
             .parse(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(builtMapping));
 
-        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/opensearch/index/mapper/multifield/test-data.json"));
+        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/density/index/mapper/multifield/test-data.json"));
         Document doc = docMapper.parse(new SourceToParse("test", "1", json, MediaTypeRegistry.JSON)).rootDoc();
 
         IndexableField f = doc.getField("name");

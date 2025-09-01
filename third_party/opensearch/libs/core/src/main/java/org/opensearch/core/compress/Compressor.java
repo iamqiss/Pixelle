@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.compress;
+package org.density.core.compress;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Compressor interface used for compressing {@link org.opensearch.core.xcontent.MediaType} and
- * {@code org.opensearch.repositories.blobstore.BlobStoreRepository} implementations.
+ * Compressor interface used for compressing {@link org.density.core.xcontent.MediaType} and
+ * {@code org.density.repositories.blobstore.BlobStoreRepository} implementations.
  * <p>
  * This is not to be confused with {@link org.apache.lucene.codecs.compressing.Compressor} which is used
- * for codec implementations such as {@code org.opensearch.index.codec.customcodecs.Lucene95CustomCodec}
+ * for codec implementations such as {@code org.density.index.codec.customcodecs.Lucene95CustomCodec}
  * for compressing {@link org.apache.lucene.document.StoredField}s
  *
- * @opensearch.api - intended to be extended
- * @opensearch.experimental - however, bwc is not guaranteed at this time
+ * @density.api - intended to be extended
+ * @density.experimental - however, bwc is not guaranteed at this time
  */
 @ExperimentalApi
 @PublicApi(since = "2.10.0")

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.compress;
+package org.density.core.compress;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.spi.CompressorProvider;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
+import org.density.common.Nullable;
+import org.density.common.annotation.InternalApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.spi.CompressorProvider;
+import org.density.core.xcontent.MediaTypeRegistry;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
  * <p>
  * This enables plugins, modules, extensions to register their own compression implementations through SPI
  *
- * @opensearch.experimental
- * @opensearch.internal
+ * @density.experimental
+ * @density.internal
  */
 @InternalApi
 public final class CompressorRegistry {

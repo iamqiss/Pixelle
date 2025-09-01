@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
 import com.github.mustachejava.MustacheFactory;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.script.TemplateScript;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -51,7 +51,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Mustache based templating test
  */
-public class MustacheScriptEngineTests extends OpenSearchTestCase {
+public class MustacheScriptEngineTests extends DensityTestCase {
     private MustacheScriptEngine qe;
     private MustacheFactory factory;
 

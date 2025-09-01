@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DynamicTemplate.XContentFieldType;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DynamicTemplate.XContentFieldType;
 
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
@@ -56,12 +56,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import static org.opensearch.index.mapper.FieldMapper.IGNORE_MALFORMED_SETTING;
+import static org.density.index.mapper.FieldMapper.IGNORE_MALFORMED_SETTING;
 
 /**
  * A parser for documents, given mappings from a DocumentMapper
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class DocumentParser {
 
@@ -812,7 +812,7 @@ final class DocumentParser {
                 for (DateFormatter dateTimeFormatter : context.root().dynamicDateTimeFormatters()) {
                     try {
                         dateTimeFormatter.parse(text);
-                    } catch (OpenSearchParseException | DateTimeParseException | IllegalArgumentException e) {
+                    } catch (DensityParseException | DateTimeParseException | IllegalArgumentException e) {
                         // failure to parse this, continue
                         continue;
                     }

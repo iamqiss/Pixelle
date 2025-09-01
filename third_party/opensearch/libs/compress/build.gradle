@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-apply plugin: 'opensearch.build'
-apply plugin: 'opensearch.publish'
+apply plugin: 'density.build'
+apply plugin: 'density.publish'
 
 base {
-  archivesName = 'opensearch-compress'
+  archivesName = 'density-compress'
 }
 
 dependencies {
-  api project(':libs:opensearch-common')
-  api project(':libs:opensearch-core')
+  api project(':libs:density-common')
+  api project(':libs:density-core')
 
   //zstd
   api "com.github.luben:zstd-jni:${versions.zstd}"
 
   testImplementation(project(":test:framework")) {
     // tests use the locally compiled version of server
-    exclude group: 'org.opensearch', module: 'opensearch-compress'
+    exclude group: 'org.density', module: 'density-compress'
   }
 }
 
 tasks.named('forbiddenApisMain').configure {
-  // :libs:opensearch-compress does not depend on server
+  // :libs:density-compress does not depend on server
   // TODO: Need to decide how we want to handle for forbidden signatures with the changes to server
   replaceSignatureFiles 'jdk-signatures'
 }

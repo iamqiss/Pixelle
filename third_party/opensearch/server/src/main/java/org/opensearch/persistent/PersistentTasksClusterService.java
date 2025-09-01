@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Assignment;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.persistent.decider.AssignmentDecision;
-import org.opensearch.persistent.decider.EnableAssignmentDecider;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ResourceAlreadyExistsException;
+import org.density.ResourceNotFoundException;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.core.action.ActionListener;
+import org.density.persistent.PersistentTasksCustomMetadata.Assignment;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.persistent.decider.AssignmentDecision;
+import org.density.persistent.decider.EnableAssignmentDecider;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.util.Objects;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_PERSISTENT_TASK;
-import static org.opensearch.cluster.service.ClusterManagerTask.FINISH_PERSISTENT_TASK;
-import static org.opensearch.cluster.service.ClusterManagerTask.REMOVE_PERSISTENT_TASK;
-import static org.opensearch.cluster.service.ClusterManagerTask.UPDATE_TASK_STATE;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_PERSISTENT_TASK;
+import static org.density.cluster.service.ClusterManagerTask.FINISH_PERSISTENT_TASK;
+import static org.density.cluster.service.ClusterManagerTask.REMOVE_PERSISTENT_TASK;
+import static org.density.cluster.service.ClusterManagerTask.UPDATE_TASK_STATE;
 
 /**
  * Component that runs only on the cluster-manager node and is responsible for assigning running tasks to nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PersistentTasksClusterService implements ClusterStateListener, Closeable {
 

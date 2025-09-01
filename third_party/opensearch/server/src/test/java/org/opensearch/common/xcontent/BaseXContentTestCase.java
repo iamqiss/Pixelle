@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -38,29 +38,29 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Constants;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedObjectNotFoundException;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentGenerator;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.geo.GeoPoint;
+import org.density.common.io.PathUtils;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.text.Text;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedObjectNotFoundException;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentGenerator;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
@@ -107,7 +107,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
 
-public abstract class BaseXContentTestCase extends OpenSearchTestCase {
+public abstract class BaseXContentTestCase extends DensityTestCase {
 
     protected abstract XContentType xcontentType();
 
@@ -777,7 +777,7 @@ public abstract class BaseXContentTestCase extends OpenSearchTestCase {
         Map<String, Object> objects = new HashMap<>();
         objects.put("{'obj':50.63}", DistanceUnit.METERS.fromMeters(50.63));
         objects.put("{'obj':'MINUTES'}", TimeUnit.MINUTES);
-        objects.put("{'obj':'class org.opensearch.common.xcontent.BaseXContentTestCase'}", BaseXContentTestCase.class);
+        objects.put("{'obj':'class org.density.common.xcontent.BaseXContentTestCase'}", BaseXContentTestCase.class);
 
         for (Map.Entry<String, ?> o : objects.entrySet()) {
             final String expected = o.getKey();

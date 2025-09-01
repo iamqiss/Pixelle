@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -44,17 +44,17 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.SerialMergeScheduler;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.Lucene;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class UUIDTests extends OpenSearchTestCase {
+public class UUIDTests extends DensityTestCase {
 
     static UUIDGenerator timeUUIDGen = new TimeBasedUUIDGenerator();
     static UUIDGenerator randomUUIDGen = new RandomBasedUUIDGenerator();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.main.MainAction;
-import org.opensearch.action.main.TransportMainAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.ActionPlugin.ActionHandler;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.rest.action.RestMainAction;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.action.main.MainAction;
+import org.density.action.main.TransportMainAction;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportAction;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.extensions.ExtensionsManager;
+import org.density.identity.IdentityService;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.ActionPlugin.ActionHandler;
+import org.density.rest.RestChannel;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.rest.action.RestMainAction;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.mock;
 
-public class ActionModuleTests extends OpenSearchTestCase {
+public class ActionModuleTests extends DensityTestCase {
     public void testSetupActionsContainsKnownBuiltin() {
         assertThat(
             ActionModule.setupActions(emptyList()),

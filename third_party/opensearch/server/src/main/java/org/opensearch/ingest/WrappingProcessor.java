@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 /**
  * A srapping processor is one that encapsulates an inner processor, or a processor that the wrapped processor enacts upon. All processors
  * that contain an "inner" processor should implement this interface, such that the actual processor can be obtained.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface WrappingProcessor extends Processor {
 

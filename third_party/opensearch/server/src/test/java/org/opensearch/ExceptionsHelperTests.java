@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.InputCoercionException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.RemoteClusterAware;
+import org.density.action.OriginalIndices;
+import org.density.action.search.ShardSearchFailure;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.ParsingException;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.query.QueryShardException;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
+import org.density.transport.RemoteClusterAware;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.opensearch.ExceptionsHelper.maybeError;
+import static org.density.ExceptionsHelper.maybeError;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class ExceptionsHelperTests extends OpenSearchTestCase {
+public class ExceptionsHelperTests extends DensityTestCase {
 
     public void testMaybeError() {
         final Error outOfMemoryError = new OutOfMemoryError();
@@ -113,7 +113,7 @@ public class ExceptionsHelperTests extends OpenSearchTestCase {
         assertThat(ExceptionsHelper.status(new IllegalArgumentException("illegal")), equalTo(RestStatus.BAD_REQUEST));
         assertThat(ExceptionsHelper.status(new InputCoercionException(null, "illegal", null, null)), equalTo(RestStatus.BAD_REQUEST));
         assertThat(ExceptionsHelper.status(new JsonParseException(null, "illegal")), equalTo(RestStatus.BAD_REQUEST));
-        assertThat(ExceptionsHelper.status(new OpenSearchRejectedExecutionException("rejected")), equalTo(RestStatus.TOO_MANY_REQUESTS));
+        assertThat(ExceptionsHelper.status(new DensityRejectedExecutionException("rejected")), equalTo(RestStatus.TOO_MANY_REQUESTS));
     }
 
     public void testSummaryMessage() {
@@ -123,7 +123,7 @@ public class ExceptionsHelperTests extends OpenSearchTestCase {
             equalTo("Incompatible JSON value")
         );
         assertThat(ExceptionsHelper.summaryMessage(new JsonParseException(null, "illegal")), equalTo("Failed to parse JSON"));
-        assertThat(ExceptionsHelper.summaryMessage(new OpenSearchRejectedExecutionException("rejected")), equalTo("Too many requests"));
+        assertThat(ExceptionsHelper.summaryMessage(new DensityRejectedExecutionException("rejected")), equalTo("Too many requests"));
     }
 
     public void testGroupBy() {
@@ -191,8 +191,8 @@ public class ExceptionsHelperTests extends OpenSearchTestCase {
         int i = 0;
         for (ShardOperationFailedException shardOperationFailedException : groupBy) {
             assertThat(shardOperationFailedException.index(), nullValue());
-            assertThat(shardOperationFailedException.getCause(), instanceOf(OpenSearchException.class));
-            OpenSearchException openSearchException = (OpenSearchException) shardOperationFailedException.getCause();
+            assertThat(shardOperationFailedException.getCause(), instanceOf(DensityException.class));
+            DensityException openSearchException = (DensityException) shardOperationFailedException.getCause();
             assertThat(openSearchException.getMessage(), equalTo(expectedErrors[i]));
             assertThat(openSearchException.getIndex().getName(), equalTo(expectedIndices[i++]));
         }
@@ -265,27 +265,27 @@ public class ExceptionsHelperTests extends OpenSearchTestCase {
         ExceptionsHelper.unwrapCorruption(e1);
     }
 
-    public void testUnwrapToOpenSearchException() {
-        // Test with OpenSearchException directly - should return the same exception
-        OpenSearchException directException = new OpenSearchException("direct error");
-        assertSame(directException, ExceptionsHelper.unwrapToOpenSearchException(directException));
+    public void testUnwrapToDensityException() {
+        // Test with DensityException directly - should return the same exception
+        DensityException directException = new DensityException("direct error");
+        assertSame(directException, ExceptionsHelper.unwrapToDensityException(directException));
 
-        // Test with nested OpenSearchException - should unwrap to it
-        OpenSearchException nestedOpenSearchException = new OpenSearchException("nested error");
-        RuntimeException wrapper = new RuntimeException("wrapper", nestedOpenSearchException);
-        assertSame(nestedOpenSearchException, ExceptionsHelper.unwrapToOpenSearchException(wrapper));
+        // Test with nested DensityException - should unwrap to it
+        DensityException nestedDensityException = new DensityException("nested error");
+        RuntimeException wrapper = new RuntimeException("wrapper", nestedDensityException);
+        assertSame(nestedDensityException, ExceptionsHelper.unwrapToDensityException(wrapper));
 
-        // Test with non-OpenSearchException - should return original
-        IllegalArgumentException nonOpenSearchException = new IllegalArgumentException("not opensearch");
-        assertSame(nonOpenSearchException, ExceptionsHelper.unwrapToOpenSearchException(nonOpenSearchException));
+        // Test with non-DensityException - should return original
+        IllegalArgumentException nonDensityException = new IllegalArgumentException("not density");
+        assertSame(nonDensityException, ExceptionsHelper.unwrapToDensityException(nonDensityException));
 
         // Test with multiple levels of nesting
-        OpenSearchException deepNested = new OpenSearchException("deep error");
+        DensityException deepNested = new DensityException("deep error");
         RuntimeException level1 = new RuntimeException("level 1", deepNested);
         RuntimeException level2 = new RuntimeException("level 2", level1);
-        assertSame(deepNested, ExceptionsHelper.unwrapToOpenSearchException(level2));
+        assertSame(deepNested, ExceptionsHelper.unwrapToDensityException(level2));
 
         // Test with null - should return null
-        assertThat(ExceptionsHelper.unwrapToOpenSearchException(null), nullValue());
+        assertThat(ExceptionsHelper.unwrapToDensityException(null), nullValue());
     }
 }

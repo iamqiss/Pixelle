@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.Version;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.Version;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -18,8 +18,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class ClasspathPluginIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class ClasspathPluginIT extends DensityIntegTestCase {
 
     public interface SampleExtension {}
 

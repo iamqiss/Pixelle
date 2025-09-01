@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.common.breaker.TestCircuitBreaker;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.breaker.TestCircuitBreaker;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.Streams;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ import java.util.function.Supplier;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public abstract class InboundPipelineTests extends OpenSearchTestCase {
+public abstract class InboundPipelineTests extends DensityTestCase {
 
     private static final int BYTE_THRESHOLD = 128 * 1024;
     public final ThreadContext threadContext = new ThreadContext(Settings.EMPTY);

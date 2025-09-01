@@ -2,15 +2,15 @@
 "Help - before 2.0.0":
   - skip:
       version: " - 7.10.99 , 2.0.0 - "
-      reason: "discovered_master added in OpenSearch 1.0.0, and renamed to discovered_cluster_manager in 2.0.0"
+      reason: "discovered_master added in Density 1.0.0, and renamed to discovered_cluster_manager in 2.0.0"
       features: node_selector
   - do:
       cat.health:
         help: true
       node_selector:
         # Only send request to nodes in <2.0 versions, especially during ':qa:mixed-cluster:v1.x.x#mixedClusterTest'.
-        # Because YAML REST test takes the minimum OpenSearch version in the cluster to apply the filter in 'skip' section,
-        # see OpenSearchClientYamlSuiteTestCase#initAndResetContext() for detail.
+        # Because YAML REST test takes the minimum Density version in the cluster to apply the filter in 'skip' section,
+        # see DensityClientYamlSuiteTestCase#initAndResetContext() for detail.
         # During 'mixedClusterTest', the cluster can be mixed with nodes in 1.x and 2.x versions,
         # so node_selector is required, and only filtering version in 'skip' is not enough.
         version: "1.0.0 - 1.4.99"
@@ -39,7 +39,7 @@
 "Help":
   - skip:
       version: " - 1.4.99"
-      reason: "discovered_cluster_manager is added in OpenSearch 2.0.0"
+      reason: "discovered_cluster_manager is added in Density 2.0.0"
   - do:
       cat.health:
         help: true
@@ -68,7 +68,7 @@
 "Empty cluster":
   - skip:
       version: " - 7.10.99"
-      reason: "discovered_master added in OpenSearch 1.0.0"
+      reason: "discovered_master added in Density 1.0.0"
   - do:
       cat.health: {}
 
@@ -99,7 +99,7 @@
 "With ts parameter":
   - skip:
       version: " - 7.10.99"
-      reason: "discovered_master added in OpenSearch 1.0.0"
+      reason: "discovered_master added in Density 1.0.0"
   - do:
       cat.health:
         ts: false

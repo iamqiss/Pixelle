@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,56 +25,56 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.bootstrap.BootstrapCheck;
-import org.opensearch.bootstrap.BootstrapContext;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine.Searcher;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.breaker.BreakerSettings;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.fs.FsProbe;
-import org.opensearch.plugins.CircuitBreakerPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.TelemetryAwarePlugin;
-import org.opensearch.plugins.TelemetryPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.telemetry.Telemetry;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.NodeRoles;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.bootstrap.BootstrapCheck;
+import org.density.bootstrap.BootstrapContext;
+import org.density.cluster.ClusterName;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine.Searcher;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.breaker.BreakerSettings;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.fs.FsProbe;
+import org.density.plugins.CircuitBreakerPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.TelemetryAwarePlugin;
+import org.density.plugins.TelemetryPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.telemetry.Telemetry;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.tracing.Tracer;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockHttpTransport;
+import org.density.test.NodeRoles;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -90,12 +90,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.util.FeatureFlags.TELEMETRY;
-import static org.opensearch.test.NodeRoles.addRoles;
-import static org.opensearch.test.NodeRoles.dataNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.util.FeatureFlags.TELEMETRY;
+import static org.density.test.NodeRoles.addRoles;
+import static org.density.test.NodeRoles.dataNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -103,7 +103,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 @LuceneTestCase.SuppressFileSystems(value = "ExtrasFS")
-public class NodeTests extends OpenSearchTestCase {
+public class NodeTests extends DensityTestCase {
 
     public static class CheckPlugin extends Plugin {
         public static final BootstrapCheck CHECK = context -> BootstrapCheck.BootstrapCheckResult.success();

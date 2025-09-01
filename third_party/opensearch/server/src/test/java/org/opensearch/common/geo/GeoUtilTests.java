@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedConsumer;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
-public class GeoUtilTests extends OpenSearchTestCase {
+public class GeoUtilTests extends DensityTestCase {
 
     public void testPrecisionParser() throws IOException {
         assertEquals(10, parsePrecision(builder -> builder.field("test", 10)));

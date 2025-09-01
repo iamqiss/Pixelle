@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,17 +27,17 @@
  * under the License.
  */
 
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import groovy.transform.CompileStatic
-import org.opensearch.gradle.OpenSearchJavaPlugin
+import org.density.gradle.DensityJavaPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.tasks.testing.Test
 
 /**
- * Configures the build to compile against OpenSearch's test framework and
+ * Configures the build to compile against Density's test framework and
  * run integration and unit tests. Use BuildPlugin if you want to build main
  * code as well as tests. */
 @CompileStatic
@@ -53,7 +53,7 @@ class StandaloneTestPlugin implements Plugin<Project> {
             t.mustRunAfter(project.tasks.getByName('precommit'))
         }
 
-        OpenSearchJavaPlugin.configureCompile(project)
+        DensityJavaPlugin.configureCompile(project)
         project.tasks.named('check').configure { it.dependsOn(project.tasks.named('test')) }
     }
 }

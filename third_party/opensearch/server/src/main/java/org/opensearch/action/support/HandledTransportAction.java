@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRequest;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.Writeable;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 /**
  * A TransportAction that self registers a handler into the transport service
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class HandledTransportAction<Request extends ActionRequest, Response extends ActionResponse> extends TransportAction<
     Request,
@@ -124,7 +124,7 @@ public abstract class HandledTransportAction<Request extends ActionRequest, Resp
     /**
      * Inner transport handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class TransportHandler implements TransportRequestHandler<Request> {
         @Override

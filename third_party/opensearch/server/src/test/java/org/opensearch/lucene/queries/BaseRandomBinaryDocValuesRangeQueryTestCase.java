@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.queries;
+package org.density.lucene.queries;
 
 import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.tests.search.BaseRangeFieldQueryTestCase;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Objects;
 
-import static org.opensearch.lucene.queries.BinaryDocValuesRangeQuery.QueryType.CONTAINS;
-import static org.opensearch.lucene.queries.BinaryDocValuesRangeQuery.QueryType.CROSSES;
-import static org.opensearch.lucene.queries.BinaryDocValuesRangeQuery.QueryType.INTERSECTS;
-import static org.opensearch.lucene.queries.BinaryDocValuesRangeQuery.QueryType.WITHIN;
+import static org.density.lucene.queries.BinaryDocValuesRangeQuery.QueryType.CONTAINS;
+import static org.density.lucene.queries.BinaryDocValuesRangeQuery.QueryType.CROSSES;
+import static org.density.lucene.queries.BinaryDocValuesRangeQuery.QueryType.INTERSECTS;
+import static org.density.lucene.queries.BinaryDocValuesRangeQuery.QueryType.WITHIN;
 
 public abstract class BaseRandomBinaryDocValuesRangeQueryTestCase extends BaseRangeFieldQueryTestCase {
 

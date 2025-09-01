@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.broadcast.node;
+package org.density.action.support.broadcast.node;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.action.support.broadcast.BroadcastShardOperationFailedException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.NodeShouldNotConnectException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.FailedNodeException;
+import org.density.action.IndicesRequest;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.TransportActions;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.action.support.broadcast.BroadcastShardOperationFailedException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.transport.TransportResponse;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.NodeShouldNotConnectException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  * @param <Response>             the response to the client request
  * @param <ShardOperationResult> per-shard operation results
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportBroadcastByNodeAction<
     Request extends BroadcastRequest<Request>,
@@ -276,7 +276,7 @@ public abstract class TransportBroadcastByNodeAction<
     /**
      * Asynchronous action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected class AsyncAction {
         private final Task task;
@@ -451,7 +451,7 @@ public abstract class TransportBroadcastByNodeAction<
     /**
      * Broadcast by a node's transport request handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class BroadcastByNodeTransportRequestHandler implements TransportRequestHandler<NodeRequest> {
         @Override
@@ -542,7 +542,7 @@ public abstract class TransportBroadcastByNodeAction<
     /**
      * A node request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class NodeRequest extends TransportRequest implements IndicesRequest {
         private String nodeId;
@@ -594,7 +594,7 @@ public abstract class TransportBroadcastByNodeAction<
     /**
      * A node response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class NodeResponse extends TransportResponse {
         protected String nodeId;
@@ -661,7 +661,7 @@ public abstract class TransportBroadcastByNodeAction<
      * Can be used for implementations of {@link #shardOperation(BroadcastRequest, ShardRouting) shardOperation} for
      * which there is no shard-level return value.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class EmptyResult implements Writeable {
         public static EmptyResult INSTANCE = new EmptyResult();

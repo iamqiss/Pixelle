@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.StopFilter;
@@ -70,35 +70,35 @@ import org.apache.lucene.tests.analysis.CannedTokenStream;
 import org.apache.lucene.tests.analysis.MockSynonymAnalyzer;
 import org.apache.lucene.tests.analysis.Token;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.CustomAnalyzer;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.StandardTokenizerFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.TextFieldMapper.TextFieldType;
-import org.opensearch.index.query.MatchPhrasePrefixQueryBuilder;
-import org.opensearch.index.query.MatchPhraseQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.CustomAnalyzer;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.StandardTokenizerFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.TextFieldMapper.TextFieldType;
+import org.density.index.query.MatchPhrasePrefixQueryBuilder;
+import org.density.index.query.MatchPhraseQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.search.MatchQuery;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.IndicesModule;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
 import org.junit.Before;
 
 import java.io.IOException;

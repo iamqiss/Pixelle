@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import java.security.BasicPermission;
 import java.security.Permission;
@@ -47,13 +47,13 @@ import java.util.Set;
  * Examples:
  * <p>
  * Allow permission to {@code java.util.List}
- * <pre>permission org.opensearch.script.ClassPermission "java.util.List";</pre>
+ * <pre>permission org.density.script.ClassPermission "java.util.List";</pre>
  * Allow permission to classes underneath {@code java.util} (and its subpackages such as {@code java.util.zip})
- * <pre>permission org.opensearch.script.ClassPermission "java.util.*";</pre>
+ * <pre>permission org.density.script.ClassPermission "java.util.*";</pre>
  * Allow permission to standard predefined list of basic classes (see list below)
- * <pre>permission org.opensearch.script.ClassPermission "&lt;&lt;STANDARD&gt;&gt;";</pre>
+ * <pre>permission org.density.script.ClassPermission "&lt;&lt;STANDARD&gt;&gt;";</pre>
  * Allow permission to all classes
- * <pre>permission org.opensearch.script.ClassPermission "*";</pre>
+ * <pre>permission org.density.script.ClassPermission "*";</pre>
  * <p>
  * Set of classes (allowed by special value <code>&lt;&lt;STANDARD&gt;&gt;</code>):
  * <ul>
@@ -86,7 +86,7 @@ import java.util.Set;
  *   <li>{@link org.joda.time.ReadableInstant}</li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ClassPermission extends BasicPermission {
     public static final String STANDARD = "<<STANDARD>>";

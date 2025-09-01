@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.BaseFuture;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.UncategorizedExecutionException;
-import org.opensearch.core.action.ActionListener;
+import org.density.DensityException;
+import org.density.common.action.ActionFuture;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.BaseFuture;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.UncategorizedExecutionException;
+import org.density.core.action.ActionListener;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Future adapter action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AdapterActionFuture<T, L> extends BaseFuture<T> implements ActionFuture<T>, ActionListener<L> {
 
@@ -53,7 +53,7 @@ public abstract class AdapterActionFuture<T, L> extends BaseFuture<T> implements
     public T actionGet() {
         try {
             return FutureUtils.get(this);
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             throw unwrapEsException(e);
         }
     }
@@ -77,7 +77,7 @@ public abstract class AdapterActionFuture<T, L> extends BaseFuture<T> implements
     public T actionGet(long timeout, TimeUnit unit) {
         try {
             return FutureUtils.get(this, timeout, unit);
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             throw unwrapEsException(e);
         }
     }
@@ -94,7 +94,7 @@ public abstract class AdapterActionFuture<T, L> extends BaseFuture<T> implements
 
     protected abstract T convert(L listenerResponse);
 
-    private static RuntimeException unwrapEsException(OpenSearchException esEx) {
+    private static RuntimeException unwrapEsException(DensityException esEx) {
         Throwable root = esEx.unwrapCause();
         if (root instanceof RuntimeException) {
             return (RuntimeException) root;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cli;
+package org.density.cli;
 
 import joptsimple.OptionSet;
 import org.apache.lucene.tests.util.TestRuleRestoreSystemProperties;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.env.Environment;
+import org.density.test.DensityTestCase;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 
-public class EvilEnvironmentAwareCommandTests extends OpenSearchTestCase {
+public class EvilEnvironmentAwareCommandTests extends DensityTestCase {
 
     @Rule
-    public TestRule restoreSystemProperties = new TestRuleRestoreSystemProperties("opensearch.path.conf");
+    public TestRule restoreSystemProperties = new TestRuleRestoreSystemProperties("density.path.conf");
 
     public void testEsPathConfNotSet() throws Exception {
         clearEsPathConf();
@@ -68,12 +68,12 @@ public class EvilEnvironmentAwareCommandTests extends OpenSearchTestCase {
         final TestEnvironmentAwareCommand command = new TestEnvironmentAwareCommand("test");
         final UserException e =
                 expectThrows(UserException.class, () -> command.mainWithoutErrorHandling(new String[0], new MockTerminal()));
-        assertThat(e, hasToString(containsString("the system property [opensearch.path.conf] must be set")));
+        assertThat(e, hasToString(containsString("the system property [density.path.conf] must be set")));
     }
 
-    @SuppressForbidden(reason =  "clears system property opensearch.path.conf as part of test setup")
+    @SuppressForbidden(reason =  "clears system property density.path.conf as part of test setup")
     private void clearEsPathConf() {
-        System.clearProperty("opensearch.path.conf");
+        System.clearProperty("density.path.conf");
     }
 
 }

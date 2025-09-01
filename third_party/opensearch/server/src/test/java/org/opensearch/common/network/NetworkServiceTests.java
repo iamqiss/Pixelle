@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.net.InetAddress;
 import java.util.Collections;
@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.is;
  * Tests for network service... try to keep them safe depending upon configuration
  * please don't actually bind to anything, just test the addresses.
  */
-public class NetworkServiceTests extends OpenSearchTestCase {
+public class NetworkServiceTests extends DensityTestCase {
 
     /**
      * ensure exception if we bind to multicast ipv4 address

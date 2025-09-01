@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.snapshots.mockstore.MockRepository;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.plugins.Plugin;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.snapshots.mockstore.MockRepository;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -59,7 +59,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.node.MockNode;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.util.BigArrays;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.indices.IndicesService;
+import org.density.node.MockNode;
+import org.density.plugins.Plugin;
+import org.density.script.ScriptService;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.internal.ReaderContext;
+import org.density.search.query.QueryPhase;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.randomFrom;
+import static org.density.test.DensityTestCase.randomIntBetween;
 
 public final class RandomCreateIndexGenerator {
 
@@ -75,8 +75,8 @@ public final class RandomCreateIndexGenerator {
 
     /**
      * Returns a {@link Settings} instance which include random values for
-     * {@link org.opensearch.cluster.metadata.IndexMetadata#SETTING_NUMBER_OF_SHARDS} and
-     * {@link org.opensearch.cluster.metadata.IndexMetadata#SETTING_NUMBER_OF_REPLICAS}
+     * {@link org.density.cluster.metadata.IndexMetadata#SETTING_NUMBER_OF_SHARDS} and
+     * {@link org.density.cluster.metadata.IndexMetadata#SETTING_NUMBER_OF_REPLICAS}
      */
     public static Settings randomIndexSettings() {
         Settings.Builder builder = Settings.builder();

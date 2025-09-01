@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.core.action.ActionListener;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import org.mockito.Mockito;
@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 
-public class TrackingSearchRequestProcessorWrapperTests extends OpenSearchTestCase {
+public class TrackingSearchRequestProcessorWrapperTests extends DensityTestCase {
     private SearchRequestProcessor mockProcessor;
     private TrackingSearchRequestProcessorWrapper wrapper;
     private PipelineProcessingContext context;

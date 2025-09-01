@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupBuilder;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.script.ScriptException;
+import org.density.DensityException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupBuilder;
+import org.density.painless.spi.Allowlist;
+import org.density.script.ScriptException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -60,16 +60,16 @@ public class DebugTests extends ScriptTestCase {
             () -> exec("Debug.explain(params.a)", singletonMap("a", dummy), true)
         );
         assertSame(dummy, e.getObjectToExplain());
-        assertThat(e.getHeaders(painlessLookup), hasEntry("opensearch.to_string", singletonList(dummy.toString())));
-        assertThat(e.getHeaders(painlessLookup), hasEntry("opensearch.java_class", singletonList("java.lang.Object")));
-        assertThat(e.getHeaders(painlessLookup), hasEntry("opensearch.painless_class", singletonList("java.lang.Object")));
+        assertThat(e.getHeaders(painlessLookup), hasEntry("density.to_string", singletonList(dummy.toString())));
+        assertThat(e.getHeaders(painlessLookup), hasEntry("density.java_class", singletonList("java.lang.Object")));
+        assertThat(e.getHeaders(painlessLookup), hasEntry("density.painless_class", singletonList("java.lang.Object")));
 
         // Null should be ok
         e = expectScriptThrows(PainlessExplainError.class, () -> exec("Debug.explain(null)"));
         assertNull(e.getObjectToExplain());
-        assertThat(e.getHeaders(painlessLookup), hasEntry("opensearch.to_string", singletonList("null")));
-        assertThat(e.getHeaders(painlessLookup), not(hasKey("opensearch.java_class")));
-        assertThat(e.getHeaders(painlessLookup), not(hasKey("opensearch.painless_class")));
+        assertThat(e.getHeaders(painlessLookup), hasEntry("density.to_string", singletonList("null")));
+        assertThat(e.getHeaders(painlessLookup), not(hasKey("density.java_class")));
+        assertThat(e.getHeaders(painlessLookup), not(hasKey("density.painless_class")));
 
         // You can't catch the explain exception
         e = expectScriptThrows(
@@ -89,17 +89,17 @@ public class DebugTests extends ScriptTestCase {
     public void testPainlessExplainErrorSerialization() throws IOException {
         Map<String, Object> params = singletonMap("a", "jumped over the moon");
         ScriptException e = expectThrows(ScriptException.class, () -> exec("Debug.explain(params.a)", params, true));
-        assertEquals(singletonList("jumped over the moon"), e.getMetadata("opensearch.to_string"));
-        assertEquals(singletonList("java.lang.String"), e.getMetadata("opensearch.java_class"));
-        assertEquals(singletonList("java.lang.String"), e.getMetadata("opensearch.painless_class"));
+        assertEquals(singletonList("jumped over the moon"), e.getMetadata("density.to_string"));
+        assertEquals(singletonList("java.lang.String"), e.getMetadata("density.java_class"));
+        assertEquals(singletonList("java.lang.String"), e.getMetadata("density.painless_class"));
 
         try (BytesStreamOutput out = new BytesStreamOutput()) {
             out.writeException(e);
             try (StreamInput in = out.bytes().streamInput()) {
-                OpenSearchException read = (ScriptException) in.readException();
-                assertEquals(singletonList("jumped over the moon"), read.getMetadata("opensearch.to_string"));
-                assertEquals(singletonList("java.lang.String"), read.getMetadata("opensearch.java_class"));
-                assertEquals(singletonList("java.lang.String"), read.getMetadata("opensearch.painless_class"));
+                DensityException read = (ScriptException) in.readException();
+                assertEquals(singletonList("jumped over the moon"), read.getMetadata("density.to_string"));
+                assertEquals(singletonList("java.lang.String"), read.getMetadata("density.java_class"));
+                assertEquals(singletonList("java.lang.String"), read.getMetadata("density.painless_class"));
             }
         }
     }

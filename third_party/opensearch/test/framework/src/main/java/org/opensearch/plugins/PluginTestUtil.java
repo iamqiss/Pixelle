@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -42,7 +42,7 @@ import java.util.Properties;
 public class PluginTestUtil {
 
     public static void writePluginProperties(Path pluginDir, String... stringProps) throws IOException {
-        writeProperties(pluginDir.resolve(PluginInfo.OPENSEARCH_PLUGIN_PROPERTIES), stringProps);
+        writeProperties(pluginDir.resolve(PluginInfo.DENSITY_PLUGIN_PROPERTIES), stringProps);
     }
 
     /** convenience method to write a plugin properties file */

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 import static java.lang.Math.min;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueNanos;
 import static org.hamcrest.Matchers.containsString;
 
-public class BulkByScrollTaskTests extends OpenSearchTestCase {
+public class BulkByScrollTaskTests extends DensityTestCase {
     public void testStatusHatesNegatives() {
         checkStatusNegatives(-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, "sliceId");
         checkStatusNegatives(null, -1, 0, 0, 0, 0, 0, 0, 0, 0, "total");

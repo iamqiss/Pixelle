@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.transport.TransportRequest;
+import org.density.ExceptionsHelper;
+import org.density.common.annotation.PublicApi;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
+import org.density.transport.TransportRequest;
 
 import java.util.List;
 
 /**
  * An listener for search, fetch and context events.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface SearchOperationListener {
@@ -74,7 +74,7 @@ public interface SearchOperationListener {
 
     /**
      * Executed before the slice execution in
-     * {@link org.opensearch.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)}.
+     * {@link org.density.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)}.
      * This will be called once per slice in concurrent search and only once in non-concurrent search.
      * @param searchContext the current search context
      */
@@ -82,7 +82,7 @@ public interface SearchOperationListener {
 
     /**
      * Executed if the slice execution in
-     * {@link org.opensearch.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)} failed.
+     * {@link org.density.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)} failed.
      * This will be called once per slice in concurrent search and only once in non-concurrent search.
      * @param searchContext the current search context
      */
@@ -90,12 +90,12 @@ public interface SearchOperationListener {
 
     /**
      * Executed after the slice execution in
-     * {@link org.opensearch.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)} successfully finished.
+     * {@link org.density.search.internal.ContextIndexSearcher#search(IndexSearcher.LeafReaderContextPartition[], org.apache.lucene.search.Weight, org.apache.lucene.search.Collector)} successfully finished.
      * This will be called once per slice in concurrent search and only once in non-concurrent search.
      * Note: this is not invoked if the slice execution failed.*
      * @param searchContext the current search context
      *
-     * @see #onFailedSliceExecution(org.opensearch.search.internal.SearchContext)
+     * @see #onFailedSliceExecution(org.density.search.internal.SearchContext)
      */
     default void onSliceExecution(SearchContext searchContext) {}
 

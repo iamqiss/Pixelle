@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.RamUsageEstimator;
 
 import java.util.Arrays;
 
-import static org.opensearch.common.util.PageCacheRecycler.LONG_PAGE_SIZE;
+import static org.density.common.util.PageCacheRecycler.LONG_PAGE_SIZE;
 
 /**
  * Double array abstraction able to support more than 2B values. This implementation slices data into fixed-sized blocks of
  * configurable length.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class BigDoubleArray extends AbstractBigArray implements DoubleArray {
 

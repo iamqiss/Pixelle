@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.coordination.LeaderChecker.LeaderCheckRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.telemetry.TestInMemoryMetricsRegistry;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.coordination.LeaderChecker.LeaderCheckRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.monitor.StatusInfo;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.EqualsHashCodeTestUtils.CopyFunction;
+import org.density.test.DensityTestCase;
+import org.density.test.telemetry.TestInMemoryMetricsRegistry;
+import org.density.test.transport.CapturingTransport;
+import org.density.test.transport.MockTransport;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_ACTION_NAME;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.transport.TransportService.HANDSHAKE_ACTION_NAME;
-import static org.opensearch.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_ACTION_NAME;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.transport.TransportService.HANDSHAKE_ACTION_NAME;
+import static org.density.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
@@ -81,7 +81,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.matchesRegex;
 import static org.hamcrest.Matchers.nullValue;
 
-public class LeaderCheckerTests extends OpenSearchTestCase {
+public class LeaderCheckerTests extends DensityTestCase {
 
     public void testFollowerBehaviour() {
         final DiscoveryNode leader1 = new DiscoveryNode("leader-1", buildNewFakeTransportAddress(), Version.CURRENT);
@@ -152,7 +152,7 @@ public class LeaderCheckerTests extends OpenSearchTestCase {
                         if (successResponse) {
                             handleResponse(requestId, Empty.INSTANCE);
                         } else {
-                            handleRemoteError(requestId, new OpenSearchException("simulated error"));
+                            handleRemoteError(requestId, new DensityException("simulated error"));
                         }
                     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.client.TimedRequest;
-import org.opensearch.client.Validatable;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
+import org.density.client.TimedRequest;
+import org.density.client.Validatable;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
 
 import java.util.Arrays;
 import java.util.List;

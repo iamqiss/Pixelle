@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,56 +25,56 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.cluster.decommission.DecommissionStatus;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.cluster.service.ClusterManagerServiceTests;
-import org.opensearch.cluster.service.FakeThreadPoolClusterManagerService;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.BaseFuture;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.node.Node;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RequestHandlerRegistry;
-import org.opensearch.transport.TestTransportChannel;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.cluster.decommission.DecommissionStatus;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.cluster.service.ClusterManagerServiceTests;
+import org.density.cluster.service.FakeThreadPoolClusterManagerService;
+import org.density.common.Randomness;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.BaseFuture;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.transport.TransportResponse;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.node.Node;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RequestHandlerRegistry;
+import org.density.transport.TestTransportChannel;
+import org.density.transport.Transport;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -100,13 +100,13 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.transport.TransportService.HANDSHAKE_ACTION_NAME;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.transport.TransportService.HANDSHAKE_ACTION_NAME;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class NodeJoinTests extends OpenSearchTestCase {
+public class NodeJoinTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
 
@@ -262,7 +262,7 @@ public class NodeJoinTests extends OpenSearchTestCase {
             clusterSettings,
             transportService,
             writableRegistry(),
-            OpenSearchAllocationTestCase.createAllocationService(Settings.EMPTY),
+            DensityAllocationTestCase.createAllocationService(Settings.EMPTY),
             clusterManagerService,
             () -> persistedStateRegistry.getPersistedState(PersistedStateType.LOCAL),
             r -> emptyList(),

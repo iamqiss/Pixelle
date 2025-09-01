@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.core.http.ProxyOptions;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.core.common.Strings;
+import org.density.common.settings.SettingsException;
+import org.density.core.common.Strings;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;

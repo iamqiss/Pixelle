@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.cluster.awarenesshealth.ClusterAwarenessAttributesHealth;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.cluster.awarenesshealth.ClusterAwarenessAttributesHealth;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.onlyRole;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class ClusterAwarenessHealthIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class ClusterAwarenessHealthIT extends DensityIntegTestCase {
 
     public void testAwarenessAttributeHealthSucceeded() {
         createIndex("test");

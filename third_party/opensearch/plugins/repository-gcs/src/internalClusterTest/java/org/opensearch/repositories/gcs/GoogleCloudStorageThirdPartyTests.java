@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.AbstractThirdPartyRepositoryTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.plugins.Plugin;
+import org.density.repositories.AbstractThirdPartyRepositoryTestCase;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Base64;
 import java.util.Collection;
@@ -86,6 +86,6 @@ public class GoogleCloudStorageThirdPartyTests extends AbstractThirdPartyReposit
         Settings.Builder settings = Settings.builder()
             .put("bucket", System.getProperty("test.google.bucket"))
             .put("base_path", System.getProperty("test.google.base", "/"));
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), repoName, "gcs", settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), repoName, "gcs", settings);
     }
 }

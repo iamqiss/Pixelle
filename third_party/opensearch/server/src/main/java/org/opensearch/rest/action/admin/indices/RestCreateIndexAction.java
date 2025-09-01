@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.index.mapper.MapperService;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,12 +50,12 @@ import java.util.Map;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /**
  * Transport action to create an index
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestCreateIndexAction extends BaseRestHandler {
 

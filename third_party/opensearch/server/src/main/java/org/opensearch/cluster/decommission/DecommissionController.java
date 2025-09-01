@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsAction;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.coordination.NodeRemovalClusterStateTaskExecutor;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.http.HttpStats;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityTimeoutException;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsAction;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.coordination.NodeRemovalClusterStateTaskExecutor;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.http.HttpStats;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -45,12 +45,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.clearExclusionsAndGetState;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.clearExclusionsAndGetState;
 
 /**
  * Helper controller class to remove list of nodes from the cluster and update status
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 public class DecommissionController {
@@ -138,7 +138,7 @@ public class DecommissionController {
                     nodesToBeDecommissioned.toString()
                 );
                 nodesRemovedListener.onFailure(
-                    new OpenSearchTimeoutException(
+                    new DensityTimeoutException(
                         "timed out [{}] while waiting for removal of decommissioned nodes [{}]",
                         timeout.toString(),
                         nodesToBeDecommissioned.toString()

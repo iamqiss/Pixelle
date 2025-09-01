@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.action;
+package org.density.painless.action;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.painless.action.PainlessExecuteAction.Request.ContextSetup;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchModule;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.painless.action.PainlessExecuteAction.Request.ContextSetup;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptType;
+import org.density.search.SearchModule;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

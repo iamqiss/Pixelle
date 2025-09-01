@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.ToXContentObject;
 
 import java.io.IOException;
 
 /**
- * Foundation class for all OpenSearch query builders
+ * Foundation class for all Density query builders
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface QueryBuilder extends NamedWriteable, ToXContentObject, Rewriteable<QueryBuilder> {

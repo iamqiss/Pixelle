@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
@@ -46,15 +46,15 @@ import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.PreConfiguredTokenizer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.PreConfiguredTokenizer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,12 +64,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class GetTermVectorsTests extends OpenSearchSingleNodeTestCase {
+public class GetTermVectorsTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
@@ -256,7 +256,7 @@ public class GetTermVectorsTests extends OpenSearchSingleNodeTestCase {
                         break;
                     }
                     default: {
-                        throw new OpenSearchException("unsupported encoding type");
+                        throw new DensityException("unsupported encoding type");
                     }
                 }
             }
@@ -320,7 +320,7 @@ public class GetTermVectorsTests extends OpenSearchSingleNodeTestCase {
                         break;
                     }
                     default: {
-                        throw new OpenSearchException("unsupported encoding type");
+                        throw new DensityException("unsupported encoding type");
                     }
                 }
             } else {

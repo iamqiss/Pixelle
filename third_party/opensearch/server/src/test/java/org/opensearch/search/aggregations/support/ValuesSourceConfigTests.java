@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.support.WriteRequest;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.query.QueryShardContext;
+import org.density.test.DensitySingleNodeTestCase;
 
 // TODO: This whole set of tests needs to be rethought.
-public class ValuesSourceConfigTests extends OpenSearchSingleNodeTestCase {
+public class ValuesSourceConfigTests extends DensitySingleNodeTestCase {
 
     public void testKeyword() throws Exception {
         IndexService indexService = createIndexWithSimpleMappings("index", Settings.EMPTY, "bytes", "type=keyword");

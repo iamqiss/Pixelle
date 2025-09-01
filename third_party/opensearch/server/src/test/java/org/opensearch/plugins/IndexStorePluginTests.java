@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.ShardLock;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.node.MockNode;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.env.ShardLock;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.indices.recovery.RecoveryState;
+import org.density.node.MockNode;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.test.hamcrest.RegexMatcher.matches;
+import static org.density.test.hamcrest.RegexMatcher.matches;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 
-public class IndexStorePluginTests extends OpenSearchTestCase {
+public class IndexStorePluginTests extends DensityTestCase {
 
     public static class BarStorePlugin extends Plugin implements IndexStorePlugin {
 
@@ -165,8 +165,8 @@ public class IndexStorePluginTests extends OpenSearchTestCase {
             hasToString(
                 matches(
                     "java.lang.IllegalStateException: Duplicate key store \\(attempted merging values "
-                        + "org.opensearch.index.store.FsDirectoryFactory@[\\w\\d]+ "
-                        + "and org.opensearch.index.store.FsDirectoryFactory@[\\w\\d]+\\)"
+                        + "org.density.index.store.FsDirectoryFactory@[\\w\\d]+ "
+                        + "and org.density.index.store.FsDirectoryFactory@[\\w\\d]+\\)"
                 )
             )
         );

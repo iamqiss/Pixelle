@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.stats;
+package org.density.action.admin.cluster.node.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.WeightedRoutingStats;
-import org.opensearch.cluster.service.ClusterManagerThrottlingStats;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.cache.service.NodeCacheStats;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.indices.breaker.AllCircuitBreakerStats;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.http.HttpStats;
-import org.opensearch.index.SegmentReplicationRejectionStats;
-import org.opensearch.index.stats.IndexingPressureStats;
-import org.opensearch.index.stats.ShardIndexingPressureStats;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.indices.NodeIndicesStats;
-import org.opensearch.ingest.IngestStats;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.os.OsStats;
-import org.opensearch.monitor.process.ProcessStats;
-import org.opensearch.node.AdaptiveSelectionStats;
-import org.opensearch.node.NodesResourceUsageStats;
-import org.opensearch.node.remotestore.RemoteStoreNodeStats;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
-import org.opensearch.repositories.RepositoriesStats;
-import org.opensearch.script.ScriptCacheStats;
-import org.opensearch.script.ScriptStats;
-import org.opensearch.search.backpressure.stats.SearchBackpressureStats;
-import org.opensearch.search.pipeline.SearchPipelineStats;
-import org.opensearch.tasks.TaskCancellationStats;
-import org.opensearch.threadpool.ThreadPoolStats;
-import org.opensearch.transport.TransportStats;
+import org.density.Version;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.WeightedRoutingStats;
+import org.density.cluster.service.ClusterManagerThrottlingStats;
+import org.density.common.Nullable;
+import org.density.common.cache.service.NodeCacheStats;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.indices.breaker.AllCircuitBreakerStats;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.DiscoveryStats;
+import org.density.http.HttpStats;
+import org.density.index.SegmentReplicationRejectionStats;
+import org.density.index.stats.IndexingPressureStats;
+import org.density.index.stats.ShardIndexingPressureStats;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.indices.NodeIndicesStats;
+import org.density.ingest.IngestStats;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.os.OsStats;
+import org.density.monitor.process.ProcessStats;
+import org.density.node.AdaptiveSelectionStats;
+import org.density.node.NodesResourceUsageStats;
+import org.density.node.remotestore.RemoteStoreNodeStats;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
+import org.density.repositories.RepositoriesStats;
+import org.density.script.ScriptCacheStats;
+import org.density.script.ScriptStats;
+import org.density.search.backpressure.stats.SearchBackpressureStats;
+import org.density.search.pipeline.SearchPipelineStats;
+import org.density.tasks.TaskCancellationStats;
+import org.density.threadpool.ThreadPoolStats;
+import org.density.transport.TransportStats;
 
 import java.io.IOException;
 import java.util.Map;
@@ -76,7 +76,7 @@ import java.util.Map;
 /**
  * Node statistics (dynamic, changes depending on when created).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeStats extends BaseNodeResponse implements ToXContentFragment {
 

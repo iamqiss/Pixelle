@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchPhaseResultsProcessor;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
-import org.opensearch.search.pipeline.SearchResponseProcessor;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.transport.client.Client;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.script.ScriptService;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchPhaseResultsProcessor;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.search.pipeline.SearchRequestProcessor;
+import org.density.search.pipeline.SearchResponseProcessor;
+import org.density.threadpool.Scheduler;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.Map;
@@ -30,14 +30,14 @@ import java.util.function.LongSupplier;
 /**
  * An extension point for {@link Plugin} implementation to add custom search pipeline processors.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface SearchPipelinePlugin {
     /**
      * Returns additional search pipeline request processor types added by this plugin.
      * <p>
      * The key of the returned {@link Map} is the unique name for the processor which is specified
-     * in pipeline configurations, and the value is a {@link org.opensearch.search.pipeline.Processor.Factory}
+     * in pipeline configurations, and the value is a {@link org.density.search.pipeline.Processor.Factory}
      * to create the processor from a given pipeline configuration.
      */
     default Map<String, Processor.Factory<SearchRequestProcessor>> getRequestProcessors(Parameters parameters) {
@@ -48,7 +48,7 @@ public interface SearchPipelinePlugin {
      * Returns additional search pipeline response processor types added by this plugin.
      * <p>
      * The key of the returned {@link Map} is the unique name for the processor which is specified
-     * in pipeline configurations, and the value is a {@link org.opensearch.search.pipeline.Processor.Factory}
+     * in pipeline configurations, and the value is a {@link org.density.search.pipeline.Processor.Factory}
      * to create the processor from a given pipeline configuration.
      */
     default Map<String, Processor.Factory<SearchResponseProcessor>> getResponseProcessors(Parameters parameters) {
@@ -59,7 +59,7 @@ public interface SearchPipelinePlugin {
      * Returns additional search pipeline search phase results processor types added by this plugin.
      * <p>
      * The key of the returned {@link Map} is the unique name for the processor which is specified
-     * in pipeline configurations, and the value is a {@link org.opensearch.search.pipeline.Processor.Factory}
+     * in pipeline configurations, and the value is a {@link org.density.search.pipeline.Processor.Factory}
      * to create the processor from a given pipeline configuration.
      */
     default Map<String, Processor.Factory<SearchPhaseResultsProcessor>> getSearchPhaseResultsProcessors(Parameters parameters) {
@@ -88,7 +88,7 @@ public interface SearchPipelinePlugin {
         public final AnalysisRegistry analysisRegistry;
 
         /**
-         * Allows processors to read headers set by {@link org.opensearch.action.support.ActionFilter}
+         * Allows processors to read headers set by {@link org.density.action.support.ActionFilter}
          * instances that have run while handling the current search.
          */
         public final ThreadContext threadContext;

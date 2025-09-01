@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.mapping;
+package org.density.indices.mapping;
 
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.index.IndexResponse;
+import org.density.core.action.ActionListener;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +43,11 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.emptyIterable;
 
-public class ConcurrentDynamicTemplateIT extends OpenSearchIntegTestCase {
+public class ConcurrentDynamicTemplateIT extends DensityIntegTestCase {
     // see #3544
     public void testConcurrentDynamicMapping() throws Exception {
         final String fieldName = "field";

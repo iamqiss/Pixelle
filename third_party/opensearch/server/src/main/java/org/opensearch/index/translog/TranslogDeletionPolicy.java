@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.lucene.util.Counter;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.Assertions;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.core.Assertions;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Defines a translog deletion policy
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class TranslogDeletionPolicy {

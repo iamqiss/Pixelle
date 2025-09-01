@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks.consumer;
+package org.density.tasks.consumer;
 
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.logging.OpenSearchLogMessage;
+import org.density.action.search.SearchShardTask;
+import org.density.common.logging.DensityLogMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,9 @@ import java.util.Map;
  * Search shard task information that will be extracted from Task and converted into
  * format that will be logged
  *
- * @opensearch.internal
+ * @density.internal
  */
-public final class SearchShardTaskDetailsLogMessage extends OpenSearchLogMessage {
+public final class SearchShardTaskDetailsLogMessage extends DensityLogMessage {
     SearchShardTaskDetailsLogMessage(SearchShardTask task) {
         super(prepareMap(task), message(task));
     }

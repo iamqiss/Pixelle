@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
 
-import org.opensearch.gradle.MavenFilteringHack
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.test.InternalClusterTestPlugin
-import org.opensearch.gradle.test.RestIntegTestTask
-import org.opensearch.gradle.test.rest.YamlRestTestPlugin
+import org.density.gradle.MavenFilteringHack
+import org.density.gradle.info.BuildParams
+import org.density.gradle.test.InternalClusterTestPlugin
+import org.density.gradle.test.RestIntegTestTask
+import org.density.gradle.test.rest.YamlRestTestPlugin
 
 import java.nio.file.Files
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 
-import static org.opensearch.gradle.PropertyNormalization.IGNORE_VALUE
+import static org.density.gradle.PropertyNormalization.IGNORE_VALUE
 
 /*
  * Licensed to Elasticsearch under one or more contributor
@@ -40,16 +40,16 @@ import static org.opensearch.gradle.PropertyNormalization.IGNORE_VALUE
  * specific language governing permissions and limitations
  * under the License.
  */
-apply plugin: 'opensearch.yaml-rest-test'
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.yaml-rest-test'
+apply plugin: 'density.internal-cluster-test'
 
 ext {
   guava_version = "33.4.0-jre"
 }
 
-opensearchplugin {
+densityplugin {
   description = 'The GCS repository plugin adds Google Cloud Storage support for repositories.'
-  classname = 'org.opensearch.repositories.gcs.GoogleCloudStoragePlugin'
+  classname = 'org.density.repositories.gcs.GoogleCloudStoragePlugin'
 }
 
 dependencies {
@@ -300,7 +300,7 @@ if (!gcsServiceAccount && !gcsBucket && !gcsBasePath) {
   gcsBasePath = 'integration_test'
   useFixture = true
 
-  apply plugin: 'opensearch.test.fixtures'
+  apply plugin: 'density.test.fixtures'
   testFixtures.useFixture(':test:fixtures:gcs-fixture', 'gcs-fixture')
   testFixtures.useFixture(':test:fixtures:gcs-fixture', 'gcs-fixture-third-party')
 
@@ -400,7 +400,7 @@ testClusters {
     plugin bundlePlugin.archiveFile
 
     // force large blob uploads by setting the threshold small, forcing this code path to be tested
-    systemProperty 'opensearch.repository_gcs.large_blob_threshold_byte_size', '256'
+    systemProperty 'density.repository_gcs.large_blob_threshold_byte_size', '256'
   }
 }
 

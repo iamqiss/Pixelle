@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.crypto.CryptoSettings;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.crypto.CryptoSettings;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * Metadata about encryption and decryption
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class CryptoMetadata implements Writeable {
@@ -112,24 +112,24 @@ public class CryptoMetadata implements Writeable {
                 String currentFieldName = parser.currentName();
                 if (KEY_PROVIDER_NAME_KEY.equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                        throw new OpenSearchParseException("failed to parse crypto metadata [{}], unknown type");
+                        throw new DensityParseException("failed to parse crypto metadata [{}], unknown type");
                     }
                     keyProviderName = parser.text();
                 } else if (KEY_PROVIDER_TYPE_KEY.equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                        throw new OpenSearchParseException("failed to parse crypto metadata [{}], unknown type");
+                        throw new DensityParseException("failed to parse crypto metadata [{}], unknown type");
                     }
                     keyProviderType = parser.text();
                 } else if (SETTINGS_KEY.equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                        throw new OpenSearchParseException("failed to parse crypto metadata [{}], unknown type");
+                        throw new DensityParseException("failed to parse crypto metadata [{}], unknown type");
                     }
                     settings = Settings.fromXContent(parser);
                 } else {
-                    throw new OpenSearchParseException("failed to parse crypto metadata, unknown field [{}]", currentFieldName);
+                    throw new DensityParseException("failed to parse crypto metadata, unknown field [{}]", currentFieldName);
                 }
             } else {
-                throw new OpenSearchParseException("failed to parse repositories");
+                throw new DensityParseException("failed to parse repositories");
             }
         }
         return new CryptoMetadata(keyProviderName, keyProviderType, settings);

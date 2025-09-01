@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import org.opensearch.index.translog.transfer.listener.FileTransferListener;
+import org.density.common.logging.Loggers;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import org.density.index.translog.transfer.listener.FileTransferListener;
 
 import java.io.IOException;
 import java.util.HashMap;

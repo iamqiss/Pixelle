@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.maxmind.geoip2.DatabaseReader;
 
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedSupplier;
+import org.density.common.io.PathUtils;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,13 +51,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class GeoIpProcessorTests extends OpenSearchTestCase {
+public class GeoIpProcessorTests extends DensityTestCase {
 
     public void testCity() throws Exception {
         GeoIpProcessor processor = new GeoIpProcessor(

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.io.stream.Writeable;
+import org.density.test.DensityTestCase;
 
-public class CreateRuleActionTests extends OpenSearchTestCase {
+public class CreateRuleActionTests extends DensityTestCase {
     public void testGetName() {
-        assertEquals("cluster:admin/opensearch/rule/_create", CreateRuleAction.NAME);
+        assertEquals("cluster:admin/density/rule/_create", CreateRuleAction.NAME);
     }
 
     public void testCreateResponseReader() {

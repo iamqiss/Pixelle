@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -37,15 +37,15 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.transport.Transports;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.AbstractRefCounted;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.transport.Transports;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -60,7 +60,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * A multi file writer utility for recovery
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiFileWriter extends AbstractRefCounted implements Releasable {
 
@@ -209,7 +209,7 @@ public class MultiFileWriter extends AbstractRefCounted implements Releasable {
     /**
      * A file chunk
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class FileChunk {
         final StoreFileMetadata md;

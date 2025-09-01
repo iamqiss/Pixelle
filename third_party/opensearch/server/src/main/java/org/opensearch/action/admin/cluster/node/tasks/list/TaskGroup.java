@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks.list;
+package org.density.action.admin.cluster.node.tasks.list;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.tasks.TaskInfo;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.tasks.TaskInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 /**
  * Information about a currently running task and all its subtasks.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TaskGroup implements ToXContentObject {
@@ -67,7 +67,7 @@ public class TaskGroup implements ToXContentObject {
     /**
      * Builder for the Task Group
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

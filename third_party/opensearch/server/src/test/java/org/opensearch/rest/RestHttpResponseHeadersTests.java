@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
-public class RestHttpResponseHeadersTests extends OpenSearchTestCase {
+public class RestHttpResponseHeadersTests extends DensityTestCase {
 
     /**
      * For requests to a valid REST endpoint using an unsupported HTTP method,

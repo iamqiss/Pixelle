@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.ScoreDoc;
@@ -39,19 +39,19 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
+import org.density.DensityException;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.completion.CompletionSuggestion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,7 +80,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * - field collapsing is supported, but whenever inner_hits are requested, they will be retrieved by each cluster locally after the fetch
  * phase, through the {@link ExpandSearchPhase}. Such inner_hits are not merged together as part of hits reduction.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // TODO it may make sense to integrate the remote clusters responses as a shard response in the initial search phase and ignore hits coming
 // from the remote clusters in the fetch phase. This would be identical to the removed QueryAndFetch strategy except that only the remote
@@ -284,8 +284,8 @@ final class SearchResponseMerger {
                 return shard.getShardId();
             }
             Throwable cause = failure.getCause();
-            if (cause instanceof OpenSearchException) {
-                OpenSearchException e = (OpenSearchException) cause;
+            if (cause instanceof DensityException) {
+                DensityException e = (DensityException) cause;
                 return e.getShardId();
             }
             return null;
@@ -414,7 +414,7 @@ final class SearchResponseMerger {
     /**
      * Holds a field search hit and doc
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class FieldDocAndSearchHit extends FieldDoc {
         private final SearchHit searchHit;
@@ -433,7 +433,7 @@ final class SearchResponseMerger {
      * make their ShardIds different, which is not the case if the index is really the same one from the same cluster, in which case we
      * need to look at the cluster alias and make sure to assign a different shardIndex based on that.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ShardIdAndClusterAlias implements Comparable<ShardIdAndClusterAlias> {
         private final ShardId shardId;

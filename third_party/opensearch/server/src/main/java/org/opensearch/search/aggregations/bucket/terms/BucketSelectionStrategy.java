@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.LocalBucketCountThresholds;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds.BucketOrdsEnum;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.bucket.LocalBucketCountThresholds;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds.BucketOrdsEnum;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.aggregations.InternalOrder.isKeyOrder;
+import static org.density.search.aggregations.InternalOrder.isKeyOrder;
 
 /**
  * Strategy for selecting top buckets from aggregation results.

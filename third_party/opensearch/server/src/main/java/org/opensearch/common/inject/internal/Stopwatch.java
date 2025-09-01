@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.logging.Logger;
 
@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Stopwatch {
     private static final Logger logger = Logger.getLogger(Stopwatch.class.getName());

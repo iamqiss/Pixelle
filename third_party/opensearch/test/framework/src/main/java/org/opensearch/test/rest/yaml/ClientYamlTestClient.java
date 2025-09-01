@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml;
+package org.density.test.rest.yaml;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -41,18 +41,18 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.client.NodeSelector;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilder;
-import org.opensearch.client.WarningsHandler;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.test.rest.yaml.restspec.ClientYamlSuiteRestApi;
-import org.opensearch.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
+import org.density.Version;
+import org.density.client.NodeSelector;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilder;
+import org.density.client.WarningsHandler;
+import org.density.common.CheckedSupplier;
+import org.density.test.rest.yaml.restspec.ClientYamlSuiteRestApi;
+import org.density.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -70,7 +70,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Used by {@link OpenSearchClientYamlSuiteTestCase} to execute REST requests according to the tests written in yaml suite files. Wraps a
+ * Used by {@link DensityClientYamlSuiteTestCase} to execute REST requests according to the tests written in yaml suite files. Wraps a
  * {@link RestClient} instance used to send the REST requests. Holds the {@link ClientYamlSuiteRestSpec} used to translate api calls into
  * REST calls.
  */

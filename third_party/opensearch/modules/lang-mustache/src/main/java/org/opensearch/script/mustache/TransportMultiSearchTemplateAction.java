@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.script.ScriptService;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.script.ScriptService;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.script.mustache.TransportSearchTemplateAction.convert;
+import static org.density.script.mustache.TransportSearchTemplateAction.convert;
 
 public class TransportMultiSearchTemplateAction extends HandledTransportAction<MultiSearchTemplateRequest, MultiSearchTemplateResponse> {
 

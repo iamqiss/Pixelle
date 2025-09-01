@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.index.Index;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.logging.Loggers;
+import org.density.core.index.Index;
 
 /**
  * A base class for new index components
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractIndexComponent implements IndexComponent {
 

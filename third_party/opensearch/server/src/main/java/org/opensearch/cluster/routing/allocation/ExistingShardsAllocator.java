@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingChangesObserver;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingChangesObserver;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.Nullable;
+import org.density.common.settings.Setting;
+import org.density.gateway.GatewayAllocator;
+import org.density.gateway.ShardsBatchGatewayAllocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ import java.util.List;
  * Searches for, and allocates, shards for which there is an existing on-disk copy somewhere in the cluster. The default implementation is
  * {@link GatewayAllocator} and {@link ShardsBatchGatewayAllocator}, but plugins can supply their own implementations too.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ExistingShardsAllocator {
 

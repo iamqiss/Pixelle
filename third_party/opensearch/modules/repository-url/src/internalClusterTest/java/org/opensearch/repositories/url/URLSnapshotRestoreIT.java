@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.url;
+package org.density.repositories.url;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.plugin.repository.url.URLRepositoryModulePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.plugin.repository.url.URLRepositoryModulePlugin;
+import org.density.plugins.Plugin;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class URLSnapshotRestoreIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class URLSnapshotRestoreIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions;
+package org.density.transport.grpc.proto.response.exceptions;
 
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.script.ScriptException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.ObjectMap;
+import org.density.script.ScriptException;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScriptExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class ScriptExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testMetadataToProtoWithoutPosition() {
         // Create a ScriptException without position information

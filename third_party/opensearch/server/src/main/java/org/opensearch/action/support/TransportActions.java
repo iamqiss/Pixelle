@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.shard.IllegalIndexShardStateException;
-import org.opensearch.index.shard.ShardNotFoundException;
+import org.density.ExceptionsHelper;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.UnavailableShardsException;
+import org.density.index.IndexNotFoundException;
+import org.density.index.shard.IllegalIndexShardStateException;
+import org.density.index.shard.ShardNotFoundException;
 
 /**
  * Utility class for transport actions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportActions {
 

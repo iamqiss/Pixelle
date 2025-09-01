@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +57,7 @@ import java.util.stream.StreamSupport;
  * A {@link RoutingNode} represents a cluster node associated with a single {@link DiscoveryNode} including all shards
  * that are hosted on that nodes. Each {@link RoutingNode} has a unique node id that can be used to identify the node.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RoutingNode implements Iterable<ShardRouting> {

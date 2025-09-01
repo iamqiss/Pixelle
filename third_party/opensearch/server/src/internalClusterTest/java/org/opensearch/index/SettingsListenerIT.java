@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.common.inject.AbstractModule;
+import org.density.common.inject.Module;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.OpenSearchIntegTestCase.Scope.SUITE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.DensityIntegTestCase.Scope.SUITE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 @ClusterScope(scope = SUITE, supportsDedicatedMasters = false, numDataNodes = 1, numClientNodes = 0)
-public class SettingsListenerIT extends OpenSearchIntegTestCase {
+public class SettingsListenerIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.KeywordField;
 import org.apache.lucene.index.DirectoryReader;
@@ -28,14 +28,14 @@ import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.Mockito.mock;
 
 /**
- * Field mapper for OpenSearch semantic version field type
+ * Field mapper for Density semantic version field type
  */
 public class SemanticVersionFieldMapperTests extends MapperTestCase {
 

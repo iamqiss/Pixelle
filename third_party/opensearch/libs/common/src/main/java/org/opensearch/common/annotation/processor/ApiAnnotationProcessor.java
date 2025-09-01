@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.annotation.processor;
+package org.density.common.annotation.processor;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.DeprecatedApi;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.Nullable;
+import org.density.common.annotation.DeprecatedApi;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -53,10 +53,10 @@ import java.util.Set;
  * </ul>
  */
 @InternalApi
-@SupportedAnnotationTypes("org.opensearch.common.annotation.*")
+@SupportedAnnotationTypes("org.density.common.annotation.*")
 public class ApiAnnotationProcessor extends AbstractProcessor {
     private static final String OPTION_CONTINUE_ON_FAILING_CHECKS = "continueOnFailingChecks";
-    private static final String OPENSEARCH_PACKAGE = "org.opensearch";
+    private static final String DENSITY_PACKAGE = "org.density";
 
     private final Set<Element> reported = new HashSet<>();
     private final Set<Element> validated = new HashSet<>();
@@ -75,7 +75,7 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment round) {
-        processingEnv.getMessager().printMessage(Kind.NOTE, "Processing OpenSearch Api annotations");
+        processingEnv.getMessager().printMessage(Kind.NOTE, "Processing Density Api annotations");
 
         if (processingEnv.getOptions().containsKey(OPTION_CONTINUE_ON_FAILING_CHECKS) == true) {
             reportFailureAs = Kind.NOTE;
@@ -117,7 +117,7 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
                 processingEnv.getMessager()
                     .printMessage(
                         reportFailureAs,
-                        "The type " + element + " has @PublicApi annotation with unparseable OpenSearch version: " + publicApi.since()
+                        "The type " + element + " has @PublicApi annotation with unparseable Density version: " + publicApi.since()
                     );
             }
         }
@@ -130,7 +130,7 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
                         reportFailureAs,
                         "The type "
                             + element
-                            + " has @DeprecatedApi annotation with unparseable OpenSearch version: "
+                            + " has @DeprecatedApi annotation with unparseable Density version: "
                             + deprecatedApi.since()
                     );
             }
@@ -299,7 +299,7 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
      */
     private boolean inspectable(Element element) {
         final PackageElement pckg = processingEnv.getElementUtils().getPackageOf(element);
-        return pckg.getQualifiedName().toString().startsWith(OPENSEARCH_PACKAGE);
+        return pckg.getQualifiedName().toString().startsWith(DENSITY_PACKAGE);
     }
 
     /**
@@ -314,9 +314,9 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
         }
 
         final PackageElement pckg = processingEnv.getElementUtils().getPackageOf(element);
-        final boolean belongsToOpenSearch = pckg.getQualifiedName().toString().startsWith(OPENSEARCH_PACKAGE);
+        final boolean belongsToDensity = pckg.getQualifiedName().toString().startsWith(DENSITY_PACKAGE);
 
-        if (!belongsToOpenSearch) {
+        if (!belongsToDensity) {
             reported.add(element);
 
             processingEnv.getMessager()
@@ -325,13 +325,13 @@ public class ApiAnnotationProcessor extends AbstractProcessor {
                     "The type "
                         + element
                         + " is not residing in "
-                        + OPENSEARCH_PACKAGE
+                        + DENSITY_PACKAGE
                         + ".* package "
-                        + "and should not be annotated as OpenSearch APIs."
+                        + "and should not be annotated as Density APIs."
                 );
         }
 
-        return belongsToOpenSearch;
+        return belongsToDensity;
     }
 
     /**

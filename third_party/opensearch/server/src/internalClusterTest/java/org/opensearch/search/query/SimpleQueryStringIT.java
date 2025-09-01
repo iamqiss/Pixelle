@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.Operator;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.index.query.SimpleQueryStringFlag;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.ExceptionsHelper;
+import org.density.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.Operator;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.index.query.SimpleQueryStringFlag;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchService;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -73,21 +73,21 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.simpleQueryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchService.INDICES_MAX_CLAUSE_COUNT_SETTING;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFirstHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.simpleQueryStringQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.INDICES_MAX_CLAUSE_COUNT_SETTING;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertFirstHit;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -95,7 +95,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests for the {@code simple_query_string} query
  */
-public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SimpleQueryStringIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static int CLUSTER_MAX_CLAUSE_COUNT;
 
@@ -466,7 +466,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testBasicAllQuery() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
@@ -491,7 +491,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testWithDate() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
@@ -519,7 +519,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testWithLotsOfTypes() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
@@ -551,12 +551,12 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testDocWithAllTypes() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
         List<IndexRequestBuilder> reqs = new ArrayList<>();
-        String docBody = copyToStringFromClasspath("/org/opensearch/search/query/all-example-document.json");
+        String docBody = copyToStringFromClasspath("/org/density/search/query/all-example-document.json");
         reqs.add(client().prepareIndex("test").setId("1").setSource(docBody, MediaTypeRegistry.JSON));
         indexRandom(true, false, reqs);
         indexRandomForConcurrentSearch("test");
@@ -597,7 +597,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testKeywordWithWhitespace() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
@@ -618,7 +618,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testAllFieldsWithSpecifiedLeniency() throws IOException {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON).get();
         ensureGreen("test");
 
@@ -665,7 +665,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testFieldAlias() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         assertAcked(prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON));
         ensureGreen("test");
 
@@ -684,7 +684,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testFieldAliasWithWildcardField() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         assertAcked(prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON));
         ensureGreen("test");
 
@@ -703,7 +703,7 @@ public class SimpleQueryStringIT extends ParameterizedStaticSettingsOpenSearchIn
     }
 
     public void testFieldAliasOnDisallowedFieldType() throws Exception {
-        String indexBody = copyToStringFromClasspath("/org/opensearch/search/query/all-query-index.json");
+        String indexBody = copyToStringFromClasspath("/org/density/search/query/all-query-index.json");
         assertAcked(prepareCreate("test").setSource(indexBody, MediaTypeRegistry.JSON));
         ensureGreen("test");
 

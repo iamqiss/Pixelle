@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.uid;
+package org.density.common.lucene.uid;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
@@ -41,16 +41,16 @@ import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndSeqNo;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndSeqNo;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
 
 import java.io.IOException;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /** Utility class to do efficient primary-key (only 1 doc contains the
  *  given term) lookups by segment, re-using the enums.  This class is
@@ -62,7 +62,7 @@ import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
  *  {@link org.apache.lucene.index.IndexReader#getReaderCacheHelper() reader cache helper}
  *  rather than the {@link LeafReader#getCoreCacheHelper() core cache helper}.
  *
- *  @opensearch.internal
+ *  @density.internal
  */
 final class PerThreadIDVersionAndSeqNoLookup {
     // TODO: do we really need to store all this stuff? some if it might not speed up anything.

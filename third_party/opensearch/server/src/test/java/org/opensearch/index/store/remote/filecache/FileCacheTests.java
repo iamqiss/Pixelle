@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.breaker.TestCircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.index.store.remote.utils.FileTypeUtils;
-import org.opensearch.node.Node;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SetOnce;
+import org.density.common.SuppressForbidden;
+import org.density.common.breaker.TestCircuitBreaker;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.env.NodeEnvironment;
+import org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.index.store.remote.utils.FileTypeUtils;
+import org.density.node.Node;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-public class FileCacheTests extends OpenSearchTestCase {
+public class FileCacheTests extends DensityTestCase {
     // need concurrency level to be static to make these tests more deterministic because capacity per segment is dependent on
     // (total capacity) / (concurrency level) so having high concurrency level might trigger early evictions which is tolerable in real life
     // but fatal to these tests

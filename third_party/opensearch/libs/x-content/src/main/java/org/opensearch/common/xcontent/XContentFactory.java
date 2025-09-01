@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.smile.SmileXContent;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.smile.SmileXContent;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,7 +48,7 @@ import java.io.OutputStream;
 public class XContentFactory {
 
     /**
-     * Returns a content builder using JSON format ({@link org.opensearch.common.xcontent.XContentType#JSON}.
+     * Returns a content builder using JSON format ({@link org.density.common.xcontent.XContentType#JSON}.
      */
     public static XContentBuilder jsonBuilder() throws IOException {
         return MediaTypeRegistry.contentBuilder(XContentType.JSON);
@@ -62,7 +62,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using SMILE format ({@link org.opensearch.common.xcontent.XContentType#SMILE}.
+     * Returns a content builder using SMILE format ({@link org.density.common.xcontent.XContentType#SMILE}.
      */
     public static XContentBuilder smileBuilder() throws IOException {
         return MediaTypeRegistry.contentBuilder(XContentType.SMILE);
@@ -76,7 +76,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using YAML format ({@link org.opensearch.common.xcontent.XContentType#YAML}.
+     * Returns a content builder using YAML format ({@link org.density.common.xcontent.XContentType#YAML}.
      */
     public static XContentBuilder yamlBuilder() throws IOException {
         return MediaTypeRegistry.contentBuilder(XContentType.YAML);
@@ -90,7 +90,7 @@ public class XContentFactory {
     }
 
     /**
-     * Returns a content builder using CBOR format ({@link org.opensearch.common.xcontent.XContentType#CBOR}.
+     * Returns a content builder using CBOR format ({@link org.density.common.xcontent.XContentType#CBOR}.
      */
     public static XContentBuilder cborBuilder() throws IOException {
         return MediaTypeRegistry.contentBuilder(XContentType.CBOR);

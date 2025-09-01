@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree;
+package org.density.index.compositeindex.datacube.startree;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.index.compositeindex.datacube.DataCubeDateTimeUnit;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Rounding;
+import org.density.index.compositeindex.datacube.DataCubeDateTimeUnit;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.index.compositeindex.datacube.DateDimension.DateTimeUnitComparator.ORDERED_DATE_TIME_UNIT;
+import static org.density.index.compositeindex.datacube.DateDimension.DateTimeUnitComparator.ORDERED_DATE_TIME_UNIT;
 
-public class DateDimensionTests extends OpenSearchTestCase {
+public class DateDimensionTests extends DensityTestCase {
     public void testDateDimension() {
         String field = "timestamp";
         List<DateTimeUnitRounding> intervals = Arrays.asList(

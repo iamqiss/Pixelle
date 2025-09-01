@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.FieldCollapse;
-import org.opensearch.search.collapse.CollapseBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.FieldCollapse;
+import org.density.search.collapse.CollapseBuilder;
 
 import java.io.IOException;
 
 /**
- * Utility class for converting CollapseBuilder Protocol Buffers to OpenSearch objects.
+ * Utility class for converting CollapseBuilder Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of field collapse
- * specifications into their corresponding OpenSearch CollapseBuilder implementations for
+ * specifications into their corresponding Density CollapseBuilder implementations for
  * search result field collapsing and grouping.
  */
 public class CollapseBuilderProtoUtils {
@@ -26,7 +26,7 @@ public class CollapseBuilderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer FieldCollapse to an OpenSearch CollapseBuilder.
+     * Converts a Protocol Buffer FieldCollapse to an Density CollapseBuilder.
      * Similar to {@link CollapseBuilder#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates a properly configured
      * CollapseBuilder with the appropriate field, max concurrent group searches,

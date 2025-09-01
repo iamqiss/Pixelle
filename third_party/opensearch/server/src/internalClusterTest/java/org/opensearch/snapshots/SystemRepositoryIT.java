@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.nio.file.Path;
 
-import static org.opensearch.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
+import static org.density.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SystemRepositoryIT extends AbstractSnapshotIntegTestCase {
     protected Path absolutePath;
     final String systemRepoName = "system-repo-name";

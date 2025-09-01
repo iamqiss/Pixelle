@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.Table;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.rest.action.list.RestIndicesListAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.Version;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.pagination.PageToken;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.Table;
+import org.density.common.UUIDs;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.rest.action.list.RestIndicesListAction;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RestIndicesActionTests extends OpenSearchTestCase {
+public class RestIndicesActionTests extends DensityTestCase {
 
     final Map<String, Settings> indicesSettings = new LinkedHashMap<>();
     final Map<String, IndexMetadata> indicesMetadatas = new LinkedHashMap<>();
@@ -259,8 +259,8 @@ public class RestIndicesActionTests extends OpenSearchTestCase {
         long knownTs = 1710000000000L;
         IndexStats indexStats = mock(IndexStats.class);
         CommonStats commonStats = mock(CommonStats.class);
-        org.opensearch.index.shard.IndexingStats indexingStats = mock(org.opensearch.index.shard.IndexingStats.class);
-        org.opensearch.index.shard.IndexingStats.Stats stats = mock(org.opensearch.index.shard.IndexingStats.Stats.class);
+        org.density.index.shard.IndexingStats indexingStats = mock(org.density.index.shard.IndexingStats.class);
+        org.density.index.shard.IndexingStats.Stats stats = mock(org.density.index.shard.IndexingStats.Stats.class);
         when(indexStats.getTotal()).thenReturn(commonStats);
         when(indexStats.getPrimaries()).thenReturn(commonStats);
         when(commonStats.getIndexing()).thenReturn(indexingStats);
@@ -272,7 +272,7 @@ public class RestIndicesActionTests extends OpenSearchTestCase {
         Map<String, Settings> testSettings = new LinkedHashMap<>();
         testSettings.put(testIndex, Settings.EMPTY);
         Map<String, IndexMetadata> testMetadatas = new LinkedHashMap<>();
-        Settings indexSettings = Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT).build();
+        Settings indexSettings = Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT).build();
         testMetadatas.put(
             testIndex,
             IndexMetadata.builder(testIndex).settings(indexSettings).numberOfShards(1).numberOfReplicas(0).build()

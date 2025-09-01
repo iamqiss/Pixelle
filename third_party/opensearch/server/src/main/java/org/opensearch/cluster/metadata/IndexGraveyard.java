@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.Version;
+import org.density.cluster.Diff;
+import org.density.cluster.NamedDiff;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -69,7 +69,7 @@ import java.util.Objects;
  * tombstones remain in the cluster state for a fixed period of time, after which
  * they are purged.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexGraveyard implements Metadata.Custom {
@@ -193,7 +193,7 @@ public final class IndexGraveyard implements Metadata.Custom {
     /**
      * A class to build an IndexGraveyard.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Builder {
@@ -281,7 +281,7 @@ public final class IndexGraveyard implements Metadata.Custom {
     /**
      * A class representing a diff of two IndexGraveyard objects.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class IndexGraveyardDiff implements NamedDiff<Metadata.Custom> {
 
@@ -370,7 +370,7 @@ public final class IndexGraveyard implements Metadata.Custom {
     /**
      * An individual tombstone entry for representing a deleted index.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Tombstone implements ToXContentObject, Writeable {
@@ -471,7 +471,7 @@ public final class IndexGraveyard implements Metadata.Custom {
         /**
          * A builder for building tombstone entries.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static final class Builder {
             private Index index;

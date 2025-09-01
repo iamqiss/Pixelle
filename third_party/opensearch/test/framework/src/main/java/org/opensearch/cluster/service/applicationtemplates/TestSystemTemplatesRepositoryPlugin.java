@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.service.applicationtemplates;
+package org.density.cluster.service.applicationtemplates;
 
-import org.opensearch.cluster.applicationtemplates.SystemTemplate;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateLoader;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateRepository;
-import org.opensearch.cluster.applicationtemplates.SystemTemplatesPlugin;
-import org.opensearch.cluster.applicationtemplates.TemplateRepositoryMetadata;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.plugins.Plugin;
+import org.density.cluster.applicationtemplates.SystemTemplate;
+import org.density.cluster.applicationtemplates.SystemTemplateLoader;
+import org.density.cluster.applicationtemplates.SystemTemplateMetadata;
+import org.density.cluster.applicationtemplates.SystemTemplateRepository;
+import org.density.cluster.applicationtemplates.SystemTemplatesPlugin;
+import org.density.cluster.applicationtemplates.TemplateRepositoryMetadata;
+import org.density.core.common.bytes.BytesReference;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

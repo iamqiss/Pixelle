@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.action;
+package org.density.common.action;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * An extension to {@link Future} allowing for simplified "get" operations.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ActionFuture<T> extends Future<T> {

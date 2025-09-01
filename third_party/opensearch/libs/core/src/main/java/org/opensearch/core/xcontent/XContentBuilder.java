@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -169,7 +169,7 @@ public final class XContentBuilder implements Closeable, Flushable {
     /**
      * The writer interface for the serializable content builder
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface Writer {

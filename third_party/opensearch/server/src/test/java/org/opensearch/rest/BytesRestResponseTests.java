@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.ResourceAlreadyExistsException;
+import org.density.ResourceNotFoundException;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.RemoteTransportException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.OpenSearchExceptionTests.assertDeepEquals;
+import static org.density.DensityExceptionTests.assertDeepEquals;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class BytesRestResponseTests extends OpenSearchTestCase {
+public class BytesRestResponseTests extends DensityTestCase {
 
     class UnknownException extends Exception {
         UnknownException(final String message, final Throwable cause) {
@@ -88,10 +88,10 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
         RestRequest request = new FakeRestRequest();
         RestChannel channel = new SimpleExceptionRestChannel(request);
 
-        Exception t = new OpenSearchException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
+        Exception t = new DensityException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
         BytesRestResponse response = new BytesRestResponse(channel, t);
         String text = response.content().utf8ToString();
-        assertThat(text, containsString("OpenSearchException[an error occurred reading data]"));
+        assertThat(text, containsString("DensityException[an error occurred reading data]"));
         assertThat(text, not(containsString("FileNotFoundException")));
         assertThat(text, not(containsString("/foo/bar")));
         assertThat(text, not(containsString("error_trace")));
@@ -101,14 +101,14 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
         RestRequest request = new FakeRestRequest();
         RestChannel channel = new DetailedExceptionRestChannel(request);
 
-        Exception t = new OpenSearchException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
+        Exception t = new DensityException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
         BytesRestResponse response = new BytesRestResponse(channel, t);
         String text = response.content().utf8ToString();
         assertThat(text, containsString("{\"type\":\"exception\",\"reason\":\"an error occurred reading data\"}"));
         assertThat(text, containsString("{\"type\":\"file_not_found_exception\",\"reason\":\"/foo/bar\"}"));
     }
 
-    public void testNonOpenSearchExceptionIsNotShownAsSimpleMessage() throws Exception {
+    public void testNonDensityExceptionIsNotShownAsSimpleMessage() throws Exception {
         RestRequest request = new FakeRestRequest();
         RestChannel channel = new SimpleExceptionRestChannel(request);
 
@@ -131,14 +131,14 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
         String text = response.content().utf8ToString();
         assertThat(text, containsString("\"type\":\"unknown_exception\",\"reason\":\"an error occurred reading data\""));
         assertThat(text, containsString("{\"type\":\"file_not_found_exception\""));
-        assertThat(text, containsString("\"stack_trace\":\"OpenSearchException[an error occurred reading data]"));
+        assertThat(text, containsString("\"stack_trace\":\"DensityException[an error occurred reading data]"));
     }
 
     public void testGuessRootCause() throws IOException {
         RestRequest request = new FakeRestRequest();
         RestChannel channel = new DetailedExceptionRestChannel(request);
         {
-            Exception e = new OpenSearchException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
+            Exception e = new DensityException("an error occurred reading data", new FileNotFoundException("/foo/bar"));
             BytesRestResponse response = new BytesRestResponse(channel, e);
             String text = response.content().utf8ToString();
             assertThat(text, containsString("{\"root_cause\":[{\"type\":\"exception\",\"reason\":\"an error occurred reading data\"}]"));
@@ -205,7 +205,7 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
     public void testResponseWhenInternalServerError() throws IOException {
         final RestRequest request = new FakeRestRequest();
         final RestChannel channel = new DetailedExceptionRestChannel(request);
-        final BytesRestResponse response = new BytesRestResponse(channel, new OpenSearchException("simulated"));
+        final BytesRestResponse response = new BytesRestResponse(channel, new DensityException("simulated"));
         assertNotNull(response.content());
         final String content = response.content().utf8ToString();
         assertThat(content, containsString("\"type\":\"exception\""));
@@ -217,7 +217,7 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
         final boolean detailed = randomBoolean();
 
         Exception original;
-        OpenSearchException cause = null;
+        DensityException cause = null;
         String reason;
         String type = "exception";
         RestStatus status = RestStatus.INTERNAL_SERVER_ERROR;
@@ -225,34 +225,34 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
 
         switch (randomIntBetween(0, 5)) {
             case 0:
-                original = new OpenSearchException("OpenSearchException without cause");
+                original = new DensityException("DensityException without cause");
                 if (detailed) {
                     addHeadersOrMetadata = randomBoolean();
-                    reason = "OpenSearchException without cause";
+                    reason = "DensityException without cause";
                 } else {
-                    reason = "OpenSearchException[OpenSearchException without cause]";
+                    reason = "DensityException[DensityException without cause]";
                 }
                 break;
             case 1:
-                original = new OpenSearchException("OpenSearchException with a cause", new FileNotFoundException("missing"));
+                original = new DensityException("DensityException with a cause", new FileNotFoundException("missing"));
                 if (detailed) {
                     addHeadersOrMetadata = randomBoolean();
                     type = "exception";
-                    reason = "OpenSearchException with a cause";
-                    cause = new OpenSearchException("OpenSearch exception [type=file_not_found_exception, reason=missing]");
+                    reason = "DensityException with a cause";
+                    cause = new DensityException("Density exception [type=file_not_found_exception, reason=missing]");
                 } else {
-                    reason = "OpenSearchException[OpenSearchException with a cause]";
+                    reason = "DensityException[DensityException with a cause]";
                 }
                 break;
             case 2:
-                original = new ResourceNotFoundException("OpenSearchException with custom status");
+                original = new ResourceNotFoundException("DensityException with custom status");
                 status = RestStatus.NOT_FOUND;
                 if (detailed) {
                     addHeadersOrMetadata = randomBoolean();
                     type = "resource_not_found_exception";
-                    reason = "OpenSearchException with custom status";
+                    reason = "DensityException with custom status";
                 } else {
-                    reason = "ResourceNotFoundException[OpenSearchException with custom status]";
+                    reason = "ResourceNotFoundException[DensityException with custom status]";
                 }
                 break;
             case 3:
@@ -261,19 +261,19 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
                     "remote",
                     address,
                     "action",
-                    new ResourceAlreadyExistsException("OpenSearchWrapperException with a cause that has a custom status")
+                    new ResourceAlreadyExistsException("DensityWrapperException with a cause that has a custom status")
                 );
                 status = RestStatus.BAD_REQUEST;
                 if (detailed) {
                     type = "resource_already_exists_exception";
-                    reason = "OpenSearchWrapperException with a cause that has a custom status";
+                    reason = "DensityWrapperException with a cause that has a custom status";
                 } else {
                     reason = "RemoteTransportException[[remote][" + address.toString() + "][action]]";
                 }
                 break;
             case 4:
                 original = new RemoteTransportException(
-                    "OpenSearchWrapperException with a cause that has a special treatment",
+                    "DensityWrapperException with a cause that has a special treatment",
                     new IllegalArgumentException("wrong")
                 );
                 status = RestStatus.BAD_REQUEST;
@@ -281,36 +281,36 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
                     type = "illegal_argument_exception";
                     reason = "wrong";
                 } else {
-                    reason = "RemoteTransportException[[OpenSearchWrapperException with a cause that has a special treatment]]";
+                    reason = "RemoteTransportException[[DensityWrapperException with a cause that has a special treatment]]";
                 }
                 break;
             case 5:
                 status = randomFrom(RestStatus.values());
-                original = new OpenSearchStatusException("OpenSearchStatusException with random status", status);
+                original = new DensityStatusException("DensityStatusException with random status", status);
                 if (detailed) {
                     addHeadersOrMetadata = randomBoolean();
                     type = "status_exception";
-                    reason = "OpenSearchStatusException with random status";
+                    reason = "DensityStatusException with random status";
                 } else {
-                    reason = "OpenSearchStatusException[OpenSearchStatusException with random status]";
+                    reason = "DensityStatusException[DensityStatusException with random status]";
                 }
                 break;
             default:
                 throw new UnsupportedOperationException("Failed to generate random exception");
         }
 
-        String message = "OpenSearch exception [type=" + type + ", reason=" + reason + "]";
-        OpenSearchStatusException expected = new OpenSearchStatusException(message, status, cause);
+        String message = "Density exception [type=" + type + ", reason=" + reason + "]";
+        DensityStatusException expected = new DensityStatusException(message, status, cause);
 
         if (addHeadersOrMetadata) {
-            OpenSearchException originalException = ((OpenSearchException) original);
+            DensityException originalException = ((DensityException) original);
             if (randomBoolean()) {
                 originalException.addHeader("foo", "bar", "baz");
                 expected.addHeader("foo", "bar", "baz");
             }
             if (randomBoolean()) {
-                originalException.addMetadata("opensearch.metadata_0", "0");
-                expected.addMetadata("opensearch.metadata_0", "0");
+                originalException.addMetadata("density.metadata_0", "0");
+                expected.addMetadata("density.metadata_0", "0");
             }
             if (randomBoolean()) {
                 String resourceType = randomAlphaOfLength(5);
@@ -332,7 +332,7 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
 
         BytesRestResponse response = new BytesRestResponse(channel, original);
 
-        OpenSearchException parsedError;
+        DensityException parsedError;
         try (XContentParser parser = createParser(xContentType.xContent(), response.content())) {
             parsedError = BytesRestResponse.errorFromXContent(parser);
             assertNull(parser.nextToken());
@@ -354,16 +354,16 @@ public class BytesRestResponseTests extends OpenSearchTestCase {
                 }
             }
         });
-        assertEquals("Failed to parse opensearch status exception: no exception was found", e.getMessage());
+        assertEquals("Failed to parse density status exception: no exception was found", e.getMessage());
     }
 
-    public static class WithHeadersException extends OpenSearchException {
+    public static class WithHeadersException extends DensityException {
 
         WithHeadersException() {
             super("");
             this.addHeader("n1", "v11", "v12");
             this.addHeader("n2", "v21", "v22");
-            this.addMetadata("opensearch.test", "value1", "value2");
+            this.addMetadata("density.test", "value1", "value2");
         }
     }
 

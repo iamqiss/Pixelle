@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.transport.InboundDecoderTests;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.transport.InboundDecoderTests;
 
 import java.io.IOException;
 import java.util.Collections;

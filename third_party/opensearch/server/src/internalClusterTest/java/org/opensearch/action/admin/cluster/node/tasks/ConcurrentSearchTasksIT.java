@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.FeatureFlagSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.SearchService;
-import org.opensearch.tasks.TaskInfo;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.search.SearchAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.FeatureFlagSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.index.query.QueryBuilders;
+import org.density.search.SearchService;
+import org.density.tasks.TaskInfo;
 import org.hamcrest.MatcherAssert;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 

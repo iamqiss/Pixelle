@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff;
+package org.density.client.sniff;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.opensearch.client.Node;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilder;
+import org.density.client.Node;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilder;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -55,7 +55,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Class responsible for sniffing nodes from some source (default is opensearch itself) and setting them to a provided instance of
+ * Class responsible for sniffing nodes from some source (default is density itself) and setting them to a provided instance of
  * {@link RestClient}. Must be created via {@link SnifferBuilder}, which allows to set all of the different options or rely on defaults.
  * A background task fetches the nodes through the {@link NodesSniffer} and sets them to the {@link RestClient} instance.
  * It is possible to perform sniffing on failure by creating a {@link SniffOnFailureListener} and providing it as an argument to
@@ -65,7 +65,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Sniffer implements Closeable {
 
     private static final Log logger = LogFactory.getLog(Sniffer.class);
-    private static final String SNIFFER_THREAD_NAME = "opensearch_rest_client_sniffer";
+    private static final String SNIFFER_THREAD_NAME = "density_rest_client_sniffer";
 
     private final NodesSniffer nodesSniffer;
     private final RestClient restClient;

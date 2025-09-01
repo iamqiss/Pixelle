@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsAction;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.transport.TransportLoggerTests;
+import org.density.Version;
+import org.density.action.admin.cluster.stats.ClusterStatsAction;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.transport.TransportLoggerTests;
 
 import java.io.IOException;
 
-@TestLogging(value = "org.opensearch.transport.TransportLogger:trace", reason = "to ensure we log network events on TRACE level")
+@TestLogging(value = "org.density.transport.TransportLogger:trace", reason = "to ensure we log network events on TRACE level")
 public class NativeTransportLoggerTests extends TransportLoggerTests {
 
     public BytesReference buildRequest() throws IOException {

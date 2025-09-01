@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.Version;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.repositories.IndexId;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ShardRoutingTests extends OpenSearchTestCase {
+public class ShardRoutingTests extends DensityTestCase {
 
     public void testIsSameAllocation() {
         ShardRouting unassignedShard0 = TestShardRouting.newShardRouting("test", 0, null, false, ShardRoutingState.UNASSIGNED);

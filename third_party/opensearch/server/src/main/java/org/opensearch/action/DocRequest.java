@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Generic interface to group ActionRequest, which perform actions on a single document
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "3.1.0")
 public interface DocRequest {

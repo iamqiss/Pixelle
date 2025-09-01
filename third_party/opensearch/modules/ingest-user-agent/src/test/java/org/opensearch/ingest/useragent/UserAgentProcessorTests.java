@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.useragent;
+package org.density.ingest.useragent;
 
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -44,12 +44,12 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 
-public class UserAgentProcessorTests extends OpenSearchTestCase {
+public class UserAgentProcessorTests extends DensityTestCase {
 
     private static UserAgentProcessor processor;
 

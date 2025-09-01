@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.search.SearchResponse.Clusters;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregations;
+import org.density.action.search.SearchResponse.Clusters;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.common.annotation.PublicApi;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregations;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +52,7 @@ import java.util.stream.StreamSupport;
 /**
  * A listener that allows to track progress of the {@link SearchAction}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class SearchProgressListener {

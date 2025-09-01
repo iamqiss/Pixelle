@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test;
+package org.density.gradle.test;
 
-import org.opensearch.gradle.OpenSearchTestBasePlugin;
-import org.opensearch.gradle.SystemPropertyCommandLineArgumentProvider;
-import org.opensearch.gradle.testclusters.OpenSearchCluster;
-import org.opensearch.gradle.testclusters.TestClustersPlugin;
+import org.density.gradle.DensityTestBasePlugin;
+import org.density.gradle.SystemPropertyCommandLineArgumentProvider;
+import org.density.gradle.testclusters.DensityCluster;
+import org.density.gradle.testclusters.TestClustersPlugin;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -48,13 +48,13 @@ public class RestTestBasePlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         project.getPluginManager().apply(TestClustersPlugin.class);
-        project.getPluginManager().apply(OpenSearchTestBasePlugin.class);
+        project.getPluginManager().apply(DensityTestBasePlugin.class);
         project.getTasks().withType(RestIntegTestTask.class).configureEach(restIntegTestTask -> {
             @SuppressWarnings("unchecked")
-            NamedDomainObjectContainer<OpenSearchCluster> testClusters = (NamedDomainObjectContainer<OpenSearchCluster>) project
+            NamedDomainObjectContainer<DensityCluster> testClusters = (NamedDomainObjectContainer<DensityCluster>) project
                 .getExtensions()
                 .getByName(TestClustersPlugin.EXTENSION_NAME);
-            OpenSearchCluster cluster = testClusters.maybeCreate(restIntegTestTask.getName());
+            DensityCluster cluster = testClusters.maybeCreate(restIntegTestTask.getName());
             restIntegTestTask.useCluster(project, cluster);
             restIntegTestTask.include("**/*IT.class");
             restIntegTestTask.systemProperty("tests.rest.load_packaged", Boolean.FALSE.toString());

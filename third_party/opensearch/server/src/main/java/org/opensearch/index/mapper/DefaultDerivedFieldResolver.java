@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
+import org.density.common.regex.Regex;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.opensearch.index.mapper.FieldMapper.IGNORE_MALFORMED_SETTING;
+import static org.density.index.mapper.FieldMapper.IGNORE_MALFORMED_SETTING;
 
 /**
  * Accepts definition of DerivedField from search request in both forms: map parsed from SearchRequest and {@link DerivedField} defined using client.

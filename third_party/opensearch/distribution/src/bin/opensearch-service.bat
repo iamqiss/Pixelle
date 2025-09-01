@@ -6,24 +6,24 @@ setlocal enableextensions
 set NOJAVA=nojava
 if /i "%1" == "install" set NOJAVA=
 
-call "%~dp0opensearch-env.bat" %NOJAVA% || exit /b 1
+call "%~dp0density-env.bat" %NOJAVA% || exit /b 1
 
-rem opensearch-service-x64.exe is based off of the Apache Commons Daemon procrun service application.
-rem Run "opensearch-service-x64.exe version" for version information.
-rem Run "opensearch-service-x64.exe help" for command options.
+rem density-service-x64.exe is based off of the Apache Commons Daemon procrun service application.
+rem Run "density-service-x64.exe version" for version information.
+rem Run "density-service-x64.exe help" for command options.
 rem See https://commons.apache.org/proper/commons-daemon/procrun.html for more information.
-set EXECUTABLE=%OPENSEARCH_HOME%\bin\opensearch-service-x64.exe
-if "%SERVICE_ID%" == "" set SERVICE_ID=opensearch-service-x64
+set EXECUTABLE=%DENSITY_HOME%\bin\density-service-x64.exe
+if "%SERVICE_ID%" == "" set SERVICE_ID=density-service-x64
 set ARCH=64-bit
 
 if EXIST "%EXECUTABLE%" goto okExe
-echo opensearch-service-x64.exe was not found...
+echo density-service-x64.exe was not found...
 exit /B 1
 
 :okExe
-set OPENSEARCH_VERSION=${project.version}
+set DENSITY_VERSION=${project.version}
 
-if "%SERVICE_LOG_DIR%" == "" set SERVICE_LOG_DIR=%OPENSEARCH_HOME%\logs
+if "%SERVICE_LOG_DIR%" == "" set SERVICE_LOG_DIR=%DENSITY_HOME%\logs
 rem The logs directory must exist for the service to start.
 if not exist "%SERVICE_LOG_DIR%" (
 	mkdir "%SERVICE_LOG_DIR%"
@@ -49,7 +49,7 @@ exit /B 1
 
 :displayUsage
 echo.
-echo Usage: opensearch-service.bat install^|remove^|start^|stop^|manager [SERVICE_ID]
+echo Usage: density-service.bat install^|remove^|start^|stop^|manager [SERVICE_ID]
 goto:eof
 
 :doStart
@@ -75,9 +75,9 @@ echo The service '%SERVICE_ID%' has been stopped
 goto:eof
 
 :doManagment
-rem opensearch-service-mgr.exe is based off of the Apache Commons Daemon procrun monitor application.
+rem density-service-mgr.exe is based off of the Apache Commons Daemon procrun monitor application.
 rem See https://commons.apache.org/proper/commons-daemon/procrun.html for more information.
-set EXECUTABLE_MGR=%OPENSEARCH_HOME%\bin\opensearch-service-mgr
+set EXECUTABLE_MGR=%DENSITY_HOME%\bin\density-service-mgr
 rem //ES == Edit Service
 "%EXECUTABLE_MGR%" //ES//%SERVICE_ID%
 if not errorlevel 1 goto managed
@@ -120,23 +120,23 @@ if exist "%JAVA_HOME%\bin\server\jvm.dll" (
 )
 
 :foundJVM
-if not defined OPENSEARCH_TMPDIR (
-  for /f "tokens=* usebackq" %%a in (`CALL "%JAVA%" -cp "!OPENSEARCH_CLASSPATH!" "org.opensearch.tools.launchers.TempDirectory"`) do set OPENSEARCH_TMPDIR=%%a
+if not defined DENSITY_TMPDIR (
+  for /f "tokens=* usebackq" %%a in (`CALL "%JAVA%" -cp "!DENSITY_CLASSPATH!" "org.density.tools.launchers.TempDirectory"`) do set DENSITY_TMPDIR=%%a
 )
 
 rem The JVM options parser produces the final JVM options to start
-rem OpenSearch. It does this by incorporating JVM options in the following
+rem Density. It does this by incorporating JVM options in the following
 rem way:
 rem   - first, system JVM options are applied (these are hardcoded options in
 rem     the parser)
 rem   - second, JVM options are read from jvm.options and
 rem     jvm.options.d/*.options
-rem   - third, JVM options from OPENSEARCH_JAVA_OPTS are applied
+rem   - third, JVM options from DENSITY_JAVA_OPTS are applied
 rem   - fourth, ergonomic JVM options are applied
 
 @setlocal
-for /F "usebackq delims=" %%a in (`CALL "%JAVA%" -cp "!OPENSEARCH_CLASSPATH!" "org.opensearch.tools.launchers.JvmOptionsParser" "!OPENSEARCH_PATH_CONF!" ^|^| echo jvm_options_parser_failed`) do set OPENSEARCH_JAVA_OPTS=%%a
-@endlocal & set "MAYBE_JVM_OPTIONS_PARSER_FAILED=%OPENSEARCH_JAVA_OPTS%" & set OPENSEARCH_JAVA_OPTS=%OPENSEARCH_JAVA_OPTS%
+for /F "usebackq delims=" %%a in (`CALL "%JAVA%" -cp "!DENSITY_CLASSPATH!" "org.density.tools.launchers.JvmOptionsParser" "!DENSITY_PATH_CONF!" ^|^| echo jvm_options_parser_failed`) do set DENSITY_JAVA_OPTS=%%a
+@endlocal & set "MAYBE_JVM_OPTIONS_PARSER_FAILED=%DENSITY_JAVA_OPTS%" & set DENSITY_JAVA_OPTS=%DENSITY_JAVA_OPTS%
 
 if "%MAYBE_JVM_OPTIONS_PARSER_FAILED%" == "jvm_options_parser_failed" (
   exit /b 1
@@ -145,18 +145,18 @@ if "%MAYBE_JVM_OPTIONS_PARSER_FAILED%" == "jvm_options_parser_failed" (
 rem The output of the JVM options parses is space-delimited. We need to
 rem convert to semicolon-delimited and avoid doubled semicolons.
 @setlocal
-if not "%OPENSEARCH_JAVA_OPTS%" == "" (
-  set OPENSEARCH_JAVA_OPTS=!OPENSEARCH_JAVA_OPTS: =;!
-  set OPENSEARCH_JAVA_OPTS=!OPENSEARCH_JAVA_OPTS:;;=;!
+if not "%DENSITY_JAVA_OPTS%" == "" (
+  set DENSITY_JAVA_OPTS=!DENSITY_JAVA_OPTS: =;!
+  set DENSITY_JAVA_OPTS=!DENSITY_JAVA_OPTS:;;=;!
 )
-@endlocal & set OPENSEARCH_JAVA_OPTS=%OPENSEARCH_JAVA_OPTS%
+@endlocal & set DENSITY_JAVA_OPTS=%DENSITY_JAVA_OPTS%
 
-if "%OPENSEARCH_JAVA_OPTS:~-1%"==";" set OPENSEARCH_JAVA_OPTS=%OPENSEARCH_JAVA_OPTS:~0,-1%
+if "%DENSITY_JAVA_OPTS:~-1%"==";" set DENSITY_JAVA_OPTS=%DENSITY_JAVA_OPTS:~0,-1%
 
-echo %OPENSEARCH_JAVA_OPTS%
+echo %DENSITY_JAVA_OPTS%
 
 @setlocal EnableDelayedExpansion
-for %%a in ("%OPENSEARCH_JAVA_OPTS:;=","%") do (
+for %%a in ("%DENSITY_JAVA_OPTS:;=","%") do (
   set var=%%a
   set other_opt=true
   if "!var:~1,4!" == "-Xms" (
@@ -194,27 +194,27 @@ for %%a in ("%OPENSEARCH_JAVA_OPTS:;=","%") do (
 @endlocal & set JVM_MS=%JVM_MS% & set JVM_MX=%JVM_MX% & set JVM_SS=%JVM_SS% & set OTHER_JAVA_OPTS=%OTHER_JAVA_OPTS%
 
 if "%JVM_MS%" == "" (
-  echo minimum heap size not set; configure using -Xms via "%OPENSEARCH_PATH_CONF%/jvm.options.d", or OPENSEARCH_JAVA_OPTS
+  echo minimum heap size not set; configure using -Xms via "%DENSITY_PATH_CONF%/jvm.options.d", or DENSITY_JAVA_OPTS
   goto:eof
 )
 if "%JVM_MX%" == "" (
-  echo maximum heap size not set; configure using -Xmx via "%OPENSEARCH_PATH_CONF%/jvm.options.d", or OPENSEARCH_JAVA_OPTS
+  echo maximum heap size not set; configure using -Xmx via "%DENSITY_PATH_CONF%/jvm.options.d", or DENSITY_JAVA_OPTS
   goto:eof
 )
 if "%JVM_SS%" == "" (
-  echo thread stack size not set; configure using -Xss via "%OPENSEARCH_PATH_CONF%/jvm.options.d", or OPENSEARCH_JAVA_OPTS
+  echo thread stack size not set; configure using -Xss via "%DENSITY_PATH_CONF%/jvm.options.d", or DENSITY_JAVA_OPTS
   goto:eof
 )
 set OTHER_JAVA_OPTS=%OTHER_JAVA_OPTS:"=%
 set OTHER_JAVA_OPTS=%OTHER_JAVA_OPTS:~1%
 
-set OPENSEARCH_PARAMS=-Dopensearch;-Dopensearch.path.home="%OPENSEARCH_HOME%";-Dopensearch.path.conf="%OPENSEARCH_PATH_CONF%";-Dopensearch.distribution.type="%OPENSEARCH_DISTRIBUTION_TYPE%";-Dopensearch.bundled_jdk="%OPENSEARCH_BUNDLED_JDK%"
+set DENSITY_PARAMS=-Ddensity;-Ddensity.path.home="%DENSITY_HOME%";-Ddensity.path.conf="%DENSITY_PATH_CONF%";-Ddensity.distribution.type="%DENSITY_DISTRIBUTION_TYPE%";-Ddensity.bundled_jdk="%DENSITY_BUNDLED_JDK%"
 
-if "%OPENSEARCH_START_TYPE%" == "" set OPENSEARCH_START_TYPE=manual
-if "%OPENSEARCH_STOP_TIMEOUT%" == "" set OPENSEARCH_STOP_TIMEOUT=0
+if "%DENSITY_START_TYPE%" == "" set DENSITY_START_TYPE=manual
+if "%DENSITY_STOP_TIMEOUT%" == "" set DENSITY_STOP_TIMEOUT=0
 
-if "%SERVICE_DISPLAY_NAME%" == "" set SERVICE_DISPLAY_NAME=OpenSearch %OPENSEARCH_VERSION% (%SERVICE_ID%)
-if "%SERVICE_DESCRIPTION%" == "" set SERVICE_DESCRIPTION=OpenSearch %OPENSEARCH_VERSION% Windows Service - https://opensearch.org
+if "%SERVICE_DISPLAY_NAME%" == "" set SERVICE_DISPLAY_NAME=Density %DENSITY_VERSION% (%SERVICE_ID%)
+if "%SERVICE_DESCRIPTION%" == "" set SERVICE_DESCRIPTION=Density %DENSITY_VERSION% Windows Service - https://density.org
 
 if not "%SERVICE_USERNAME%" == "" (
 	if not "%SERVICE_PASSWORD%" == "" (
@@ -222,7 +222,7 @@ if not "%SERVICE_USERNAME%" == "" (
 	)
 )
 rem //IS == Install Service
-"%EXECUTABLE%" //IS//%SERVICE_ID% --Startup %OPENSEARCH_START_TYPE% --StopTimeout %OPENSEARCH_STOP_TIMEOUT% --StartClass org.opensearch.bootstrap.OpenSearch --StartMethod main ++StartParams --quiet --StopClass org.opensearch.bootstrap.OpenSearch --StopMethod close --Classpath "%OPENSEARCH_CLASSPATH%" --JvmMs %JVM_MS% --JvmMx %JVM_MX% --JvmSs %JVM_SS% --JvmOptions %OTHER_JAVA_OPTS% ++JvmOptions %OPENSEARCH_PARAMS% %LOG_OPTS% --PidFile "%SERVICE_ID%.pid" --DisplayName "%SERVICE_DISPLAY_NAME%" --Description "%SERVICE_DESCRIPTION%" --Jvm "%JAVA_HOME%%JVM_DLL%" --StartMode jvm --StopMode jvm --StartPath "%OPENSEARCH_HOME%" %SERVICE_PARAMS% ++Environment HOSTNAME="%%COMPUTERNAME%%"
+"%EXECUTABLE%" //IS//%SERVICE_ID% --Startup %DENSITY_START_TYPE% --StopTimeout %DENSITY_STOP_TIMEOUT% --StartClass org.density.bootstrap.Density --StartMethod main ++StartParams --quiet --StopClass org.density.bootstrap.Density --StopMethod close --Classpath "%DENSITY_CLASSPATH%" --JvmMs %JVM_MS% --JvmMx %JVM_MX% --JvmSs %JVM_SS% --JvmOptions %OTHER_JAVA_OPTS% ++JvmOptions %DENSITY_PARAMS% %LOG_OPTS% --PidFile "%SERVICE_ID%.pid" --DisplayName "%SERVICE_DISPLAY_NAME%" --Description "%SERVICE_DESCRIPTION%" --Jvm "%JAVA_HOME%%JVM_DLL%" --StartMode jvm --StopMode jvm --StartPath "%DENSITY_HOME%" %SERVICE_PARAMS% ++Environment HOSTNAME="%%COMPUTERNAME%%"
 
 if not errorlevel 1 goto installed
 echo Failed installing '%SERVICE_ID%' service

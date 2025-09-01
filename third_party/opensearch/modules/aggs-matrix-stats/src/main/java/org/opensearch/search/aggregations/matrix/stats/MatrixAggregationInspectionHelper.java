@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.matrix.stats;
+package org.density.search.aggregations.matrix.stats;
 
 /**
- * Counterpart to {@link org.opensearch.search.aggregations.support.AggregationInspectionHelper}, providing
+ * Counterpart to {@link org.density.search.aggregations.support.AggregationInspectionHelper}, providing
  * helpers for some aggs in the MatrixStats package
  */
 public class MatrixAggregationInspectionHelper {

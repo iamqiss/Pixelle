@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.recycler;
+package org.density.common.recycler;
 
 import java.util.Deque;
 
 /**
  * A {@link Recycler} implementation based on a {@link Deque}. This implementation is NOT thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DequeRecycler<T> extends AbstractRecycler<T> {
 

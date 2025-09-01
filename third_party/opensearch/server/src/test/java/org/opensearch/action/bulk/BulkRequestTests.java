@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.update.UpdateRequest;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.script.Script;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -58,7 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
@@ -67,9 +67,9 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class BulkRequestTests extends OpenSearchTestCase {
+public class BulkRequestTests extends DensityTestCase {
     public void testSimpleBulk1() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk.json");
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         assertThat(bulkRequest.numberOfActions(), equalTo(3));
@@ -93,21 +93,21 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk2() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk2.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk2.json");
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         assertThat(bulkRequest.numberOfActions(), equalTo(3));
     }
 
     public void testSimpleBulk3() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk3.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk3.json");
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         assertThat(bulkRequest.numberOfActions(), equalTo(3));
     }
 
     public void testSimpleBulk4() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk4.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk4.json");
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         assertThat(bulkRequest.numberOfActions(), equalTo(4));
@@ -128,14 +128,14 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testBulkAllowExplicitIndex() throws Exception {
-        String bulkAction1 = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk.json");
+        String bulkAction1 = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk.json");
         Exception ex = expectThrows(
             Exception.class,
             () -> new BulkRequest().add(new BytesArray(bulkAction1.getBytes(StandardCharsets.UTF_8)), null, false, MediaTypeRegistry.JSON)
         );
         assertEquals("explicit index in bulk is not allowed", ex.getMessage());
 
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk5.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk5.json");
         new BulkRequest().add(new BytesArray(bulkAction.getBytes(StandardCharsets.UTF_8)), "test", false, MediaTypeRegistry.JSON);
     }
 
@@ -153,7 +153,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk6() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk6.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk6.json");
         BulkRequest bulkRequest = new BulkRequest();
         ParsingException exc = expectThrows(
             ParsingException.class,
@@ -163,7 +163,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk7() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk7.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk7.json");
         BulkRequest bulkRequest = new BulkRequest();
         IllegalArgumentException exc = expectThrows(
             IllegalArgumentException.class,
@@ -176,7 +176,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk8() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk8.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk8.json");
         BulkRequest bulkRequest = new BulkRequest();
         IllegalArgumentException exc = expectThrows(
             IllegalArgumentException.class,
@@ -186,7 +186,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk9() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk9.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk9.json");
         BulkRequest bulkRequest = new BulkRequest();
         IllegalArgumentException exc = expectThrows(
             IllegalArgumentException.class,
@@ -199,7 +199,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleBulk10() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk10.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk10.json");
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         assertThat(bulkRequest.numberOfActions(), equalTo(9));
@@ -405,7 +405,7 @@ public class BulkRequestTests extends OpenSearchTestCase {
     }
 
     public void testBulkTerminatedByNewline() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk11.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk11.json");
         IllegalArgumentException expectThrows = expectThrows(
             IllegalArgumentException.class,
             () -> new BulkRequest().add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON)

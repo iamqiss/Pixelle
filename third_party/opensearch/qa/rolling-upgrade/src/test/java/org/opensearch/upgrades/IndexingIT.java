@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.opensearch.Version;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.Version;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Booleans;
+import org.density.common.io.Streams;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.EngineConfig;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -54,9 +54,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
-import static org.opensearch.rest.action.search.RestSearchAction.TOTAL_HITS_AS_INT_PARAM;
-import static org.opensearch.test.OpenSearchIntegTestCase.CODECS;
+import static org.density.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
+import static org.density.rest.action.search.RestSearchAction.TOTAL_HITS_AS_INT_PARAM;
+import static org.density.test.DensityIntegTestCase.CODECS;
 
 /**
  * Basic test that indexed documents survive the rolling restart. See

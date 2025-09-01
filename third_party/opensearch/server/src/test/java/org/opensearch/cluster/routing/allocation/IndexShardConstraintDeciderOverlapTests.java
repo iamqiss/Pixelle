@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.OpenSearchAllocationWithConstraintsTestCase;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.test.VersionUtils;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.DensityAllocationWithConstraintsTestCase;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.node.NodeResourceUsageStats;
+import org.density.test.VersionUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.STARTED;
-import static org.opensearch.cluster.routing.ShardRoutingState.UNASSIGNED;
+import static org.density.cluster.routing.ShardRoutingState.STARTED;
+import static org.density.cluster.routing.ShardRoutingState.UNASSIGNED;
 
-public class IndexShardConstraintDeciderOverlapTests extends OpenSearchAllocationWithConstraintsTestCase {
+public class IndexShardConstraintDeciderOverlapTests extends DensityAllocationWithConstraintsTestCase {
 
     /**
      * High watermark breach blocks new shard allocations to affected nodes. If shard count on such

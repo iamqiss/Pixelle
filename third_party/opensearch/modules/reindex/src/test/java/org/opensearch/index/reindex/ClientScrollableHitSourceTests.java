@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollAction;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
-import org.opensearch.transport.client.support.AbstractClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollAction;
+import org.density.action.search.SearchScrollRequest;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.tasks.TaskId;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.ParentTaskAssigningClient;
+import org.density.transport.client.support.AbstractClient;
 import org.junit.After;
 import org.junit.Before;
 
@@ -69,11 +69,11 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.apache.lucene.tests.util.TestUtil.randomSimpleString;
 
-public class ClientScrollableHitSourceTests extends OpenSearchTestCase {
+public class ClientScrollableHitSourceTests extends DensityTestCase {
 
     private ThreadPool threadPool;
 
@@ -108,7 +108,7 @@ public class ClientScrollableHitSourceTests extends OpenSearchTestCase {
         ExpectedException ex = expectThrows(ExpectedException.class, () -> {
             dotestBasicsWithRetry(retries, retries + 1, retries + 1, e -> { throw new ExpectedException(e); });
         });
-        assertThat(ex.getCause(), instanceOf(OpenSearchRejectedExecutionException.class));
+        assertThat(ex.getCause(), instanceOf(DensityRejectedExecutionException.class));
     }
 
     private void dotestBasicsWithRetry(int retries, int minFailures, int maxFailures, Consumer<Exception> failureHandler)
@@ -131,7 +131,7 @@ public class ClientScrollableHitSourceTests extends OpenSearchTestCase {
 
         hitSource.start();
         for (int retry = 0; retry < randomIntBetween(minFailures, maxFailures); ++retry) {
-            client.fail(SearchAction.INSTANCE, new OpenSearchRejectedExecutionException());
+            client.fail(SearchAction.INSTANCE, new DensityRejectedExecutionException());
             client.awaitOperation();
             ++expectedSearchRetries;
         }
@@ -147,7 +147,7 @@ public class ClientScrollableHitSourceTests extends OpenSearchTestCase {
             asyncResponse.done(TimeValue.ZERO);
 
             for (int retry = 0; retry < randomIntBetween(minFailures, maxFailures); ++retry) {
-                client.fail(SearchScrollAction.INSTANCE, new OpenSearchRejectedExecutionException());
+                client.fail(SearchScrollAction.INSTANCE, new DensityRejectedExecutionException());
                 client.awaitOperation();
                 ++expectedSearchRetries;
             }

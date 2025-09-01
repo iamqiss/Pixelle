@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import java.util.Locale;
 /**
  * Utility class for binary serializtion/deserialization of libs/geo classes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class GeometryIO {
 

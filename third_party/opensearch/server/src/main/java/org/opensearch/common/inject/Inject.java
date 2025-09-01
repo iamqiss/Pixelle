@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,11 +23,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -48,8 +48,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * constructor taking no parameters. The Injector then proceeds to perform
  * method and field injections.
  * <li>Pre-constructed instances passed to {@link Injector#injectMembers},
- * {@link org.opensearch.common.inject.binder.LinkedBindingBuilder#toInstance(Object)} and
- * {@link org.opensearch.common.inject.binder.LinkedBindingBuilder#toProvider(Provider)}.
+ * {@link org.density.common.inject.binder.LinkedBindingBuilder#toInstance(Object)} and
+ * {@link org.density.common.inject.binder.LinkedBindingBuilder#toProvider(Provider)}.
  * In this case all constructors are, of course, ignored.
  * <li>Static fields and methods of classes which any {@link Module} has
  * specifically requested static injection for, using
@@ -61,7 +61,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Target({ METHOD, CONSTRUCTOR, FIELD })
 @Retention(RUNTIME)

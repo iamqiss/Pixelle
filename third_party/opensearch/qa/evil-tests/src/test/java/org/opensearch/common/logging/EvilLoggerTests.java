@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -41,17 +41,17 @@ import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.appender.CountingNoOpAppender;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cli.UserException;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.env.Environment;
-import org.opensearch.node.Node;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.RegexMatcher;
+import org.density.cli.UserException;
+import org.density.cluster.ClusterName;
+import org.density.common.Randomness;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.env.Environment;
+import org.density.node.Node;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.RegexMatcher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -68,13 +68,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.common.logging.DeprecationLogger.DEPRECATION;
+import static org.density.common.logging.DeprecationLogger.DEPRECATION;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.startsWith;
 
-public class EvilLoggerTests extends OpenSearchTestCase {
+public class EvilLoggerTests extends DensityTestCase {
 
     @Override
     public void setUp() throws Exception {
@@ -101,13 +101,13 @@ public class EvilLoggerTests extends OpenSearchTestCase {
         testLogger.debug("This is a debug message");
         testLogger.trace("This is a trace message");
         final String path =
-            System.getProperty("opensearch.logs.base_path") +
+            System.getProperty("density.logs.base_path") +
                 System.getProperty("file.separator") +
-                System.getProperty("opensearch.logs.cluster_name") +
+                System.getProperty("density.logs.cluster_name") +
                 ".log";
         final List<String> events = Files.readAllLines(PathUtils.get(path));
         assertThat(events.size(), equalTo(5));
-        final String location = "org.opensearch.common.logging.EvilLoggerTests.testLocationInfoTest";
+        final String location = "org.density.common.logging.EvilLoggerTests.testLocationInfoTest";
         // the first message is a warning for unsupported configuration files
         assertLogLine(events.get(0), Level.ERROR, location, "This is an error message");
         assertLogLine(events.get(1), Level.WARN, location, "This is a warning message");
@@ -159,9 +159,9 @@ public class EvilLoggerTests extends OpenSearchTestCase {
         barrier.await();
 
         final String deprecationPath =
-                System.getProperty("opensearch.logs.base_path") +
+                System.getProperty("density.logs.base_path") +
                         System.getProperty("file.separator") +
-                        System.getProperty("opensearch.logs.cluster_name") +
+                        System.getProperty("density.logs.cluster_name") +
                         "_deprecation.log";
         final List<String> deprecationEvents = Files.readAllLines(PathUtils.get(deprecationPath));
         // we appended an integer to each log message, use that for sorting
@@ -172,7 +172,7 @@ public class EvilLoggerTests extends OpenSearchTestCase {
             assertLogLine(
                     deprecationEvents.get(i),
                     DEPRECATION,
-                    "org.opensearch.common.logging.DeprecationLogger\\$DeprecationLoggerBuilder.withDeprecation",
+                    "org.density.common.logging.DeprecationLogger\\$DeprecationLoggerBuilder.withDeprecation",
                     "This is a maybe logged deprecation message" + i);
         }
 
@@ -197,9 +197,9 @@ public class EvilLoggerTests extends OpenSearchTestCase {
         }
 
         final String deprecationPath =
-                System.getProperty("opensearch.logs.base_path") +
+                System.getProperty("density.logs.base_path") +
                         System.getProperty("file.separator") +
-                        System.getProperty("opensearch.logs.cluster_name") +
+                        System.getProperty("density.logs.cluster_name") +
                         "_deprecation.log";
         final List<String> deprecationEvents = Files.readAllLines(PathUtils.get(deprecationPath));
         if (iterations > 0) {
@@ -207,8 +207,8 @@ public class EvilLoggerTests extends OpenSearchTestCase {
             assertLogLine(
                     deprecationEvents.get(0),
                     DEPRECATION,
-                    "org.opensearch.common.logging.DeprecationLogger\\$DeprecationLoggerBuilder.withDeprecation",
-                    "\\[deprecated.foo\\] setting was deprecated in OpenSearch and will be removed in a future release! " +
+                    "org.density.common.logging.DeprecationLogger\\$DeprecationLoggerBuilder.withDeprecation",
+                    "\\[deprecated.foo\\] setting was deprecated in Density and will be removed in a future release! " +
                             "See the breaking changes documentation for the next major version.");
         }
     }
@@ -238,9 +238,9 @@ public class EvilLoggerTests extends OpenSearchTestCase {
         logger.info(new ParameterizedMessage("{}", "test"), e);
 
         final String path =
-            System.getProperty("opensearch.logs.base_path") +
+            System.getProperty("density.logs.base_path") +
                 System.getProperty("file.separator") +
-                System.getProperty("opensearch.logs.cluster_name") +
+                System.getProperty("density.logs.cluster_name") +
                 ".log";
         final List<String> events = Files.readAllLines(PathUtils.get(path));
 
@@ -276,10 +276,10 @@ public class EvilLoggerTests extends OpenSearchTestCase {
                 .build();
         setupLogging("minimal", settings);
 
-        assertNotNull(System.getProperty("opensearch.logs.base_path"));
+        assertNotNull(System.getProperty("density.logs.base_path"));
 
-        assertThat(System.getProperty("opensearch.logs.cluster_name"), equalTo(ClusterName.CLUSTER_NAME_SETTING.get(settings).value()));
-        assertThat(System.getProperty("opensearch.logs.node_name"), equalTo(Node.NODE_NAME_SETTING.get(settings)));
+        assertThat(System.getProperty("density.logs.cluster_name"), equalTo(ClusterName.CLUSTER_NAME_SETTING.get(settings).value()));
+        assertThat(System.getProperty("density.logs.node_name"), equalTo(Node.NODE_NAME_SETTING.get(settings)));
     }
 
     private void setupLogging(final String config) throws IOException, UserException {

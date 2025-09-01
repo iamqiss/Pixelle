@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.search.suggest.completion.context.ContextBuilder;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.GeoContextMapping;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.DensityParseException;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.search.suggest.completion.context.ContextBuilder;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.GeoContextMapping;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.geometry.utils.Geohash.addNeighborsAtLevel;
-import static org.opensearch.search.suggest.completion.CategoryContextMappingTests.assertContextSuggestFields;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.geometry.utils.Geohash.addNeighborsAtLevel;
+import static org.density.search.suggest.completion.CategoryContextMappingTests.assertContextSuggestFields;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.in;
 import static org.hamcrest.Matchers.is;
 
-public class GeoContextMappingTests extends OpenSearchSingleNodeTestCase {
+public class GeoContextMappingTests extends DensitySingleNodeTestCase {
 
     public void testIndexingWithNoContexts() throws Exception {
         XContentBuilder mapping = jsonBuilder().startObject()
@@ -268,7 +268,7 @@ public class GeoContextMappingTests extends OpenSearchSingleNodeTestCase {
         mapping.endObject();
         mapping.endObject();
 
-        OpenSearchParseException ex = expectThrows(OpenSearchParseException.class, () -> createIndex("test", Settings.EMPTY, mapping));
+        DensityParseException ex = expectThrows(DensityParseException.class, () -> createIndex("test", Settings.EMPTY, mapping));
 
         assertThat(ex.getMessage(), equalTo("field [pin] referenced in context [st] must be mapped to geo_point, found [" + type + "]"));
     }
@@ -295,7 +295,7 @@ public class GeoContextMappingTests extends OpenSearchSingleNodeTestCase {
         mapping.endObject();
         mapping.endObject();
 
-        OpenSearchParseException ex = expectThrows(OpenSearchParseException.class, () -> createIndex("test", Settings.EMPTY, mapping));
+        DensityParseException ex = expectThrows(DensityParseException.class, () -> createIndex("test", Settings.EMPTY, mapping));
 
         assertThat(ex.getMessage(), equalTo("field [pin] referenced in context [st] is not defined in the mapping"));
     }

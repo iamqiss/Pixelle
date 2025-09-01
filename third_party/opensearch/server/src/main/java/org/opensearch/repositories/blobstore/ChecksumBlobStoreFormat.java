@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.CorruptIndexException;
@@ -39,27 +39,27 @@ import org.apache.lucene.store.ByteBuffersDataInput;
 import org.apache.lucene.store.ByteBuffersIndexInput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.CorruptStateException;
-import org.opensearch.index.store.exception.ChecksumCombinationException;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.CheckedFunction;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
+import org.density.common.io.Streams;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.CorruptStateException;
+import org.density.index.store.exception.ChecksumCombinationException;
+import org.density.snapshots.SnapshotInfo;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -67,12 +67,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
+import static org.density.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
 
 /**
  * Snapshot metadata file format used in v2.0 and above
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ChecksumBlobStoreFormat<T extends ToXContent> extends BaseBlobStoreFormat<T> {
 

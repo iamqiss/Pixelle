@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -28,26 +28,26 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.InternalAggregation;
+import org.density.common.Rounding;
+import org.density.common.lucene.Lucene;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.InternalAggregation;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -59,10 +59,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.range;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.search.aggregations.AggregationBuilders.range;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 
 /**
  * Tests for aggregations with date-range query

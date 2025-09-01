@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.nested;
+package org.density.search.aggregations.bucket.nested;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.core.ParseField;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregator;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.lucene.search.Queries;
+import org.density.core.ParseField;
+import org.density.index.mapper.ObjectMapper;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.SingleBucketAggregator;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ import java.util.Map;
 /**
  * Aggregates documents that match a nested path.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReverseNestedAggregator extends BucketsAggregator implements SingleBucketAggregator {
 
@@ -85,7 +85,7 @@ public class ReverseNestedAggregator extends BucketsAggregator implements Single
 
     @Override
     protected LeafBucketCollector getLeafCollector(LeafReaderContext ctx, final LeafBucketCollector sub) throws IOException {
-        // In OpenSearch if parent is deleted, then also the children are deleted, so the child docs this agg receives
+        // In Density if parent is deleted, then also the children are deleted, so the child docs this agg receives
         // must belong to parent docs that is alive. For this reason acceptedDocs can be null here.
         final BitSet parentDocs = parentBitsetProducer.getBitSet(ctx);
         if (parentDocs == null) {

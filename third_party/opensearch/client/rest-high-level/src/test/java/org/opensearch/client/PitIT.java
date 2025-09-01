@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitInfo;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.GetAllPitNodesResponse;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
+import org.density.DensityStatusException;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitInfo;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.GetAllPitNodesResponse;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 /**
  * Tests point in time API with rest high level client
  */
-public class PitIT extends OpenSearchRestHighLevelClientTestCase {
+public class PitIT extends DensityRestHighLevelClientTestCase {
 
     @Before
     public void indexDocuments() throws IOException {
@@ -100,7 +100,7 @@ public class PitIT extends OpenSearchRestHighLevelClientTestCase {
 
             @Override
             public void onFailure(Exception e) {
-                if (!(e instanceof OpenSearchStatusException)) {
+                if (!(e instanceof DensityStatusException)) {
                     throw new AssertionError("Delete all failed");
                 }
             }
@@ -118,7 +118,7 @@ public class PitIT extends OpenSearchRestHighLevelClientTestCase {
 
             @Override
             public void onFailure(Exception e) {
-                if (!(e instanceof OpenSearchStatusException)) {
+                if (!(e instanceof DensityStatusException)) {
                     throw new AssertionError("List all PITs failed", e);
                 }
             }

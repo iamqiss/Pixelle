@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,19 +23,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.collect;
+package org.density.common.collect;
 
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.util.CollectionUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.NoSuchElementException;
 
-public class EvictingQueueTests extends OpenSearchTestCase {
+public class EvictingQueueTests extends DensityTestCase {
     public void testCreateWithNegativeSize() throws Exception {
         try {
             new EvictingQueue<>(-1);

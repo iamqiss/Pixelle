@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,53 +25,53 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.Version;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.TransportCancelTasksAction;
-import org.opensearch.action.admin.cluster.node.tasks.get.TransportGetTaskAction;
-import org.opensearch.action.admin.cluster.node.tasks.list.TransportListTasksAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.tasks.TaskCancellationService;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.tasks.MockTaskManager;
-import org.opensearch.threadpool.RunnableTaskExecutionListener;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.cluster.node.tasks.cancel.TransportCancelTasksAction;
+import org.density.action.admin.cluster.node.tasks.get.TransportGetTaskAction;
+import org.density.action.admin.cluster.node.tasks.list.TransportListTasksAction;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasable;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.tasks.TaskCancellationService;
+import org.density.tasks.TaskManager;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.tasks.MockTaskManager;
+import org.density.threadpool.RunnableTaskExecutionListener;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.nio.MockNioTransport;
 import org.junit.After;
 import org.junit.Before;
 
@@ -86,14 +86,14 @@ import java.util.function.Function;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.setState;
 import static org.mockito.Mockito.mock;
 
 /**
  * The test case for unit testing task manager and related transport actions
  */
-public abstract class TaskManagerTestCase extends OpenSearchTestCase {
+public abstract class TaskManagerTestCase extends DensityTestCase {
 
     protected ThreadPool threadPool;
     protected TestNode[] testNodes;

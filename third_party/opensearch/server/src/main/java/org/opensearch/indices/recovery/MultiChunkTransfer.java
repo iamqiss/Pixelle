@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.concurrent.AsyncIOProcessor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
+import org.density.common.collect.Tuple;
+import org.density.common.util.concurrent.AsyncIOProcessor;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.index.seqno.LocalCheckpointTracker;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -48,8 +48,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * File chunks are sent/requested sequentially by at most one thread at any time. However, the sender/requestor won't wait for the response
@@ -69,7 +69,7 @@ import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
  * one of the networking threads which receive/handle the responses of the current pending file chunk requests. This process will continue
  * until all chunk requests are sent/responded.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MultiChunkTransfer<Source, Request extends MultiChunkTransfer.ChunkRequest> implements Closeable {
     private Status status = Status.PROCESSING;
@@ -214,7 +214,7 @@ public abstract class MultiChunkTransfer<Source, Request extends MultiChunkTrans
     /**
      * A file chunk item as the response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FileChunkResponseItem<Source> {
         final long requestSeqId;
@@ -231,7 +231,7 @@ public abstract class MultiChunkTransfer<Source, Request extends MultiChunkTrans
     /**
      * A chunk request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface ChunkRequest {
         /**

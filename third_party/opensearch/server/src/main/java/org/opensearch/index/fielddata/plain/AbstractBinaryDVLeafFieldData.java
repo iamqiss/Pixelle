@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.fielddata.SortedBinaryDocValues;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -46,7 +46,7 @@ import java.util.Collections;
 /**
  * Base class for binary docvalue "field data"
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AbstractBinaryDVLeafFieldData implements LeafFieldData {
     private final BinaryDocValues values;

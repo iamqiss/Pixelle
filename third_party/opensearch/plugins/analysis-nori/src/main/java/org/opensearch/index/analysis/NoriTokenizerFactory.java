@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.ko.KoreanTokenizer;
 import org.apache.lucene.analysis.ko.dict.UserDictionary;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -82,7 +82,7 @@ public class NoriTokenizerFactory extends AbstractTokenizerFactory {
             return UserDictionary.open(rulesReader);
         } catch (IOException e) {
             LOGGER.error("Failed to load nori user dictionary", e);
-            throw new OpenSearchException("Failed to load nori user dictionary");
+            throw new DensityException("Failed to load nori user dictionary");
         }
     }
 

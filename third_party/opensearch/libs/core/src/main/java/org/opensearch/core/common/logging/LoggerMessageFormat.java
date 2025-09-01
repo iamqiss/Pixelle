@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,7 +26,7 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -37,19 +37,19 @@
  * SPDX-License-Identifier: MIT
  */
 
-package org.opensearch.core.common.logging;
+package org.density.core.common.logging;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Format string for OpenSearch log messages.
+ * Format string for Density log messages.
  * <p>
  * This class is almost a copy of {@code org.slf4j.helpers.MessageFormatter}<p>
  * The original code is licensed under the MIT License and is available at :
  * <a href="https://github.com/qos-ch/slf4j/blob/7c164fab8d54f823dd55c01a5a839c153f578297/slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java">MessageFormatter.java</a>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LoggerMessageFormat {
 

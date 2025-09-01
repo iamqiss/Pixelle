@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.fieldcaps;
+package org.density.action.fieldcaps;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for retrieving field capabilities
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class FieldCapabilitiesRequestBuilder extends ActionRequestBuilder<FieldCapabilitiesRequest, FieldCapabilitiesResponse> {
-    public FieldCapabilitiesRequestBuilder(OpenSearchClient client, FieldCapabilitiesAction action, String... indices) {
+    public FieldCapabilitiesRequestBuilder(DensityClient client, FieldCapabilitiesAction action, String... indices) {
         super(client, action, new FieldCapabilitiesRequest().indices(indices));
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStream;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStream;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.BufferedReader;
 import java.io.FilterInputStream;
@@ -60,7 +60,7 @@ import java.util.function.Consumer;
  * Mainly for use within the framework,
  * but also useful for application code.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class Streams {
 
@@ -171,7 +171,7 @@ public abstract class Streams {
      * Fully consumes the input stream, throwing the bytes away. Returns the number of bytes consumed.
      */
     public static long consumeFully(InputStream inputStream) throws IOException {
-        return org.opensearch.common.util.io.Streams.copy(inputStream, NULL_OUTPUT_STREAM);
+        return org.density.common.util.io.Streams.copy(inputStream, NULL_OUTPUT_STREAM);
     }
 
     public static List<String> readAllLines(InputStream input) throws IOException {
@@ -217,7 +217,7 @@ public abstract class Streams {
      */
     public static BytesReference readFully(InputStream in) throws IOException {
         BytesStreamOutput out = new BytesStreamOutput();
-        org.opensearch.common.util.io.Streams.copy(in, out);
+        org.density.common.util.io.Streams.copy(in, out);
         return out.bytes();
     }
 
@@ -233,7 +233,7 @@ public abstract class Streams {
      * needed as sometimes a stream will be closed but the bytes that the stream holds still need
      * to be used and the stream cannot be closed until the bytes have been consumed.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FlushOnCloseOutputStream extends BytesStream {
 
@@ -277,7 +277,7 @@ public abstract class Streams {
     /**
      * A wrapper around an {@link InputStream} that limits the number of bytes that can be read from the stream.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class LimitedInputStream extends FilterInputStream {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.annotatedtext;
+package org.density.index.mapper.annotatedtext;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queries.intervals.Intervals;
 import org.apache.lucene.queries.intervals.IntervalsSource;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.FieldTypeTestCase;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.query.IntervalMode;
+import org.density.common.settings.Settings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.FieldTypeTestCase;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.query.IntervalMode;
 
 import java.io.IOException;
 import java.util.Collections;

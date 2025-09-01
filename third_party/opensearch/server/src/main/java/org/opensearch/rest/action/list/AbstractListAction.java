@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.list;
+package org.density.rest.action.list;
 
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.cat.AbstractCatAction;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.pagination.PageParams;
+import org.density.rest.RestRequest;
+import org.density.rest.action.cat.AbstractCatAction;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
-import static org.opensearch.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
+import static org.density.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
+import static org.density.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
 
 /**
  * Base Transport action class for _list API.
  * Serves as a base class for APIs wanting to support pagination.
- * Existing _cat APIs can refer {@link org.opensearch.rest.action.cat.RestIndicesAction}.
- * @opensearch.api
+ * Existing _cat APIs can refer {@link org.density.rest.action.cat.RestIndicesAction}.
+ * @density.api
  */
 public abstract class AbstractListAction extends AbstractCatAction {
 

@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure;
+package org.density.search.backpressure;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.process.ProcessProbe;
-import org.opensearch.search.backpressure.settings.SearchBackpressureMode;
-import org.opensearch.search.backpressure.settings.SearchBackpressureSettings;
-import org.opensearch.search.backpressure.settings.SearchShardTaskSettings;
-import org.opensearch.search.backpressure.settings.SearchTaskSettings;
-import org.opensearch.search.backpressure.stats.SearchBackpressureStats;
-import org.opensearch.search.backpressure.stats.SearchShardTaskStats;
-import org.opensearch.search.backpressure.stats.SearchTaskStats;
-import org.opensearch.search.backpressure.trackers.CpuUsageTracker;
-import org.opensearch.search.backpressure.trackers.ElapsedTimeTracker;
-import org.opensearch.search.backpressure.trackers.HeapUsageTracker;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackerType;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.SearchBackpressureTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskCancellation;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.tasks.TaskResourceTrackingService.TaskCompletionListener;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupService;
+import org.density.ExceptionsHelper;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchTask;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.process.ProcessProbe;
+import org.density.search.backpressure.settings.SearchBackpressureMode;
+import org.density.search.backpressure.settings.SearchBackpressureSettings;
+import org.density.search.backpressure.settings.SearchShardTaskSettings;
+import org.density.search.backpressure.settings.SearchTaskSettings;
+import org.density.search.backpressure.stats.SearchBackpressureStats;
+import org.density.search.backpressure.stats.SearchShardTaskStats;
+import org.density.search.backpressure.stats.SearchTaskStats;
+import org.density.search.backpressure.trackers.CpuUsageTracker;
+import org.density.search.backpressure.trackers.ElapsedTimeTracker;
+import org.density.search.backpressure.trackers.HeapUsageTracker;
+import org.density.search.backpressure.trackers.NodeDuressTrackers;
+import org.density.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackerType;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.SearchBackpressureTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskCancellation;
+import org.density.tasks.TaskManager;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.tasks.TaskResourceTrackingService.TaskCompletionListener;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,13 +58,13 @@ import java.util.function.Function;
 import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.backpressure.trackers.HeapUsageTracker.isHeapTrackingSupported;
+import static org.density.search.backpressure.trackers.HeapUsageTracker.isHeapTrackingSupported;
 
 /**
  * SearchBackpressureService is responsible for monitoring and cancelling in-flight search tasks if they are
  * breaching resource usage limits when the node is in duress.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchBackpressureService extends AbstractLifecycleComponent implements TaskCompletionListener {
     private static final Logger logger = LogManager.getLogger(SearchBackpressureService.class);

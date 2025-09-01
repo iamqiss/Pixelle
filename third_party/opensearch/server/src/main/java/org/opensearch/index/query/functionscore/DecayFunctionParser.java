@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.SearchModule;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.plugins.SearchPlugin;
+import org.density.search.MultiValueMode;
+import org.density.search.SearchModule;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
@@ -80,7 +80,7 @@ import java.util.function.BiFunction;
  * register them in {@link SearchModule#registerScoreFunctions} or {@link SearchPlugin#getScoreFunctions}
  * See {@link GaussDecayFunctionBuilder#PARSER} for an example.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DecayFunctionParser<DFB extends DecayFunctionBuilder<DFB>> implements ScoreFunctionParser<DFB> {
 

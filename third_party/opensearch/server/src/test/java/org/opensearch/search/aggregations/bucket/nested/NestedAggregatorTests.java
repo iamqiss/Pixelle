@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.nested;
+package org.density.search.aggregations.bucket.nested;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -55,55 +55,55 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.query.support.NestedScope;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.InternalTerms;
-import org.opensearch.search.aggregations.bucket.terms.LongTerms;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.InternalSum;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Min;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.InternalSimpleValue;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
-import org.opensearch.search.aggregations.support.ValueType;
+import org.density.common.CheckedConsumer;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.query.support.NestedScope;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.InternalTerms;
+import org.density.search.aggregations.bucket.terms.LongTerms;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.InternalSum;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.Min;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.InternalSimpleValue;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
+import org.density.search.aggregations.support.ValueType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,10 +121,10 @@ import java.util.stream.LongStream;
 import org.mockito.Mockito;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.nested;
-import static org.opensearch.search.aggregations.bucket.nested.NestedAggregator.getParentAndChildId;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.nested;
+import static org.density.search.aggregations.bucket.nested.NestedAggregator.getParentAndChildId;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
 import static org.mockito.ArgumentMatchers.any;

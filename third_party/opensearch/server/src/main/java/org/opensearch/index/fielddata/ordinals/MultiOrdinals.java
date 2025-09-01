@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.SortedSetDocValues;
@@ -40,8 +40,8 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.LongsRef;
 import org.apache.lucene.util.packed.PackedInts;
 import org.apache.lucene.util.packed.PackedLongValues;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
-import org.opensearch.index.fielddata.AbstractSortedSetDocValues;
+import org.density.index.fielddata.AbstractSortedDocValues;
+import org.density.index.fielddata.AbstractSortedSetDocValues;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ import java.util.List;
 /**
  * {@link Ordinals} implementation which is efficient at storing field data ordinals for multi-valued or sparse fields.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiOrdinals extends Ordinals {
 
@@ -132,7 +132,7 @@ public class MultiOrdinals extends Ordinals {
     /**
      * Single doc type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SingleDocs extends AbstractSortedDocValues {
 
@@ -185,7 +185,7 @@ public class MultiOrdinals extends Ordinals {
     /**
      * Multiple docs
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MultiDocs extends AbstractSortedSetDocValues {
 

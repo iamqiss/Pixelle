@@ -1,69 +1,69 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.action.search.DeleteSearchPipelineRequest;
-import org.opensearch.action.search.MockSearchPhaseContext;
-import org.opensearch.action.search.PutSearchPipelineRequest;
-import org.opensearch.action.search.QueryPhaseResultConsumer;
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchPhaseController;
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchPhaseResults;
-import org.opensearch.action.search.SearchProgressListener;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.plugins.SearchPipelinePlugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.DensityParseException;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.action.search.DeleteSearchPipelineRequest;
+import org.density.action.search.MockSearchPhaseContext;
+import org.density.action.search.PutSearchPipelineRequest;
+import org.density.action.search.QueryPhaseResultConsumer;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchPhaseController;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchPhaseResults;
+import org.density.action.search.SearchProgressListener;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.metrics.OperationStats;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.query.TermQueryBuilder;
+import org.density.plugins.SearchPipelinePlugin;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchModule;
+import org.density.search.SearchPhaseResult;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -80,7 +80,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchPipelineServiceTests extends OpenSearchTestCase {
+public class SearchPipelineServiceTests extends DensityTestCase {
 
     private static final SearchPipelinePlugin DUMMY_PLUGIN = new SearchPipelinePlugin() {
         @Override
@@ -105,7 +105,7 @@ public class SearchPipelineServiceTests extends OpenSearchTestCase {
     @Before
     public void setup() {
         threadPool = mock(ThreadPool.class);
-        ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        ExecutorService executorService = DensityExecutors.newDirectExecutorService();
         indexNameExpressionResolver = new IndexNameExpressionResolver(new ThreadContext(Settings.EMPTY));
         when(threadPool.generic()).thenReturn(executorService);
         when(threadPool.executor(anyString())).thenReturn(executorService);
@@ -383,7 +383,7 @@ public class SearchPipelineServiceTests extends OpenSearchTestCase {
     ) {
         Client client = mock(Client.class);
         ThreadPool threadPool = mock(ThreadPool.class);
-        ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        ExecutorService executorService = DensityExecutors.newDirectExecutorService();
         when(threadPool.generic()).thenReturn(executorService);
         when(threadPool.executor(anyString())).thenReturn(executorService);
         return new SearchPipelineService(
@@ -753,7 +753,7 @@ public class SearchPipelineServiceTests extends OpenSearchTestCase {
         SearchPhaseContext searchPhaseContext = new MockSearchPhaseContext(10);
         QueryPhaseResultConsumer searchPhaseResults = new QueryPhaseResultConsumer(
             searchPhaseContext.getRequest(),
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             controller,
             SearchProgressListener.NOOP,
@@ -918,7 +918,7 @@ public class SearchPipelineServiceTests extends OpenSearchTestCase {
         SearchPipelineInfo incompletePipelineInfo = new SearchPipelineInfo(Map.of(Pipeline.REQUEST_PROCESSORS_KEY, List.of(reqProcessor)));
         // One node is missing a processor
         expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> searchPipelineService.validatePipeline(Map.of(n1, completePipelineInfo, n2, incompletePipelineInfo), putRequest)
         );
 

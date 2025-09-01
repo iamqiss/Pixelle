@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.InputCoercionException;
@@ -40,14 +40,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.compress.NotXContentException;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
+import org.density.common.CheckedRunnable;
+import org.density.common.CheckedSupplier;
+import org.density.common.Nullable;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.compress.NotXContentException;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,12 +66,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.OpenSearchException.getExceptionSimpleClassName;
+import static org.density.DensityException.getExceptionSimpleClassName;
 
 /**
- * Helper class for OpenSearch Exceptions
+ * Helper class for Density Exceptions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ExceptionsHelper {
     private static final Logger logger = LogManager.getLogger(ExceptionsHelper.class);
@@ -115,27 +115,27 @@ public final class ExceptionsHelper {
         if (e instanceof RuntimeException) {
             return (RuntimeException) e;
         }
-        return new OpenSearchException(e);
+        return new DensityException(e);
     }
 
-    public static OpenSearchException convertToOpenSearchException(Exception e) {
-        if (e instanceof OpenSearchException) {
-            return (OpenSearchException) e;
+    public static DensityException convertToDensityException(Exception e) {
+        if (e instanceof DensityException) {
+            return (DensityException) e;
         }
-        return new OpenSearchException(e);
+        return new DensityException(e);
     }
 
     public static RestStatus status(Throwable t) {
         if (t != null) {
-            if (t instanceof OpenSearchException) {
-                return ((OpenSearchException) t).status();
+            if (t instanceof DensityException) {
+                return ((DensityException) t).status();
             } else if (t instanceof IllegalArgumentException) {
                 return RestStatus.BAD_REQUEST;
             } else if (t instanceof InputCoercionException) {
                 return RestStatus.BAD_REQUEST;
             } else if (t instanceof JsonParseException) {
                 return RestStatus.BAD_REQUEST;
-            } else if (t instanceof OpenSearchRejectedExecutionException) {
+            } else if (t instanceof DensityRejectedExecutionException) {
                 return RestStatus.TOO_MANY_REQUESTS;
             } else if (t instanceof NotXContentException) {
                 return RestStatus.BAD_REQUEST;
@@ -146,7 +146,7 @@ public final class ExceptionsHelper {
 
     public static String summaryMessage(Throwable t) {
         if (t != null) {
-            if (t instanceof OpenSearchException) {
+            if (t instanceof DensityException) {
                 return getExceptionSimpleClassName(t) + "[" + t.getMessage() + "]";
             } else if (t instanceof IllegalArgumentException) {
                 return ErrorMessages.INVALID_ARGUMENT;
@@ -154,7 +154,7 @@ public final class ExceptionsHelper {
                 return ErrorMessages.JSON_COERCION_FAILED;
             } else if (t instanceof JsonParseException) {
                 return ErrorMessages.JSON_PARSE_FAILED;
-            } else if (t instanceof OpenSearchRejectedExecutionException) {
+            } else if (t instanceof DensityRejectedExecutionException) {
                 return ErrorMessages.TOO_MANY_REQUESTS;
             }
         }
@@ -164,7 +164,7 @@ public final class ExceptionsHelper {
     public static Throwable unwrapCause(Throwable t) {
         int counter = 0;
         Throwable result = t;
-        while (result instanceof OpenSearchWrapperException) {
+        while (result instanceof DensityWrapperException) {
             if (result.getCause() == null) {
                 return result;
             }
@@ -182,17 +182,17 @@ public final class ExceptionsHelper {
     }
 
     /**
-     * Unwraps exception causes up to 10 levels looking for the first OpenSearchException.
+     * Unwraps exception causes up to 10 levels looking for the first DensityException.
      * This method is used by both HTTP and gRPC error handling to ensure consistent exception
      * unwrapping behavior across protocols.
      *
      * @param e The exception to unwrap
-     * @return The first OpenSearchException found in the cause chain, or the original exception if none found
+     * @return The first DensityException found in the cause chain, or the original exception if none found
      */
-    public static Throwable unwrapToOpenSearchException(Throwable e) {
+    public static Throwable unwrapToDensityException(Throwable e) {
         Throwable t = e;
         for (int counter = 0; counter < 10 && t != null; counter++) {
-            if (t instanceof OpenSearchException) {
+            if (t instanceof DensityException) {
                 break;
             }
             t = t.getCause();
@@ -265,7 +265,7 @@ public final class ExceptionsHelper {
             main = useOrSuppress(main, ex);
         }
         if (main != null) {
-            throw new OpenSearchException(main);
+            throw new DensityException(main);
         }
     }
 
@@ -455,8 +455,8 @@ public final class ExceptionsHelper {
             // which does not include the cluster alias.
             String indexName = failure.index();
             if (indexName == null) {
-                if (cause instanceof OpenSearchException) {
-                    final Index index = ((OpenSearchException) cause).getIndex();
+                if (cause instanceof DensityException) {
+                    final Index index = ((DensityException) cause).getIndex();
                     if (index != null) {
                         indexName = index.getName();
                     }

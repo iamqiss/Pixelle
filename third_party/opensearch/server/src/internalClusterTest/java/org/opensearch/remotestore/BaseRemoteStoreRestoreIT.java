@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.index.IndexResponse;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
 
 import java.util.Collection;
 import java.util.Map;
@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class BaseRemoteStoreRestoreIT extends RemoteStoreBaseIntegTestCase {
     static final String INDEX_NAME = "remote-store-test-idx-1";
     static final String INDEX_NAMES = "test-remote-store-1,test-remote-store-2,remote-store-test-index-1,remote-store-test-index-2";

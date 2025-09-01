@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
-import org.opensearch.packaging.util.Distribution;
+import org.density.packaging.util.Distribution;
 import org.junit.BeforeClass;
 
 import java.nio.file.Paths;
 
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.FileUtils.assertPathsDoNotExist;
-import static org.opensearch.packaging.util.FileUtils.assertPathsExist;
-import static org.opensearch.packaging.util.Packages.SYSVINIT_SCRIPT;
-import static org.opensearch.packaging.util.Packages.assertInstalled;
-import static org.opensearch.packaging.util.Packages.assertRemoved;
-import static org.opensearch.packaging.util.Packages.installPackage;
-import static org.opensearch.packaging.util.Packages.remove;
-import static org.opensearch.packaging.util.Packages.verifyPackageInstallation;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.FileUtils.assertPathsDoNotExist;
+import static org.density.packaging.util.FileUtils.assertPathsExist;
+import static org.density.packaging.util.Packages.SYSVINIT_SCRIPT;
+import static org.density.packaging.util.Packages.assertInstalled;
+import static org.density.packaging.util.Packages.assertRemoved;
+import static org.density.packaging.util.Packages.installPackage;
+import static org.density.packaging.util.Packages.remove;
+import static org.density.packaging.util.Packages.verifyPackageInstallation;
 import static org.junit.Assume.assumeTrue;
 
 public class DebPreservationTests extends PackagingTestCase {
@@ -72,7 +72,7 @@ public class DebPreservationTests extends PackagingTestCase {
         // some config files were not removed
         assertPathsExist(
             installation.config,
-            installation.config("opensearch.yml"),
+            installation.config("density.yml"),
             installation.config("jvm.options"),
             installation.config("log4j2.properties"),
             installation.config(Paths.get("jvm.options.d", "heap.options"))
@@ -80,7 +80,7 @@ public class DebPreservationTests extends PackagingTestCase {
 
         // keystore was removed
 
-        assertPathsDoNotExist(installation.config("opensearch.keystore"), installation.config(".opensearch.keystore.initial_md5sum"));
+        assertPathsDoNotExist(installation.config("density.keystore"), installation.config(".density.keystore.initial_md5sum"));
 
         // sysvinit service file was not removed
         assertThat(SYSVINIT_SCRIPT, fileExists());

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.query.rewriters.BooleanFlatteningRewriter;
-import org.opensearch.search.query.rewriters.MatchAllRemovalRewriter;
-import org.opensearch.search.query.rewriters.MustNotToShouldRewriter;
-import org.opensearch.search.query.rewriters.MustToFilterRewriter;
-import org.opensearch.search.query.rewriters.TermsMergingRewriter;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.search.SearchService;
+import org.density.search.query.rewriters.BooleanFlatteningRewriter;
+import org.density.search.query.rewriters.MatchAllRemovalRewriter;
+import org.density.search.query.rewriters.MustNotToShouldRewriter;
+import org.density.search.query.rewriters.MustToFilterRewriter;
+import org.density.search.query.rewriters.TermsMergingRewriter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Registry for query rewriters
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class QueryRewriterRegistry {
 

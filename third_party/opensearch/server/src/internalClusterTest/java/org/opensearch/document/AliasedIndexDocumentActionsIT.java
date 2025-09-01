@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.document;
+package org.density.document;
 
-import org.opensearch.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.alias.Alias;
 
-import static org.opensearch.transport.client.Requests.createIndexRequest;
+import static org.density.transport.client.Requests.createIndexRequest;
 
 public class AliasedIndexDocumentActionsIT extends DocumentActionsIT {
 

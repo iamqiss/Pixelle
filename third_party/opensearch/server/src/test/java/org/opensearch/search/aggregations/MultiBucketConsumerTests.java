@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.LongAdder;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.search.aggregations.MultiBucketConsumerService.DEFAULT_MAX_BUCKETS;
+import static org.density.search.aggregations.MultiBucketConsumerService.DEFAULT_MAX_BUCKETS;
 
-public class MultiBucketConsumerTests extends OpenSearchTestCase {
+public class MultiBucketConsumerTests extends DensityTestCase {
 
     public void testMultiConsumerAcceptWhenCBTripped() {
         CircuitBreaker breaker = Mockito.mock(CircuitBreaker.class);

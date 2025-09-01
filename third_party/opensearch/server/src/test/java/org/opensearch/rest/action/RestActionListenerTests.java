@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.DensityException;
+import org.density.core.rest.RestStatus;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
 
-public class RestActionListenerTests extends OpenSearchTestCase {
+public class RestActionListenerTests extends DensityTestCase {
 
     /**
      * Validate that response is sent even when BytesRestResponse can not be constructed from the exception
-     * see https://github.com/opensearch-project/OpenSearch/pull/923
+     * see https://github.com/density-project/Density/pull/923
      */
     public void testExceptionInByteRestResponse() throws Exception {
         FakeRestChannel channel = new FakeRestChannel(new FakeRestRequest(), true, 1);
@@ -36,10 +36,10 @@ public class RestActionListenerTests extends OpenSearchTestCase {
 
         // TODO: it will be better to mock BytesRestResponse() and throw exception from it's ctor, but the current version of
         // mockito does not support mocking static methods and ctor.
-        listener.onFailure(new OpenSearchException("mock status() call") {
+        listener.onFailure(new DensityException("mock status() call") {
             @Override
             public RestStatus status() {
-                throw new OpenSearchException("call to status failed");
+                throw new DensityException("call to status failed");
             }
         });
 

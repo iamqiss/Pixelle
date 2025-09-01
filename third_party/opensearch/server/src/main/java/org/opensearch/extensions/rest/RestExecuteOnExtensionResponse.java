@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.rest.RestResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.transport.TransportResponse;
+import org.density.rest.RestResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Response to execute REST Actions on the extension node. Wraps the components of a {@link RestResponse}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RestExecuteOnExtensionResponse extends TransportResponse {
 

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.backward_codecs.store.EndiannessReverserUtil;
@@ -15,53 +15,53 @@ import org.apache.lucene.store.ByteArrayDataOutput;
 import org.apache.lucene.store.DataOutput;
 import org.apache.lucene.tests.mockfile.FilterFileChannel;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.MissingHistoryOperationsException;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.LocalCheckpointTrackerTests;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.index.translog.transfer.TranslogUploadFailedException;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.engine.MissingHistoryOperationsException;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.LocalCheckpointTrackerTests;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.index.translog.transfer.TranslogUploadFailedException;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -100,11 +100,11 @@ import java.util.function.LongConsumer;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 
-import static org.opensearch.common.util.BigArrays.NON_RECYCLING_INSTANCE;
-import static org.opensearch.index.IndexSettings.INDEX_REMOTE_TRANSLOG_KEEP_EXTRA_GEN_SETTING;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
-import static org.opensearch.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
+import static org.density.common.util.BigArrays.NON_RECYCLING_INSTANCE;
+import static org.density.index.IndexSettings.INDEX_REMOTE_TRANSLOG_KEEP_EXTRA_GEN_SETTING;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
+import static org.density.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -115,7 +115,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS")
-public class RemoteFsTranslogTests extends OpenSearchTestCase {
+public class RemoteFsTranslogTests extends DensityTestCase {
 
     protected final ShardId shardId = new ShardId("index", "_na_", 1);
 
@@ -216,7 +216,7 @@ public class RemoteFsTranslogTests extends OpenSearchTestCase {
 
     private TranslogConfig getTranslogConfig(final Path path, int gensToKeep) {
         final Settings settings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             // only randomize between nog age retention and a long one, so failures will have a chance of reproducing
             .put(IndexSettings.INDEX_TRANSLOG_RETENTION_AGE_SETTING.getKey(), randomBoolean() ? "-1ms" : "1h")
             .put(IndexSettings.INDEX_TRANSLOG_RETENTION_SIZE_SETTING.getKey(), randomIntBetween(-1, 2048) + "b")
@@ -1923,7 +1923,7 @@ public class RemoteFsTranslogTests extends OpenSearchTestCase {
             try {
                 return new ThrowingBlobContainer(this, path, buildAndCreate(path), fail, slowDown);
             } catch (IOException ex) {
-                throw new OpenSearchException("failed to create blob container", ex);
+                throw new DensityException("failed to create blob container", ex);
             }
         }
     }

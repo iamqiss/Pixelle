@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentFragment;
 
 /**
  * Represents the common interface that all moving average models share. Moving
  * average models are used by the MovAvg aggregation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface MovAvgModelBuilder extends ToXContentFragment {
 

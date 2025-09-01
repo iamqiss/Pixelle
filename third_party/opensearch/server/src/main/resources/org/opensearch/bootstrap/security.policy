@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,7 +26,7 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -37,20 +37,20 @@
 //// SecurityManager impl:
 //// Must have all permissions to properly perform access checks
 
-grant codeBase "${codebase.opensearch-secure-sm}" {
+grant codeBase "${codebase.density-secure-sm}" {
   permission java.security.AllPermission;
 };
 
 //// Opensearch core:
 //// These are only allowed inside the server jar, not in plugins
-grant codeBase "${codebase.opensearch}" {
+grant codeBase "${codebase.density}" {
   // needed for loading plugins which may expect the context class loader to be set
   permission java.lang.RuntimePermission "setContextClassLoader";
   permission java.lang.RuntimePermission "getClassLoader";
   // needed for SPI class loading
   permission java.lang.RuntimePermission "accessDeclaredMembers";
-  permission org.opensearch.secure_sm.ThreadContextPermission "markAsSystemContext";
-  permission org.opensearch.secure_sm.ThreadContextPermission "stashWithOrigin";
+  permission org.density.secure_sm.ThreadContextPermission "markAsSystemContext";
+  permission org.density.secure_sm.ThreadContextPermission "stashWithOrigin";
 };
 
 //// Very special jar permissions:
@@ -72,7 +72,7 @@ grant codeBase "${codebase.lucene-misc}" {
   permission java.nio.file.LinkPermission "hard";
 };
 
-grant codeBase "${codebase.opensearch-plugin-classloader}" {
+grant codeBase "${codebase.density-plugin-classloader}" {
   // needed to create the classloader which allows plugins to extend other plugins
   permission java.lang.RuntimePermission "createClassLoader";
 };
@@ -94,12 +94,12 @@ grant codeBase "${codebase.reactor-core}" {
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch-cli}" {
+grant codeBase "${codebase.density-cli}" {
   permission java.net.SocketPermission "*", "connect,resolve";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch-core}" {
+grant codeBase "${codebase.density-core}" {
   permission java.net.SocketPermission "*", "connect,resolve";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
@@ -109,17 +109,17 @@ grant codeBase "${codebase.jackson-core}" {
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch-common}" {
+grant codeBase "${codebase.density-common}" {
   permission java.net.SocketPermission "*", "connect,resolve";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch-x-content}" {
+grant codeBase "${codebase.density-x-content}" {
   permission java.net.SocketPermission "*", "connect,resolve";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch}" {
+grant codeBase "${codebase.density}" {
   permission java.net.SocketPermission "*", "connect,resolve";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
@@ -132,7 +132,7 @@ grant codeBase "${codebase.bc-fips}" {
   permission java.io.FilePermission "${java.home}/conf/security/policy/unlimited/*", "read";
 };
 
-grant codeBase "${codebase.opensearch-ssl-config}" {
+grant codeBase "${codebase.density-ssl-config}" {
   permission java.io.FilePermission "${java.home}/conf/security/policy/unlimited/*", "read";
 };
 
@@ -144,7 +144,7 @@ grant {
 
   // checked by scripting engines, and before hacks and other issues in
   // third party code, to safeguard these against unprivileged code like scripts.
-  permission org.opensearch.SpecialPermission;
+  permission org.density.SpecialPermission;
 
   // Allow host/ip name service lookups
   permission java.net.SocketPermission "*", "resolve";
@@ -173,12 +173,12 @@ grant {
   permission java.util.PropertyPermission "solr.data.dir", "write";
   permission java.util.PropertyPermission "solr.directoryFactory", "write";
 
-  // set by OpenSearchTestCase to improve test reproducibility
+  // set by DensityTestCase to improve test reproducibility
   // TODO: set this with gradle or some other way that repros with seed?
   permission java.util.PropertyPermission "processors.override", "write";
 
   // needed for feature flags
-  permission java.util.PropertyPermission "opensearch.experimental.feature.*", "write";
+  permission java.util.PropertyPermission "density.experimental.feature.*", "write";
 
   // TODO: these simply trigger a noisy warning if its unable to clear the properties
   // fix that in randomizedtesting
@@ -232,7 +232,7 @@ grant {
 
   // control group stats on Linux
   // TODO: update later when wildcard is supported in policy
-  // https://github.com/opensearch-project/OpenSearch/pull/18987
+  // https://github.com/density-project/Density/pull/18987
   permission java.io.FilePermission "/proc/self/cgroup", "read";
   permission java.io.FilePermission "/sys/fs/cgroup/cpu", "read";
   permission java.io.FilePermission "/sys/fs/cgroup/cpu/-", "read";

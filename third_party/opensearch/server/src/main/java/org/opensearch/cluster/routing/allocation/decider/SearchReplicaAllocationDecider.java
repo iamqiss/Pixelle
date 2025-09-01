@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RoutingAllocation;
 
 /**
  * A search replica can be allocated to only nodes with a search role
  * other shard types will not be allocated to these nodes.
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchReplicaAllocationDecider extends AllocationDecider {
 

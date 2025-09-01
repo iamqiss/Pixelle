@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.FlightStream;
@@ -15,17 +15,17 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.arrow.flight.bootstrap.FlightClientManager;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.arrow.spi.StreamReader;
-import org.opensearch.arrow.spi.StreamTicket;
-import org.opensearch.arrow.spi.StreamTicketFactory;
-import org.opensearch.common.cache.Cache;
-import org.opensearch.common.cache.CacheBuilder;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.TaskId;
+import org.density.arrow.flight.bootstrap.FlightClientManager;
+import org.density.arrow.spi.StreamManager;
+import org.density.arrow.spi.StreamProducer;
+import org.density.arrow.spi.StreamReader;
+import org.density.arrow.spi.StreamTicket;
+import org.density.arrow.spi.StreamTicketFactory;
+import org.density.common.cache.Cache;
+import org.density.common.cache.CacheBuilder;
+import org.density.common.cache.RemovalReason;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.TaskId;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 
 /**
  * FlightStreamManager is a concrete implementation of StreamManager that provides
- * an abstraction layer for managing Arrow Flight streams in OpenSearch.
+ * an abstraction layer for managing Arrow Flight streams in Density.
  * It encapsulates the details of Flight client operations, allowing consumers to
  * work with streams without direct exposure to Flight internals.
  */

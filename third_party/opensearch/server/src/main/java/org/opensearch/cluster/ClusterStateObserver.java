@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -51,7 +51,7 @@ import java.util.function.Supplier;
  * one tries to take action based on the current state but may want to wait for a new state
  * and retry upon failure.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterStateObserver {
 
@@ -120,7 +120,7 @@ public class ClusterStateObserver {
     /** sets the last observed state to the currently applied cluster state and returns it */
     public ClusterState setAndGetObservedState() {
         if (observingContext.get() != null) {
-            throw new OpenSearchException("cannot set current cluster state while waiting for a cluster state change");
+            throw new DensityException("cannot set current cluster state while waiting for a cluster state change");
         }
         ClusterState clusterState = clusterApplierService.state();
         lastObservedState.set(new StoredState(clusterState));
@@ -154,7 +154,7 @@ public class ClusterStateObserver {
     public void waitForNextChange(Listener listener, Predicate<ClusterState> statePredicate, @Nullable TimeValue timeOutValue) {
         listener = new ContextPreservingListener(listener, contextHolder.newRestorableContext(false));
         if (observingContext.get() != null) {
-            throw new OpenSearchException("already waiting for a cluster state change");
+            throw new DensityException("already waiting for a cluster state change");
         }
 
         Long timeoutTimeLeftMS;
@@ -198,7 +198,7 @@ public class ClusterStateObserver {
             logger.trace("observer: sampled state rejected by predicate ({}). adding listener to ClusterService", newState);
             final ObservingContext context = new ObservingContext(listener, statePredicate);
             if (!observingContext.compareAndSet(null, context)) {
-                throw new OpenSearchException("already waiting for a cluster state change");
+                throw new DensityException("already waiting for a cluster state change");
             }
             clusterApplierService.addTimeoutListener(
                 timeoutTimeLeftMS == null ? null : new TimeValue(timeoutTimeLeftMS),
@@ -210,7 +210,7 @@ public class ClusterStateObserver {
     /**
      * An observer of the cluster state for changes.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class ObserverClusterStateListener implements TimeoutClusterStateListener {
 
@@ -304,7 +304,7 @@ public class ClusterStateObserver {
     /**
      * The observer considers two cluster states to be the same if they have the same version and cluster-manager node id (i.e. null or set)
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class StoredState {
         private final String clusterManagerNodeId;
@@ -327,7 +327,7 @@ public class ClusterStateObserver {
     /**
      * Listener for the observer.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Listener {
 
@@ -343,7 +343,7 @@ public class ClusterStateObserver {
     /**
      * Context for the observer.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ObservingContext {
         public final Listener listener;
@@ -363,7 +363,7 @@ public class ClusterStateObserver {
     /**
      * A context preserving listener.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ContextPreservingListener implements Listener {
         private final Listener delegate;

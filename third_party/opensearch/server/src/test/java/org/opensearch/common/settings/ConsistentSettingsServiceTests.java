@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.service.ClusterService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -48,7 +48,7 @@ import org.mockito.stubbing.Answer;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
-public class ConsistentSettingsServiceTests extends OpenSearchTestCase {
+public class ConsistentSettingsServiceTests extends DensityTestCase {
 
     private AtomicReference<ClusterState> clusterState = new AtomicReference<>();
     private ClusterService clusterService;

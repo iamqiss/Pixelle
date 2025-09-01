@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.backward_codecs.store.EndiannessReverserUtil;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.util.set.Sets;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class RecoveryStatusTests extends OpenSearchSingleNodeTestCase {
-    private static final org.apache.lucene.util.Version MIN_SUPPORTED_LUCENE_VERSION = org.opensearch.Version.CURRENT
+public class RecoveryStatusTests extends DensitySingleNodeTestCase {
+    private static final org.apache.lucene.util.Version MIN_SUPPORTED_LUCENE_VERSION = org.density.Version.CURRENT
         .minimumIndexCompatibilityVersion().luceneVersion;
 
     public void testRenameTempFiles() throws IOException {

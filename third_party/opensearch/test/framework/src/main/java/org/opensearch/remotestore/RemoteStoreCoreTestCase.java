@@ -1,51 +1,51 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.Priority;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.BufferedAsyncIOProcessor;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.Translog.Durability;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.recovery.PeerRecoveryTargetService;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.Priority;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.BufferedAsyncIOProcessor;
+import org.density.index.IndexSettings;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.translog.Translog;
+import org.density.index.translog.Translog.Durability;
+import org.density.indices.IndicesService;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.recovery.PeerRecoveryTargetService;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.plugins.Plugin;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotState;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
+import org.density.transport.client.Requests;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
@@ -62,23 +62,23 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.index.shard.IndexShardTestCase.getTranslog;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_INDEX_SEGMENT_METADATA_RETENTION_MAX_COUNT_SETTING;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_TRANSLOG_BUFFER_INTERVAL_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.shard.IndexShardTestCase.getTranslog;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_INDEX_SEGMENT_METADATA_RETENTION_MAX_COUNT_SETTING;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_TRANSLOG_BUFFER_INTERVAL_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.oneOf;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreCoreTestCase extends RemoteStoreBaseIntegTestCase {
 
     protected final String INDEX_NAME = "remote-store-test-idx-1";
@@ -200,7 +200,7 @@ public class RemoteStoreCoreTestCase extends RemoteStoreBaseIntegTestCase {
         }, 30, TimeUnit.SECONDS);
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/9327")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/9327")
     public void testRemoteTranslogCleanup() throws Exception {
         verifyRemoteStoreCleanup();
     }
@@ -809,7 +809,7 @@ public class RemoteStoreCoreTestCase extends RemoteStoreBaseIntegTestCase {
         mockTargetTransportService.addSendBehavior((connection, requestId, action, request, options) -> {
             if (PeerRecoveryTargetService.Actions.HANDOFF_PRIMARY_CONTEXT.equals(action)) {
                 handOffLatch.countDown();
-                throw new OpenSearchException("failing recovery for test purposes");
+                throw new DensityException("failing recovery for test purposes");
             }
             connection.sendRequest(requestId, action, request, options);
         });

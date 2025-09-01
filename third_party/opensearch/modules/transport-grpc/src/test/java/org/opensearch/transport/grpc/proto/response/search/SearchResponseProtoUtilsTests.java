@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.protobufs.PhaseTook;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.unit.TimeValue;
+import org.density.protobufs.PhaseTook;
+import org.density.search.SearchHits;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import java.util.Map;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
+public class SearchResponseProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithBasicResponse() throws IOException {
         // Create a mock SearchResponse
@@ -41,7 +41,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -69,7 +69,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -92,7 +92,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -126,7 +126,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -155,7 +155,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -178,7 +178,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -200,7 +200,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         when(mockResponse.getInternalResponse()).thenReturn(mock(SearchResponseSections.class));
 
         // Call the method under test
-        org.opensearch.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
+        org.density.protobufs.SearchResponse protoResponse = SearchResponseProtoUtils.toProto(mockResponse);
 
         // Verify the result
         assertNotNull("Proto response should not be null", protoResponse);
@@ -258,7 +258,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         SearchResponse.Clusters clusters = new SearchResponse.Clusters(3, 2, 1);
 
         // Create a builder to populate
-        org.opensearch.protobufs.ResponseBody.Builder builder = org.opensearch.protobufs.ResponseBody.newBuilder();
+        org.density.protobufs.ResponseBody.Builder builder = org.density.protobufs.ResponseBody.newBuilder();
 
         // Call the method under test
         SearchResponseProtoUtils.ClustersProtoUtils.toProto(builder, clusters);
@@ -275,7 +275,7 @@ public class SearchResponseProtoUtilsTests extends OpenSearchTestCase {
         SearchResponse.Clusters clusters = new SearchResponse.Clusters(0, 0, 0);
 
         // Create a builder to populate
-        org.opensearch.protobufs.ResponseBody.Builder builder = org.opensearch.protobufs.ResponseBody.newBuilder();
+        org.density.protobufs.ResponseBody.Builder builder = org.density.protobufs.ResponseBody.newBuilder();
 
         // Call the method under test
         SearchResponseProtoUtils.ClustersProtoUtils.toProto(builder, clusters);

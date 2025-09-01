@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.services;
+package org.density.transport.grpc.services;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.BulkRequestBody;
-import org.opensearch.protobufs.CreateOperation;
-import org.opensearch.protobufs.DeleteOperation;
-import org.opensearch.protobufs.IndexOperation;
-import org.opensearch.protobufs.UpdateOperation;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.grpc.proto.request.document.bulk.BulkRequestProtoUtils;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.BulkRequestBody;
+import org.density.protobufs.CreateOperation;
+import org.density.protobufs.DeleteOperation;
+import org.density.protobufs.IndexOperation;
+import org.density.protobufs.UpdateOperation;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.grpc.proto.request.document.bulk.BulkRequestProtoUtils;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.io.IOException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
+public class BulkRequestProtoUtilsTests extends DensityTestCase {
 
     @Mock
     private NodeClient client;
@@ -42,8 +42,8 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         // Create a Protocol Buffer BulkRequest with an index operation
         BulkRequest request = createBulkRequestWithIndexOperation();
 
-        // Convert to OpenSearch BulkRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        // Convert to Density BulkRequest
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the converted request
         assertEquals("Should have 1 request", 1, bulkRequest.numberOfActions());
@@ -63,8 +63,8 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         // Create a Protocol Buffer BulkRequest with a create operation
         BulkRequest request = createBulkRequestWithCreateOperation();
 
-        // Convert to OpenSearch BulkRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        // Convert to Density BulkRequest
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the converted request
         assertEquals("Should have 1 request", 1, bulkRequest.numberOfActions());
@@ -80,8 +80,8 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         // Create a Protocol Buffer BulkRequest with a delete operation
         BulkRequest request = createBulkRequestWithDeleteOperation();
 
-        // Convert to OpenSearch BulkRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        // Convert to Density BulkRequest
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the converted request
         assertEquals("Should have 1 request", 1, bulkRequest.numberOfActions());
@@ -96,8 +96,8 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         // Create a Protocol Buffer BulkRequest with an update operation
         BulkRequest request = createBulkRequestWithUpdateOperation();
 
-        // Convert to OpenSearch BulkRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        // Convert to Density BulkRequest
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the converted request
         assertEquals("Should have 1 request", 1, bulkRequest.numberOfActions());

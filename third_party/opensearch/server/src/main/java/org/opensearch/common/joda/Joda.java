@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.FormatNames;
-import org.opensearch.common.util.LazyInitializable;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.FormatNames;
+import org.density.common.util.LazyInitializable;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeField;
@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  *
  * @deprecated
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Deprecated
 public class Joda {
@@ -421,7 +421,7 @@ public class Joda {
     /**
      * parses epcoch timers
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class EpochTimeParser implements DateTimeParser {
 
@@ -459,14 +459,14 @@ public class Joda {
                     getDeprecationLogger().deprecate(
                         "epoch-negative",
                         "Use of negative values"
-                            + " in epoch time formats is deprecated and will not be supported in the next major version of OpenSearch."
+                            + " in epoch time formats is deprecated and will not be supported in the next major version of Density."
                     );
                 }
                 if (scientificNotation.matcher(text).find()) {
                     getDeprecationLogger().deprecate(
                         "epoch-scientific-notation",
                         "Use of scientific notation"
-                            + " in epoch time formats is deprecated and will not be supported in the next major version of OpenSearch."
+                            + " in epoch time formats is deprecated and will not be supported in the next major version of Density."
                     );
                 }
                 DateTime dt = new DateTime(millis, DateTimeZone.UTC);
@@ -492,7 +492,7 @@ public class Joda {
     /**
      * Epoch timer printer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class EpochTimePrinter implements DateTimePrinter {
 

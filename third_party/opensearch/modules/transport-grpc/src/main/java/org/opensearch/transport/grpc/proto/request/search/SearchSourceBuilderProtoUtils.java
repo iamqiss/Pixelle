@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.DerivedField;
-import org.opensearch.protobufs.FieldAndFormat;
-import org.opensearch.protobufs.NumberMap;
-import org.opensearch.protobufs.Rescore;
-import org.opensearch.protobufs.ScriptField;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.protobufs.TrackHits;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
-import org.opensearch.transport.grpc.proto.request.common.ScriptProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.sort.SortBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.suggest.SuggestBuilderProtoUtils;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.DerivedField;
+import org.density.protobufs.FieldAndFormat;
+import org.density.protobufs.NumberMap;
+import org.density.protobufs.Rescore;
+import org.density.protobufs.ScriptField;
+import org.density.protobufs.SearchRequestBody;
+import org.density.protobufs.TrackHits;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
+import org.density.transport.grpc.proto.request.common.ScriptProtoUtils;
+import org.density.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.sort.SortBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.suggest.SuggestBuilderProtoUtils;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.search.builder.SearchSourceBuilder.TIMEOUT_FIELD;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
+import static org.density.search.builder.SearchSourceBuilder.TIMEOUT_FIELD;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
 
 /**
  * Utility class for converting SearchSourceBuilder Protocol Buffers to objects
@@ -198,7 +198,7 @@ public class SearchSourceBuilderProtoUtils {
         if (protoRequest.getDocvalueFieldsCount() > 0) {
             for (FieldAndFormat fieldAndFormatProto : protoRequest.getDocvalueFieldsList()) {
                 /**
-                 * Similar to {@link org.opensearch.search.fetch.subphase.FieldAndFormat#fromXContent(XContentParser)}
+                 * Similar to {@link org.density.search.fetch.subphase.FieldAndFormat#fromXContent(XContentParser)}
                 */
                 searchSourceBuilder.docValueField(fieldAndFormatProto.getField(), fieldAndFormatProto.getFormat());
             }
@@ -207,7 +207,7 @@ public class SearchSourceBuilderProtoUtils {
         if (protoRequest.getFieldsCount() > 0) {
             for (FieldAndFormat fieldAndFormatProto : protoRequest.getFieldsList()) {
                 /**
-                 * Similar to {@link org.opensearch.search.fetch.subphase.FieldAndFormat#fromXContent(XContentParser)}
+                 * Similar to {@link org.density.search.fetch.subphase.FieldAndFormat#fromXContent(XContentParser)}
                  */
                 searchSourceBuilder.fetchField(fieldAndFormatProto.getField(), fieldAndFormatProto.getFormat());
             }
@@ -221,7 +221,7 @@ public class SearchSourceBuilderProtoUtils {
     }
 
     /**
-     * Utility class for converting ScriptField Protocol Buffers to OpenSearch objects.
+     * Utility class for converting ScriptField Protocol Buffers to Density objects.
      * This class handles the transformation of script field definitions between the two formats.
      */
     public static class ScriptFieldProtoUtils {
@@ -242,7 +242,7 @@ public class SearchSourceBuilderProtoUtils {
          */
 
         public static SearchSourceBuilder.ScriptField fromProto(String scriptFieldName, ScriptField scriptFieldProto) throws IOException {
-            org.opensearch.script.Script script = ScriptProtoUtils.parseFromProtoRequest(scriptFieldProto.getScript());
+            org.density.script.Script script = ScriptProtoUtils.parseFromProtoRequest(scriptFieldProto.getScript());
             boolean ignoreFailure = scriptFieldProto.hasIgnoreFailure() ? scriptFieldProto.getIgnoreFailure() : false;
 
             return new SearchSourceBuilder.ScriptField(scriptFieldName, script, ignoreFailure);

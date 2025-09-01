@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.discovery.DiscoveryStats;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -26,15 +26,15 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.METADATA_FILE_PREFIX;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.METADATA_FILE_PREFIX;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteClusterStateServiceIT extends RemoteStoreBaseIntegTestCase {
 
     private static String INDEX_NAME = "test-index";

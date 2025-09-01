@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,75 +25,75 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.LocalClusterUpdateTask;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.ClusterFormationFailureHelper.ClusterFormationState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.CoordinationState.VoteCollection;
-import org.opensearch.cluster.coordination.FollowersChecker.FollowerCheckRequest;
-import org.opensearch.cluster.coordination.JoinHelper.InitialJoinAccumulator;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterApplier.ClusterApplyListener;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.cluster.service.ClusterStateStats;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.discovery.HandshakingTransportAddressConnector;
-import org.opensearch.discovery.PeerFinder;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.discovery.SeedHostsResolver;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.telemetry.metrics.tags.Tags;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.LocalClusterUpdateTask;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.ClusterFormationFailureHelper.ClusterFormationState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.CoordinationState.VoteCollection;
+import org.density.cluster.coordination.FollowersChecker.FollowerCheckRequest;
+import org.density.cluster.coordination.JoinHelper.InitialJoinAccumulator;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterApplier.ClusterApplyListener;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.cluster.service.ClusterStateStats;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasable;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.discovery.Discovery;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.DiscoveryStats;
+import org.density.discovery.HandshakingTransportAddressConnector;
+import org.density.discovery.PeerFinder;
+import org.density.discovery.SeedHostsProvider;
+import org.density.discovery.SeedHostsResolver;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.telemetry.metrics.tags.Tags;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,22 +112,22 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.cluster.ClusterManagerMetrics.FOLLOWER_NODE_ID_TAG;
-import static org.opensearch.cluster.ClusterManagerMetrics.REASON_TAG;
-import static org.opensearch.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_DISCONNECTED;
-import static org.opensearch.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_FOLLOWER_CHECK_RETRY_FAIL;
-import static org.opensearch.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_HEALTHCHECK_FAIL;
-import static org.opensearch.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_LAGGING;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ID;
-import static org.opensearch.cluster.decommission.DecommissionHelper.nodeCommissioned;
-import static org.opensearch.gateway.ClusterStateUpdaters.hideStateIfNotRecovered;
-import static org.opensearch.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.cluster.ClusterManagerMetrics.FOLLOWER_NODE_ID_TAG;
+import static org.density.cluster.ClusterManagerMetrics.REASON_TAG;
+import static org.density.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_DISCONNECTED;
+import static org.density.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_FOLLOWER_CHECK_RETRY_FAIL;
+import static org.density.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_HEALTHCHECK_FAIL;
+import static org.density.cluster.coordination.FollowersChecker.NODE_LEFT_REASON_LAGGING;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ID;
+import static org.density.cluster.decommission.DecommissionHelper.nodeCommissioned;
+import static org.density.gateway.ClusterStateUpdaters.hideStateIfNotRecovered;
+import static org.density.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * The main lifecycle resource coordinator
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Coordinator extends AbstractLifecycleComponent implements Discovery {
 
@@ -1486,7 +1486,7 @@ public class Coordinator extends AbstractLifecycleComponent implements Discovery
     /**
      * The mode of the coordinator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Mode {
         CANDIDATE,
@@ -1497,7 +1497,7 @@ public class Coordinator extends AbstractLifecycleComponent implements Discovery
     /**
      * The coordinator peer finder.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class CoordinatorPeerFinder extends PeerFinder {
 
@@ -1643,7 +1643,7 @@ public class Coordinator extends AbstractLifecycleComponent implements Discovery
     /**
      * The coordinator publication.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class CoordinatorPublication extends Publication {
 
@@ -1844,7 +1844,7 @@ public class Coordinator extends AbstractLifecycleComponent implements Discovery
                     ackListener.onNodeAck(getLocalNode(), exception); // other nodes have acked, but not the cluster manager.
                     publishListener.onFailure(exception);
                 }
-            }, OpenSearchExecutors.newDirectExecutorService(), transportService.getThreadPool().getThreadContext());
+            }, DensityExecutors.newDirectExecutorService(), transportService.getThreadPool().getThreadContext());
         }
 
         private void cancelTimeoutHandlers() {

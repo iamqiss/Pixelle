@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.ssl;
+package org.density.transport.grpc.ssl;
 
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -23,12 +23,12 @@ import io.grpc.BindableService;
 import io.grpc.StatusRuntimeException;
 import io.grpc.health.v1.HealthCheckResponse;
 
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.ConnectExceptions.BAD_CERT;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthOptional;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthRequired;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.ConnectExceptions.BAD_CERT;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthNone;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthOptional;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getServerClientAuthRequired;
 
-public class SecureNetty4GrpcServerTransportTests extends OpenSearchTestCase {
+public class SecureNetty4GrpcServerTransportTests extends DensityTestCase {
     private NetworkService networkService;
     private final List<BindableService> services = new ArrayList<>();
 

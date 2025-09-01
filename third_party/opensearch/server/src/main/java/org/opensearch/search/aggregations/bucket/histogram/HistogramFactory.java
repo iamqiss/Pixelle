@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
 /**
  * Implemented by histogram aggregations and used by pipeline aggregations to insert buckets.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // public so that pipeline aggs can use this API: can we fix it?
 public interface HistogramFactory {

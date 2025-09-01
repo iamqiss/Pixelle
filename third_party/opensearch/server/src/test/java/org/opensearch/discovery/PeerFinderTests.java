@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.cluster.coordination.PeersResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.node.DiscoveryNodes.Builder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.PeerFinder.TransportAddressConnector;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.test.transport.CapturingTransport.CapturedRequest;
-import org.opensearch.test.transport.StubbableConnectionManager;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.ClusterConnectionManager;
-import org.opensearch.transport.ConnectionManager;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.cluster.coordination.PeersResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.node.DiscoveryNodes.Builder;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.PeerFinder.TransportAddressConnector;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.test.transport.CapturingTransport.CapturedRequest;
+import org.density.test.transport.StubbableConnectionManager;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.ClusterConnectionManager;
+import org.density.transport.ConnectionManager;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -80,8 +80,8 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
-import static org.opensearch.discovery.PeerFinder.REQUEST_PEERS_ACTION_NAME;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.discovery.PeerFinder.REQUEST_PEERS_ACTION_NAME;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.emptyArray;
@@ -90,7 +90,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PeerFinderTests extends OpenSearchTestCase {
+public class PeerFinderTests extends DensityTestCase {
 
     private CapturingTransport capturingTransport;
     private DeterministicTaskQueue deterministicTaskQueue;
@@ -148,7 +148,7 @@ public class PeerFinderTests extends OpenSearchTestCase {
                                 listener.onResponse(discoveryNode);
                                 return;
                             } else {
-                                listener.onFailure(new OpenSearchException("non-cluster-manager node " + discoveryNode));
+                                listener.onFailure(new DensityException("non-cluster-manager node " + discoveryNode));
                                 return;
                             }
                         }

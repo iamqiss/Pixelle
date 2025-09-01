@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.get.GetResponse;
+import org.density.action.get.GetResponse;
 
-import static org.opensearch.action.DocWriteRequest.OpType.CREATE;
-import static org.opensearch.index.VersionType.EXTERNAL;
-import static org.opensearch.index.VersionType.INTERNAL;
+import static org.density.action.DocWriteRequest.OpType.CREATE;
+import static org.density.index.VersionType.EXTERNAL;
+import static org.density.index.VersionType.INTERNAL;
 
 public class ReindexVersioningTests extends ReindexTestCase {
     private static final int SOURCE_VERSION = 4;

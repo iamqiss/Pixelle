@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
 
 /**
  * An index event listener is the primary extension point for plugins and build-in services
  * to react / listen to per-index and per-shard events. These listeners are registered per-index
- * via {@link org.opensearch.index.IndexModule#addIndexEventListener(IndexEventListener)}. All listeners have the same
+ * via {@link org.density.index.IndexModule#addIndexEventListener(IndexEventListener)}. All listeners have the same
  * lifecycle as the {@link IndexService} they are created for.
  * <p>
  * An IndexEventListener can be used across multiple indices and shards since all callback methods receive sufficient
@@ -52,7 +52,7 @@ import org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndice
  * modify local state without sufficient synchronization.
  * </p>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndexEventListener {
@@ -91,7 +91,7 @@ public interface IndexEventListener {
     default void afterIndexShardClosed(ShardId shardId, @Nullable IndexShard indexShard, Settings indexSettings) {}
 
     /**
-     * Called after a shard's {@link org.opensearch.index.shard.IndexShardState} changes.
+     * Called after a shard's {@link org.density.index.shard.IndexShardState} changes.
      * The order of concurrent events is preserved. The execution must be lightweight.
      *
      * @param indexShard the shard the new state was applied to

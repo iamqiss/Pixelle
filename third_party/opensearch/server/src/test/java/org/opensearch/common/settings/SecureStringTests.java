@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.settings.SecureString;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 
@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class SecureStringTests extends OpenSearchTestCase {
+public class SecureStringTests extends DensityTestCase {
 
     public void testCloseableCharsDoesNotModifySecureString() {
         final char[] password = randomAlphaOfLengthBetween(1, 32).toCharArray();

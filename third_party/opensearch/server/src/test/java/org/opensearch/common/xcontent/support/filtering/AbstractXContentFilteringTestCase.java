@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.support.filtering;
+package org.density.common.xcontent.support.filtering;
 
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.AbstractFilteringTestCase;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.AbstractFilteringTestCase;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 import org.junit.Assert;
 
 import java.io.IOException;

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.stats;
+package org.density.arrow.flight.stats;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class FlightStatsRequestTests extends OpenSearchTestCase {
+public class FlightStatsRequestTests extends DensityTestCase {
 
     public void testBasicFunctionality() throws IOException {
         FlightStatsRequest request = new FlightStatsRequest("node1", "node2");

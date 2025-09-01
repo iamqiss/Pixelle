@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.api.flightinfo;
+package org.density.arrow.flight.api.flightinfo;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
-public class NodesFlightInfoRequestTests extends OpenSearchTestCase {
+public class NodesFlightInfoRequestTests extends DensityTestCase {
 
     public void testNodesFlightInfoRequestSerialization() throws Exception {
         NodesFlightInfoRequest originalRequest = new NodesFlightInfoRequest("node1", "node2");

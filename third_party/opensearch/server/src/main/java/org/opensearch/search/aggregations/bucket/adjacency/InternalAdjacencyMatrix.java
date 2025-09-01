@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.adjacency;
+package org.density.search.aggregations.bucket.adjacency;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import java.util.Objects;
 /**
  * Internal class used to represent an adjacency matrix as a collection of buckets
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalAdjacencyMatrix extends InternalMultiBucketAggregation<InternalAdjacencyMatrix, InternalAdjacencyMatrix.InternalBucket>
     implements
@@ -60,7 +60,7 @@ public class InternalAdjacencyMatrix extends InternalMultiBucketAggregation<Inte
     /**
      * An internal bucket of the adjacency matrix
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class InternalBucket extends InternalMultiBucketAggregation.InternalBucket implements AdjacencyMatrix.Bucket {
 

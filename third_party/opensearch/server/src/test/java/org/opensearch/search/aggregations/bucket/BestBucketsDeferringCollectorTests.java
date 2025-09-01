@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -47,10 +47,10 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.BucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.internal.SearchContext;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.BucketCollector;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Collections;

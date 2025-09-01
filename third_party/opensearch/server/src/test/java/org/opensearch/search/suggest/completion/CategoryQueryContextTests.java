@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.suggest.completion.context.CategoryQueryContext;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.suggest.completion.context.CategoryQueryContext;
 
 import java.io.IOException;
 

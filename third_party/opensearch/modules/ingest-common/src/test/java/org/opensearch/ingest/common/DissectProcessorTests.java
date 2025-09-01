@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.dissect.DissectException;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.MapBuilder;
+import org.density.dissect.DissectException;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 import org.hamcrest.CoreMatchers;
 
 import java.util.Collections;
 import java.util.HashMap;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
- * Basic tests for the {@link DissectProcessor}. See the {@link org.opensearch.dissect.DissectParser} test suite for a comprehensive
+ * Basic tests for the {@link DissectProcessor}. See the {@link org.density.dissect.DissectParser} test suite for a comprehensive
  * set of dissect tests.
  */
-public class DissectProcessorTests extends OpenSearchTestCase {
+public class DissectProcessorTests extends DensityTestCase {
 
     public void testMatch() {
         IngestDocument ingestDocument = new IngestDocument(

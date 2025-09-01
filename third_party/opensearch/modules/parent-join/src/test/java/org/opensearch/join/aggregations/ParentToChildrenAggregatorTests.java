@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.aggregations;
+package org.density.join.aggregations;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.SortedDocValuesField;
@@ -46,32 +46,32 @@ import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.join.ParentJoinModulePlugin;
-import org.opensearch.join.mapper.MetaJoinFieldMapper;
-import org.opensearch.join.mapper.ParentJoinFieldMapper;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalMin;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MappingLookup;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.join.ParentJoinModulePlugin;
+import org.density.join.mapper.MetaJoinFieldMapper;
+import org.density.join.mapper.ParentJoinFieldMapper;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalMin;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -117,7 +117,7 @@ public class ParentToChildrenAggregatorTests extends AggregatorTestCase {
         final Map<String, Tuple<Integer, Integer>> expectedParentChildRelations = setupIndex(indexWriter);
         indexWriter.close();
 
-        IndexReader indexReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(directory), new ShardId(new Index("foo", "_na_"), 1));
+        IndexReader indexReader = DensityDirectoryReader.wrap(DirectoryReader.open(directory), new ShardId(new Index("foo", "_na_"), 1));
         // TODO set "maybeWrap" to true for IndexSearcher once #23338 is resolved
         IndexSearcher indexSearcher = newSearcher(indexReader, false, true);
 
@@ -155,7 +155,7 @@ public class ParentToChildrenAggregatorTests extends AggregatorTestCase {
             indexWriter.close();
 
             try (
-                IndexReader indexReader = OpenSearchDirectoryReader.wrap(
+                IndexReader indexReader = DensityDirectoryReader.wrap(
                     DirectoryReader.open(directory),
                     new ShardId(new Index("foo", "_na_"), 1)
                 )

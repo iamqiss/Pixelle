@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
@@ -44,84 +44,84 @@ import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.AssertingDirectoryReader;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.SetOnce.AlreadySetException;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLock;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.cache.query.DisabledQueryCache;
-import org.opensearch.index.cache.query.IndexQueryCache;
-import org.opensearch.index.cache.query.QueryCache;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.engine.InternalEngineTests;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexingOperationListener;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.similarity.NonNegativeScoresSimilarity;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.InternalTranslogFactory;
-import org.opensearch.index.translog.RemoteBlobStoreInternalTranslogFactory;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.indices.recovery.DefaultRecoverySettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.engine.MockEngineFactory;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.SetOnce;
+import org.density.common.SetOnce.AlreadySetException;
+import org.density.common.UUIDs;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLock;
+import org.density.env.TestEnvironment;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.cache.query.DisabledQueryCache;
+import org.density.index.cache.query.IndexQueryCache;
+import org.density.index.cache.query.QueryCache;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.engine.InternalEngineTests;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.Uid;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexingOperationListener;
+import org.density.index.shard.SearchOperationListener;
+import org.density.index.shard.ShardPath;
+import org.density.index.similarity.NonNegativeScoresSimilarity;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.translog.InternalTranslogFactory;
+import org.density.index.translog.RemoteBlobStoreInternalTranslogFactory;
+import org.density.index.translog.TranslogFactory;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesModule;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.indices.recovery.DefaultRecoverySettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.plugins.IndexStorePlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.search.internal.ReaderContext;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.engine.MockEngineFactory;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -135,7 +135,7 @@ import java.util.function.BiFunction;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.index.IndexService.IndexCreationContext.CREATE_INDEX;
+import static org.density.index.IndexService.IndexCreationContext.CREATE_INDEX;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasToString;
@@ -143,7 +143,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
-public class IndexModuleTests extends OpenSearchTestCase {
+public class IndexModuleTests extends DensityTestCase {
     private Index index;
     private Settings settings;
     private IndexSettings indexSettings;
@@ -543,7 +543,7 @@ public class IndexModuleTests extends OpenSearchTestCase {
             return customQueryCache;
         });
         threadPool.shutdown(); // causes index service creation to fail
-        expectThrows(OpenSearchRejectedExecutionException.class, () -> newIndexService(module));
+        expectThrows(DensityRejectedExecutionException.class, () -> newIndexService(module));
         assertThat(liveQueryCaches, empty());
     }
 
@@ -598,7 +598,7 @@ public class IndexModuleTests extends OpenSearchTestCase {
         );
         IndexModule module = createIndexModule(indexSettings, analysisRegistry);
         threadPool.shutdown(); // causes index service creation to fail
-        expectThrows(OpenSearchRejectedExecutionException.class, () -> newIndexService(module));
+        expectThrows(DensityRejectedExecutionException.class, () -> newIndexService(module));
         assertThat(openAnalyzers, empty());
     }
 

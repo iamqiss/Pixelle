@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.DocumentMapperParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.DocumentMapperParser;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.IndicesModule;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.AnalysisPlugin;
+import org.density.test.IndexSettingsModule;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collections;
 
-import static org.opensearch.test.OpenSearchTestCase.createTestAnalysis;
+import static org.density.test.DensityTestCase.createTestAnalysis;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.apache.lucene.tests.util.LuceneTestCase.expectThrows;

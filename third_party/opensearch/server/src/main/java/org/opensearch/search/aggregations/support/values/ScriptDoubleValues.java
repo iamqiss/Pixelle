@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support.values;
+package org.density.search.aggregations.support.values;
 
 import org.apache.lucene.search.Scorable;
-import org.opensearch.common.lucene.ScorerAware;
-import org.opensearch.index.fielddata.SortingNumericDoubleValues;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.aggregations.AggregationExecutionException;
+import org.density.common.lucene.ScorerAware;
+import org.density.index.fielddata.SortingNumericDoubleValues;
+import org.density.script.AggregationScript;
+import org.density.search.aggregations.AggregationExecutionException;
 import org.joda.time.ReadableInstant;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ import java.util.Collection;
 /**
  * {@link SortingNumericDoubleValues} implementation which is based on a script
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptDoubleValues extends SortingNumericDoubleValues implements ScorerAware {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 
 /**
  * Specifies how a geo query should be run.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum GeoExecType implements Writeable {
 
@@ -63,7 +63,7 @@ public enum GeoExecType implements Writeable {
             case (1):
                 return INDEXED;
         }
-        throw new OpenSearchException("unknown serialized type [" + ord + "]");
+        throw new DensityException("unknown serialized type [" + ord + "]");
     }
 
     @Override

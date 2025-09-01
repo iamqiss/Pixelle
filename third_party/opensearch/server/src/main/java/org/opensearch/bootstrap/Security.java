@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.cli.Command;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.env.Environment;
-import org.opensearch.http.HttpTransportSettings;
-import org.opensearch.javaagent.bootstrap.AgentPolicy;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.secure_sm.policy.PolicyFile;
-import org.opensearch.transport.TcpTransport;
+import org.density.cli.Command;
+import org.density.common.SuppressForbidden;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.env.Environment;
+import org.density.http.HttpTransportSettings;
+import org.density.javaagent.bootstrap.AgentPolicy;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginsService;
+import org.density.secure_sm.policy.PolicyFile;
+import org.density.transport.TcpTransport;
 
 import java.io.IOException;
 import java.net.SocketPermission;
@@ -72,11 +72,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.opensearch.bootstrap.FilePermissionUtils.addDirectoryPath;
-import static org.opensearch.bootstrap.FilePermissionUtils.addSingleFilePath;
-import static org.opensearch.transport.AuxTransport.AUX_PORT_DEFAULTS;
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_PORT;
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
+import static org.density.bootstrap.FilePermissionUtils.addDirectoryPath;
+import static org.density.bootstrap.FilePermissionUtils.addSingleFilePath;
+import static org.density.transport.AuxTransport.AUX_PORT_DEFAULTS;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_PORT;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
 
 /**
  * Initializes SecurityManager with necessary permissions.
@@ -87,7 +87,7 @@ import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
  * between security and ease of use:
  * <ul>
  *   <li>Assigns file permissions to user-configurable paths that can
- *       be specified from the command-line or {@code opensearch.yml}.</li>
+ *       be specified from the command-line or {@code density.yml}.</li>
  *   <li>Allows for some contained usage of native code that would not
  *       otherwise be permitted.</li>
  * </ul>
@@ -106,7 +106,7 @@ import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
  * permission, but there are extenuating circumstances.
  * <p>
  * Scripts (groovy) are assigned minimal permissions. This does not provide adequate
- * sandboxing, as these scripts still have access to OpenSearch classes, and could
+ * sandboxing, as these scripts still have access to Density classes, and could
  * modify members, etc that would cause bad things to happen later on their
  * behalf (no package protections are yet in place, this would need some
  * cleanups to the scripting apis). But still it can provide some defense for users
@@ -115,7 +115,7 @@ import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
  * <h2>Debugging Security</h2>
  * A good place to start when there is a problem is to turn on security debugging:
  * <pre>
- * OPENSEARCH_JAVA_OPTS="-Djava.security.debug=access,failure" bin/opensearch
+ * DENSITY_JAVA_OPTS="-Djava.security.debug=access,failure" bin/density
  * </pre>
  * <p>
  * When running tests you have to pass it to the test runner like this:
@@ -125,7 +125,7 @@ import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
  * See <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/troubleshooting-security.html">
  * Troubleshooting Security</a> for information.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @SuppressWarnings("removal")
 final class Security {
@@ -148,11 +148,11 @@ final class Security {
         // enable security manager
         final String[] classesThatCanExit = new String[] {
             // SecureSM matches class names as regular expressions so we escape the $ that arises from the nested class name
-            OpenSearchUncaughtExceptionHandler.PrivilegedHaltAction.class.getName().replace("$", "\\$"),
+            DensityUncaughtExceptionHandler.PrivilegedHaltAction.class.getName().replace("$", "\\$"),
             Command.class.getName() };
 
         AgentPolicy.setPolicy(
-            new OpenSearchPolicy(
+            new DensityPolicy(
                 codebases,
                 createPermissions(environment),
                 getPluginPermissions(environment),
@@ -169,7 +169,7 @@ final class Security {
     }
 
     /**
-     * Return a map from codebase name to codebase url of jar codebases used by OpenSearch core.
+     * Return a map from codebase name to codebase url of jar codebases used by Density core.
      */
     @SuppressForbidden(reason = "find URL path")
     static Map<String, URL> getCodebaseJarMap(Set<URL> urls) {
@@ -202,7 +202,7 @@ final class Security {
 
         // now process each one
         for (Path plugin : pluginsAndModules) {
-            Path policyFile = plugin.resolve(PluginInfo.OPENSEARCH_PLUGIN_POLICY);
+            Path policyFile = plugin.resolve(PluginInfo.DENSITY_PLUGIN_POLICY);
             if (Files.exists(policyFile)) {
                 // first get a list of URLs for the plugins' jars:
                 // we resolve symlinks so map is keyed on the normalize codebase name

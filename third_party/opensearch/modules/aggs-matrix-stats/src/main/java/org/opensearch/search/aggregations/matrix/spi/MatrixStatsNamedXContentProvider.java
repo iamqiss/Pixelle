@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.matrix.spi;
+package org.density.search.aggregations.matrix.spi;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.plugins.spi.NamedXContentProvider;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
-import org.opensearch.search.aggregations.matrix.stats.ParsedMatrixStats;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.plugins.spi.NamedXContentProvider;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
+import org.density.search.aggregations.matrix.stats.ParsedMatrixStats;
 
 import java.util.List;
 

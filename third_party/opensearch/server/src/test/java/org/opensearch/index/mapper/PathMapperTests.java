@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PathMapperTests extends OpenSearchSingleNodeTestCase {
+public class PathMapperTests extends DensitySingleNodeTestCase {
     public void testPathMapping() throws IOException {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/path/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/path/test-mapping.json");
         DocumentMapper docMapper = createIndex("test").mapperService()
             .documentMapperParser()
             .parse(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping));

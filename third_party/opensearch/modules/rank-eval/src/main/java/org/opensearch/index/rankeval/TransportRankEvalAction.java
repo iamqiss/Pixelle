@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.MultiSearchResponse.Item;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.MultiSearchResponse.Item;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.TemplateScript;
+import org.density.search.SearchHit;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.opensearch.common.xcontent.XContentHelper.createParser;
-import static org.opensearch.index.rankeval.RatedRequest.validateEvaluatedQuery;
+import static org.density.common.xcontent.XContentHelper.createParser;
+import static org.density.index.rankeval.RatedRequest.validateEvaluatedQuery;
 
 /**
  * Instances of this class execute a collection of search intents (read: user

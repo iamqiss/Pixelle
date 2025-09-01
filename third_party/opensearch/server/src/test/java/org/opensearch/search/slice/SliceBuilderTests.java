@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.DocValuesType;
@@ -42,36 +42,36 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.analysis.MockAnalyzer;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.PlainShardIterator;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.PlainShardIterator;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.mapper.ValueFetcher;
+import org.density.index.query.QueryShardContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -90,7 +90,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SliceBuilderTests extends OpenSearchTestCase {
+public class SliceBuilderTests extends DensityTestCase {
     private static final int MAX_SLICE = 20;
 
     private static SliceBuilder randomSliceBuilder() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.AnalyzerWrapper;
@@ -41,21 +41,21 @@ import org.apache.lucene.search.uhighlight.PassageFormatter;
 import org.apache.lucene.search.uhighlight.UnifiedHighlighter.OffsetSource;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.search.uhighlight.BoundedBreakIteratorScanner;
-import org.opensearch.lucene.search.uhighlight.CustomPassageFormatter;
-import org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter;
-import org.opensearch.lucene.search.uhighlight.Snippet;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhase.HitContext;
+import org.density.common.CheckedSupplier;
+import org.density.core.common.Strings;
+import org.density.core.common.text.Text;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.search.uhighlight.BoundedBreakIteratorScanner;
+import org.density.lucene.search.uhighlight.CustomPassageFormatter;
+import org.density.lucene.search.uhighlight.CustomUnifiedHighlighter;
+import org.density.lucene.search.uhighlight.Snippet;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhase.HitContext;
 
 import java.io.IOException;
 import java.text.BreakIterator;
@@ -69,12 +69,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
+import static org.density.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
 
 /**
  * Uses lucene's unified highlighter implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UnifiedHighlighter implements Highlighter {
     @Override

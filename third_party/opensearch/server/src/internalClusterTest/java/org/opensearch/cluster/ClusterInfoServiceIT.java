@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.node.resource.tracker.ResourceTrackerSettings;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SystemIndexPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.ActionRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsAction;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.node.NodeResourceUsageStats;
+import org.density.node.resource.tracker.ResourceTrackerSettings;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SystemIndexPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 import org.hamcrest.Matchers;
 
 import java.util.Arrays;
@@ -77,8 +77,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.util.set.Sets.newHashSet;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.util.set.Sets.newHashSet;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -86,8 +86,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 /**
  * Integration tests for the ClusterInfoService collecting information
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class ClusterInfoServiceIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class ClusterInfoServiceIT extends DensityIntegTestCase {
 
     private static final String TEST_SYSTEM_INDEX_NAME = ".test-cluster-info-system-index";
 
@@ -112,13 +112,13 @@ public class ClusterInfoServiceIT extends OpenSearchIntegTestCase {
         }
     }
 
-    public static class BlockingActionFilter extends org.opensearch.action.support.ActionFilter.Simple {
+    public static class BlockingActionFilter extends org.density.action.support.ActionFilter.Simple {
         private Set<String> blockedActions = emptySet();
 
         @Override
         protected boolean apply(String action, ActionRequest request, ActionListener<?> listener) {
             if (blockedActions.contains(action)) {
-                throw new OpenSearchException("force exception on [" + action + "]");
+                throw new DensityException("force exception on [" + action + "]");
             }
             return true;
         }

@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.document.get;
+package org.density.transport.grpc.proto.response.document.get;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.InlineGetDictUserDefined;
-import org.opensearch.protobufs.ResponseItem;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.get.GetResult;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.InlineGetDictUserDefined;
+import org.density.protobufs.ResponseItem;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-public class GetResultProtoUtilsTests extends OpenSearchTestCase {
+public class GetResultProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithExistingDocument() throws IOException {
         // Create a GetResult for an existing document

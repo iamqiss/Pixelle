@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 /**
  * A shared interface for aggregations that parse and use "interval" parameters.
@@ -38,7 +38,7 @@ package org.opensearch.search.aggregations.bucket.histogram;
  * Provides definitions for the new fixed and calendar intervals, and deprecated
  * defintions for the old interval/dateHisto interval parameters
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface DateIntervalConsumer<T> {
     @Deprecated

@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,7 +28,7 @@
  * under the License.
  */
 
-import org.opensearch.gradle.BuildPlugin
+import org.density.gradle.BuildPlugin
 
 /*
  * This script plugin configures formatting for Java source using Spotless
@@ -75,11 +75,11 @@ allprojects {
               'com.maxmind|com.github|com.networknt|groovy|nebula',
               'org.antlr',
               'software.amazon',
-              'com.azure|com.microsoft|com.ibm|com.google|joptsimple|org.apache|org.bouncycastle|org.codehaus|org.opensearch|org.objectweb|org.joda|org.hamcrest|org.openjdk|org.gradle|org.junit',
+              'com.azure|com.microsoft|com.ibm|com.google|joptsimple|org.apache|org.bouncycastle|org.codehaus|org.density|org.objectweb|org.joda|org.hamcrest|org.openjdk|org.gradle|org.junit',
               'javax',
               'java',
               '',
-              '\\#java|\\#org.opensearch|\\#org.hamcrest|\\#'
+              '\\#java|\\#org.density|\\#org.hamcrest|\\#'
           )
 
           eclipse().withP2Mirrors(Map.of("https://download.eclipse.org/", "https://mirror.umd.edu/eclipse/")).configFile rootProject.file('buildSrc/formatterConfig.xml')

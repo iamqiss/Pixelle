@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.DocIdSet;
@@ -38,9 +38,9 @@ import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.DocIdSetBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.DocCountProvider;
+import org.density.common.Nullable;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.DocCountProvider;
 
 import java.io.IOException;
 
@@ -49,7 +49,7 @@ import java.io.IOException;
  * definition. It can be used to control which documents should be collected to produce the top composite buckets
  * without visiting all documents in an index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class SortedDocsProducer {
     protected final String field;

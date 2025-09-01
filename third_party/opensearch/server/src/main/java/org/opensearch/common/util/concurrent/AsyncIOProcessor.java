@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import java.util.function.Supplier;
  * hijack a worker if nobody else is currently processing queued items. If the internal queue has reached it's capacity incoming threads
  * might be blocked until other items are processed
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class AsyncIOProcessor<Item> {

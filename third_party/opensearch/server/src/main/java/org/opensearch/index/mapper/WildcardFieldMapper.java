@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -39,20 +39,20 @@ import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.unit.Fuzziness;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -69,13 +69,13 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.mapper.KeywordFieldMapper.normalizeValue;
+import static org.density.index.mapper.KeywordFieldMapper.normalizeValue;
 
 /**
  * Mapper for the "wildcard" field type, which supports (relatively) efficient matching by wildcard, prefix, and regexp
  * queries. It's not really a "full-text" field type, but rather an "unstructured string" field type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WildcardFieldMapper extends ParametrizedFieldMapper {
     private final String nullValue;
@@ -87,7 +87,7 @@ public class WildcardFieldMapper extends ParametrizedFieldMapper {
     /**
      * The builder for the field mapper.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Builder extends ParametrizedFieldMapper.Builder {
 

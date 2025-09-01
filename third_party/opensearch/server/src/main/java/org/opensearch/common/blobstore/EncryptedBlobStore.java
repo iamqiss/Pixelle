@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.crypto.CryptoHandlerRegistry;
-import org.opensearch.crypto.CryptoRegistryException;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.crypto.CryptoHandler;
+import org.density.crypto.CryptoHandlerRegistry;
+import org.density.crypto.CryptoRegistryException;
 
 import java.io.IOException;
 import java.util.Map;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class FixedThreadPoolTests extends OpenSearchThreadPoolTestCase {
+public class FixedThreadPoolTests extends DensityThreadPoolTestCase {
 
     public void testRejectedExecutionCounter() throws InterruptedException {
         final String threadPoolName = randomThreadPool(ThreadPool.ThreadPoolType.FIXED);
         // some of the fixed thread pool are bound by the number of
         // cores so we can not exceed that
-        final int size = randomIntBetween(1, OpenSearchExecutors.allocatedProcessors(Settings.EMPTY));
+        final int size = randomIntBetween(1, DensityExecutors.allocatedProcessors(Settings.EMPTY));
         final int queueSize = randomIntBetween(1, 16);
         final long rejections = randomIntBetween(1, 16);
 
@@ -89,7 +89,7 @@ public class FixedThreadPoolTests extends OpenSearchThreadPoolTestCase {
             for (int i = 0; i < rejections; i++) {
                 try {
                     threadPool.executor(threadPoolName).execute(() -> {});
-                } catch (OpenSearchRejectedExecutionException e) {
+                } catch (DensityRejectedExecutionException e) {
                     counter++;
                 }
             }

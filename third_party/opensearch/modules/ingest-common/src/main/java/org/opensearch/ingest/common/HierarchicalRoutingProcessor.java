@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.core.common.Strings;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
+import org.density.common.Nullable;
+import org.density.common.hash.MurmurHash3;
+import org.density.core.common.Strings;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.ConfigurationUtils;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Processor that sets document routing based on hierarchical path structure.
@@ -28,7 +28,7 @@ import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException
  * and uses a configurable depth of path segments to compute a routing value
  * using MurmurHash3 for consistent distribution across shards.
  *
- * Introduced in OpenSearch 3.2.0 to enable intelligent document co-location
+ * Introduced in Density 3.2.0 to enable intelligent document co-location
  * based on hierarchical path structures.
  */
 public final class HierarchicalRoutingProcessor extends AbstractProcessor {

@@ -1,4 +1,4 @@
-"Test that the custom-settings plugin is loaded in OpenSearch":
+"Test that the custom-settings plugin is loaded in Density":
 
   # Use the Cat Plugins API to retrieve the list of plugins
   - do:

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,7 +67,7 @@ import org.apache.hc.core5.io.CloseMode;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.reactor.IOReactorStatus;
 import org.apache.hc.core5.util.TimeValue;
-import org.opensearch.client.http.HttpUriRequestProducer;
+import org.density.client.http.HttpUriRequestProducer;
 import org.junit.After;
 import org.junit.Before;
 
@@ -93,10 +93,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.LongAdder;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.client.RestClientTestUtil.getAllErrorStatusCodes;
-import static org.opensearch.client.RestClientTestUtil.getHttpMethods;
-import static org.opensearch.client.RestClientTestUtil.getOkStatusCodes;
-import static org.opensearch.client.RestClientTestUtil.randomStatusCode;
+import static org.density.client.RestClientTestUtil.getAllErrorStatusCodes;
+import static org.density.client.RestClientTestUtil.getHttpMethods;
+import static org.density.client.RestClientTestUtil.getOkStatusCodes;
+import static org.density.client.RestClientTestUtil.randomStatusCode;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -584,12 +584,12 @@ public class RestClientSingleHostTests extends RestClientTestCase {
     }
 
     /**
-     * Emulates OpenSearch's HeaderWarningLogger.formatWarning in simple
+     * Emulates Density's HeaderWarningLogger.formatWarning in simple
      * cases. We don't have that available because we're testing against 1.7.
      */
     private static String formatWarningWithoutDate(String warningBody) {
         final String hash = new String(new byte[40], StandardCharsets.UTF_8).replace('\0', 'e');
-        return "299 OpenSearch-1.2.2-SNAPSHOT-" + hash + " \"" + warningBody + "\"";
+        return "299 Density-1.2.2-SNAPSHOT-" + hash + " \"" + warningBody + "\"";
     }
 
     private static String formatWarning(String warningBody) {

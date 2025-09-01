@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.vectorhighlight.SimpleBoundaryScanner;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.NamedObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext.FieldOptions;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.NamedObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext.FieldOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,15 +61,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-import static org.opensearch.core.xcontent.ObjectParser.fromList;
+import static org.density.core.xcontent.ObjectParser.fromList;
 
 /**
  * A builder for search highlighting. Settings can control how large fields
  * are summarized to show only selected snippets ("fragments") containing search terms.
  *
- * @see org.opensearch.search.builder.SearchSourceBuilder#highlight()
+ * @see org.density.search.builder.SearchSourceBuilder#highlight()
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilder> {
@@ -480,7 +480,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     /**
      * Field for highlight builder
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Field extends AbstractHighlighterBuilder<Field> {
@@ -589,7 +589,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     /**
      * Order for highlight builder
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Order implements Writeable {
@@ -621,7 +621,7 @@ public class HighlightBuilder extends AbstractHighlighterBuilder<HighlightBuilde
     /**
      * Boundary scanner type
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum BoundaryScannerType implements Writeable {

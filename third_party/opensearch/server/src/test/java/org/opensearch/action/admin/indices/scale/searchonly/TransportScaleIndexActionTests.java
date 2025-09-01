@@ -1,56 +1,56 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.scale.searchonly;
+package org.density.action.admin.indices.scale.searchonly;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.translog.TranslogStats;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -66,7 +66,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_SEARCH_ONLY_BLOCK_ID;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_SEARCH_ONLY_BLOCK_ID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -78,7 +78,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportScaleIndexActionTests extends OpenSearchTestCase {
+public class TransportScaleIndexActionTests extends DensityTestCase {
 
     private TransportService transportService;
     private ClusterService clusterService;

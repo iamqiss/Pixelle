@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * Exception when the context provided in the creation of an index is invalid.
  */
-public class InvalidIndexContextException extends OpenSearchException {
+public class InvalidIndexContextException extends DensityException {
 
     /**
      *

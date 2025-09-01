@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContent.Params;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.Operator;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
+import org.density.ExceptionsHelper;
+import org.density.action.FailedNodeException;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.ParseField;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.ParsingException;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContent.Params;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.Operator;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * REST actions
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestActions {
 

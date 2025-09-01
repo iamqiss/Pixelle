@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.stats;
+package org.density.action.admin.indices.stats;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.engine.CommitStats;
-import org.opensearch.index.seqno.RetentionLeaseStats;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
+import org.density.Version;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.engine.CommitStats;
+import org.density.index.seqno.RetentionLeaseStats;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.shard.ShardPath;
+import org.density.indices.pollingingest.PollingIngestStats;
 
 import java.io.IOException;
 
 /**
- * Shard Stats for OpenSearch
+ * Shard Stats for Density
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ShardStats implements Writeable, ToXContentFragment {
@@ -203,7 +203,7 @@ public class ShardStats implements Writeable, ToXContentFragment {
     /**
      * Fields for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String ROUTING = "routing";

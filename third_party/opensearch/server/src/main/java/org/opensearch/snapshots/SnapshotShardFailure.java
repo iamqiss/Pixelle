@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotFailedException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.index.snapshots.IndexShardSnapshotFailedException;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -53,7 +53,7 @@ import java.util.Objects;
 /**
  * Stores information about failures that occurred during shard snapshotting process
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SnapshotShardFailure extends ShardOperationFailedException {
@@ -156,10 +156,10 @@ public class SnapshotShardFailure extends ShardOperationFailedException {
         String status = (String) args[5];
 
         if (index == null) {
-            throw new OpenSearchParseException("index name was not set");
+            throw new DensityParseException("index name was not set");
         }
         if (intShardId == null) {
-            throw new OpenSearchParseException("index shard was not set");
+            throw new DensityParseException("index shard was not set");
         }
 
         ShardId shardId = new ShardId(index, indexUuid != null ? indexUuid : IndexMetadata.INDEX_UUID_NA_VALUE, intShardId);

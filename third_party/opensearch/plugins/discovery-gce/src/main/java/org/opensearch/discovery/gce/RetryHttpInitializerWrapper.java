@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.testing.auth.oauth2.MockGoogleCredential;
@@ -44,8 +44,8 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.client.util.Sleeper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cloud.gce.util.Access;
-import org.opensearch.common.unit.TimeValue;
+import org.density.cloud.gce.util.Access;
+import org.density.common.unit.TimeValue;
 
 import java.io.IOException;
 import java.util.Objects;

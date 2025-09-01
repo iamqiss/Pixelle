@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.structure;
+package org.density.cluster.structure;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.PlainShardIterator;
-import org.opensearch.cluster.routing.RotationShardShuffler;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardShuffler;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexModule;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.PlainShardIterator;
+import org.density.cluster.routing.RotationShardShuffler;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardShuffler;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexModule;
+import org.density.test.ClusterServiceUtils;
+import org.density.threadpool.TestThreadPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +71,7 @@ import java.util.Map;
 
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -79,7 +79,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class RoutingIteratorTests extends OpenSearchAllocationTestCase {
+public class RoutingIteratorTests extends DensityAllocationTestCase {
     public void testEmptyIterator() {
         ShardShuffler shuffler = new RotationShardShuffler(0);
         ShardIterator shardIterator = new PlainShardIterator(

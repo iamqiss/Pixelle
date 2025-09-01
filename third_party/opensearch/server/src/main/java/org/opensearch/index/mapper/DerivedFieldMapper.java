@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.script.Script;
+import org.density.common.Explicit;
+import org.density.common.time.DateFormatter;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.index.mapper.DateFieldMapper.getDefaultDateTimeFormatter;
+import static org.density.index.mapper.DateFieldMapper.getDefaultDateTimeFormatter;
 
 /**
  * A field mapper for derived fields
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DerivedFieldMapper extends ParametrizedFieldMapper {
 
@@ -42,7 +42,7 @@ public class DerivedFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for this field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
         private final Parameter<String> type = Parameter.stringParam("type", true, m -> toType(m).type, "");

@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
-import org.opensearch.index.mapper.FieldValueConverter;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.index.mapper.FieldValueConverter;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 public class SumValueAggregatorTests extends AbstractValueAggregatorTests {
 

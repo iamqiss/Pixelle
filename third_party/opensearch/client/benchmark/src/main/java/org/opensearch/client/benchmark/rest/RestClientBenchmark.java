@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.benchmark.rest;
+package org.density.client.benchmark.rest;
 
 import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.message.BasicHeader;
-import org.opensearch.OpenSearchException;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.benchmark.AbstractBenchmark;
-import org.opensearch.client.benchmark.ops.bulk.BulkRequestExecutor;
-import org.opensearch.client.benchmark.ops.search.SearchRequestExecutor;
+import org.density.DensityException;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.client.benchmark.AbstractBenchmark;
+import org.density.client.benchmark.ops.bulk.BulkRequestExecutor;
+import org.density.client.benchmark.ops.search.SearchRequestExecutor;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -97,7 +97,7 @@ public final class RestClientBenchmark extends AbstractBenchmark<RestClient> {
                 Response response = client.performRequest(request);
                 return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
             } catch (Exception e) {
-                throw new OpenSearchException(e);
+                throw new DensityException(e);
             }
         }
     }
@@ -119,7 +119,7 @@ public final class RestClientBenchmark extends AbstractBenchmark<RestClient> {
                 Response response = client.performRequest(request);
                 return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
             } catch (IOException e) {
-                throw new OpenSearchException(e);
+                throw new DensityException(e);
             }
         }
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.spi.MediaTypeProvider;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.spi.MediaTypeProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 /**
  * Parses supported internet media types
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class MediaTypeRegistry {
     private static Map<String, MediaType> formatToMediaType = Map.of();

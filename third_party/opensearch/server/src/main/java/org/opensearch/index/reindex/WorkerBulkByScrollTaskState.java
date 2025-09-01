@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,12 +49,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
+import static org.density.common.unit.TimeValue.timeValueNanos;
 
 /**
  * Task behavior for {@link BulkByScrollTask} that does the actual work of querying and indexing
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WorkerBulkByScrollTaskState implements SuccessfullyProcessed {
 
@@ -212,7 +212,7 @@ public class WorkerBulkByScrollTaskState implements SuccessfullyProcessed {
                 delayedPrepareBulkRequestReference.set(
                     new DelayedPrepareBulkRequest(threadPool, getRequestsPerSecond(), delay, new RunOnce(prepareBulkRequestRunnable))
                 );
-            } catch (OpenSearchRejectedExecutionException e) {
+            } catch (DensityRejectedExecutionException e) {
                 prepareBulkRequestRunnable.onRejection(e);
             }
         }

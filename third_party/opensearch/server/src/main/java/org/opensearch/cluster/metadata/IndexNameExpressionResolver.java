@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.InvalidIndexNameException;
+import org.density.DensityParseException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.regex.Regex;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.DateUtils;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.set.Sets;
+import org.density.core.common.Strings;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.index.Index;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.IndexClosedException;
+import org.density.indices.InvalidIndexNameException;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -77,13 +77,13 @@ import java.util.stream.StreamSupport;
 /**
  * Resolves index name from an expression
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexNameExpressionResolver {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(IndexNameExpressionResolver.class);
 
-    public static final String EXCLUDED_DATA_STREAMS_KEY = "opensearch.excluded_ds";
+    public static final String EXCLUDED_DATA_STREAMS_KEY = "density.excluded_ds";
     public static final String SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY = "_system_index_access_allowed";
 
     private final DateMathExpressionResolver dateMathExpressionResolver = new DateMathExpressionResolver();
@@ -429,7 +429,7 @@ public class IndexNameExpressionResolver {
         // trappy to hide throttled indices by default. In order to avoid breaking backward compatibility,
         // we changed it to look at the `index.frozen` setting instead, since frozen indices were the only
         // type of index to use the `search_throttled` threadpool at that time.
-        // NOTE: The Setting object was defined in an external plugin prior to OpenSearch fork.
+        // NOTE: The Setting object was defined in an external plugin prior to Density fork.
         return (context.options.ignoreThrottled() && metadata.getSettings().getAsBoolean("index.frozen", false)) == false;
     }
 
@@ -441,7 +441,7 @@ public class IndexNameExpressionResolver {
 
     /**
      * Utility method that allows to resolve an index expression to its corresponding single concrete index.
-     * Callers should make sure they provide proper {@link org.opensearch.action.support.IndicesOptions}
+     * Callers should make sure they provide proper {@link org.density.action.support.IndicesOptions}
      * that require a single index as a result. The indices resolution must in fact return a single index when
      * using this method, an {@link IllegalArgumentException} gets thrown otherwise.
      *
@@ -803,7 +803,7 @@ public class IndexNameExpressionResolver {
     /**
      * Context for the resolver.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "3.1.0")
     public static class Context {
@@ -934,7 +934,7 @@ public class IndexNameExpressionResolver {
     /**
      * Expression resolver for index name expressions.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "3.1.0")
     public interface ExpressionResolver {
@@ -952,7 +952,7 @@ public class IndexNameExpressionResolver {
     /**
      * Resolves alias/index name expressions with wildcards into the corresponding concrete indices/aliases
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class WildcardExpressionResolver implements ExpressionResolver {
 
@@ -1236,7 +1236,7 @@ public class IndexNameExpressionResolver {
     /**
      * A date math expression resolver.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DateMathExpressionResolver implements ExpressionResolver {
 
@@ -1296,7 +1296,7 @@ public class IndexNameExpressionResolver {
                                 inDateFormat = true;
                                 inPlaceHolderSb.append(c);
                             } else {
-                                throw new OpenSearchParseException(
+                                throw new DensityParseException(
                                     "invalid dynamic name expression [{}]." + " invalid character in placeholder at position [{}]",
                                     new String(text, from, length),
                                     i
@@ -1323,13 +1323,13 @@ public class IndexNameExpressionResolver {
                                     timeZone = ZoneOffset.UTC;
                                 } else {
                                     if (inPlaceHolderString.lastIndexOf(RIGHT_BOUND) != inPlaceHolderString.length() - 1) {
-                                        throw new OpenSearchParseException(
+                                        throw new DensityParseException(
                                             "invalid dynamic name expression [{}]. missing closing `}`" + " for date math format",
                                             inPlaceHolderString
                                         );
                                     }
                                     if (dateTimeFormatLeftBoundIndex == inPlaceHolderString.length() - 2) {
-                                        throw new OpenSearchParseException(
+                                        throw new DensityParseException(
                                             "invalid dynamic name expression [{}]. missing date format",
                                             inPlaceHolderString
                                         );
@@ -1376,7 +1376,7 @@ public class IndexNameExpressionResolver {
 
                         case RIGHT_BOUND:
                             if (!escapedChar) {
-                                throw new OpenSearchParseException(
+                                throw new DensityParseException(
                                     "invalid dynamic name expression [{}]."
                                         + " invalid character at position [{}]. `{` and `}` are reserved characters and"
                                         + " should be escaped when used as part of the index name using `\\` (e.g. `\\{text\\}`)",
@@ -1391,13 +1391,13 @@ public class IndexNameExpressionResolver {
             }
 
             if (inPlaceHolder) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid dynamic name expression [{}]. date math placeholder is open ended",
                     new String(text, from, length)
                 );
             }
             if (beforePlaceHolderSb.length() == 0) {
-                throw new OpenSearchParseException("nothing captured");
+                throw new DensityParseException("nothing captured");
             }
             return beforePlaceHolderSb.toString();
         }

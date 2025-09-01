@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.command;
+package org.density.cluster.routing.allocation.command;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.RerouteExplanation;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.RerouteExplanation;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -54,7 +54,7 @@ import java.util.Objects;
  * <b>Note:</b> The shard needs to be in the state
  * {@link ShardRoutingState#STARTED} in order to be moved.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MoveAllocationCommand implements AllocationCommand {
 
@@ -245,23 +245,23 @@ public class MoveAllocationCommand implements AllocationCommand {
                 } else if ("to_node".equals(currentFieldName) || "toNode".equals(currentFieldName)) {
                     toNode = parser.text();
                 } else {
-                    throw new OpenSearchParseException("[{}] command does not support field [{}]", NAME, currentFieldName);
+                    throw new DensityParseException("[{}] command does not support field [{}]", NAME, currentFieldName);
                 }
             } else {
-                throw new OpenSearchParseException("[{}] command does not support complex json tokens [{}]", NAME, token);
+                throw new DensityParseException("[{}] command does not support complex json tokens [{}]", NAME, token);
             }
         }
         if (index == null) {
-            throw new OpenSearchParseException("[{}] command missing the index parameter", NAME);
+            throw new DensityParseException("[{}] command missing the index parameter", NAME);
         }
         if (shardId == -1) {
-            throw new OpenSearchParseException("[{}] command missing the shard parameter", NAME);
+            throw new DensityParseException("[{}] command missing the shard parameter", NAME);
         }
         if (fromNode == null) {
-            throw new OpenSearchParseException("[{}] command missing the from_node parameter", NAME);
+            throw new DensityParseException("[{}] command missing the from_node parameter", NAME);
         }
         if (toNode == null) {
-            throw new OpenSearchParseException("[{}] command missing the to_node parameter", NAME);
+            throw new DensityParseException("[{}] command missing the to_node parameter", NAME);
         }
         return new MoveAllocationCommand(index, shardId, fromNode, toNode);
     }

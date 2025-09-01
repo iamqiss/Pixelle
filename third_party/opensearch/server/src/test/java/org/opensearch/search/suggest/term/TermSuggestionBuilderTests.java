@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.term;
+package org.density.search.suggest.term;
 
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.suggest.AbstractSuggestionBuilderTestCase;
-import org.opensearch.search.suggest.SortBy;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder.StringDistanceImpl;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder.SuggestMode;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.suggest.AbstractSuggestionBuilderTestCase;
+import org.density.search.suggest.SortBy;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.search.suggest.term.TermSuggestionBuilder.StringDistanceImpl;
+import org.density.search.suggest.term.TermSuggestionBuilder.SuggestMode;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_ACCURACY;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_EDITS;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_INSPECTIONS;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_TERM_FREQ;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_DOC_FREQ;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_WORD_LENGTH;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_PREFIX_LENGTH;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_ACCURACY;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_EDITS;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_INSPECTIONS;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_TERM_FREQ;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_DOC_FREQ;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_WORD_LENGTH;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_PREFIX_LENGTH;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 

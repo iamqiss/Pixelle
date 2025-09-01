@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.FlightStream;
@@ -14,12 +14,12 @@ import org.apache.arrow.flight.Ticket;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.arrow.vector.types.pojo.Schema;
-import org.opensearch.arrow.flight.bootstrap.FlightClientManager;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.arrow.spi.StreamReader;
-import org.opensearch.arrow.spi.StreamTicket;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.arrow.flight.bootstrap.FlightClientManager;
+import org.density.arrow.spi.StreamProducer;
+import org.density.arrow.spi.StreamReader;
+import org.density.arrow.spi.StreamTicket;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class FlightStreamManagerTests extends OpenSearchTestCase {
+public class FlightStreamManagerTests extends DensityTestCase {
 
     private FlightClient flightClient;
     private FlightStreamManager flightStreamManager;

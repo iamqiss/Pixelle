@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.status;
+package org.density.action.admin.cluster.snapshots.status;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.support.broadcast.BroadcastShardResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
+import org.density.DensityParseException;
+import org.density.action.support.broadcast.BroadcastShardResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
 
 import java.io.IOException;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Status for snapshotting an Index Shard
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SnapshotIndexShardStatus extends BroadcastShardResponse implements ToXContentFragment {
@@ -171,7 +171,7 @@ public class SnapshotIndexShardStatus extends BroadcastShardResponse implements 
     /**
      * Inner Fields used for creating XContent and parsing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String STAGE = "stage";
@@ -210,7 +210,7 @@ public class SnapshotIndexShardStatus extends BroadcastShardResponse implements 
                 try {
                     stage = SnapshotIndexShardStage.valueOf(rawStage);
                 } catch (IllegalArgumentException iae) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "failed to parse snapshot index shard status [{}][{}], unknown stage [{}]",
                         shard.getIndex().getName(),
                         shard.getId(),
@@ -231,7 +231,7 @@ public class SnapshotIndexShardStatus extends BroadcastShardResponse implements 
             try {
                 shard = Integer.parseInt(shardName);
             } catch (NumberFormatException nfe) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "failed to parse snapshot index shard status [{}], expected numeric shard id but got [{}]",
                     indexId,
                     shardName

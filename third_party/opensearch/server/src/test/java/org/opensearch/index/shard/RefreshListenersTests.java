@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -40,45 +40,45 @@ import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.engine.InternalEngine;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogConfig;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 import org.junit.After;
 import org.junit.Before;
 
@@ -94,13 +94,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 import static org.hamcrest.Matchers.arrayContaining;
 
 /**
  * Tests how {@linkplain RefreshListeners} interacts with {@linkplain InternalEngine}.
  */
-public class RefreshListenersTests extends OpenSearchTestCase {
+public class RefreshListenersTests extends DensityTestCase {
     private RefreshListeners listeners;
     private Engine engine;
     private volatile int maxListeners;

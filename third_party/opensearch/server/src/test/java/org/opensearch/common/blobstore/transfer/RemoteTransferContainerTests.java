@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer;
+package org.density.common.blobstore.transfer;
 
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.common.StreamContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeFileInputStream;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeInputStream;
-import org.opensearch.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
-import org.opensearch.common.blobstore.transfer.stream.ResettableCheckedInputStream;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.StreamContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.stream.OffsetRangeFileInputStream;
+import org.density.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
+import org.density.common.blobstore.transfer.stream.OffsetRangeInputStream;
+import org.density.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
+import org.density.common.blobstore.transfer.stream.ResettableCheckedInputStream;
+import org.density.common.io.InputStreamContainer;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ import java.util.function.Supplier;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-public class RemoteTransferContainerTests extends OpenSearchTestCase {
+public class RemoteTransferContainerTests extends DensityTestCase {
 
     private static final int TEST_FILE_SIZE_BYTES = 128;
 

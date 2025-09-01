@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.recovery;
+package org.density.recovery;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.get.GetResponse;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Collection;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.transport.client.Requests.flushRequest;
-import static org.opensearch.transport.client.Requests.getRequest;
-import static org.opensearch.transport.client.Requests.indexRequest;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.transport.client.Requests.flushRequest;
+import static org.density.transport.client.Requests.getRequest;
+import static org.density.transport.client.Requests.indexRequest;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SimpleRecoveryIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SimpleRecoveryIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SimpleRecoveryIT(Settings settings) {
         super(settings);

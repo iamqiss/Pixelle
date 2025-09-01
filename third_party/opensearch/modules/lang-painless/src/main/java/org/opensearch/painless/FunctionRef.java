@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.lookup.PainlessConstructor;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.symbol.FunctionTable;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.lookup.PainlessConstructor;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.symbol.FunctionTable;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
 
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Modifier;
@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.painless.WriterConstants.CLASS_NAME;
+import static org.density.painless.WriterConstants.CLASS_NAME;
 import static org.objectweb.asm.Opcodes.H_INVOKEINTERFACE;
 import static org.objectweb.asm.Opcodes.H_INVOKESTATIC;
 import static org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL;

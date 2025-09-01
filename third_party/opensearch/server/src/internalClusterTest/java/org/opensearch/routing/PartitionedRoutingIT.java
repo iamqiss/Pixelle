@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.routing;
+package org.density.routing;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,7 +46,7 @@ import java.util.Set;
 
 import org.mockito.internal.util.collections.Sets;
 
-public class PartitionedRoutingIT extends OpenSearchIntegTestCase {
+public class PartitionedRoutingIT extends DensityIntegTestCase {
 
     public void testVariousPartitionSizes() throws Exception {
         for (int shards = 1; shards <= 4; shards++) {

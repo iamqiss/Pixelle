@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.SourceConfig;
-import org.opensearch.protobufs.SourceConfigParam;
-import org.opensearch.protobufs.SourceFilter;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.SourceConfig;
+import org.density.protobufs.SourceConfigParam;
+import org.density.protobufs.SourceFilter;
+import org.density.rest.RestRequest;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Utility class for converting SourceConfig Protocol Buffers to FetchSourceContext objects.
  * This class handles the conversion of Protocol Buffer representations to their
- * corresponding OpenSearch objects.
+ * corresponding Density objects.
  */
 public class FetchSourceContextProtoUtils {
 
@@ -37,7 +37,7 @@ public class FetchSourceContextProtoUtils {
      * @param request The BulkRequest Protocol Buffer containing source configuration
      * @return A FetchSourceContext object based on the request parameters, or null if no source parameters are provided
      */
-    public static FetchSourceContext parseFromProtoRequest(org.opensearch.protobufs.BulkRequest request) {
+    public static FetchSourceContext parseFromProtoRequest(org.density.protobufs.BulkRequest request) {
         Boolean fetchSource = true;
         String[] sourceExcludes = null;
         String[] sourceIncludes = null;
@@ -76,7 +76,7 @@ public class FetchSourceContextProtoUtils {
      * @param request The SearchRequest Protocol Buffer containing source configuration
      * @return A FetchSourceContext object based on the request parameters, or null if no source parameters are provided
      */
-    public static FetchSourceContext parseFromProtoRequest(org.opensearch.protobufs.SearchRequest request) {
+    public static FetchSourceContext parseFromProtoRequest(org.density.protobufs.SearchRequest request) {
         Boolean fetchSource = null;
         String[] sourceExcludes = null;
         String[] sourceIncludes = null;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
 import org.apache.lucene.analysis.charfilter.HTMLStripCharFilter;
-import org.opensearch.OpenSearchException;
+import org.density.DensityException;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -61,7 +61,7 @@ public final class HtmlStripProcessor extends AbstractStringProcessor<String> {
                 builder.append((char) ch);
             }
         } catch (IOException e) {
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
 
         return builder.toString();

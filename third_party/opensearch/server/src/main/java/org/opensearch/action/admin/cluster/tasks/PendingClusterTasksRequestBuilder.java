@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.tasks;
+package org.density.action.admin.cluster.tasks;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for getting pending cluster tasks
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PendingClusterTasksRequestBuilder extends ClusterManagerNodeReadOperationRequestBuilder<
@@ -47,7 +47,7 @@ public class PendingClusterTasksRequestBuilder extends ClusterManagerNodeReadOpe
     PendingClusterTasksResponse,
     PendingClusterTasksRequestBuilder> {
 
-    public PendingClusterTasksRequestBuilder(OpenSearchClient client, PendingClusterTasksAction action) {
+    public PendingClusterTasksRequestBuilder(DensityClient client, PendingClusterTasksAction action) {
         super(client, action, new PendingClusterTasksRequest());
     }
 }

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.protobufs.SearchRequest;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.opensearch.action.support.IndicesOptions.WildcardStates;
+import static org.density.action.support.IndicesOptions.WildcardStates;
 
-public class IndicesOptionsProtoUtilsTests extends OpenSearchTestCase {
+public class IndicesOptionsProtoUtilsTests extends DensityTestCase {
 
     public void testFromRequestWithDefaultSettings() {
         // Create a SearchRequest with no indices options

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.LowLevelHttpRequest;
@@ -41,9 +41,9 @@ import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.io.Streams;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.util.FileSystemUtils;
+import org.density.common.io.Streams;
+import org.density.core.common.Strings;
+import org.density.core.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,7 +94,7 @@ public class GceMockUtils {
 
         URL resource = GceMockUtils.class.getResource(mockFileName);
         if (resource == null) {
-            throw new IOException("can't read [" + url + "] in src/test/resources/org/opensearch/discovery/gce");
+            throw new IOException("can't read [" + url + "] in src/test/resources/org/density/discovery/gce");
         }
         try (InputStream is = FileSystemUtils.openFileURLStream(resource)) {
             final StringBuilder sb = new StringBuilder();

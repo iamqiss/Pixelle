@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.plugins.DiscoveryPlugin;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.gateway.GatewayMetaState;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.plugins.DiscoveryPlugin;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -71,7 +71,7 @@ import java.util.function.Supplier;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DiscoveryModuleTests extends OpenSearchTestCase {
+public class DiscoveryModuleTests extends DensityTestCase {
 
     private TransportService transportService;
     private NamedWriteableRegistry namedWriteableRegistry;
@@ -168,7 +168,7 @@ public class DiscoveryModuleTests extends OpenSearchTestCase {
         newModule(settings, Collections.singletonList(plugin));
         assertTrue(created.get());
         assertWarnings(
-            "[discovery.zen.hosts_provider] setting was deprecated in OpenSearch and will be removed in a future release! "
+            "[discovery.zen.hosts_provider] setting was deprecated in Density and will be removed in a future release! "
                 + "See the breaking changes documentation for the next major version."
         );
     }

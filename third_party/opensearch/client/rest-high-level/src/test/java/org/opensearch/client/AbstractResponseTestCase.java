@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -51,7 +51,7 @@ import java.io.IOException;
  * @param <S> The class representing the response on the server side.
  * @param <C> The class representing the response on the client side.
  */
-public abstract class AbstractResponseTestCase<S extends ToXContent, C> extends OpenSearchTestCase {
+public abstract class AbstractResponseTestCase<S extends ToXContent, C> extends DensityTestCase {
 
     public final void testFromXContent() throws IOException {
         final XContentType xContentType = randomFrom(XContentType.values());

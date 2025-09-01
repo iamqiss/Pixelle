@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.transport.Transport;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.AliasFilter;
+import org.density.telemetry.tracing.Tracer;
+import org.density.transport.Transport;
 
 import java.util.Map;
 import java.util.Set;

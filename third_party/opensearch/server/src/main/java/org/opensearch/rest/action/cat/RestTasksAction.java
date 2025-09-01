@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.TaskGroup;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Table;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.TaskGroup;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Table;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -59,13 +59,13 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.action.admin.cluster.RestListTasksAction.generateListTasksRequest;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.action.admin.cluster.RestListTasksAction.generateListTasksRequest;
 
 /**
  * _cat API action to get tasks information
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestTasksAction extends AbstractCatAction {
     private final Supplier<DiscoveryNodes> nodesInCluster;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.io.ByteArrayInputStream;
@@ -48,7 +48,7 @@ import java.util.Random;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class SlicedInputStreamTests extends OpenSearchTestCase {
+public class SlicedInputStreamTests extends DensityTestCase {
     public void testReadRandom() throws IOException {
         int parts = randomIntBetween(1, 20);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

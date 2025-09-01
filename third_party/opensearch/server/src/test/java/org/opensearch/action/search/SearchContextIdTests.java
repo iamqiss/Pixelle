@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.SearchPhaseResult;
+import org.density.search.internal.AliasFilter;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SearchContextIdTests extends OpenSearchTestCase {
+public class SearchContextIdTests extends DensityTestCase {
 
     QueryBuilder randomQueryBuilder() {
         if (randomBoolean()) {

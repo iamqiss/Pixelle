@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.reindex.RemoteInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.reindex.RemoteInfo;
+import org.density.test.DensityTestCase;
 
 import static java.util.Collections.emptyMap;
 
-public class RemoteInfoTests extends OpenSearchTestCase {
+public class RemoteInfoTests extends DensityTestCase {
     private RemoteInfo newRemoteInfo(String scheme, String prefixPath, String username, String password) {
         return new RemoteInfo(
             scheme,

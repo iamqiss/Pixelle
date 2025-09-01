@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotemigration;
+package org.density.remotemigration;
 
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.index.remote.RemoteSegmentStats;
-import org.opensearch.index.translog.RemoteTranslogStats;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.util.FileSystemUtils;
+import org.density.index.remote.RemoteSegmentStats;
+import org.density.index.translog.RemoteTranslogStats;
+import org.density.indices.RemoteStoreSettings;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -31,11 +31,11 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.SEGMENT_NAME_UUID_SEPARATOR;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.store.RemoteSegmentStoreDirectory.SEGMENT_NAME_UUID_SEPARATOR;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemotePrimaryLocalRecoveryIT extends MigrationBaseTestCase {
     String indexName = "idx1";
     int numOfNodes = randomIntBetween(6, 9);

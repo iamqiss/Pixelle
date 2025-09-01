@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.support.MultiTermsValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValueType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.BaseAggregationTestCase;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.support.MultiTermsValuesSourceConfig;
+import org.density.search.aggregations.support.ValueType;
 
 import java.time.ZoneId;
 import java.util.ArrayList;

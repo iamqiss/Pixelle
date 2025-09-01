@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.compress;
+package org.density.compress;
 
 import com.github.luben.zstd.RecyclingBufferPool;
 import com.github.luben.zstd.ZstdInputStreamNoFinalizer;
 import com.github.luben.zstd.ZstdOutputStreamNoFinalizer;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,8 +26,8 @@ import java.util.Arrays;
 /**
  * {@link Compressor} implementation based on the ZSTD compression algorithm.
  *
- * @opensearch.api - registered name requires BWC support
- * @opensearch.experimental - class methods might change
+ * @density.api - registered name requires BWC support
+ * @density.experimental - class methods might change
  */
 public class ZstdCompressor implements Compressor {
 
@@ -42,7 +42,7 @@ public class ZstdCompressor implements Compressor {
     /**
      * The name to register the compressor by
      *
-     * @opensearch.api - requires BWC support
+     * @density.api - requires BWC support
      */
     @PublicApi(since = "2.10.0")
     public static final String NAME = "ZSTD";

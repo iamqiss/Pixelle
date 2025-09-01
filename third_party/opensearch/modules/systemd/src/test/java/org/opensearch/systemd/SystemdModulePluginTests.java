@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.systemd;
+package org.density.systemd;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OptionalMatchers;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.CheckedConsumer;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.OptionalMatchers;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -56,7 +56,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SystemdModulePluginTests extends OpenSearchTestCase {
+public class SystemdModulePluginTests extends DensityTestCase {
     final Scheduler.Cancellable extender = mock(Scheduler.Cancellable.class);
     final ThreadPool threadPool = mock(ThreadPool.class);
 
@@ -86,7 +86,7 @@ public class SystemdModulePluginTests extends OpenSearchTestCase {
             () -> randomAlphaOfLength(4)
         );
         final RuntimeException e = expectThrows(RuntimeException.class, () -> new SystemdModulePlugin(esSDNotify));
-        assertThat(e, hasToString(containsString("OPENSEARCH_SD_NOTIFY set to unexpected value [" + esSDNotify + "]")));
+        assertThat(e, hasToString(containsString("DENSITY_SD_NOTIFY set to unexpected value [" + esSDNotify + "]")));
     }
 
     public void testOnNodeStartedSuccess() {

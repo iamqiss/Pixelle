@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.settings.Settings;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.settings.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,7 +60,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 
 /**
  * A base testcase that allows to run tests based on the output of the CAT API
@@ -70,7 +70,7 @@ import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
  * the test builds up a clusterstate from the cat input and optionally runs a full balance on it.
  * This can be used to debug cluster allocation decisions.
  */
-public abstract class CatAllocationTestCase extends OpenSearchAllocationTestCase {
+public abstract class CatAllocationTestCase extends DensityAllocationTestCase {
     protected abstract Path getCatPath() throws IOException;
 
     public void testRun() throws IOException {
@@ -151,7 +151,7 @@ public abstract class CatAllocationTestCase extends OpenSearchAllocationTestCase
         for (String node : nodes) {
             builderDiscoNodes.add(newNode(node));
         }
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .nodes(builderDiscoNodes.build())
@@ -179,7 +179,7 @@ public abstract class CatAllocationTestCase extends OpenSearchAllocationTestCase
             }
             logger.debug("Initializing shards: {}", initializing);
             numRelocations += initializing.size();
-            clusterState = OpenSearchAllocationTestCase.startShardsAndReroute(strategy, clusterState, initializing);
+            clusterState = DensityAllocationTestCase.startShardsAndReroute(strategy, clusterState, initializing);
         }
         logger.debug("--> num relocations to get balance: {}", numRelocations);
         return clusterState;

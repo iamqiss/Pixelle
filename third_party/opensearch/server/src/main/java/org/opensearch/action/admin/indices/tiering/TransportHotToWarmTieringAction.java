@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.tiering;
+package org.density.action.admin.indices.tiering;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Set;
 
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateHotToWarm;
+import static org.density.indices.tiering.TieringRequestValidator.validateHotToWarm;
 
 /**
  * Transport Tiering action to move indices from hot to warm
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class TransportHotToWarmTieringAction extends TransportClusterManagerNodeAction<TieringIndexRequest, HotToWarmTieringResponse> {

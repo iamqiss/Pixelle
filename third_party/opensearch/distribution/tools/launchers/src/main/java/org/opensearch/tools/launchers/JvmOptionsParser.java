@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.launchers;
+package org.density.tools.launchers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,26 +86,26 @@ final class JvmOptionsParser {
      * The main entry point. The exit code is 0 if the JVM options were successfully parsed, otherwise the exit code is 1. If an improperly
      * formatted line is discovered, the line is output to standard error.
      *
-     * @param args the args to the program which should consist of a single option, the path to OPENSEARCH_PATH_CONF
+     * @param args the args to the program which should consist of a single option, the path to DENSITY_PATH_CONF
      */
     public static void main(final String[] args) throws InterruptedException, IOException {
         if (args.length != 1) {
             throw new IllegalArgumentException(
-                "expected one argument specifying path to OPENSEARCH_PATH_CONF but was " + Arrays.toString(args)
+                "expected one argument specifying path to DENSITY_PATH_CONF but was " + Arrays.toString(args)
             );
         }
 
         final JvmOptionsParser parser = new JvmOptionsParser();
 
         final Map<String, String> substitutions = new HashMap<>();
-        substitutions.put("OPENSEARCH_TMPDIR", System.getenv("OPENSEARCH_TMPDIR"));
-        final String environmentPathConf = System.getenv("OPENSEARCH_PATH_CONF");
+        substitutions.put("DENSITY_TMPDIR", System.getenv("DENSITY_TMPDIR"));
+        final String environmentPathConf = System.getenv("DENSITY_PATH_CONF");
         if (environmentPathConf != null) {
-            substitutions.put("OPENSEARCH_PATH_CONF", environmentPathConf);
+            substitutions.put("DENSITY_PATH_CONF", environmentPathConf);
         }
 
         try {
-            final List<String> jvmOptions = parser.jvmOptions(Paths.get(args[0]), System.getenv("OPENSEARCH_JAVA_OPTS"), substitutions);
+            final List<String> jvmOptions = parser.jvmOptions(Paths.get(args[0]), System.getenv("DENSITY_JAVA_OPTS"), substitutions);
             Launchers.outPrintln(String.join(" ", jvmOptions));
         } catch (final JvmOptionsFileParserException e) {
             final String errorMessage = String.format(
@@ -135,14 +135,14 @@ final class JvmOptionsParser {
         Launchers.exit(0);
     }
 
-    private List<String> jvmOptions(final Path config, final String opensearchJavaOpts, final Map<String, String> substitutions)
+    private List<String> jvmOptions(final Path config, final String densityJavaOpts, final Map<String, String> substitutions)
         throws InterruptedException, IOException, JvmOptionsFileParserException {
 
         final List<String> jvmOptions = readJvmOptionsFiles(config);
 
-        if (opensearchJavaOpts != null) {
+        if (densityJavaOpts != null) {
             jvmOptions.addAll(
-                Arrays.stream(opensearchJavaOpts.split("\\s+")).filter(s -> s.trim().isEmpty() == false).collect(Collectors.toList())
+                Arrays.stream(densityJavaOpts.split("\\s+")).filter(s -> s.trim().isEmpty() == false).collect(Collectors.toList())
             );
         }
 

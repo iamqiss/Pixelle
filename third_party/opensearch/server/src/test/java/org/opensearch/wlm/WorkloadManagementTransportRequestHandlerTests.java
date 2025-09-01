@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
+import org.density.action.index.IndexRequest;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
 
 import java.util.Collections;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-public class WorkloadManagementTransportRequestHandlerTests extends OpenSearchTestCase {
+public class WorkloadManagementTransportRequestHandlerTests extends DensityTestCase {
     private WorkloadManagementTransportInterceptor.RequestHandler<TransportRequest> sut;
     private ThreadPool threadPool;
     private WorkloadGroupService workloadGroupService;
@@ -59,9 +59,9 @@ public class WorkloadManagementTransportRequestHandlerTests extends OpenSearchTe
     public void testMessageReceivedForSearchWorkload_RejectionCase() throws Exception {
         ShardSearchRequest request = mock(ShardSearchRequest.class);
         WorkloadGroupTask spyTask = getSpyTask();
-        doThrow(OpenSearchRejectedExecutionException.class).when(workloadGroupService).rejectIfNeeded(anyString());
+        doThrow(DensityRejectedExecutionException.class).when(workloadGroupService).rejectIfNeeded(anyString());
 
-        assertThrows(OpenSearchRejectedExecutionException.class, () -> sut.messageReceived(request, mock(TransportChannel.class), spyTask));
+        assertThrows(DensityRejectedExecutionException.class, () -> sut.messageReceived(request, mock(TransportChannel.class), spyTask));
     }
 
     public void testMessageReceivedForNonSearchWorkload() throws Exception {

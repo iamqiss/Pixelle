@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.action.support.single.shard.SingleShardOperationRequestBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.VersionType;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.single.shard.SingleShardOperationRequestBuilder;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.index.VersionType;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.DensityClient;
 
 /**
  * A get document action request builder.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetRequestBuilder extends SingleShardOperationRequestBuilder<GetRequest, GetResponse, GetRequestBuilder> {
 
-    public GetRequestBuilder(OpenSearchClient client, GetAction action) {
+    public GetRequestBuilder(DensityClient client, GetAction action) {
         super(client, action, new GetRequest());
     }
 
-    public GetRequestBuilder(OpenSearchClient client, GetAction action, @Nullable String index) {
+    public GetRequestBuilder(DensityClient client, GetAction action, @Nullable String index) {
         super(client, action, new GetRequest(index));
     }
 
@@ -156,7 +156,7 @@ public class GetRequestBuilder extends SingleShardOperationRequestBuilder<GetReq
     }
 
     /**
-     * Sets the versioning type. Defaults to {@link org.opensearch.index.VersionType#INTERNAL}.
+     * Sets the versioning type. Defaults to {@link org.density.index.VersionType#INTERNAL}.
      */
     public GetRequestBuilder setVersionType(VersionType versionType) {
         request.versionType(versionType);

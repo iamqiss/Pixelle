@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RecoverySource.EmptyStoreRecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.LocalShardsRecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.PeerRecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RecoverySource.EmptyStoreRecoverySource;
+import org.density.cluster.routing.RecoverySource.LocalShardsRecoverySource;
+import org.density.cluster.routing.RecoverySource.PeerRecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -72,7 +72,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Unit tests for the DiskThresholdDecider
  */
-public class DiskThresholdDeciderUnitTests extends OpenSearchAllocationTestCase {
+public class DiskThresholdDeciderUnitTests extends DensityAllocationTestCase {
 
     public void testCanAllocateUsesMaxAvailableSpace() {
         ClusterSettings nss = new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
@@ -314,7 +314,7 @@ public class DiskThresholdDeciderUnitTests extends OpenSearchAllocationTestCase 
 
         RoutingTable routingTable = RoutingTable.builder().addAsNew(indexMetadata).build();
 
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();
@@ -422,7 +422,7 @@ public class DiskThresholdDeciderUnitTests extends OpenSearchAllocationTestCase 
         RoutingTable.Builder routingTableBuilder = RoutingTable.builder();
         routingTableBuilder.addAsNew(metadata.index("test"));
         routingTableBuilder.addAsNew(metadata.index("other"));
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTableBuilder.build())
             .build();
@@ -562,7 +562,7 @@ public class DiskThresholdDeciderUnitTests extends OpenSearchAllocationTestCase 
         routingTableBuilder.addAsNew(metadata.index("test"));
         routingTableBuilder.addAsNew(metadata.index("target"));
         routingTableBuilder.addAsNew(metadata.index("target2"));
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTableBuilder.build())
             .build();

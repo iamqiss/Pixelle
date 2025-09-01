@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.Version;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -51,11 +51,11 @@ import java.util.Map;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.AND;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.OR;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.AND;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.OR;
 import static org.hamcrest.Matchers.equalTo;
 
-public class DiscoveryNodeFiltersTests extends OpenSearchTestCase {
+public class DiscoveryNodeFiltersTests extends DensityTestCase {
 
     private static TransportAddress localAddress;
 

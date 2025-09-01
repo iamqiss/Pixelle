@@ -1,7 +1,7 @@
 {
   "search":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/search/",
+      "url":"https://density.org/docs/latest/api-reference/search/",
       "description":"Returns results matching a query."
     },
     "stability":"stable",

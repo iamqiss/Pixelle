@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.cache.ICache;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
-public class TieredSpilloverCachePluginTests extends OpenSearchTestCase {
+public class TieredSpilloverCachePluginTests extends DensityTestCase {
 
     public void testGetCacheFactoryMap() {
         TieredSpilloverCachePlugin tieredSpilloverCachePlugin = new TieredSpilloverCachePlugin(Settings.EMPTY);

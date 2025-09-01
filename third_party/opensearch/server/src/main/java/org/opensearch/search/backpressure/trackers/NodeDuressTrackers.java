@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure.trackers;
+package org.density.search.backpressure.trackers;
 
-import org.opensearch.common.util.Streak;
-import org.opensearch.common.util.TimeBasedExpiryTracker;
-import org.opensearch.wlm.ResourceType;
+import org.density.common.util.Streak;
+import org.density.common.util.TimeBasedExpiryTracker;
+import org.density.wlm.ResourceType;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +20,7 @@ import java.util.function.IntSupplier;
 /**
  * NodeDuressTrackers is used to check if the node is in duress based on various resources.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeDuressTrackers {
     private final Map<ResourceType, NodeDuressTracker> duressTrackers;
@@ -70,7 +70,7 @@ public class NodeDuressTrackers {
 
     /**
      * NodeDuressTracker is used to check if the node is in duress
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeDuressTracker {
         /**

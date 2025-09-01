@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.Map;
 
 /**
- * A script used by {@link org.opensearch.ingest.ConditionalProcessor}.
+ * A script used by {@link org.density.ingest.ConditionalProcessor}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IngestConditionalScript {
 
@@ -71,7 +71,7 @@ public abstract class IngestConditionalScript {
     /**
      * Factory for ingest condition script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory {
         IngestConditionalScript newInstance(Map<String, Object> params);

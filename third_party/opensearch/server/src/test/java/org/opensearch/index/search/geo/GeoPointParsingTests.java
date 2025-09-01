@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.geo;
+package org.density.index.search.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.geo.RandomGeoGenerator;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
+import org.density.test.geo.RandomGeoGenerator;
 
 import java.io.IOException;
 import java.util.function.DoubleSupplier;
 
-import static org.opensearch.geometry.utils.Geohash.stringEncode;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.geometry.utils.Geohash.stringEncode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.is;
 
-public class GeoPointParsingTests extends OpenSearchTestCase {
+public class GeoPointParsingTests extends DensityTestCase {
     private static final String ERR_MSG_INVALID_FIELDS = "field must be either [lon|lat], [type|coordinates], or [geohash]";
     private static final double TOLERANCE = 1E-5;
 
@@ -76,10 +76,10 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
 
     public void testParseWktInvalid() {
         GeoPoint point = new GeoPoint(0, 0);
-        Exception e = expectThrows(OpenSearchParseException.class, () -> point.resetFromString("NOT A POINT(1 2)"));
+        Exception e = expectThrows(DensityParseException.class, () -> point.resetFromString("NOT A POINT(1 2)"));
         assertEquals("Invalid WKT format", e.getMessage());
 
-        Exception e2 = expectThrows(OpenSearchParseException.class, () -> point.resetFromString("MULTIPOINT(1 2, 3 4)"));
+        Exception e2 = expectThrows(DensityParseException.class, () -> point.resetFromString("MULTIPOINT(1 2, 3 4)"));
         assertEquals("[geo_point] supports only POINT among WKT primitives, but found MULTIPOINT", e2.getMessage());
     }
 
@@ -142,12 +142,12 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
         try (XContentParser parser2 = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser2.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -160,12 +160,12 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
         try (XContentParser parser2 = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser2.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -179,12 +179,12 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser.nextToken();
 
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
         try (XContentParser parser2 = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser2.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -197,13 +197,13 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
 
         try (XContentParser parser2 = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser2.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(toObject(parser2), randomBoolean()));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -217,7 +217,7 @@ public class GeoPointParsingTests extends OpenSearchTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, BytesReference.bytes(content))) {
             parser.nextToken();
 
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("unsupported symbol [!] in geohash [!!!!]"));
         }
     }

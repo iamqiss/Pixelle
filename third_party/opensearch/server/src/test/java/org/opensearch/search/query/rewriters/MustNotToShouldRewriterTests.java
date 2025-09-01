@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query.rewriters;
+package org.density.search.query.rewriters;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.IntPoint;
@@ -15,14 +15,14 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.Lucene;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryShardContext;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MustNotToShouldRewriterTests extends OpenSearchTestCase {
+public class MustNotToShouldRewriterTests extends DensityTestCase {
 
     private final MustNotToShouldRewriter rewriter = MustNotToShouldRewriter.INSTANCE;
     private QueryShardContext context;

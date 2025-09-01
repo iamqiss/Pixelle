@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.StepListener;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.transport.RemoteClusterService;
+import org.density.action.StepListener;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.transport.RemoteClusterService;
 
 import java.util.Set;
 import java.util.function.BiFunction;

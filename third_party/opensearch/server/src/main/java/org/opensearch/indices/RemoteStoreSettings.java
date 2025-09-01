@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.remote.RemoteStoreEnums;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexSettings;
+import org.density.index.remote.RemoteStoreEnums;
 
 /**
  * Settings for remote store
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.14.0")
 public class RemoteStoreSettings {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.action;
+package org.density.painless.action;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.DirectoryReader;
@@ -44,54 +44,54 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.action.support.single.shard.TransportSingleShardAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedBiFunction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.script.FilterScript;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.action.support.single.shard.TransportSingleShardAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedBiFunction;
+import org.density.common.inject.Inject;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexService;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.indices.IndicesService;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.script.FilterScript;
+import org.density.script.ScoreScript;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -102,9 +102,9 @@ import java.util.Objects;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
 
 public class PainlessExecuteAction extends ActionType<PainlessExecuteAction.Response> {
 

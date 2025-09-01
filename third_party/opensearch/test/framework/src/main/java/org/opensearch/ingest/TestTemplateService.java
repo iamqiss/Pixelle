@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.TemplateScript;
+import org.density.common.settings.Settings;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptService;
+import org.density.script.TemplateScript;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.script.Script.DEFAULT_TEMPLATE_LANG;
+import static org.density.script.Script.DEFAULT_TEMPLATE_LANG;
 
 public class TestTemplateService extends ScriptService {
     private boolean compilationException;

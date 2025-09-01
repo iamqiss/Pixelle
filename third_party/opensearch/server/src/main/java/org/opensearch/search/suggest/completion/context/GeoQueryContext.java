@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.common.geo.GeoUtils.parsePrecision;
-import static org.opensearch.search.suggest.completion.context.GeoContextMapping.CONTEXT_BOOST;
-import static org.opensearch.search.suggest.completion.context.GeoContextMapping.CONTEXT_NEIGHBOURS;
-import static org.opensearch.search.suggest.completion.context.GeoContextMapping.CONTEXT_PRECISION;
-import static org.opensearch.search.suggest.completion.context.GeoContextMapping.CONTEXT_VALUE;
+import static org.density.common.geo.GeoUtils.parsePrecision;
+import static org.density.search.suggest.completion.context.GeoContextMapping.CONTEXT_BOOST;
+import static org.density.search.suggest.completion.context.GeoContextMapping.CONTEXT_NEIGHBOURS;
+import static org.density.search.suggest.completion.context.GeoContextMapping.CONTEXT_PRECISION;
+import static org.density.search.suggest.completion.context.GeoContextMapping.CONTEXT_VALUE;
 
 /**
  * Defines the query context for {@link GeoContextMapping}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class GeoQueryContext implements ToXContentObject {
     public static final String NAME = "geo";
@@ -158,7 +158,7 @@ public final class GeoQueryContext implements ToXContentObject {
         } else if (token == XContentParser.Token.VALUE_STRING) {
             builder.setGeoPoint(GeoPoint.fromGeohash(parser.text()));
         } else {
-            throw new OpenSearchParseException("geo context must be an object or string");
+            throw new DensityParseException("geo context must be an object or string");
         }
         return builder.build();
     }
@@ -180,7 +180,7 @@ public final class GeoQueryContext implements ToXContentObject {
     /**
      * Builder for the geo context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private GeoPoint geoPoint;

@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.IndexSettings.MINIMUM_REFRESH_INTERVAL;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.OpenSearchIntegTestCase.Scope.TEST;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.IndexSettings.MINIMUM_REFRESH_INTERVAL;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.DensityIntegTestCase.Scope.TEST;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = TEST, numClientNodes = 0, maxNumDataNodes = 1, supportsDedicatedMasters = false)
-public class TermsFixedDocCountErrorIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = TEST, numClientNodes = 0, maxNumDataNodes = 1, supportsDedicatedMasters = false)
+public class TermsFixedDocCountErrorIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String STRING_FIELD_NAME = "s_value";
 

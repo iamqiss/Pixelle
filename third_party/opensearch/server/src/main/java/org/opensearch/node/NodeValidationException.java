@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.BoundTransportAddress;
 
 import java.util.List;
 
 /**
  * An exception thrown during node validation. Node validation runs immediately before a node
  * begins accepting network requests in
- * {@link Node#validateNodeBeforeAcceptingRequests(org.opensearch.bootstrap.BootstrapContext, BoundTransportAddress, List)}.
+ * {@link Node#validateNodeBeforeAcceptingRequests(org.density.bootstrap.BootstrapContext, BoundTransportAddress, List)}.
  * This exception is a checked exception that is declared as thrown from this method for the purpose of bubbling up to the user.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeValidationException extends Exception {
 

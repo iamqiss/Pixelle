@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.KeyedLock;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.KeyedLock;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Maps _uid value to its version information.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class LiveVersionMap implements ReferenceManager.RefreshListener, Accountable {
 
@@ -58,7 +58,7 @@ final class LiveVersionMap implements ReferenceManager.RefreshListener, Accounta
     /**
      * Looks up document version
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class VersionLookup {
 
@@ -128,7 +128,7 @@ final class LiveVersionMap implements ReferenceManager.RefreshListener, Accounta
     /**
      * Map of version lookups
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class Maps {
 

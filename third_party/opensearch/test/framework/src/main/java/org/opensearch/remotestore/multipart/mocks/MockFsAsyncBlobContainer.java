@@ -2,24 +2,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore.multipart.mocks;
+package org.density.remotestore.multipart.mocks;
 
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.common.StreamContext;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.StreamContext;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.io.InputStreamContainer;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexUpgradeService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexUpgradeService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
+import static org.density.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
 
 /**
  * Allocates dangled indices
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LocalAllocateDangledIndices {
 
@@ -266,7 +266,7 @@ public class LocalAllocateDangledIndices {
     /**
      * The request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
 
     public static class AllocateDangledRequest extends TransportRequest {
@@ -296,7 +296,7 @@ public class LocalAllocateDangledIndices {
     /**
      * The response.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class AllocateDangledResponse extends TransportResponse {
 

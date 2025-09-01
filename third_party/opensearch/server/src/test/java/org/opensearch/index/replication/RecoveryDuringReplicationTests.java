@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.replication;
+package org.density.index.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.bulk.BulkShardRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.DocIdSeqNoAndSource;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.engine.InternalEngineTests;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.PrimaryReplicaSyncer;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.recovery.RecoveryTarget;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.bulk.BulkShardRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.engine.DocIdSeqNoAndSource;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.engine.InternalEngineTests;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.PrimaryReplicaSyncer;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.recovery.RecoveryTarget;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 
-public class RecoveryDuringReplicationTests extends OpenSearchIndexLevelReplicationTestCase {
+public class RecoveryDuringReplicationTests extends DensityIndexLevelReplicationTestCase {
 
     public void testIndexingDuringFileRecovery() throws Exception {
         try (ReplicationGroup shards = createGroup(randomInt(1))) {

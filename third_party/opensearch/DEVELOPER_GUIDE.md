@@ -1,6 +1,6 @@
 - [Developer Guide](#developer-guide)
   - [Getting Started](#getting-started)
-    - [Git Clone OpenSearch Repo](#git-clone-opensearch-repo)
+    - [Git Clone Density Repo](#git-clone-density-repo)
     - [Install Prerequisites](#install-prerequisites)
       - [JDK](#jdk)
       - [Custom Runtime JDK](#custom-runtime-jdk)
@@ -9,7 +9,7 @@
     - [Build](#build)
       - [Generated Code](#generated-code)
     - [Run Tests](#run-tests)
-    - [Run OpenSearch](#run-opensearch)
+    - [Run Density](#run-density)
   - [Use an Editor](#use-an-editor)
     - [IntelliJ IDEA](#intellij-idea)
       - [Remote development using JetBrains Gateway](#remote-development-using-jetbrains-gateway)
@@ -64,24 +64,24 @@
 
 # Developer Guide
 
-So you want to contribute code to OpenSearch? Excellent! We're glad you're here. Here's what you need to do.
+So you want to contribute code to Density? Excellent! We're glad you're here. Here's what you need to do.
 
 ## Getting Started
 
-### Git Clone OpenSearch Repo
+### Git Clone Density Repo
 
-Fork [opensearch-project/OpenSearch](https://github.com/opensearch-project/OpenSearch) and clone locally, e.g. `git clone https://github.com/[your username]/OpenSearch.git`.
+Fork [density-project/Density](https://github.com/density-project/Density) and clone locally, e.g. `git clone https://github.com/[your username]/Density.git`.
 
 ### Install Prerequisites
 
 #### JDK
 
-OpenSearch recommends building with the [Temurin/Adoptium](https://adoptium.net/temurin/releases/) distribution. JDK 11 is the minimum supported, and JDK-24 is the newest supported. You must have a supported JDK installed with the environment variable `JAVA_HOME` referencing the path to Java home for your JDK installation, e.g. `JAVA_HOME=/usr/lib/jvm/jdk-21`. 
+Density recommends building with the [Temurin/Adoptium](https://adoptium.net/temurin/releases/) distribution. JDK 11 is the minimum supported, and JDK-24 is the newest supported. You must have a supported JDK installed with the environment variable `JAVA_HOME` referencing the path to Java home for your JDK installation, e.g. `JAVA_HOME=/usr/lib/jvm/jdk-21`. 
 
 Download Java 11 from [here](https://adoptium.net/releases.html?variant=openjdk11). 
 
 
-In addition, certain backward compatibility tests check out and compile the previous major version of OpenSearch, and therefore require installing [JDK 11](https://adoptium.net/temurin/releases/?version=11) and [JDK 17](https://adoptium.net/temurin/releases/?version=17) and setting the `JAVA11_HOME` and `JAVA17_HOME` environment variables. More to that, since 8.10 release, Gradle has deprecated the usage of the any JDKs below JDK-16. For smooth development experience, the recommendation is to install at least [JDK 17](https://adoptium.net/temurin/releases/?version=17) or [JDK 21](https://adoptium.net/temurin/releases/?version=21). If you still want to build with JDK-11 only, please add `-Dorg.gradle.warning.mode=none` when invoking any Gradle build task from command line, for example:
+In addition, certain backward compatibility tests check out and compile the previous major version of Density, and therefore require installing [JDK 11](https://adoptium.net/temurin/releases/?version=11) and [JDK 17](https://adoptium.net/temurin/releases/?version=17) and setting the `JAVA11_HOME` and `JAVA17_HOME` environment variables. More to that, since 8.10 release, Gradle has deprecated the usage of the any JDKs below JDK-16. For smooth development experience, the recommendation is to install at least [JDK 17](https://adoptium.net/temurin/releases/?version=17) or [JDK 21](https://adoptium.net/temurin/releases/?version=21). If you still want to build with JDK-11 only, please add `-Dorg.gradle.warning.mode=none` when invoking any Gradle build task from command line, for example:
 
 ```
 ./gradlew check -Dorg.gradle.warning.mode=none
@@ -104,13 +104,13 @@ On Windows, set `_JAVA_OPTIONS: -Xmx4096M`. You may also need to set `LongPathsE
 
 #### Docker
 
-Download and install [Docker](https://docs.docker.com/install/), required for building OpenSearch artifacts, and executing certain test suites.
+Download and install [Docker](https://docs.docker.com/install/), required for building Density artifacts, and executing certain test suites.
 
-On Windows, [use Docker Desktop 3.6](https://docs.docker.com/desktop/windows/release-notes/3.x/). See [OpenSearch#1425](https://github.com/opensearch-project/OpenSearch/issues/1425) for workarounds and issues with Docker Desktop 4.1.1.
+On Windows, [use Docker Desktop 3.6](https://docs.docker.com/desktop/windows/release-notes/3.x/). See [Density#1425](https://github.com/density-project/Density/issues/1425) for workarounds and issues with Docker Desktop 4.1.1.
 
 ### Build
 
-To build all distributions of OpenSearch, run:
+To build all distributions of Density, run:
 
 ```
 ./gradlew assemble
@@ -126,18 +126,18 @@ All distributions built will be under `distributions/archives`.
 
 #### Generated Code
 
-OpenSearch uses code generators like [Protobuf](https://protobuf.dev/).
-OpenSearch build system already takes a dependency of generating code from protobuf, if you run into compilation errors, run:
+Density uses code generators like [Protobuf](https://protobuf.dev/).
+Density build system already takes a dependency of generating code from protobuf, if you run into compilation errors, run:
 
 ```
 ./gradlew generateProto
 ```
 
-Generated code in OpenSearch is used to establish cross version compatibility communication for API contracts within OpenSearch.
+Generated code in Density is used to establish cross version compatibility communication for API contracts within Density.
 
 ### Run Tests
 
-OpenSearch uses a Gradle wrapper for its build. Run `gradlew` on Unix systems, or `gradlew.bat` on Windows in the root of the repository.
+Density uses a Gradle wrapper for its build. Run `gradlew` on Unix systems, or `gradlew.bat` on Windows in the root of the repository.
 
 Start by running the test suite with `gradlew check`. This should complete without errors.
 
@@ -145,7 +145,7 @@ Start by running the test suite with `gradlew check`. This should complete witho
 ./gradlew check
 
 =======================================
-OpenSearch Build Hamster says Hello!
+Density Build Hamster says Hello!
   Gradle Version        : 6.6.1
   OS Info               : Linux 5.4.0-1037-aws (amd64)
   JDK Version           : 11 (JDK)
@@ -164,9 +164,9 @@ If the full test suite fails you may want to start with a smaller set.
 ./gradlew precommit
 ```
 
-### Run OpenSearch
+### Run Density
 
-Run OpenSearch using `gradlew run`.
+Run Density using `gradlew run`.
 
 ```
 ./gradlew run
@@ -178,14 +178,14 @@ Run OpenSearch using `gradlew run`.
 ./gradlew run -PinstalledPlugins="['plugin1', 'plugin2']"
 ```
 
-That will build OpenSearch and start it, writing its log above Gradle's status message. We log a lot of stuff on startup, specifically these lines tell you that OpenSearch is ready.
+That will build Density and start it, writing its log above Gradle's status message. We log a lot of stuff on startup, specifically these lines tell you that Density is ready.
 
 ```
 [2020-05-29T14:50:35,167][INFO ][o.e.h.AbstractHttpServerTransport] [runTask-0] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
 [2020-05-29T14:50:35,169][INFO ][o.e.n.Node               ] [runTask-0] started
 ```
 
-It's typically easier to wait until the console stops scrolling, and then run `curl` in another window to check if OpenSearch instance is running.
+It's typically easier to wait until the console stops scrolling, and then run `curl` in another window to check if Density instance is running.
 
 ```bash
 curl localhost:9200
@@ -209,10 +209,10 @@ The expected reponse should be
 }
 ```
 
-Use `-Dtests.opensearch.` to pass additional settings to the running instance. For example, to enable OpenSearch to listen on an external IP address pass `-Dtests.opensearch.http.host`. Make sure your firewall or security policy allows external connections for this to work.
+Use `-Dtests.density.` to pass additional settings to the running instance. For example, to enable Density to listen on an external IP address pass `-Dtests.density.http.host`. Make sure your firewall or security policy allows external connections for this to work.
 
 ```bash
-./gradlew run -Dtests.opensearch.http.host=0.0.0.0
+./gradlew run -Dtests.density.http.host=0.0.0.0
 ```
 
 ## Use an Editor
@@ -221,7 +221,7 @@ Use `-Dtests.opensearch.` to pass additional settings to the running instance. F
 
 When importing into IntelliJ you will need to define an appropriate JDK. The convention is that **this SDK should be named "11"**, and the project import will detect it automatically. For more details on defining an SDK in IntelliJ please refer to [this documentation](https://www.jetbrains.com/help/idea/sdk.html#define-sdk). Note that SDK definitions are global, so you can add the JDK from any project, or after project import. Importing with a missing JDK will still work, IntelliJ will report a problem and will refuse to build until resolved.
 
-You can import the OpenSearch project into IntelliJ IDEA as follows.
+You can import the Density project into IntelliJ IDEA as follows.
 
 1. Select **File > Open**
 2. In the subsequent dialog navigate to the root `build.gradle` file
@@ -246,14 +246,14 @@ When importing to Eclipse, you need to have [Eclipse Buildship](https://projects
 
     ./gradlew eclipse
 
-You can now import the OpenSearch project into Eclipse as follows.
+You can now import the Density project into Eclipse as follows.
 
 1. Select **File > Import -> Existing Gradle Project**
 2. In the subsequent dialog navigate to the root of `build.gradle` file
 3. In the subsequent dialog, if JDK 11 is not set as default JRE, please make sure to check **[Override workspace settings]**, keep **[Gradle Wrapper]** and provide the correct path to JDK11 using **[Java Home]** property under **[Advanced Options]**. Otherwise, you may run into cryptic import failures and only top level project is going to be imported.
 4. In the subsequent dialog, you should see **[Gradle project structure]** populated, please click **[Finish]** to complete the import
 
-**Note:** it may look non-intuitive why one needs to use Gradle wrapper and then import existing Gradle project (in general, **File > Import -> Existing Gradle Project** should be enough). Practically, as it stands now, Eclipse Buildship plugin does not import OpenSearch project dependencies correctly but does work in conjunction with Gradle wrapper.
+**Note:** it may look non-intuitive why one needs to use Gradle wrapper and then import existing Gradle project (in general, **File > Import -> Existing Gradle Project** should be enough). Practically, as it stands now, Eclipse Buildship plugin does not import Density project dependencies correctly but does work in conjunction with Gradle wrapper.
 
 ## Project Layout
 
@@ -273,21 +273,21 @@ Libraries used to build other parts of the project. These are meant to be intern
 
 ### `modules`
 
-Features that are shipped with OpenSearch by default but are not built in to the server. We typically separate features from the server because they require permissions that we don't believe *all* of OpenSearch should have or because they depend on libraries that we don't believe *all* of OpenSearch should depend on.
+Features that are shipped with Density by default but are not built in to the server. We typically separate features from the server because they require permissions that we don't believe *all* of Density should have or because they depend on libraries that we don't believe *all* of Density should depend on.
 
-For example, reindex requires the `connect` permission so it can perform reindex-from-remote but we don't believe that the *all* of OpenSearch should have the "connect". For another example, Painless is implemented using antlr4 and asm and we don't believe that *all* of OpenSearch should have access to them.
+For example, reindex requires the `connect` permission so it can perform reindex-from-remote but we don't believe that the *all* of Density should have the "connect". For another example, Painless is implemented using antlr4 and asm and we don't believe that *all* of Density should have access to them.
 
 ### `plugins`
 
-OpenSearch plugins. We decide that a feature should be a plugin rather than shipped as a module because we feel that it is only important to a subset of users, especially if it requires extra dependencies.
+Density plugins. We decide that a feature should be a plugin rather than shipped as a module because we feel that it is only important to a subset of users, especially if it requires extra dependencies.
 
-The canonical example of this is the ICU analysis plugin. It is important for folks who want the fairly language neutral ICU analyzer but the library to implement the analyzer is 11MB so we don't ship it with OpenSearch by default.
+The canonical example of this is the ICU analysis plugin. It is important for folks who want the fairly language neutral ICU analyzer but the library to implement the analyzer is 11MB so we don't ship it with Density by default.
 
 Another example is the `discovery-gce` plugin. It is *vital* to folks running in [GCP](https://cloud.google.com/) but useless otherwise and it depends on a dozen extra jars.
 
 ### `sandbox`
 
-This is where the community can add experimental features in to OpenSearch. There are three directories inside the sandbox - `libs`, `modules` and `plugins` - which mirror the subdirectories in the project root and have the same guidelines for deciding on where a new feature goes. The artifacts from `libs` and `modules` will be automatically included in the **snapshot** distributions. Once a certain feature is deemed worthy to be included in the OpenSearch release, it will be promoted to the corresponding subdirectory in the project root. **Note**: The sandbox code do not have any other guarantees such as backwards compatibility or long term support and can be removed at any time.
+This is where the community can add experimental features in to Density. There are three directories inside the sandbox - `libs`, `modules` and `plugins` - which mirror the subdirectories in the project root and have the same guidelines for deciding on where a new feature goes. The artifacts from `libs` and `modules` will be automatically included in the **snapshot** distributions. Once a certain feature is deemed worthy to be included in the Density release, it will be promoted to the corresponding subdirectory in the project root. **Note**: The sandbox code do not have any other guarantees such as backwards compatibility or long term support and can be removed at any time.
 
 To exclude the modules from snapshot distributions, use the `sandbox.enabled` system property.
 
@@ -300,26 +300,26 @@ Honestly this is kind of in flux and we're not 100% sure where we'll end up. We 
 Right now the directory contains the following.
 
 * Tests that require multiple modules or plugins to work.
-* Tests that form a cluster made up of multiple versions of OpenSearch like full cluster restart, rolling restarts, and mixed version tests.
-* Tests that test the OpenSearch clients in "interesting" places like the `wildfly` project.
-* Tests that test OpenSearch in funny configurations like with ingest disabled.
+* Tests that form a cluster made up of multiple versions of Density like full cluster restart, rolling restarts, and mixed version tests.
+* Tests that test the Density clients in "interesting" places like the `wildfly` project.
+* Tests that test Density in funny configurations like with ingest disabled.
 * Tests that need to do strange things like install plugins that thrown uncaught `Throwable`s or add a shutdown hook.
 
 But we're not convinced that all of these things *belong* in the qa directory. We're fairly sure that tests that require multiple modules or plugins to work should just pick a "home" plugin. We're fairly sure that the multi-version tests *do* belong in qa. Beyond that, we're not sure. If you want to add a new qa project, open a PR and be ready to discuss options.
 
 ### `server`
 
-The server component of OpenSearch that contains all of the modules and plugins. Right now things like the high level rest client depend on the server but we'd like to fix that in the future.
+The server component of Density that contains all of the modules and plugins. Right now things like the high level rest client depend on the server but we'd like to fix that in the future.
 
 ### `test`
 
-Our test framework and test fixtures. We use the test framework for testing the server, the plugins, and modules, and pretty much everything else. We publish the test framework so folks who develop OpenSearch plugins can use it to test the plugins. The test fixtures are external processes that we start before running specific tests that rely on them.
+Our test framework and test fixtures. We use the test framework for testing the server, the plugins, and modules, and pretty much everything else. We publish the test framework so folks who develop Density plugins can use it to test the plugins. The test fixtures are external processes that we start before running specific tests that rely on them.
 
 For example, we have an hdfs test that uses mini-hdfs to test our repository-hdfs plugin.
 
 ## Java Language Formatting Guidelines
 
-Java files in the OpenSearch codebase are formatted with the Eclipse JDT formatter, using the [Spotless Gradle](https://github.com/diffplug/spotless/tree/master/plugin-gradle) plugin. This plugin is configured on a project-by-project basis, via `build.gradle` in the root of the repository. So long as at least one project is configured, the formatting check can be run explicitly with:
+Java files in the Density codebase are formatted with the Eclipse JDT formatter, using the [Spotless Gradle](https://github.com/diffplug/spotless/tree/master/plugin-gradle) plugin. This plugin is configured on a project-by-project basis, via `build.gradle` in the root of the repository. So long as at least one project is configured, the formatting check can be run explicitly with:
 
     ./gradlew spotlessJavaCheck
 
@@ -371,7 +371,7 @@ The `paddedCell()` option is disabled for normal operation in order to detect an
 
 ## Gradle Build
 
-We use Gradle to build OpenSearch because it is flexible enough to not only build and package OpenSearch, but also orchestrate all of the ways that we have to test OpenSearch.
+We use Gradle to build Density because it is flexible enough to not only build and package Density, but also orchestrate all of the ways that we have to test Density.
 
 ### Configurations
 
@@ -392,7 +392,7 @@ Dependencies that not on the classpath at compile time but are on the classpath 
 #### compileOnly
 
 Code that is on the classpath at compile time but that should not be shipped with the project because it is "provided" by the runtime
-somehow. OpenSearch plugins use this configuration to include dependencies that are bundled with OpenSearch's server.
+somehow. Density plugins use this configuration to include dependencies that are bundled with Density's server.
 
 #### testImplementation
 
@@ -403,16 +403,16 @@ of this is `junit`.
 
 #### Distribution Download Plugin
 
-The Distribution Download plugin downloads the latest version of OpenSearch by default, and supports overriding this behavior by setting `customDistributionUrl`.
+The Distribution Download plugin downloads the latest version of Density by default, and supports overriding this behavior by setting `customDistributionUrl`.
 ```
-./gradlew integTest -PcustomDistributionUrl="https://ci.opensearch.org/ci/dbc/bundle-build/1.2.0/1127/linux/x64/dist/opensearch-1.2.0-linux-x64.tar.gz"
+./gradlew integTest -PcustomDistributionUrl="https://ci.density.org/ci/dbc/bundle-build/1.2.0/1127/linux/x64/dist/density-1.2.0-linux-x64.tar.gz"
 ```
 
 ### Creating fat-JAR of a Module
 
 A fat-JAR (or an uber-JAR) is the JAR, which contains classes from all the libraries, on which your project depends and, of course, the classes of current project.
 
-There might be cases where a developer would like to add some custom logic to the code of a module (or multiple modules) and generate a fat-JAR that can be directly used by the dependency management tool. For example, in [#3665](https://github.com/opensearch-project/OpenSearch/pull/3665) a developer wanted to provide a tentative patch as a fat-JAR to a consumer for changes made in the high level REST client.
+There might be cases where a developer would like to add some custom logic to the code of a module (or multiple modules) and generate a fat-JAR that can be directly used by the dependency management tool. For example, in [#3665](https://github.com/density-project/Density/pull/3665) a developer wanted to provide a tentative patch as a fat-JAR to a consumer for changes made in the high level REST client.
 
 Use [Gradle Shadow plugin](https://imperceptiblethoughts.com/shadow/).
 Add the following to the `build.gradle` file of the module for which you want to create the fat-JAR, e.g. `client/rest-high-level/build.gradle`:
@@ -426,28 +426,28 @@ Run the `shadowJar` command using:
 ./gradlew :client:rest-high-level:shadowJar
 ```
 
-This will generate a fat-JAR in the `build/distributions` folder of the module, e.g. .`/client/rest-high-level/build/distributions/opensearch-rest-high-level-client-1.4.0-SNAPSHOT.jar`.
+This will generate a fat-JAR in the `build/distributions` folder of the module, e.g. .`/client/rest-high-level/build/distributions/density-rest-high-level-client-1.4.0-SNAPSHOT.jar`.
 
 You can further customize your fat-JAR by customising the plugin, More information about shadow plugin can be found [here](https://imperceptiblethoughts.com/shadow/).
 
 To use the generated JAR, install the JAR locally, e.g.
 ```
-mvn install:install-file -Dfile=src/main/resources/opensearch-rest-high-level-client-1.4.0-SNAPSHOT.jar -DgroupId=org.opensearch.client -DartifactId=opensearch-rest-high-level-client -Dversion=1.4.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+mvn install:install-file -Dfile=src/main/resources/density-rest-high-level-client-1.4.0-SNAPSHOT.jar -DgroupId=org.density.client -DartifactId=density-rest-high-level-client -Dversion=1.4.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
 ```
 
 Refer the installed JAR as any other maven artifact, e.g.
 
 ```
 <dependency>
-    <groupId>org.opensearch.client</groupId>
-    <artifactId>opensearch-rest-high-level-client</artifactId>
+    <groupId>org.density.client</groupId>
+    <artifactId>density-rest-high-level-client</artifactId>
     <version>1.4.0-SNAPSHOT</version>
 </dependency>
 ```
 
 ## Components
 
-As you work in the OpenSearch repo you may notice issues getting labeled with component labels.  It's a housekeeping task to help group together similar pieces of work.  You can pretty much ignore it, but if you're curious, here's what the different labels mean:
+As you work in the Density repo you may notice issues getting labeled with component labels.  It's a housekeeping task to help group together similar pieces of work.  You can pretty much ignore it, but if you're curious, here's what the different labels mean:
 
 ### Build Libraries & Interfaces
 
@@ -464,7 +464,7 @@ Includes:
 
 ### Clients & Libraries
 
-APIs and communication mechanisms for external connections to OpenSearch.  This includes the “library” directory in OpenSearch (a set of common functions).
+APIs and communication mechanisms for external connections to Density.  This includes the “library” directory in Density (a set of common functions).
 
 Includes:
 
@@ -474,7 +474,7 @@ Includes:
 
 ### Plugins
 
-Anything touching the plugin infrastructure within core OpenSearch.
+Anything touching the plugin infrastructure within core Density.
 
 Includes:
 
@@ -485,7 +485,7 @@ Includes:
 
 ### Indexing & Search
 
-The critical path of indexing and search, including:  Measure index and search, performance, Improving the performance of indexing and search, ensure synchronization OpenSearch APIs with upstream Lucene change (e.g. new field types, changing doc values and codex).
+The critical path of indexing and search, including:  Measure index and search, performance, Improving the performance of indexing and search, ensure synchronization Density APIs with upstream Lucene change (e.g. new field types, changing doc values and codex).
 
 Includes:
 
@@ -496,7 +496,7 @@ Includes:
 
 ### Aggregations
 
-Making sure OpenSearch can be used as a compute engine.
+Making sure Density can be used as a compute engine.
 
 Includes:
 
@@ -505,14 +505,14 @@ Includes:
 
 ### Distributed Framework
 
-Work to make sure that OpenSearch can scale in a distributed manner.
+Work to make sure that Density can scale in a distributed manner.
 
 Includes:
 
 - Nodes (Cluster Manager, Data, Compute, Ingest, Discovery, etc.)
 - Replication & Merge Policies (Document, Segment level)
 - Snapshot/Restore (repositories; S3, Azure, GCP, NFS)
-- Translog (e.g., OpenSearch, Kafka, Kinesis)
+- Translog (e.g., Density, Kafka, Kinesis)
 - Shard Strategies
 - Circuit Breakers
 
@@ -551,52 +551,52 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Backwards Compatibility
 
-OpenSearch strives for a smooth and easy upgrade experience that is resilient to data loss and corruption while minimizing downtime and ensuring integration with
+Density strives for a smooth and easy upgrade experience that is resilient to data loss and corruption while minimizing downtime and ensuring integration with
 external systems does not unexpectedly break.
 
 To provide these guarantees each version must be designed and developed with [forward compatibility](https://en.wikipedia.org/wiki/Forward_compatibility) in mind.
-OpenSearch addresses backward and forward compatibility at three different levels: 1. Data, 2. Developer API, 3. User API. These levels and the developer mechanisms
+Density addresses backward and forward compatibility at three different levels: 1. Data, 2. Developer API, 3. User API. These levels and the developer mechanisms
 to ensure backwards compatibility are provided below.
 
 #### Data
 
-The data level consists of index and application data file formats. OpenSearch guarantees file formats and indexes are compatible only back to the first release of
+The data level consists of index and application data file formats. Density guarantees file formats and indexes are compatible only back to the first release of
 the previous major version. If on disk formats or encodings need to be changed (including index data, cluster state, or any other persisted data) developers must
 use Version checks accordingly (e.g., `Version.onOrAfter`, `Version.before`) to guarantee backwards compatibility.
 
 #### Developer API
 
-The Developer API consists of interfaces and foundation software implementations that enable external users to develop new OpenSearch features. This includes obvious
-components such as the Plugin and Extension frameworks and less obvious components such as REST Action Handlers. When developing a new feature of OpenSearch it is
+The Developer API consists of interfaces and foundation software implementations that enable external users to develop new Density features. This includes obvious
+components such as the Plugin and Extension frameworks and less obvious components such as REST Action Handlers. When developing a new feature of Density it is
 important to explicitly mark which implementation components may, or may not, be extended by external implementations. For example, all new API classes with
-`@PublicApi` annotation (or documented as `@opensearch.api`) signal that the new component may be extended by an external implementation and therefore provide
-backwards compatibility guarantees. Similarly, any class explicitly marked with the `@InternalApi` (or documented as `@opensearch.internal`) annotation, or not
+`@PublicApi` annotation (or documented as `@density.api`) signal that the new component may be extended by an external implementation and therefore provide
+backwards compatibility guarantees. Similarly, any class explicitly marked with the `@InternalApi` (or documented as `@density.internal`) annotation, or not
 explicitly marked by an annotation should not be extended by external implementation components as it does not guarantee backwards compatibility and may change at
-any time. The `@DeprecatedApi` annotation could also be added to any classes annotated with `@PublicApi` (or documented as `@opensearch.api`) or their methods that
+any time. The `@DeprecatedApi` annotation could also be added to any classes annotated with `@PublicApi` (or documented as `@density.api`) or their methods that
 are either changed (with replacement) or planned to be removed across major versions.
 
-The APIs which are designated to be public but have not been stabilized yet should be marked with `@ExperimentalApi` (or documented as `@opensearch.experimental`)
+The APIs which are designated to be public but have not been stabilized yet should be marked with `@ExperimentalApi` (or documented as `@density.experimental`)
 annotation. The presence of this annotation signals that API may change at any time (major, minor or even patch releases). In general, the classes annotated with
 `@PublicApi` may expose other classes or methods annotated with `@ExperimentalApi`, in such cases the backward compatibility guarantees would not apply to latter
 (see please [Experimental Development](#experimental-development) for more details).
 
 #### User API
 
-The User API consists of integration specifications (e.g., [Query Domain Specific Language](https://opensearch.org/docs/latest/opensearch/query-dsl/index/),
-[field mappings](https://opensearch.org/docs/latest/opensearch/mappings/)) and endpoints (e.g., [`_search`](https://opensearch.org/docs/latest/api-reference/search/),
-[`_cat`](https://opensearch.org/docs/latest/api-reference/cat/index/)) users rely on to integrate and use OpenSearch. Backwards compatibility is critical to the
-User API, therefore OpenSearch commits to using [semantic versioning](https://opensearch.org/blog/what-is-semver/) for all User facing APIs. To support this
+The User API consists of integration specifications (e.g., [Query Domain Specific Language](https://density.org/docs/latest/density/query-dsl/index/),
+[field mappings](https://density.org/docs/latest/density/mappings/)) and endpoints (e.g., [`_search`](https://density.org/docs/latest/api-reference/search/),
+[`_cat`](https://density.org/docs/latest/api-reference/cat/index/)) users rely on to integrate and use Density. Backwards compatibility is critical to the
+User API, therefore Density commits to using [semantic versioning](https://density.org/blog/what-is-semver/) for all User facing APIs. To support this
 developers must leverage `Version` checks for any user facing endpoints or API specifications that change across minor versions. Developers must also inform
-users of any changes by adding the `>breaking` label on Pull Requests, adding an entry to the [CHANGELOG](https://github.com/opensearch-project/OpenSearch/blob/main/CHANGELOG.md)
-and a log message to the OpenSearch deprecation log files using the `DeprecationLogger`.
+users of any changes by adding the `>breaking` label on Pull Requests, adding an entry to the [CHANGELOG](https://github.com/density-project/Density/blob/main/CHANGELOG.md)
+and a log message to the Density deprecation log files using the `DeprecationLogger`.
 
 #### Experimental Development
 
-Rapidly developing new features often benefit from several release cycles before committing to an official and long term supported (LTS) API. To enable this cycle OpenSearch
+Rapidly developing new features often benefit from several release cycles before committing to an official and long term supported (LTS) API. To enable this cycle Density
 uses an Experimental Development process leveraging [Feature Flags](https://featureflags.io/feature-flags/). This allows a feature to be developed using the same process as
 a LTS feature but with additional guard rails and communication mechanisms to signal to the users and development community the feature is not yet stable, may change in a future
 release, or be removed altogether. Any Developer or User APIs implemented along with the experimental feature should be marked with `@ExperimentalApi` (or documented as
-`@opensearch.experimental`) annotation to signal the implementation is not subject to LTS and does not follow backwards compatibility guidelines. When writing tests for
+`@density.experimental`) annotation to signal the implementation is not subject to LTS and does not follow backwards compatibility guidelines. When writing tests for
 functionality gated behind a feature flag please refer to `FeatureFlags.TestUtils` and the `@LockFeatureFlag` annotation.
 
 #### API Compatibility Checks
@@ -607,7 +607,7 @@ The compatibility checks for public APIs are performed using [japicmp](https://s
 ./gradlew japicmp
 ```
 
-By default, the API compatibility checks are run against the latest released version of the OpenSearch, however the target version to compare to could be provided using system property during the build, fe.:
+By default, the API compatibility checks are run against the latest released version of the Density, however the target version to compare to could be provided using system property during the build, fe.:
 
 ```
 ./gradlew japicmp  -Djapicmp.compare.version=2.14.0-SNAPSHOT
@@ -641,9 +641,9 @@ Note that these snapshots do not follow the Maven [naming convention](https://ma
 
 ### Flaky Tests
 
-If you encounter a test failure locally or in CI that is seemingly unrelated to the change in your pull request, it may be a known flaky test or a new test failure. OpenSearch has a very large test suite with long running, often failing (flaky), integration tests. Such individual tests are labelled as [Flaky Random Test Failure](https://github.com/opensearch-project/OpenSearch/issues?q=is%3Aopen+is%3Aissue+label%3A%22flaky-test%22). Your help is wanted fixing these!
+If you encounter a test failure locally or in CI that is seemingly unrelated to the change in your pull request, it may be a known flaky test or a new test failure. Density has a very large test suite with long running, often failing (flaky), integration tests. Such individual tests are labelled as [Flaky Random Test Failure](https://github.com/density-project/Density/issues?q=is%3Aopen+is%3Aissue+label%3A%22flaky-test%22). Your help is wanted fixing these!
 
-The automation [gradle-check-flaky-test-detector](https://build.ci.opensearch.org/job/gradle-check-flaky-test-detector/), which runs in OpenSearch public Jenkins, identifies failing flaky issues that are part of post-merge actions. Once a flaky test is identified, the automation creates an issue with detailed report that includes links to all relevant commits, the Gradle check build log, the test report, and pull requests that are impacted with the flaky test failures. This automation leverages data from the [OpenSearch Metrics Project](https://github.com/opensearch-project/opensearch-metrics) to establish a baseline for creating the issue and updating the flaky test report. For all flaky test issues created by automation, visit this [link](https://github.com/opensearch-project/OpenSearch/issues?q=is%3Aissue+is%3Aopen+label%3A%3Etest-failure+author%3Aopensearch-ci-bot).
+The automation [gradle-check-flaky-test-detector](https://build.ci.density.org/job/gradle-check-flaky-test-detector/), which runs in Density public Jenkins, identifies failing flaky issues that are part of post-merge actions. Once a flaky test is identified, the automation creates an issue with detailed report that includes links to all relevant commits, the Gradle check build log, the test report, and pull requests that are impacted with the flaky test failures. This automation leverages data from the [Density Metrics Project](https://github.com/density-project/density-metrics) to establish a baseline for creating the issue and updating the flaky test report. For all flaky test issues created by automation, visit this [link](https://github.com/density-project/Density/issues?q=is%3Aissue+is%3Aopen+label%3A%3Etest-failure+author%3Adensity-ci-bot).
 
 If you still see a failing test that is not part of the post merge actions, please do:
 
@@ -656,4 +656,4 @@ If you still see a failing test that is not part of the post merge actions, plea
 
 ### Gradle Check Metrics Dashboard
 
-To get the comprehensive insights and analysis of the Gradle Check test failures, visit the [OpenSearch Gradle Check Metrics Dashboard](https://metrics.opensearch.org/_dashboards/app/dashboards#/view/e5e64d40-ed31-11ee-be99-69d1dbc75083). This dashboard is part of the [OpenSearch Metrics Project](https://github.com/opensearch-project/opensearch-metrics) initiative. The dashboard contains multiple data points that can help investigate and resolve flaky failures. Additionally, this dashboard can be used to drill down, slice, and dice the data using multiple supported filters, which further aids in troubleshooting and resolving issues.
+To get the comprehensive insights and analysis of the Gradle Check test failures, visit the [Density Gradle Check Metrics Dashboard](https://metrics.density.org/_dashboards/app/dashboards#/view/e5e64d40-ed31-11ee-be99-69d1dbc75083). This dashboard is part of the [Density Metrics Project](https://github.com/density-project/density-metrics) initiative. The dashboard contains multiple data points that can help investigate and resolve flaky failures. Additionally, this dashboard can be used to drill down, slice, and dice the data using multiple supported filters, which further aids in troubleshooting and resolving issues.

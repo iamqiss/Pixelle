@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.NoMergePolicy;
@@ -14,20 +14,20 @@ import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.util.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TestTranslog;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.TestTranslog;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.IndexSettingsModule;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -41,9 +41,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
-import static org.opensearch.index.seqno.SequenceNumbers.MAX_SEQ_NO;
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
+import static org.density.index.seqno.SequenceNumbers.MAX_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
 import static org.hamcrest.Matchers.equalTo;
 
 public class NRTReplicationEngineTests extends EngineTestCase {
@@ -260,11 +260,11 @@ public class NRTReplicationEngineTests extends EngineTestCase {
             assertEquals(2, nrtEngine.getLastCommittedSegmentInfos().getGeneration());
             assertEquals(2, nrtEngine.getLatestSegmentInfos().getGeneration());
 
-            ReferenceManager<OpenSearchDirectoryReader> referenceManager = nrtEngine.getReferenceManager(Engine.SearcherScope.EXTERNAL);
-            OpenSearchDirectoryReader readerBeforeRefresh = referenceManager.acquire();
+            ReferenceManager<DensityDirectoryReader> referenceManager = nrtEngine.getReferenceManager(Engine.SearcherScope.EXTERNAL);
+            DensityDirectoryReader readerBeforeRefresh = referenceManager.acquire();
 
             nrtEngine.refresh("test refresh");
-            OpenSearchDirectoryReader readerAfterRefresh = referenceManager.acquire();
+            DensityDirectoryReader readerAfterRefresh = referenceManager.acquire();
 
             // Verify both readers before and after refresh are same and no change in segments
             assertSame(readerBeforeRefresh, readerAfterRefresh);

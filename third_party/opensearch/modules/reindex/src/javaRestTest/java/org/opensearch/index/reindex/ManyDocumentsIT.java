@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.client.Request;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.test.rest.DensityRestTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ import static org.hamcrest.Matchers.hasEntry;
  * sure that we don't change the default behavior of touching <strong>all</strong>
  * documents in the request.
  */
-public class ManyDocumentsIT extends OpenSearchRestTestCase {
+public class ManyDocumentsIT extends DensityRestTestCase {
     private final int count = between(150, 2000);
 
     @Before

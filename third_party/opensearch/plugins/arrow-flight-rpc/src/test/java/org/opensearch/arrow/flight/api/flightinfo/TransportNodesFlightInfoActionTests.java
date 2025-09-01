@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.api.flightinfo;
+package org.density.arrow.flight.api.flightinfo;
 
-import org.opensearch.Version;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.arrow.flight.bootstrap.FlightService;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.arrow.flight.bootstrap.FlightService;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportNodesFlightInfoActionTests extends OpenSearchTestCase {
+public class TransportNodesFlightInfoActionTests extends DensityTestCase {
 
     private DiscoveryNode localNode;
     private TransportNodesFlightInfoAction action;

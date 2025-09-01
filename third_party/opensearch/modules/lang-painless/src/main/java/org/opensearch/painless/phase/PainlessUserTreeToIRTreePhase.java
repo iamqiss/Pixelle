@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.Location;
-import org.opensearch.painless.PainlessError;
-import org.opensearch.painless.PainlessExplainError;
-import org.opensearch.painless.ScriptClassInfo;
-import org.opensearch.painless.ScriptClassInfo.MethodArgument;
-import org.opensearch.painless.ir.BinaryImplNode;
-import org.opensearch.painless.ir.BlockNode;
-import org.opensearch.painless.ir.CatchNode;
-import org.opensearch.painless.ir.ConstantNode;
-import org.opensearch.painless.ir.DeclarationNode;
-import org.opensearch.painless.ir.ExpressionNode;
-import org.opensearch.painless.ir.FieldNode;
-import org.opensearch.painless.ir.FunctionNode;
-import org.opensearch.painless.ir.IRNode;
-import org.opensearch.painless.ir.InvokeCallMemberNode;
-import org.opensearch.painless.ir.InvokeCallNode;
-import org.opensearch.painless.ir.LoadFieldMemberNode;
-import org.opensearch.painless.ir.LoadVariableNode;
-import org.opensearch.painless.ir.NullNode;
-import org.opensearch.painless.ir.ReturnNode;
-import org.opensearch.painless.ir.StaticNode;
-import org.opensearch.painless.ir.ThrowNode;
-import org.opensearch.painless.ir.TryNode;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.node.AStatement;
-import org.opensearch.painless.node.SExpression;
-import org.opensearch.painless.node.SFunction;
-import org.opensearch.painless.node.SReturn;
-import org.opensearch.painless.symbol.Decorations.Converter;
-import org.opensearch.painless.symbol.Decorations.IRNodeDecoration;
-import org.opensearch.painless.symbol.Decorations.MethodEscape;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
-import org.opensearch.painless.symbol.ScriptScope;
-import org.opensearch.script.ScriptException;
+import org.density.painless.Location;
+import org.density.painless.PainlessError;
+import org.density.painless.PainlessExplainError;
+import org.density.painless.ScriptClassInfo;
+import org.density.painless.ScriptClassInfo.MethodArgument;
+import org.density.painless.ir.BinaryImplNode;
+import org.density.painless.ir.BlockNode;
+import org.density.painless.ir.CatchNode;
+import org.density.painless.ir.ConstantNode;
+import org.density.painless.ir.DeclarationNode;
+import org.density.painless.ir.ExpressionNode;
+import org.density.painless.ir.FieldNode;
+import org.density.painless.ir.FunctionNode;
+import org.density.painless.ir.IRNode;
+import org.density.painless.ir.InvokeCallMemberNode;
+import org.density.painless.ir.InvokeCallNode;
+import org.density.painless.ir.LoadFieldMemberNode;
+import org.density.painless.ir.LoadVariableNode;
+import org.density.painless.ir.NullNode;
+import org.density.painless.ir.ReturnNode;
+import org.density.painless.ir.StaticNode;
+import org.density.painless.ir.ThrowNode;
+import org.density.painless.ir.TryNode;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.node.AStatement;
+import org.density.painless.node.SExpression;
+import org.density.painless.node.SFunction;
+import org.density.painless.node.SReturn;
+import org.density.painless.symbol.Decorations.Converter;
+import org.density.painless.symbol.Decorations.IRNodeDecoration;
+import org.density.painless.symbol.Decorations.MethodEscape;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.symbol.ScriptScope;
+import org.density.script.ScriptException;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.Method;
 

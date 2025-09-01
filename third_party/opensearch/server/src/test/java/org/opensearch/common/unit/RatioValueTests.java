@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.is;
 
 /**
  * Tests for the {@link RatioValue} class
  */
-public class RatioValueTests extends OpenSearchTestCase {
+public class RatioValueTests extends DensityTestCase {
     public void testParsing() {
         assertThat(RatioValue.parseRatioValue("100%").toString(), is("100.0%"));
         assertThat(RatioValue.parseRatioValue("0%").toString(), is("0.0%"));
@@ -71,7 +71,7 @@ public class RatioValueTests extends OpenSearchTestCase {
         try {
             RatioValue.parseRatioValue(r);
             fail("Value: [" + r + "] should be an invalid ratio");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             // success
         }
     }

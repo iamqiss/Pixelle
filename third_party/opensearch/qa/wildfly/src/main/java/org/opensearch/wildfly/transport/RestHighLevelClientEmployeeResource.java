@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.wildfly.transport;
+package org.density.wildfly.transport;
 
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.wildfly.model.Employee;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.client.RequestOptions;
+import org.density.client.RestHighLevelClient;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.wildfly.model.Employee;
 
 import java.io.IOException;
 import java.net.URI;
@@ -58,7 +58,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
 @Path("/employees")
 public class RestHighLevelClientEmployeeResource {

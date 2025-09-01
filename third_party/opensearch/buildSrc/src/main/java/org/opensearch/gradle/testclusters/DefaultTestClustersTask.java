@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 import org.gradle.api.DefaultTask;
 
@@ -38,10 +38,10 @@ import java.util.HashSet;
 
 public class DefaultTestClustersTask extends DefaultTask implements TestClustersAware {
 
-    private Collection<OpenSearchCluster> clusters = new HashSet<>();
+    private Collection<DensityCluster> clusters = new HashSet<>();
 
     @Override
-    public Collection<OpenSearchCluster> getClusters() {
+    public Collection<DensityCluster> getClusters() {
         return clusters;
     }
 

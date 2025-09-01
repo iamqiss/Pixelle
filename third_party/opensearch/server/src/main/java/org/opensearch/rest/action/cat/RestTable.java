@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Table;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.io.UTF8StreamWriter;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.unit.SizeValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.BytesStream;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
+import org.density.common.Booleans;
+import org.density.common.Table;
+import org.density.common.io.Streams;
+import org.density.common.io.UTF8StreamWriter;
+import org.density.common.regex.Regex;
+import org.density.common.unit.SizeValue;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.BytesStream;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +61,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.action.pagination.PageToken.PAGINATED_RESPONSE_NEXT_TOKEN_KEY;
+import static org.density.action.pagination.PageToken.PAGINATED_RESPONSE_NEXT_TOKEN_KEY;
 
 /**
  * a REST table
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestTable {
 

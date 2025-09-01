@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 
-public class IngestDocumentMatcherTests extends OpenSearchTestCase {
+public class IngestDocumentMatcherTests extends DensityTestCase {
 
     public void testDifferentMapData() {
         Map<String, Object> sourceAndMetadata1 = new HashMap<>();

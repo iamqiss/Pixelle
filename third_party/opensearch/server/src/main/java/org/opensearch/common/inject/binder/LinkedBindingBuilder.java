@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,63 +23,63 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.binder;
+package org.density.common.inject.binder;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.TypeLiteral;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Key;
+import org.density.common.inject.Provider;
+import org.density.common.inject.TypeLiteral;
 
 /**
- * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+ * See the EDSL examples at {@link org.density.common.inject.Binder}.
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface LinkedBindingBuilder<T> extends ScopedBindingBuilder {
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     ScopedBindingBuilder to(Class<? extends T> implementation);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     ScopedBindingBuilder to(TypeLiteral<? extends T> implementation);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     ScopedBindingBuilder to(Key<? extends T> targetKey);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      *
-     * @see org.opensearch.common.inject.Injector#injectMembers
+     * @see org.density.common.inject.Injector#injectMembers
      */
     void toInstance(T instance);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      *
-     * @see org.opensearch.common.inject.Injector#injectMembers
+     * @see org.density.common.inject.Injector#injectMembers
      */
     ScopedBindingBuilder toProvider(Provider<? extends T> provider);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     ScopedBindingBuilder toProvider(Class<? extends Provider<? extends T>> providerType);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     ScopedBindingBuilder toProvider(Key<? extends Provider<? extends T>> providerKey);
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.UnavailableShardsException;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 /**
  * Tests setting the active shard count for replication operations (e.g. index) operates correctly.
  */
-public class WaitActiveShardCountIT extends OpenSearchIntegTestCase {
+public class WaitActiveShardCountIT extends DensityIntegTestCase {
     public void testReplicationWaitsForActiveShardCount() throws Exception {
         CreateIndexResponse createIndexResponse = prepareCreate(
             "test",

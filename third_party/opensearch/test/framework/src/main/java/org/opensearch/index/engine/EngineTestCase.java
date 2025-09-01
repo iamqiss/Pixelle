@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -62,70 +62,70 @@ import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.common.CheckedBiFunction;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MapperTestUtils;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.fieldvisitor.IdOnlyFieldVisitor;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.Mapping;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.InternalTranslogManager;
-import org.opensearch.index.translog.LocalTranslog;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogOperationHelper;
-import org.opensearch.index.translog.listener.TranslogEventListener;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.common.CheckedBiFunction;
+import org.density.common.Nullable;
+import org.density.common.Randomness;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.MapperTestUtils;
+import org.density.index.VersionType;
+import org.density.index.codec.CodecService;
+import org.density.index.fieldvisitor.IdOnlyFieldVisitor;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.Mapping;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.Uid;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.InternalTranslogManager;
+import org.density.index.translog.LocalTranslog;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogConfig;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogOperationHelper;
+import org.density.index.translog.listener.TranslogEventListener;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -152,17 +152,17 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.shuffle;
-import static org.opensearch.index.engine.Engine.Operation.Origin.PEER_RECOVERY;
-import static org.opensearch.index.engine.Engine.Operation.Origin.PRIMARY;
-import static org.opensearch.index.engine.Engine.Operation.Origin.REPLICA;
-import static org.opensearch.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
+import static org.density.index.engine.Engine.Operation.Origin.PEER_RECOVERY;
+import static org.density.index.engine.Engine.Operation.Origin.PRIMARY;
+import static org.density.index.engine.Engine.Operation.Origin.REPLICA;
+import static org.density.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public abstract class EngineTestCase extends OpenSearchTestCase {
+public abstract class EngineTestCase extends DensityTestCase {
 
     protected final ShardId shardId = new ShardId(new Index("index", "_na_"), 0);
     protected final AllocationId allocationId = AllocationId.newInitializing();

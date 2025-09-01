@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.plugins.Plugin;
+import org.density.plugins.Plugin;
 
 public class NodeMocksPlugin extends Plugin { // just a marker plugin for MockNode to mock out BigArrays
 }

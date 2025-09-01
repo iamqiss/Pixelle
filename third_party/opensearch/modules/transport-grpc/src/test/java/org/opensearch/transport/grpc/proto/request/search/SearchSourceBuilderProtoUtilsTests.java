@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.protobufs.DerivedField;
-import org.opensearch.protobufs.FieldAndFormat;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.GeneralNumber;
-import org.opensearch.protobufs.InlineScript;
-import org.opensearch.protobufs.MatchAllQuery;
-import org.opensearch.protobufs.NumberMap;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.protobufs.Script;
-import org.opensearch.protobufs.ScriptField;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.protobufs.SlicedScroll;
-import org.opensearch.protobufs.SortCombinations;
-import org.opensearch.protobufs.TrackHits;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.protobufs.DerivedField;
+import org.density.protobufs.FieldAndFormat;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.GeneralNumber;
+import org.density.protobufs.InlineScript;
+import org.density.protobufs.MatchAllQuery;
+import org.density.protobufs.NumberMap;
+import org.density.protobufs.ObjectMap;
+import org.density.protobufs.QueryContainer;
+import org.density.protobufs.Script;
+import org.density.protobufs.ScriptField;
+import org.density.protobufs.SearchRequestBody;
+import org.density.protobufs.SlicedScroll;
+import org.density.protobufs.SortCombinations;
+import org.density.protobufs.TrackHits;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
 import static org.mockito.Mockito.mock;
 
-public class SearchSourceBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class SearchSourceBuilderProtoUtilsTests extends DensityTestCase {
 
     private NamedWriteableRegistry mockRegistry;
     private AbstractQueryBuilderProtoUtils queryUtils;
@@ -444,14 +444,14 @@ public class SearchSourceBuilderProtoUtilsTests extends OpenSearchTestCase {
             "Should contain script_field_1",
             searchSourceBuilder.scriptFields()
                 .contains(
-                    new SearchSourceBuilder.ScriptField("script_field_1", new org.opensearch.script.Script("doc['field'].value * 2"), true)
+                    new SearchSourceBuilder.ScriptField("script_field_1", new org.density.script.Script("doc['field'].value * 2"), true)
                 )
         );
         assertTrue(
             "Should contain script_field_2",
             searchSourceBuilder.scriptFields()
                 .contains(
-                    new SearchSourceBuilder.ScriptField("script_field_2", new org.opensearch.script.Script("doc['field'].value * 2"), false)
+                    new SearchSourceBuilder.ScriptField("script_field_2", new org.density.script.Script("doc['field'].value * 2"), false)
                 )
         );
     }
@@ -512,10 +512,10 @@ public class SearchSourceBuilderProtoUtilsTests extends OpenSearchTestCase {
             "Should contain derived_field_1",
             searchSourceBuilder.getDerivedFields()
                 .contains(
-                    new org.opensearch.index.mapper.DerivedField(
+                    new org.density.index.mapper.DerivedField(
                         "derived_field_1",
                         "number",
-                        new org.opensearch.script.Script("doc['field'].value * 2")
+                        new org.density.script.Script("doc['field'].value * 2")
                     )
                 )
         );
@@ -523,10 +523,10 @@ public class SearchSourceBuilderProtoUtilsTests extends OpenSearchTestCase {
             "Should contain derived_field_2",
             searchSourceBuilder.getDerivedFields()
                 .contains(
-                    new org.opensearch.index.mapper.DerivedField(
+                    new org.density.index.mapper.DerivedField(
                         "derived_field_2",
                         "string",
-                        new org.opensearch.script.Script("doc['field'].value * 2")
+                        new org.density.script.Script("doc['field'].value * 2")
                     )
                 )
         );

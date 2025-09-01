@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.state;
+package org.density.indices.state;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommands;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.Rebalance;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.recovery.PeerRecoverySourceService;
-import org.opensearch.indices.recovery.StartRecoveryRequest;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.reroute.ClusterRerouteRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.command.AllocationCommands;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider.Rebalance;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.recovery.PeerRecoverySourceService;
+import org.density.indices.recovery.StartRecoveryRequest;
+import org.density.plugins.Plugin;
+import org.density.test.BackgroundIndexer;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,15 +69,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.indices.state.CloseIndexIT.assertException;
-import static org.opensearch.indices.state.CloseIndexIT.assertIndexIsClosed;
-import static org.opensearch.indices.state.CloseIndexIT.assertIndexIsOpened;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.indices.state.CloseIndexIT.assertException;
+import static org.density.indices.state.CloseIndexIT.assertIndexIsClosed;
+import static org.density.indices.state.CloseIndexIT.assertIndexIsOpened;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class CloseWhileRelocatingShardsIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class CloseWhileRelocatingShardsIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

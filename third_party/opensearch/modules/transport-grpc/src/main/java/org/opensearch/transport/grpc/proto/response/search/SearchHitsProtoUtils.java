@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.NullValue;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.NullValue;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
 
 import java.io.IOException;
 
@@ -35,8 +35,8 @@ public class SearchHitsProtoUtils {
      * @return A Protocol Buffer HitsMetadata representation
      * @throws IOException if there's an error during conversion
      */
-    protected static org.opensearch.protobufs.HitsMetadata toProto(SearchHits hits) throws IOException {
-        org.opensearch.protobufs.HitsMetadata.Builder hitsMetaData = org.opensearch.protobufs.HitsMetadata.newBuilder();
+    protected static org.density.protobufs.HitsMetadata toProto(SearchHits hits) throws IOException {
+        org.density.protobufs.HitsMetadata.Builder hitsMetaData = org.density.protobufs.HitsMetadata.newBuilder();
         toProto(hits, hitsMetaData);
         return hitsMetaData.build();
     }
@@ -49,7 +49,7 @@ public class SearchHitsProtoUtils {
      * @param hitsMetaData The builder to populate with the SearchHits data
      * @throws IOException if there's an error during conversion
      */
-    protected static void toProto(SearchHits hits, org.opensearch.protobufs.HitsMetadata.Builder hitsMetaData) throws IOException {
+    protected static void toProto(SearchHits hits, org.density.protobufs.HitsMetadata.Builder hitsMetaData) throws IOException {
         // Process total hits information
         processTotalHits(hits, hitsMetaData);
 
@@ -66,8 +66,8 @@ public class SearchHitsProtoUtils {
      * @param hits The SearchHits to process
      * @param hitsMetaData The builder to populate with the total hits data
      */
-    private static void processTotalHits(SearchHits hits, org.opensearch.protobufs.HitsMetadata.Builder hitsMetaData) {
-        org.opensearch.protobufs.HitsMetadata.Total.Builder totalBuilder = org.opensearch.protobufs.HitsMetadata.Total.newBuilder();
+    private static void processTotalHits(SearchHits hits, org.density.protobufs.HitsMetadata.Builder hitsMetaData) {
+        org.density.protobufs.HitsMetadata.Total.Builder totalBuilder = org.density.protobufs.HitsMetadata.Total.newBuilder();
 
         // TODO need to pass parameters
         // boolean totalHitAsInt = params.paramAsBoolean(RestSearchAction.TOTAL_HITS_AS_INT_PARAM, false);
@@ -77,13 +77,13 @@ public class SearchHitsProtoUtils {
             long total = hits.getTotalHits() == null ? -1 : hits.getTotalHits().value();
             totalBuilder.setDoubleValue(total);
         } else if (hits.getTotalHits() != null) {
-            org.opensearch.protobufs.TotalHits.Builder totalHitsBuilder = org.opensearch.protobufs.TotalHits.newBuilder();
+            org.density.protobufs.TotalHits.Builder totalHitsBuilder = org.density.protobufs.TotalHits.newBuilder();
             totalHitsBuilder.setValue(hits.getTotalHits().value());
 
             // Set relation based on the TotalHits relation
-            org.opensearch.protobufs.TotalHits.TotalHitsRelation relation = hits.getTotalHits().relation() == TotalHits.Relation.EQUAL_TO
-                ? org.opensearch.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_EQ
-                : org.opensearch.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_GTE;
+            org.density.protobufs.TotalHits.TotalHitsRelation relation = hits.getTotalHits().relation() == TotalHits.Relation.EQUAL_TO
+                ? org.density.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_EQ
+                : org.density.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_GTE;
             totalHitsBuilder.setRelation(relation);
 
             totalBuilder.setTotalHits(totalHitsBuilder.build());
@@ -98,8 +98,8 @@ public class SearchHitsProtoUtils {
      * @param hits The SearchHits to process
      * @param hitsMetaData The builder to populate with the max score data
      */
-    private static void processMaxScore(SearchHits hits, org.opensearch.protobufs.HitsMetadata.Builder hitsMetaData) {
-        org.opensearch.protobufs.HitsMetadata.MaxScore.Builder maxScoreBuilder = org.opensearch.protobufs.HitsMetadata.MaxScore
+    private static void processMaxScore(SearchHits hits, org.density.protobufs.HitsMetadata.Builder hitsMetaData) {
+        org.density.protobufs.HitsMetadata.MaxScore.Builder maxScoreBuilder = org.density.protobufs.HitsMetadata.MaxScore
             .newBuilder();
 
         if (Float.isNaN(hits.getMaxScore())) {
@@ -118,10 +118,10 @@ public class SearchHitsProtoUtils {
      * @param hitsMetaData The builder to populate with the hits data
      * @throws IOException if there's an error during conversion
      */
-    private static void processHits(SearchHits hits, org.opensearch.protobufs.HitsMetadata.Builder hitsMetaData) throws IOException {
+    private static void processHits(SearchHits hits, org.density.protobufs.HitsMetadata.Builder hitsMetaData) throws IOException {
         // Process each hit
         for (SearchHit hit : hits) {
-            org.opensearch.protobufs.Hit.Builder hitBuilder = org.opensearch.protobufs.Hit.newBuilder();
+            org.density.protobufs.Hit.Builder hitBuilder = org.density.protobufs.Hit.newBuilder();
             SearchHitProtoUtils.toProto(hit, hitBuilder);
             hitsMetaData.addHits(hitBuilder.build());
         }

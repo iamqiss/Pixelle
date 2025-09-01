@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.RankFeatureQueryBuilders;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
-import org.opensearch.join.query.JoinQueryBuilders;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.unit.DistanceUnit;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.RankFeatureQueryBuilders;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
+import org.density.join.query.JoinQueryBuilders;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,44 +54,44 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.boostingQuery;
-import static org.opensearch.index.query.QueryBuilders.commonTermsQuery;
-import static org.opensearch.index.query.QueryBuilders.constantScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.disMaxQuery;
-import static org.opensearch.index.query.QueryBuilders.existsQuery;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.fuzzyQuery;
-import static org.opensearch.index.query.QueryBuilders.geoBoundingBoxQuery;
-import static org.opensearch.index.query.QueryBuilders.geoDistanceQuery;
-import static org.opensearch.index.query.QueryBuilders.geoPolygonQuery;
-import static org.opensearch.index.query.QueryBuilders.geoShapeQuery;
-import static org.opensearch.index.query.QueryBuilders.idsQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.moreLikeThisQuery;
-import static org.opensearch.index.query.QueryBuilders.multiMatchQuery;
-import static org.opensearch.index.query.QueryBuilders.nestedQuery;
-import static org.opensearch.index.query.QueryBuilders.prefixQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.regexpQuery;
-import static org.opensearch.index.query.QueryBuilders.scriptQuery;
-import static org.opensearch.index.query.QueryBuilders.simpleQueryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.spanContainingQuery;
-import static org.opensearch.index.query.QueryBuilders.spanFirstQuery;
-import static org.opensearch.index.query.QueryBuilders.spanMultiTermQueryBuilder;
-import static org.opensearch.index.query.QueryBuilders.spanNearQuery;
-import static org.opensearch.index.query.QueryBuilders.spanNotQuery;
-import static org.opensearch.index.query.QueryBuilders.spanOrQuery;
-import static org.opensearch.index.query.QueryBuilders.spanTermQuery;
-import static org.opensearch.index.query.QueryBuilders.spanWithinQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.QueryBuilders.termsQuery;
-import static org.opensearch.index.query.QueryBuilders.wildcardQuery;
-import static org.opensearch.index.query.QueryBuilders.wrapperQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.exponentialDecayFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.boostingQuery;
+import static org.density.index.query.QueryBuilders.commonTermsQuery;
+import static org.density.index.query.QueryBuilders.constantScoreQuery;
+import static org.density.index.query.QueryBuilders.disMaxQuery;
+import static org.density.index.query.QueryBuilders.existsQuery;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.fuzzyQuery;
+import static org.density.index.query.QueryBuilders.geoBoundingBoxQuery;
+import static org.density.index.query.QueryBuilders.geoDistanceQuery;
+import static org.density.index.query.QueryBuilders.geoPolygonQuery;
+import static org.density.index.query.QueryBuilders.geoShapeQuery;
+import static org.density.index.query.QueryBuilders.idsQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.moreLikeThisQuery;
+import static org.density.index.query.QueryBuilders.multiMatchQuery;
+import static org.density.index.query.QueryBuilders.nestedQuery;
+import static org.density.index.query.QueryBuilders.prefixQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.regexpQuery;
+import static org.density.index.query.QueryBuilders.scriptQuery;
+import static org.density.index.query.QueryBuilders.simpleQueryStringQuery;
+import static org.density.index.query.QueryBuilders.spanContainingQuery;
+import static org.density.index.query.QueryBuilders.spanFirstQuery;
+import static org.density.index.query.QueryBuilders.spanMultiTermQueryBuilder;
+import static org.density.index.query.QueryBuilders.spanNearQuery;
+import static org.density.index.query.QueryBuilders.spanNotQuery;
+import static org.density.index.query.QueryBuilders.spanOrQuery;
+import static org.density.index.query.QueryBuilders.spanTermQuery;
+import static org.density.index.query.QueryBuilders.spanWithinQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.termsQuery;
+import static org.density.index.query.QueryBuilders.wildcardQuery;
+import static org.density.index.query.QueryBuilders.wrapperQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.exponentialDecayFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
 
 /**
  * Examples of using the transport client that are imported into the transport client documentation.
@@ -99,7 +99,7 @@ import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.ran
  * compile and don't throw weird runtime exceptions. Assertions and example data would be nice, but
  * that is secondary.
  */
-public class QueryDSLDocumentationTests extends OpenSearchTestCase {
+public class QueryDSLDocumentationTests extends DensityTestCase {
     public void testBool() {
         // tag::bool
         boolQuery()
@@ -139,7 +139,7 @@ public class QueryDSLDocumentationTests extends OpenSearchTestCase {
         // tag::dis_max
         disMaxQuery()
                 .add(termQuery("name", "foobar"))                    // <1>
-                .add(termQuery("name", "opensearch"))             // <2>
+                .add(termQuery("name", "density"))             // <2>
                 .boost(1.2f)                                         // <3>
                 .tieBreaker(0.7f);                                   // <4>
         // end::dis_max
@@ -263,7 +263,7 @@ public class QueryDSLDocumentationTests extends OpenSearchTestCase {
         // tag::match
         matchQuery(
                 "name",                                              // <1>
-                "foobar opensearch");                             // <2>
+                "foobar density");                             // <2>
         // end::match
     }
 
@@ -281,7 +281,7 @@ public class QueryDSLDocumentationTests extends OpenSearchTestCase {
     public void testMultiMatch() {
         // tag::multi_match
         multiMatchQuery(
-                "foobar opensearch",                              // <1>
+                "foobar density",                              // <1>
                 "user", "message");                                  // <2>
         // end::multi_match
     }
@@ -307,7 +307,7 @@ public class QueryDSLDocumentationTests extends OpenSearchTestCase {
 
     public void testQueryString() {
         // tag::query_string
-        queryStringQuery("+foobar -opensearch");
+        queryStringQuery("+foobar -density");
         // end::query_string
     }
 
@@ -356,7 +356,7 @@ public class QueryDSLDocumentationTests extends OpenSearchTestCase {
 
     public void testSimpleQueryString() {
         // tag::simple_query_string
-        simpleQueryStringQuery("+foobar -opensearch");
+        simpleQueryStringQuery("+foobar -density");
         // end::simple_query_string
     }
 

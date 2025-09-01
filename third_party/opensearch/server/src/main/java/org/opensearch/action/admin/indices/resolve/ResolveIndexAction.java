@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.resolve;
+package org.density.action.admin.indices.resolve;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexAbstractionResolver;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.IndicesRequest;
+import org.density.action.OriginalIndices;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexAbstractionResolver;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ import java.util.stream.StreamSupport;
 /**
  * Transport action to resolve an index.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> {
@@ -98,7 +98,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * Request for resolving an index
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Request extends ActionRequest implements IndicesRequest.Replaceable {
@@ -173,7 +173,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * Abstraction class for resolving an index
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ResolvedIndexAbstraction {
 
@@ -199,7 +199,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * The resolved index
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ResolvedIndex extends ResolvedIndexAbstraction implements Writeable, ToXContentObject {
@@ -288,7 +288,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * The resolved index alias
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ResolvedAlias extends ResolvedIndexAbstraction implements Writeable, ToXContentObject {
@@ -351,7 +351,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * The resolved data stream
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ResolvedDataStream extends ResolvedIndexAbstraction implements Writeable, ToXContentObject {
@@ -424,7 +424,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * Response for resolving an index
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Response extends ActionResponse implements ToXContentObject {
@@ -495,7 +495,7 @@ public class ResolveIndexAction extends ActionType<ResolveIndexAction.Response> 
     /**
      * Transport action for resolving an index
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TransportAction extends HandledTransportAction<Request, Response> {
 

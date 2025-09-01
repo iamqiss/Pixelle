@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.test.DensityTestCase;
 import org.junit.BeforeClass;
 
-import static org.opensearch.common.logging.TestThreadInfoPatternConverter.threadInfo;
+import static org.density.common.logging.TestThreadInfoPatternConverter.threadInfo;
 
-public class TestThreadInfoPatternConverterTests extends OpenSearchTestCase {
+public class TestThreadInfoPatternConverterTests extends DensityTestCase {
     private static String suiteInfo;
 
     @BeforeClass
@@ -49,7 +49,7 @@ public class TestThreadInfoPatternConverterTests extends OpenSearchTestCase {
     public void testThreadInfo() {
         // Threads that are part of a node get the node name
         String nodeName = randomAlphaOfLength(5);
-        String threadName = OpenSearchExecutors.threadName(nodeName, randomAlphaOfLength(20)) + "[T#" + between(0, 1000) + "]";
+        String threadName = DensityExecutors.threadName(nodeName, randomAlphaOfLength(20)) + "[T#" + between(0, 1000) + "]";
         assertEquals(nodeName, threadInfo(threadName));
 
         // Test threads get the test name

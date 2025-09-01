@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,21 +44,21 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileDoesNotExist;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
-import static org.opensearch.packaging.util.FileMatcher.Fileness.Directory;
-import static org.opensearch.packaging.util.FileMatcher.Fileness.File;
-import static org.opensearch.packaging.util.FileMatcher.file;
-import static org.opensearch.packaging.util.FileMatcher.p644;
-import static org.opensearch.packaging.util.FileMatcher.p660;
-import static org.opensearch.packaging.util.FileMatcher.p755;
-import static org.opensearch.packaging.util.FileUtils.getCurrentVersion;
-import static org.opensearch.packaging.util.FileUtils.getDefaultArchiveInstallPath;
-import static org.opensearch.packaging.util.FileUtils.getDistributionFile;
-import static org.opensearch.packaging.util.FileUtils.lsGlob;
-import static org.opensearch.packaging.util.FileUtils.mv;
-import static org.opensearch.packaging.util.FileUtils.slurp;
-import static org.opensearch.packaging.util.Platforms.isDPKG;
+import static org.density.packaging.util.FileExistenceMatchers.fileDoesNotExist;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.util.FileMatcher.Fileness.Directory;
+import static org.density.packaging.util.FileMatcher.Fileness.File;
+import static org.density.packaging.util.FileMatcher.file;
+import static org.density.packaging.util.FileMatcher.p644;
+import static org.density.packaging.util.FileMatcher.p660;
+import static org.density.packaging.util.FileMatcher.p755;
+import static org.density.packaging.util.FileUtils.getCurrentVersion;
+import static org.density.packaging.util.FileUtils.getDefaultArchiveInstallPath;
+import static org.density.packaging.util.FileUtils.getDistributionFile;
+import static org.density.packaging.util.FileUtils.lsGlob;
+import static org.density.packaging.util.FileUtils.mv;
+import static org.density.packaging.util.FileUtils.slurp;
+import static org.density.packaging.util.Platforms.isDPKG;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -74,11 +74,11 @@ public class Archives {
     protected static final Logger logger = LogManager.getLogger(Archives.class);
 
     // in the future we'll run as a role user on Windows
-    public static final String ARCHIVE_OWNER = Platforms.WINDOWS ? System.getenv("username") : "opensearch";
+    public static final String ARCHIVE_OWNER = Platforms.WINDOWS ? System.getenv("username") : "density";
 
-    /** This is an arbitrarily chosen value that gives OpenSearch time to log Bootstrap
+    /** This is an arbitrarily chosen value that gives Density time to log Bootstrap
      *  errors to the console if they occur before the logging framework is initialized. */
-    public static final String OPENSEARCH_STARTUP_SLEEP_TIME_SECONDS = "10";
+    public static final String DENSITY_STARTUP_SLEEP_TIME_SECONDS = "10";
 
     public static Installation installArchive(Shell sh, Distribution distribution) throws Exception {
         return installArchive(sh, distribution, getDefaultArchiveInstallPath(), getCurrentVersion());
@@ -87,10 +87,10 @@ public class Archives {
     public static Installation installArchive(Shell sh, Distribution distribution, Path fullInstallPath, String version) throws Exception {
         final Path distributionFile = getDistributionFile(distribution);
         final Path baseInstallPath = fullInstallPath.getParent();
-        final Path extractedPath = baseInstallPath.resolve("opensearch-" + version);
+        final Path extractedPath = baseInstallPath.resolve("density-" + version);
 
         assertThat("distribution file must exist: " + distributionFile.toString(), Files.exists(distributionFile), is(true));
-        assertThat("opensearch must not already be installed", lsGlob(baseInstallPath, "opensearch*"), empty());
+        assertThat("density must not already be installed", lsGlob(baseInstallPath, "density*"), empty());
 
         logger.info("Installing file: " + distributionFile);
         final String installCommand;
@@ -121,7 +121,7 @@ public class Archives {
         mv(extractedPath, fullInstallPath);
 
         assertThat("extracted archive moved to install location", Files.exists(fullInstallPath));
-        final List<Path> installations = lsGlob(baseInstallPath, "opensearch*");
+        final List<Path> installations = lsGlob(baseInstallPath, "density*");
         assertThat("only the intended installation exists", installations, hasSize(1));
         assertThat("only the intended installation exists", installations.get(0), is(fullInstallPath));
 
@@ -135,35 +135,35 @@ public class Archives {
     private static void setupArchiveUsersLinux(Path installPath) {
         final Shell sh = new Shell();
 
-        if (sh.runIgnoreExitCode("getent group opensearch").isSuccess() == false) {
+        if (sh.runIgnoreExitCode("getent group density").isSuccess() == false) {
             if (isDPKG()) {
-                sh.run("addgroup --system opensearch");
+                sh.run("addgroup --system density");
             } else {
-                sh.run("groupadd -r opensearch");
+                sh.run("groupadd -r density");
             }
         }
 
-        if (sh.runIgnoreExitCode("id opensearch").isSuccess() == false) {
+        if (sh.runIgnoreExitCode("id density").isSuccess() == false) {
             if (isDPKG()) {
                 sh.run(
                     "adduser "
                         + "--quiet "
                         + "--system "
                         + "--no-create-home "
-                        + "--ingroup opensearch "
+                        + "--ingroup density "
                         + "--disabled-password "
                         + "--shell /bin/false "
-                        + "opensearch"
+                        + "density"
                 );
             } else {
                 sh.run(
                     "useradd "
                         + "--system "
                         + "-M "
-                        + "--gid opensearch "
+                        + "--gid density "
                         + "--shell /sbin/nologin "
-                        + "--comment 'opensearch user' "
-                        + "opensearch"
+                        + "--comment 'density user' "
+                        + "density"
                 );
             }
         }
@@ -180,9 +180,9 @@ public class Archives {
 
         assertThat(es.bin, file(Directory, owner, owner, p755));
         assertThat(es.lib, file(Directory, owner, owner, p755));
-        assertThat(Files.exists(es.config("opensearch.keystore")), is(false));
+        assertThat(Files.exists(es.config("density.keystore")), is(false));
 
-        Stream.of("opensearch", "opensearch-env", "opensearch-keystore", "opensearch-plugin", "opensearch-shard", "opensearch-node")
+        Stream.of("density", "density-env", "density-keystore", "density-plugin", "density-shard", "density-node")
             .forEach(executable -> {
 
                 assertThat(es.bin(executable), file(File, owner, owner, p755));
@@ -193,24 +193,24 @@ public class Archives {
             });
 
         if (distribution.packaging == Distribution.Packaging.ZIP) {
-            Stream.of("opensearch-service.bat", "opensearch-service-mgr.exe", "opensearch-service-x64.exe")
+            Stream.of("density-service.bat", "density-service-mgr.exe", "density-service-x64.exe")
                 .forEach(executable -> assertThat(es.bin(executable), file(File, owner)));
         }
 
-        Stream.of("opensearch.yml", "jvm.options", "log4j2.properties")
+        Stream.of("density.yml", "jvm.options", "log4j2.properties")
             .forEach(configFile -> assertThat(es.config(configFile), file(File, owner, owner, p660)));
 
         Stream.of("NOTICE.txt", "LICENSE.txt", "README.md")
             .forEach(doc -> assertThat(es.home.resolve(doc), file(File, owner, owner, p644)));
     }
 
-    public static Shell.Result startOpenSearch(Installation installation, Shell sh) {
-        return runOpenSearchStartCommand(installation, sh, null, true);
+    public static Shell.Result startDensity(Installation installation, Shell sh) {
+        return runDensityStartCommand(installation, sh, null, true);
     }
 
-    public static Shell.Result startOpenSearchWithTty(Installation installation, Shell sh, String keystorePassword, boolean daemonize)
+    public static Shell.Result startDensityWithTty(Installation installation, Shell sh, String keystorePassword, boolean daemonize)
         throws Exception {
-        final Path pidFile = installation.home.resolve("opensearch.pid");
+        final Path pidFile = installation.home.resolve("density.pid");
         final Installation.Executables bin = installation.executables();
 
         List<String> command = new ArrayList<>();
@@ -229,43 +229,43 @@ public class Archives {
                 + "spawn -ignore HUP "
                 + String.join(" ", command)
                 + "\n"
-                + "expect \"OpenSearch keystore password:\"\n"
+                + "expect \"Density keystore password:\"\n"
                 + "send \"%s\\r\"\n"
                 + "expect eof\n"
                 + "EXPECT\n"
                 + ")\"",
             ARCHIVE_OWNER,
-            bin.opensearch,
+            bin.density,
             pidFile,
             keystorePassword
         );
 
-        sh.getEnv().put("OPENSEARCH_STARTUP_SLEEP_TIME", OPENSEARCH_STARTUP_SLEEP_TIME_SECONDS);
+        sh.getEnv().put("DENSITY_STARTUP_SLEEP_TIME", DENSITY_STARTUP_SLEEP_TIME_SECONDS);
         return sh.runIgnoreExitCode(script);
     }
 
-    public static Shell.Result runOpenSearchStartCommand(Installation installation, Shell sh, String keystorePassword, boolean daemonize) {
-        final Path pidFile = installation.home.resolve("opensearch.pid");
+    public static Shell.Result runDensityStartCommand(Installation installation, Shell sh, String keystorePassword, boolean daemonize) {
+        final Path pidFile = installation.home.resolve("density.pid");
 
         assertThat(pidFile, fileDoesNotExist());
 
         final Installation.Executables bin = installation.executables();
 
         if (Platforms.WINDOWS == false) {
-            // If jayatana is installed then we try to use it. OpenSearch should ignore it even when we try.
-            // If it doesn't ignore it then OpenSearch will fail to start because of security errors.
+            // If jayatana is installed then we try to use it. Density should ignore it even when we try.
+            // If it doesn't ignore it then Density will fail to start because of security errors.
             // This line is attempting to emulate the on login behavior of /usr/share/upstart/sessions/jayatana.conf
             if (Files.exists(Paths.get("/usr/share/java/jayatanaag.jar"))) {
                 sh.getEnv().put("JAVA_TOOL_OPTIONS", "-javaagent:/usr/share/java/jayatanaag.jar");
             }
 
-            // We need to give OpenSearch enough time to print failures to stderr before exiting
-            sh.getEnv().put("OPENSEARCH_STARTUP_SLEEP_TIME", OPENSEARCH_STARTUP_SLEEP_TIME_SECONDS);
+            // We need to give Density enough time to print failures to stderr before exiting
+            sh.getEnv().put("DENSITY_STARTUP_SLEEP_TIME", DENSITY_STARTUP_SLEEP_TIME_SECONDS);
 
             List<String> command = new ArrayList<>();
             command.add("sudo -E -u ");
             command.add(ARCHIVE_OWNER);
-            command.add(bin.opensearch.toString());
+            command.add(bin.density.toString());
             if (daemonize) {
                 command.add("-d");
             }
@@ -296,10 +296,10 @@ public class Archives {
             return sh.run(
                 "$processInfo = New-Object System.Diagnostics.ProcessStartInfo; "
                     + "$processInfo.FileName = '"
-                    + bin.opensearch
+                    + bin.density
                     + "'; "
                     + "$processInfo.Arguments = '-p "
-                    + installation.home.resolve("opensearch.pid")
+                    + installation.home.resolve("density.pid")
                     + "'; "
                     + powerShellProcessUserSetup
                     + "$processInfo.RedirectStandardOutput = $true; "
@@ -334,7 +334,7 @@ public class Archives {
                     + keystorePassword
                     + "'); "
                     + "Wait-Process -Timeout "
-                    + OPENSEARCH_STARTUP_SLEEP_TIME_SECONDS
+                    + DENSITY_STARTUP_SLEEP_TIME_SECONDS
                     + " -Id $process.Id; "
                     + "$process.Id;"
             );
@@ -343,24 +343,24 @@ public class Archives {
             if (keystorePassword != null) {
                 command.add("echo '" + keystorePassword + "' |");
             }
-            command.add(bin.opensearch.toString());
+            command.add(bin.density.toString());
             command.add("-p");
-            command.add(installation.home.resolve("opensearch.pid").toString());
+            command.add(installation.home.resolve("density.pid").toString());
             return sh.runIgnoreExitCode(String.join(" ", command));
         }
     }
 
-    public static void assertOpenSearchStarted(Installation installation) throws Exception {
-        final Path pidFile = installation.home.resolve("opensearch.pid");
-        ServerUtils.waitForOpenSearch(installation);
+    public static void assertDensityStarted(Installation installation) throws Exception {
+        final Path pidFile = installation.home.resolve("density.pid");
+        ServerUtils.waitForDensity(installation);
 
-        assertThat("Starting OpenSearch produced a pid file at " + pidFile, pidFile, fileExists());
+        assertThat("Starting Density produced a pid file at " + pidFile, pidFile, fileExists());
         String pid = slurp(pidFile).trim();
         assertThat(pid, is(not(emptyOrNullString())));
     }
 
-    public static void stopOpenSearch(Installation installation) throws Exception {
-        Path pidFile = installation.home.resolve("opensearch.pid");
+    public static void stopDensity(Installation installation) throws Exception {
+        Path pidFile = installation.home.resolve("density.pid");
         assertThat(pidFile, fileExists());
         String pid = slurp(pidFile).trim();
         assertThat(pid, is(not(emptyOrNullString())));

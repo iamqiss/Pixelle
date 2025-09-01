@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -43,9 +43,9 @@ import java.io.IOException;
  * Thrown when some action cannot be performed because the primary shard of
  * some shard group in an index has not been allocated post api action.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class IndexPrimaryShardNotAllocatedException extends OpenSearchException {
+public class IndexPrimaryShardNotAllocatedException extends DensityException {
     public IndexPrimaryShardNotAllocatedException(StreamInput in) throws IOException {
         super(in);
     }

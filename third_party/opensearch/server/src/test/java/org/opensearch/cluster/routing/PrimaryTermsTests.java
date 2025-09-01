@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.health.ClusterStateHealth;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.node.DiscoveryNodes.Builder;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.common.settings.Settings;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.health.ClusterStateHealth;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.node.DiscoveryNodes.Builder;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.common.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,11 +52,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-public class PrimaryTermsTests extends OpenSearchAllocationTestCase {
+public class PrimaryTermsTests extends DensityAllocationTestCase {
 
     private static final String TEST_INDEX_1 = "test1";
     private static final String TEST_INDEX_2 = "test2";
@@ -91,7 +91,7 @@ public class PrimaryTermsTests extends OpenSearchAllocationTestCase {
             )
             .build();
 
-        this.clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        this.clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();

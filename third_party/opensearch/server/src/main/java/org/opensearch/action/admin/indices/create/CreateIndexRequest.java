@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.transport.client.IndicesAdminClient;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.cluster.metadata.Context;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
+import org.density.transport.client.IndicesAdminClient;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -70,21 +70,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
-import static org.opensearch.common.settings.Settings.readSettingsFromStream;
-import static org.opensearch.common.settings.Settings.writeSettingsToStream;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.common.settings.Settings.readSettingsFromStream;
+import static org.density.common.settings.Settings.writeSettingsToStream;
 
 /**
  * A request to create an index. Best created with {@link Requests#createIndexRequest(String)}.
  * <p>
- * The index created can optionally be created with {@link #settings(org.opensearch.common.settings.Settings)}.
+ * The index created can optionally be created with {@link #settings(org.density.common.settings.Settings)}.
  *
  * @see IndicesAdminClient#create(CreateIndexRequest)
  * @see Requests#createIndexRequest(String)
  * @see CreateIndexResponse
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> implements IndicesRequest {
@@ -358,7 +358,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             builder.map(source);
             return mapping(builder.toString());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -388,7 +388,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             builder.map(source);
             return aliases(BytesReference.bytes(builder));
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -419,7 +419,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             }
             return this;
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse aliases", e);
+            throw new DensityParseException("Failed to parse aliases", e);
         }
     }
 
@@ -523,7 +523,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             String name = entry.getKey();
             if (SETTINGS.match(name, deprecationHandler)) {
                 if (entry.getValue() instanceof Map == false) {
-                    throw new OpenSearchParseException("key [settings] must be an object");
+                    throw new DensityParseException("key [settings] must be an object");
                 }
                 settings((Map<String, Object>) entry.getValue());
             } else if (MAPPINGS.match(name, deprecationHandler)) {
@@ -536,7 +536,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             } else if (CONTEXT.match(name, deprecationHandler)) {
                 context((Map<String, Object>) entry.getValue());
             } else {
-                throw new OpenSearchParseException("unknown key [{}] for create index", name);
+                throw new DensityParseException("unknown key [{}] for create index", name);
             }
         }
         return this;
@@ -588,7 +588,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             builder.map(source);
             return context(BytesReference.bytes(builder));
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -599,7 +599,7 @@ public class CreateIndexRequest extends AcknowledgedRequest<CreateIndexRequest> 
             context(Context.fromXContent(parser));
             return this;
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse context", e);
+            throw new DensityParseException("Failed to parse context", e);
         }
     }
 

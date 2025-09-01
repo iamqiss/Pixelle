@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -39,17 +39,17 @@ import com.sun.jna.WString;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.nio.file.Path;
 
-import static org.opensearch.bootstrap.JNAKernel32Library.SizeT;
+import static org.density.bootstrap.JNAKernel32Library.SizeT;
 
 /**
  * This class performs the actual work with JNA and library bindings to call native methods. It should only be used after
  * we are sure that the JNA classes are available to the JVM
  *
- * @opensearch.internal
+ * @density.internal
  */
 class JNANatives {
 
@@ -63,10 +63,10 @@ class JNANatives {
     // Set to true, in case native system call filter install was successful
     static boolean LOCAL_SYSTEM_CALL_FILTER = false;
     // Set to true, in case policy can be applied to all threads of the process (even existing ones)
-    // otherwise they are only inherited for new threads (OpenSearch app threads)
+    // otherwise they are only inherited for new threads (Density app threads)
     static boolean LOCAL_SYSTEM_CALL_FILTER_ALL = false;
     // set to the maximum number of threads that can be created for
-    // the user ID that owns the running OpenSearch process
+    // the user ID that owns the running Density process
     static long MAX_NUMBER_OF_THREADS = -1;
 
     static long MAX_SIZE_VIRTUAL_MEMORY = Long.MIN_VALUE;

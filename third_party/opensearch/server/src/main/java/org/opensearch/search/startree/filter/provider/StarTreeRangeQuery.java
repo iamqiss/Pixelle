@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree.filter.provider;
+package org.density.search.startree.filter.provider;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
 
 /**
  * Wrapper class for {@link RangeQueryBuilder} to expose the required fields

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,19 +54,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.scriptScoreQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFirstHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertOrderedSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSecondHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertThirdHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasScore;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.scriptScoreQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFirstHit;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertOrderedSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSecondHit;
+import static org.density.test.hamcrest.DensityAssertions.assertThirdHit;
+import static org.density.test.hamcrest.DensityAssertions.hasScore;
 
-public class ScriptScoreQueryIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class ScriptScoreQueryIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public ScriptScoreQueryIT(Settings staticSettings) {
         super(staticSettings);
@@ -196,8 +196,8 @@ public class ScriptScoreQueryIT extends ParameterizedStaticSettingsOpenSearchInt
             updateSettingsRequest.persistentSettings(Settings.builder().put("search.allow_expensive_queries", false));
             assertAcked(client().admin().cluster().updateSettings(updateSettingsRequest).actionGet());
 
-            OpenSearchException e = expectThrows(
-                OpenSearchException.class,
+            DensityException e = expectThrows(
+                DensityException.class,
                 () -> client().prepareSearch("test-index").setQuery(scriptScoreQuery(matchQuery("field1", "text0"), script)).get()
             );
             assertEquals(

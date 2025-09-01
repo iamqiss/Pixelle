@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite;
+package org.density.index.codec.composite;
 
 import org.apache.lucene.codecs.DocValuesConsumer;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
@@ -17,8 +17,8 @@ import org.apache.lucene.index.SegmentWriteState;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.InfoStream;
 import org.apache.lucene.util.Version;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class LuceneDocValuesConsumerFactoryTests extends OpenSearchTestCase {
+public class LuceneDocValuesConsumerFactoryTests extends DensityTestCase {
 
     private Directory directory;
     private final String dataCodec = "data_codec";

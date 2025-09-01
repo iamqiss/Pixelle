@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
-import org.opensearch.Version;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.MetadataStateFormat;
+import org.density.Version;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.MetadataStateFormat;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,7 +48,7 @@ import java.util.Objects;
  * Metadata associated with this node: its persistent node ID and its version.
  * The metadata is persisted in the data folder of this node and is reused across restarts.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NodeMetadata {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.internal.io;
+package org.density.core.internal.io;
 
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.Streams;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,7 +43,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class StreamsTests extends OpenSearchTestCase {
+public class StreamsTests extends DensityTestCase {
     public void testCopyFromInputStream() throws IOException {
         byte[] content = "content".getBytes(StandardCharsets.UTF_8);
         ByteArrayInputStream in = new ByteArrayInputStream(content);

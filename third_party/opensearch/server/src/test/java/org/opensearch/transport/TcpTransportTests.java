@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.network.NetworkUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.network.NetworkService;
+import org.density.common.network.NetworkUtils;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -68,7 +68,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 /** Unit tests for {@link TcpTransport} */
-public class TcpTransportTests extends OpenSearchTestCase {
+public class TcpTransportTests extends DensityTestCase {
 
     /** Test ipv4 host with a default port works */
     public void testParseV4DefaultPort() throws Exception {
@@ -436,22 +436,22 @@ public class TcpTransportTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(reason = "testing logging", value = "org.opensearch.transport.TcpTransport:DEBUG")
+    @TestLogging(reason = "testing logging", value = "org.density.transport.TcpTransport:DEBUG")
     public void testExceptionHandling() throws IllegalAccessException {
         testExceptionHandling(
             false,
-            new OpenSearchException("simulated"),
+            new DensityException("simulated"),
             true,
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.ERROR, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.WARN, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.INFO, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.DEBUG, "*")
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.ERROR, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.WARN, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.INFO, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.DEBUG, "*")
         );
         testExceptionHandling(
-            new OpenSearchException("simulated"),
+            new DensityException("simulated"),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.WARN,
                 "exception caught on transport layer [*], closing connection"
             )
@@ -460,16 +460,16 @@ public class TcpTransportTests extends OpenSearchTestCase {
             new ClosedChannelException(),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.DEBUG,
                 "close connection exception caught on transport layer [*], disconnecting from relevant node"
             )
         );
         testExceptionHandling(
-            new OpenSearchException("Connection reset"),
+            new DensityException("Connection reset"),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.DEBUG,
                 "close connection exception caught on transport layer [*], disconnecting from relevant node"
             )
@@ -478,7 +478,7 @@ public class TcpTransportTests extends OpenSearchTestCase {
             new BindException(),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.DEBUG,
                 "bind exception caught on transport layer [*]"
             )
@@ -487,7 +487,7 @@ public class TcpTransportTests extends OpenSearchTestCase {
             new CancelledKeyException(),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.DEBUG,
                 "cancelled key exception caught on transport layer [*], disconnecting from relevant node"
             )
@@ -496,16 +496,16 @@ public class TcpTransportTests extends OpenSearchTestCase {
             true,
             new TcpTransport.HttpRequestOnTransportException("test"),
             false,
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.ERROR, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.WARN, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.INFO, "*"),
-            new MockLogAppender.UnseenEventExpectation("message", "org.opensearch.transport.TcpTransport", Level.DEBUG, "*")
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.ERROR, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.WARN, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.INFO, "*"),
+            new MockLogAppender.UnseenEventExpectation("message", "org.density.transport.TcpTransport", Level.DEBUG, "*")
         );
         testExceptionHandling(
             new StreamCorruptedException("simulated"),
             new MockLogAppender.SeenEventExpectation(
                 "message",
-                "org.opensearch.transport.TcpTransport",
+                "org.density.transport.TcpTransport",
                 Level.WARN,
                 "simulated, [*], closing connection"
             )

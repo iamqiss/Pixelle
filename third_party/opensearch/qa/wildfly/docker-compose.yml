@@ -4,7 +4,7 @@ services:
   wildfly:
     image: quay.io/wildfly/wildfly:34.0.1.Final-jdk21
     environment:
-      JAVA_OPTS: -Dopensearch.uri=opensearch:9200 -Djboss.http.port=8080 -Djava.net.preferIPv4Stack=true
+      JAVA_OPTS: -Ddensity.uri=density:9200 -Djboss.http.port=8080 -Djava.net.preferIPv4Stack=true
     volumes:
       - ./build/distributions/example-app.war:/opt/jboss/wildfly/standalone/deployments/example-app.war
     ports:
@@ -16,8 +16,8 @@ services:
       timeout: 1s
       retries: 5
 
-  opensearch:
-    image: opensearch:test
+  density:
+    image: density:test
     environment:
       KEYSTORE_PASSWORD: ${KEYSTORE_PASSWORD}
       discovery.type: single-node

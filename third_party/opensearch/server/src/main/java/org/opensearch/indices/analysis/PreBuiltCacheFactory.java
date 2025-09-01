@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
+import org.density.DensityException;
+import org.density.Version;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * A factory for the pre-built cache
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PreBuiltCacheFactory {
 
@@ -51,19 +51,19 @@ public class PreBuiltCacheFactory {
      * <ul>
      * <li>ONE        : Exactly one version is stored. Useful for analyzers which do not store version information</li>
      * <li>LUCENE     : Exactly one version for each lucene version is stored. Useful to prevent different analyzers with the same version</li>
-     * <li>OPENSEARCH : Exactly one version per opensearch version is stored. Useful if you change an analyzer between opensearch releases, when the lucene version does not change</li>
+     * <li>DENSITY : Exactly one version per density version is stored. Useful if you change an analyzer between density releases, when the lucene version does not change</li>
      * </ul>
      */
     public enum CachingStrategy {
         ONE,
         LUCENE,
-        OPENSEARCH
+        DENSITY
     }
 
     /**
      * The prebuilt cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface PreBuiltCache<T> {
 
@@ -82,17 +82,17 @@ public class PreBuiltCacheFactory {
                 return new PreBuiltCacheStrategyOne<>();
             case LUCENE:
                 return new PreBuiltCacheStrategyLucene<>();
-            case OPENSEARCH:
-                return new PreBuiltCacheStrategyOpenSearch<>();
+            case DENSITY:
+                return new PreBuiltCacheStrategyDensity<>();
             default:
-                throw new OpenSearchException("No action configured for caching strategy[" + cachingStrategy + "]");
+                throw new DensityException("No action configured for caching strategy[" + cachingStrategy + "]");
         }
     }
 
     /**
      * This is a pretty simple cache, it only contains one version
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PreBuiltCacheStrategyOne<T> implements PreBuiltCache<T> {
 
@@ -115,11 +115,11 @@ public class PreBuiltCacheFactory {
     }
 
     /**
-     * This cache contains one version for each opensearch version object
+     * This cache contains one version for each density version object
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    private static class PreBuiltCacheStrategyOpenSearch<T> implements PreBuiltCache<T> {
+    private static class PreBuiltCacheStrategyDensity<T> implements PreBuiltCache<T> {
 
         Map<Version, T> mapModel = new HashMap<>(2);
 
@@ -142,7 +142,7 @@ public class PreBuiltCacheFactory {
     /**
      * This cache uses the lucene version for caching
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PreBuiltCacheStrategyLucene<T> implements PreBuiltCache<T> {
 
@@ -154,7 +154,7 @@ public class PreBuiltCacheFactory {
         }
 
         @Override
-        public void put(org.opensearch.Version version, T model) {
+        public void put(org.density.Version version, T model) {
             mapModel.put(version.luceneVersion, model);
         }
 

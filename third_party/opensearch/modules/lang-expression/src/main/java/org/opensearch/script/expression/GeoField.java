@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.expression;
+package org.density.script.expression;
 
 import org.apache.lucene.search.DoubleValuesSource;
-import org.opensearch.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData;
 
 /**
  * Expressions API for geo_point fields.

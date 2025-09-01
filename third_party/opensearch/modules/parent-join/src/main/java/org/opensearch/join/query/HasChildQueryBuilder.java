@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.query;
+package org.density.join.query;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -42,36 +42,36 @@ import org.apache.lucene.search.QueryVisitor;
 import org.apache.lucene.search.join.JoinUtil;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.InnerHitContextBuilder;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilderVisitor;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.join.mapper.ParentIdFieldMapper;
-import org.opensearch.join.mapper.ParentJoinFieldMapper;
+import org.density.DensityException;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.search.Queries;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.InnerHitContextBuilder;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilderVisitor;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.join.mapper.ParentIdFieldMapper;
+import org.density.join.mapper.ParentJoinFieldMapper;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 
 /**
  * A query builder for {@code has_child} query.
@@ -328,7 +328,7 @@ public class HasChildQueryBuilder extends AbstractQueryBuilder<HasChildQueryBuil
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[joining] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }

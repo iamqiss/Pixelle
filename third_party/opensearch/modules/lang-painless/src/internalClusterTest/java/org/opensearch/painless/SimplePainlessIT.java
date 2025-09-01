@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.composite.InternalComposite;
-import org.opensearch.search.aggregations.bucket.composite.TermsValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.composite.InternalComposite;
+import org.density.search.aggregations.bucket.composite.TermsValuesSourceBuilder;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,14 +38,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_TARGET_MAX_SLICE_COUNT_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_TARGET_MAX_SLICE_COUNT_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class SimplePainlessIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class SimplePainlessIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SimplePainlessIT(Settings nodeSettings) {
         super(nodeSettings);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.StringHelper;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.mapper.DateFieldMapper;
+import org.density.ExceptionsHelper;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.time.DateMathParser;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.unit.TimeValue;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.mapper.DateFieldMapper;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import static org.opensearch.common.util.BitMixer.mix32;
-import static org.opensearch.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.SUM_TOTAL_TERM_FREQ;
-import static org.opensearch.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.TERM_FREQ;
-import static org.opensearch.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.TOTAL_TERM_FREQ;
+import static org.density.common.util.BitMixer.mix32;
+import static org.density.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.SUM_TOTAL_TERM_FREQ;
+import static org.density.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.TERM_FREQ;
+import static org.density.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName.TOTAL_TERM_FREQ;
 
 /**
  * Utilities for scoring scripts
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ScoreScriptUtils {
 
@@ -76,7 +76,7 @@ public final class ScoreScriptUtils {
     /**
      * Retrieves the term frequency within a field for a specific term.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class TermFreq {
         private final ScoreScript scoreScript;
@@ -89,7 +89,7 @@ public final class ScoreScriptUtils {
             try {
                 return (int) scoreScript.getTermFrequency(TERM_FREQ, field, term);
             } catch (Exception e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
     }
@@ -97,7 +97,7 @@ public final class ScoreScriptUtils {
     /**
      * Retrieves the total term frequency within a field for a specific term.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class TotalTermFreq {
         private final ScoreScript scoreScript;
@@ -110,7 +110,7 @@ public final class ScoreScriptUtils {
             try {
                 return (long) scoreScript.getTermFrequency(TOTAL_TERM_FREQ, field, term);
             } catch (Exception e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
     }
@@ -118,7 +118,7 @@ public final class ScoreScriptUtils {
     /**
      * Retrieves the sum of total term frequencies within a field.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class SumTotalTermFreq {
         private final ScoreScript scoreScript;
@@ -131,7 +131,7 @@ public final class ScoreScriptUtils {
             try {
                 return (long) scoreScript.getTermFrequency(SUM_TOTAL_TERM_FREQ, field, null);
             } catch (Exception e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
     }
@@ -139,7 +139,7 @@ public final class ScoreScriptUtils {
     /**
      * random score based on the documents' values of the given field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class RandomScoreField {
         private final ScoreScript scoreScript;
@@ -161,7 +161,7 @@ public final class ScoreScriptUtils {
                 int hash = StringHelper.murmurhash3_x86_32(new BytesRef(seedValue), saltedSeed);
                 return (hash & 0x00FFFFFF) / (float) (1 << 24); // only use the lower 24 bits to construct a float from 0.0-1.0
             } catch (Exception e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
     }
@@ -169,7 +169,7 @@ public final class ScoreScriptUtils {
     /**
      * random score based on the internal Lucene document Ids
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class RandomScoreDoc {
         private final ScoreScript scoreScript;
@@ -191,7 +191,7 @@ public final class ScoreScriptUtils {
     /**
      * **** Decay functions on geo field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayGeoLinear {
         // cached variables calculated once per script execution
@@ -219,7 +219,7 @@ public final class ScoreScriptUtils {
     /**
      * Exponential geo decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayGeoExp {
         double originLat;
@@ -246,7 +246,7 @@ public final class ScoreScriptUtils {
     /**
      * Gaussian geo decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayGeoGauss {
         double originLat;
@@ -275,7 +275,7 @@ public final class ScoreScriptUtils {
     /**
      * Linear numeric decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayNumericLinear {
         double origin;
@@ -297,7 +297,7 @@ public final class ScoreScriptUtils {
     /**
      * Exponential numeric decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayNumericExp {
         double origin;
@@ -319,7 +319,7 @@ public final class ScoreScriptUtils {
     /**
      * Gaussian numeric decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayNumericGauss {
         double origin;
@@ -355,7 +355,7 @@ public final class ScoreScriptUtils {
     /**
      * Linear date decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayDateLinear {
         long origin;
@@ -383,7 +383,7 @@ public final class ScoreScriptUtils {
     /**
      * Exponential date decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayDateExp {
         long origin;
@@ -410,7 +410,7 @@ public final class ScoreScriptUtils {
     /**
      * Gaussian date decay
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DecayDateGauss {
         long origin;

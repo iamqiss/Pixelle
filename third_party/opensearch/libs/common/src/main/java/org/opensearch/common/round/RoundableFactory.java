@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.round;
+package org.density.common.round;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 /**
  * Factory class to create and return the fastest implementation of {@link Roundable}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public final class RoundableFactory {
     /**
      * The maximum limit up to which linear search is used, otherwise binary or B-tree search is used.
      * This is because linear search is much faster on small arrays.
-     * Benchmark results: <a href="https://github.com/opensearch-project/OpenSearch/pull/9727">PR #9727</a>
+     * Benchmark results: <a href="https://github.com/density-project/Density/pull/9727">PR #9727</a>
      */
     private static final int LINEAR_SEARCH_MAX_SIZE = 64;
 
@@ -42,7 +42,7 @@ public final class RoundableFactory {
     }
 
     static {
-        String simdRoundingFeatureFlag = System.getProperty("opensearch.experimental.feature.simd.rounding.enabled");
+        String simdRoundingFeatureFlag = System.getProperty("density.experimental.feature.simd.rounding.enabled");
         boolean useBtreeSearcher = false;
 
         try {

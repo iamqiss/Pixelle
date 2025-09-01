@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.PointValues;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityException;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.Diff;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ import java.util.Objects;
 /**
  * Primary DataStream class
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class DataStream extends AbstractDiffable<DataStream> implements ToXContentObject {
@@ -81,7 +81,7 @@ public final class DataStream extends AbstractDiffable<DataStream> implements To
                 return Long.MIN_VALUE;
             }
         } catch (IOException e) {
-            throw new OpenSearchException("Not a timeseries Index! Field [{}] not found!", TIMESERIES_FIELDNAME);
+            throw new DensityException("Not a timeseries Index! Field [{}] not found!", TIMESERIES_FIELDNAME);
         }
     }).reversed();
 
@@ -260,7 +260,7 @@ public final class DataStream extends AbstractDiffable<DataStream> implements To
     /**
      * A timestamp field.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class TimestampField implements Writeable, ToXContentObject {

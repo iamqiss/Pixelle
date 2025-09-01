@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
-import org.opensearch.secure_sm.policy.PolicyInitializationException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.secure_sm.policy.PolicyInitializationException;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.Path;
 import java.util.Set;
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 /** Tests plugin manager security check */
 @SuppressWarnings("removal")
-public class PluginSecurityTests extends OpenSearchTestCase {
+public class PluginSecurityTests extends DensityTestCase {
 
     /** Test that we can parse the set of permissions correctly for a simple policy */
     public void testParsePermissions() throws Exception {

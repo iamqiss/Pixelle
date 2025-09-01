@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.allocation;
+package org.density.cluster.allocation;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.RoutingNode;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SimpleAllocationIT extends OpenSearchIntegTestCase {
+public class SimpleAllocationIT extends DensityIntegTestCase {
 
     @Override
     protected int numberOfShards() {

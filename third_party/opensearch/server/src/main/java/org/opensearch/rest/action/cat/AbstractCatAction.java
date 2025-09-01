@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.common.Table;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.io.UTF8StreamWriter;
-import org.opensearch.core.common.io.stream.BytesStream;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.Table;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.io.Streams;
+import org.density.common.io.UTF8StreamWriter;
+import org.density.core.common.io.stream.BytesStream;
+import org.density.core.rest.RestStatus;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,13 +48,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.opensearch.rest.action.cat.RestTable.buildHelpWidths;
-import static org.opensearch.rest.action.cat.RestTable.pad;
+import static org.density.rest.action.cat.RestTable.buildHelpWidths;
+import static org.density.rest.action.cat.RestTable.pad;
 
 /**
  * Base Transport action class for _cat API
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class AbstractCatAction extends BaseRestHandler {
 

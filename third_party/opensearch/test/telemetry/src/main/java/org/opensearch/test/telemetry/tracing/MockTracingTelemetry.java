@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test.telemetry.tracing;
+package org.density.test.telemetry.tracing;
 
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanCreationContext;
-import org.opensearch.telemetry.tracing.TracingContextPropagator;
-import org.opensearch.telemetry.tracing.TracingTelemetry;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanCreationContext;
+import org.density.telemetry.tracing.TracingContextPropagator;
+import org.density.telemetry.tracing.TracingTelemetry;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

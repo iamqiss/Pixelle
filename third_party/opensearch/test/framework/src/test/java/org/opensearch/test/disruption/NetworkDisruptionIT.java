@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.disruption;
+package org.density.test.disruption;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthAction;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.health.ClusterHealthAction;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.cluster.NodeConnectionsService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -62,8 +62,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class NetworkDisruptionIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+public class NetworkDisruptionIT extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Arrays.asList(MockTransportService.TestPlugin.class);

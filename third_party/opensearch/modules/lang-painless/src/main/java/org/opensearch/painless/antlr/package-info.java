@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -27,11 +27,11 @@
 
 /**
  * Lexer, parser, and tree walker responsible for turning the code
- * generating nodes in {@link org.opensearch.painless.node}.
+ * generating nodes in {@link org.density.painless.node}.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.antlr;
+package org.density.painless.antlr;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.ingest.TestTemplateService;
+import org.density.script.TemplateScript;
+import org.density.test.DensityTestCase;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -55,7 +55,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-public class DateProcessorTests extends OpenSearchTestCase {
+public class DateProcessorTests extends DensityTestCase {
 
     private TemplateScript.Factory templatize(Locale locale) {
         return new TestTemplateService.MockTemplateScript.Factory(locale.getLanguage());

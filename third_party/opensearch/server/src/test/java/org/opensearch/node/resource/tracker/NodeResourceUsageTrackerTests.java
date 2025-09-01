@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.resource.tracker;
+package org.density.node.resource.tracker;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.monitor.fs.FsService;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.Mockito.mock;
 
 /**
  * Tests to assert resource usage trackers retrieving resource utilization averages
  */
-public class NodeResourceUsageTrackerTests extends OpenSearchSingleNodeTestCase {
+public class NodeResourceUsageTrackerTests extends DensitySingleNodeTestCase {
     ThreadPool threadPool;
 
     @Before

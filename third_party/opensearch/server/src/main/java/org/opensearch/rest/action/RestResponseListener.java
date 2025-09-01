@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestResponse;
 
 /**
  * A REST enabled action listener that has a basic onFailure implementation, and requires
  * sub classes to only implement {@link #buildResponse(Object)}.
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class RestResponseListener<Response> extends RestActionListener<Response> {
 

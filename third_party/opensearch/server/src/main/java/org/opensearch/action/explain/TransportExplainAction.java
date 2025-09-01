@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.explain;
+package org.density.action.explain;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Explanation;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.single.shard.TransportSingleShardAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.rescore.Rescorer;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.RoutingMissingException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.single.shard.TransportSingleShardAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasables;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.Rewriteable;
+import org.density.index.shard.IndexShard;
+import org.density.search.SearchService;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.rescore.Rescorer;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Set;
@@ -71,7 +71,7 @@ import java.util.Set;
 /**
  * Explain transport action. Computes the explain on the targeted shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // TODO: AggregatedDfs. Currently the idf can be different then when executing a normal search with explain.
 public class TransportExplainAction extends TransportSingleShardAction<ExplainRequest, ExplainResponse> {
@@ -177,7 +177,7 @@ public class TransportExplainAction extends TransportSingleShardAction<ExplainRe
                 return new ExplainResponse(shardId.getIndexName(), request.id(), true, explanation);
             }
         } catch (IOException e) {
-            throw new OpenSearchException("Could not explain", e);
+            throw new DensityException("Could not explain", e);
         } finally {
             Releasables.close(result, context);
         }

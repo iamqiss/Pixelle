@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
+package org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
 
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresResponse;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ShardFailure;
-import org.opensearch.transport.grpc.proto.response.exceptions.opensearchexception.OpenSearchExceptionProtoUtils;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse;
+import org.density.action.admin.indices.shards.IndicesShardStoresResponse;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ShardFailure;
+import org.density.transport.grpc.proto.response.exceptions.densityexception.DensityExceptionProtoUtils;
 
 import java.io.IOException;
 
@@ -112,7 +112,7 @@ public class DefaultShardOperationFailedExceptionProtoUtils {
         }
         shardFailureBuilder.setStatus(exception.status().name());
         if (exception.reason() != null) {
-            shardFailureBuilder.setReason(OpenSearchExceptionProtoUtils.generateThrowableProto(exception.getCause()));
+            shardFailureBuilder.setReason(DensityExceptionProtoUtils.generateThrowableProto(exception.getCause()));
         }
     }
 }

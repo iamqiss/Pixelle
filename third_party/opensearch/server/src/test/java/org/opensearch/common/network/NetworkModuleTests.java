@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.HttpStats;
-import org.opensearch.http.NullDispatcher;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.SecureAuxTransportSettingsProvider;
-import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
-import org.opensearch.plugins.SecureSettingsFactory;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.plugins.TransportExceptionHandler;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpInfo;
+import org.density.http.HttpServerTransport;
+import org.density.http.HttpStats;
+import org.density.http.NullDispatcher;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.SecureAuxTransportSettingsProvider;
+import org.density.plugins.SecureHttpTransportSettingsProvider;
+import org.density.plugins.SecureSettingsFactory;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.plugins.TransportExceptionHandler;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLException;
@@ -78,7 +78,7 @@ import java.util.function.Supplier;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 
-public class NetworkModuleTests extends OpenSearchTestCase {
+public class NetworkModuleTests extends DensityTestCase {
     private ThreadPool threadPool;
     private SecureSettingsFactory secureSettingsFactory;
 

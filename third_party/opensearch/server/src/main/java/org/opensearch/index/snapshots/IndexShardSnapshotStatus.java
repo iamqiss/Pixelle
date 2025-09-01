@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots;
+package org.density.index.snapshots;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Represent shard snapshot status
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexShardSnapshotStatus {
@@ -48,7 +48,7 @@ public class IndexShardSnapshotStatus {
     /**
      * Snapshot stage
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Stage {
@@ -252,7 +252,7 @@ public class IndexShardSnapshotStatus {
     /**
      * Returns an immutable state of {@link IndexShardSnapshotStatus} at a given point in time.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Copy {

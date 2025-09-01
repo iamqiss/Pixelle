@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.fielddata.cache;
+package org.density.indices.fielddata.cache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,25 +39,25 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexReader.CacheKey;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.cache.Cache;
-import org.opensearch.common.cache.CacheBuilder;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.shard.ShardUtils;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.cache.Cache;
+import org.density.common.cache.CacheBuilder;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.shard.ShardUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ import java.util.function.ToLongBiFunction;
 /**
  * The field data cache for multiple indices
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesFieldDataCache implements RemovalListener<IndicesFieldDataCache.Key, Accountable>, Releasable {
@@ -130,7 +130,7 @@ public class IndicesFieldDataCache implements RemovalListener<IndicesFieldDataCa
     /**
      * Computes a weight based on ramBytesUsed
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FieldDataWeigher implements ToLongBiFunction<Key, Accountable> {
         @Override
@@ -143,7 +143,7 @@ public class IndicesFieldDataCache implements RemovalListener<IndicesFieldDataCa
     /**
      * A specific cache instance for the relevant parameters of it (index, fieldNames, fieldType).
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class IndexFieldCache implements IndexFieldDataCache, IndexReader.ClosedListener {
         private final Logger logger;
@@ -202,7 +202,7 @@ public class IndicesFieldDataCache implements RemovalListener<IndicesFieldDataCa
             final Key key = new Key(this, cacheHelper.getKey(), shardId);
             // noinspection unchecked
             final Accountable accountable = cache.computeIfAbsent(key, k -> {
-                OpenSearchDirectoryReader.addReaderCloseListener(indexReader, IndexFieldCache.this);
+                DensityDirectoryReader.addReaderCloseListener(indexReader, IndexFieldCache.this);
                 Collections.addAll(k.listeners, this.listeners);
                 final Accountable ifd = (Accountable) indexFieldData.loadGlobalDirect(indexReader);
                 for (Listener listener : k.listeners) {
@@ -254,7 +254,7 @@ public class IndicesFieldDataCache implements RemovalListener<IndicesFieldDataCa
     /**
      * Key for the indices field data cache
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Key {

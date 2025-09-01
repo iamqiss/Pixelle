@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.get;
+package org.density.action.admin.indices.get;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.get.GetIndexRequest.Feature;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.get.GetIndexRequest.Feature;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexNotFoundException;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class GetIndexIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class GetIndexIT extends DensityIntegTestCase {
     @Override
     protected void setupSuiteScopeCluster() throws Exception {
         assertAcked(prepareCreate("idx").addAlias(new Alias("alias_idx")).setSettings(Settings.builder().put("number_of_shards", 1)).get());

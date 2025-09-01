@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.analysis.phone;
+package org.density.analysis.phone;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AbstractIndexAnalyzerProvider;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AbstractIndexAnalyzerProvider;
 
 /**
  * Provider for {@link PhoneNumberAnalyzer}.

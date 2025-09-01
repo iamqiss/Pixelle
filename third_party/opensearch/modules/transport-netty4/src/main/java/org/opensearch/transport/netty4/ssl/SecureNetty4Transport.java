@@ -18,37 +18,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4.ssl;
+package org.density.transport.netty4.ssl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchSecurityException;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.plugins.TransportExceptionHandler;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.netty4.Netty4Transport;
-import org.opensearch.transport.netty4.ssl.SecureConnectionTestUtil.SSLConnectionTestResult;
+import org.density.ExceptionsHelper;
+import org.density.DensitySecurityException;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.SuppressForbidden;
+import org.density.common.network.NetworkModule;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.plugins.TransportExceptionHandler;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.TcpChannel;
+import org.density.transport.netty4.Netty4Transport;
+import org.density.transport.netty4.ssl.SecureConnectionTestUtil.SSLConnectionTestResult;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLException;
@@ -67,7 +67,7 @@ import io.netty.handler.codec.DecoderException;
 import io.netty.handler.ssl.SslHandler;
 
 /**
- * @see <a href="https://github.com/opensearch-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/opensearch/security/ssl/transport/SecuritySSLNettyTransport.java">SecuritySSLNettyTransport</a>
+ * @see <a href="https://github.com/density-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/density/security/ssl/transport/SecuritySSLNettyTransport.java">SecuritySSLNettyTransport</a>
  */
 public class SecureNetty4Transport extends Netty4Transport {
 
@@ -117,7 +117,7 @@ public class SecureNetty4Transport extends Netty4Transport {
         logger.error("Exception during establishing a SSL connection: " + cause, cause);
 
         if (channel == null || !channel.isOpen()) {
-            throw new OpenSearchSecurityException("The provided TCP channel is invalid.", e);
+            throw new DensitySecurityException("The provided TCP channel is invalid.", e);
         }
         super.onException(channel, e);
     }
@@ -241,7 +241,7 @@ public class SecureNetty4Transport extends Netty4Transport {
                     sslEngine = SslUtils.createDefaultClientSSLEngine();
                 }
             } catch (final SSLException e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
 
             final SslHandler sslHandler = new SslHandler(sslEngine);
@@ -282,9 +282,9 @@ public class SecureNetty4Transport extends Netty4Transport {
         protected void initChannel(Channel ch) throws Exception {
             super.initChannel(ch);
 
-            if (connectionTestResult == SSLConnectionTestResult.OPENSEARCH_PING_FAILED) {
+            if (connectionTestResult == SSLConnectionTestResult.DENSITY_PING_FAILED) {
                 logger.error(
-                    "SSL dual mode is enabled but dual mode handshake and OpenSearch ping has failed during client connection setup, closing channel"
+                    "SSL dual mode is enabled but dual mode handshake and Density ping has failed during client connection setup, closing channel"
                 );
                 ch.close();
                 return;

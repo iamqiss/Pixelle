@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteRequestBuilder;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.WriteRequestBuilder;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateRequestBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteRequestBuilder;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.WriteRequestBuilder;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateRequestBuilder;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaType;
+import org.density.transport.client.DensityClient;
 
 /**
  * A bulk request holds an ordered {@link IndexRequest}s and {@link DeleteRequest}s and allows to executes
  * it in a single batch.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class BulkRequestBuilder extends ActionRequestBuilder<BulkRequest, BulkResponse> implements WriteRequestBuilder<BulkRequestBuilder> {
 
-    public BulkRequestBuilder(OpenSearchClient client, BulkAction action, @Nullable String globalIndex) {
+    public BulkRequestBuilder(DensityClient client, BulkAction action, @Nullable String globalIndex) {
         super(client, action, new BulkRequest(globalIndex));
     }
 
-    public BulkRequestBuilder(OpenSearchClient client, BulkAction action) {
+    public BulkRequestBuilder(DensityClient client, BulkAction action) {
         super(client, action, new BulkRequest());
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.TokenStream;
 
@@ -40,7 +40,7 @@ import org.apache.lucene.analysis.TokenStream;
  * The default implementation delegates {@link #normalize(TokenStream)} to
  * {@link #create(TokenStream)}}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface NormalizingTokenFilterFactory extends TokenFilterFactory {
 

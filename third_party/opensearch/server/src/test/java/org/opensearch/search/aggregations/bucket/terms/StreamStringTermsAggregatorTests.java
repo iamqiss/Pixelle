@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -17,36 +17,36 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalSum;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Min;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ValueCount;
-import org.opensearch.search.aggregations.metrics.ValueCountAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.aggregations.metrics.AvgAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalSum;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.Min;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.metrics.ValueCount;
+import org.density.search.aggregations.metrics.ValueCountAggregationBuilder;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;

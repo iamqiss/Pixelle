@@ -2,10 +2,10 @@
 
 ```mermaid
 flowchart TD
-%% OpenSearch Layer
-    ClientAction["Action Execution (OpenSearch)"]
-    ServerAction["Action Execution (OpenSearch)"]
-    ServerRH["Request Handler (OpenSearch)"]
+%% Density Layer
+    ClientAction["Action Execution (Density)"]
+    ServerAction["Action Execution (Density)"]
+    ServerRH["Request Handler (Density)"]
 
 %% Transport Layer
     ClientTS["StreamTransportService (Transport)"]
@@ -68,12 +68,12 @@ flowchart TD
     FC ~~~ FS ~~~ FSQueue
 
 %% Style
-    classDef opensearch fill:#e3f2fd,stroke:#1976d2
+    classDef density fill:#e3f2fd,stroke:#1976d2
     classDef transport fill:#e8f5e9,stroke:#2e7d32
     classDef arrow fill:#fff3e0,stroke:#e65100
     classDef queue fill:#ffecb3,stroke:#ff6f00
 
-    class ClientAction,ServerAction,ServerRH opensearch
+    class ClientAction,ServerAction,ServerRH density
     class ClientTS,ClientFT,ClientFCC,ClientFTR,ServerTS,ServerFT,ServerFTC,ServerFSC transport
     class FC,FS,FSrv,SSL,VSR arrow
     class FSQueue queue

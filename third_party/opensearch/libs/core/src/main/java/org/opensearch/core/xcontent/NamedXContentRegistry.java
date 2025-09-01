@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
+import org.density.common.CheckedFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Main registry for serializable content (e.g., field mappers, aggregations)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NamedXContentRegistry {

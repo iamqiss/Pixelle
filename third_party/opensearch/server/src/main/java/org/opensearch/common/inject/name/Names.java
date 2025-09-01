@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,14 +23,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.name;
+package org.density.common.inject.name;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Key;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Key;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -41,7 +41,7 @@ import java.util.Properties;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Names {
 

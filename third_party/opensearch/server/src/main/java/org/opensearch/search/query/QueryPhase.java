@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,30 +46,30 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.concurrent.EWMATrackingThreadPoolExecutor;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.lucene.queries.SearchAfterSortedDocQuery;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchContextSourcePrinter;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.AggregationProcessor;
-import org.opensearch.search.aggregations.DefaultAggregationProcessor;
-import org.opensearch.search.aggregations.GlobalAggCollectorManager;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.ScrollContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.query.InternalProfileCollector;
-import org.opensearch.search.rescore.RescoreProcessor;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.suggest.SuggestProcessor;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.search.SearchShardTask;
+import org.density.common.Booleans;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.concurrent.EWMATrackingThreadPoolExecutor;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.lucene.queries.SearchAfterSortedDocQuery;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchContextSourcePrinter;
+import org.density.search.SearchService;
+import org.density.search.aggregations.AggregationProcessor;
+import org.density.search.aggregations.DefaultAggregationProcessor;
+import org.density.search.aggregations.GlobalAggCollectorManager;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.ScrollContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.query.InternalProfileCollector;
+import org.density.search.rescore.RescoreProcessor;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.suggest.SuggestProcessor;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -80,23 +80,23 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.query.QueryCollectorContext.createEarlyTerminationCollectorContext;
-import static org.opensearch.search.query.QueryCollectorContext.createFilteredCollectorContext;
-import static org.opensearch.search.query.QueryCollectorContext.createMinScoreCollectorContext;
-import static org.opensearch.search.query.QueryCollectorContext.createMultiCollectorContext;
-import static org.opensearch.search.query.TopDocsCollectorContext.createTopDocsCollectorContext;
+import static org.density.search.query.QueryCollectorContext.createEarlyTerminationCollectorContext;
+import static org.density.search.query.QueryCollectorContext.createFilteredCollectorContext;
+import static org.density.search.query.QueryCollectorContext.createMinScoreCollectorContext;
+import static org.density.search.query.QueryCollectorContext.createMultiCollectorContext;
+import static org.density.search.query.TopDocsCollectorContext.createTopDocsCollectorContext;
 
 /**
  * Query phase of a search request, used to run the query and get back from each shard information about the matching documents
  * (document ids and score or sort criteria) so that matches can be reduced on the coordinating node
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class QueryPhase {
     private static final Logger LOGGER = LogManager.getLogger(QueryPhase.class);
     // TODO: remove this property
-    public static final boolean SYS_PROP_REWRITE_SORT = Booleans.parseBoolean(System.getProperty("opensearch.search.rewrite_sort", "true"));
+    public static final boolean SYS_PROP_REWRITE_SORT = Booleans.parseBoolean(System.getProperty("density.search.rewrite_sort", "true"));
     public static final QueryPhaseSearcher DEFAULT_QUERY_PHASE_SEARCHER = new DefaultQueryPhaseSearcher();
     private final QueryPhaseSearcher queryPhaseSearcher;
     private final SuggestProcessor suggestProcessor;
@@ -400,7 +400,7 @@ public class QueryPhase {
     /**
      * The exception being raised when search timeout is reached.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TimeExceededException extends RuntimeException {
         private static final long serialVersionUID = 1L;
@@ -409,7 +409,7 @@ public class QueryPhase {
     /**
      * Default {@link QueryPhaseSearcher} implementation which delegates to the {@link QueryPhase}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class DefaultQueryPhaseSearcher implements QueryPhaseSearcher {
         private final AggregationProcessor aggregationProcessor;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.rescore;
+package org.density.example.rescore;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.test.AbstractWireSerializingTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.search.rescore.RescoreContext;
+import org.density.test.AbstractWireSerializingTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -63,7 +63,7 @@ public class ExampleRescoreBuilderTests extends AbstractWireSerializingTestCase<
                 randomValueOtherThan(instance.windowSize(), () -> between(0, Integer.MAX_VALUE))
             ),
             () -> new ExampleRescoreBuilder(
-                randomValueOtherThan(instance.factor(), OpenSearchTestCase::randomFloat),
+                randomValueOtherThan(instance.factor(), DensityTestCase::randomFloat),
                 instance.factorField()
             ).windowSize(instance.windowSize()),
             () -> new ExampleRescoreBuilder(instance.factor(), randomValueOtherThan(instance.factorField(), () -> randomAlphaOfLength(5)))

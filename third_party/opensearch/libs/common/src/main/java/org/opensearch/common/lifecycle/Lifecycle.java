@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lifecycle;
+package org.density.common.lifecycle;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Lifecycle state. Allows the following transitions:
@@ -75,7 +75,7 @@ import org.opensearch.common.annotation.PublicApi;
  * }
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Lifecycle {
@@ -83,7 +83,7 @@ public class Lifecycle {
     /**
      * State in the lifecycle
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum State {

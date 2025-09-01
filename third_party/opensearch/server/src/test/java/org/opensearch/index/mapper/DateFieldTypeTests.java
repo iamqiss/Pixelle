@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.LongPoint;
@@ -58,29 +58,29 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.DateFieldMapper.Resolution;
-import org.opensearch.index.mapper.MappedFieldType.Relation;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.query.BaseQueryRewriteContext;
-import org.opensearch.index.query.DateRangeIncludingNowQuery;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.TestSearchContext;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.common.time.DateMathParser;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.index.IndexSettings;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.DateFieldMapper.Resolution;
+import org.density.index.mapper.MappedFieldType.Relation;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.query.BaseQueryRewriteContext;
+import org.density.index.query.DateRangeIncludingNowQuery;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.TestSearchContext;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;

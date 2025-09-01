@@ -28,45 +28,45 @@ while [ -h "$SCRIPT" ] ; do
   fi
 done
 
-if [[ -z "$OPENSEARCH_HOME" ]]; then
-  # determine OpenSearch home; to do this, we strip from the path until we find
+if [[ -z "$DENSITY_HOME" ]]; then
+  # determine Density home; to do this, we strip from the path until we find
   # bin, and then strip bin (there is an assumption here that there is no nested
   # directory under bin also named bin)
-  OPENSEARCH_HOME=`dirname "$SCRIPT"`
+  DENSITY_HOME=`dirname "$SCRIPT"`
 
-  # now make OPENSEARCH_HOME absolute
-  OPENSEARCH_HOME=`cd "$OPENSEARCH_HOME"; pwd`
+  # now make DENSITY_HOME absolute
+  DENSITY_HOME=`cd "$DENSITY_HOME"; pwd`
 
-  while [ "`basename "$OPENSEARCH_HOME"`" != "bin" ]; do
-    OPENSEARCH_HOME=`dirname "$OPENSEARCH_HOME"`
+  while [ "`basename "$DENSITY_HOME"`" != "bin" ]; do
+    DENSITY_HOME=`dirname "$DENSITY_HOME"`
   done
-  OPENSEARCH_HOME=`dirname "$OPENSEARCH_HOME"`
+  DENSITY_HOME=`dirname "$DENSITY_HOME"`
 fi
 
 # now set the classpath
-OPENSEARCH_CLASSPATH="$OPENSEARCH_HOME/lib/*"
+DENSITY_CLASSPATH="$DENSITY_HOME/lib/*"
 
-# now set the path to java: OPENSEARCH_JAVA_HOME -> JAVA_HOME -> bundled JRE -> bundled JDK
-if [ ! -z "$OPENSEARCH_JAVA_HOME" ]; then
-  JAVA="$OPENSEARCH_JAVA_HOME/bin/java"
-  JAVA_TYPE="OPENSEARCH_JAVA_HOME"
+# now set the path to java: DENSITY_JAVA_HOME -> JAVA_HOME -> bundled JRE -> bundled JDK
+if [ ! -z "$DENSITY_JAVA_HOME" ]; then
+  JAVA="$DENSITY_JAVA_HOME/bin/java"
+  JAVA_TYPE="DENSITY_JAVA_HOME"
 elif [ ! -z "$JAVA_HOME" ]; then
   JAVA="$JAVA_HOME/bin/java"
   JAVA_TYPE="JAVA_HOME"
 else
   if [ $OS = "darwin" ]; then
     # macOS bundled Java
-    JAVA="$OPENSEARCH_HOME/jdk.app/Contents/Home/bin/java"
+    JAVA="$DENSITY_HOME/jdk.app/Contents/Home/bin/java"
     JAVA_TYPE="bundled jdk"
   elif [ $OS = "freebsd" ]; then
     # using FreeBSD default java from ports if JAVA_HOME is not set
     JAVA="/usr/local/bin/java"
     JAVA_TYPE="bundled jdk"
-  elif [ -d "$OPENSEARCH_HOME/jre" ]; then
-    JAVA="$OPENSEARCH_HOME/jre/bin/java"
+  elif [ -d "$DENSITY_HOME/jre" ]; then
+    JAVA="$DENSITY_HOME/jre/bin/java"
     JAVA_TYPE="bundled jre"
   else
-    JAVA="$OPENSEARCH_HOME/jdk/bin/java"
+    JAVA="$DENSITY_HOME/jdk/bin/java"
     JAVA_TYPE="bundled jdk"
   fi
 fi
@@ -86,7 +86,7 @@ fi
 # warn them that we are not observing the value of $JAVA_OPTS
 if [ ! -z "$JAVA_OPTS" ]; then
   echo -n "warning: ignoring JAVA_OPTS=$JAVA_OPTS; "
-  echo "pass JVM parameters via OPENSEARCH_JAVA_OPTS"
+  echo "pass JVM parameters via DENSITY_JAVA_OPTS"
 fi
 
 if [[ "$("$JAVA" -version 2>/dev/null)" =~ "Unable to map CDS archive" ]]; then
@@ -96,69 +96,69 @@ else
 fi
 
 # check the Java version
-"$JAVA" "$XSHARE" -cp "$OPENSEARCH_CLASSPATH" org.opensearch.tools.java_version_checker.JavaVersionChecker
+"$JAVA" "$XSHARE" -cp "$DENSITY_CLASSPATH" org.density.tools.java_version_checker.JavaVersionChecker
 
 export HOSTNAME=$HOSTNAME
 
-if [ -z "$OPENSEARCH_PATH_CONF" ]; then
+if [ -z "$DENSITY_PATH_CONF" ]; then
   ${source.path.env}
 fi
 
-if [ -z "$OPENSEARCH_PATH_CONF" ]; then
-  echo "OPENSEARCH_PATH_CONF must be set to the configuration path"
+if [ -z "$DENSITY_PATH_CONF" ]; then
+  echo "DENSITY_PATH_CONF must be set to the configuration path"
   exit 1
 fi
 
-# now make OPENSEARCH_PATH_CONF absolute
-OPENSEARCH_PATH_CONF=`cd "$OPENSEARCH_PATH_CONF"; pwd`
+# now make DENSITY_PATH_CONF absolute
+DENSITY_PATH_CONF=`cd "$DENSITY_PATH_CONF"; pwd`
 
 # Check if any bc-fips jar exists on classpath
 # run in FIPS JVM if jar is found
-if ls "$OPENSEARCH_HOME/lib" | grep -E -q "bc-fips.*\.jar"; then
+if ls "$DENSITY_HOME/lib" | grep -E -q "bc-fips.*\.jar"; then
   echo "BouncyCastle FIPS library found, setting FIPS JVM options."
-  export OPENSEARCH_JAVA_OPTS="-Dorg.bouncycastle.fips.approved_only=true \
-    -Djava.security.properties=${OPENSEARCH_PATH_CONF}/fips_java.security \
-    ${OPENSEARCH_JAVA_OPTS}"
+  export DENSITY_JAVA_OPTS="-Dorg.bouncycastle.fips.approved_only=true \
+    -Djava.security.properties=${DENSITY_PATH_CONF}/fips_java.security \
+    ${DENSITY_JAVA_OPTS}"
 fi
 
-OPENSEARCH_DISTRIBUTION_TYPE=${opensearch.distribution.type}
-OPENSEARCH_BUNDLED_JDK=${opensearch.bundled_jdk}
+DENSITY_DISTRIBUTION_TYPE=${density.distribution.type}
+DENSITY_BUNDLED_JDK=${density.bundled_jdk}
 
-if [[ "$OPENSEARCH_BUNDLED_JDK" == "false" ]]; then
+if [[ "$DENSITY_BUNDLED_JDK" == "false" ]]; then
   echo "warning: no-jdk distributions that do not bundle a JDK are deprecated and will be removed in a future release" >&2
 fi
 
-if [[ "$OPENSEARCH_DISTRIBUTION_TYPE" == "docker" ]]; then
+if [[ "$DENSITY_DISTRIBUTION_TYPE" == "docker" ]]; then
   # Allow environment variables to be set by creating a file with the
   # contents, and setting an environment variable with the suffix _FILE to
   # point to it. This can be used to provide secrets to a container, without
   # the values being specified explicitly when running the container.
-  source "$OPENSEARCH_HOME/bin/opensearch-env-from-file"
+  source "$DENSITY_HOME/bin/density-env-from-file"
 
-  # Parse Docker env vars to customize OpenSearch
+  # Parse Docker env vars to customize Density
   #
   # e.g. Setting the env var cluster.name=testcluster
   #
-  # will cause OpenSearch to be invoked with -Ecluster.name=testcluster
+  # will cause Density to be invoked with -Ecluster.name=testcluster
   #
-  # see https://opensearch.org/docs/opensearch/configuration/ 
+  # see https://density.org/docs/density/configuration/ 
 
-  declare -a opensearch_arg_array
+  declare -a density_arg_array
 
   while IFS='=' read -r envvar_key envvar_value
   do
-    # OpenSearch settings need to have at least two dot separated lowercase
+    # Density settings need to have at least two dot separated lowercase
     # words, e.g. `cluster.name`
     if [[ "$envvar_key" =~ ^[a-z0-9_]+\.[a-z0-9_]+ ]]; then
       if [[ ! -z $envvar_value ]]; then
-        opensearch_opt="-E${envvar_key}=${envvar_value}"
-        opensearch_arg_array+=("${opensearch_opt}")
+        density_opt="-E${envvar_key}=${envvar_value}"
+        density_arg_array+=("${density_opt}")
       fi
     fi
   done < <(env)
 
-  # Reset the positional parameters to the opensearch_arg_array values and any existing positional params
-  set -- "$@" "${opensearch_arg_array[@]}"
+  # Reset the positional parameters to the density_arg_array values and any existing positional params
+  set -- "$@" "${density_arg_array[@]}"
 
   # The virtual file /proc/self/cgroup should list the current cgroup
   # membership. For each hierarchy, you can follow the cgroup path from
@@ -166,13 +166,13 @@ if [[ "$OPENSEARCH_DISTRIBUTION_TYPE" == "docker" ]]; then
   # introspect the statistics for the cgroup for the given
   # hierarchy. Alas, Docker breaks this by mounting the container
   # statistics at the root while leaving the cgroup paths as the actual
-  # paths. Therefore, OpenSearch provides a mechanism to override
+  # paths. Therefore, Density provides a mechanism to override
   # reading the cgroup path from /proc/self/cgroup and instead uses the
   # cgroup path defined the JVM system property
-  # opensearch.cgroups.hierarchy.override. Therefore, we set this value here so
+  # density.cgroups.hierarchy.override. Therefore, we set this value here so
   # that cgroup statistics are available for the container this process
   # will run in.
-  export OPENSEARCH_JAVA_OPTS="-Dopensearch.cgroups.hierarchy.override=/ $OPENSEARCH_JAVA_OPTS"
+  export DENSITY_JAVA_OPTS="-Ddensity.cgroups.hierarchy.override=/ $DENSITY_JAVA_OPTS"
 fi
 
-cd "$OPENSEARCH_HOME"
+cd "$DENSITY_HOME"

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.index.rankeval.RatedDocument.DocumentKey;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.index.rankeval.RatedDocument.DocumentKey;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
 
 import java.util.ArrayList;
 import java.util.Collection;

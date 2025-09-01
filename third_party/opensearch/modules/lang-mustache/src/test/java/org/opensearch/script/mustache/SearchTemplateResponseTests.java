@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.function.Predicate;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
 public class SearchTemplateResponseTests extends AbstractXContentTestCase<SearchTemplateResponse> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.IndexReader;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.histogram.DateIntervalConsumer;
-import org.opensearch.search.aggregations.bucket.histogram.DateIntervalWrapper;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Rounding;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.histogram.DateIntervalConsumer;
+import org.density.search.aggregations.bucket.histogram.DateIntervalWrapper;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -70,7 +70,7 @@ import java.util.function.LongConsumer;
  * A {@link CompositeValuesSourceBuilder} that builds a {@link RoundingValuesSource} from a {@link Script} or
  * a field name using the provided interval.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DateHistogramValuesSourceBuilder extends CompositeValuesSourceBuilder<DateHistogramValuesSourceBuilder>
     implements
@@ -78,7 +78,7 @@ public class DateHistogramValuesSourceBuilder extends CompositeValuesSourceBuild
     /**
      * Supplier for a composite date histogram
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface DateHistogramCompositeSupplier {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
 
 import java.util.Map;
 
 /**
  * Context used during field level highlighting
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FieldHighlightContext {
 

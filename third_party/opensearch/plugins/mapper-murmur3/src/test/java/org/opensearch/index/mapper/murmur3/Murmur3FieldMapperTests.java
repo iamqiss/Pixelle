@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.murmur3;
+package org.density.index.mapper.murmur3;
 
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MapperTestCase;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.plugin.mapper.MapperMurmur3Plugin;
-import org.opensearch.plugins.Plugin;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MapperTestCase;
+import org.density.index.mapper.ParsedDocument;
+import org.density.plugin.mapper.MapperMurmur3Plugin;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.util.Arrays;

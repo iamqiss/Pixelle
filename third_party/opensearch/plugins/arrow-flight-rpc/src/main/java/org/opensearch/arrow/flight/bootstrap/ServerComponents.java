@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
 import org.apache.arrow.flight.FlightProducer;
 import org.apache.arrow.flight.FlightServer;
@@ -16,17 +16,17 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.util.AutoCloseables;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.BindTransportException;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.BindTransportException;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -47,15 +47,15 @@ import io.netty.util.NettyRuntime;
 import io.netty.util.concurrent.Future;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.settings.Setting.intSetting;
-import static org.opensearch.common.settings.Setting.listSetting;
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_PORT;
-import static org.opensearch.transport.Transport.resolveTransportPublishPort;
+import static org.density.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.listSetting;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_PORT;
+import static org.density.transport.Transport.resolveTransportPublishPort;
 
 /**
- * Server components for Arrow Flight RPC integration with OpenSearch.
+ * Server components for Arrow Flight RPC integration with Density.
  * Manages the lifecycle of Flight server instances and their configuration.
- * @opensearch.internal
+ * @density.internal
  */
 @SuppressWarnings("removal")
 public final class ServerComponents implements AutoCloseable {

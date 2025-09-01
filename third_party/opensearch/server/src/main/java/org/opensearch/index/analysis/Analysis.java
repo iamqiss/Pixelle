@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,9 +69,9 @@ import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.analysis.sv.SwedishAnalyzer;
 import org.apache.lucene.analysis.th.ThaiAnalyzer;
 import org.apache.lucene.analysis.tr.TurkishAnalyzer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.env.Environment;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.env.Environment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -94,7 +94,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Core analysis class
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Analysis {
     private static final Logger LOGGER = LogManager.getLogger(Analysis.class);

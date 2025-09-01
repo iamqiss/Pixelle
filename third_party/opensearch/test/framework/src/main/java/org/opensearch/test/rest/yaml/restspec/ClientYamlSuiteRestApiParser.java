@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.restspec;
+package org.density.test.rest.yaml.restspec;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.HashSet;

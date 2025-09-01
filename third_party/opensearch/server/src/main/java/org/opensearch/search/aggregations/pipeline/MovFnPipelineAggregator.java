@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.script.Script;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramFactory;
+import org.density.script.Script;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.histogram.HistogramFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
+import static org.density.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
 
 /**
  * This pipeline aggregation gives the user the ability to script functions that "move" across a window
@@ -66,7 +66,7 @@ import static org.opensearch.search.aggregations.pipeline.BucketHelpers.resolveB
  * </ul>
  *  The user can also define any arbitrary logic via their own scripting, or combine with the above methods.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MovFnPipelineAggregator extends PipelineAggregator {
     private final DocValueFormat formatter;

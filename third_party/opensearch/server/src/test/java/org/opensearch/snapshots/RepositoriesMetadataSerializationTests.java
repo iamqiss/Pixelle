@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractDiffableSerializationTestCase;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.Diff;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractDiffableSerializationTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fieldvisitor;
+package org.density.index.fieldvisitor;
 
 import org.apache.lucene.index.FieldInfo;
 
@@ -41,7 +41,7 @@ import java.util.Set;
  * The Uid field is always loaded.
  * The class is optimized for source loading as it is a common use case.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CustomFieldsVisitor extends FieldsVisitor {
 

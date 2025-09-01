@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.stats;
+package org.density.arrow.flight.stats;
 
 import org.apache.arrow.memory.BufferAllocator;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

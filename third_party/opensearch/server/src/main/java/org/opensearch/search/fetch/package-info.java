@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -27,12 +27,12 @@
 
 /**
  * Search phase that fetches the top hits from the shards after the results of the query phase have been merged. Pluggable by implementing
- * {@link org.opensearch.search.fetch.FetchSubPhase} and
- * {@link org.opensearch.plugins.SearchPlugin#getFetchSubPhases(org.opensearch.plugins.SearchPlugin.FetchPhaseConstructionContext)}.
+ * {@link org.density.search.fetch.FetchSubPhase} and
+ * {@link org.density.plugins.SearchPlugin#getFetchSubPhases(org.density.plugins.SearchPlugin.FetchPhaseConstructionContext)}.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;

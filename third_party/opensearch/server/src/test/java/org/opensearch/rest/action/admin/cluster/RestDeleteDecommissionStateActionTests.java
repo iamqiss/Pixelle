@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.rest.RestActionTestCase;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.test.rest.RestActionTestCase;
 import org.junit.Before;
 
 import java.util.List;

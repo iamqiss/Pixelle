@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.cache.Cache;
-import org.opensearch.common.cache.CacheBuilder;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
+import org.density.common.cache.Cache;
+import org.density.common.cache.CacheBuilder;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
 
 import java.util.Map;
 import java.util.Objects;
@@ -51,7 +51,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Script cache and compilation rate limiter.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptCache {
 
@@ -267,7 +267,7 @@ public class ScriptCache {
     /**
      * Tracking compilation rate
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CompilationRate {
         public final int count;

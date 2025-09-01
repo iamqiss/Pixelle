@@ -33,13 +33,13 @@ def createChaosAgent() {
   if (!agentJar.exists()) {
     def manifestFile = file("${buildDir}/MANIFEST.MF")
     manifestFile.text = '''Manifest-Version: 1.0
-Premain-Class: org.opensearch.arrow.flight.chaos.ChaosAgent
-Agent-Class: org.opensearch.arrow.flight.chaos.ChaosAgent
+Premain-Class: org.density.arrow.flight.chaos.ChaosAgent
+Agent-Class: org.density.arrow.flight.chaos.ChaosAgent
 Can-Redefine-Classes: true
 Can-Retransform-Classes: true
 '''
     ant.jar(destfile: agentJar, manifest: manifestFile) {
-      fileset(dir: sourceSets.internalClusterTest.output.classesDirs.first(), includes: 'org/opensearch/arrow/flight/chaos/ChaosAgent*.class')
+      fileset(dir: sourceSets.internalClusterTest.output.classesDirs.first(), includes: 'org/density/arrow/flight/chaos/ChaosAgent*.class')
     }
   }
 

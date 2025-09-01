@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.RandomAccessInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -23,7 +23,7 @@ import java.nio.file.Path;
 /**
  * Tests for {@link ByteArrayBackedBitset}
  */
-public class ByteArrayBackedBitsetTests extends OpenSearchTestCase {
+public class ByteArrayBackedBitsetTests extends DensityTestCase {
     public void testWriteAndReadNullBitSets() throws IOException {
         for (int k = 0; k < 10; k++) {
             int randomArraySize = randomIntBetween(2, 300);

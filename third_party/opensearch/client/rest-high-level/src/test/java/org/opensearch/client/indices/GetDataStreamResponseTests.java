@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.admin.indices.datastream.GetDataStreamAction;
-import org.opensearch.action.admin.indices.datastream.GetDataStreamAction.Response.DataStreamInfo;
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.action.admin.indices.datastream.GetDataStreamAction;
+import org.density.action.admin.indices.datastream.GetDataStreamAction.Response.DataStreamInfo;
+import org.density.client.AbstractResponseTestCase;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.DataStream;
+import org.density.common.UUIDs;
+import org.density.common.xcontent.XContentType;
+import org.density.core.index.Index;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.cluster.metadata.DataStream.getDefaultBackingIndexName;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.metadata.DataStream.getDefaultBackingIndexName;
 
 public class GetDataStreamResponseTests extends AbstractResponseTestCase<GetDataStreamAction.Response, GetDataStreamResponse> {
 
@@ -92,9 +92,9 @@ public class GetDataStreamResponseTests extends AbstractResponseTestCase<GetData
         assertEquals(serverTestInstance.getDataStreams().size(), clientInstance.getDataStreams().size());
         Iterator<DataStreamInfo> serverIt = serverTestInstance.getDataStreams().iterator();
 
-        Iterator<org.opensearch.client.indices.DataStream> clientIt = clientInstance.getDataStreams().iterator();
+        Iterator<org.density.client.indices.DataStream> clientIt = clientInstance.getDataStreams().iterator();
         while (serverIt.hasNext()) {
-            org.opensearch.client.indices.DataStream client = clientIt.next();
+            org.density.client.indices.DataStream client = clientIt.next();
             DataStream server = serverIt.next().getDataStream();
             assertEquals(server.getName(), client.getName());
             assertEquals(server.getIndices().stream().map(Index::getName).collect(Collectors.toList()), client.getIndices());

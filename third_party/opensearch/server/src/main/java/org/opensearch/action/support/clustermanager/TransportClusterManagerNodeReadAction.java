@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.Writeable;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 /**
  * A base class for read operations that needs to be performed on the cluster-manager node.
  * Can also be executed on the local node if needed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportClusterManagerNodeReadAction<
     Request extends ClusterManagerNodeReadRequest<Request>,

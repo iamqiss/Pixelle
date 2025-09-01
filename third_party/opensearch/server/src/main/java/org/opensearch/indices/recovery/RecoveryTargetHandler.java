@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
+import org.density.core.action.ActionListener;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
 
 import java.util.List;
 
 /**
  * Handler for the recovery target
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface RecoveryTargetHandler extends FileChunkWriter {
 
@@ -92,7 +92,7 @@ public interface RecoveryTargetHandler extends FileChunkWriter {
      * @param mappingVersionOnPrimary             the mapping version which is at least as up to date as the mapping version that the
      *                                            primary used to index translog {@code operations} in this request.
      *                                            If the mapping version on the replica is not older this version, we should not retry on
-     *                                            {@link org.opensearch.index.mapper.MapperException}; otherwise we should wait for a
+     *                                            {@link org.density.index.mapper.MapperException}; otherwise we should wait for a
      *                                            new mapping then retry.
      * @param listener                            a listener which will be notified with the local checkpoint on the target
      *                                            after these operations are successfully indexed on the target.

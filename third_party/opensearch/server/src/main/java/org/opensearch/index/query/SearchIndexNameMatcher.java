@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.transport.RemoteClusterAware;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.regex.Regex;
+import org.density.transport.RemoteClusterAware;
 
 import java.util.function.Predicate;
 
 /**
  * A predicate that checks whether an index pattern matches the current search shard target.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchIndexNameMatcher implements Predicate<String> {
     private final String indexName;

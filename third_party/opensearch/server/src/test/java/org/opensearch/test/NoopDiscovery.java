@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.lifecycle.LifecycleListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.discovery.DiscoveryStats;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.NodeConnectionsService;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.LifecycleListener;
+import org.density.core.action.ActionListener;
+import org.density.discovery.Discovery;
+import org.density.discovery.DiscoveryStats;
 
 public class NoopDiscovery implements Discovery {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * Exception when Resources already exists
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class ResourceAlreadyExistsException extends OpenSearchException {
+public class ResourceAlreadyExistsException extends DensityException {
 
     public ResourceAlreadyExistsException(Index index) {
         this("index {} already exists", index.toString());

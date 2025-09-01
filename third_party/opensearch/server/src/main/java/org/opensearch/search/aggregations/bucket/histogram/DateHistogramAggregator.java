@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -37,36 +37,36 @@ import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.StarTreePreComputeCollector;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge;
-import org.opensearch.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.StarTreeQueryHelper;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.MatchAllFilter;
+import org.density.common.Nullable;
+import org.density.common.Rounding;
+import org.density.common.lease.Releasables;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.StarTreePreComputeCollector;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge;
+import org.density.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.StarTreeQueryHelper;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.MatchAllFilter;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -76,8 +76,8 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import static org.opensearch.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge.segmentMatchAll;
-import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedStarTree;
+import static org.density.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge.segmentMatchAll;
+import static org.density.search.startree.StarTreeQueryHelper.getSupportedStarTree;
 
 /**
  * An aggregator for date values. Every date is rounded down using a configured
@@ -85,7 +85,7 @@ import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedSta
  *
  * @see Rounding
  *
- * @opensearch.internal
+ * @density.internal
  */
 class DateHistogramAggregator extends BucketsAggregator implements SizedBucketAggregator, StarTreePreComputeCollector {
     private final ValuesSource.Numeric valuesSource;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -38,19 +38,19 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.filter.RegexFilter;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.logging.Loggers;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.NODE_PROCESSORS_SETTING;
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
-import static org.opensearch.index.MergeSchedulerConfig.MAX_MERGE_COUNT_SETTING;
-import static org.opensearch.index.MergeSchedulerConfig.MAX_THREAD_COUNT_SETTING;
+import static org.density.common.util.concurrent.DensityExecutors.NODE_PROCESSORS_SETTING;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
+import static org.density.index.MergeSchedulerConfig.MAX_MERGE_COUNT_SETTING;
+import static org.density.index.MergeSchedulerConfig.MAX_THREAD_COUNT_SETTING;
 import static org.hamcrest.core.StringContains.containsString;
 
-public class MergeSchedulerSettingsTests extends OpenSearchTestCase {
+public class MergeSchedulerSettingsTests extends DensityTestCase {
     private static class MockAppender extends AbstractAppender {
         public boolean sawUpdateMaxThreadCount;
         public boolean sawUpdateAutoThrottle;
@@ -84,7 +84,7 @@ public class MergeSchedulerSettingsTests extends OpenSearchTestCase {
     public void testUpdateAutoThrottleSettings() throws Exception {
         MockAppender mockAppender = new MockAppender("testUpdateAutoThrottleSettings");
         mockAppender.start();
-        final Logger settingsLogger = LogManager.getLogger("org.opensearch.common.settings.IndexScopedSettings");
+        final Logger settingsLogger = LogManager.getLogger("org.density.common.settings.IndexScopedSettings");
         Loggers.addAppender(settingsLogger, mockAppender);
         Loggers.setLevel(settingsLogger, Level.TRACE);
         try {
@@ -115,7 +115,7 @@ public class MergeSchedulerSettingsTests extends OpenSearchTestCase {
     public void testUpdateMergeMaxThreadCount() throws Exception {
         MockAppender mockAppender = new MockAppender("testUpdateAutoThrottleSettings");
         mockAppender.start();
-        final Logger settingsLogger = LogManager.getLogger("org.opensearch.common.settings.IndexScopedSettings");
+        final Logger settingsLogger = LogManager.getLogger("org.density.common.settings.IndexScopedSettings");
         Loggers.addAppender(settingsLogger, mockAppender);
         Loggers.setLevel(settingsLogger, Level.TRACE);
         try {

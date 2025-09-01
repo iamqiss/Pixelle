@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
@@ -38,135 +38,135 @@ import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MapperTestUtils;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.cache.IndexCache;
-import org.opensearch.index.cache.query.DisabledQueryCache;
-import org.opensearch.index.engine.DocIdSeqNoAndSource;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.engine.MergedSegmentWarmerFactory;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.replication.TestReplicationSource;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
-import org.opensearch.index.store.RemoteDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.index.store.lockmanager.RemoteStoreMetadataLockManager;
-import org.opensearch.index.translog.InternalTranslogFactory;
-import org.opensearch.index.translog.RemoteBlobStoreInternalTranslogFactory;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.indices.recovery.AsyncRecoveryTarget;
-import org.opensearch.indices.recovery.DefaultRecoverySettings;
-import org.opensearch.indices.recovery.PeerRecoveryTargetService;
-import org.opensearch.indices.recovery.RecoveryFailedException;
-import org.opensearch.indices.recovery.RecoveryResponse;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RecoverySourceHandler;
-import org.opensearch.indices.recovery.RecoverySourceHandlerFactory;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.recovery.RecoveryTarget;
-import org.opensearch.indices.recovery.StartRecoveryRequest;
-import org.opensearch.indices.replication.AbstractSegmentReplicationTarget;
-import org.opensearch.indices.replication.CheckpointInfoResponse;
-import org.opensearch.indices.replication.GetSegmentFilesResponse;
-import org.opensearch.indices.replication.MergedSegmentReplicationTarget;
-import org.opensearch.indices.replication.SegmentReplicationSource;
-import org.opensearch.indices.replication.SegmentReplicationSourceFactory;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.indices.replication.SegmentReplicationTarget;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentPublisher;
-import org.opensearch.indices.replication.checkpoint.ReferencedSegmentsPublisher;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.indices.replication.common.CopyState;
-import org.opensearch.indices.replication.common.ReplicationCollection;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.indices.replication.common.ReplicationState;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.io.PathUtils;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.MapperTestUtils;
+import org.density.index.ReplicationStats;
+import org.density.index.VersionType;
+import org.density.index.cache.IndexCache;
+import org.density.index.cache.query.DisabledQueryCache;
+import org.density.index.engine.DocIdSeqNoAndSource;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.engine.MergedSegmentWarmerFactory;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.replication.TestReplicationSource;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.store.RemoteBufferedOutputDirectory;
+import org.density.index.store.RemoteDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.index.store.lockmanager.RemoteStoreMetadataLockManager;
+import org.density.index.translog.InternalTranslogFactory;
+import org.density.index.translog.RemoteBlobStoreInternalTranslogFactory;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogFactory;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesService;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.indices.recovery.AsyncRecoveryTarget;
+import org.density.indices.recovery.DefaultRecoverySettings;
+import org.density.indices.recovery.PeerRecoveryTargetService;
+import org.density.indices.recovery.RecoveryFailedException;
+import org.density.indices.recovery.RecoveryResponse;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RecoverySourceHandler;
+import org.density.indices.recovery.RecoverySourceHandlerFactory;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.recovery.RecoveryTarget;
+import org.density.indices.recovery.StartRecoveryRequest;
+import org.density.indices.replication.AbstractSegmentReplicationTarget;
+import org.density.indices.replication.CheckpointInfoResponse;
+import org.density.indices.replication.GetSegmentFilesResponse;
+import org.density.indices.replication.MergedSegmentReplicationTarget;
+import org.density.indices.replication.SegmentReplicationSource;
+import org.density.indices.replication.SegmentReplicationSourceFactory;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.indices.replication.SegmentReplicationTarget;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.indices.replication.checkpoint.MergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.MergedSegmentPublisher;
+import org.density.indices.replication.checkpoint.ReferencedSegmentsPublisher;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.indices.replication.common.CopyState;
+import org.density.indices.replication.common.ReplicationCollection;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.indices.replication.common.ReplicationState;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.Snapshot;
+import org.density.test.DummyShardLock;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -193,8 +193,8 @@ import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.cluster.routing.TestShardRouting.newShardRouting;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
+import static org.density.cluster.routing.TestShardRouting.newShardRouting;
+import static org.density.test.ClusterServiceUtils.createClusterService;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -209,7 +209,7 @@ import static org.mockito.Mockito.when;
  * containing utilities for shard creation and recoveries. See {{@link #newShard(boolean)}} and
  * {@link #newStartedShard()} for a good starting points
  */
-public abstract class IndexShardTestCase extends OpenSearchTestCase {
+public abstract class IndexShardTestCase extends DensityTestCase {
 
     public static final IndexEventListener EMPTY_EVENT_LISTENER = new IndexEventListener() {
     };
@@ -1453,7 +1453,7 @@ public abstract class IndexShardTestCase extends OpenSearchTestCase {
         final Index index = shard.shardId().getIndex();
         final IndexId indexId = new IndexId(index.getName(), index.getUUID());
         final IndexShardSnapshotStatus snapshotStatus = IndexShardSnapshotStatus.newInitializing(
-            OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
+            DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
                 .shardGenerations()
                 .getShardGen(indexId, shard.shardId().getId())
         );

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.core.common.Strings;
+import org.density.core.common.Strings;
 
 import java.util.Locale;
 
@@ -51,7 +51,7 @@ import java.util.Locale;
  * @see RegexpQueryBuilder#flags(RegexpFlag...)
  * @see RegexpQueryBuilder#flags(RegexpFlag...)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum RegexpFlag {
 

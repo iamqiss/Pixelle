@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.breaker;
+package org.density.common.breaker;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.common.breaker.ResponseLimitSettings.CAT_INDICES_RESPONSE_LIMIT_SETTING;
-import static org.opensearch.common.breaker.ResponseLimitSettings.CAT_SEGMENTS_RESPONSE_LIMIT_SETTING;
-import static org.opensearch.common.breaker.ResponseLimitSettings.CAT_SHARDS_RESPONSE_LIMIT_SETTING;
+import static org.density.common.breaker.ResponseLimitSettings.CAT_INDICES_RESPONSE_LIMIT_SETTING;
+import static org.density.common.breaker.ResponseLimitSettings.CAT_SEGMENTS_RESPONSE_LIMIT_SETTING;
+import static org.density.common.breaker.ResponseLimitSettings.CAT_SHARDS_RESPONSE_LIMIT_SETTING;
 
-public class ResponseLimitSettingsTests extends OpenSearchTestCase {
+public class ResponseLimitSettingsTests extends DensityTestCase {
 
     public void testIsResponseLimitBreachedForNullMetadataExpectNotBreached() {
         final Settings settings = Settings.builder().build();
@@ -216,7 +216,7 @@ public class ResponseLimitSettingsTests extends OpenSearchTestCase {
             indexRoutingTableMap.put(index.getName(), indexRoutingTable.build());
         }
         final RoutingTable routingTable = new RoutingTable(1, indexRoutingTableMap);
-        return ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        return ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .build();

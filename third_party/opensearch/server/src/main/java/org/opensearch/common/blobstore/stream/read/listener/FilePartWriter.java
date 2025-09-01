@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.read.listener;
+package org.density.common.blobstore.stream.read.listener;
 
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.io.Channels;
-import org.opensearch.common.io.InputStreamContainer;
+import org.density.common.annotation.InternalApi;
+import org.density.common.io.Channels;
+import org.density.common.io.InputStreamContainer;
 
 import java.io.IOException;
 import java.io.InputStream;

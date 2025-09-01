@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestRequest;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestRequest;
 
 import java.util.List;
 
 /**
  * A subclass of {@link BytesRestResponse} which also tracks consumed parameters and content.
  *
- * @opensearch.api
+ * @density.api
  */
 public class ExtensionRestResponse extends BytesRestResponse {
 

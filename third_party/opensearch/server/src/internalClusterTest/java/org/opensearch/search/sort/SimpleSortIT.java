@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.sort.ScriptSortBuilder.ScriptSortType;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.sort.ScriptSortBuilder.ScriptSortType;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,20 +61,20 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.sort.SortBuilders.scriptSort;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.sort.SortBuilders.scriptSort;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-public class SimpleSortIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SimpleSortIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String DOUBLE_APOSTROPHE = "\u0027\u0027";
 

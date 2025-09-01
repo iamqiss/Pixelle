@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.common.util.MovingAverage;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.util.MovingAverage;
+import org.density.core.index.shard.ShardId;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Base class for remote store stats trackers
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class RemoteTransferTracker {
     /**

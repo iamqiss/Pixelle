@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,7 @@ import java.util.concurrent.CountDownLatch;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 
-public class RetentionLeaseStatsTests extends OpenSearchSingleNodeTestCase {
+public class RetentionLeaseStatsTests extends DensitySingleNodeTestCase {
 
     public void testRetentionLeaseStats() throws InterruptedException {
         final Settings settings = Settings.builder()

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.protobufs.InnerHits;
-import org.opensearch.protobufs.ScriptField;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.sort.SortBuilderProtoUtils;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.InnerHitBuilder;
+import org.density.protobufs.InnerHits;
+import org.density.protobufs.ScriptField;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
+import org.density.transport.grpc.proto.request.search.sort.SortBuilderProtoUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,14 +72,14 @@ public class InnerHitsBuilderProtoUtils {
             }
             if (innerHit.getDocvalueFieldsCount() > 0) {
                 List<FieldAndFormat> fieldAndFormatList = new ArrayList<>();
-                for (org.opensearch.protobufs.FieldAndFormat fieldAndFormat : innerHit.getDocvalueFieldsList()) {
+                for (org.density.protobufs.FieldAndFormat fieldAndFormat : innerHit.getDocvalueFieldsList()) {
                     fieldAndFormatList.add(FieldAndFormatProtoUtils.fromProto(fieldAndFormat));
                 }
                 innerHitBuilder.setDocValueFields(fieldAndFormatList);
             }
             if (innerHit.getFieldsCount() > 0) {
                 List<FieldAndFormat> fieldAndFormatList = new ArrayList<>();
-                for (org.opensearch.protobufs.FieldAndFormat fieldAndFormat : innerHit.getFieldsList()) {
+                for (org.density.protobufs.FieldAndFormat fieldAndFormat : innerHit.getFieldsList()) {
                     fieldAndFormatList.add(FieldAndFormatProtoUtils.fromProto(fieldAndFormat));
                 }
                 innerHitBuilder.setFetchFields(fieldAndFormatList);

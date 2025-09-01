@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,61 +26,61 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.coordination.CoordinationState;
-import org.opensearch.cluster.coordination.CoordinationState.PersistedState;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Manifest;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.gateway.GatewayMetaState.RemotePersistedState;
-import org.opensearch.gateway.PersistedClusterStateService.Writer;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.gateway.remote.RemoteUploadStats;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.index.recovery.RemoteStoreRestoreService;
-import org.opensearch.index.recovery.RemoteStoreRestoreService.RemoteRestoreResult;
-import org.opensearch.index.remote.RemoteIndexPathUploader;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.node.Node;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.coordination.CoordinationState;
+import org.density.cluster.coordination.CoordinationState.PersistedState;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Manifest;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.TestEnvironment;
+import org.density.gateway.GatewayMetaState.RemotePersistedState;
+import org.density.gateway.PersistedClusterStateService.Writer;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.gateway.remote.RemoteUploadStats;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.index.recovery.RemoteStoreRestoreService;
+import org.density.index.recovery.RemoteStoreRestoreService.RemoteRestoreResult;
+import org.density.index.remote.RemoteIndexPathUploader;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.node.Node;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.Closeable;
 import java.io.IOError;
@@ -98,14 +98,14 @@ import java.util.function.Supplier;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V1;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V1;
+import static org.density.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
@@ -121,7 +121,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
+public class GatewayMetaStatePersistedStateTests extends DensityTestCase {
 
     private NodeEnvironment nodeEnvironment;
     private ClusterName clusterName;
@@ -313,7 +313,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             final String indexName = randomAlphaOfLength(10);
             final int numberOfShards = randomIntBetween(1, 5);
             final long version = randomNonNegativeLong();
-            final long term = randomValueOtherThan(Long.MAX_VALUE, OpenSearchTestCase::randomNonNegativeLong);
+            final long term = randomValueOtherThan(Long.MAX_VALUE, DensityTestCase::randomNonNegativeLong);
             final IndexMetadata indexMetadata = createIndexMetadata(indexName, numberOfShards, version);
             final ClusterState state = createClusterState(
                 randomNonNegativeLong(),
@@ -344,7 +344,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             gateway = newGatewayPersistedState();
 
             long currentTerm = randomNonNegativeLong();
-            long term = randomValueOtherThan(currentTerm, OpenSearchTestCase::randomNonNegativeLong);
+            long term = randomValueOtherThan(currentTerm, DensityTestCase::randomNonNegativeLong);
 
             gateway.setCurrentTerm(currentTerm);
             gateway.setLastAcceptedState(
@@ -819,7 +819,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             .clusterTerm(1L)
             .stateVersion(5L)
             .codecVersion(CODEC_V1)
-            .opensearchVersion(Version.V_2_15_0)
+            .densityVersion(Version.V_2_15_0)
             .build();
         Mockito.when(remoteClusterStateService.writeFullMetadata(Mockito.any(), Mockito.any()))
             .thenReturn(new RemoteClusterStateManifestInfo(manifest, "path/to/manifest2"));
@@ -843,7 +843,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             .clusterTerm(1L)
             .stateVersion(5L)
             .codecVersion(MANIFEST_CURRENT_CODEC_VERSION)
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .build();
         Mockito.when(remoteClusterStateService.writeFullMetadata(Mockito.any(), Mockito.any()))
             .thenReturn(new RemoteClusterStateManifestInfo(manifest2, "path/to/manifest"));
@@ -981,7 +981,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             true
         );
 
-        assertThrows(OpenSearchException.class, () -> remotePersistedState.setLastAcceptedState(clusterState));
+        assertThrows(DensityException.class, () -> remotePersistedState.setLastAcceptedState(clusterState));
     }
 
     public void testRemotePersistedStateFailureStats() throws IOException {
@@ -1003,7 +1003,7 @@ public class GatewayMetaStatePersistedStateTests extends OpenSearchTestCase {
             true
         );
 
-        assertThrows(OpenSearchException.class, () -> remotePersistedState.setLastAcceptedState(clusterState));
+        assertThrows(DensityException.class, () -> remotePersistedState.setLastAcceptedState(clusterState));
         assertEquals(1, remoteClusterStateService.getUploadStats().getFailedCount());
         assertEquals(0, remoteClusterStateService.getUploadStats().getSuccessCount());
     }

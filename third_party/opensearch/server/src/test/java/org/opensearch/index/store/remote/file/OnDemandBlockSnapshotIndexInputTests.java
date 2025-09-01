@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.file;
+package org.density.index.store.remote.file;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
@@ -19,14 +19,14 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.store.remote.utils.BlobFetchRequest;
-import org.opensearch.index.store.remote.utils.TransferManager;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.store.remote.utils.BlobFetchRequest;
+import org.density.index.store.remote.utils.TransferManager;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.EOFException;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-public class OnDemandBlockSnapshotIndexInputTests extends OpenSearchTestCase {
+public class OnDemandBlockSnapshotIndexInputTests extends DensityTestCase {
     // params shared by all test cases
     private static final String RESOURCE_DESCRIPTION = "Test OnDemandBlockSnapshotIndexInput Block Size";
     private static final long BLOCK_SNAPSHOT_FILE_OFFSET = 0;
@@ -56,7 +56,7 @@ public class OnDemandBlockSnapshotIndexInputTests extends OpenSearchTestCase {
 
     @Before
     public void init() {
-        assumeFalse("Awaiting Windows fix https://github.com/opensearch-project/OpenSearch/issues/5396", Constants.WINDOWS);
+        assumeFalse("Awaiting Windows fix https://github.com/density-project/Density/issues/5396", Constants.WINDOWS);
         transferManager = mock(TransferManager.class);
         lockFactory = SimpleFSLockFactory.INSTANCE;
         path = createTempDir("OnDemandBlockSnapshotIndexInputTests");

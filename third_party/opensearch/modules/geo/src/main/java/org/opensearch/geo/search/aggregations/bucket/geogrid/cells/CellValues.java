@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.cells;
+package org.density.geo.search.aggregations.bucket.geogrid.cells;
 
-import org.opensearch.index.fielddata.AbstractSortingNumericDocValues;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.AbstractSortingNumericDocValues;
+import org.density.index.fielddata.MultiGeoPointValues;
 
 import java.io.IOException;
 
@@ -41,7 +41,7 @@ import java.io.IOException;
  * the geo-doc-values. Class must encode the values and then
  * sort them in order to account for the cells correctly.
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class CellValues extends AbstractSortingNumericDocValues {
     private MultiGeoPointValues geoValues;
@@ -79,5 +79,5 @@ abstract class CellValues extends AbstractSortingNumericDocValues {
      * @param valuesIdx the index into <code>values</code> to set
      * @return          valuesIdx + 1 if value was set, valuesIdx otherwise.
      */
-    abstract int advanceValue(org.opensearch.common.geo.GeoPoint target, int valuesIdx);
+    abstract int advanceValue(org.density.common.geo.GeoPoint target, int valuesIdx);
 }

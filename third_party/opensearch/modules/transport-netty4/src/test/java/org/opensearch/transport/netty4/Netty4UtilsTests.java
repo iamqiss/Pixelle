@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.bytes.AbstractBytesReferenceTestCase;
-import org.opensearch.common.io.stream.ReleasableBytesStreamOutput;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.bytes.AbstractBytesReferenceTestCase;
+import org.density.common.io.stream.ReleasableBytesStreamOutput;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -49,7 +49,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
 
-public class Netty4UtilsTests extends OpenSearchTestCase {
+public class Netty4UtilsTests extends DensityTestCase {
 
     private static final int PAGE_SIZE = PageCacheRecycler.BYTE_PAGE_SIZE;
     private final BigArrays bigarrays = new BigArrays(null, new NoneCircuitBreakerService(), CircuitBreaker.REQUEST);

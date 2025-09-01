@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
-public class SemanticVersionFieldQueryTests extends OpenSearchSingleNodeTestCase {
+public class SemanticVersionFieldQueryTests extends DensitySingleNodeTestCase {
 
     @Override
     public void setUp() throws Exception {
@@ -397,7 +397,7 @@ public class SemanticVersionFieldQueryTests extends OpenSearchSingleNodeTestCase
      */
     public void testSortByVersion() throws IOException {
         SearchResponse response = client().prepareSearch("test")
-            .addSort("version", org.opensearch.search.sort.SortOrder.ASC)
+            .addSort("version", org.density.search.sort.SortOrder.ASC)
             .setQuery(QueryBuilders.matchAllQuery())
             .get();
 

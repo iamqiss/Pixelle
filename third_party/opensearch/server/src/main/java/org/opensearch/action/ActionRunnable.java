@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.CheckedConsumer;
+import org.density.common.CheckedRunnable;
+import org.density.common.CheckedSupplier;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
 
 /**
  * Base class for {@link Runnable}s that need to call {@link ActionListener#onFailure(Exception)} in case an uncaught
  * exception or error is thrown while the actual action is run.
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class ActionRunnable<Response> extends AbstractRunnable {
 

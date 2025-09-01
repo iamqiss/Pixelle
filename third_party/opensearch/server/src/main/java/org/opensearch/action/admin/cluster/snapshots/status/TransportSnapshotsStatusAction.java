@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.status;
+package org.density.action.admin.cluster.snapshots.status;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotMissingException;
-import org.opensearch.snapshots.SnapshotShardFailure;
-import org.opensearch.snapshots.SnapshotShardsService;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.StepListener;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexNotFoundException;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotMissingException;
+import org.density.snapshots.SnapshotShardFailure;
+import org.density.snapshots.SnapshotShardsService;
+import org.density.snapshots.SnapshotState;
+import org.density.snapshots.SnapshotsService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,12 +84,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
+import static org.density.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
 
 /**
  * Transport action for accessing snapshot status
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportSnapshotsStatusAction extends TransportClusterManagerNodeAction<SnapshotsStatusRequest, SnapshotsStatusResponse> {
 

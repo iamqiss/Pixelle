@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.index.query.IntervalFilterScript;
-import org.opensearch.index.similarity.ScriptedSimilarity.Doc;
-import org.opensearch.index.similarity.ScriptedSimilarity.Field;
-import org.opensearch.index.similarity.ScriptedSimilarity.Query;
-import org.opensearch.index.similarity.ScriptedSimilarity.Term;
-import org.opensearch.search.aggregations.pipeline.MovingFunctionScript;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.collect.Tuple;
+import org.density.index.query.IntervalFilterScript;
+import org.density.index.similarity.ScriptedSimilarity.Doc;
+import org.density.index.similarity.ScriptedSimilarity.Field;
+import org.density.index.similarity.ScriptedSimilarity.Query;
+import org.density.index.similarity.ScriptedSimilarity.Term;
+import org.density.search.aggregations.pipeline.MovingFunctionScript;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;

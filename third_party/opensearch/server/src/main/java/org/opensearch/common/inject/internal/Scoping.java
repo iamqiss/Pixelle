@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,18 +23,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Scope;
-import org.opensearch.common.inject.Scopes;
-import org.opensearch.common.inject.Singleton;
-import org.opensearch.common.inject.Stage;
-import org.opensearch.common.inject.binder.ScopedBindingBuilder;
-import org.opensearch.common.inject.spi.BindingScopingVisitor;
+import org.density.common.inject.Scope;
+import org.density.common.inject.Scopes;
+import org.density.common.inject.Singleton;
+import org.density.common.inject.Stage;
+import org.density.common.inject.binder.ScopedBindingBuilder;
+import org.density.common.inject.spi.BindingScopingVisitor;
 
 import java.lang.annotation.Annotation;
 
@@ -44,7 +44,7 @@ import java.lang.annotation.Annotation;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class Scoping {
 

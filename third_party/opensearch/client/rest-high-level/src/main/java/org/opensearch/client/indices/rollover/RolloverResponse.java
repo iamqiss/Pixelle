@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices.rollover;
+package org.density.client.indices.rollover;
 
-import org.opensearch.action.support.clustermanager.ShardsAcknowledgedResponse;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.action.support.clustermanager.ShardsAcknowledgedResponse;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * Response object for {@link RolloverRequest} API

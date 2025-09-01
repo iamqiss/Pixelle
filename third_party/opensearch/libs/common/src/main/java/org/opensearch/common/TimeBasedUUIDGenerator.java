@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 import java.util.Base64;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * For more information about flake ids, check out
  * https://archive.fo/2015.07.08-082503/http://www.boundary.com/blog/2012/01/flake-a-decentralized-k-ordered-unique-id-generator-in-erlang/
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 class TimeBasedUUIDGenerator implements UUIDGenerator {

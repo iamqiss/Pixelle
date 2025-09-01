@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.search.Explanation;
-import org.opensearch.common.Nullable;
+import org.density.common.Nullable;
 
 import java.io.IOException;
 
 /**
  * To be implemented by {@link ScoreScript} which can provided an {@link Explanation} of the score
- * This is currently not used inside opensearch but it is used, see for example here:
+ * This is currently not used inside density but it is used, see for example here:
  * https://github.com/elastic/elasticsearch/issues/8561
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ExplainableScoreScript {
 

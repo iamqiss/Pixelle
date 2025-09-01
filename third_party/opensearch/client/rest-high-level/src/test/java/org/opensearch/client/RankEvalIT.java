@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.rankeval.DiscountedCumulativeGain;
-import org.opensearch.index.rankeval.EvalQueryQuality;
-import org.opensearch.index.rankeval.EvaluationMetric;
-import org.opensearch.index.rankeval.ExpectedReciprocalRank;
-import org.opensearch.index.rankeval.MeanReciprocalRank;
-import org.opensearch.index.rankeval.PrecisionAtK;
-import org.opensearch.index.rankeval.RankEvalRequest;
-import org.opensearch.index.rankeval.RankEvalResponse;
-import org.opensearch.index.rankeval.RankEvalSpec;
-import org.opensearch.index.rankeval.RatedDocument;
-import org.opensearch.index.rankeval.RatedRequest;
-import org.opensearch.index.rankeval.RatedSearchHit;
-import org.opensearch.index.rankeval.RecallAtK;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.rankeval.DiscountedCumulativeGain;
+import org.density.index.rankeval.EvalQueryQuality;
+import org.density.index.rankeval.EvaluationMetric;
+import org.density.index.rankeval.ExpectedReciprocalRank;
+import org.density.index.rankeval.MeanReciprocalRank;
+import org.density.index.rankeval.PrecisionAtK;
+import org.density.index.rankeval.RankEvalRequest;
+import org.density.index.rankeval.RankEvalResponse;
+import org.density.index.rankeval.RankEvalSpec;
+import org.density.index.rankeval.RatedDocument;
+import org.density.index.rankeval.RatedRequest;
+import org.density.index.rankeval.RatedSearchHit;
+import org.density.index.rankeval.RecallAtK;
+import org.density.search.builder.SearchSourceBuilder;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -60,9 +60,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.rankeval.EvaluationMetric.filterUnratedDocuments;
+import static org.density.index.rankeval.EvaluationMetric.filterUnratedDocuments;
 
-public class RankEvalIT extends OpenSearchRestHighLevelClientTestCase {
+public class RankEvalIT extends DensityRestHighLevelClientTestCase {
 
     @Before
     public void indexDocuments() throws IOException {

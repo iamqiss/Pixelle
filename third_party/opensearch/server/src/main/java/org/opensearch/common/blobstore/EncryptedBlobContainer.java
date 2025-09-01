@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.DecryptedRangedStreamProvider;
-import org.opensearch.common.crypto.EncryptedHeaderContentSupplier;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.DecryptedRangedStreamProvider;
+import org.density.common.crypto.EncryptedHeaderContentSupplier;
+import org.density.common.io.InputStreamContainer;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.io.InputStream;

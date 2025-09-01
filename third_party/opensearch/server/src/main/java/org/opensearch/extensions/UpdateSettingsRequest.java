@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.WriteableSetting;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.transport.TransportRequest;
+import org.density.common.settings.Setting;
+import org.density.common.settings.WriteableSetting;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * Update Settings Request for Extensibility
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateSettingsRequest extends TransportRequest {
     private static final Logger logger = LogManager.getLogger(UpdateSettingsRequest.class);

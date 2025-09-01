@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.lookup;
+package org.density.search.lookup;
 
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fieldvisitor.SingleFieldsVisitor;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fieldvisitor.SingleFieldsVisitor;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ import static java.util.Collections.singletonMap;
 /**
  * looks up multiple leaf fields
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class LeafFieldsLookup implements Map {
@@ -157,7 +157,7 @@ public class LeafFieldsLookup implements Map {
             try {
                 reader.storedFields().document(docId, visitor);
             } catch (IOException e) {
-                throw new OpenSearchParseException("failed to load field [{}]", e, name);
+                throw new DensityParseException("failed to load field [{}]", e, name);
             }
             data.fields(singletonMap(data.fieldType().name(), values));
         }

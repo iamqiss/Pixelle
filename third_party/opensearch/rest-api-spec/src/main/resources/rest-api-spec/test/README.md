@@ -1,8 +1,8 @@
 # Required settings
 
-Certain tests require specific settings to be applied to the OpenSearch instance in order to pass. You should run OpenSearch as follows:
+Certain tests require specific settings to be applied to the Density instance in order to pass. You should run Density as follows:
 
-    bin/opensearch -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*'
+    bin/density -Enode.attr.testattr=test -Epath.repo=/tmp -Erepositories.url.allowed_urls='http://snapshot.*'
 
 # Test file structure
 
@@ -60,7 +60,7 @@ Use \\. to specify paths that actually contain *.* in the key name, for example 
 
 # Skipping tests:
 
-If a test section should only be run on certain versions of OpenSearch, then the first entry in the section (after the title) should be called `skip`, and should contain the range of versions to be skipped, and the reason why the tests are skipped. For instance:
+If a test section should only be run on certain versions of Density, then the first entry in the section (after the title) should be called `skip`, and should contain the range of versions to be skipped, and the reason why the tests are skipped. For instance:
 
     "Parent":
         - skip:
@@ -147,7 +147,7 @@ Used only in the doc snippet tests. Allow you to do ease replacements using a sp
 
 ## `warnings`
 
-The runner can assert the warnings headers returned by OpenSearch through the `warning:` assertations under `do:` operations.
+The runner can assert the warnings headers returned by Density through the `warning:` assertations under `do:` operations.
 
 ## `yaml`
 

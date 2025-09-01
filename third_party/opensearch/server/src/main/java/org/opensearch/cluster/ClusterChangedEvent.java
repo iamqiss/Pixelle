@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexGraveyard.IndexGraveyardDiff;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.Index;
-import org.opensearch.gateway.GatewayService;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexGraveyard.IndexGraveyardDiff;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.Index;
+import org.density.gateway.GatewayService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 /**
  * An event received by the local node, signaling that the cluster state has changed.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterChangedEvent {
@@ -217,7 +217,7 @@ public class ClusterChangedEvent {
     }
 
     /**
-     * Returns the {@link org.opensearch.cluster.node.DiscoveryNodes.Delta} between
+     * Returns the {@link org.density.cluster.node.DiscoveryNodes.Delta} between
      * the previous cluster state and the new cluster state.
      */
     public DiscoveryNodes.Delta nodesDelta() {

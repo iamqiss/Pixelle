@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.pl.PolishAnalyzer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.analysis.pl.PolishStemTokenFilterFactory;
-import org.opensearch.plugin.analysis.stempel.AnalysisStempelPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.analysis.pl.PolishStemTokenFilterFactory;
+import org.density.plugin.analysis.stempel.AnalysisStempelPlugin;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class PolishAnalysisTests extends OpenSearchTestCase {
+public class PolishAnalysisTests extends DensityTestCase {
     public void testDefaultsPolishAnalysis() throws IOException {
         final TestAnalysis analysis = createTestAnalysis(new Index("test", "_na_"), Settings.EMPTY, new AnalysisStempelPlugin());
         TokenFilterFactory tokenizerFactory = analysis.tokenFilter.get("polish_stem");

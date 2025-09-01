@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.io.stream;
+package org.density.common.io.stream;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable.WriteableRegistry;
-import org.opensearch.search.aggregations.metrics.ScriptedAvg;
+import org.density.common.geo.GeoPoint;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable.WriteableRegistry;
+import org.density.search.aggregations.metrics.ScriptedAvg;
 
 /**
  * This utility class registers generic types for streaming over the wire using
  * {@linkplain StreamOutput#writeGenericValue(Object)} and {@linkplain StreamInput#readGenericValue()}
  *
- * In this manner we can register any type across OpenSearch modules, plugins, or libraries without requiring
+ * In this manner we can register any type across Density modules, plugins, or libraries without requiring
  * the implementation reside in the server module.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Streamables {
 
@@ -29,7 +29,7 @@ public final class Streamables {
     private Streamables() {}
 
     /**
-     * Called when {@linkplain org.opensearch.transport.TransportService} is loaded by the classloader
+     * Called when {@linkplain org.density.transport.TransportService} is loaded by the classloader
      * We do this because streamables depend on the TransportService being loaded
      */
     public static void registerStreamables() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.metrics.OperationMetrics;
-import org.opensearch.script.IngestConditionalScript;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
+import org.density.common.metrics.OperationMetrics;
+import org.density.script.IngestConditionalScript;
+import org.density.script.Script;
+import org.density.script.ScriptException;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,12 +53,12 @@ import java.util.function.BiConsumer;
 import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Ingest processor based on specific conditions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ConditionalProcessor extends AbstractProcessor implements WrappingProcessor {
 

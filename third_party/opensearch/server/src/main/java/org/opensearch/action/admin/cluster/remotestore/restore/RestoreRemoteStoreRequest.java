@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.restore;
+package org.density.action.admin.cluster.remotestore.restore;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Restore remote store request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.2.0")
 public class RestoreRemoteStoreRequest extends ClusterManagerNodeRequest<RestoreRemoteStoreRequest> implements ToXContentObject {

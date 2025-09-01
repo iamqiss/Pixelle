@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.SeedHostsProvider.HostsResolver;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.SeedHostsProvider.HostsResolver;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +46,7 @@ import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SettingsBasedSeedHostsProviderTests extends OpenSearchTestCase {
+public class SettingsBasedSeedHostsProviderTests extends DensityTestCase {
 
     private class AssertingHostsResolver implements HostsResolver {
         private final Set<String> expectedHosts;
@@ -103,7 +103,7 @@ public class SettingsBasedSeedHostsProviderTests extends OpenSearchTestCase {
         ).getSeedAddresses(hostsResolver);
         assertTrue(hostsResolver.getResolvedHosts());
         assertWarnings(
-            "[discovery.zen.ping.unicast.hosts] setting was deprecated in OpenSearch and will be removed in a future "
+            "[discovery.zen.ping.unicast.hosts] setting was deprecated in Density and will be removed in a future "
                 + "release! See the breaking changes documentation for the next major version."
         );
     }

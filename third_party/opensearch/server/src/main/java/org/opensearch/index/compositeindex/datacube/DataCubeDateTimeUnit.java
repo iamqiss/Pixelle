@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube;
+package org.density.index.compositeindex.datacube;
 
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +26,9 @@ import static java.util.Collections.unmodifiableMap;
  * <p>
  * The enum also provides a static map of date field units to their corresponding ExtendedDateTimeUnit instances.
  *
- * @see org.opensearch.common.Rounding.DateTimeUnit for more information on the dateTimeUnit enum and rounding logic.
+ * @see org.density.common.Rounding.DateTimeUnit for more information on the dateTimeUnit enum and rounding logic.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public enum DataCubeDateTimeUnit implements DateTimeUnitRounding {
     HALF_HOUR_OF_DAY("half-hour") {

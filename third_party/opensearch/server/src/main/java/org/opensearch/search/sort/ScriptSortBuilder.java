@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -38,35 +38,35 @@ import org.apache.lucene.search.Scorable;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.AbstractBinaryDocValues;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.script.NumberSortScript;
-import org.opensearch.script.Script;
-import org.opensearch.script.StringSortScript;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.util.BigArrays;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.AbstractBinaryDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
+import org.density.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.script.NumberSortScript;
+import org.density.script.Script;
+import org.density.script.StringSortScript;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -75,14 +75,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.search.sort.FieldSortBuilder.validateMaxChildrenExistOnlyInTopLevelNestedSort;
-import static org.opensearch.search.sort.NestedSortBuilder.NESTED_FIELD;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.search.sort.FieldSortBuilder.validateMaxChildrenExistOnlyInTopLevelNestedSort;
+import static org.density.search.sort.NestedSortBuilder.NESTED_FIELD;
 
 /**
  * Script sort builder allows to sort based on a custom script expression.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(ScriptSortBuilder.class);
@@ -483,7 +483,7 @@ public class ScriptSortBuilder extends SortBuilder<ScriptSortBuilder> {
     /**
      * Sort type for scripting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ScriptSortType implements Writeable {
         /** script sort for a string value **/

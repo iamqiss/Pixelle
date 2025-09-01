@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.query.InternalProfileCollector;
-import org.opensearch.search.query.QueryPhaseExecutionException;
+import org.density.common.lucene.search.Queries;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.query.InternalProfileCollector;
+import org.density.search.query.QueryPhaseExecutionException;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * {@link AggregationProcessor} implementation which is used with {@link org.opensearch.search.query.QueryPhase.DefaultQueryPhaseSearcher}.
+ * {@link AggregationProcessor} implementation which is used with {@link org.density.search.query.QueryPhase.DefaultQueryPhaseSearcher}.
  * This is the default implementation which works when collection for aggregations happen in sequential manner. It doesn't perform any
  * reduce on the collected documents at shard level
  */

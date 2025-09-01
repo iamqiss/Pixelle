@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.LocalTimeOffset.Gap;
-import org.opensearch.common.LocalTimeOffset.Overlap;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.LocalTimeOffset.Gap;
+import org.density.common.LocalTimeOffset.Overlap;
+import org.density.common.time.DateFormatter;
+import org.density.test.DensityTestCase;
 
 import java.lang.Runtime.Version;
 import java.time.Instant;
@@ -53,7 +53,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class LocalTimeOffsetTests extends OpenSearchTestCase {
+public class LocalTimeOffsetTests extends DensityTestCase {
     public void testRangeTooLarge() {
         ZoneId zone = ZoneId.of("America/New_York");
         assertThat(LocalTimeOffset.lookup(zone, Long.MIN_VALUE, Long.MAX_VALUE), nullValue());
@@ -82,7 +82,7 @@ public class LocalTimeOffsetTests extends OpenSearchTestCase {
         assertThat(lookup.anyMoveBackToPreviousDay(), equalTo(false));
 
         long min = randomLong();
-        long max = randomValueOtherThan(min, OpenSearchTestCase::randomLong);
+        long max = randomValueOtherThan(min, DensityTestCase::randomLong);
         if (min > max) {
             long s = min;
             min = max;

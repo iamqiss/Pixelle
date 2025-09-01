@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.benchmark.time;
+package org.density.benchmark.time;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -41,7 +41,7 @@ public class NanoTimeVsCurrentTimeMillisBenchmark {
     }
 
     /*
-    * this acts as upper bound of how time is cached in org.opensearch.threadpool.ThreadPool
+    * this acts as upper bound of how time is cached in org.density.threadpool.ThreadPool
     * */
     @Benchmark
     public long accessLongVar() {

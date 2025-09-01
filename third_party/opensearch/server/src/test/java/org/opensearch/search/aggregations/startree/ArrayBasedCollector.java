@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNode;
-import org.opensearch.search.startree.StarTreeNodeCollector;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNode;
+import org.density.search.startree.StarTreeNodeCollector;
 
 import java.io.IOException;
 import java.util.HashSet;

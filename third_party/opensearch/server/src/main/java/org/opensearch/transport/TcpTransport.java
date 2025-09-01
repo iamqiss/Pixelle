@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,53 +25,53 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.support.ThreadedActionListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.network.NetworkUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.nativeprotocol.NativeOutboundHandler;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.support.ThreadedActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Booleans;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.network.CloseableChannel;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkService;
+import org.density.common.network.NetworkUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.node.Node;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.nativeprotocol.NativeOutboundHandler;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
@@ -106,14 +106,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.common.transport.NetworkExceptionHelper.isCloseConnectionException;
-import static org.opensearch.common.transport.NetworkExceptionHelper.isConnectException;
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.common.transport.NetworkExceptionHelper.isCloseConnectionException;
+import static org.density.common.transport.NetworkExceptionHelper.isConnectException;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
 
 /**
  * The TCP Transport layer
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class TcpTransport extends AbstractLifecycleComponent implements Transport {
@@ -302,7 +302,7 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
     /**
      * List of node connection channels
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public final class NodeChannels extends CloseableConnection {
         private final Map<TransportRequestOptions.Type, ConnectionProfile.ConnectionTypeHandle> typeMapping;
@@ -913,9 +913,9 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
      * A helper exception to mark an incoming connection as potentially being HTTP
      * so an appropriate error code can be returned
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static class HttpRequestOnTransportException extends OpenSearchException {
+    public static class HttpRequestOnTransportException extends DensityException {
 
         HttpRequestOnTransportException(String msg) {
             super(msg);
@@ -1001,7 +1001,7 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
     /**
      * Representation of a transport profile settings for a {@code transport.profiles.$profilename.*}
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class ProfileSettings {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.core.action.ActionListener;
+import org.density.DensityException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.core.action.ActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ import java.util.function.BiFunction;
  * This component only does meaningful work on the elected cluster-manager node. Reroute requests will fail with a {@link NotClusterManagerException} on
  * other nodes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BatchedRerouteService implements RerouteService {
     private static final Logger logger = LogManager.getLogger(BatchedRerouteService.class);
@@ -177,7 +177,7 @@ public class BatchedRerouteService implements RerouteService {
                             e
                         );
                     }
-                    ActionListener.onFailure(currentListeners, new OpenSearchException("delayed reroute [" + reason + "] failed", e));
+                    ActionListener.onFailure(currentListeners, new DensityException("delayed reroute [" + reason + "] failed", e));
                 }
 
                 @Override
@@ -196,7 +196,7 @@ public class BatchedRerouteService implements RerouteService {
             logger.warn(() -> new ParameterizedMessage("failed to reroute routing table, current state:\n{}", state), e);
             ActionListener.onFailure(
                 currentListeners,
-                new OpenSearchException("delayed reroute [" + reason + "] could not be submitted", e)
+                new DensityException("delayed reroute [" + reason + "] could not be submitted", e)
             );
         }
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.common.Priority;
-import org.opensearch.common.util.concurrent.PrioritizedRunnable;
+import org.density.common.Priority;
+import org.density.common.util.concurrent.PrioritizedRunnable;
 
 /**
  * PrioritizedRunnable that also has a source string
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SourcePrioritizedRunnable extends PrioritizedRunnable {
     protected final String source;

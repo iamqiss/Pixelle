@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.env.Environment;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.index.IndexSettings;
+import org.density.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotsService;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -63,15 +63,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import static org.opensearch.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
+import static org.density.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -129,7 +129,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         Settings snapshotRepoSettings = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()))
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()))
             .build();
         createRepository(client, snapshotRepositoryName, snapshotRepoSettings);
 
@@ -191,7 +191,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         final RepositoriesService repositoriesService = getInstanceFromNode(RepositoriesService.class);
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(snapshotRepositoryName);
-        RepositoryData repositoryData = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
+        RepositoryData repositoryData = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
         IndexId indexId = repositoryData.resolveIndexId(remoteStoreIndexName);
 
         List<SnapshotId> snapshotIds = repositoryData.getSnapshotIds()
@@ -218,7 +218,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         Settings snapshotRepoSettings = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()))
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()))
             .build();
         createRepository(client, snapshotRepositoryName, snapshotRepoSettings);
 
@@ -244,7 +244,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         final RepositoriesService repositoriesService = getInstanceFromNode(RepositoriesService.class);
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(snapshotRepositoryName);
-        RepositoryData repositoryData = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
+        RepositoryData repositoryData = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
         IndexSettings indexSetting = getIndexSettings(remoteStoreIndexName);
         IndexId indexId = repositoryData.resolveIndexId(remoteStoreIndexName);
         RemoteStoreShardShallowCopySnapshot shardShallowCopySnapshot = repository.getRemoteStoreShallowCopyShardMetadata(
@@ -267,7 +267,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
         logger.info("-->  creating snapshot repository");
         Settings snapshotRepoSettings = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()))
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()))
             .build();
         createRepository(client, snapshotRepositoryName, snapshotRepoSettings);
 
@@ -374,7 +374,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         final RepositoriesService repositoriesService = getInstanceFromNode(RepositoriesService.class);
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(snapshotRepositoryName);
-        List<SnapshotId> snapshotIds = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
+        List<SnapshotId> snapshotIds = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
             .getSnapshotIds()
             .stream()
             .sorted((s1, s2) -> s1.getName().compareTo(s2.getName()))
@@ -387,7 +387,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         Settings snapshotRepoSettings1 = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()))
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()))
             .put(REMOTE_STORE_INDEX_SHALLOW_COPY.getKey(), true)
             .put(SHALLOW_SNAPSHOT_V2.getKey(), true)
             .build();
@@ -416,7 +416,7 @@ public class BlobStoreRepositoryRemoteIndexTests extends BlobStoreRepositoryHelp
 
         Settings snapshotRepoSettings2 = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()))
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()))
             .put(REMOTE_STORE_INDEX_SHALLOW_COPY.getKey(), true)
             .put(SHALLOW_SNAPSHOT_V2.getKey(), true)
             .build();

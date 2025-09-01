@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.grok.MatcherWatchdog;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.grok.MatcherWatchdog;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GrokProcessorTests extends OpenSearchTestCase {
+public class GrokProcessorTests extends DensityTestCase {
 
     public void testMatch() throws Exception {
         String fieldName = RandomDocumentPicks.randomFieldName(random());

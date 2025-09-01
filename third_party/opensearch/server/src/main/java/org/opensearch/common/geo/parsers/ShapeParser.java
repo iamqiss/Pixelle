@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.parsers;
+package org.density.common.geo.parsers;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.AbstractGeometryFieldMapper;
-import org.opensearch.index.mapper.AbstractShapeGeometryFieldMapper;
+import org.density.DensityParseException;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.ParseField;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.AbstractGeometryFieldMapper;
+import org.density.index.mapper.AbstractShapeGeometryFieldMapper;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import java.util.Collections;
 /**
  * first point of entry for a shape parser
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ShapeParser {
     ParseField FIELD_TYPE = new ParseField("type");
@@ -82,7 +82,7 @@ public interface ShapeParser {
         } else if (parser.currentToken() == XContentParser.Token.VALUE_STRING) {
             return GeoWKTParser.parse(parser, shapeMapper);
         }
-        throw new OpenSearchParseException("shape must be an object consisting of type and coordinates");
+        throw new DensityParseException("shape must be an object consisting of type and coordinates");
     }
 
     /**

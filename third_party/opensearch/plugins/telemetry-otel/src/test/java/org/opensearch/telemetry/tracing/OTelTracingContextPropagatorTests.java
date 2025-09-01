@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,7 +27,7 @@ import io.opentelemetry.context.propagation.ContextPropagators;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OTelTracingContextPropagatorTests extends OpenSearchTestCase {
+public class OTelTracingContextPropagatorTests extends DensityTestCase {
 
     private static final String TRACE_ID = "4aa59968f31dcbff7807741afa9d7d62";
     private static final String SPAN_ID = "bea205cd25756b5e";
@@ -51,7 +51,7 @@ public class OTelTracingContextPropagatorTests extends OpenSearchTestCase {
         OpenTelemetry mockOpenTelemetry = mock(OpenTelemetry.class);
         when(mockOpenTelemetry.getPropagators()).thenReturn(ContextPropagators.create(W3CTraceContextPropagator.getInstance()));
         TracingContextPropagator tracingContextPropagator = new OTelTracingContextPropagator(mockOpenTelemetry);
-        org.opensearch.telemetry.tracing.Span span = tracingContextPropagator.extract(requestHeaders).orElse(null);
+        org.density.telemetry.tracing.Span span = tracingContextPropagator.extract(requestHeaders).orElse(null);
         assertEquals(TRACE_ID, span.getTraceId());
         assertEquals(SPAN_ID, span.getSpanId());
     }
@@ -62,7 +62,7 @@ public class OTelTracingContextPropagatorTests extends OpenSearchTestCase {
         OpenTelemetry mockOpenTelemetry = mock(OpenTelemetry.class);
         when(mockOpenTelemetry.getPropagators()).thenReturn(ContextPropagators.create(W3CTraceContextPropagator.getInstance()));
         TracingContextPropagator tracingContextPropagator = new OTelTracingContextPropagator(mockOpenTelemetry);
-        org.opensearch.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(requestHeaders).get();
+        org.density.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(requestHeaders).get();
         assertEquals(TRACE_ID, span.getTraceId());
         assertEquals(SPAN_ID, span.getSpanId());
     }
@@ -71,8 +71,8 @@ public class OTelTracingContextPropagatorTests extends OpenSearchTestCase {
         OpenTelemetry mockOpenTelemetry = mock(OpenTelemetry.class);
         when(mockOpenTelemetry.getPropagators()).thenReturn(ContextPropagators.create(W3CTraceContextPropagator.getInstance()));
         TracingContextPropagator tracingContextPropagator = new OTelTracingContextPropagator(mockOpenTelemetry);
-        org.opensearch.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(null).get();
-        org.opensearch.telemetry.tracing.Span propagatedSpan = new OTelPropagatedSpan(Span.fromContext(Context.root()));
+        org.density.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(null).get();
+        org.density.telemetry.tracing.Span propagatedSpan = new OTelPropagatedSpan(Span.fromContext(Context.root()));
         assertEquals(propagatedSpan.getTraceId(), span.getTraceId());
         assertEquals(propagatedSpan.getSpanId(), span.getSpanId());
     }
@@ -81,8 +81,8 @@ public class OTelTracingContextPropagatorTests extends OpenSearchTestCase {
         OpenTelemetry mockOpenTelemetry = mock(OpenTelemetry.class);
         when(mockOpenTelemetry.getPropagators()).thenReturn(ContextPropagators.create(W3CTraceContextPropagator.getInstance()));
         TracingContextPropagator tracingContextPropagator = new OTelTracingContextPropagator(mockOpenTelemetry);
-        org.opensearch.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(new HashMap<>()).get();
-        org.opensearch.telemetry.tracing.Span propagatedSpan = new OTelPropagatedSpan(Span.fromContext(Context.root()));
+        org.density.telemetry.tracing.Span span = tracingContextPropagator.extractFromHeaders(new HashMap<>()).get();
+        org.density.telemetry.tracing.Span propagatedSpan = new OTelPropagatedSpan(Span.fromContext(Context.root()));
         assertEquals(propagatedSpan.getTraceId(), span.getTraceId());
         assertEquals(propagatedSpan.getSpanId(), span.getSpanId());
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.indices.IndexingMemoryController;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Setting.Property;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.indices.IndexingMemoryController;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.IndicesRequestCache;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class MemorySizeSettingsTests extends OpenSearchTestCase {
+public class MemorySizeSettingsTests extends DensityTestCase {
 
     public void testPageCacheLimitHeapSetting() {
         assertMemorySizeSetting(
@@ -82,7 +82,7 @@ public class MemorySizeSettingsTests extends OpenSearchTestCase {
             new ByteSizeValue((long) (JvmInfo.jvmInfo().getMem().getHeapMax().getBytes() * 0.01))
         );
         assertWarnings(
-            "[indices.requests.cache.size] setting was deprecated in OpenSearch and will be removed in a future release! See the breaking changes documentation for the next major version."
+            "[indices.requests.cache.size] setting was deprecated in Density and will be removed in a future release! See the breaking changes documentation for the next major version."
         );
     }
 

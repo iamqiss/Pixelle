@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.SortedDocValues;
 import org.apache.lucene.index.SortedSetDocValues;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
-public class SingleOrdinalsTests extends OpenSearchTestCase {
+public class SingleOrdinalsTests extends DensityTestCase {
     public void testSvValues() throws IOException {
         int numDocs = 1000000;
         int numOrdinals = numDocs / 4;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
@@ -51,26 +51,26 @@ import org.apache.lucene.search.MultiPhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldMapper;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldType;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeAnalyzer;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeFieldType;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldMapper;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldType;
-import org.opensearch.index.query.MatchPhrasePrefixQueryBuilder;
-import org.opensearch.index.query.MatchPhraseQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.plugins.Plugin;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldMapper;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldType;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeAnalyzer;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeFieldType;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldMapper;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldType;
+import org.density.index.query.MatchPhrasePrefixQueryBuilder;
+import org.density.index.query.MatchPhraseQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;

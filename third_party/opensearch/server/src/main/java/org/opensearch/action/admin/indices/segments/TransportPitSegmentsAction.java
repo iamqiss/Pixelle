@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.action.admin.indices.segments;
+package org.density.action.admin.indices.segments;
 
-import org.opensearch.action.search.ListPitInfo;
-import org.opensearch.action.search.PitService;
-import org.opensearch.action.search.SearchContextId;
-import org.opensearch.action.search.SearchContextIdForNode;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.broadcast.node.TransportBroadcastByNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.PlainShardsIterator;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.internal.PitReaderContext;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.search.ListPitInfo;
+import org.density.action.search.PitService;
+import org.density.action.search.SearchContextId;
+import org.density.action.search.SearchContextIdForNode;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.broadcast.node.TransportBroadcastByNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.PlainShardsIterator;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.indices.IndicesService;
+import org.density.search.SearchService;
+import org.density.search.internal.PitReaderContext;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.search.SearchContextId.decode;
+import static org.density.action.search.SearchContextId.decode;
 
 /**
  * Transport action for retrieving segment information of PITs

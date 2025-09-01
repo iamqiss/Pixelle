@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry.Option;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
+import org.density.common.CheckedFunction;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.suggest.Suggest.Suggestion.Entry;
+import org.density.search.suggest.Suggest.Suggestion.Entry.Option;
+import org.density.search.suggest.completion.CompletionSuggestion;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,12 +66,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Top level suggest result, containing the result for each suggestion.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? extends Option>>>, Writeable, ToXContentFragment {
@@ -234,7 +234,7 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
 
     /**
      * The suggestion responses corresponding with the suggestions in the request.
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class Suggestion<T extends Suggestion.Entry> implements Iterable<T>, NamedWriteable, ToXContentFragment {
@@ -428,7 +428,7 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
         /**
          * Represents a part from the suggest text with suggested options.
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public abstract static class Entry<O extends Option> implements Iterable<O>, Writeable, ToXContentFragment {
@@ -619,7 +619,7 @@ public class Suggest implements Iterable<Suggest.Suggestion<? extends Entry<? ex
             /**
              * Contains the suggested text with its document frequency and score.
              *
-             * @opensearch.api
+             * @density.api
              */
             @PublicApi(since = "1.0.0")
             public abstract static class Option implements Writeable, ToXContentFragment {

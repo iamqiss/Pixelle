@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.client.AbstractRequestTestCase;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.action.support.IndicesOptions;
+import org.density.client.AbstractRequestTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.util.ArrayUtils;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.rest.action.RestActions;
+import org.density.search.SearchModule;
+import org.density.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.equalTo;
 
 // similar to SearchRequestTests as CountRequest inline several members (and functionality) from SearchRequest

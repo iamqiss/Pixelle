@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -24,10 +24,10 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.common.settings.Setting.Property;
-import static org.opensearch.common.settings.WriteableSetting.SettingType;
+import static org.density.common.settings.Setting.Property;
+import static org.density.common.settings.WriteableSetting.SettingType;
 
-public class WriteableSettingTests extends OpenSearchTestCase {
+public class WriteableSettingTests extends DensityTestCase {
 
     // These settings have a default value and null fallback
     private final Map<SettingType, Setting<?>> settingMap = new EnumMap<>(SettingType.class);

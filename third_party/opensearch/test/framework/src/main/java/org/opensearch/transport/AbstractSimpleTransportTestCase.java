@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -39,42 +39,42 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.Supplier;
 import org.apache.lucene.util.CollectionUtil;
 import org.apache.lucene.util.Constants;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkUtils;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.node.Node;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.CloseableChannel;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkUtils;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
+import org.density.node.Node;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -108,7 +108,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
+import static org.density.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -119,7 +119,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
-public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase {
+public abstract class AbstractSimpleTransportTestCase extends DensityTestCase {
 
     protected ThreadPool threadPool;
     // we use always a non-alpha or beta version here otherwise minimumCompatibilityVersion will be different for the two used versions
@@ -491,7 +491,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
                 if (randomBoolean()) {
                     channel.sendResponse(TransportResponse.Empty.INSTANCE);
                 } else {
-                    channel.sendResponse(new OpenSearchException("simulated"));
+                    channel.sendResponse(new DensityException("simulated"));
                 }
             } catch (IOException e) {
                 logger.error("Unexpected failure", e);
@@ -558,7 +558,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
         try {
             serviceA.submitRequest(nodeB, ACTION, TransportRequest.Empty.INSTANCE, EmptyTransportResponseHandler.INSTANCE_SAME).get();
         } catch (ExecutionException e) {
-            assertThat(e.getCause(), instanceOf(OpenSearchException.class));
+            assertThat(e.getCause(), instanceOf(DensityException.class));
             assertThat(ExceptionsHelper.unwrapCause(e.getCause()).getMessage(), equalTo("simulated"));
         }
 
@@ -577,7 +577,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
         try {
             serviceB.submitRequest(nodeA, ACTION, TransportRequest.Empty.INSTANCE, EmptyTransportResponseHandler.INSTANCE_SAME).get();
         } catch (ExecutionException e) {
-            assertThat(e.getCause(), instanceOf(OpenSearchException.class));
+            assertThat(e.getCause(), instanceOf(DensityException.class));
             assertThat(ExceptionsHelper.unwrapCause(e.getCause()).getMessage(), equalTo("simulated"));
         }
 
@@ -597,7 +597,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
         try {
             serviceA.submitRequest(nodeA, ACTION, TransportRequest.Empty.INSTANCE, EmptyTransportResponseHandler.INSTANCE_SAME).get();
         } catch (ExecutionException e) {
-            assertThat(e.getCause(), instanceOf(OpenSearchException.class));
+            assertThat(e.getCause(), instanceOf(DensityException.class));
             assertThat(ExceptionsHelper.unwrapCause(e.getCause()).getMessage(), equalTo("simulated"));
         }
 
@@ -1150,7 +1150,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
         assertTrue(inFlight.tryAcquire(Integer.MAX_VALUE, 10, TimeUnit.SECONDS));
     }
 
-    @TestLogging(value = "org.opensearch.transport.TransportService.tracer:trace", reason = "to ensure we log network events on TRACE level")
+    @TestLogging(value = "org.density.transport.TransportService.tracer:trace", reason = "to ensure we log network events on TRACE level")
     public void testTracerLog() throws Exception {
         TransportRequestHandler<TransportRequest> handler = (request, channel, task) -> channel.sendResponse(new StringMessageResponse(""));
         TransportRequestHandler<StringMessageRequest> handlerWithError = (request, channel, task) -> {
@@ -1204,33 +1204,33 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
                 .build()
         );
 
-        final Logger logger = LogManager.getLogger("org.opensearch.transport.TransportService.tracer");
+        final Logger logger = LogManager.getLogger("org.density.transport.TransportService.tracer");
         try (MockLogAppender appender = MockLogAppender.createForLoggers(logger)) {
             final String requestSent = ".*\\[internal:test].*sent to.*\\{TS_B}.*";
             final MockLogAppender.LoggingExpectation requestSentExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "sent request",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 requestSent
             );
             final String requestReceived = ".*\\[internal:test].*received request.*";
             final MockLogAppender.LoggingExpectation requestReceivedExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "received request",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 requestReceived
             );
             final String responseSent = ".*\\[internal:test].*sent response.*";
             final MockLogAppender.LoggingExpectation responseSentExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "sent response",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 responseSent
             );
             final String responseReceived = ".*\\[internal:test].*received response from.*\\{TS_B}.*";
             final MockLogAppender.LoggingExpectation responseReceivedExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "received response",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 responseReceived
             );
@@ -1248,7 +1248,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
             final String errorResponseSent = ".*\\[internal:testError].*sent error response.*";
             final MockLogAppender.LoggingExpectation errorResponseSentExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "sent error response",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 errorResponseSent
             );
@@ -1256,7 +1256,7 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
             final String errorResponseReceived = ".*\\[internal:testError].*received response from.*\\{TS_B}.*";
             final MockLogAppender.LoggingExpectation errorResponseReceivedExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "received error response",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 errorResponseReceived
             );
@@ -1271,21 +1271,21 @@ public abstract class AbstractSimpleTransportTestCase extends OpenSearchTestCase
             final String notSeenSent = "*[internal:testNotSeen]*sent to*";
             final MockLogAppender.LoggingExpectation notSeenSentExpectation = new MockLogAppender.UnseenEventExpectation(
                 "not seen request sent",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 notSeenSent
             );
             final String notSeenReceived = ".*\\[internal:testNotSeen].*received request.*";
             final MockLogAppender.LoggingExpectation notSeenReceivedExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "not seen request received",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 notSeenReceived
             );
             final String notSeenResponseSent = ".*\\[internal:testNotSeen].*sent response.*";
             final MockLogAppender.LoggingExpectation notSeenResponseSentExpectation = new MockLogAppender.PatternSeenEventExpectation(
                 "sent response",
-                "org.opensearch.transport.TransportService.tracer",
+                "org.density.transport.TransportService.tracer",
                 Level.TRACE,
                 notSeenResponseSent
             );

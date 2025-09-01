@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterStateHealth;
-import org.opensearch.cluster.metadata.AutoExpandReplicas;
-import org.opensearch.cluster.metadata.AutoExpandSearchReplicas;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsAllocator;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommands;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.gateway.PriorityComparator;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
-import org.opensearch.snapshots.SnapshotsInfoService;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterStateHealth;
+import org.density.cluster.metadata.AutoExpandReplicas;
+import org.density.cluster.metadata.AutoExpandSearchReplicas;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.allocation.allocator.ShardsAllocator;
+import org.density.cluster.routing.allocation.command.AllocationCommands;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.gateway.GatewayAllocator;
+import org.density.gateway.PriorityComparator;
+import org.density.gateway.ShardsBatchGatewayAllocator;
+import org.density.snapshots.SnapshotsInfoService;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,8 +81,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
-import static org.opensearch.cluster.routing.allocation.ExistingShardsAllocator.EXISTING_SHARDS_ALLOCATOR_BATCH_MODE;
+import static org.density.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
+import static org.density.cluster.routing.allocation.ExistingShardsAllocator.EXISTING_SHARDS_ALLOCATOR_BATCH_MODE;
 
 /**
  * This service manages the node allocation of a cluster. For this reason the
@@ -90,7 +90,7 @@ import static org.opensearch.cluster.routing.allocation.ExistingShardsAllocator.
  * for shard allocation. This class also manages new nodes joining the cluster
  * and rerouting of shards.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AllocationService {
 
@@ -839,9 +839,9 @@ public class AllocationService {
 
     /**
      * this class is used to describe results of applying a set of
-     * {@link org.opensearch.cluster.routing.allocation.command.AllocationCommand}
+     * {@link org.density.cluster.routing.allocation.command.AllocationCommand}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CommandsResult {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.Version;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.geo.GeoJson;
-import org.opensearch.common.geo.GeometryIO;
-import org.opensearch.common.geo.GeometryParser;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.common.SetOnce;
+import org.density.common.geo.GeoJson;
+import org.density.common.geo.GeometryIO;
+import org.density.common.geo.GeometryParser;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -65,7 +65,7 @@ import java.util.function.Supplier;
 /**
  * Base {@link QueryBuilder} that builds a Geometry Query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractGeometryQueryBuilder<QB extends AbstractGeometryQueryBuilder<QB>> extends AbstractQueryBuilder<QB>
     implements
@@ -530,7 +530,7 @@ public abstract class AbstractGeometryQueryBuilder<QB extends AbstractGeometryQu
     /**
      * local class that encapsulates xcontent parsed shape parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected abstract static class ParsedGeometryQueryParams {
         public String fieldName;

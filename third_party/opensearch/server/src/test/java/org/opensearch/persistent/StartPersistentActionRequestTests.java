@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.common.UUIDs;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.persistent.StartPersistentTaskAction.Request;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestParams;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.common.UUIDs;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.persistent.StartPersistentTaskAction.Request;
+import org.density.persistent.TestPersistentTasksPlugin.TestParams;
+import org.density.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.util.Collections;
 

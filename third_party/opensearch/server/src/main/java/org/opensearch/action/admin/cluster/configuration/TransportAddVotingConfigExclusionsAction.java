@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,52 +25,52 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.configuration;
+package org.density.action.admin.cluster.configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateObserver.Listener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.DensityTimeoutException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateObserver.Listener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.addExclusionAndGetState;
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.resolveVotingConfigExclusionsAndCheckMaximum;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.addExclusionAndGetState;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.resolveVotingConfigExclusionsAndCheckMaximum;
 
 /**
  * Transport endpoint action for adding exclusions to voting config
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportAddVotingConfigExclusionsAction extends TransportClusterManagerNodeAction<
     AddVotingConfigExclusionsRequest,
@@ -181,7 +181,7 @@ public class TransportAddVotingConfigExclusionsAction extends TransportClusterMa
                     @Override
                     public void onClusterServiceClose() {
                         listener.onFailure(
-                            new OpenSearchException(
+                            new DensityException(
                                 "cluster service closed while waiting for voting config exclusions "
                                     + resolvedExclusions
                                     + " to take effect"
@@ -192,7 +192,7 @@ public class TransportAddVotingConfigExclusionsAction extends TransportClusterMa
                     @Override
                     public void onTimeout(TimeValue timeout) {
                         listener.onFailure(
-                            new OpenSearchTimeoutException(
+                            new DensityTimeoutException(
                                 "timed out waiting for voting config exclusions " + resolvedExclusions + " to take effect"
                             )
                         );

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.analysis.PreBuiltAnalyzers;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.indices.analysis.PreBuiltAnalyzers;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Locale;
 
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.test.VersionUtils.randomVersion;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-public class PreBuiltAnalyzerTests extends OpenSearchSingleNodeTestCase {
+public class PreBuiltAnalyzerTests extends DensitySingleNodeTestCase {
 
     @Override
     protected boolean forbidPrivateIndexSettings() {
@@ -83,7 +83,7 @@ public class PreBuiltAnalyzerTests extends OpenSearchSingleNodeTestCase {
 
     public void testThatInstancesAreCachedAndReused() {
         assertSame(PreBuiltAnalyzers.STANDARD.getAnalyzer(Version.CURRENT), PreBuiltAnalyzers.STANDARD.getAnalyzer(Version.CURRENT));
-        // same opensearch version should be cached
+        // same density version should be cached
         Version v = VersionUtils.randomVersion(random());
         assertSame(PreBuiltAnalyzers.STANDARD.getAnalyzer(v), PreBuiltAnalyzers.STANDARD.getAnalyzer(v));
         assertNotSame(

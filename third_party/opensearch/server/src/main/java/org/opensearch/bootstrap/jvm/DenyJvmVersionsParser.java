@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.bootstrap.jvm;
+package org.density.bootstrap.jvm;
 
-import org.opensearch.common.Nullable;
+import org.density.common.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
  * Parses the list of JVM versions which should be denied to run Opensearch engine with due to discovered
  * issues or flaws.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DenyJvmVersionsParser {
     /**
      * Provides the reason for the denial
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface VersionPredicate extends Predicate<Version> {
         String getReason();

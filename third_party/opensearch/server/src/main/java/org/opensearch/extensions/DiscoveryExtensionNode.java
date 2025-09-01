@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Discover extensions running independently or in a separate process
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiscoveryExtensionNode extends DiscoveryNode implements Writeable, ToXContentFragment {
 
@@ -105,10 +105,10 @@ public class DiscoveryExtensionNode extends DiscoveryNode implements Writeable, 
 
     private void validate() {
         if (!Version.CURRENT.onOrAfter(minimumCompatibleVersion)) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "Extension minimumCompatibleVersion: "
                     + minimumCompatibleVersion
-                    + " is greater than current OpenSearch version: "
+                    + " is greater than current Density version: "
                     + Version.CURRENT
             );
         }

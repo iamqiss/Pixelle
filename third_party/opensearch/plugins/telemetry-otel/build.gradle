@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.opensearch.gradle.Architecture
-import org.opensearch.gradle.OS
-import org.opensearch.gradle.info.BuildParams
+import org.density.gradle.Architecture
+import org.density.gradle.OS
+import org.density.gradle.info.BuildParams
 
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.internal-cluster-test'
 
-opensearchplugin {
+densityplugin {
   description = 'Opentelemetry based telemetry implementation.'
-  classname = 'org.opensearch.telemetry.OTelTelemetryPlugin'
+  classname = 'org.density.telemetry.OTelTelemetryPlugin'
   hasClientJar = false
 }
 
 dependencies {
-  api project(":libs:opensearch-telemetry")
+  api project(":libs:density-telemetry")
   api "io.opentelemetry:opentelemetry-api:${versions.opentelemetry}"
   api "io.opentelemetry:opentelemetry-common:${versions.opentelemetry}"
   api "io.opentelemetry:opentelemetry-context:${versions.opentelemetry}"

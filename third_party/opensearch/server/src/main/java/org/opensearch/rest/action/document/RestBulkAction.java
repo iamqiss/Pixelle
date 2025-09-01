@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.document;
+package org.density.rest.action.document;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkShardRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.Requests;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkShardRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.common.settings.Settings;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.Requests;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.POST;
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /**
  * <pre>
@@ -61,7 +61,7 @@ import static org.opensearch.rest.RestRequest.Method.PUT;
  * { "type1" : { "field1" : "value1" } }
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestBulkAction extends BaseRestHandler {
 

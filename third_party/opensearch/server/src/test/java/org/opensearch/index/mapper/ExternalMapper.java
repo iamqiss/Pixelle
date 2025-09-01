@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.opensearch.common.collect.Iterators;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.geometry.Point;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.collect.Iterators;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.geometry.Point;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,54 +25,54 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.ExceptionsHelper;
+import org.density.ResourceNotFoundException;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionRunnable;
+import org.density.action.ActionType;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.SetOnce;
+import org.density.common.action.ActionFuture;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.tasks.TaskManager;
+import org.density.test.InternalTestCluster;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
@@ -98,7 +98,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class CancellableTasksIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class CancellableTasksIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     static int idGenerator = 0;
     static final Map<TestRequest, CountDownLatch> beforeSendLatches = ConcurrentCollections.newConcurrentMap();

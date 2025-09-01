@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.analyze;
+package org.density.action.admin.indices.analyze;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -40,34 +40,34 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.single.shard.TransportSingleShardAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.AnalyzerComponents;
-import org.opensearch.index.analysis.AnalyzerComponentsProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.NameOrDefinition;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.StringFieldType;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.single.shard.TransportSingleShardAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.AnalyzerComponents;
+import org.density.index.analysis.AnalyzerComponentsProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.NameOrDefinition;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.StringFieldType;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -83,7 +83,7 @@ import java.util.TreeMap;
 /**
  * Transport action used to execute analyze requests
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAction.Request, AnalyzeAction.Response> {
 
@@ -303,7 +303,7 @@ public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAc
                 lastPosition += analyzer.getPositionIncrementGap("");
                 lastOffset += analyzer.getOffsetGap("");
             } catch (IOException e) {
-                throw new OpenSearchException("failed to analyze", e);
+                throw new DensityException("failed to analyze", e);
             }
         }
         return tokens;
@@ -458,7 +458,7 @@ public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAc
             try {
                 len = input.read(buf, 0, BUFFER_SIZE);
             } catch (IOException e) {
-                throw new OpenSearchException("failed to analyze (charFiltering)", e);
+                throw new DensityException("failed to analyze (charFiltering)", e);
             }
             if (len > 0) {
                 sb.append(buf, 0, len);
@@ -470,7 +470,7 @@ public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAc
     /**
      * Inner Token Counter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TokenCounter {
         private int tokenCount = 0;
@@ -496,7 +496,7 @@ public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAc
     /**
      * Inner Token List Creator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TokenListCreator {
         int lastPosition = -1;
@@ -544,7 +544,7 @@ public class TransportAnalyzeAction extends TransportSingleShardAction<AnalyzeAc
                 lastOffset += offsetGap;
 
             } catch (IOException e) {
-                throw new OpenSearchException("failed to analyze", e);
+                throw new DensityException("failed to analyze", e);
             } finally {
                 IOUtils.closeWhileHandlingException(stream);
             }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -44,13 +44,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
-import org.opensearch.search.aggregations.support.MultiValuesSourceFieldConfig;
+import org.density.common.CheckedConsumer;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
+import org.density.search.aggregations.support.MultiValuesSourceFieldConfig;
 
 import java.io.IOException;
 import java.time.ZoneOffset;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingChangesObserver;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteMigrationIndexMetadataUpdater;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingChangesObserver;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.util.set.Sets;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteMigrationIndexMetadataUpdater;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
  * <p>
  * Allocation ids are added for shards that become active and removed for shards that stop being active.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexMetadataUpdater extends RoutingChangesObserver.AbstractRoutingChangesObserver {
     private final Logger logger = LogManager.getLogger(IndexMetadataUpdater.class);

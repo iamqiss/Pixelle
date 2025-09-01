@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.Optional;
  * The default tracer implementation. It handles tracing context propagation between spans by maintaining
  * current active span in its storage
  *
- *  @opensearch.internal
+ *  @density.internal
  */
 @InternalApi
 class DefaultTracer implements Tracer {

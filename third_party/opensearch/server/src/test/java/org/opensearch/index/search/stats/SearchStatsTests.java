@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.stats;
+package org.density.index.search.stats;
 
-import org.opensearch.action.search.SearchPhase;
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchRequestOperationsListenerSupport;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.search.stats.SearchStats.Stats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchPhase;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchRequestOperationsListenerSupport;
+import org.density.action.search.SearchRequestStats;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.index.search.stats.SearchStats.Stats;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchStatsTests extends OpenSearchTestCase implements SearchRequestOperationsListenerSupport {
+public class SearchStatsTests extends DensityTestCase implements SearchRequestOperationsListenerSupport {
 
     public void testShardLevelSearchGroupStats() {
         // let's create two dummy search stats with groups

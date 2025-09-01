@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree;
+package org.density.index.compositeindex.datacube.startree;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.StarTreeMapper;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.IndexSettings;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.StarTreeMapper;
 
 import java.util.Locale;
 import java.util.Set;
@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Validations for star tree fields as part of mappings
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreeValidator {

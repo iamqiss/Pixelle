@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsResponse;
-import org.opensearch.common.hash.MessageDigests;
-import org.opensearch.wlm.stats.SortBy;
-import org.opensearch.wlm.stats.SortOrder;
-import org.opensearch.wlm.stats.WlmStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.wlm.WlmStatsResponse;
+import org.density.common.hash.MessageDigests;
+import org.density.wlm.stats.SortBy;
+import org.density.wlm.stats.SortOrder;
+import org.density.wlm.stats.WlmStats;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -130,7 +130,7 @@ public class WlmPaginationStrategy implements PaginationStrategy<WlmStats> {
         OptionalInt index = findIndex(sortedStats, token.getNodeId(), token.getWorkloadGroupId());
 
         if (index.isEmpty()) {
-            throw new OpenSearchParseException("Invalid or outdated token: " + nextToken);
+            throw new DensityParseException("Invalid or outdated token: " + nextToken);
         }
 
         return index.getAsInt();
@@ -265,7 +265,7 @@ public class WlmPaginationStrategy implements PaginationStrategy<WlmStats> {
                 || isNullOrBlank(parts[HASH_POS])
                 || isNullOrBlank(parts[SORT_ORDER_POS])
                 || isNullOrBlank(parts[SORT_BY_POS])) {
-                throw new OpenSearchParseException("Invalid pagination token format");
+                throw new DensityParseException("Invalid pagination token format");
             }
             return parts;
         }

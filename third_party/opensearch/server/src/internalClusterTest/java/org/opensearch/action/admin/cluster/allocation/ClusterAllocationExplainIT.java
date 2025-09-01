@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.allocation;
+package org.density.action.admin.cluster.allocation;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.UnassignedInfo.Reason;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationDecision;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.NodeAllocationResult;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.UnassignedInfo.Reason;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationDecision;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.NodeAllocationResult;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -69,7 +69,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -82,8 +82,8 @@ import static org.hamcrest.Matchers.startsWith;
 /**
  * Tests for the cluster allocation explanation
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public final class ClusterAllocationExplainIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public final class ClusterAllocationExplainIT extends DensityIntegTestCase {
 
     public void testUnassignedPrimaryWithExistingIndex() throws Exception {
         logger.info("--> starting 2 nodes");

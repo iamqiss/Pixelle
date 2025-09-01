@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.sort.plugin.CustomSortBuilder;
-import org.opensearch.search.sort.plugin.CustomSortPlugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.plugins.Plugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.sort.plugin.CustomSortBuilder;
+import org.density.search.sort.plugin.CustomSortPlugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SortFromPluginIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SortFromPluginIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public SortFromPluginIT(Settings settings) {
         super(settings);
     }

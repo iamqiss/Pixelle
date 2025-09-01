@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 
-public class FuzzinessTests extends OpenSearchTestCase {
+public class FuzzinessTests extends DensityTestCase {
     public void testNumerics() {
         String[] options = new String[] { "1.0", "1", "1.000000" };
         assertThat(Fuzziness.build(randomFrom(options)).asFloat(), equalTo(1f));
@@ -154,7 +154,7 @@ public class FuzzinessTests extends OpenSearchTestCase {
             assertThat(parser.nextToken(), equalTo(XContentParser.Token.START_OBJECT));
             assertThat(parser.nextToken(), equalTo(XContentParser.Token.FIELD_NAME));
             assertThat(parser.nextToken(), equalTo(XContentParser.Token.VALUE_STRING));
-            OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> Fuzziness.parse(parser));
+            DensityParseException e = expectThrows(DensityParseException.class, () -> Fuzziness.parse(parser));
             assertTrue(e.getMessage().startsWith("failed to find low and high distance values"));
         }
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.get;
+package org.density.index.get;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.RandomObjects;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.indices.IndicesModule;
+import org.density.test.DensityTestCase;
+import org.density.test.RandomObjects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,11 +54,11 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class DocumentFieldTests extends OpenSearchTestCase {
+public class DocumentFieldTests extends DensityTestCase {
 
     public void testToXContent() {
         DocumentField documentField = new DocumentField("field", Arrays.asList("value1", "value2"));
@@ -150,7 +150,7 @@ public class DocumentFieldTests extends OpenSearchTestCase {
                     DocumentField expected = new DocumentField(fieldName, tuple.v2());
                     return Tuple.tuple(input, expected);
                 case 1:
-                    List<Object> listValues = randomList(1, 5, () -> randomList(1, 5, OpenSearchTestCase::randomInt));
+                    List<Object> listValues = randomList(1, 5, () -> randomList(1, 5, DensityTestCase::randomInt));
                     DocumentField listField = new DocumentField(randomAlphaOfLength(5), listValues);
                     return Tuple.tuple(listField, listField);
                 case 2:

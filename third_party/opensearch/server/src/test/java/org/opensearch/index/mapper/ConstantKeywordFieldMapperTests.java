@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.StoredField;
@@ -15,19 +15,19 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.Directory;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.DensityParseException;
+import org.density.common.CheckedConsumer;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.Collection;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class ConstantKeywordFieldMapperTests extends OpenSearchSingleNodeTestCase {
+public class ConstantKeywordFieldMapperTests extends DensitySingleNodeTestCase {
 
     private static final String FIELD_NAME = "field";
 
@@ -107,8 +107,8 @@ public class ConstantKeywordFieldMapperTests extends OpenSearchSingleNodeTestCas
             .endObject()
             .endObject();
 
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> parser.parse("type", new CompressedXContent(mapping.toString()))
         );
         assertThat(e.getMessage(), containsString("Field [field] is missing required parameter [value]"));

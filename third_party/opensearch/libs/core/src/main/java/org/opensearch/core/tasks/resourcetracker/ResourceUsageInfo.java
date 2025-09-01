@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.tasks.resourcetracker;
+package org.density.core.tasks.resourcetracker;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * It captures the resource usage information like memory, CPU about a particular execution of thread
  * for a specific stats type.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.1.0")
 public class ResourceUsageInfo {

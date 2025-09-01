@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.hc.core5.http.HttpRequestInterceptor;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.bulk.Retry;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.UpdateScript;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.bulk.Retry;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.TransportAction;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.VersionType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.UpdateScript;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.ParentTaskAssigningClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,11 +88,11 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.action.bulk.BackoffPolicy.exponentialBackoff;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
-import static org.opensearch.core.rest.RestStatus.CONFLICT;
-import static org.opensearch.index.reindex.AbstractBulkByScrollRequest.MAX_DOCS_ALL_MATCHES;
-import static org.opensearch.search.sort.SortBuilders.fieldSort;
+import static org.density.action.bulk.BackoffPolicy.exponentialBackoff;
+import static org.density.common.unit.TimeValue.timeValueNanos;
+import static org.density.core.rest.RestStatus.CONFLICT;
+import static org.density.index.reindex.AbstractBulkByScrollRequest.MAX_DOCS_ALL_MATCHES;
+import static org.density.search.sort.SortBuilders.fieldSort;
 
 /**
  * Abstract base for scrolling across a search and executing bulk actions on all results. All package private methods are package private so

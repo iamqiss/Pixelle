@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsBalancer;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.ShardsBalancer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_REBALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.isPerIndexPrimaryShardsPerNodeBreached;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.isPrimaryShardsPerNodeBreached;
+import static org.density.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_REBALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.isPerIndexPrimaryShardsPerNodeBreached;
+import static org.density.cluster.routing.allocation.ConstraintTypes.isPrimaryShardsPerNodeBreached;
 
 /**
  * Constraints applied during rebalancing round; specify conditions which, if breached, reduce the
  * priority of a node for receiving shard relocations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RebalanceConstraints {
 

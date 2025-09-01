@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.state;
+package org.density.indices.state;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.open.OpenIndexResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.open.OpenIndexResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.common.settings.Settings;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.IndexClosedException;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class SimpleIndexStateIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class SimpleIndexStateIT extends DensityIntegTestCase {
     private final Logger logger = LogManager.getLogger(SimpleIndexStateIT.class);
 
     public void testSimpleOpenClose() {

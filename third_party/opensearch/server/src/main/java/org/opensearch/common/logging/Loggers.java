@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -40,18 +40,18 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.settings.Setting;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Map;
 
-import static org.opensearch.core.common.util.CollectionUtils.asArrayList;
+import static org.density.core.common.util.CollectionUtils.asArrayList;
 
 /**
  * A set of utilities around Logging.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Loggers {
 

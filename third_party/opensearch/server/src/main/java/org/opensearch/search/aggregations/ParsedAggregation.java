@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.core.xcontent.AbstractObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.core.xcontent.AbstractObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -47,7 +47,7 @@ import java.util.Map;
  * An implementation of {@link Aggregation} that is parsed from a REST response.
  * Serves as a base class for all aggregation implementations that are parsed from REST.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ParsedAggregation implements Aggregation, ToXContentFragment {
 

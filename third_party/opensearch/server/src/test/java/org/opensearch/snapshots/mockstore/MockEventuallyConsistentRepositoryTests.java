@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots.mockstore;
+package org.density.snapshots.mockstore;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.ShardGenerations;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -61,7 +61,7 @@ import java.util.function.Function;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
-public class MockEventuallyConsistentRepositoryTests extends OpenSearchTestCase {
+public class MockEventuallyConsistentRepositoryTests extends DensityTestCase {
 
     private final RecoverySettings recoverySettings = new RecoverySettings(
         Settings.EMPTY,

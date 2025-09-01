@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceInfo;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
+import org.density.action.OriginalIndices;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.resourcetracker.TaskResourceInfo;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
 import org.junit.After;
 import org.junit.Before;
 
@@ -89,12 +89,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_RESOURCE_USAGE;
+import static org.density.tasks.TaskResourceTrackingService.TASK_RESOURCE_USAGE;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class AbstractSearchAsyncActionTests extends OpenSearchTestCase {
+public class AbstractSearchAsyncActionTests extends DensityTestCase {
 
     private final List<Tuple<String, String>> resolvedNodes = new ArrayList<>();
     private final Set<ShardSearchContextId> releasedContexts = new CopyOnWriteArraySet<>();
@@ -803,7 +803,7 @@ public class AbstractSearchAsyncActionTests extends OpenSearchTestCase {
         );
         SearchRequest searchRequest = new SearchRequest().allowPartialSearchResults(true);
         SearchTask task = new SearchTask(0, "n/a", "n/a", () -> "test", null, Collections.emptyMap());
-        Executor executor = OpenSearchExecutors.newDirectExecutorService();
+        Executor executor = DensityExecutors.newDirectExecutorService();
         SearchShardIterator shards = new SearchShardIterator(null, null, Collections.emptyList(), null);
         GroupShardsIterator<SearchShardIterator> shardsIter = new GroupShardsIterator<>(List.of(shards));
         QueryPhaseResultConsumer resultConsumer = new QueryPhaseResultConsumer(
@@ -858,7 +858,7 @@ public class AbstractSearchAsyncActionTests extends OpenSearchTestCase {
         );
         SearchRequest searchRequest = new SearchRequest().allowPartialSearchResults(true);
         SearchTask task = new SearchTask(0, "n/a", "n/a", () -> "test", null, Collections.emptyMap());
-        Executor executor = OpenSearchExecutors.newDirectExecutorService();
+        Executor executor = DensityExecutors.newDirectExecutorService();
         SearchShardIterator shards = new SearchShardIterator(null, null, Collections.emptyList(), null);
         GroupShardsIterator<SearchShardIterator> shardsIter = new GroupShardsIterator<>(List.of(shards));
         QueryPhaseResultConsumer resultConsumer = new QueryPhaseResultConsumer(
@@ -921,7 +921,7 @@ public class AbstractSearchAsyncActionTests extends OpenSearchTestCase {
         );
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(1);
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),

@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.IndexStoreListener;
+import org.density.common.inject.Provider;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.IndexStoreListener;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
-import static org.opensearch.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
+import static org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
+import static org.density.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
 
 /**
  * IndexStoreListener to clean up file cache when the index is deleted. The cached entries will be eligible
  * for eviction when the shard is deleted, but this listener deterministically removes entries from memory and
  * from disk at the time of shard deletion as opposed to waiting for the cache to need to perform eviction.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileCacheCleaner implements IndexStoreListener {
     private static final Logger logger = LogManager.getLogger(FileCacheCleaner.class);

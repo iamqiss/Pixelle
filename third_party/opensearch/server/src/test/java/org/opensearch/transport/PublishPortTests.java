@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.network.NetworkUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.network.NetworkUtils;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -45,7 +45,7 @@ import static java.net.InetAddress.getByName;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PublishPortTests extends OpenSearchTestCase {
+public class PublishPortTests extends DensityTestCase {
 
     public void testPublishPort() throws Exception {
         int boundPort = randomIntBetween(9000, 9100);

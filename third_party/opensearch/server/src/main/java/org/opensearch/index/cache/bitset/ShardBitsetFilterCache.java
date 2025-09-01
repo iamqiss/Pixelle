@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache.bitset;
+package org.density.index.cache.bitset;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.AbstractIndexShardComponent;
+import org.density.common.annotation.PublicApi;
+import org.density.common.metrics.CounterMetric;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.shard.AbstractIndexShardComponent;
 
 /**
  * Bitset Filter Cache for shards
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ShardBitsetFilterCache extends AbstractIndexShardComponent {

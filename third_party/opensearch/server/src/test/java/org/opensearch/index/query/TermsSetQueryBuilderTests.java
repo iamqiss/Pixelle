@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -51,18 +51,18 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.common.compress.CompressedXContent;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.mapper.MapperService;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,63 +26,63 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.rollover;
+package org.density.action.admin.indices.rollover;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsTests;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexAliasesService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.get.GetStats;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.shard.IndexingStats;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.warmer.WarmerStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.IndicesStatsTests;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.cluster.metadata.MetadataIndexAliasesService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.get.GetStats;
+import org.density.index.merge.MergeStats;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.search.stats.SearchStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.shard.IndexingStats;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.StoreStats;
+import org.density.index.warmer.WarmerStats;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ import java.util.Set;
 import org.mockito.ArgumentCaptor;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.action.admin.indices.rollover.TransportRolloverAction.evaluateConditions;
+import static org.density.action.admin.indices.rollover.TransportRolloverAction.evaluateConditions;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.any;
@@ -105,7 +105,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportRolloverActionTests extends OpenSearchTestCase {
+public class TransportRolloverActionTests extends DensityTestCase {
 
     public void testDocStatsSelectionFromPrimariesOnly() {
         long docsInPrimaryShards = 100;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.en.PorterStemFilter;
 import org.apache.lucene.analysis.snowball.SnowballFilter;
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
 import static org.hamcrest.Matchers.instanceOf;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.scaledRandomIntBetween;
 
-public class StemmerTokenFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class StemmerTokenFilterFactoryTests extends DensityTokenStreamTestCase {
 
     private static final CommonAnalysisModulePlugin PLUGIN = new CommonAnalysisModulePlugin();
 
@@ -71,7 +71,7 @@ public class StemmerTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
 
-            OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
+            DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("my_english");
             assertThat(tokenFilter, instanceOf(StemmerTokenFilterFactory.class));
             Tokenizer tokenizer = new WhitespaceTokenizer();
@@ -98,7 +98,7 @@ public class StemmerTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
 
-            OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
+            DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("my_porter2");
             assertThat(tokenFilter, instanceOf(StemmerTokenFilterFactory.class));
             Tokenizer tokenizer = new WhitespaceTokenizer();
@@ -125,7 +125,7 @@ public class StemmerTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
 
-            OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
+            DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, PLUGIN);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("my_plurals");
             assertThat(tokenFilter, instanceOf(StemmerTokenFilterFactory.class));
             Tokenizer tokenizer = new WhitespaceTokenizer();

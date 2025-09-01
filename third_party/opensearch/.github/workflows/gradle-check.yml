@@ -33,7 +33,7 @@ jobs:
 
   gradle-check:
     needs: check-files
-    if: github.repository == 'opensearch-project/OpenSearch' && needs.check-files.outputs.RUN_GRADLE_CHECK == 'true'
+    if: github.repository == 'density-project/Density' && needs.check-files.outputs.RUN_GRADLE_CHECK == 'true'
     permissions:
       contents: read # to fetch code (actions/checkout)
       pull-requests: write # to create or update comment (peter-evans/create-or-update-comment)
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 130
     steps:
-      - name: Checkout OpenSearch repo
+      - name: Checkout Density repo
         uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -78,7 +78,7 @@ jobs:
       - name: Setup environment variables (Push)
         if: github.event_name == 'push'
         run: |
-          repo_url="https://github.com/opensearch-project/OpenSearch"
+          repo_url="https://github.com/density-project/Density"
           ref_id=$(git rev-parse HEAD)
           branch_name=$(git rev-parse --abbrev-ref HEAD)
           echo "branch_name=$branch_name" >> $GITHUB_ENV
@@ -92,18 +92,18 @@ jobs:
           echo "pr_or_commit_description=$(jq --ascii-output .head_commit.message $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "post_merge_action=true" >> $GITHUB_ENV
 
-      - name: Checkout opensearch-build repo
+      - name: Checkout density-build repo
         uses: actions/checkout@v5
         with:
-          repository: opensearch-project/opensearch-build
+          repository: density-project/density-build
           ref: main
-          path: opensearch-build
+          path: density-build
 
       - name: Trigger jenkins workflow to run gradle check
         run: |
           set -e
           set -o pipefail
-          bash opensearch-build/scripts/gradle/gradle-check.sh -t ${{ secrets.JENKINS_GRADLE_CHECK_GENERIC_WEBHOOK_TOKEN }} -u ${{ secrets.JENKINS_GITHUB_USER}} -p ${{ secrets.JENKINS_GITHUB_USER_TOKEN}} | tee -a gradle-check.log
+          bash density-build/scripts/gradle/gradle-check.sh -t ${{ secrets.JENKINS_GRADLE_CHECK_GENERIC_WEBHOOK_TOKEN }} -u ${{ secrets.JENKINS_GITHUB_USER}} -p ${{ secrets.JENKINS_GITHUB_USER_TOKEN}} | tee -a gradle-check.log
 
       - name: Setup Result Status
         if: always()
@@ -151,7 +151,7 @@ jobs:
           body: |
             :grey_exclamation: Gradle check result for ${{ env.pr_from_sha }}: [${{ env.result }}](${{ env.workflow_url }}) ${{ env.test_failures }}
 
-            Please review all [flaky tests](https://github.com/opensearch-project/OpenSearch/blob/main/DEVELOPER_GUIDE.md#flaky-tests) that succeeded after retry and create an issue if one does not already exist to track the flaky failure.
+            Please review all [flaky tests](https://github.com/density-project/Density/blob/main/DEVELOPER_GUIDE.md#flaky-tests) that succeeded after retry and create an issue if one does not already exist to track the flaky failure.
 
       - name: Create Comment Failure
         if: ${{ github.event_name == 'pull_request_target' && failure() }}
@@ -161,7 +161,7 @@ jobs:
           body: |
             :x: Gradle check result for ${{ env.pr_from_sha }}: [${{ env.result }}](${{ env.workflow_url }})
 
-            Please examine the workflow log, locate, and copy-paste the failure(s) below, then iterate to green. Is the failure [a flaky test](https://github.com/opensearch-project/OpenSearch/blob/main/DEVELOPER_GUIDE.md#flaky-tests) unrelated to your change?
+            Please examine the workflow log, locate, and copy-paste the failure(s) below, then iterate to green. Is the failure [a flaky test](https://github.com/density-project/Density/blob/main/DEVELOPER_GUIDE.md#flaky-tests) unrelated to your change?
 
   check-result:
     needs: [check-files, gradle-check]

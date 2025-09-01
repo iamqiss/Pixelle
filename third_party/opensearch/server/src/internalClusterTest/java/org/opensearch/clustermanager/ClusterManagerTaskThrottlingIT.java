@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.clustermanager;
+package org.density.clustermanager;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.cluster.service.ClusterManagerThrottlingException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.cluster.service.ClusterManagerThrottlingException;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportService;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 0)
-public class ClusterManagerTaskThrottlingIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 0)
+public class ClusterManagerTaskThrottlingIT extends DensityIntegTestCase {
 
     /*
      * This integ test will test end-end cluster manager throttling feature for

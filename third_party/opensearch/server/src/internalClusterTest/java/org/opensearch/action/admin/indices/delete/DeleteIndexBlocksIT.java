@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.delete;
+package org.density.action.admin.indices.delete;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 
-public class DeleteIndexBlocksIT extends OpenSearchIntegTestCase {
+public class DeleteIndexBlocksIT extends DensityIntegTestCase {
     public void testDeleteIndexWithBlocks() {
         createIndex("test");
         ensureGreen("test");

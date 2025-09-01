@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.segments.IndexSegments;
-import org.opensearch.action.admin.indices.segments.IndexShardSegments;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.admin.indices.segments.ShardSegments;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Table;
-import org.opensearch.common.breaker.ResponseLimitBreachedException;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.engine.Segment;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestActionListener;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.segments.IndexSegments;
+import org.density.action.admin.indices.segments.IndexShardSegments;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.admin.indices.segments.ShardSegments;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Table;
+import org.density.common.breaker.ResponseLimitBreachedException;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.Strings;
+import org.density.index.engine.Segment;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestActionListener;
+import org.density.rest.action.RestResponseListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.List;
 import java.util.Map;
@@ -58,13 +58,13 @@ import java.util.Objects;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.common.breaker.ResponseLimitSettings.LimitEntity.INDICES;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.common.breaker.ResponseLimitSettings.LimitEntity.INDICES;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _cat API action to get segments information
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestSegmentsAction extends AbstractCatAction {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.OriginalIndices;
+import org.density.common.UUIDs;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 
-public class CountedCollectorTests extends OpenSearchTestCase {
+public class CountedCollectorTests extends DensityTestCase {
     public void testCollect() throws InterruptedException {
         ArraySearchPhaseResults<SearchPhaseResult> consumer = new ArraySearchPhaseResults<>(randomIntBetween(1, 100));
         List<Integer> state = new ArrayList<>();

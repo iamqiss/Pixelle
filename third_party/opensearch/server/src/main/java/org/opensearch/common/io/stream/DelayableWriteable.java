@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io.stream;
+package org.density.common.io.stream;
 
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 
@@ -63,7 +63,7 @@ import java.io.IOException;
  * to force their buffering in serialized format by calling
  * {@link #asSerialized(Reader, NamedWriteableRegistry)}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class DelayableWriteable<T extends Writeable> implements Writeable {
@@ -106,7 +106,7 @@ public abstract class DelayableWriteable<T extends Writeable> implements Writeab
     /**
      * A referencing writable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Referencing<T extends Writeable> extends DelayableWriteable<T> {
         private final T reference;
@@ -153,7 +153,7 @@ public abstract class DelayableWriteable<T extends Writeable> implements Writeab
     /**
      * A {@link Writeable} stored in serialized form.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Serialized<T extends Writeable> extends DelayableWriteable<T> implements Accountable {

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.transport.TransportRequest;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * Request for onIndexModule extension point
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndicesModuleRequest extends TransportRequest {
     private final Index index;

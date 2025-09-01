@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,15 +27,15 @@
  * under the License.
  */
 
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import com.sun.jna.Native
 import com.sun.jna.WString
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.opensearch.gradle.Version
-import org.opensearch.gradle.VersionProperties
+import org.density.gradle.Version
+import org.density.gradle.VersionProperties
 import org.gradle.api.Project
-import org.opensearch.gradle.test.JNAKernel32Library
+import org.density.gradle.test.JNAKernel32Library
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -65,13 +65,13 @@ class NodeInfo {
     /** the pid file the node will use */
     File pidFile
 
-    /** a file written by opensearch containing the ports of each bound address for http */
+    /** a file written by density containing the ports of each bound address for http */
     File httpPortsFile
 
-    /** a file written by opensearch containing the ports of each bound address for transport */
+    /** a file written by density containing the ports of each bound address for transport */
     File transportPortsFile
 
-    /** opensearch home dir */
+    /** density home dir */
     File homeDir
 
     /** config directory */
@@ -89,7 +89,7 @@ class NodeInfo {
     /** file that if it exists, indicates the node failed to start */
     File failedMarker
 
-    /** stdout/stderr log of the opensearch process for this node */
+    /** stdout/stderr log of the density process for this node */
     File startLog
 
     /** directory to install plugins from */
@@ -104,11 +104,11 @@ class NodeInfo {
     /** arguments to start the node with */
     List<String> args
 
-    /** Executable to run the bin/opensearch with, either cmd or sh */
+    /** Executable to run the bin/density with, either cmd or sh */
     String executable
 
-    /** Path to the opensearch start script */
-    private Object opensearchScript
+    /** Path to the density start script */
+    private Object densityScript
 
     /** script to run when running in the background */
     private File wrapperScript
@@ -116,7 +116,7 @@ class NodeInfo {
     /** buffer for ant output when starting this node */
     ByteArrayOutputStream buffer = new ByteArrayOutputStream()
 
-    /** the version of opensearch that this node runs */
+    /** the version of density that this node runs */
     Version nodeVersion
 
     /** true if the node is not the current version */
@@ -134,17 +134,17 @@ class NodeInfo {
             clusterName = project.path.replace(':', '_').substring(1) + '_' + prefix
         }
         baseDir = new File(project.buildDir, "cluster/${prefix} node${nodeNum}")
-        pidFile = new File(baseDir, 'opensearch.pid')
+        pidFile = new File(baseDir, 'density.pid')
         this.nodeVersion = Version.fromString(nodeVersion)
-        this.isBwcNode = this.nodeVersion.before(VersionProperties.getOpenSearch())
-        homeDir = new File(baseDir, "opensearch-${nodeVersion}")
+        this.isBwcNode = this.nodeVersion.before(VersionProperties.getDensity())
+        homeDir = new File(baseDir, "density-${nodeVersion}")
         pathConf = new File(homeDir, 'config')
         if (config.dataDir != null) {
             dataDir = "${config.dataDir(nodeNum)}"
         } else {
             dataDir = new File(homeDir, "data")
         }
-        configFile = new File(pathConf, 'opensearch.yml')
+        configFile = new File(pathConf, 'density.yml')
         // even for rpm/deb, the logs are under home because we dont start with real services
         File logsDir = new File(homeDir, 'logs')
         httpPortsFile = new File(logsDir, 'http.ports')
@@ -164,11 +164,11 @@ class NodeInfo {
              * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to
              * getting the short name requiring the path to already exist.
              */
-            opensearchScript = "${-> binPath().resolve('opensearch.bat').toString()}"
+            densityScript = "${-> binPath().resolve('density.bat').toString()}"
         } else {
             executable = 'bash'
             wrapperScript = new File(cwd, "run")
-            opensearchScript = binPath().resolve('opensearch')
+            densityScript = binPath().resolve('density')
         }
         if (config.daemonize) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
@@ -181,7 +181,7 @@ class NodeInfo {
                 args.add("${wrapperScript}")
             }
         } else {
-            args.add("${opensearchScript}")
+            args.add("${densityScript}")
         }
 
 
@@ -197,9 +197,9 @@ class NodeInfo {
         env = [:]
         env.putAll(config.environmentVariables)
         for (Map.Entry<String, String> property : System.properties.entrySet()) {
-            if (property.key.startsWith('tests.opensearch.')) {
+            if (property.key.startsWith('tests.density.')) {
                 args.add("-E")
-                args.add("${property.key.substring('tests.opensearch.'.size())}=${property.value}")
+                args.add("${property.key.substring('tests.density.'.size())}=${property.value}")
             }
         }
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
@@ -207,12 +207,12 @@ class NodeInfo {
              * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to
              * getting the short name requiring the path to already exist.
              */
-            env.put('OPENSEARCH_PATH_CONF', "${-> getShortPathName(pathConf.toString())}")
+            env.put('DENSITY_PATH_CONF', "${-> getShortPathName(pathConf.toString())}")
         }
         else {
-            env.put('OPENSEARCH_PATH_CONF', pathConf)
+            env.put('DENSITY_PATH_CONF', pathConf)
         }
-        if (!System.properties.containsKey("tests.opensearch.path.data")) {
+        if (!System.properties.containsKey("tests.density.path.data")) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                 /*
                  * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to
@@ -267,7 +267,7 @@ class NodeInfo {
             esCommandString += "|\n|  [${wrapperScript.name}]\n"
             wrapperScript.eachLine('UTF-8', { line -> esCommandString += "    ${line}\n"})
         }
-        esCommandString += '|\n|  [opensearch.yml]\n'
+        esCommandString += '|\n|  [density.yml]\n'
         configFile.eachLine('UTF-8', { line -> esCommandString += "|    ${line}\n" })
         esCommandString += "|-----------------------------------------"
         return esCommandString
@@ -280,7 +280,7 @@ class NodeInfo {
             argsPasser = '%*'
             exitMarker = "\r\n if \"%errorlevel%\" neq \"0\" ( type nul >> run.failed )"
         }
-        wrapperScript.setText("\"${opensearchScript}\" ${argsPasser} > run.log 2>&1 ${exitMarker}", 'UTF-8')
+        wrapperScript.setText("\"${densityScript}\" ${argsPasser} > run.log 2>&1 ${exitMarker}", 'UTF-8')
     }
 
     /** Returns an address and port suitable for a uri to connect to this node over http */

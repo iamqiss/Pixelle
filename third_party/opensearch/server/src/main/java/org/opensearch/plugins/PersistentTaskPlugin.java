@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.persistent.PersistentTasksExecutor;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.SettingsModule;
+import org.density.persistent.PersistentTasksExecutor;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Plugin for registering persistent tasks executors.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface PersistentTaskPlugin {
 

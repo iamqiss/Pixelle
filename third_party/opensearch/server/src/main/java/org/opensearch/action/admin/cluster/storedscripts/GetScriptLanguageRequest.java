@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.storedscripts;
+package org.density.action.admin.cluster.storedscripts;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
 /**
  * Transport request for getting script language
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GetScriptLanguageRequest extends ActionRequest {
     public GetScriptLanguageRequest() {

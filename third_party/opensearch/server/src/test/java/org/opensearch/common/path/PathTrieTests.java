@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.path;
+package org.density.common.path;
 
-import org.opensearch.common.path.PathTrie.TrieMatchingMode;
-import org.opensearch.rest.RestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.path.PathTrie.TrieMatchingMode;
+import org.density.rest.RestUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PathTrieTests extends OpenSearchTestCase {
+public class PathTrieTests extends DensityTestCase {
 
     public static final PathTrie.Decoder NO_DECODER = new PathTrie.Decoder() {
         @Override

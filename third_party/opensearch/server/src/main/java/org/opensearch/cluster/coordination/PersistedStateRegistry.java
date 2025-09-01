@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.cluster.coordination.CoordinationState.PersistedState;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.cluster.coordination.CoordinationState.PersistedState;
+import org.density.common.util.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * A class which encapsulates the PersistedStates
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PersistedStateRegistry implements Closeable {
 

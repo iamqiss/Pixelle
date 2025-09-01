@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.rollover.MaxAgeCondition;
-import org.opensearch.action.admin.indices.rollover.MaxDocsCondition;
-import org.opensearch.action.admin.indices.rollover.MaxSizeCondition;
-import org.opensearch.action.admin.indices.rollover.RolloverInfo;
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.indices.rollover.MaxAgeCondition;
+import org.density.action.admin.indices.rollover.MaxDocsCondition;
+import org.density.action.admin.indices.rollover.MaxSizeCondition;
+import org.density.action.admin.indices.rollover.RolloverInfo;
+import org.density.cluster.Diff;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.indices.IndicesModule;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -68,12 +68,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.parseIndexNameCounter;
+import static org.density.cluster.metadata.IndexMetadata.parseIndexNameCounter;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class IndexMetadataTests extends OpenSearchTestCase {
+public class IndexMetadataTests extends DensityTestCase {
 
     private IndicesModule INDICES_MODULE = new IndicesModule(Collections.emptyList());
 

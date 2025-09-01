@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.action.support.tasks.BaseTasksRequest;
-import org.opensearch.action.support.tasks.BaseTasksResponse;
-import org.opensearch.action.support.tasks.TransportTasksAction;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.ActionType;
+import org.density.action.FailedNodeException;
+import org.density.action.IndicesRequest;
+import org.density.action.TaskOperationFailure;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.action.support.tasks.BaseTasksRequest;
+import org.density.action.support.tasks.BaseTasksResponse;
+import org.density.action.support.tasks.TransportTasksAction;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.tasks.TaskId;
+import org.density.core.transport.TransportResponse;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportException;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
+import org.density.transport.client.DensityClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,8 +86,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
-import static org.opensearch.test.OpenSearchTestCase.waitUntil;
+import static org.density.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
+import static org.density.test.DensityTestCase.waitUntil;
 
 /**
  * A plugin that adds a cancellable blocking test task of integration testing of the task manager.
@@ -471,7 +471,7 @@ public class TestTaskPlugin extends Plugin implements ActionPlugin, NetworkPlugi
 
     public static class UnblockTestTasksRequestBuilder extends ActionRequestBuilder<UnblockTestTasksRequest, UnblockTestTasksResponse> {
 
-        protected UnblockTestTasksRequestBuilder(OpenSearchClient client, ActionType<UnblockTestTasksResponse> action) {
+        protected UnblockTestTasksRequestBuilder(DensityClient client, ActionType<UnblockTestTasksResponse> action) {
             super(client, action, new UnblockTestTasksRequest());
         }
     }

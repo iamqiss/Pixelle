@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.WrappingProcessor;
-import org.opensearch.script.ScriptService;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.ConfigurationUtils;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.WrappingProcessor;
+import org.density.script.ScriptService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +46,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
-import static org.opensearch.ingest.ConfigurationUtils.readBooleanProperty;
-import static org.opensearch.ingest.ConfigurationUtils.readMap;
-import static org.opensearch.ingest.ConfigurationUtils.readStringProperty;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.readBooleanProperty;
+import static org.density.ingest.ConfigurationUtils.readMap;
+import static org.density.ingest.ConfigurationUtils.readStringProperty;
 
 /**
  * A processor that for each value in a list executes a one or more processors.

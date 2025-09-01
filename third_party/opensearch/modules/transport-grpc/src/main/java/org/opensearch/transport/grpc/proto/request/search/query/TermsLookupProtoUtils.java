@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.protobufs.TermsLookupField;
+import org.density.core.xcontent.XContentParser;
+import org.density.indices.TermsLookup;
+import org.density.protobufs.TermsLookupField;
 
 /**
- * Utility class for converting TermsLookup Protocol Buffers to OpenSearch objects.
+ * Utility class for converting TermsLookup Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of terms lookups
- * into their corresponding OpenSearch TermsLookup implementations for search operations.
+ * into their corresponding Density TermsLookup implementations for search operations.
  */
 public class TermsLookupProtoUtils {
 
@@ -23,7 +23,7 @@ public class TermsLookupProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer TermsLookupField to an OpenSearch TermsLookup object.
+     * Converts a Protocol Buffer TermsLookupField to an Density TermsLookup object.
      * Similar to {@link TermsLookup#parseTermsLookup(XContentParser)}
      *
      * @param termsLookupFieldProto The Protocol Buffer TermsLookupField object containing index, id, path, and optional routing/store values

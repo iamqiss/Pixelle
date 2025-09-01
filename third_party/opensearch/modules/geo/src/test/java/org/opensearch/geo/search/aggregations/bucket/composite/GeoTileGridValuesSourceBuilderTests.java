@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.composite;
+package org.density.geo.search.aggregations.bucket.composite;
 
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.test.DensityTestCase;
 
-public class GeoTileGridValuesSourceBuilderTests extends OpenSearchTestCase {
+public class GeoTileGridValuesSourceBuilderTests extends DensityTestCase {
 
     public void testSetFormat() {
         CompositeValuesSourceBuilder<?> builder = new GeoTileGridValuesSourceBuilder("name");

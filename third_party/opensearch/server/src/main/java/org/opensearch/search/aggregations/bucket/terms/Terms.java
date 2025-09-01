@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
@@ -39,14 +39,14 @@ import java.util.List;
  * A {@code terms} aggregation. Defines multiple bucket, each associated with a unique term for a specific field.
  * All documents in a bucket has the bucket's term in that field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Terms extends MultiBucketsAggregation {
 
     /**
      * A bucket that is associated with a single term
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Bucket extends MultiBucketsAggregation.Bucket {
 

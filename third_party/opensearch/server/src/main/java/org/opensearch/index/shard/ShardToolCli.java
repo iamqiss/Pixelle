@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.cli.LoggingAwareMultiCommand;
+import org.density.cli.Terminal;
+import org.density.common.cli.LoggingAwareMultiCommand;
 
 /**
- * Class encapsulating and dispatching commands from the {@code opensearch-shard} command line tool
+ * Class encapsulating and dispatching commands from the {@code density-shard} command line tool
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardToolCli extends LoggingAwareMultiCommand {
 

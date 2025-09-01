@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
@@ -45,21 +45,21 @@ import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.tests.analysis.MockSynonymAnalyzer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MockFieldMapper.FakeFieldType;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.search.MultiMatchQuery.FieldAndBoost;
-import org.opensearch.lucene.queries.BlendedTermQuery;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.MockKeywordPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MockFieldMapper.FakeFieldType;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.search.MultiMatchQuery.FieldAndBoost;
+import org.density.lucene.queries.BlendedTermQuery;
+import org.density.plugins.Plugin;
+import org.density.test.MockKeywordPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -71,10 +71,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.query.QueryBuilders.multiMatchQuery;
+import static org.density.index.query.QueryBuilders.multiMatchQuery;
 import static org.hamcrest.Matchers.equalTo;
 
-public class MultiMatchQueryTests extends OpenSearchSingleNodeTestCase {
+public class MultiMatchQueryTests extends DensitySingleNodeTestCase {
 
     private IndexService indexService;
 

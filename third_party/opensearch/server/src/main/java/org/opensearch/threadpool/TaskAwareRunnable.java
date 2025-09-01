@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.WrappedRunnable;
-import org.opensearch.tasks.TaskManager;
+import org.density.ExceptionsHelper;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.WrappedRunnable;
+import org.density.tasks.TaskManager;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Thread.currentThread;
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_ID;
+import static org.density.tasks.TaskResourceTrackingService.TASK_ID;
 
 /**
  * Responsible for wrapping the original task's runnable and sending updates on when it starts and finishes to

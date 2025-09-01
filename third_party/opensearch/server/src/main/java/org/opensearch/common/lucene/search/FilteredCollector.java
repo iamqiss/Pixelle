@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
@@ -39,15 +39,15 @@ import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.search.profile.query.ProfileWeight;
+import org.density.common.lucene.Lucene;
+import org.density.search.profile.query.ProfileWeight;
 
 import java.io.IOException;
 
 /**
  * A filtered collector.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilteredCollector implements Collector {
 

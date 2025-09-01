@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Circle;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.GeoShapeQueryable;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Circle;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.GeoShapeQueryable;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -61,7 +61,7 @@ import java.util.Objects;
  * Filter results of a query to include only those within a specific distance to some
  * geo point.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoDistanceQueryBuilder extends AbstractQueryBuilder<GeoDistanceQueryBuilder> implements WithFieldName {
     public static final String NAME = "geo_distance";

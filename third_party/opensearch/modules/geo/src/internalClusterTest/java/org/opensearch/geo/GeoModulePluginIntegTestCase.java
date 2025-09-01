@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo;
+package org.density.geo;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.geometry.utils.StandardValidator;
-import org.opensearch.geometry.utils.WellKnownText;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.common.settings.Settings;
+import org.density.geometry.utils.StandardValidator;
+import org.density.geometry.utils.WellKnownText;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.plugins.Plugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
 
 /**
  * This is the base class for all the Geo related integration tests. Use this class to add the features and settings
  * for the test cluster on which integration tests are running.
  */
-public abstract class GeoModulePluginIntegTestCase extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public abstract class GeoModulePluginIntegTestCase extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     protected static final double GEOHASH_TOLERANCE = 1E-5D;
 

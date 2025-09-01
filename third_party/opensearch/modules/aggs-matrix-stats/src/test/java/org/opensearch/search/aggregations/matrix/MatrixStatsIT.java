@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.matrix;
+package org.density.search.aggregations.matrix;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.indices.IndicesRequestCache;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.util.List;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
-public class MatrixStatsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
+public class MatrixStatsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public MatrixStatsIT(Settings nodeSettings) {
         super(nodeSettings);
     }

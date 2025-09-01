@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.tracker;
+package org.density.wlm.tracker;
 
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupLevelResourceUsageView;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupLevelResourceUsageView;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.EnumMap;
 import java.util.EnumSet;

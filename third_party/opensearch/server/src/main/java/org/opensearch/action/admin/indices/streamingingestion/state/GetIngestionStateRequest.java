@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.streamingingestion.state;
+package org.density.action.admin.indices.streamingingestion.state;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.pagination.PageParams;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,14 +26,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
 
 /**
  * Request to get current ingestion state when using pull-based ingestion. This request supports retrieving index and
  * shard level state. By default, all shards of an index are included.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class GetIngestionStateRequest extends BroadcastRequest<GetIngestionStateRequest> {

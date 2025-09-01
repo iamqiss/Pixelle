@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchWrapperException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.DensityWrapperException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
@@ -48,10 +48,10 @@ import java.io.IOException;
  *             otherwise use a more appropriate exception (e.g. if thrown
  *             from various abstractions)
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Deprecated
-public class GeneralScriptException extends OpenSearchException implements OpenSearchWrapperException {
+public class GeneralScriptException extends DensityException implements DensityWrapperException {
 
     public GeneralScriptException(String msg) {
         super(msg);

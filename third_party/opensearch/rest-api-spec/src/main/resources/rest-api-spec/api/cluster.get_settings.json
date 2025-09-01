@@ -1,7 +1,7 @@
 {
   "cluster.get_settings":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/cluster-api/cluster-settings/",
+      "url":"https://density.org/docs/latest/api-reference/cluster-api/cluster-settings/",
       "description":"Returns cluster settings."
     },
     "stability":"stable",

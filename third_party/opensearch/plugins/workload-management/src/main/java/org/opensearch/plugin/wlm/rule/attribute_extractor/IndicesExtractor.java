@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule.attribute_extractor;
+package org.density.plugin.wlm.rule.attribute_extractor;
 
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.rule.RuleAttribute;
-import org.opensearch.rule.attribute_extractor.AttributeExtractor;
-import org.opensearch.rule.autotagging.Attribute;
+import org.density.action.IndicesRequest;
+import org.density.rule.RuleAttribute;
+import org.density.rule.attribute_extractor.AttributeExtractor;
+import org.density.rule.autotagging.Attribute;
 
 import java.util.List;
 

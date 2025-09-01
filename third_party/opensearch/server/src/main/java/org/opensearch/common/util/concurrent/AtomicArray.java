@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.DensityGenerationException;
+import org.density.common.annotation.PublicApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  * A list backed by an {@link AtomicReferenceArray} with potential null values, easily allowing
  * to get the concrete values as a list using {@link #asList()}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AtomicArray<E> {
@@ -120,7 +120,7 @@ public class AtomicArray<E> {
      */
     public E[] toArray(E[] a) {
         if (a.length != array.length()) {
-            throw new OpenSearchGenerationException("AtomicArrays can only be copied to arrays of the same size");
+            throw new DensityGenerationException("AtomicArrays can only be copied to arrays of the same size");
         }
         for (int i = 0; i < array.length(); i++) {
             a[i] = array.get(i);

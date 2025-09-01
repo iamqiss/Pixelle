@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
-import org.opensearch.index.analysis.AnalysisMode;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.ParametrizedFieldMapper.Parameter;
-import org.opensearch.index.similarity.SimilarityProvider;
+import org.density.index.analysis.AnalysisMode;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.ParametrizedFieldMapper.Parameter;
+import org.density.index.similarity.SimilarityProvider;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -48,7 +48,7 @@ import java.util.function.Supplier;
 /**
  * Utility functions for text mapper parameters
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TextParams {
 
@@ -57,7 +57,7 @@ public final class TextParams {
     /**
      * Analyzers for text
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Analyzers {
         public final Parameter<NamedAnalyzer> indexAnalyzer;

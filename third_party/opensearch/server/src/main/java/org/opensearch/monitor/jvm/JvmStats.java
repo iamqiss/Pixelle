@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.lang.management.BufferPoolMXBean;
@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Holds JVM statistics
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JvmStats implements Writeable, ToXContentFragment {
 
@@ -373,7 +373,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * Garbage collector references.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GarbageCollectors implements Writeable, Iterable<GarbageCollector> {
 
@@ -405,7 +405,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * The garbage collector.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GarbageCollector implements Writeable {
 
@@ -448,7 +448,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * Thread information.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Threads implements Writeable {
 
@@ -485,7 +485,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
      * most recently expended effort in recycling unused objects
      * in particular memory pool.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class MemoryPoolGcStats implements Writeable {
 
@@ -527,7 +527,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * A memory pool.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class MemoryPool implements Writeable {
 
@@ -597,7 +597,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * Memory data.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Mem implements Writeable, Iterable<MemoryPool> {
 
@@ -678,7 +678,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * A buffer pool.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class BufferPool implements Writeable {
 
@@ -729,7 +729,7 @@ public class JvmStats implements Writeable, ToXContentFragment {
     /**
      * Class information.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Classes implements Writeable {
 

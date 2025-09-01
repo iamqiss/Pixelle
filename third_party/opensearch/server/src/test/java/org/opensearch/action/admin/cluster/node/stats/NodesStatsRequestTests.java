@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.stats;
+package org.density.action.admin.cluster.node.stats;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.in;
 import static org.hamcrest.Matchers.not;
 
-public class NodesStatsRequestTests extends OpenSearchTestCase {
+public class NodesStatsRequestTests extends DensityTestCase {
 
     /**
      * Make sure that we can set, serialize, and deserialize arbitrary sets

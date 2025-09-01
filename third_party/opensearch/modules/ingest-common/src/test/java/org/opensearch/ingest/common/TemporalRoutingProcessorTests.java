@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.IngestDocument;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TemporalRoutingProcessorTests extends OpenSearchTestCase {
+public class TemporalRoutingProcessorTests extends DensityTestCase {
 
     public void testExecuteHourlyGranularity() throws Exception {
         TemporalRoutingProcessor processor = createProcessor("@timestamp", "hour", "strict_date_optional_time", false, true, false);
@@ -204,8 +204,8 @@ public class TemporalRoutingProcessorTests extends OpenSearchTestCase {
         // Test missing timestamp_field
         Map<String, Object> config1 = new HashMap<>();
         config1.put("granularity", "day");
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(Collections.emptyMap(), "test", null, config1)
         );
         assertThat(exception.getMessage(), containsString("timestamp_field"));
@@ -213,14 +213,14 @@ public class TemporalRoutingProcessorTests extends OpenSearchTestCase {
         // Test missing granularity
         Map<String, Object> config2 = new HashMap<>();
         config2.put("timestamp_field", "@timestamp");
-        exception = expectThrows(OpenSearchParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config2));
+        exception = expectThrows(DensityParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config2));
         assertThat(exception.getMessage(), containsString("granularity"));
 
         // Test invalid granularity
         Map<String, Object> config3 = new HashMap<>();
         config3.put("timestamp_field", "@timestamp");
         config3.put("granularity", "invalid");
-        exception = expectThrows(OpenSearchParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config3));
+        exception = expectThrows(DensityParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config3));
         assertThat(exception.getMessage(), containsString("Invalid granularity"));
 
         // Test invalid format
@@ -228,7 +228,7 @@ public class TemporalRoutingProcessorTests extends OpenSearchTestCase {
         config4.put("timestamp_field", "@timestamp");
         config4.put("granularity", "day");
         config4.put("format", "invalid_format");
-        exception = expectThrows(OpenSearchParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config4));
+        exception = expectThrows(DensityParseException.class, () -> factory.create(Collections.emptyMap(), "test", null, config4));
         assertThat(exception.getMessage(), containsString("invalid date format"));
     }
 

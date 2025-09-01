@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.assistedinject;
+package org.density.common.inject.assistedinject;
 
-import org.opensearch.common.inject.BindingAnnotation;
+import org.density.common.inject.BindingAnnotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -45,7 +45,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author jmourits@google.com (Jerome Mourits)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 @BindingAnnotation
 @Target({ FIELD, PARAMETER, METHOD })

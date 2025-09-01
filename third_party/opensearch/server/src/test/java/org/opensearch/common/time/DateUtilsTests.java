@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.joda.time.DateTimeZone;
 
 import java.time.Instant;
@@ -48,16 +48,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.opensearch.common.time.DateUtils.clampToNanosRange;
-import static org.opensearch.common.time.DateUtils.toInstant;
-import static org.opensearch.common.time.DateUtils.toLong;
-import static org.opensearch.common.time.DateUtils.toMilliSeconds;
-import static org.opensearch.common.time.DateUtils.toNanoSeconds;
+import static org.density.common.time.DateUtils.clampToNanosRange;
+import static org.density.common.time.DateUtils.toInstant;
+import static org.density.common.time.DateUtils.toLong;
+import static org.density.common.time.DateUtils.toMilliSeconds;
+import static org.density.common.time.DateUtils.toNanoSeconds;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class DateUtilsTests extends OpenSearchTestCase {
+public class DateUtilsTests extends DensityTestCase {
     private static final Set<String> IGNORE = new HashSet<>(
         Arrays.asList("America/Bahia_Banderas", "America/Hermosillo", "America/Mazatlan", "Mexico/BajaSur", "WET")
     );

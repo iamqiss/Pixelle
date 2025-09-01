@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.url;
+package org.density.repositories.url;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -51,7 +51,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class URLRepositoryTests extends OpenSearchTestCase {
+public class URLRepositoryTests extends DensityTestCase {
 
     private URLRepository createRepository(Settings baseSettings, RepositoryMetadata repositoryMetadata) {
         return new URLRepository(

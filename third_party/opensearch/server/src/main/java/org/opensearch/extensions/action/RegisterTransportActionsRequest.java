@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.action;
+package org.density.extensions.action;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.extensions.proto.ExtensionIdentityProto.ExtensionIdentity;
-import org.opensearch.extensions.proto.RegisterTransportActionsProto.RegisterTransportActions;
-import org.opensearch.transport.TransportRequest;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.extensions.proto.ExtensionIdentityProto.ExtensionIdentity;
+import org.density.extensions.proto.RegisterTransportActionsProto.RegisterTransportActions;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Request to register extension Transport actions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RegisterTransportActionsRequest extends TransportRequest {
     private final RegisterTransportActions request;

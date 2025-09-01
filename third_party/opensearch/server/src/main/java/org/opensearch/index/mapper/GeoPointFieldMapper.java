@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.LatLonDocValuesField;
@@ -39,21 +39,21 @@ import org.apache.lucene.geo.GeoEncodingUtils;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Point;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.AbstractLatLonPointIndexFieldData;
-import org.opensearch.index.mapper.GeoPointFieldMapper.ParsedGeoPoint;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.VectorGeoPointShapeQueryProcessor;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityParseException;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.unit.DistanceUnit;
+import org.density.geometry.Geometry;
+import org.density.geometry.Point;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.AbstractLatLonPointIndexFieldData;
+import org.density.index.mapper.GeoPointFieldMapper.ParsedGeoPoint;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.VectorGeoPointShapeQueryProcessor;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ import java.util.function.Supplier;
  * <p>
  * Uses lucene 6 LatLonPoint encoding
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<ParsedGeoPoint>, List<? extends GeoPoint>> {
     public static final String CONTENT_TYPE = "geo_point";
@@ -82,7 +82,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
     /**
      * Concrete builder for geo_point types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends AbstractPointGeometryFieldMapper.Builder<Builder, GeoPointFieldType> {
 
@@ -116,7 +116,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
     /**
      * Concrete parser for geo_point types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser extends AbstractPointGeometryFieldMapper.TypeParser<Builder> {
         @Override
@@ -248,7 +248,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
     /**
      * Concrete field type for geo_point
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GeoPointFieldType extends AbstractPointGeometryFieldType<List<ParsedGeoPoint>, List<? extends GeoPoint>>
         implements
@@ -306,7 +306,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
     /**
      * A geo point parsed from geojson
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static class ParsedGeoPoint extends GeoPoint implements AbstractPointGeometryFieldMapper.ParsedPoint {
         @Override
@@ -324,7 +324,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
             if (isNormalizable(lat()) && isNormalizable(lon())) {
                 GeoUtils.normalizePoint(this);
             } else {
-                throw new OpenSearchParseException("cannot normalize the point - not a number");
+                throw new DensityParseException("cannot normalize the point - not a number");
             }
         }
 
@@ -368,7 +368,7 @@ public class GeoPointFieldMapper extends AbstractPointGeometryFieldMapper<List<P
     /**
      * The indexer for geo_point
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static class GeoPointIndexer implements Indexer<List<ParsedGeoPoint>, List<? extends GeoPoint>> {
 

@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.stats;
+package org.density.action.admin.cluster.remotestore.stats;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.compareStatsResponse;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createEmptyTranslogStats;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createShardRouting;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForNewPrimary;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForNewReplica;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForRemoteStoreRestoredPrimary;
-import static org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createTranslogStats;
-import static org.opensearch.core.xcontent.ToXContent.EMPTY_PARAMS;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.compareStatsResponse;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createEmptyTranslogStats;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createShardRouting;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForNewPrimary;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForNewReplica;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createStatsForRemoteStoreRestoredPrimary;
+import static org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsTestHelper.createTranslogStats;
+import static org.density.core.xcontent.ToXContent.EMPTY_PARAMS;
 
-public class RemoteStoreStatsResponseTests extends OpenSearchTestCase {
+public class RemoteStoreStatsResponseTests extends DensityTestCase {
     private ThreadPool threadPool;
     private ShardId shardId;
 

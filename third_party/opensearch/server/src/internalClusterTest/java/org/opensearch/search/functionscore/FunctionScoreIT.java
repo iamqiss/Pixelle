@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.functionscore;
+package org.density.search.functionscore;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.DensityTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,22 +62,22 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class FunctionScoreIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class FunctionScoreIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     static final String TYPE = "type";
     static final String INDEX = "index";
@@ -193,8 +193,8 @@ public class FunctionScoreIT extends ParameterizedStaticSettingsOpenSearchIntegT
     }
 
     public void testMinScoreFunctionScoreBasic() throws IOException, InterruptedException {
-        float score = randomValueOtherThanMany((f) -> Float.compare(f, 0) < 0, OpenSearchTestCase::randomFloat);
-        float minScore = randomValueOtherThanMany((f) -> Float.compare(f, 0) < 0, OpenSearchTestCase::randomFloat);
+        float score = randomValueOtherThanMany((f) -> Float.compare(f, 0) < 0, DensityTestCase::randomFloat);
+        float minScore = randomValueOtherThanMany((f) -> Float.compare(f, 0) < 0, DensityTestCase::randomFloat);
         index(
             INDEX,
             TYPE,

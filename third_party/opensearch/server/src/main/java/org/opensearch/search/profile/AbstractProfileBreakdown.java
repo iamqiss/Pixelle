@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import static java.util.Collections.emptyMap;
  * A node's time may be composed of several internal attributes (rewriting, weighting,
  * scoring, etc).
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "3.2.0")
 public abstract class AbstractProfileBreakdown {

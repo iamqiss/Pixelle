@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core;
+package org.density.core;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.PriorityQueue;
 
-public class RestStatusTests extends OpenSearchTestCase {
+public class RestStatusTests extends DensityTestCase {
 
     public void testStatusReturns200ForNoFailures() {
         int totalShards = randomIntBetween(1, 100);

@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry;
+package org.density.telemetry;
 
-import org.opensearch.plugins.TelemetryPlugin;
+import org.density.plugins.TelemetryPlugin;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * A module for loading classes for telemetry
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TelemetryModule {
 

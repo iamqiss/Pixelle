@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache.bitset;
+package org.density.index.cache.bitset;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -50,13 +50,13 @@ import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class BitSetFilterCacheTests extends OpenSearchTestCase {
+public class BitSetFilterCacheTests extends DensityTestCase {
 
     private static final IndexSettings INDEX_SETTINGS = IndexSettingsModule.newIndexSettings("test", Settings.EMPTY);
 
@@ -100,7 +100,7 @@ public class BitSetFilterCacheTests extends OpenSearchTestCase {
         writer.commit();
 
         DirectoryReader reader = DirectoryReader.open(writer);
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId("test", "_na_", 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId("test", "_na_", 0));
 
         BitsetFilterCache cache = new BitsetFilterCache(INDEX_SETTINGS, new BitsetFilterCache.Listener() {
             @Override
@@ -124,7 +124,7 @@ public class BitSetFilterCacheTests extends OpenSearchTestCase {
         writer.forceMerge(1);
         reader.close();
         reader = DirectoryReader.open(writer);
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId("test", "_na_", 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId("test", "_na_", 0));
 
         assertThat(matchCount(filter, reader), equalTo(3));
 
@@ -149,7 +149,7 @@ public class BitSetFilterCacheTests extends OpenSearchTestCase {
         writer.addDocument(document);
         writer.commit();
         final DirectoryReader writerReader = DirectoryReader.open(writer);
-        final IndexReader reader = OpenSearchDirectoryReader.wrap(writerReader, new ShardId("test", "_na_", 0));
+        final IndexReader reader = DensityDirectoryReader.wrap(writerReader, new ShardId("test", "_na_", 0));
 
         final AtomicLong stats = new AtomicLong();
         final AtomicInteger onCacheCalls = new AtomicInteger();
@@ -220,7 +220,7 @@ public class BitSetFilterCacheTests extends OpenSearchTestCase {
         writer.addDocument(new Document());
         DirectoryReader reader = DirectoryReader.open(writer);
         writer.close();
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId("test2", "_na_", 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId("test2", "_na_", 0));
 
         BitSetProducer producer = cache.getBitSetProducer(new MatchAllDocsQuery());
 

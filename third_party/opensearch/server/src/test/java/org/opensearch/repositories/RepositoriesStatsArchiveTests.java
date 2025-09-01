@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class RepositoriesStatsArchiveTests extends OpenSearchTestCase {
+public class RepositoriesStatsArchiveTests extends DensityTestCase {
     public void testStatsAreEvictedOnceTheyAreOlderThanRetentionPeriod() {
         int retentionTimeInMillis = randomIntBetween(100, 1000);
 

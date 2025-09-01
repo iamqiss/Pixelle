@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
@@ -14,30 +14,30 @@ import org.apache.arrow.util.AutoCloseables;
 import org.apache.arrow.util.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.arrow.flight.bootstrap.tls.DefaultSslContextProvider;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.arrow.flight.impl.BaseFlightProducer;
-import org.opensearch.arrow.flight.impl.FlightStreamManager;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.client.Client;
+import org.density.arrow.flight.bootstrap.tls.DefaultSslContextProvider;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.arrow.flight.impl.BaseFlightProducer;
+import org.density.arrow.flight.impl.FlightStreamManager;
+import org.density.arrow.spi.StreamManager;
+import org.density.cluster.service.ClusterService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.client.Client;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Objects;
 
 /**
- * FlightService manages the Arrow Flight server and client for OpenSearch.
+ * FlightService manages the Arrow Flight server and client for Density.
  * It handles the initialization, startup, and shutdown of the Flight server and client,
  * as well as managing the stream operations through a FlightStreamManager.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FlightService extends AuxTransport {
     /**

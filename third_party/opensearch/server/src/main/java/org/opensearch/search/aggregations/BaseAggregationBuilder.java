@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.AggregatorFactories.Builder;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ import java.util.Map;
  * Interface shared by {@link AggregationBuilder} and {@link PipelineAggregationBuilder} so they can conveniently share the same namespace
  * for {@link XContentParser#namedObject(Class, String, Object)}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface BaseAggregationBuilder {
     /**

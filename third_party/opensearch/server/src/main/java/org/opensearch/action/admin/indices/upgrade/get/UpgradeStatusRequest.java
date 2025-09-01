@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.upgrade.get;
+package org.density.action.admin.indices.upgrade.get;
 
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
 /**
  * Transport Request for retrieving status of upgrading an Index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class UpgradeStatusRequest extends BroadcastRequest<UpgradeStatusRequest> {

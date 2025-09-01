@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.common.Priority;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class TaskBatcherTests extends TaskExecutorTests {
 
     static class TestTaskBatcher extends TaskBatcher {
 
-        TestTaskBatcher(Logger logger, PrioritizedOpenSearchThreadPoolExecutor threadExecutor) {
+        TestTaskBatcher(Logger logger, PrioritizedDensityThreadPoolExecutor threadExecutor) {
             super(logger, threadExecutor, getMockListener());
         }
 

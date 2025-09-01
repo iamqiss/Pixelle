@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.node;
+package org.density.index.compositeindex.datacube.startree.node;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.search.startree.StarTreeNodeCollector;
-import org.opensearch.search.startree.filter.provider.DimensionFilterMapper;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.search.startree.StarTreeNodeCollector;
+import org.density.search.startree.filter.provider.DimensionFilterMapper;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import java.util.Iterator;
 /**
  * Interface that represents star tree node
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface StarTreeNode {

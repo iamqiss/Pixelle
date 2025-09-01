@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
 import org.apache.hc.core5.http.ContentTooLongException;
 import org.apache.hc.core5.http.ContentType;
@@ -40,30 +40,30 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.Supplier;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.Version;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.client.Request;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.ResponseListener;
-import org.opensearch.client.RestClient;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.RejectAwareActionListener;
-import org.opensearch.index.reindex.RetryListener;
-import org.opensearch.index.reindex.ScrollableHitSource;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.Version;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.search.SearchRequest;
+import org.density.client.Request;
+import org.density.client.ResponseException;
+import org.density.client.ResponseListener;
+import org.density.client.RestClient;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.RejectAwareActionListener;
+import org.density.index.reindex.RetryListener;
+import org.density.index.reindex.ScrollableHitSource;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,10 +72,10 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
-import static org.opensearch.index.reindex.remote.RemoteResponseParsers.MAIN_ACTION_PARSER;
-import static org.opensearch.index.reindex.remote.RemoteResponseParsers.RESPONSE_PARSER;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueNanos;
+import static org.density.index.reindex.remote.RemoteResponseParsers.MAIN_ACTION_PARSER;
+import static org.density.index.reindex.remote.RemoteResponseParsers.RESPONSE_PARSER;
 
 public class RemoteScrollableHitSource extends ScrollableHitSource {
     private final RestClient client;
@@ -145,7 +145,7 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
         logger.debug("Clearing the scrollID {}", scrollId);
         client.performRequestAsync(RemoteRequestBuilders.clearScroll(scrollId, remoteVersion), new ResponseListener() {
             @Override
-            public void onSuccess(org.opensearch.client.Response response) {
+            public void onSuccess(org.density.client.Response response) {
                 logger.debug("Successfully cleared [{}]", scrollId);
                 onCompletion.run();
             }
@@ -162,7 +162,7 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
                     if (remoteVersion.before(Version.fromId(2000099)) && re.getResponse().getStatusLine().getStatusCode() == 404) {
                         logger.debug(
                             (Supplier<?>) () -> new ParameterizedMessage(
-                                "Failed to clear scroll [{}] from pre-2.0 OpenSearch. This is normal if the request terminated "
+                                "Failed to clear scroll [{}] from pre-2.0 Density. This is normal if the request terminated "
                                     + "normally as the scroll has already been cleared automatically.",
                                 scrollId
                             ),
@@ -216,7 +216,7 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
         try {
             client.performRequestAsync(request, new ResponseListener() {
                 @Override
-                public void onSuccess(org.opensearch.client.Response response) {
+                public void onSuccess(org.density.client.Response response) {
                     logger.trace("Successfully got response from the remote");
                     // Restore the thread context to get the precious headers
                     try (ThreadContext.StoredContext ctx = contextSupplier.get()) {
@@ -233,11 +233,11 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
                             if (mediaType == null) {
                                 try {
                                     logger.error("Response didn't include Content-Type: " + bodyMessage(response.getEntity()));
-                                    throw new OpenSearchException(
-                                        "Response didn't include supported Content-Type, remote is likely not an OpenSearch instance"
+                                    throw new DensityException(
+                                        "Response didn't include supported Content-Type, remote is likely not an Density instance"
                                     );
                                 } catch (IOException e) {
-                                    OpenSearchException ee = new OpenSearchException("Error extracting body from response");
+                                    DensityException ee = new DensityException("Error extracting body from response");
                                     ee.addSuppressed(e);
                                     throw ee;
                                 }
@@ -251,10 +251,10 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
                             } catch (XContentParseException e) {
                                 /* Because we're streaming the response we can't get a copy of it here. The best we can do is hint that it
                                  * is totally wrong and we're probably not talking to Elasticsearch. */
-                                throw new OpenSearchException("Error parsing the response, remote is likely not an OpenSearch instance", e);
+                                throw new DensityException("Error parsing the response, remote is likely not an Density instance", e);
                             }
                         } catch (IOException e) {
-                            throw new OpenSearchException("Error deserializing response, remote is likely not an OpenSearch instance", e);
+                            throw new DensityException("Error deserializing response, remote is likely not an Density instance", e);
                         }
                         listener.onResponse(parsedResponse);
                     }
@@ -296,9 +296,9 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
     /**
      * Wrap the ResponseException in an exception that'll preserve its status code if possible so we can send it back to the user. We might
      * not have a constant for the status code so in that case we just use 500 instead. We also extract make sure to include the response
-     * body in the message so the user can figure out *why* the remote OpenSearch service threw the error back to us.
+     * body in the message so the user can figure out *why* the remote Density service threw the error back to us.
      */
-    static OpenSearchStatusException wrapExceptionToPreserveStatus(int statusCode, @Nullable HttpEntity entity, Exception cause) {
+    static DensityStatusException wrapExceptionToPreserveStatus(int statusCode, @Nullable HttpEntity entity, Exception cause) {
         RestStatus status = RestStatus.fromCode(statusCode);
         String messagePrefix = "";
         if (status == null) {
@@ -306,9 +306,9 @@ public class RemoteScrollableHitSource extends ScrollableHitSource {
             status = RestStatus.INTERNAL_SERVER_ERROR;
         }
         try {
-            return new OpenSearchStatusException(messagePrefix + bodyMessage(entity), status, cause);
+            return new DensityStatusException(messagePrefix + bodyMessage(entity), status, cause);
         } catch (IOException ioe) {
-            OpenSearchStatusException e = new OpenSearchStatusException(messagePrefix + "Failed to extract body.", status, cause);
+            DensityStatusException e = new DensityStatusException(messagePrefix + "Failed to extract body.", status, cause);
             e.addSuppressed(ioe);
             return e;
         }

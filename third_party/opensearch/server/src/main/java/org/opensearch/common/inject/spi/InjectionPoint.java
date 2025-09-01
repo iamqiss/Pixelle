@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,22 +23,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.ConfigurationException;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.internal.Annotations;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.MoreTypes;
-import org.opensearch.common.inject.internal.Nullability;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.ConfigurationException;
+import org.density.common.inject.Inject;
+import org.density.common.inject.Key;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.internal.Annotations;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.MoreTypes;
+import org.density.common.inject.internal.Nullability;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.inject.internal.MoreTypes.getRawType;
+import static org.density.common.inject.internal.MoreTypes.getRawType;
 
 /**
  * A constructor, field or method that can receive injections. Typically this is a member with the
@@ -67,7 +67,7 @@ import static org.opensearch.common.inject.internal.MoreTypes.getRawType;
  * @author crazybob@google.com (Bob Lee)
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class InjectionPoint {
@@ -165,7 +165,7 @@ public final class InjectionPoint {
     /**
      * Returns true if this injection point shall be skipped if the injector cannot resolve bindings
      * for all required dependencies. Both explicit bindings (as specified in a module), and implicit
-     * bindings ({@literal @}{@link org.opensearch.common.inject.ImplementedBy ImplementedBy}, default
+     * bindings ({@literal @}{@link org.density.common.inject.ImplementedBy ImplementedBy}, default
      * constructors etc.) may be used to satisfy optional injection points.
      */
     public boolean isOptional() {
@@ -411,7 +411,7 @@ public final class InjectionPoint {
     /**
      * Factory for the injection point
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private interface Factory<M extends Member & AnnotatedElement> {
         Factory<Field> FIELDS = new Factory<Field>() {

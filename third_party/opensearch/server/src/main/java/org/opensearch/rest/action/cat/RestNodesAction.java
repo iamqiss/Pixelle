@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,66 +26,66 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Table;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.get.GetStats;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.index.shard.IndexingStats;
-import org.opensearch.indices.NodeIndicesStats;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.os.OsStats;
-import org.opensearch.monitor.process.ProcessInfo;
-import org.opensearch.monitor.process.ProcessStats;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestActionListener;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.script.ScriptStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Table;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.network.NetworkAddress;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.http.HttpInfo;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.get.GetStats;
+import org.density.index.merge.MergeStats;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.search.stats.SearchStats;
+import org.density.index.shard.IndexingStats;
+import org.density.indices.NodeIndicesStats;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.os.OsStats;
+import org.density.monitor.process.ProcessInfo;
+import org.density.monitor.process.ProcessStats;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestActionListener;
+import org.density.rest.action.RestResponseListener;
+import org.density.script.ScriptStats;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _cat API action to get node information
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestNodesAction extends AbstractCatAction {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(RestNodesAction.class);

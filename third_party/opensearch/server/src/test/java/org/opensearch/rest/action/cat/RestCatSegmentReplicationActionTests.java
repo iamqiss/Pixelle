@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.Table;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Randomness;
+import org.density.common.Table;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RestCatSegmentReplicationActionTests extends OpenSearchTestCase {
+public class RestCatSegmentReplicationActionTests extends DensityTestCase {
     public void testSegmentReplicationAction() throws IOException {
         final RestCatSegmentReplicationAction action = new RestCatSegmentReplicationAction();
         final int totalShards = randomIntBetween(1, 32);

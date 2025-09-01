@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.DensityClient;
 
 /**
  * Base request builder for cluster-manager node operations that support acknowledgements
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AcknowledgedRequestBuilder<
     Request extends AcknowledgedRequest<Request>,
@@ -48,7 +48,7 @@ public abstract class AcknowledgedRequestBuilder<
         Response,
         RequestBuilder> {
 
-    protected AcknowledgedRequestBuilder(OpenSearchClient client, ActionType<Response> action, Request request) {
+    protected AcknowledgedRequestBuilder(DensityClient client, ActionType<Response> action, Request request) {
         super(client, action, request);
     }
 

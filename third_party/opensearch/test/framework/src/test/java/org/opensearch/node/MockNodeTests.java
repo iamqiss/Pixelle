@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.MockSearchService;
-import org.opensearch.search.SearchService;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.env.Environment;
+import org.density.plugins.Plugin;
+import org.density.search.MockSearchService;
+import org.density.search.SearchService;
+import org.density.test.MockHttpTransport;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockNodeTests extends OpenSearchTestCase {
+public class MockNodeTests extends DensityTestCase {
     /**
      * Test that we add the appropriate mock services when their plugins are added. This is a very heavy test for a testing component but
      * we've broken it in the past so it is important.

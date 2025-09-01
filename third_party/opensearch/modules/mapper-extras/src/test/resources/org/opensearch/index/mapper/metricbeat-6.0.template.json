@@ -1240,7 +1240,7 @@
         "dropwizard": {
           "properties": {}
         },
-        "opensearch": {
+        "density": {
           "properties": {
             "cluster": {
               "properties": {

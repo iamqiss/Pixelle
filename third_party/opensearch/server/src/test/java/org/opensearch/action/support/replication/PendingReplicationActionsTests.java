@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.RetryableAction;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.PrimaryShardClosedException;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.RetryableAction;
+import org.density.common.UUIDs;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.PrimaryShardClosedException;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
 
 import java.util.Collections;
 
-public class PendingReplicationActionsTests extends OpenSearchTestCase {
+public class PendingReplicationActionsTests extends DensityTestCase {
 
     private TestThreadPool threadPool;
     private ShardId shardId;

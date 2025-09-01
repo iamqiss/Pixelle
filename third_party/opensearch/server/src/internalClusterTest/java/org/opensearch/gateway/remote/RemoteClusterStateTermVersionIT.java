@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateAction;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionAction;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.cluster.coordination.PublicationTransportHandler;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.gateway.remote.model.RemoteRoutingTableBlobStore;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.state.ClusterStateAction;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.support.clustermanager.term.GetTermVersionAction;
+import org.density.action.support.clustermanager.term.GetTermVersionResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.cluster.coordination.PublicationTransportHandler;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.core.transport.TransportResponse;
+import org.density.gateway.remote.model.RemoteRoutingTableBlobStore;
+import org.density.index.mapper.MapperService;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.plugins.Plugin;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.nio.file.Path;
@@ -39,12 +39,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteClusterStateTermVersionIT extends RemoteStoreBaseIntegTestCase {
     private static final String INDEX_NAME = "test-index";
     private static final String INDEX_NAME_1 = "test-index-1";

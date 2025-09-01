@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,18 +28,18 @@
  * under the License.
  */
 
-import org.opensearch.gradle.test.RestIntegTestTask
-import org.opensearch.gradle.info.BuildParams
+import org.density.gradle.test.RestIntegTestTask
+import org.density.gradle.info.BuildParams
 
-apply plugin: 'opensearch.testclusters'
-apply plugin: 'opensearch.build'
-apply plugin: 'opensearch.rest-test'
-apply plugin: 'opensearch.publish'
-apply plugin: 'opensearch.rest-resources'
+apply plugin: 'density.testclusters'
+apply plugin: 'density.build'
+apply plugin: 'density.rest-test'
+apply plugin: 'density.publish'
+apply plugin: 'density.rest-resources'
 
 base {
-  group = 'org.opensearch.client'
-  archivesName = 'opensearch-rest-high-level-client'
+  group = 'org.density.client'
+  archivesName = 'density-rest-high-level-client'
 }
 
 restResources {
@@ -77,7 +77,7 @@ tasks.named('forbiddenApisMain').configure {
 
 File nodeCert = file("./testnode.crt")
 File nodeTrustStore = file("./testnode.jks")
-File pkiTrustCert = file("./src/test/resources/org/opensearch/client/security/delegate_pki/testRootCA.crt")
+File pkiTrustCert = file("./src/test/resources/org/density/client/security/delegate_pki/testRootCA.crt")
 
 integTest {
   systemProperty 'tests.rest.async', 'false'
@@ -95,7 +95,7 @@ check.dependsOn(asyncIntegTest)
 
 testClusters.all {
   testDistribution = 'ARCHIVE'
-  systemProperty 'opensearch.scripting.update.ctx_in_params', 'false'
+  systemProperty 'density.scripting.update.ctx_in_params', 'false'
   setting 'reindex.remote.allowlist', '[ "[::1]:*", "127.0.0.1:*" ]'
 
   extraConfigFile 'roles.yml', file('roles.yml')

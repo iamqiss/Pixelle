@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,12 +50,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomLong;
-import static org.opensearch.test.OpenSearchTestCase.randomLongBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomSubsetOf;
+import static org.density.test.DensityTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.randomFrom;
+import static org.density.test.DensityTestCase.randomIntBetween;
+import static org.density.test.DensityTestCase.randomLong;
+import static org.density.test.DensityTestCase.randomLongBetween;
+import static org.density.test.DensityTestCase.randomSubsetOf;
 import static org.hamcrest.Matchers.hasSize;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.rarely;
 import static org.apache.lucene.tests.util.LuceneTestCase.random;

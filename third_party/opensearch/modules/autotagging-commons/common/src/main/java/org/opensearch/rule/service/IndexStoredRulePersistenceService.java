@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.service;
+package org.density.rule.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.engine.DocumentMissingException;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rule.RuleEntityParser;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.RuleQueryMapper;
-import org.opensearch.rule.RuleUtils;
-import org.opensearch.rule.action.CreateRuleRequest;
-import org.opensearch.rule.action.CreateRuleResponse;
-import org.opensearch.rule.action.DeleteRuleRequest;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.action.UpdateRuleRequest;
-import org.opensearch.rule.action.UpdateRuleResponse;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.transport.client.Client;
+import org.density.ResourceNotFoundException;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Setting;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.engine.DocumentMissingException;
+import org.density.index.query.QueryBuilder;
+import org.density.rule.RuleEntityParser;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.RuleQueryMapper;
+import org.density.rule.RuleUtils;
+import org.density.rule.action.CreateRuleRequest;
+import org.density.rule.action.CreateRuleResponse;
+import org.density.rule.action.DeleteRuleRequest;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.action.UpdateRuleRequest;
+import org.density.rule.action.UpdateRuleResponse;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.search.SearchHit;
+import org.density.search.sort.SortOrder;
+import org.density.transport.client.Client;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import java.util.Optional;
 
 /**
  * This class encapsulates the logic to manage the lifecycle of rules at index level
- * @opensearch.experimental
+ * @density.experimental
  */
 public class IndexStoredRulePersistenceService implements RulePersistenceService {
     /**
@@ -88,9 +88,9 @@ public class IndexStoredRulePersistenceService implements RulePersistenceService
 
     /**
      * Constructs an instance of {@link IndexStoredRulePersistenceService} with the specified parameters.
-     * This service handles persistence and retrieval of stored rules within an OpenSearch index.
-     * @param indexName - The name of the OpenSearch index where the rules are stored.
-     * @param client - The OpenSearch client used to interact with the OpenSearch cluster.
+     * This service handles persistence and retrieval of stored rules within an Density index.
+     * @param indexName - The name of the Density index where the rules are stored.
+     * @param client - The Density client used to interact with the Density cluster.
      * @param clusterService
      * @param maxRulesPerPage - The maximum number of rules that can be returned in a single get request.
      * @param parser
@@ -141,7 +141,7 @@ public class IndexStoredRulePersistenceService implements RulePersistenceService
         SearchResponse searchResponse = client.prepareSearch(indexName).setQuery(queryBuilder.getCardinalityQuery()).get();
         if (searchResponse.getHits().getTotalHits() != null && searchResponse.getHits().getTotalHits().value() >= maxAllowedRulesCount) {
             listener.onFailure(
-                new OpenSearchRejectedExecutionException(
+                new DensityRejectedExecutionException(
                     "This create operation will violate"
                         + " the cardinality limit of "
                         + DEFAULT_MAX_ALLOWED_RULE_COUNT

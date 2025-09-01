@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.PointValues;
@@ -15,7 +15,7 @@ import org.apache.lucene.search.CollectionTerminatedException;
 import org.apache.lucene.search.DocIdSet;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.DocIdSetBuilder;
-import org.opensearch.common.Numbers;
+import org.density.common.Numbers;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * A {@link SortedDocsProducer} that can sort documents based on numerics indexed for unsigned long field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class UnsignedLongPointsSortedDocsProducer extends SortedDocsProducer {
     private final byte[] lowerPointQuery;

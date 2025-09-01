@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.search.sort.SortOrder;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.query.QueryBuilder;
+import org.density.script.Script;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,9 +64,9 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.index.VersionType.INTERNAL;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.index.VersionType.INTERNAL;
 
 /**
  * Request to reindex some documents from one index to another. This implements CompositeIndicesRequest but in a misleading way. Rather than
@@ -74,7 +74,7 @@ import static org.opensearch.index.VersionType.INTERNAL;
  * of reasons, not least of which that scripts are allowed to change the destination request in drastic ways, including changing the index
  * to which documents are written.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReindexRequest extends AbstractBulkIndexByScrollRequest<ReindexRequest> implements CompositeIndicesRequest, ToXContentObject {
     /**

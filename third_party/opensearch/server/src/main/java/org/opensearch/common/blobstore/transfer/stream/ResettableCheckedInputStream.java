@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer.stream;
+package org.density.common.blobstore.transfer.stream;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import com.jcraft.jzlib.CRC32;
  * ResettableCheckedInputStream is a modified implementation of {@link java.util.zip.CheckedInputStream} that supports
  * mark and reset and modifies the file checksum during mark and reset calls.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ResettableCheckedInputStream extends FilterInputStream {
     private final CRC32 checksum;

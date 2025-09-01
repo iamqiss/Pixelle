@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.cluster.decommission.DecommissionStatus;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ResourceNotFoundException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.cluster.decommission.DecommissionStatus;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,8 +42,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_FORCE_GROUP_SETTING;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_FORCE_GROUP_SETTING;
 
 /**
  * * Service responsible for updating cluster state metadata with weighted routing weights

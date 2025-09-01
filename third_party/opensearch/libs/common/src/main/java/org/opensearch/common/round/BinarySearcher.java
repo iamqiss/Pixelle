@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.round;
+package org.density.common.round;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 import java.util.Arrays;
 
 /**
  * It uses binary search on a sorted array of pre-computed round-down points.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 class BinarySearcher implements Roundable {

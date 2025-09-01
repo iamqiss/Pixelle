@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.search.aggregations.metrics.InternalGeoCentroid.Fields;
+import org.density.common.geo.GeoPoint;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.search.aggregations.metrics.InternalGeoCentroid.Fields;
 
 import java.io.IOException;
 
 /**
  * Serialization and merge logic for {@link GeoCentroidAggregator}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedGeoCentroid extends ParsedAggregation implements GeoCentroid {
     private GeoPoint centroid;

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.sampler;
+package org.density.telemetry.tracing.sampler;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import io.opentelemetry.sdk.trace.data.LinkData;
 import io.opentelemetry.sdk.trace.samplers.Sampler;
 import io.opentelemetry.sdk.trace.samplers.SamplingResult;
 
-import static org.opensearch.telemetry.tracing.AttributeNames.TRACE;
+import static org.density.telemetry.tracing.AttributeNames.TRACE;
 
 /**
  * RequestSampler based on HeadBased sampler

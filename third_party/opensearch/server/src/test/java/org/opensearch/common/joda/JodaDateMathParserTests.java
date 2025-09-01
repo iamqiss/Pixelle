@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.test.DensityTestCase;
 import org.joda.time.DateTimeZone;
 
 import java.time.Instant;
@@ -47,7 +47,7 @@ import java.util.function.LongSupplier;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class JodaDateMathParserTests extends OpenSearchTestCase {
+public class JodaDateMathParserTests extends DensityTestCase {
 
     DateFormatter formatter = Joda.forPattern("date_optional_time||epoch_millis");
     DateMathParser parser = formatter.toDateMathParser();
@@ -321,7 +321,7 @@ public class JodaDateMathParserTests extends OpenSearchTestCase {
         try {
             parser.parse(date, () -> 0);
             fail("Date: " + date + "\n" + msg);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage().contains(exc), equalTo(true));
         }
     }
@@ -355,8 +355,8 @@ public class JodaDateMathParserTests extends OpenSearchTestCase {
         JodaDateMathParser parser = new JodaDateMathParser(Joda.forPattern("epoch_millis"));
         try {
             parser.parse("1234567890123", () -> 42, false, ZoneId.of("CET"));
-            fail("Expected OpenSearchParseException");
-        } catch (OpenSearchParseException e) {
+            fail("Expected DensityParseException");
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("failed to parse date field"));
             assertThat(e.getMessage(), containsString("with format [epoch_millis]"));
         }

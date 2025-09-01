@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.template;
+package org.density.indices.template;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.common.xcontent.XContentFactory;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.io.IOException;
 import java.util.Collections;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.hasSize;
 
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class IndexTemplateBlocksIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class IndexTemplateBlocksIT extends DensityIntegTestCase {
     public void testIndexTemplatesWithBlocks() throws IOException {
         // creates a simple index template
         client().admin()

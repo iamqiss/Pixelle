@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseTests;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.aggregations.AggregationsTests;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.SearchProfileShardResultsTests;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.SuggestTests;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseTests;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.plugins.SearchPlugin;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.aggregations.AggregationsTests;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.SearchProfileShardResultsTests;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.SuggestTests;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -49,7 +49,7 @@ import java.util.UUID;
 
 import static java.util.Collections.singletonMap;
 
-public class GenericSearchExtBuilderTests extends OpenSearchTestCase {
+public class GenericSearchExtBuilderTests extends DensityTestCase {
 
     private static final NamedXContentRegistry xContentRegistry;
     static {

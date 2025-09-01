@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,39 +25,39 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksAction;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksAction;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.tasks.TaskManager;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.test.ClusterServiceUtils.setState;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
@@ -615,12 +615,12 @@ public class CancellableTasksTests extends TaskManagerTestCase {
         taskManager.addTaskEventListeners(new TaskManager.TaskEventListeners() {
             @Override
             public void onTaskCancelled(CancellableTask task) {
-                throw new OpenSearchException("Exception");
+                throw new DensityException("Exception");
             }
         });
         CancellableTask cancellableTask = (CancellableTask) taskManager.register("type-0", "action-0", new CancellableNodeRequest());
         AtomicBoolean taskCompleted = new AtomicBoolean();
-        assertThrows(OpenSearchException.class, () -> taskManager.cancel(cancellableTask, "test", () -> taskCompleted.set(true)));
+        assertThrows(DensityException.class, () -> taskManager.cancel(cancellableTask, "test", () -> taskCompleted.set(true)));
         assertFalse(taskCompleted.get());
     }
 

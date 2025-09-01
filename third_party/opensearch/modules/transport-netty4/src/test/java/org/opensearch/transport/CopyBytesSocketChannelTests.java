@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -58,7 +58,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 
-public class CopyBytesSocketChannelTests extends OpenSearchTestCase {
+public class CopyBytesSocketChannelTests extends DensityTestCase {
 
     private final UnpooledByteBufAllocator alloc = new UnpooledByteBufAllocator(false);
     private final AtomicReference<CopyBytesSocketChannel> accepted = new AtomicReference<>();

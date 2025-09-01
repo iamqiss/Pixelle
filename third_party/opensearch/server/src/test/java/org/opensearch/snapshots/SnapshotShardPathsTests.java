@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class SnapshotShardPathsTests extends OpenSearchTestCase {
+public class SnapshotShardPathsTests extends DensityTestCase {
 
     public void testToXContent() throws IOException {
         List<String> paths = Arrays.asList("/path/to/shard/1", "/path/to/shard/2", "/path/to/shard/3");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.index.OpenSearchLeafReader;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.Nullable;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.index.DensityLeafReader;
+import org.density.core.index.shard.ShardId;
 
 /**
  * Utility class for shard operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ShardUtils {
 
@@ -54,9 +54,9 @@ public final class ShardUtils {
      */
     @Nullable
     public static ShardId extractShardId(LeafReader reader) {
-        final OpenSearchLeafReader esReader = OpenSearchLeafReader.getOpenSearchLeafReader(reader);
+        final DensityLeafReader esReader = DensityLeafReader.getDensityLeafReader(reader);
         if (esReader != null) {
-            assert reader.getRefCount() > 0 : "OpenSearchLeafReader is already closed";
+            assert reader.getRefCount() > 0 : "DensityLeafReader is already closed";
             return esReader.shardId();
         }
         return null;
@@ -68,10 +68,10 @@ public final class ShardUtils {
      */
     @Nullable
     public static ShardId extractShardId(DirectoryReader reader) {
-        final OpenSearchDirectoryReader esReader = OpenSearchDirectoryReader.getOpenSearchDirectoryReader(reader);
+        final DensityDirectoryReader esReader = DensityDirectoryReader.getDensityDirectoryReader(reader);
         if (esReader != null) {
             return esReader.shardId();
         }
-        throw new IllegalArgumentException("can't extract shard ID, can't unwrap OpenSearchDirectoryReader");
+        throw new IllegalArgumentException("can't extract shard ID, can't unwrap DensityDirectoryReader");
     }
 }

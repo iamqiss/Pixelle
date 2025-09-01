@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.Node;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.Node;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyInt;

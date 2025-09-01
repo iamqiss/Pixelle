@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.IndicesOptions.WildcardStates;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.IndicesOptions.WildcardStates;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,16 +63,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeBooleanValue;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeStringArrayValue;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeStringValue;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeTimeValue;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.xcontent.support.XContentMapValues.nodeBooleanValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeStringArrayValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeStringValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeTimeValue;
 
 /**
  * A multi search API request.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MultiSearchRequest extends ActionRequest implements CompositeIndicesRequest {

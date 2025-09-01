@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.search.function.FieldValueFactorFunction;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class FieldValueFactorFunctionModifierTests extends OpenSearchTestCase {
+public class FieldValueFactorFunctionModifierTests extends DensityTestCase {
 
     public void testValidOrdinals() {
         assertThat(FieldValueFactorFunction.Modifier.NONE.ordinal(), equalTo(0));

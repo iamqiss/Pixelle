@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateUtils;
+import org.density.test.DensityTestCase;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -46,7 +46,7 @@ import java.util.function.Function;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class DateFormatTests extends OpenSearchTestCase {
+public class DateFormatTests extends DensityTestCase {
 
     public void testParseJava() {
         Function<String, ZonedDateTime> javaFunction = DateFormat.Java.getFunction(

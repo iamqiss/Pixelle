@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.FieldInfos;
@@ -65,21 +65,21 @@ import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
 import org.apache.lucene.search.grouping.CollapsingTopDocsCollector;
-import org.opensearch.action.search.MaxScoreCollector;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.ScriptScoreQuery;
-import org.opensearch.common.util.CachedSupplier;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.collapse.CollapseContext;
-import org.opensearch.search.internal.ScrollContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.action.search.MaxScoreCollector;
+import org.density.common.Nullable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.ScriptScoreQuery;
+import org.density.common.util.CachedSupplier;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.search.DocValueFormat;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.collapse.CollapseContext;
+import org.density.search.internal.ScrollContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,13 +88,13 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_COUNT;
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_TOP_HITS;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_COUNT;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_TOP_HITS;
 
 /**
  * A {@link QueryCollectorContext} that creates top docs collector
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TopDocsCollectorContext extends QueryCollectorContext implements RescoringQueryCollectorContext {
     protected final int numHits;
@@ -877,8 +877,8 @@ public abstract class TopDocsCollectorContext extends QueryCollectorContext impl
         void checkMaxScoreInfo(Query query) {
             if (query instanceof FunctionScoreQuery || query instanceof ScriptScoreQuery || query instanceof SpanQuery) {
                 hasInfMaxScore = true;
-            } else if (query instanceof OpenSearchToParentBlockJoinQuery) {
-                OpenSearchToParentBlockJoinQuery q = (OpenSearchToParentBlockJoinQuery) query;
+            } else if (query instanceof DensityToParentBlockJoinQuery) {
+                DensityToParentBlockJoinQuery q = (DensityToParentBlockJoinQuery) query;
                 hasInfMaxScore |= (q.getScoreMode() != org.apache.lucene.search.join.ScoreMode.None);
             }
         }

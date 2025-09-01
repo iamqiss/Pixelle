@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.node.SClass;
-import org.opensearch.painless.node.SFunction;
-import org.opensearch.painless.symbol.FunctionTable;
-import org.opensearch.painless.symbol.ScriptScope;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.node.SClass;
+import org.density.painless.node.SFunction;
+import org.density.painless.symbol.FunctionTable;
+import org.density.painless.symbol.ScriptScope;
 
 import java.util.ArrayList;
 import java.util.List;

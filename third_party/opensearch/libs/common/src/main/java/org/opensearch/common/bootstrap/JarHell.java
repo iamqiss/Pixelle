@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.bootstrap;
+package org.density.common.bootstrap;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
 
 import java.io.IOException;
 import java.lang.Runtime.Version;
@@ -68,11 +68,11 @@ import java.util.jar.Manifest;
  *   <li>Checks that class files are not duplicated across jars.</li>
  *   <li>Checks any {@code X-Compile-Target-JDK} value in the jar
  *       manifest is compatible with current JRE</li>
- *   <li>Checks any {@code X-Compile-OpenSearch-Version} value in
+ *   <li>Checks any {@code X-Compile-Density-Version} value in
  *       the jar manifest is compatible with the current ES</li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JarHell {
 

@@ -1,10 +1,10 @@
-apply plugin: 'opensearch.opensearchplugin'
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.densityplugin'
+apply plugin: 'density.internal-cluster-test'
 
-opensearchplugin {
+densityplugin {
   name = 'stream-transport-example'
   description = 'Example plugin demonstrating stream-based transport actions'
-  classname = 'org.opensearch.example.stream.StreamTransportExamplePlugin'
+  classname = 'org.density.example.stream.StreamTransportExamplePlugin'
   licenseFile = rootProject.file('licenses/APACHE-LICENSE-2.0.txt')
   noticeFile = rootProject.file('NOTICE.txt')
 }

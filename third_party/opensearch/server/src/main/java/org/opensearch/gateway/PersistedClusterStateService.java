@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,36 +60,36 @@ import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.bytes.RecyclingBytesStreamOutput;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeMetadata;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.CheckedConsumer;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.bytes.RecyclingBytesStreamOutput;
+import org.density.common.io.Streams;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.ByteArray;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeMetadata;
 
 import java.io.Closeable;
 import java.io.IOError;
@@ -132,7 +132,7 @@ import java.util.function.Supplier;
  * <p>
  * (the last-accepted term is recorded in Metadata → CoordinationMetadata so does not need repeating here)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PersistedClusterStateService {
     private static final Logger logger = LogManager.getLogger(PersistedClusterStateService.class);
@@ -271,7 +271,7 @@ public class PersistedClusterStateService {
     /**
      * The on disk state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class OnDiskState {
         private static final OnDiskState NO_ON_DISK_STATE = new OnDiskState(null, null, 0L, 0L, Metadata.EMPTY_METADATA);
@@ -592,7 +592,7 @@ public class PersistedClusterStateService {
     /**
      * Writer for cluster state service
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Writer implements Closeable {
 

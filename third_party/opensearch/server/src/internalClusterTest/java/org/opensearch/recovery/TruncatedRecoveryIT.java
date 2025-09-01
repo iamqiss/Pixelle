@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.recovery;
+package org.density.recovery;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.tests.util.English;
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressCodecs;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.recovery.FileChunkRequest;
-import org.opensearch.indices.recovery.PeerRecoveryTargetService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.recovery.FileChunkRequest;
+import org.density.indices.recovery.PeerRecoveryTargetService;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,14 +61,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 2, numClientNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
+@DensityIntegTestCase.ClusterScope(numDataNodes = 2, numClientNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
 @SuppressCodecs("*") // test relies on exact file extensions
-public class TruncatedRecoveryIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class TruncatedRecoveryIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public TruncatedRecoveryIT(Settings settings) {
         super(settings);

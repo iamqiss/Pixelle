@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.codecs.StoredFieldsReader;
@@ -65,7 +65,7 @@ import java.util.function.Supplier;
 /**
  * Merge Policy that prunes the recovery source
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
     RecoverySourcePruneMergePolicy(String recoverySourceField, Supplier<Query> retainSourceQuerySupplier, MergePolicy in) {
@@ -104,7 +104,7 @@ final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
     /**
      * A codec reader that prunes the source using a filter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SourcePruningFilterCodecReader extends FilterCodecReader {
         private final BitSet recoverySourceToKeep;
@@ -175,7 +175,7 @@ final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
         /**
          * A producer of filtered doc vlaues
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class FilterDocValuesProducer extends DocValuesProducer {
             private final DocValuesProducer in;
@@ -228,7 +228,7 @@ final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
         /**
          * A fields reader that provides a filtered stored field
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private abstract static class FilterStoredFieldsReader extends StoredFieldsReader {
 
@@ -260,7 +260,7 @@ final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
         /**
          * A reader of pruned stored fields
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class RecoverySourcePruningStoredFieldsReader extends FilterStoredFieldsReader {
 
@@ -304,7 +304,7 @@ final class RecoverySourcePruneMergePolicy extends OneMergeWrappingMergePolicy {
         /**
          * A visitor pattern for filtered stored fields
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class FilterStoredFieldVisitor extends StoredFieldVisitor {
             private final StoredFieldVisitor visitor;

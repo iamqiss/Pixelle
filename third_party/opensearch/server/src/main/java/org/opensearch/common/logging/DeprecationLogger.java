@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * A logger that logs deprecation notices. Logger should be initialized with a parent logger which name will be used
- * for deprecation logger. For instance <code>DeprecationLogger.getLogger("org.opensearch.test.SomeClass")</code> will
- * result in a deprecation logger with name <code>org.opensearch.deprecation.test.SomeClass</code>. This allows to use a
+ * for deprecation logger. For instance <code>DeprecationLogger.getLogger("org.density.test.SomeClass")</code> will
+ * result in a deprecation logger with name <code>org.density.deprecation.test.SomeClass</code>. This allows to use a
  * <code>deprecation</code> logger defined in log4j2.properties.
  * <p>
  * Logs are emitted at the custom {@link #DEPRECATION} level, and routed wherever they need to go using log4j. For example,
@@ -51,7 +51,7 @@ import org.opensearch.common.annotation.PublicApi;
  * key is combined with the <code>X-Opaque-Id</code> request header value, if supplied, which allows for per-client
  * message limiting.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DeprecationLogger {
@@ -77,17 +77,17 @@ public class DeprecationLogger {
 
     /**
      * Creates a new deprecation logger based on the parent logger. Automatically
-     * prefixes the logger name with "deprecation", if it starts with "org.opensearch.",
-     * it replaces "org.opensearch" with "org.opensearch.deprecation" to maintain
-     * the "org.opensearch" namespace.
+     * prefixes the logger name with "deprecation", if it starts with "org.density.",
+     * it replaces "org.density" with "org.density.deprecation" to maintain
+     * the "org.density" namespace.
      */
     public static DeprecationLogger getLogger(String name) {
         return new DeprecationLogger(getDeprecatedLoggerForName(name));
     }
 
     private static Logger getDeprecatedLoggerForName(String name) {
-        if (name.startsWith("org.opensearch")) {
-            name = name.replace("org.opensearch.", "org.opensearch.deprecation.");
+        if (name.startsWith("org.density")) {
+            name = name.replace("org.density.", "org.density.deprecation.");
         } else {
             name = "deprecation." + name;
         }
@@ -110,7 +110,7 @@ public class DeprecationLogger {
     /**
      * The builder for the deprecation logger
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public class DeprecationLoggerBuilder {

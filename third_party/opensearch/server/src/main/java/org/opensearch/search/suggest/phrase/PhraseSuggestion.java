@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggest.Suggestion;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggest.Suggestion;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Suggestion entry returned from the {@link PhraseSuggester}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PhraseSuggestion extends Suggest.Suggestion<PhraseSuggestion.Entry> {
 
@@ -90,7 +90,7 @@ public class PhraseSuggestion extends Suggest.Suggestion<PhraseSuggestion.Entry>
     /**
      * Entry in the phrase suggester
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Entry extends Suggestion.Entry<PhraseSuggestion.Entry.Option> {
 
@@ -178,7 +178,7 @@ public class PhraseSuggestion extends Suggest.Suggestion<PhraseSuggestion.Entry>
         /**
          * Options for phrase suggestion
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Option extends Suggestion.Entry.Option {
 

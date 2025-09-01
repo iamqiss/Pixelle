@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.remote;
+package org.density.common.remote;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.action.ActionListener;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.test.DensityTestCase;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AbstractRemoteWritableEntityManagerTests extends OpenSearchTestCase {
+public class AbstractRemoteWritableEntityManagerTests extends DensityTestCase {
     public void testGetStoreWithKnownEntityType() {
         AbstractRemoteWritableEntityManager manager = new ConcreteRemoteWritableEntityManager();
         String knownEntityType = "knownType";

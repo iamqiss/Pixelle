@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.translog.Translog;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 import org.junit.After;
 import org.junit.Before;
 
@@ -57,14 +57,14 @@ import java.util.Optional;
 import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class MaxDocsLimitIT extends OpenSearchIntegTestCase {
+public class MaxDocsLimitIT extends DensityIntegTestCase {
 
     private static final AtomicInteger maxDocs = new AtomicInteger();
     private static final ShardId shardId = new ShardId(new Index("test", "_na_"), 0);
@@ -135,7 +135,7 @@ public class MaxDocsLimitIT extends OpenSearchIntegTestCase {
             .setTrackTotalHitsUpTo(Integer.MAX_VALUE)
             .setSize(0)
             .get();
-        OpenSearchAssertions.assertNoFailures(searchResponse);
+        DensityAssertions.assertNoFailures(searchResponse);
         assertThat(searchResponse.getHits().getTotalHits().value(), equalTo((long) maxDocs.get()));
         if (randomBoolean()) {
             client().admin().indices().prepareFlush("test").get();
@@ -148,7 +148,7 @@ public class MaxDocsLimitIT extends OpenSearchIntegTestCase {
             .setTrackTotalHitsUpTo(Integer.MAX_VALUE)
             .setSize(0)
             .get();
-        OpenSearchAssertions.assertNoFailures(searchResponse);
+        DensityAssertions.assertNoFailures(searchResponse);
         assertThat(searchResponse.getHits().getTotalHits().value(), equalTo((long) maxDocs.get()));
     }
 
@@ -166,7 +166,7 @@ public class MaxDocsLimitIT extends OpenSearchIntegTestCase {
             .setTrackTotalHitsUpTo(Integer.MAX_VALUE)
             .setSize(0)
             .get();
-        OpenSearchAssertions.assertNoFailures(searchResponse);
+        DensityAssertions.assertNoFailures(searchResponse);
         assertThat(searchResponse.getHits().getTotalHits().value(), equalTo((long) indexingResult.numSuccess));
         int totalSuccess = indexingResult.numSuccess;
         while (totalSuccess < maxDocs.get()) {
@@ -184,7 +184,7 @@ public class MaxDocsLimitIT extends OpenSearchIntegTestCase {
             .setTrackTotalHitsUpTo(Integer.MAX_VALUE)
             .setSize(0)
             .get();
-        OpenSearchAssertions.assertNoFailures(searchResponse);
+        DensityAssertions.assertNoFailures(searchResponse);
         assertThat(searchResponse.getHits().getTotalHits().value(), equalTo((long) totalSuccess));
     }
 

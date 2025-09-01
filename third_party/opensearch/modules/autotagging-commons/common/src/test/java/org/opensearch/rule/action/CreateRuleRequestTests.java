@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.rule.utils.RuleTestUtils.assertEqualRule;
-import static org.opensearch.rule.utils.RuleTestUtils.ruleOne;
+import static org.density.rule.utils.RuleTestUtils.assertEqualRule;
+import static org.density.rule.utils.RuleTestUtils.ruleOne;
 
-public class CreateRuleRequestTests extends OpenSearchTestCase {
+public class CreateRuleRequestTests extends DensityTestCase {
 
     /**
      * Test case to verify the serialization and deserialization of CreateRuleRequest.

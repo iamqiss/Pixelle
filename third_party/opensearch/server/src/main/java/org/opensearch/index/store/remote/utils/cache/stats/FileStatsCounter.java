@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache.stats;
+package org.density.index.store.remote.utils.cache.stats;
 
-import org.opensearch.index.store.remote.filecache.CachedFullFileIndexInput;
+import org.density.index.store.remote.filecache.CachedFullFileIndexInput;
 
 /**
  * A non thread-safe {@link StatsCounter} implementation which aggregates multiple {@link DefaultStatsCounter}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileStatsCounter<K, V> implements StatsCounter<K, V> {
 

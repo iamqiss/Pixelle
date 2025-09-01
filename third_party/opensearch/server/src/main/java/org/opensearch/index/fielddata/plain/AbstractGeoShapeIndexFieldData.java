@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.SortField;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.LeafGeoShapeFieldData;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.util.BigArrays;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.LeafGeoShapeFieldData;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 /**
  * Base class for retrieving Geometry docvalues
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractGeoShapeIndexFieldData implements IndexFieldData<LeafGeoShapeFieldData> {
     protected final String fieldName;
@@ -112,7 +112,7 @@ public abstract class AbstractGeoShapeIndexFieldData implements IndexFieldData<L
     /**
      * Builder class for creating the GeoShapeIndexFieldData.
      * This is required the way the indexfieldData is created via the builder class only.
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder implements IndexFieldData.Builder {
         private final String name;

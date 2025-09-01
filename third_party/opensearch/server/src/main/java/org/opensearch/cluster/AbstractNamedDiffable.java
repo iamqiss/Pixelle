@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ import java.io.IOException;
  * Abstract diffable object with simple diffs implementation that sends the entire object if object has changed or
  * nothing is object remained the same. Comparing to AbstractDiffable, this class also works with NamedWriteables
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractNamedDiffable<T extends NamedDiffable<T>> implements Diffable<T>, NamedWriteable {
 
@@ -65,7 +65,7 @@ public abstract class AbstractNamedDiffable<T extends NamedDiffable<T>> implemen
     /**
      * A complete named diff.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class CompleteNamedDiff<T extends NamedDiffable<T>> implements NamedDiff<T> {
 

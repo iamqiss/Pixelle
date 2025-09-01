@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.analysis.AnalyzerComponentsProvider;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.ShingleTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionContext.DirectCandidateGenerator;
+import org.density.DensityParseException;
+import org.density.common.lucene.BytesRefs;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.analysis.AnalyzerComponentsProvider;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.ShingleTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.script.TemplateScript;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.search.suggest.phrase.PhraseSuggestionContext.DirectCandidateGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ import java.util.Set;
 /**
  * Defines the actual suggest command for phrase suggestions ( {@code phrase}).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionBuilder> {
 
@@ -622,7 +622,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
 
         // now we should have field name, check and copy fields over to the suggestion builder we return
         if (fieldname == null) {
-            throw new OpenSearchParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
+            throw new DensityParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
         }
         return new PhraseSuggestionBuilder(fieldname, tmpSuggestion);
     }
@@ -773,7 +773,7 @@ public class PhraseSuggestionBuilder extends SuggestionBuilder<PhraseSuggestionB
     /**
      * {@link CandidateGenerator} interface.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface CandidateGenerator extends Writeable, ToXContentObject {
         String getType();

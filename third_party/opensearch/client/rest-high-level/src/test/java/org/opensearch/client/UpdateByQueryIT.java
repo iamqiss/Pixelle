@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.client.tasks.TaskSubmissionResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.reindex.BulkByScrollResponse;
-import org.opensearch.index.reindex.UpdateByQueryAction;
-import org.opensearch.index.reindex.UpdateByQueryRequest;
-import org.opensearch.script.Script;
-import org.opensearch.tasks.RawTaskStatus;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.get.GetRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest;
+import org.density.client.tasks.TaskSubmissionResponse;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.reindex.BulkByScrollResponse;
+import org.density.index.reindex.UpdateByQueryAction;
+import org.density.index.reindex.UpdateByQueryRequest;
+import org.density.script.Script;
+import org.density.tasks.RawTaskStatus;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class UpdateByQueryIT extends OpenSearchRestHighLevelClientTestCase {
+public class UpdateByQueryIT extends DensityRestHighLevelClientTestCase {
 
     public void testUpdateByQuery() throws Exception {
         final String sourceIndex = "source1";
@@ -181,7 +181,7 @@ public class UpdateByQueryIT extends OpenSearchRestHighLevelClientTestCase {
             assertFalse(response.getNodeFailures().isEmpty());
             assertEquals(1, response.getNodeFailures().size());
             assertEquals(
-                "OpenSearch exception [type=resource_not_found_exception, reason=task [" + taskIdToRethrottle + "] is missing]",
+                "Density exception [type=resource_not_found_exception, reason=task [" + taskIdToRethrottle + "] is missing]",
                 response.getNodeFailures().get(0).getCause().getMessage()
             );
         }

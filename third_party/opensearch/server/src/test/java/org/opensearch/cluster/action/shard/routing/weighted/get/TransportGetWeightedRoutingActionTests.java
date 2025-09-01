@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.action.shard.routing.weighted.get;
+package org.density.cluster.action.shard.routing.weighted.get;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingAction;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequestBuilder;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.TransportGetWeightedRoutingAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.cluster.routing.WeightedRoutingService;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingAction;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequestBuilder;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.get.TransportGetWeightedRoutingAction;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.cluster.routing.WeightedRoutingService;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 import org.junit.After;
 import org.junit.Before;
 
@@ -49,7 +49,7 @@ import java.util.Set;
 import static java.util.Collections.emptySet;
 import static org.mockito.Mockito.mock;
 
-public class TransportGetWeightedRoutingActionTests extends OpenSearchTestCase {
+public class TransportGetWeightedRoutingActionTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private ClusterService clusterService;

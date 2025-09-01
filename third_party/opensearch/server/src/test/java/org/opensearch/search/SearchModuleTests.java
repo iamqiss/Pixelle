@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,78 +25,78 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.functionscore.GaussDecayFunctionBuilder;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.BaseAggregationBuilder;
-import org.opensearch.search.aggregations.ConcurrentAggregationProcessor;
-import org.opensearch.search.aggregations.DefaultAggregationProcessor;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.ChiSquare;
-import org.opensearch.search.aggregations.pipeline.AbstractPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.InternalDerivative;
-import org.opensearch.search.aggregations.pipeline.MovAvgModel;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.pipeline.SimpleModel;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.subphase.ExplainPhase;
-import org.opensearch.search.fetch.subphase.highlight.CustomHighlighter;
-import org.opensearch.search.fetch.subphase.highlight.FastVectorHighlighter;
-import org.opensearch.search.fetch.subphase.highlight.Highlighter;
-import org.opensearch.search.fetch.subphase.highlight.PlainHighlighter;
-import org.opensearch.search.fetch.subphase.highlight.UnifiedHighlighter;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.search.query.ConcurrentQueryPhaseSearcher;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.search.query.QueryPhaseSearcher;
-import org.opensearch.search.query.QueryPhaseSearcherWrapper;
-import org.opensearch.search.rescore.QueryRescorerBuilder;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.suggest.Suggest.Suggestion;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry.Option;
-import org.opensearch.search.suggest.Suggester;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.search.suggest.SuggestionSearchContext;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.search.suggest.term.TermSuggestion;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestSearchContext;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.functionscore.GaussDecayFunctionBuilder;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.BaseAggregationBuilder;
+import org.density.search.aggregations.ConcurrentAggregationProcessor;
+import org.density.search.aggregations.DefaultAggregationProcessor;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.heuristic.ChiSquare;
+import org.density.search.aggregations.pipeline.AbstractPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.InternalDerivative;
+import org.density.search.aggregations.pipeline.MovAvgModel;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.pipeline.SimpleModel;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.subphase.ExplainPhase;
+import org.density.search.fetch.subphase.highlight.CustomHighlighter;
+import org.density.search.fetch.subphase.highlight.FastVectorHighlighter;
+import org.density.search.fetch.subphase.highlight.Highlighter;
+import org.density.search.fetch.subphase.highlight.PlainHighlighter;
+import org.density.search.fetch.subphase.highlight.UnifiedHighlighter;
+import org.density.search.profile.Timer;
+import org.density.search.query.ConcurrentQueryPhaseSearcher;
+import org.density.search.query.QueryPhase;
+import org.density.search.query.QueryPhaseSearcher;
+import org.density.search.query.QueryPhaseSearcherWrapper;
+import org.density.search.rescore.QueryRescorerBuilder;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.suggest.Suggest.Suggestion;
+import org.density.search.suggest.Suggest.Suggestion.Entry;
+import org.density.search.suggest.Suggest.Suggestion.Entry.Option;
+import org.density.search.suggest.Suggester;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.search.suggest.SuggestionSearchContext;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.search.suggest.term.TermSuggestion;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.TestSearchContext;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class SearchModuleTests extends OpenSearchTestCase {
+public class SearchModuleTests extends DensityTestCase {
 
     public void testDoubleRegister() {
         SearchPlugin registersDupeHighlighter = new SearchPlugin() {

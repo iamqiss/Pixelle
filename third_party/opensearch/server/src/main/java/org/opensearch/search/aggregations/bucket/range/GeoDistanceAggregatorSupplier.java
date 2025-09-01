@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.geo.GeoDistance;
+import org.density.common.unit.DistanceUnit;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -48,14 +48,14 @@ import java.util.Map;
 /**
  * Aggregator supplier interface for geo_distance agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface GeoDistanceAggregatorSupplier {
     Aggregator build(
         String name,
         AggregatorFactories factories,
         GeoDistance distanceType,
-        org.opensearch.common.geo.GeoPoint origin,
+        org.density.common.geo.GeoPoint origin,
         DistanceUnit units,
         ValuesSource valuesSource,
         DocValueFormat format,

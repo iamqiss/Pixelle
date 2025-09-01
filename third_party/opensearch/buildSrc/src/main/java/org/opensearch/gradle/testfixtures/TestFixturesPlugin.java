@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testfixtures;
+package org.density.gradle.testfixtures;
 
 import com.avast.gradle.dockercompose.ComposeExtension;
 import com.avast.gradle.dockercompose.DockerComposePlugin;
@@ -40,13 +40,13 @@ import com.avast.gradle.dockercompose.tasks.ComposePull;
 import com.avast.gradle.dockercompose.tasks.ComposeUp;
 
 import org.apache.tools.ant.taskdefs.condition.Os;
-import org.opensearch.gradle.SystemPropertyCommandLineArgumentProvider;
-import org.opensearch.gradle.docker.DockerSupportPlugin;
-import org.opensearch.gradle.docker.DockerSupportService;
-import org.opensearch.gradle.docker.DockerSupportService.DockerComposeV2Availability;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.precommit.TestingConventionsTasks;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.SystemPropertyCommandLineArgumentProvider;
+import org.density.gradle.docker.DockerSupportPlugin;
+import org.density.gradle.docker.DockerSupportService;
+import org.density.gradle.docker.DockerSupportService.DockerComposeV2Availability;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.precommit.TestingConventionsTasks;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Plugin;
@@ -200,9 +200,9 @@ public class TestFixturesPlugin implements Plugin<Project> {
 
         // Skip docker compose tasks if it is unavailable
         maybeSkipTasks(tasks, dockerSupport, Test.class);
-        maybeSkipTasks(tasks, dockerSupport, getTaskClass("org.opensearch.gradle.test.RestIntegTestTask"));
+        maybeSkipTasks(tasks, dockerSupport, getTaskClass("org.density.gradle.test.RestIntegTestTask"));
         maybeSkipTasks(tasks, dockerSupport, TestingConventionsTasks.class);
-        maybeSkipTasks(tasks, dockerSupport, getTaskClass("org.opensearch.gradle.test.AntFixture"));
+        maybeSkipTasks(tasks, dockerSupport, getTaskClass("org.density.gradle.test.AntFixture"));
         maybeSkipTasks(tasks, dockerSupport, ComposeBuild.class);
         maybeSkipTasks(tasks, dockerSupport, ComposeUp.class);
         maybeSkipTasks(tasks, dockerSupport, ComposePull.class);

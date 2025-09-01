@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.action;
+package org.density.core.action;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class NotifyOnceListenerTests extends OpenSearchTestCase {
+public class NotifyOnceListenerTests extends DensityTestCase {
 
     public void testWhenSuccessCannotNotifyMultipleTimes() {
         AtomicReference<String> response = new AtomicReference<>();

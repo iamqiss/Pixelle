@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,52 +25,52 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.resync;
+package org.density.action.resync;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.PendingReplicationActions;
-import org.opensearch.action.support.replication.ReplicationMode;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.PendingReplicationActions;
+import org.density.action.support.replication.ReplicationMode;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lease.Releasable;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.IndexingPressureService;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ReplicationGroup;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.nio.MockNioTransport;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -83,11 +83,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.index.remote.RemoteStoreTestsHelper.createIndexSettings;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.ClusterServiceUtils.setState;
-import static org.opensearch.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.index.remote.RemoteStoreTestsHelper.createIndexSettings;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.setState;
+import static org.density.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -98,7 +98,7 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportResyncReplicationActionTests extends OpenSearchTestCase {
+public class TransportResyncReplicationActionTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
 

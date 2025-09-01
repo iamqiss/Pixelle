@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.index.reindex.ReindexTestCase.matcher;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.index.reindex.ReindexTestCase.matcher;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-public class ReindexSingleNodeTests extends OpenSearchSingleNodeTestCase {
+public class ReindexSingleNodeTests extends DensitySingleNodeTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
         return Arrays.asList(ReindexModulePlugin.class);

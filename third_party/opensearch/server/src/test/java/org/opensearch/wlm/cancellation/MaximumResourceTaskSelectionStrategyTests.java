@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.cancellation;
+package org.density.wlm.cancellation;
 
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchTask;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.test.DensityTestCase;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
-import static org.opensearch.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
+import static org.density.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
+import static org.density.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
 
-public class MaximumResourceTaskSelectionStrategyTests extends OpenSearchTestCase {
+public class MaximumResourceTaskSelectionStrategyTests extends DensityTestCase {
 
     public void testSelectTasksToCancelSelectsTasksMeetingThreshold_ifReduceByIsGreaterThanZero() {
         MaximumResourceTaskSelectionStrategy testHighestResourceConsumingTaskFirstSelectionStrategy =

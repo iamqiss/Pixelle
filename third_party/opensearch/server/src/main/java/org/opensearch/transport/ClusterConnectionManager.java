@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRefCounted;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,7 +56,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Once the connection is opened, this class manages the connection. This includes closing the connection when
  * the connection manager is closed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterConnectionManager implements ConnectionManager {
 
@@ -160,14 +160,14 @@ public class ClusterConnectionManager implements ConnectionManager {
         if (existingListener != null) {
             try {
                 // wait on previous entry to complete connection attempt
-                existingListener.addListener(listener, OpenSearchExecutors.newDirectExecutorService());
+                existingListener.addListener(listener, DensityExecutors.newDirectExecutorService());
             } finally {
                 connectingRefCounter.decRef();
             }
             return;
         }
 
-        currentListener.addListener(listener, OpenSearchExecutors.newDirectExecutorService());
+        currentListener.addListener(listener, DensityExecutors.newDirectExecutorService());
 
         final RunOnce releaseOnce = new RunOnce(connectingRefCounter::decRef);
         internalOpenConnection(node, resolvedProfile, ActionListener.wrap(conn -> {

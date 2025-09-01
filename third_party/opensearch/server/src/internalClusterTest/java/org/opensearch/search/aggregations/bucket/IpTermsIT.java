@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.AggregationTestScriptsPlugin;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.AggregationTestScriptsPlugin;
+import org.density.search.aggregations.bucket.terms.Terms;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
 public class IpTermsIT extends AbstractTermsTestCase {
 

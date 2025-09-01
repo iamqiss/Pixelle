@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.StoreStats;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ import java.util.Map;
 /**
  * Transport action for obtaining cluster stats from node level
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterStatsNodeResponse extends BaseNodeResponse {
 
@@ -195,7 +195,7 @@ public class ClusterStatsNodeResponse extends BaseNodeResponse {
             this.indexStatsMap = new HashMap<>();
 
             // Index Level Stats
-            for (org.opensearch.action.admin.indices.stats.ShardStats shardStats : indexShardsStats) {
+            for (org.density.action.admin.indices.stats.ShardStats shardStats : indexShardsStats) {
                 AggregatedIndexStats indexShardStats = this.indexStatsMap.get(shardStats.getShardRouting().getIndexName());
                 if (indexShardStats == null) {
                     indexShardStats = new AggregatedIndexStats();

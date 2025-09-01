@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.ScoreDoc;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchRequest;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.query.ScrollQuerySearchResult;
-import org.opensearch.transport.Transport;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchShardTarget;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.ShardFetchRequest;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.query.ScrollQuerySearchResult;
+import org.density.transport.Transport;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -53,7 +53,7 @@ import java.util.function.BiFunction;
 /**
  * async action for a search scroll query then fetch
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class SearchScrollQueryThenFetchAsyncAction extends SearchScrollAsyncAction<ScrollQuerySearchResult> {
 

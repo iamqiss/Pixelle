@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClientBuilder;
@@ -184,9 +184,9 @@ public class RestClientBuilderTests extends RestClientTestCase {
 
     public void testBuildCloudId() throws IOException {
         String host = "us-east-1.aws.found.io";
-        String opensearchId = "opensearch";
+        String densityId = "density";
         String dashboardsId = "dashboards";
-        String toEncode = host + "$" + opensearchId + "$" + dashboardsId;
+        String toEncode = host + "$" + densityId + "$" + dashboardsId;
         String encodedId = Base64.getEncoder().encodeToString(toEncode.getBytes(UTF8));
         assertNotNull(RestClient.builder(encodedId));
         assertNotNull(RestClient.builder("humanReadable:" + encodedId));
@@ -208,7 +208,7 @@ public class RestClientBuilderTests extends RestClientTestCase {
 
         RestClient client = RestClient.builder(encodedId).build();
         assertThat(client.getNodes().size(), equalTo(1));
-        assertThat(client.getNodes().get(0).getHost().getHostName(), equalTo(opensearchId + "." + host));
+        assertThat(client.getNodes().get(0).getHost().getHostName(), equalTo(densityId + "." + host));
         assertThat(client.getNodes().get(0).getHost().getPort(), equalTo(443));
         assertThat(client.getNodes().get(0).getHost().getSchemeName(), equalTo("https"));
         client.close();
@@ -216,20 +216,20 @@ public class RestClientBuilderTests extends RestClientTestCase {
 
     public void testBuildCloudIdWithPort() throws IOException {
         String host = "us-east-1.aws.found.io";
-        String opensearchId = "opensearch";
+        String densityId = "density";
         String dashboardsId = "dashboards";
         String port = "9443";
-        String toEncode = host + ":" + port + "$" + opensearchId + "$" + dashboardsId;
+        String toEncode = host + ":" + port + "$" + densityId + "$" + dashboardsId;
         String encodedId = Base64.getEncoder().encodeToString(toEncode.getBytes(UTF8));
 
         RestClient client = RestClient.builder("humanReadable:" + encodedId).build();
         assertThat(client.getNodes().size(), equalTo(1));
         assertThat(client.getNodes().get(0).getHost().getPort(), equalTo(9443));
-        assertThat(client.getNodes().get(0).getHost().getHostName(), equalTo(opensearchId + "." + host));
+        assertThat(client.getNodes().get(0).getHost().getHostName(), equalTo(densityId + "." + host));
         assertThat(client.getNodes().get(0).getHost().getSchemeName(), equalTo("https"));
         client.close();
 
-        toEncode = host + ":" + "123:foo" + "$" + opensearchId + "$" + dashboardsId;
+        toEncode = host + ":" + "123:foo" + "$" + densityId + "$" + dashboardsId;
         encodedId = Base64.getEncoder().encodeToString(toEncode.getBytes(UTF8));
 
         try {

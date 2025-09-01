@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.addExclusionAndGetState;
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.resolveVotingConfigExclusionsAndCheckMaximum;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.addExclusionAndGetState;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.resolveVotingConfigExclusionsAndCheckMaximum;
 
 /**
  * Static helper utilities to execute decommission
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DecommissionHelper {
 

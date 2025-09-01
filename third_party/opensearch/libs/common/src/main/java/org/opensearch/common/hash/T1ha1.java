@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.hash;
+package org.density.common.hash;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -33,7 +33,7 @@ import static java.lang.Long.rotateRight;
  * <p>
  * Intended for little-endian systems but returns the same result on big-endian, albeit marginally slower.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public final class T1ha1 {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.validate.query;
+package org.density.action.admin.indices.validate.query;
 
-import org.opensearch.action.support.broadcast.BroadcastOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.broadcast.BroadcastOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport Request Builder to Validate a Query
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ValidateQueryRequestBuilder extends BroadcastOperationRequestBuilder<
@@ -48,14 +48,14 @@ public class ValidateQueryRequestBuilder extends BroadcastOperationRequestBuilde
     ValidateQueryResponse,
     ValidateQueryRequestBuilder> {
 
-    public ValidateQueryRequestBuilder(OpenSearchClient client, ValidateQueryAction action) {
+    public ValidateQueryRequestBuilder(DensityClient client, ValidateQueryAction action) {
         super(client, action, new ValidateQueryRequest());
     }
 
     /**
      * The query to validate.
      *
-     * @see org.opensearch.index.query.QueryBuilders
+     * @see org.density.index.query.QueryBuilders
      */
     public ValidateQueryRequestBuilder setQuery(QueryBuilder queryBuilder) {
         request.query(queryBuilder);
@@ -65,7 +65,7 @@ public class ValidateQueryRequestBuilder extends BroadcastOperationRequestBuilde
     /**
      * Indicates if detailed information about the query should be returned.
      *
-     * @see org.opensearch.index.query.QueryBuilders
+     * @see org.density.index.query.QueryBuilders
      */
     public ValidateQueryRequestBuilder setExplain(boolean explain) {
         request.explain(explain);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentOpenSearchExtension;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentDensityExtension;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.not;
 /**
  * Tests for the {@link IndexGraveyard} class
  */
-public class IndexGraveyardTests extends OpenSearchTestCase {
+public class IndexGraveyardTests extends DensityTestCase {
 
     public void testEquals() {
         final IndexGraveyard graveyard = createRandom();
@@ -89,7 +89,7 @@ public class IndexGraveyardTests extends OpenSearchTestCase {
             assertThat(
                 Strings.toString(MediaTypeRegistry.JSON, graveyard, false, true),
                 containsString(
-                    XContentOpenSearchExtension.DEFAULT_FORMATTER.format(
+                    XContentDensityExtension.DEFAULT_FORMATTER.format(
                         Instant.ofEpochMilli(graveyard.getTombstones().get(0).getDeleteDateInMillis())
                     )
                 )

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.opensearch.Version;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.Version;
+import org.density.indices.analysis.PreBuiltCacheFactory;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -44,7 +44,7 @@ import java.util.function.Function;
 /**
  * Provides pre-configured, shared {@link TokenFilter}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PreConfiguredTokenFilter extends PreConfiguredAnalysisComponent<TokenFilterFactory> {
     /**
@@ -100,18 +100,18 @@ public final class PreConfiguredTokenFilter extends PreConfiguredAnalysisCompone
     }
 
     /**
-     * Create a pre-configured token filter that may vary based on the OpenSearch version.
+     * Create a pre-configured token filter that may vary based on the Density version.
      */
     public static PreConfiguredTokenFilter openSearchVersion(
         String name,
         boolean useFilterForMultitermQueries,
-        BiFunction<TokenStream, org.opensearch.Version, TokenStream> create
+        BiFunction<TokenStream, org.density.Version, TokenStream> create
     ) {
-        return new PreConfiguredTokenFilter(name, useFilterForMultitermQueries, true, CachingStrategy.OPENSEARCH, create);
+        return new PreConfiguredTokenFilter(name, useFilterForMultitermQueries, true, CachingStrategy.DENSITY, create);
     }
 
     /**
-     * Create a pre-configured token filter that may vary based on the OpenSearch version.
+     * Create a pre-configured token filter that may vary based on the Density version.
      */
     public static PreConfiguredTokenFilter openSearchVersion(
         String name,
@@ -123,7 +123,7 @@ public final class PreConfiguredTokenFilter extends PreConfiguredAnalysisCompone
             name,
             useFilterForMultitermQueries,
             useFilterForParsingSynonyms,
-            CachingStrategy.OPENSEARCH,
+            CachingStrategy.DENSITY,
             create
         );
     }

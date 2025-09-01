@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,11 +23,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.assistedinject;
+package org.density.common.inject.assistedinject;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -50,7 +50,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *             by position. In addition, values that use the standard {@literal @Inject} constructor
  *             annotation are eligible for method interception.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Target({ CONSTRUCTOR })
 @Retention(RUNTIME)

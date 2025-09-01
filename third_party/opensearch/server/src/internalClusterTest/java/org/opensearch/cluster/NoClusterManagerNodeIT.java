@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.NetworkDisruption.IsolateAllNodes;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.get.GetResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.AutoCreateIndex;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.rest.RestStatus;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.NetworkDisruption.IsolateAllNodes;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -68,14 +68,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertExists;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertExists;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class NoClusterManagerNodeIT extends OpenSearchIntegTestCase {
+public class NoClusterManagerNodeIT extends DensityIntegTestCase {
 
     @Override
     protected int numberOfReplicas() {

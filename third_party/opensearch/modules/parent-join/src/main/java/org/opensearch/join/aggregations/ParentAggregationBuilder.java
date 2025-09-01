@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.aggregations;
+package org.density.join.aggregations;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.join.mapper.ParentIdFieldMapper;
-import org.opensearch.join.mapper.ParentJoinFieldMapper;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.join.mapper.ParentIdFieldMapper;
+import org.density.join.mapper.ParentJoinFieldMapper;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.Map;

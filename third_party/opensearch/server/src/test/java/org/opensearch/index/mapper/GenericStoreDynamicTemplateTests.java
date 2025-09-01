@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.test.StreamsUtils.copyToBytesFromClasspath;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToBytesFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GenericStoreDynamicTemplateTests extends OpenSearchSingleNodeTestCase {
+public class GenericStoreDynamicTemplateTests extends DensitySingleNodeTestCase {
     public void testSimple() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/dynamictemplate/genericstore/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/dynamictemplate/genericstore/test-mapping.json");
         IndexService index = createIndex("test");
         client().admin().indices().preparePutMapping("test").setSource(mapping, MediaTypeRegistry.JSON).get();
 
         MapperService mapperService = index.mapperService();
 
-        byte[] json = copyToBytesFromClasspath("/org/opensearch/index/mapper/dynamictemplate/genericstore/test-data.json");
+        byte[] json = copyToBytesFromClasspath("/org/density/index/mapper/dynamictemplate/genericstore/test-data.json");
         ParsedDocument parsedDoc = mapperService.documentMapper()
             .parse(new SourceToParse("test", "1", new BytesArray(json), MediaTypeRegistry.JSON));
         client().admin()

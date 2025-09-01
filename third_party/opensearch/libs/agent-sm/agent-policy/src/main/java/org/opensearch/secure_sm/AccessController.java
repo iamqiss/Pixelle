@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.secure_sm;
+package org.density.secure_sm;
 
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * removal. All new code should use this class instead of the JDK's {@code AccessController}.
  *
  * Running code in a privileged context will ensure that the code has the necessary permissions
- * without traversing through the entire call stack. See {@code org.opensearch.javaagent.StackCallerProtectionDomainChainExtractor}
+ * without traversing through the entire call stack. See {@code org.density.javaagent.StackCallerProtectionDomainChainExtractor}
  *
  * Example usages:
  * <pre>

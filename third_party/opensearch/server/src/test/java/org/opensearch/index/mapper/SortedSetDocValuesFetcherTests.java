@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SortedSetDocValuesFetcherTests extends OpenSearchTestCase {
+public class SortedSetDocValuesFetcherTests extends DensityTestCase {
     private MappedFieldType mappedFieldType;
     private LeafReader leafReader;
     private SortedSetDocValues sortedSetDocValues;

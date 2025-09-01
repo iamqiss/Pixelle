@@ -1,6 +1,6 @@
 plugins {
   id 'java-gradle-plugin'
-  id 'opensearch.pluginzip'
+  id 'density.pluginzip'
 }
 
 group="org.custom.group"

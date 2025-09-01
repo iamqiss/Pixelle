@@ -1,7 +1,7 @@
 {
   "cluster.state":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/count/",
+      "url":"https://density.org/docs/latest/api-reference/count/",
       "description":"Returns a comprehensive information about the state of the cluster."
     },
     "stability":"stable",

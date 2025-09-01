@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.MockIndexEventListener;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.DensityException;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.CheckedRunnable;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.plugins.Plugin;
+import org.density.test.MockIndexEventListener;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 import org.hamcrest.Matchers;
 
 import java.util.Arrays;
@@ -66,20 +66,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.index.shard.IndexShardState.CLOSED;
-import static org.opensearch.index.shard.IndexShardState.CREATED;
-import static org.opensearch.index.shard.IndexShardState.POST_RECOVERY;
-import static org.opensearch.index.shard.IndexShardState.RECOVERING;
-import static org.opensearch.index.shard.IndexShardState.STARTED;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.index.shard.IndexShardState.CLOSED;
+import static org.density.index.shard.IndexShardState.CREATED;
+import static org.density.index.shard.IndexShardState.POST_RECOVERY;
+import static org.density.index.shard.IndexShardState.RECOVERING;
+import static org.density.index.shard.IndexShardState.STARTED;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class IndicesLifecycleListenerIT extends OpenSearchIntegTestCase {
+public class IndicesLifecycleListenerIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -99,7 +99,7 @@ public class IndicesLifecycleListenerIT extends OpenSearchIntegTestCase {
             public void beforeIndexAddedToCluster(Index index, Settings indexSettings) {
                 beforeAddedCount.incrementAndGet();
                 if (MockIndexEventListener.TestPlugin.INDEX_FAIL.get(indexSettings)) {
-                    throw new OpenSearchException("failing on purpose");
+                    throw new DensityException("failing on purpose");
                 }
             }
 
@@ -175,7 +175,7 @@ public class IndicesLifecycleListenerIT extends OpenSearchIntegTestCase {
                 .setSettings(Settings.builder().put(SETTING_NUMBER_OF_SHARDS, 1).put("index.fail", true))
                 .get();
             fail("should have thrown an exception");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("failing on purpose"));
             ClusterStateResponse resp = client().admin().cluster().prepareState().get();
             assertFalse(resp.getState().routingTable().indicesRouting().keySet().contains("failed"));
@@ -309,7 +309,7 @@ public class IndicesLifecycleListenerIT extends OpenSearchIntegTestCase {
         public void beforeIndexCreated(Index index, Settings indexSettings) {
             this.creationSettings = indexSettings;
             if (indexSettings.getAsBoolean("index.fail", false)) {
-                throw new OpenSearchException("failing on purpose");
+                throw new DensityException("failing on purpose");
             }
         }
 

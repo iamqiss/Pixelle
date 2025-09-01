@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AclRoutingSearchProcessorTests extends OpenSearchTestCase {
+public class AclRoutingSearchProcessorTests extends DensityTestCase {
 
     public void testProcessRequestWithTermQuery() throws Exception {
         SearchRequest request = createSearchRequest();

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
+import org.density.geo.GeoModulePlugin;
+import org.density.plugins.Plugin;
+import org.density.search.aggregations.BaseAggregationTestCase;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.PipelineAggregationBuilder;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.index.query.QueryBuilder;
+import org.density.script.Script;
+import org.density.search.Scroll;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.PipelineAggregationBuilder;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.slice.SliceBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.transport.client.DensityClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,16 +59,16 @@ import java.util.List;
 /**
  * A search action request builder.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, SearchResponse> {
 
-    public SearchRequestBuilder(OpenSearchClient client, SearchAction action) {
+    public SearchRequestBuilder(DensityClient client, SearchAction action) {
         super(client, action, new SearchRequest());
     }
 
-    public SearchRequestBuilder(OpenSearchClient client, StreamSearchAction action) {
+    public SearchRequestBuilder(DensityClient client, StreamSearchAction action) {
         super(client, action, new SearchRequest());
     }
 
@@ -179,7 +179,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     /**
      * Constructs a new search source builder with a search query.
      *
-     * @see org.opensearch.index.query.QueryBuilders
+     * @see org.density.index.query.QueryBuilders
      */
     public SearchRequestBuilder setQuery(QueryBuilder queryBuilder) {
         sourceBuilder().query(queryBuilder);
@@ -220,7 +220,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with an
+     * Should each {@link org.density.search.SearchHit} be returned with an
      * explanation of the hit (ranking).
      */
     public SearchRequestBuilder setExplain(boolean explain) {
@@ -229,7 +229,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with its
+     * Should each {@link org.density.search.SearchHit} be returned with its
      * version.
      */
     public SearchRequestBuilder setVersion(boolean version) {
@@ -238,7 +238,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with the
+     * Should each {@link org.density.search.SearchHit} be returned with the
      * sequence number and primary term of the last modification of the document.
      */
     public SearchRequestBuilder seqNoAndPrimaryTerm(boolean seqNoAndPrimaryTerm) {
@@ -396,7 +396,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     /**
      * Adds a generic sort builder.
      *
-     * @see org.opensearch.search.sort.SortBuilders
+     * @see org.density.search.sort.SortBuilders
      */
     public SearchRequestBuilder addSort(SortBuilder<?> sort) {
         sourceBuilder().sort(sort);
@@ -492,7 +492,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
 
     /**
      * Clears all rescorers on the builder and sets the first one.  To use multiple rescore windows use
-     * {@link #addRescorer(org.opensearch.search.rescore.RescorerBuilder, int)}.
+     * {@link #addRescorer(org.density.search.rescore.RescorerBuilder, int)}.
      *
      * @param rescorer rescorer configuration
      * @return this for chaining
@@ -504,7 +504,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
 
     /**
      * Clears all rescorers on the builder and sets the first one.  To use multiple rescore windows use
-     * {@link #addRescorer(org.opensearch.search.rescore.RescorerBuilder, int)}.
+     * {@link #addRescorer(org.density.search.rescore.RescorerBuilder, int)}.
      *
      * @param rescorer rescorer configuration
      * @param window   rescore window
@@ -589,7 +589,7 @@ public class SearchRequestBuilder extends ActionRequestBuilder<SearchRequest, Se
     }
 
     /**
-     * If specified, OpenSearch will execute this search request using reader contexts from that point in time.
+     * If specified, Density will execute this search request using reader contexts from that point in time.
      */
     public SearchRequestBuilder setPointInTime(PointInTimeBuilder pointInTimeBuilder) {
         sourceBuilder().pointInTimeBuilder(pointInTimeBuilder);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,42 +25,42 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilter;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTermsAggregatorFactory;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.filter.InternalFilter;
+import org.density.search.aggregations.bucket.terms.SignificantTerms;
+import org.density.search.aggregations.bucket.terms.SignificantTermsAggregatorFactory;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.filter;
-import static org.opensearch.search.aggregations.AggregationBuilders.significantTerms;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.filter;
+import static org.density.search.aggregations.AggregationBuilders.significantTerms;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
-public class TermsShardMinDocCountIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class TermsShardMinDocCountIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String index = "someindex";
 
@@ -83,7 +83,7 @@ public class TermsShardMinDocCountIT extends ParameterizedStaticSettingsOpenSear
     // see https://github.com/elastic/elasticsearch/issues/5998
     public void testShardMinDocCountSignificantTermsTest() throws Exception {
         assumeFalse(
-            "For concurrent segment search shard_min_doc_count is not enforced at the slice level. See https://github.com/opensearch-project/OpenSearch/issues/11847",
+            "For concurrent segment search shard_min_doc_count is not enforced at the slice level. See https://github.com/density-project/Density/issues/11847",
             internalCluster().clusterService().getClusterSettings().get(CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING)
         );
         String textMappings;
@@ -156,7 +156,7 @@ public class TermsShardMinDocCountIT extends ParameterizedStaticSettingsOpenSear
     // see https://github.com/elastic/elasticsearch/issues/5998
     public void testShardMinDocCountTermsTest() throws Exception {
         assumeFalse(
-            "For concurrent segment search shard_min_doc_count is not enforced at the slice level. See https://github.com/opensearch-project/OpenSearch/issues/11847",
+            "For concurrent segment search shard_min_doc_count is not enforced at the slice level. See https://github.com/density-project/Density/issues/11847",
             internalCluster().clusterService().getClusterSettings().get(CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING)
         );
         final String[] termTypes = { "text", "long", "integer", "float", "double" };

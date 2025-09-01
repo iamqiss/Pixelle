@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.mapper;
+package org.density.join.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.SortedDocValuesField;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.SourceValueFetcher;
-import org.opensearch.index.mapper.StringFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.lucene.Lucene;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MappingLookup;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.SourceValueFetcher;
+import org.density.index.mapper.StringFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.mapper.ValueFetcher;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpResponse;
@@ -62,17 +62,17 @@ final class ResponseWarningsExtractor {
     /**
      * Tests if a string matches the RFC 7234 specification for warning headers.
      * This assumes that the warn code is always 299 and the warn agent is always
-     * OpenSearch.
+     * Density.
      *
      * @param s the value of a warning header formatted according to RFC 7234
      * @return {@code true} if the input string matches the specification
      */
     private static boolean matchWarningHeaderPatternByPrefix(final String s) {
-        return s.startsWith("299 OpenSearch-");
+        return s.startsWith("299 Density-");
     }
 
     /**
-     * Refer to org.opensearch.common.logging.DeprecationLogger
+     * Refer to org.density.common.logging.DeprecationLogger
      */
     private static String extractWarningValueFromWarningHeader(final String s) {
         String warningHeader = s;

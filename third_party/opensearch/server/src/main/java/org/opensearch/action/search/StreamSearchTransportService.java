@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.support.StreamSearchChannelListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchSearchRequest;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.StreamTransportResponseHandler;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.action.OriginalIndices;
+import org.density.action.support.StreamSearchChannelListener;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchService;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.fetch.ShardFetchSearchRequest;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.StreamTransportResponseHandler;
+import org.density.transport.StreamTransportService;
+import org.density.transport.Transport;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
@@ -39,7 +39,7 @@ import java.util.function.BiFunction;
 /**
  * Search transport service for streaming search
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StreamSearchTransportService extends SearchTransportService {
     private final Logger logger = LogManager.getLogger(StreamSearchTransportService.class);

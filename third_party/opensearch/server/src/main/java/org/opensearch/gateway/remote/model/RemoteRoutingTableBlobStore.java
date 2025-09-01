@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.RemoteWriteableBlobEntity;
-import org.opensearch.common.remote.RemoteWriteableEntity;
-import org.opensearch.common.remote.RemoteWriteableEntityBlobStore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.RemoteWriteableBlobEntity;
+import org.density.common.remote.RemoteWriteableEntity;
+import org.density.common.remote.RemoteWriteableEntityBlobStore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.gateway.remote.routingtable.RemoteIndexRoutingTable;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
 
 /**
  * Extends the RemoteClusterStateBlobStore to support {@link RemoteIndexRoutingTable}

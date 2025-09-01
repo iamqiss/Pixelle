@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.template.delete;
+package org.density.action.admin.indices.template.delete;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Transport action for deleting a composable index template
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DeleteComposableIndexTemplateAction extends ActionType<AcknowledgedResponse> {
 
@@ -61,7 +61,7 @@ public class DeleteComposableIndexTemplateAction extends ActionType<Acknowledged
     /**
      * Inner Request class for deleting composable index template
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends ClusterManagerNodeRequest<Request> {
 

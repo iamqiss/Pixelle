@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.cache.serializer.Serializer;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
+import org.density.DensityException;
+import org.density.common.cache.serializer.Serializer;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class IRCKeyWriteableSerializer implements Serializer<IndicesRequestCache
             object.writeTo(os);
             return BytesReference.toBytes(os.bytes());
         } catch (IOException e) {
-            throw new OpenSearchException("Unable to serialize IndicesRequestCache.Key", e);
+            throw new DensityException("Unable to serialize IndicesRequestCache.Key", e);
         }
     }
 
@@ -47,7 +47,7 @@ public class IRCKeyWriteableSerializer implements Serializer<IndicesRequestCache
             BytesStreamInput is = new BytesStreamInput(bytes, 0, bytes.length);
             return new IndicesRequestCache.Key(is);
         } catch (IOException e) {
-            throw new OpenSearchException("Unable to deserialize byte[] to IndicesRequestCache.Key", e);
+            throw new DensityException("Unable to deserialize byte[] to IndicesRequestCache.Key", e);
         }
     }
 

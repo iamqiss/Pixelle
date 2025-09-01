@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.CheckedBiFunction;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeometryFormat;
-import org.opensearch.common.geo.GeometryParser;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Point;
+import org.density.DensityParseException;
+import org.density.common.CheckedBiFunction;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeometryFormat;
+import org.density.common.geo.GeometryParser;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.ParseField;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.Point;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -54,19 +54,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.mapper.TypeParsers.parseField;
+import static org.density.index.mapper.TypeParsers.parseField;
 
 /**
  * Base class for spatial fields that only support indexing points
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extends AbstractGeometryFieldMapper<Parsed, Processed> {
 
     /**
      * Common parameter names for the base point geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Names extends AbstractGeometryFieldMapper.Names {
         public static final ParseField NULL_VALUE = new ParseField("null_value");
@@ -82,7 +82,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base builder for the base point geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder<T extends Builder<T, FT>, FT extends AbstractPointGeometryFieldType> extends
         AbstractGeometryFieldMapper.Builder<T, FT> {
@@ -126,7 +126,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base type parser for the base point geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class TypeParser<T extends Builder> extends AbstractGeometryFieldMapper.TypeParser<Builder> {
         protected abstract ParsedPoint parseNullValue(Object nullValue, boolean ignoreZValue, boolean ignoreMalformed);
@@ -162,7 +162,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base field type for the base point geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class AbstractPointGeometryFieldType<Parsed, Processed> extends AbstractGeometryFieldType<Parsed, Processed> {
         protected AbstractPointGeometryFieldType(
@@ -220,7 +220,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
     /**
      * represents a Point that has been parsed by {@link PointParser}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface ParsedPoint {
         void validate(String fieldName);
@@ -239,7 +239,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
     /**
      * A parser implementation that can parse the various point formats
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PointParser<P extends ParsedPoint> extends Parser<List<P>> {
         /**
@@ -294,7 +294,7 @@ public abstract class AbstractPointGeometryFieldMapper<Parsed, Processed> extend
                     if (token == XContentParser.Token.VALUE_NUMBER) {
                         GeoPoint.assertZValue(ignoreZValue, parser.doubleValue());
                     } else if (token != XContentParser.Token.END_ARRAY) {
-                        throw new OpenSearchParseException("field type does not accept > 3 dimensions");
+                        throw new DensityParseException("field type does not accept > 3 dimensions");
                     }
 
                     point.resetCoords(x, y);

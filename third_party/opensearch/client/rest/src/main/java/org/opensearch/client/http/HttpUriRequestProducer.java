@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client.http;
+package org.density.client.http;
 
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.core5.http.HttpEntity;
@@ -15,7 +15,7 @@ import org.apache.hc.core5.http.nio.AsyncEntityProducer;
 import org.apache.hc.core5.http.nio.support.BasicRequestProducer;
 import org.apache.hc.core5.net.URIAuthority;
 import org.apache.hc.core5.util.Args;
-import org.opensearch.client.nio.HttpEntityAsyncEntityProducer;
+import org.density.client.nio.HttpEntityAsyncEntityProducer;
 
 /**
  * The producer of the {@link HttpUriRequestBase} instances associated with a particular {@link HttpHost}

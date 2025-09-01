@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.SortedSetDocValues;
@@ -39,7 +39,7 @@ import org.apache.lucene.util.Accountables;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.RamUsageEstimator;
 import org.apache.lucene.util.packed.PackedInts;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
+import org.density.index.fielddata.AbstractSortedDocValues;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -48,7 +48,7 @@ import java.util.Collections;
 /**
  * Packed ordinals for a single field
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SinglePackedOrdinals extends Ordinals {
 
@@ -87,7 +87,7 @@ class SinglePackedOrdinals extends Ordinals {
     /**
      * Doc class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Docs extends AbstractSortedDocValues {
 

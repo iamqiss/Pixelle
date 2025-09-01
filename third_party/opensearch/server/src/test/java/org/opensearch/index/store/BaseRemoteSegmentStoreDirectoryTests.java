@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.index.SegmentInfos;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.lockmanager.RemoteStoreMetadataLockManager;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.lockmanager.RemoteStoreMetadataLockManager;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 
 import java.io.IOException;
@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
-import static org.opensearch.test.RemoteStoreTestUtils.createMetadataFileBytes;
-import static org.opensearch.test.RemoteStoreTestUtils.getDummyMetadata;
+import static org.density.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
+import static org.density.test.RemoteStoreTestUtils.createMetadataFileBytes;
+import static org.density.test.RemoteStoreTestUtils.getDummyMetadata;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -66,10 +66,10 @@ public class BaseRemoteSegmentStoreDirectoryTests extends IndexShardTestCase {
         testUploadTracker = new TestUploadListener();
 
         Settings indexSettings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             .put(IndexMetadata.SETTING_REPLICATION_TYPE, ReplicationType.SEGMENT)
             .build();
-        ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        ExecutorService executorService = DensityExecutors.newDirectExecutorService();
 
         indexShard = newStartedShard(false, indexSettings, new NRTReplicationEngineFactory());
         remoteSegmentStoreDirectory = new RemoteSegmentStoreDirectory(

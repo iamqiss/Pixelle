@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.concurrent.atomic.AtomicReference;
 

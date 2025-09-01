@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.repositories.IndexId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.repositories.IndexId;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Snapshot Shard path information.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SnapshotShardPaths implements ToXContent {
 

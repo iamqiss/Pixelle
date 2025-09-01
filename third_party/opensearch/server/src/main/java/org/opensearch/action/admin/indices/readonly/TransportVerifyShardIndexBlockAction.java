@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.readonly;
+package org.density.action.admin.indices.readonly;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ReplicationOperation;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionType;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ReplicationOperation;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -65,7 +65,7 @@ import java.util.Objects;
  * requests all operation permits of the shard in order to wait for all write operations
  * to complete.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportVerifyShardIndexBlockAction extends TransportReplicationAction<
     TransportVerifyShardIndexBlockAction.ShardRequest,
@@ -171,7 +171,7 @@ public class TransportVerifyShardIndexBlockAction extends TransportReplicationAc
      * and the flush of the shard. This is done to ensure that such shards won't be later promoted as primary
      * or reopened in an unverified state with potential non flushed translog operations.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class VerifyShardReadOnlyActionReplicasProxy extends ReplicasProxy {
         @Override
@@ -188,7 +188,7 @@ public class TransportVerifyShardIndexBlockAction extends TransportReplicationAc
     /**
      * Per shard request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ShardRequest extends ReplicationRequest<ShardRequest> {
 

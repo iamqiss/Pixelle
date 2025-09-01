@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
 import com.google.api.services.compute.model.Instance;
 import com.google.api.services.compute.model.NetworkInterface;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cloud.gce.GceInstancesService;
-import org.opensearch.cloud.gce.util.Access;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugin.discovery.gce.GceDiscoveryPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cloud.gce.GceInstancesService;
+import org.density.cloud.gce.util.Access;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.plugin.discovery.gce.GceDiscoveryPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.TransportService;
 import org.junit.After;
 
 import java.io.IOException;
@@ -53,11 +53,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoTimeout;
+import static org.density.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertNoTimeout;
 
-@OpenSearchIntegTestCase.ClusterScope(supportsDedicatedMasters = false, numDataNodes = 0, numClientNodes = 0)
-public class GceDiscoverTests extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(supportsDedicatedMasters = false, numDataNodes = 0, numClientNodes = 0)
+public class GceDiscoverTests extends DensityIntegTestCase {
 
     /** Holds a list of the current discovery nodes started in tests **/
     private static final Map<String, DiscoveryNode> nodes = new ConcurrentHashMap<>();

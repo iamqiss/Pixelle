@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.clustermanager;
+package org.density.action.support.clustermanager;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
+import org.density.cluster.ClusterState;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
 
 public class TransportClusterManagerNodeActionUtils {
 

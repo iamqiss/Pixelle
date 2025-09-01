@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.OpenSearchSecurityException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.ActionFilterChain;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.RestHeaderDefinition;
-import org.opensearch.script.ScriptService;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Netty4ModulePlugin;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.DensitySecurityException;
+import org.density.DensityStatusException;
+import org.density.action.ActionRequest;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.search.SearchAction;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.ActionFilterChain;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.http.HttpInfo;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.RestHeaderDefinition;
+import org.density.script.ScriptService;
+import org.density.tasks.Task;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Netty4ModulePlugin;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -79,10 +79,10 @@ import java.util.function.Supplier;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.index.reindex.ReindexTestCase.matcher;
+import static org.density.index.reindex.ReindexTestCase.matcher;
 import static org.hamcrest.Matchers.containsString;
 
-public class ReindexFromRemoteWithAuthTests extends OpenSearchSingleNodeTestCase {
+public class ReindexFromRemoteWithAuthTests extends DensitySingleNodeTestCase {
     private TransportAddress address;
 
     @Override
@@ -144,7 +144,7 @@ public class ReindexFromRemoteWithAuthTests extends OpenSearchSingleNodeTestCase
         ReindexRequestBuilder request = new ReindexRequestBuilder(client(), ReindexAction.INSTANCE).source("source")
             .destination("dest")
             .setRemoteInfo(newRemoteInfo(null, null, singletonMap(TestFilter.EXAMPLE_HEADER, "doesn't matter")));
-        OpenSearchStatusException e = expectThrows(OpenSearchStatusException.class, () -> request.get());
+        DensityStatusException e = expectThrows(DensityStatusException.class, () -> request.get());
         assertEquals(RestStatus.BAD_REQUEST, e.status());
         assertThat(e.getMessage(), containsString("Hurray! Sent the header!"));
     }
@@ -153,7 +153,7 @@ public class ReindexFromRemoteWithAuthTests extends OpenSearchSingleNodeTestCase
         ReindexRequestBuilder request = new ReindexRequestBuilder(client(), ReindexAction.INSTANCE).source("source")
             .destination("dest")
             .setRemoteInfo(newRemoteInfo(null, null, emptyMap()));
-        OpenSearchStatusException e = expectThrows(OpenSearchStatusException.class, () -> request.get());
+        DensityStatusException e = expectThrows(DensityStatusException.class, () -> request.get());
         assertEquals(RestStatus.UNAUTHORIZED, e.status());
         assertThat(e.getMessage(), containsString("\"reason\":\"Authentication required\""));
         assertThat(e.getMessage(), containsString("\"WWW-Authenticate\":\"Basic realm=auth-realm\""));
@@ -163,7 +163,7 @@ public class ReindexFromRemoteWithAuthTests extends OpenSearchSingleNodeTestCase
         ReindexRequestBuilder request = new ReindexRequestBuilder(client(), ReindexAction.INSTANCE).source("source")
             .destination("dest")
             .setRemoteInfo(newRemoteInfo("junk", "auth", emptyMap()));
-        OpenSearchStatusException e = expectThrows(OpenSearchStatusException.class, () -> request.get());
+        DensityStatusException e = expectThrows(DensityStatusException.class, () -> request.get());
         assertThat(e.getMessage(), containsString("\"reason\":\"Bad Authorization\""));
     }
 
@@ -245,12 +245,12 @@ public class ReindexFromRemoteWithAuthTests extends OpenSearchSingleNodeTestCase
             }
             String auth = context.getHeader(AUTHORIZATION_HEADER);
             if (auth == null) {
-                OpenSearchSecurityException e = new OpenSearchSecurityException("Authentication required", RestStatus.UNAUTHORIZED);
+                DensitySecurityException e = new DensitySecurityException("Authentication required", RestStatus.UNAUTHORIZED);
                 e.addHeader("WWW-Authenticate", "Basic realm=auth-realm");
                 throw e;
             }
             if (false == REQUIRED_AUTH.equals(auth)) {
-                throw new OpenSearchSecurityException("Bad Authorization", RestStatus.FORBIDDEN);
+                throw new DensitySecurityException("Bad Authorization", RestStatus.FORBIDDEN);
             }
             chain.proceed(task, action, request, listener);
         }

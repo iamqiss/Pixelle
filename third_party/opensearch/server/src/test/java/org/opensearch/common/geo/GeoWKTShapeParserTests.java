@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,45 +25,45 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.tests.geo.GeoTestUtil;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.parsers.GeoWKTParser;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.test.geo.RandomShapeGenerator;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.parsers.GeoWKTParser;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Line;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.test.geo.RandomShapeGenerator;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -84,7 +84,7 @@ import org.locationtech.spatial4j.shape.Shape;
 import org.locationtech.spatial4j.shape.ShapeCollection;
 import org.locationtech.spatial4j.shape.jts.JtsPoint;
 
-import static org.opensearch.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
+import static org.density.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 
@@ -114,7 +114,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
 
     private void assertMalformed(ShapeBuilder<?, ?, ?> builder) throws IOException {
         XContentBuilder xContentBuilder = toWKTContent(builder, true);
-        assertValidException(xContentBuilder, OpenSearchParseException.class);
+        assertValidException(xContentBuilder, DensityParseException.class);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
         Coordinate c = new Coordinate(p.lon(), p.lat());
         Point expected = GEOMETRY_FACTORY.createPoint(c);
         assertExpected(new JtsPoint(expected, SPATIAL_CONTEXT), new PointBuilder().coordinate(c), true);
-        assertExpected(new org.opensearch.geometry.Point(p.lon(), p.lat()), new PointBuilder().coordinate(c), false);
+        assertExpected(new org.density.geometry.Point(p.lon(), p.lat()), new PointBuilder().coordinate(c), false);
         assertMalformed(new PointBuilder().coordinate(c));
     }
 
@@ -135,10 +135,10 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
             coordinates.add(new Coordinate(GeoTestUtil.nextLongitude(), GeoTestUtil.nextLatitude()));
         }
 
-        List<org.opensearch.geometry.Point> points = new ArrayList<>(numPoints);
+        List<org.density.geometry.Point> points = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; ++i) {
             Coordinate c = coordinates.get(i);
-            points.add(new org.opensearch.geometry.Point(c.x, c.y));
+            points.add(new org.density.geometry.Point(c.x, c.y));
         }
 
         Geometry expectedGeom;
@@ -285,12 +285,12 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
         Polygon expected = GEOMETRY_FACTORY.createPolygon(shell, holes);
         assertExpected(jtsGeom(expected), polygonWithHole, true);
 
-        org.opensearch.geometry.LinearRing hole = new org.opensearch.geometry.LinearRing(
+        org.density.geometry.LinearRing hole = new org.density.geometry.LinearRing(
             new double[] { 100.2d, 100.8d, 100.8d, 100.2d, 100.2d },
             new double[] { 0.8d, 0.8d, 0.2d, 0.2d, 0.8d }
         );
-        org.opensearch.geometry.Polygon p = new org.opensearch.geometry.Polygon(
-            new org.opensearch.geometry.LinearRing(new double[] { 101d, 101d, 100d, 100d, 101d }, new double[] { 0d, 1d, 1d, 0d, 0d }),
+        org.density.geometry.Polygon p = new org.density.geometry.Polygon(
+            new org.density.geometry.LinearRing(new double[] { 101d, 101d, 100d, 100d, 101d }, new double[] { 0d, 1d, 1d, 0d, 0d }),
             Collections.singletonList(hole)
         );
         assertExpected(p, polygonWithHole, false);
@@ -332,7 +332,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
             .build(mockBuilderContext));
 
         // test store z disabled
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> ShapeParser.parse(parser, mapperBuilder));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> ShapeParser.parse(parser, mapperBuilder));
         assertThat(e, hasToString(containsString("but [ignore_z_value] parameter is [false]")));
     }
 
@@ -372,7 +372,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
             .build(mockBuilderContext));
 
         // test store z disabled
-        OpenSearchException e = expectThrows(OpenSearchException.class, () -> ShapeParser.parse(parser, mapperBuilder));
+        DensityException e = expectThrows(DensityException.class, () -> ShapeParser.parse(parser, mapperBuilder));
         assertThat(e, hasToString(containsString("unable to add coordinate to CoordinateBuilder: coordinate dimensions do not match")));
     }
 
@@ -424,8 +424,8 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
         final LegacyGeoShapeFieldMapper defaultMapperBuilder = (LegacyGeoShapeFieldMapper) (new LegacyGeoShapeFieldMapper.Builder("test")
             .coerce(false)
             .build(mockBuilderContext));
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> ShapeParser.parse(parser, defaultMapperBuilder)
         );
         assertEquals("invalid LinearRing found (coordinates are not closed)", exception.getMessage());
@@ -458,7 +458,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
         // malformed points in a polygon is a common typo
         String malformedWKT = "POLYGON ((100, 5) (100, 10) (90, 10), (90, 5), (100, 5)";
         XContentBuilder builder = XContentFactory.jsonBuilder().value(malformedWKT);
-        assertValidException(builder, OpenSearchParseException.class);
+        assertValidException(builder, DensityParseException.class);
     }
 
     @Override
@@ -468,7 +468,7 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
 
         Rectangle expected = SPATIAL_CONTEXT.makeRectangle(r.minLon, r.maxLon, r.minLat, r.maxLat);
         assertExpected(expected, builder, true);
-        assertExpected(new org.opensearch.geometry.Rectangle(r.minLon, r.maxLon, r.maxLat, r.minLat), builder, false);
+        assertExpected(new org.density.geometry.Rectangle(r.minLon, r.maxLon, r.maxLat, r.minLat), builder, false);
         assertMalformed(builder);
     }
 
@@ -499,8 +499,8 @@ public class GeoWKTShapeParserTests extends BaseGeoParsingTestCase {
         XContentBuilder builder = toWKTContent(new PointBuilder(-1, 2), false);
         XContentParser parser = createParser(builder);
         parser.nextToken();
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> GeoWKTParser.parseExpectedType(parser, GeoShapeType.POLYGON)
         );
         assertThat(e, hasToString(containsString("Expected geometry type [polygon] but found [point]")));

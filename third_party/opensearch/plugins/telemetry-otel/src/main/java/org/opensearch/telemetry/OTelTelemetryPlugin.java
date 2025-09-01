@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry;
+package org.density.telemetry;
 
-import org.opensearch.common.concurrent.RefCountedReleasable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.TelemetryPlugin;
-import org.opensearch.telemetry.tracing.OTelResourceProvider;
-import org.opensearch.telemetry.tracing.OTelTelemetry;
+import org.density.common.concurrent.RefCountedReleasable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.plugins.TelemetryPlugin;
+import org.density.telemetry.tracing.OTelResourceProvider;
+import org.density.telemetry.tracing.OTelTelemetry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +30,7 @@ public class OTelTelemetryPlugin extends Plugin implements TelemetryPlugin {
     /**
      * Instrumentation scope name.
      */
-    public static final String INSTRUMENTATION_SCOPE_NAME = "org.opensearch.telemetry";
+    public static final String INSTRUMENTATION_SCOPE_NAME = "org.density.telemetry";
 
     static final String OTEL_TRACER_NAME = "otel";
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.action.admin.cluster.node.liveness.TransportLivenessAction;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.action.admin.cluster.node.liveness.TransportLivenessAction;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.settings.Setting.affixKeySetting;
-import static org.opensearch.common.settings.Setting.boolSetting;
-import static org.opensearch.common.settings.Setting.intSetting;
-import static org.opensearch.common.settings.Setting.listSetting;
-import static org.opensearch.common.settings.Setting.timeSetting;
+import static org.density.common.settings.Setting.affixKeySetting;
+import static org.density.common.settings.Setting.boolSetting;
+import static org.density.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.listSetting;
+import static org.density.common.settings.Setting.timeSetting;
 
 /**
  * Settings for transport config
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TransportSettings {
 

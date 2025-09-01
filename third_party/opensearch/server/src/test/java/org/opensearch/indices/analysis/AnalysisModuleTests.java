@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharFilter;
@@ -42,34 +42,34 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.tests.analysis.MockTokenizer;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.Analysis;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.CustomAnalyzer;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.MyFilterTokenFilterFactory;
-import org.opensearch.index.analysis.NameOrDefinition;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.PreConfiguredCharFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenizer;
-import org.opensearch.index.analysis.StandardTokenizerFactory;
-import org.opensearch.index.analysis.StopTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.io.Streams;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.Analysis;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.CustomAnalyzer;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.MyFilterTokenFilterFactory;
+import org.density.index.analysis.NameOrDefinition;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.PreConfiguredCharFilter;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.PreConfiguredTokenizer;
+import org.density.index.analysis.StandardTokenizerFactory;
+import org.density.index.analysis.StopTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.MatcherAssert;
 
 import java.io.BufferedWriter;
@@ -94,7 +94,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.assertTokenStreamContents;
 
-public class AnalysisModuleTests extends OpenSearchTestCase {
+public class AnalysisModuleTests extends DensityTestCase {
     private final Settings emptyNodeSettings = Settings.builder()
         .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
         .build();
@@ -135,12 +135,12 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
     }
 
     public void testSimpleConfigurationJson() throws IOException {
-        Settings settings = loadFromClasspath("/org/opensearch/index/analysis/test1.json");
+        Settings settings = loadFromClasspath("/org/density/index/analysis/test1.json");
         testSimpleConfiguration(settings);
     }
 
     public void testSimpleConfigurationYaml() throws IOException {
-        Settings settings = loadFromClasspath("/org/opensearch/index/analysis/test1.yml");
+        Settings settings = loadFromClasspath("/org/density/index/analysis/test1.yml");
         testSimpleConfiguration(settings);
     }
 
@@ -219,13 +219,13 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
     }
 
     /**
-     * Tests that plugins can register pre-configured char filters that vary in behavior based on OpenSearch version, Lucene version,
+     * Tests that plugins can register pre-configured char filters that vary in behavior based on Density version, Lucene version,
      * and that do not vary based on version at all.
      */
     public void testPluginPreConfiguredCharFilters() throws IOException {
         boolean noVersionSupportsMultiTerm = randomBoolean();
         boolean luceneVersionSupportsMultiTerm = randomBoolean();
-        boolean opensearchVersionSupportsMultiTerm = randomBoolean();
+        boolean densityVersionSupportsMultiTerm = randomBoolean();
         AnalysisRegistry registry = new AnalysisModule(
             TestEnvironment.newEnvironment(emptyNodeSettings),
             singletonList(new AnalysisPlugin() {
@@ -243,8 +243,8 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
                             (tokenStream, luceneVersion) -> new AppendCharFilter(tokenStream, luceneVersion.toString())
                         ),
                         PreConfiguredCharFilter.openSearchVersion(
-                            "opensearch_version",
-                            opensearchVersionSupportsMultiTerm,
+                            "density_version",
+                            densityVersionSupportsMultiTerm,
                             (tokenStream, esVersion) -> new AppendCharFilter(tokenStream, esVersion.toString())
                         )
                     );
@@ -272,14 +272,14 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
                 .put("index.analysis.analyzer.no_version.char_filter", "no_version")
                 .put("index.analysis.analyzer.lucene_version.tokenizer", "keyword")
                 .put("index.analysis.analyzer.lucene_version.char_filter", "lucene_version")
-                .put("index.analysis.analyzer.opensearch_version.tokenizer", "keyword")
-                .put("index.analysis.analyzer.opensearch_version.char_filter", "opensearch_version")
+                .put("index.analysis.analyzer.density_version.tokenizer", "keyword")
+                .put("index.analysis.analyzer.density_version.char_filter", "density_version")
                 .put(IndexMetadata.SETTING_VERSION_CREATED, version)
                 .build()
         );
         assertTokenStreamContents(analyzers.get("no_version").tokenStream("", "test"), new String[] { "testno_version" });
         assertTokenStreamContents(analyzers.get("lucene_version").tokenStream("", "test"), new String[] { "test" + version.luceneVersion });
-        assertTokenStreamContents(analyzers.get("opensearch_version").tokenStream("", "test"), new String[] { "test" + version });
+        assertTokenStreamContents(analyzers.get("density_version").tokenStream("", "test"), new String[] { "test" + version });
 
         assertEquals(
             "test" + (noVersionSupportsMultiTerm ? "no_version" : ""),
@@ -290,19 +290,19 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
             analyzers.get("lucene_version").normalize("", "test").utf8ToString()
         );
         assertEquals(
-            "test" + (opensearchVersionSupportsMultiTerm ? version.toString() : ""),
-            analyzers.get("opensearch_version").normalize("", "test").utf8ToString()
+            "test" + (densityVersionSupportsMultiTerm ? version.toString() : ""),
+            analyzers.get("density_version").normalize("", "test").utf8ToString()
         );
     }
 
     /**
-     * Tests that plugins can register pre-configured token filters that vary in behavior based on OpenSearch version, Lucene version,
+     * Tests that plugins can register pre-configured token filters that vary in behavior based on Density version, Lucene version,
      * and that do not vary based on version at all.
      */
     public void testPluginPreConfiguredTokenFilters() throws IOException {
         boolean noVersionSupportsMultiTerm = randomBoolean();
         boolean luceneVersionSupportsMultiTerm = randomBoolean();
-        boolean opensearchVersionSupportsMultiTerm = randomBoolean();
+        boolean densityVersionSupportsMultiTerm = randomBoolean();
         AnalysisRegistry registry = new AnalysisModule(
             TestEnvironment.newEnvironment(emptyNodeSettings),
             singletonList(new AnalysisPlugin() {
@@ -320,8 +320,8 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
                             (tokenStream, luceneVersion) -> new AppendTokenFilter(tokenStream, luceneVersion.toString())
                         ),
                         PreConfiguredTokenFilter.openSearchVersion(
-                            "opensearch_version",
-                            opensearchVersionSupportsMultiTerm,
+                            "density_version",
+                            densityVersionSupportsMultiTerm,
                             (tokenStream, esVersion) -> new AppendTokenFilter(tokenStream, esVersion.toString())
                         )
                     );
@@ -337,14 +337,14 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
                 .put("index.analysis.analyzer.no_version.filter", "no_version")
                 .put("index.analysis.analyzer.lucene_version.tokenizer", "standard")
                 .put("index.analysis.analyzer.lucene_version.filter", "lucene_version")
-                .put("index.analysis.analyzer.opensearch_version.tokenizer", "standard")
-                .put("index.analysis.analyzer.opensearch_version.filter", "opensearch_version")
+                .put("index.analysis.analyzer.density_version.tokenizer", "standard")
+                .put("index.analysis.analyzer.density_version.filter", "density_version")
                 .put(IndexMetadata.SETTING_VERSION_CREATED, version)
                 .build()
         );
         assertTokenStreamContents(analyzers.get("no_version").tokenStream("", "test"), new String[] { "testno_version" });
         assertTokenStreamContents(analyzers.get("lucene_version").tokenStream("", "test"), new String[] { "test" + version.luceneVersion });
-        assertTokenStreamContents(analyzers.get("opensearch_version").tokenStream("", "test"), new String[] { "test" + version });
+        assertTokenStreamContents(analyzers.get("density_version").tokenStream("", "test"), new String[] { "test" + version });
 
         assertEquals(
             "test" + (noVersionSupportsMultiTerm ? "no_version" : ""),
@@ -355,13 +355,13 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
             analyzers.get("lucene_version").normalize("", "test").utf8ToString()
         );
         assertEquals(
-            "test" + (opensearchVersionSupportsMultiTerm ? version.toString() : ""),
-            analyzers.get("opensearch_version").normalize("", "test").utf8ToString()
+            "test" + (densityVersionSupportsMultiTerm ? version.toString() : ""),
+            analyzers.get("density_version").normalize("", "test").utf8ToString()
         );
     }
 
     /**
-     * Tests that plugins can register pre-configured token filters that vary in behavior based on OpenSearch version, Lucene version,
+     * Tests that plugins can register pre-configured token filters that vary in behavior based on Density version, Lucene version,
      * and that do not vary based on version at all.
      */
     public void testPluginPreConfiguredTokenizers() throws IOException {
@@ -407,7 +407,7 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
                             luceneVersion -> new FixedTokenizer(luceneVersion.toString())
                         ),
                         PreConfiguredTokenizer.openSearchVersion(
-                            "opensearch_version",
+                            "density_version",
                             esVersion -> new FixedTokenizer(esVersion.toString())
                         )
                     );
@@ -421,7 +421,7 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
             Settings.builder()
                 .put("index.analysis.analyzer.no_version.tokenizer", "no_version")
                 .put("index.analysis.analyzer.lucene_version.tokenizer", "lucene_version")
-                .put("index.analysis.analyzer.opensearch_version.tokenizer", "opensearch_version")
+                .put("index.analysis.analyzer.density_version.tokenizer", "density_version")
                 .put(IndexMetadata.SETTING_VERSION_CREATED, version)
                 .build()
         );
@@ -430,15 +430,15 @@ public class AnalysisModuleTests extends OpenSearchTestCase {
             analyzers.get("lucene_version").tokenStream("", "test"),
             new String[] { version.luceneVersion.toString() }
         );
-        assertTokenStreamContents(analyzers.get("opensearch_version").tokenStream("", "test"), new String[] { version.toString() });
+        assertTokenStreamContents(analyzers.get("density_version").tokenStream("", "test"), new String[] { version.toString() });
 
         // These are current broken by https://github.com/elastic/elasticsearch/issues/24752
         // assertEquals("test" + (noVersionSupportsMultiTerm ? "no_version" : ""),
         // analyzers.get("no_version").normalize("", "test").utf8ToString());
         // assertEquals("test" + (luceneVersionSupportsMultiTerm ? version.luceneVersion.toString() : ""),
         // analyzers.get("lucene_version").normalize("", "test").utf8ToString());
-        // assertEquals("test" + (opensearchVersionSupportsMultiTerm ? version.toString() : ""),
-        // analyzers.get("opensearch_version").normalize("", "test").utf8ToString());
+        // assertEquals("test" + (densityVersionSupportsMultiTerm ? version.toString() : ""),
+        // analyzers.get("density_version").normalize("", "test").utf8ToString());
     }
 
     public void testRegisterHunspellDictionary() throws Exception {

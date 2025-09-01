@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,14 +28,14 @@
  * under the License.
  */
 
-group = 'org.opensearch.plugin'
+group = 'org.density.plugin'
 
-apply plugin: 'opensearch.opensearchplugin'
+apply plugin: 'density.densityplugin'
 
-opensearchplugin {
+densityplugin {
   name = 'client-benchmark-noop-api'
-  description = 'Stubbed out OpenSearch actions that can be used for client-side benchmarking'
-  classname = 'org.opensearch.plugin.noop.NoopPlugin'
+  description = 'Stubbed out Density actions that can be used for client-side benchmarking'
+  classname = 'org.density.plugin.noop.NoopPlugin'
 }
 
 // Not published so no need to assemble

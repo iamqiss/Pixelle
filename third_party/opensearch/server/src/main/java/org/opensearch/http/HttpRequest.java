@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.RestRequest;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.rest.RestRequest;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.Map;
  * A basic http request abstraction. Http modules needs to implement this interface to integrate with the
  * server package's rest handling.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface HttpRequest {
@@ -54,7 +54,7 @@ public interface HttpRequest {
     /**
      * Which HTTP version being used
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     enum HttpVersion {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
 
 import java.util.Collections;
 import java.util.Set;
@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  * Handles responses obtained when publishing a new cluster state from cluster-manager to all non cluster-manager nodes.
  * Allows to await a reply from all non cluster-manager nodes, up to a timeout
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BlockingClusterStatePublishResponseHandler {
 

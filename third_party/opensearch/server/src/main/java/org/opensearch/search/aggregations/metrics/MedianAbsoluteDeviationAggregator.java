@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ScoreMode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.ObjectArray;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.ObjectArray;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.search.aggregations.metrics.InternalMedianAbsoluteDeviation.computeMedianAbsoluteDeviation;
+import static org.density.search.aggregations.metrics.InternalMedianAbsoluteDeviation.computeMedianAbsoluteDeviation;
 
 /**
  * Aggregate all docs into a median absolute deviation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MedianAbsoluteDeviationAggregator extends NumericMetricsAggregator.SingleValue {
 

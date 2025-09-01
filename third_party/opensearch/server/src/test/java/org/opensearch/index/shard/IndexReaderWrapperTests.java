@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -46,12 +46,12 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.FieldFilterLeafReader;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedFunction;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -59,7 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IndexReaderWrapperTests extends OpenSearchTestCase {
+public class IndexReaderWrapperTests extends DensityTestCase {
 
     public void testReaderCloseListenerIsCalled() throws IOException {
         Directory dir = newDirectory();
@@ -69,7 +69,7 @@ public class IndexReaderWrapperTests extends OpenSearchTestCase {
         doc.add(new StringField("id", "1", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         doc.add(new TextField("field", "doc", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         writer.addDocument(doc);
-        DirectoryReader open = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        DirectoryReader open = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         IndexSearcher searcher = new IndexSearcher(open);
         assertEquals(1, searcher.search(new TermQuery(new Term("field", "doc")), 1).totalHits.value());
         final AtomicInteger closeCalls = new AtomicInteger(0);
@@ -94,7 +94,7 @@ public class IndexReaderWrapperTests extends OpenSearchTestCase {
             wrapper
         );
         assertEquals(1, wrap.getIndexReader().getRefCount());
-        OpenSearchDirectoryReader.addReaderCloseListener(wrap.getDirectoryReader(), key -> {
+        DensityDirectoryReader.addReaderCloseListener(wrap.getDirectoryReader(), key -> {
             if (key == open.getReaderCacheHelper().getKey()) {
                 count.incrementAndGet();
             }
@@ -122,7 +122,7 @@ public class IndexReaderWrapperTests extends OpenSearchTestCase {
         doc.add(new StringField("id", "1", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         doc.add(new TextField("field", "doc", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         writer.addDocument(doc);
-        DirectoryReader open = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        DirectoryReader open = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         IndexSearcher searcher = new IndexSearcher(open);
         assertEquals(1, searcher.search(new TermQuery(new Term("field", "doc")), 1).totalHits.value());
         searcher.setSimilarity(iwc.getSimilarity());
@@ -147,7 +147,7 @@ public class IndexReaderWrapperTests extends OpenSearchTestCase {
                 wrapper
             )
         ) {
-            OpenSearchDirectoryReader.addReaderCloseListener(wrap.getDirectoryReader(), key -> { cache.remove(key); });
+            DensityDirectoryReader.addReaderCloseListener(wrap.getDirectoryReader(), key -> { cache.remove(key); });
             TopDocs search = wrap.search(new TermQuery(new Term("field", "doc")), 1);
             cache.put(wrap.getIndexReader().getReaderCacheHelper().getKey(), search);
         }
@@ -168,7 +168,7 @@ public class IndexReaderWrapperTests extends OpenSearchTestCase {
         doc.add(new StringField("id", "1", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         doc.add(new TextField("field", "doc", random().nextBoolean() ? Field.Store.YES : Field.Store.NO));
         writer.addDocument(doc);
-        DirectoryReader open = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        DirectoryReader open = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         IndexSearcher searcher = new IndexSearcher(open);
         assertEquals(1, searcher.search(new TermQuery(new Term("field", "doc")), 1).totalHits.value());
         searcher.setSimilarity(iwc.getSimilarity());

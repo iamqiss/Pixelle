@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.client.Request;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.search.SearchRequest;
+import org.density.client.Request;
+import org.density.common.io.Streams;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.index.reindex.remote.RemoteRequestBuilders.DEPRECATED_URL_ENCODED_INDEX_WARNING;
-import static org.opensearch.index.reindex.remote.RemoteRequestBuilders.clearScroll;
-import static org.opensearch.index.reindex.remote.RemoteRequestBuilders.initialSearch;
-import static org.opensearch.index.reindex.remote.RemoteRequestBuilders.scroll;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.index.reindex.remote.RemoteRequestBuilders.DEPRECATED_URL_ENCODED_INDEX_WARNING;
+import static org.density.index.reindex.remote.RemoteRequestBuilders.clearScroll;
+import static org.density.index.reindex.remote.RemoteRequestBuilders.initialSearch;
+import static org.density.index.reindex.remote.RemoteRequestBuilders.scroll;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
@@ -65,12 +65,12 @@ import static org.hamcrest.Matchers.not;
 
 /**
  * Tests for {@link RemoteRequestBuilders} which builds requests for remote version of
- * OpenSearch. Note that unlike most of the rest of OpenSearch this file needs to
- * be compatible with very old versions of OpenSearch. Thus is often uses identifiers
+ * Density. Note that unlike most of the rest of Density this file needs to
+ * be compatible with very old versions of Density. Thus is often uses identifiers
  * for versions like {@code 2000099} for {@code 2.0.0-alpha1}. Do not drop support for
  * features from this file just because the version constants have been removed.
  */
-public class RemoteRequestBuildersTests extends OpenSearchTestCase {
+public class RemoteRequestBuildersTests extends DensityTestCase {
     public void testIntialSearchPath() {
         Version remoteVersion = Version.fromId(between(0, Version.CURRENT.id));
         BytesReference query = new BytesArray("{}");

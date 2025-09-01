@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.geo.GeoEncodingUtils;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geo.GeometryTestUtils;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geo.GeometryTestUtils;
+import org.density.geometry.Rectangle;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -49,13 +49,13 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests for {@link GeoBoundingBox}
  */
-public class GeoBoundingBoxTests extends OpenSearchTestCase {
+public class GeoBoundingBoxTests extends DensityTestCase {
 
     public void testInvalidParseInvalidWKT() throws IOException {
         XContentBuilder bboxBuilder = XContentFactory.jsonBuilder().startObject().field("wkt", "invalid").endObject();
         XContentParser parser = createParser(bboxBuilder);
         parser.nextToken();
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> GeoBoundingBox.parseBoundingBox(parser));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> GeoBoundingBox.parseBoundingBox(parser));
         assertThat(e.getMessage(), equalTo("failed to parse WKT bounding box"));
     }
 
@@ -63,7 +63,7 @@ public class GeoBoundingBoxTests extends OpenSearchTestCase {
         XContentBuilder bboxBuilder = XContentFactory.jsonBuilder().startObject().field("wkt", "POINT (100.0 100.0)").endObject();
         XContentParser parser = createParser(bboxBuilder);
         parser.nextToken();
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> GeoBoundingBox.parseBoundingBox(parser));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> GeoBoundingBox.parseBoundingBox(parser));
         assertThat(e.getMessage(), equalTo("failed to parse WKT bounding box. [POINT] found. expected [ENVELOPE]"));
     }
 

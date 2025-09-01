@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.index.remote.RemoteIndexPath;
-import org.opensearch.index.remote.RemoteIndexPathUploader;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.util.FileSystemUtils;
+import org.density.index.remote.RemoteIndexPath;
+import org.density.index.remote.RemoteIndexPathUploader;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreUploadIndexPathIT extends RemoteStoreBaseIntegTestCase {
 
     private final String INDEX_NAME = "remote-store-test-idx-1";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.state;
+package org.density.action.admin.cluster.state;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ClusterStateApiTests extends OpenSearchSingleNodeTestCase {
+public class ClusterStateApiTests extends DensitySingleNodeTestCase {
 
     public void testWaitForMetadataVersion() throws Exception {
         ClusterStateRequest clusterStateRequest = new ClusterStateRequest();

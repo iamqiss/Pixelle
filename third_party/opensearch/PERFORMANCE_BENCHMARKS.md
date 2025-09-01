@@ -13,7 +13,7 @@ The workflow is triggered when a new comment is created on a pull request. Speci
 1. **Check Comment Format and Configuration:**
     - Validates the format of the comment to ensure it contains the required `"run-benchmark-test"` keyword and is in json format.
     - Extracts the benchmark configuration ID from the comment and verifies if it exists in the `benchmark-config.json` file.
-    - Checks if the extracted configuration ID is supported for the current OpenSearch major version.
+    - Checks if the extracted configuration ID is supported for the current Density major version.
 
 2. **Post Invalid Format Comment:**
     - If the comment format is invalid or the configuration ID is not supported, a comment is posted on the pull request indicating the problem, and the workflow fails.
@@ -23,11 +23,11 @@ The workflow is triggered when a new comment is created on a pull request. Speci
     - If the commenter is not one of the maintainers, a manual approval request is created. The workflow pauses until an approver approves or denies the benchmark run by commenting appropriate word on the issue.
     - The issue for approval request is auto-closed once the approver is done adding appropriate comment
 
-4. **Build and Assemble OpenSearch:**
-    - Builds and assembles (x64-linux tar) the OpenSearch distribution from the pull request code changes.
+4. **Build and Assemble Density:**
+    - Builds and assembles (x64-linux tar) the Density distribution from the pull request code changes.
 
 5. **Upload to S3:**
-    - Configures AWS credentials and uploads the assembled OpenSearch distribution to an S3 bucket for further use in benchmarking.
+    - Configures AWS credentials and uploads the assembled Density distribution to an S3 bucket for further use in benchmarking.
     - The S3 bucket is fronted by cloudfront to only allow downloads.
     - The lifecycle policy on the S3 bucket will delete the uploaded artifacts after 30-days.
 
@@ -36,7 +36,7 @@ The workflow is triggered when a new comment is created on a pull request. Speci
 
 7. **Update Pull Request with Job URL:**
     - Posts a comment on the pull request with the URL of the Jenkins job. The final benchmark results will be posted once the job completes.
-    - To learn about how benchmark job works see https://github.com/opensearch-project/opensearch-build/tree/main/src/test_workflow#benchmarking-tests
+    - To learn about how benchmark job works see https://github.com/density-project/density-build/tree/main/src/test_workflow#benchmarking-tests
 
 ## How to Use This Workflow
 
@@ -53,7 +53,7 @@ The workflow is triggered when a new comment is created on a pull request. Speci
       ```
 
 4. **Monitor Workflow Progress:**
-    - The workflow will validate the comment, check for approval (if necessary), build the OpenSearch distribution, and trigger the Jenkins job.
+    - The workflow will validate the comment, check for approval (if necessary), build the Density distribution, and trigger the Jenkins job.
     - A comment will be posted on the pull request with the URL of the Jenkins job. You can monitor the progress and final results there as well.
 
 ## Example Comment Format
@@ -73,19 +73,19 @@ The benchmark-config.json file accepts the following schema.
     "supported_major_versions": ["2", "3"],
     "cluster-benchmark-configs": {
       "SINGLE_NODE_CLUSTER": "Use single node cluster for benchmarking, accepted values are \"true\" or \"false\"",
-      "MIN_DISTRIBUTION": "Use OpenSearch min distribution, should always be \"true\"",
+      "MIN_DISTRIBUTION": "Use Density min distribution, should always be \"true\"",
       "MANAGER_NODE_COUNT": "For multi-node cluster tests, number of cluster manager nodes, empty value defaults to 3.",
       "DATA_NODE_COUNT": "For multi-node cluster tests, number of data nodes, empty value defaults to 2.",
       "DATA_INSTANCE_TYPE": "EC2 instance type for data node, empty defaults to r5.xlarge.",
       "DATA_NODE_STORAGE": "Data node ebs block storage size, empty value defaults to 100Gb",
       "JVM_SYS_PROPS": "A comma-separated list of key=value pairs that will be added to jvm.options as JVM system properties",
-      "ADDITIONAL_CONFIG": "Additional space delimited opensearch.yml config parameters. e.g., `search.concurrent_segment_search.enabled:true`",
-      "TEST_WORKLOAD": "The workload name from OpenSearch Benchmark Workloads. https://github.com/opensearch-project/opensearch-benchmark-workloads. Default is nyc_taxis",
-      "WORKLOAD_PARAMS": "With this parameter you can inject variables into workloads, e.g.{\"number_of_replicas\":\"0\",\"number_of_shards\":\"3\"}. See https://opensearch.org/docs/latest/benchmark/reference/commands/command-flags/#workload-params",
-      "EXCLUDE_TASKS": "Defines a comma-separated list of test procedure tasks not to run. e.g. type:search, see https://opensearch.org/docs/latest/benchmark/reference/commands/command-flags/#exclude-tasks",
-      "INCLUDE_TASKS": "Defines a comma-separated list of test procedure tasks to run. By default, all tasks listed in a test procedure array are run. See https://opensearch.org/docs/latest/benchmark/reference/commands/command-flags/#include-tasks",
-      "TEST_PROCEDURE": "Defines a test procedure to use. e.g., `append-no-conflicts,significant-text`. Uses default if none provided. See https://opensearch.org/docs/latest/benchmark/reference/commands/command-flags/#test-procedure",
-      "CAPTURE_NODE_STAT": "Enable opensearch-benchmark node-stats telemetry to capture system level metrics like cpu, jvm etc., see https://opensearch.org/docs/latest/benchmark/reference/telemetry/#node-stats"
+      "ADDITIONAL_CONFIG": "Additional space delimited density.yml config parameters. e.g., `search.concurrent_segment_search.enabled:true`",
+      "TEST_WORKLOAD": "The workload name from Density Benchmark Workloads. https://github.com/density-project/density-benchmark-workloads. Default is nyc_taxis",
+      "WORKLOAD_PARAMS": "With this parameter you can inject variables into workloads, e.g.{\"number_of_replicas\":\"0\",\"number_of_shards\":\"3\"}. See https://density.org/docs/latest/benchmark/reference/commands/command-flags/#workload-params",
+      "EXCLUDE_TASKS": "Defines a comma-separated list of test procedure tasks not to run. e.g. type:search, see https://density.org/docs/latest/benchmark/reference/commands/command-flags/#exclude-tasks",
+      "INCLUDE_TASKS": "Defines a comma-separated list of test procedure tasks to run. By default, all tasks listed in a test procedure array are run. See https://density.org/docs/latest/benchmark/reference/commands/command-flags/#include-tasks",
+      "TEST_PROCEDURE": "Defines a test procedure to use. e.g., `append-no-conflicts,significant-text`. Uses default if none provided. See https://density.org/docs/latest/benchmark/reference/commands/command-flags/#test-procedure",
+      "CAPTURE_NODE_STAT": "Enable density-benchmark node-stats telemetry to capture system level metrics like cpu, jvm etc., see https://density.org/docs/latest/benchmark/reference/telemetry/#node-stats"
     },
     "cluster_configuration": {
       "size": "Single-Node/Multi-Node",
@@ -98,9 +98,9 @@ To add a new test configuration that are suitable to your changes please create 
 
 ## How to compare my results against baseline?
 
-Apart from just running benchmarks the user will also be interested in how their change is performing against current OpenSearch distribution with the exactly same cluster and benchmark configurations.
+Apart from just running benchmarks the user will also be interested in how their change is performing against current Density distribution with the exactly same cluster and benchmark configurations.
 The user can refer to https://s12d.com/basline-dashboards (WIP) to access baseline data for their workload, this data is generated by our nightly benchmark runs on latest build distribution artifacts for 3.0 and 2.x.
-In the future, we will add the [compare](https://opensearch.org/docs/latest/benchmark/reference/commands/compare/) feature of opensearch-benchmark to run comparison and publish data on the PR as well.
+In the future, we will add the [compare](https://density.org/docs/latest/benchmark/reference/commands/compare/) feature of density-benchmark to run comparison and publish data on the PR as well.
 
 ## Notes
 

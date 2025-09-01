@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.shards;
+package org.density.action.admin.cluster.shards;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.query.RandomQueryBuilder;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.index.shard.ShardId;
+import org.density.index.query.RandomQueryBuilder;
+import org.density.search.SearchModule;
+import org.density.search.internal.AliasFilter;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ClusterSearchShardsResponseTests extends OpenSearchTestCase {
+public class ClusterSearchShardsResponseTests extends DensityTestCase {
 
     public void testSerialization() throws Exception {
         Map<String, AliasFilter> indicesAndFilters = new HashMap<>();

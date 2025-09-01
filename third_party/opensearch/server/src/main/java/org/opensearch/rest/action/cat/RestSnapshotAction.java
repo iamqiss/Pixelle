@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.common.Table;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.common.Table;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotState;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -52,12 +52,12 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * Cat API class to display information about snapshots
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestSnapshotAction extends AbstractCatAction {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 /** Tests method overloading */
 public class OverloadTests extends ScriptTestCase {
@@ -57,21 +57,21 @@ public class OverloadTests extends ScriptTestCase {
         assertEquals(
             true,
             exec(
-                "org.opensearch.painless.FeatureTestObject f = new org.opensearch.painless.FeatureTestObject();"
+                "org.density.painless.FeatureTestObject f = new org.density.painless.FeatureTestObject();"
                     + "return f.x == 0 && f.y == 0;"
             )
         );
         assertEquals(
             true,
             exec(
-                "org.opensearch.painless.FeatureTestObject f = new org.opensearch.painless.FeatureTestObject(1, 2);"
+                "org.density.painless.FeatureTestObject f = new org.density.painless.FeatureTestObject(1, 2);"
                     + "return f.x == 1 && f.y == 2;"
             )
         );
     }
 
     public void testStatic() {
-        assertEquals(true, exec("return org.opensearch.painless.FeatureTestObject.overloadedStatic();"));
-        assertEquals(false, exec("return org.opensearch.painless.FeatureTestObject.overloadedStatic(false);"));
+        assertEquals(true, exec("return org.density.painless.FeatureTestObject.overloadedStatic();"));
+        assertEquals(false, exec("return org.density.painless.FeatureTestObject.overloadedStatic(false);"));
     }
 }

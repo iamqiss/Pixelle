@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.TranslogLeafReader;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.TranslogLeafReader;
+import org.density.index.fieldvisitor.FieldsVisitor;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.Objects;
  * Helper class for comparing two index operations with the support of derived source, for which we will have to first
  * regenerate the source and perform the deep equal of both sources.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "3.1.0")
 public abstract class TranslogOperationHelper {

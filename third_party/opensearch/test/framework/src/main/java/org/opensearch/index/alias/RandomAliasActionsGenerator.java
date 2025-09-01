@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.alias;
+package org.density.index.alias;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.test.OpenSearchTestCase.between;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLengthBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
-import static org.opensearch.test.OpenSearchTestCase.randomInt;
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomLong;
+import static org.density.test.DensityTestCase.between;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.randomAlphaOfLengthBetween;
+import static org.density.test.DensityTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.randomFrom;
+import static org.density.test.DensityTestCase.randomInt;
+import static org.density.test.DensityTestCase.randomIntBetween;
+import static org.density.test.DensityTestCase.randomLong;
 
 public final class RandomAliasActionsGenerator {
 

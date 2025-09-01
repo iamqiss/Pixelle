@@ -1,50 +1,50 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.service.NodeCacheStats;
-import org.opensearch.common.cache.stats.ImmutableCacheStats;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Randomness;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.service.NodeCacheStats;
+import org.density.common.cache.stats.ImmutableCacheStats;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
 // Use a single data node to simplify logic about cache stats across different shards.
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 1)
-public class CacheStatsAPIIndicesRequestCacheIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 1)
+public class CacheStatsAPIIndicesRequestCacheIT extends DensityIntegTestCase {
     /**
      * Test aggregating by indices, indices+shards, shards, or no levels, and check the resulting stats
      * are as we expect.
@@ -271,7 +271,7 @@ public class CacheStatsAPIIndicesRequestCacheIT extends OpenSearchIntegTestCase 
             .setQuery(QueryBuilders.termQuery("k", "hello" + searchSuffix))
             .get();
         assertSearchResponse(resp);
-        OpenSearchAssertions.assertAllSuccessful(resp);
+        DensityAssertions.assertAllSuccessful(resp);
         return resp;
     }
 

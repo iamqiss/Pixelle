@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.plugin.wlm.action.CreateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestCreateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestDeleteWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestGetWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestUpdateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rule.sync.RefreshBasedSyncMechanism;
-import org.opensearch.plugin.wlm.service.WorkloadGroupPersistenceService;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.service.IndexStoredRulePersistenceService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
-import org.opensearch.wlm.WorkloadManagementSettings;
+import org.density.action.ActionRequest;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.plugin.wlm.action.CreateWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestCreateWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestDeleteWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestGetWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestUpdateWorkloadGroupAction;
+import org.density.plugin.wlm.rule.sync.RefreshBasedSyncMechanism;
+import org.density.plugin.wlm.service.WorkloadGroupPersistenceService;
+import org.density.plugins.ActionPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.service.IndexStoredRulePersistenceService;
+import org.density.script.ScriptService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
+import org.density.wlm.WorkloadManagementSettings;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -48,7 +48,7 @@ import java.util.function.Supplier;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class WorkloadManagementPluginTests extends OpenSearchTestCase {
+public class WorkloadManagementPluginTests extends DensityTestCase {
     WorkloadManagementPlugin plugin = new WorkloadManagementPlugin();
     ClusterService mockClusterService;
 

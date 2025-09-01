@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -44,17 +44,17 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.approximate.ApproximateMatchAllQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.approximate.ApproximateMatchAllQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.test.AbstractQueryTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -67,8 +67,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -288,7 +288,7 @@ public class BoolQueryBuilderTests extends AbstractQueryTestCase<BoolQueryBuilde
             + "  }, {"
             + "    \"term\" : {"
             + "      \"tag\" : {"
-            + "        \"value\" : \"opensearch\","
+            + "        \"value\" : \"density\","
             + "        \"boost\" : 1.0"
             + "      }"
             + "    }"

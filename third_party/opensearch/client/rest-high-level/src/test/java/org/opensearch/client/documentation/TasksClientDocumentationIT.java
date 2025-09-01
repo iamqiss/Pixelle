@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.TaskGroup;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.tasks.CancelTasksRequest;
-import org.opensearch.client.tasks.CancelTasksResponse;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskInfo;
+import org.density.DensityException;
+import org.density.action.LatchedActionListener;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.TaskGroup;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.RequestOptions;
+import org.density.client.RestHighLevelClient;
+import org.density.client.tasks.CancelTasksRequest;
+import org.density.client.tasks.CancelTasksResponse;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskInfo;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -79,7 +79,7 @@ import static org.hamcrest.Matchers.notNullValue;
  * than 84, the line will be cut and a horizontal scroll bar will be displayed.
  * (the code indentation of the tag is not included in the width)
  */
-public class TasksClientDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class TasksClientDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     @SuppressWarnings("unused")
     public void testListTasks() throws IOException {
@@ -124,7 +124,7 @@ public class TasksClientDocumentationIT extends OpenSearchRestHighLevelClientTes
         // end::list-tasks-response-calc
 
         // tag::list-tasks-response-failures
-        List<OpenSearchException> nodeFailures = response.getNodeFailures(); // <1>
+        List<DensityException> nodeFailures = response.getNodeFailures(); // <1>
         List<TaskOperationFailure> taskFailures = response.getTaskFailures(); // <2>
         // end::list-tasks-response-failures
 
@@ -170,22 +170,22 @@ public class TasksClientDocumentationIT extends OpenSearchRestHighLevelClientTes
         RestHighLevelClient client = highLevelClient();
         {
             // tag::cancel-tasks-request
-            CancelTasksRequest request = new org.opensearch.client.tasks.CancelTasksRequest.Builder()
+            CancelTasksRequest request = new org.density.client.tasks.CancelTasksRequest.Builder()
                 .withNodesFiltered(Arrays.asList("nodeId1", "nodeId2"))
                 .withActionsFiltered(Collections.singletonList("cluster:*"))
                 .build();
             // end::cancel-tasks-request
 
             // tag::cancel-tasks-request-filter
-            CancelTasksRequest byTaskIdRequest = new org.opensearch.client.tasks.CancelTasksRequest.Builder() // <1>
-                .withTaskId(new org.opensearch.client.tasks.TaskId("myNode",44L)) // <2>
+            CancelTasksRequest byTaskIdRequest = new org.density.client.tasks.CancelTasksRequest.Builder() // <1>
+                .withTaskId(new org.density.client.tasks.TaskId("myNode",44L)) // <2>
                 .withWaitForCompletion(true) // <3>
                 .build(); // <4>
             // end::cancel-tasks-request-filter
 
         }
 
-        CancelTasksRequest request = new org.opensearch.client.tasks.CancelTasksRequest.Builder().build();
+        CancelTasksRequest request = new org.density.client.tasks.CancelTasksRequest.Builder().build();
 
         // tag::cancel-tasks-execute
         CancelTasksResponse response = client.tasks().cancel(request, RequestOptions.DEFAULT);
@@ -194,17 +194,17 @@ public class TasksClientDocumentationIT extends OpenSearchRestHighLevelClientTes
         assertThat(response, notNullValue());
 
         // tag::cancel-tasks-response-tasks
-        List<org.opensearch.client.tasks.TaskInfo> tasks = response.getTasks(); // <1>
+        List<org.density.client.tasks.TaskInfo> tasks = response.getTasks(); // <1>
         // end::cancel-tasks-response-tasks
 
         // tag::cancel-tasks-response-calc
-        Map<String, List<org.opensearch.client.tasks.TaskInfo>> perNodeTasks = response.getPerNodeTasks(); // <1>
-        List<org.opensearch.client.tasks.TaskGroup> groups = response.getTaskGroups(); // <2>
+        Map<String, List<org.density.client.tasks.TaskInfo>> perNodeTasks = response.getPerNodeTasks(); // <1>
+        List<org.density.client.tasks.TaskGroup> groups = response.getTaskGroups(); // <2>
         // end::cancel-tasks-response-calc
 
         // tag::cancel-tasks-response-failures
-        List<org.opensearch.client.tasks.OpenSearchException> nodeFailures = response.getNodeFailures(); // <1>
-        List<org.opensearch.client.tasks.TaskOperationFailure> taskFailures = response.getTaskFailures(); // <2>
+        List<org.density.client.tasks.DensityException> nodeFailures = response.getNodeFailures(); // <1>
+        List<org.density.client.tasks.TaskOperationFailure> taskFailures = response.getTaskFailures(); // <2>
         // end::cancel-tasks-response-failures
 
         assertThat(response.getNodeFailures(), equalTo(emptyList()));
@@ -215,7 +215,7 @@ public class TasksClientDocumentationIT extends OpenSearchRestHighLevelClientTes
 
         RestHighLevelClient client = highLevelClient();
         {
-            CancelTasksRequest request = new org.opensearch.client.tasks.CancelTasksRequest.Builder().build();
+            CancelTasksRequest request = new org.density.client.tasks.CancelTasksRequest.Builder().build();
 
             // tag::cancel-tasks-execute-listener
             ActionListener<CancelTasksResponse> listener =

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder.RoundingInfo;
-import org.opensearch.search.aggregations.bucket.histogram.InternalAutoDateHistogram.BucketInfo;
-import org.opensearch.test.InternalMultiBucketAggregationTestCase;
+import org.density.common.Rounding;
+import org.density.common.time.DateFormatter;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder.RoundingInfo;
+import org.density.search.aggregations.bucket.histogram.InternalAutoDateHistogram.BucketInfo;
+import org.density.test.InternalMultiBucketAggregationTestCase;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;

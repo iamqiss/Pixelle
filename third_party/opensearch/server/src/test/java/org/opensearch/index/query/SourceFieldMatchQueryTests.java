@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -16,10 +16,10 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperServiceTestCase;
-import org.opensearch.index.mapper.ParsedDocument;
+import org.density.core.index.Index;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperServiceTestCase;
+import org.density.index.mapper.ParsedDocument;
 
 import java.io.IOException;
 import java.util.ArrayList;

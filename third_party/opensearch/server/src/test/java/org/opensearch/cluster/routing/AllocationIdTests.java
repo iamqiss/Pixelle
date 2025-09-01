@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.cluster.routing.RecoverySource.ExistingStoreRecoverySource;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.RecoverySource.ExistingStoreRecoverySource;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AllocationIdTests extends OpenSearchTestCase {
+public class AllocationIdTests extends DensityTestCase {
     public void testShardToStarted() {
         logger.info("-- create unassigned shard");
         ShardRouting shard = ShardRouting.newUnassigned(

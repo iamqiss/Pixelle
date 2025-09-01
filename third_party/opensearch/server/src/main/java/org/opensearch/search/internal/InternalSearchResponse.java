@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.pipeline.ProcessorExecutionDetail;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.suggest.Suggest;
+import org.density.Version;
+import org.density.action.search.SearchResponseSections;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.search.SearchExtBuilder;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.pipeline.ProcessorExecutionDetail;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.suggest.Suggest;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -53,7 +53,7 @@ import java.util.List;
 /**
  * {@link SearchResponseSections} subclass that can be serialized over the wire.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class InternalSearchResponse extends SearchResponseSections implements Writeable, ToXContentFragment {

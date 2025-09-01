@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.Node;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.snapshots.AbstractSnapshotIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.Node;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.snapshots.AbstractSnapshotIntegTestCase;
+import org.density.transport.client.Client;
 import org.junit.After;
 import org.junit.Before;
 
 import java.nio.file.Path;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
-import static org.opensearch.repositories.fs.ReloadableFsRepository.REPOSITORIES_FAILRATE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.repositories.fs.ReloadableFsRepository.REPOSITORIES_FAILRATE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 public abstract class RemoteSnapshotIT extends AbstractSnapshotIntegTestCase {
 

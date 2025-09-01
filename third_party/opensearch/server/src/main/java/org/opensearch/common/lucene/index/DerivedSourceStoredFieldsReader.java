@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.codecs.StoredFieldsReader;
 import org.apache.lucene.index.DocValuesSkipIndexType;
@@ -17,9 +17,9 @@ import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.mapper.SourceFieldMapper;
+import org.density.common.CheckedFunction;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.mapper.SourceFieldMapper;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -68,7 +68,7 @@ public class DerivedSourceStoredFieldsReader extends StoredFieldsReader {
     /**
      * A {@link StoredFields} that injects a _source field into the stored fields after deriving it.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class DerivedSourceStoredFields extends StoredFields {
         private static final FieldInfo FAKE_SOURCE_FIELD = new FieldInfo(

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.action.DocWriteRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaType;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.Closeable;
 import java.util.Objects;
@@ -65,7 +65,7 @@ import java.util.function.Supplier;
  * <p>
  * In order to create a new bulk processor, use the {@link Builder}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BulkProcessor implements Closeable {
 
@@ -96,7 +96,7 @@ public class BulkProcessor implements Closeable {
     /**
      * A builder used to create a build an instance of a bulk processor.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
 
@@ -188,7 +188,7 @@ public class BulkProcessor implements Closeable {
          * <p>
          * The default is to back off exponentially.
          *
-         * @see org.opensearch.action.bulk.BackoffPolicy#exponentialBackoff()
+         * @see org.density.action.bulk.BackoffPolicy#exponentialBackoff()
          */
         public Builder setBackoffPolicy(BackoffPolicy backoffPolicy) {
             if (backoffPolicy == null) {
@@ -240,10 +240,10 @@ public class BulkProcessor implements Closeable {
      * @param client The client that executes the bulk operations
      * @param listener The BulkProcessor listener that gets called on bulk events
      * @return the builder for BulkProcessor
-     * @deprecated Use {@link #builder(java.util.function.BiConsumer, org.opensearch.action.bulk.BulkProcessor.Listener)}
+     * @deprecated Use {@link #builder(java.util.function.BiConsumer, org.density.action.bulk.BulkProcessor.Listener)}
      * with client::bulk as the first argument, or {@link #builder(Client,
-     * org.opensearch.action.bulk.BulkProcessor.Listener, org.opensearch.threadpool.Scheduler,
-     * org.opensearch.threadpool.Scheduler, java.lang.Runnable)} and manage the flush and retry schedulers explicitly
+     * org.density.action.bulk.BulkProcessor.Listener, org.density.threadpool.Scheduler,
+     * org.density.threadpool.Scheduler, java.lang.Runnable)} and manage the flush and retry schedulers explicitly
      */
     @Deprecated
     public static Builder builder(Client client, Listener listener) {
@@ -547,7 +547,7 @@ public class BulkProcessor implements Closeable {
     /**
      * Flush for bulk processor
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class Flush implements Runnable {
         @Override

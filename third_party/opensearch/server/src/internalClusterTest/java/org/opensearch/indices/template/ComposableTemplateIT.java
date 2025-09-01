@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.template;
+package org.density.indices.template;
 
-import org.opensearch.action.admin.indices.template.put.PutComponentTemplateAction;
-import org.opensearch.action.admin.indices.template.put.PutComposableIndexTemplateAction;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.template.put.PutComponentTemplateAction;
+import org.density.action.admin.indices.template.put.PutComposableIndexTemplateAction;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.Template;
+import org.density.common.compress.CompressedXContent;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collections;
 
-public class ComposableTemplateIT extends OpenSearchIntegTestCase {
+public class ComposableTemplateIT extends DensityIntegTestCase {
 
     // See: https://github.com/elastic/elasticsearch/issues/58643
     public void testComponentTemplatesCanBeUpdatedAfterRestart() throws Exception {

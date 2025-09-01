@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,110 +25,110 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.TimestampParsingException;
-import org.opensearch.action.admin.indices.view.ViewAlreadyExistsException;
-import org.opensearch.action.admin.indices.view.ViewNotFoundException;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.replication.ReplicationOperation;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.IndexCreateBlockException;
-import org.opensearch.cluster.coordination.CoordinationStateRejectedException;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.coordination.NodeHealthCheckFailureException;
-import org.opensearch.cluster.decommission.DecommissioningFailedException;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IllegalShardRoutingStateException;
-import org.opensearch.cluster.routing.NodeWeighedAwayException;
-import org.opensearch.cluster.routing.PreferenceBasedSearchNotAllowedException;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.UnsupportedWeightedRoutingStateException;
-import org.opensearch.cluster.service.ClusterManagerThrottlingException;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.breaker.ResponseLimitBreachedException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.CancellableThreadsTests;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.NotSerializableExceptionWrapper;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotException;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotFailedException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.crypto.CryptoRegistryException;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.index.engine.IngestionEngineException;
-import org.opensearch.index.engine.RecoveryEngineException;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.seqno.RetentionLeaseAlreadyExistsException;
-import org.opensearch.index.seqno.RetentionLeaseInvalidRetainingSeqNoException;
-import org.opensearch.index.seqno.RetentionLeaseNotFoundException;
-import org.opensearch.index.shard.IllegalIndexShardStateException;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.PrimaryShardClosedException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.indices.IndexTemplateMissingException;
-import org.opensearch.indices.InvalidIndexContextException;
-import org.opensearch.indices.InvalidIndexTemplateException;
-import org.opensearch.indices.recovery.PeerRecoveryNotFound;
-import org.opensearch.indices.recovery.RecoverFilesRecoveryException;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.ingest.IngestProcessorException;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.rest.action.admin.indices.AliasesNotFoundException;
-import org.opensearch.search.SearchContextMissingException;
-import org.opensearch.search.SearchException;
-import org.opensearch.search.SearchParseException;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.pipeline.SearchPipelineProcessingException;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotException;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInProgressException;
-import org.opensearch.snapshots.SnapshotInUseDeletionException;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.transport.ActionNotFoundTransportException;
-import org.opensearch.transport.ActionTransportException;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.NoSeedNodeLeftException;
-import org.opensearch.transport.NoSuchRemoteClusterException;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.client.node.AbstractClientHeadersTestCase;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
-import org.opensearch.transport.stream.StreamException;
+import org.density.action.FailedNodeException;
+import org.density.action.OriginalIndices;
+import org.density.action.RoutingMissingException;
+import org.density.action.TimestampParsingException;
+import org.density.action.admin.indices.view.ViewAlreadyExistsException;
+import org.density.action.admin.indices.view.ViewNotFoundException;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.replication.ReplicationOperation;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.IndexCreateBlockException;
+import org.density.cluster.coordination.CoordinationStateRejectedException;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.coordination.NodeHealthCheckFailureException;
+import org.density.cluster.decommission.DecommissioningFailedException;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IllegalShardRoutingStateException;
+import org.density.cluster.routing.NodeWeighedAwayException;
+import org.density.cluster.routing.PreferenceBasedSearchNotAllowedException;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.UnsupportedWeightedRoutingStateException;
+import org.density.cluster.service.ClusterManagerThrottlingException;
+import org.density.common.UUIDs;
+import org.density.common.breaker.ResponseLimitBreachedException;
+import org.density.common.collect.Tuple;
+import org.density.common.io.PathUtils;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.CancellableThreadsTests;
+import org.density.common.util.set.Sets;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.NotSerializableExceptionWrapper;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.index.snapshots.IndexShardSnapshotException;
+import org.density.core.index.snapshots.IndexShardSnapshotFailedException;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentLocation;
+import org.density.crypto.CryptoRegistryException;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.index.engine.IngestionEngineException;
+import org.density.index.engine.RecoveryEngineException;
+import org.density.index.query.QueryShardException;
+import org.density.index.seqno.RetentionLeaseAlreadyExistsException;
+import org.density.index.seqno.RetentionLeaseInvalidRetainingSeqNoException;
+import org.density.index.seqno.RetentionLeaseNotFoundException;
+import org.density.index.shard.IllegalIndexShardStateException;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.PrimaryShardClosedException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.indices.IndexTemplateMissingException;
+import org.density.indices.InvalidIndexContextException;
+import org.density.indices.InvalidIndexTemplateException;
+import org.density.indices.recovery.PeerRecoveryNotFound;
+import org.density.indices.recovery.RecoverFilesRecoveryException;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.ingest.IngestProcessorException;
+import org.density.repositories.RepositoryException;
+import org.density.rest.action.admin.indices.AliasesNotFoundException;
+import org.density.search.SearchContextMissingException;
+import org.density.search.SearchException;
+import org.density.search.SearchParseException;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.pipeline.SearchPipelineProcessingException;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotException;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInProgressException;
+import org.density.snapshots.SnapshotInUseDeletionException;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.transport.ActionNotFoundTransportException;
+import org.density.transport.ActionTransportException;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.NoSeedNodeLeftException;
+import org.density.transport.NoSuchRemoteClusterException;
+import org.density.transport.TcpTransport;
+import org.density.transport.client.node.AbstractClientHeadersTestCase;
+import org.density.transport.client.transport.NoNodeAvailableException;
+import org.density.transport.stream.StreamException;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
@@ -159,26 +159,26 @@ import static java.lang.reflect.Modifier.isInterface;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
-import static org.opensearch.test.TestSearchContext.SHARD_TARGET;
+import static org.density.test.TestSearchContext.SHARD_TARGET;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class ExceptionSerializationTests extends OpenSearchTestCase {
+public class ExceptionSerializationTests extends DensityTestCase {
 
     public void testExceptionRegistration() throws ClassNotFoundException, IOException, URISyntaxException {
         final Set<Class<?>> notRegistered = new HashSet<>();
         final Set<Class<?>> hasDedicatedWrite = new HashSet<>();
         final Set<Class<?>> registered = new HashSet<>();
-        final String path = "org/opensearch";
-        final Path coreLibStartPath = PathUtils.get(OpenSearchException.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-        final Path startPath = PathUtils.get(OpenSearchServerException.class.getProtectionDomain().getCodeSource().getLocation().toURI())
+        final String path = "org/density";
+        final Path coreLibStartPath = PathUtils.get(DensityException.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        final Path startPath = PathUtils.get(DensityServerException.class.getProtectionDomain().getCodeSource().getLocation().toURI())
             .resolve("org")
-            .resolve("opensearch");
+            .resolve("density");
         final Set<String> ignore = Sets.newHashSet(
             CancellableThreadsTests.CustomException.class.getName(),
-            org.opensearch.rest.BytesRestResponseTests.WithHeadersException.class.getName(),
+            org.density.rest.BytesRestResponseTests.WithHeadersException.class.getName(),
             AbstractClientHeadersTestCase.InternalException.class.getName(),
-            "org.opensearch.rest.action.RestActionListenerTests$2"
+            "org.density.rest.action.RestActionListenerTests$2"
         );
         FileVisitor<Path> visitor = new FileVisitor<Path>() {
             private Path pkgPrefix = PathUtils.get(path).getParent();
@@ -213,10 +213,10 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
                 if (isEsException(clazz) == false) {
                     return;
                 }
-                if (OpenSearchException.isRegistered(clazz.asSubclass(Throwable.class), Version.CURRENT) == false
-                    && OpenSearchException.class.equals(clazz.getEnclosingClass()) == false) {
+                if (DensityException.isRegistered(clazz.asSubclass(Throwable.class), Version.CURRENT) == false
+                    && DensityException.class.equals(clazz.getEnclosingClass()) == false) {
                     notRegistered.add(clazz);
-                } else if (OpenSearchException.isRegistered(clazz.asSubclass(Throwable.class), Version.CURRENT)) {
+                } else if (DensityException.isRegistered(clazz.asSubclass(Throwable.class), Version.CURRENT)) {
                     registered.add(clazz);
                     try {
                         if (clazz.getMethod("writeTo", StreamOutput.class) != null) {
@@ -229,7 +229,7 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
             }
 
             private boolean isEsException(Class<?> clazz) {
-                return OpenSearchException.class.isAssignableFrom(clazz);
+                return DensityException.class.isAssignableFrom(clazz);
             }
 
             private Class<?> loadClass(String filename) throws ClassNotFoundException {
@@ -263,15 +263,15 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         assertTrue(notRegistered.remove(TestException.class));
         assertTrue(notRegistered.remove(UnknownHeaderException.class));
         assertTrue(
-            "Classes subclassing OpenSearchException must be registered in OpenSearchException.OpenSearchExceptionHandle \n"
+            "Classes subclassing DensityException must be registered in DensityException.DensityExceptionHandle \n"
                 + notRegistered,
             notRegistered.isEmpty()
         );
-        assertTrue(registered.removeAll(OpenSearchException.getRegisteredKeys())); // check
+        assertTrue(registered.removeAll(DensityException.getRegisteredKeys())); // check
         assertEquals(registered.toString(), 0, registered.size());
     }
 
-    public static final class TestException extends OpenSearchException {
+    public static final class TestException extends DensityException {
         public TestException(StreamInput in) throws IOException {
             super(in);
         }
@@ -590,7 +590,7 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         final Exception ex = new UnknownException("eggplant", parsingException);
         Exception exception = serialize(ex);
         assertEquals("unknown_exception: eggplant", exception.getMessage());
-        assertTrue(exception instanceof OpenSearchException);
+        assertTrue(exception instanceof DensityException);
         ParsingException e = (ParsingException) exception.getCause();
         assertEquals(parsingException.getIndex(), e.getIndex());
         assertEquals(parsingException.getMessage(), e.getMessage());
@@ -607,7 +607,7 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
             new IllegalArgumentException("alalaal"),
             new NullPointerException("boom"),
             new EOFException("dadada"),
-            new OpenSearchSecurityException("nono!"),
+            new DensitySecurityException("nono!"),
             new NumberFormatException("not a number"),
             new CorruptIndexException("baaaam booom", "this is my resource"),
             new IndexFormatTooNewException("tooo new", 1, 2, 3),
@@ -621,8 +621,8 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
             new LockObtainFailedException("can't lock directory", new NullPointerException()),
             unknownException };
         for (final Exception cause : causes) {
-            OpenSearchException ex = new OpenSearchException("topLevel", cause);
-            OpenSearchException deserialized = serialize(ex);
+            DensityException ex = new DensityException("topLevel", cause);
+            DensityException deserialized = serialize(ex);
             assertEquals(deserialized.getMessage(), ex.getMessage());
             assertTrue(
                 "Expected: "
@@ -644,35 +644,35 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
 
     public void testWithRestHeadersException() throws IOException {
         {
-            OpenSearchException ex = new OpenSearchException("msg");
+            DensityException ex = new DensityException("msg");
             ex.addHeader("foo", "foo", "bar");
-            ex.addMetadata("opensearch.foo_metadata", "value1", "value2");
+            ex.addMetadata("density.foo_metadata", "value1", "value2");
             ex = serialize(ex);
             assertEquals("msg", ex.getMessage());
             assertEquals(2, ex.getHeader("foo").size());
             assertEquals("foo", ex.getHeader("foo").get(0));
             assertEquals("bar", ex.getHeader("foo").get(1));
-            assertEquals(2, ex.getMetadata("opensearch.foo_metadata").size());
-            assertEquals("value1", ex.getMetadata("opensearch.foo_metadata").get(0));
-            assertEquals("value2", ex.getMetadata("opensearch.foo_metadata").get(1));
+            assertEquals(2, ex.getMetadata("density.foo_metadata").size());
+            assertEquals("value1", ex.getMetadata("density.foo_metadata").get(0));
+            assertEquals("value2", ex.getMetadata("density.foo_metadata").get(1));
         }
         {
             RestStatus status = randomFrom(RestStatus.values());
             // ensure we are carrying over the headers and metadata even if not serialized
             UnknownHeaderException uhe = new UnknownHeaderException("msg", status);
             uhe.addHeader("foo", "foo", "bar");
-            uhe.addMetadata("opensearch.foo_metadata", "value1", "value2");
+            uhe.addMetadata("density.foo_metadata", "value1", "value2");
 
-            OpenSearchException serialize = serialize((OpenSearchException) uhe);
+            DensityException serialize = serialize((DensityException) uhe);
             assertTrue(serialize instanceof NotSerializableExceptionWrapper);
             NotSerializableExceptionWrapper e = (NotSerializableExceptionWrapper) serialize;
             assertEquals("unknown_header_exception: msg", e.getMessage());
             assertEquals(2, e.getHeader("foo").size());
             assertEquals("foo", e.getHeader("foo").get(0));
             assertEquals("bar", e.getHeader("foo").get(1));
-            assertEquals(2, e.getMetadata("opensearch.foo_metadata").size());
-            assertEquals("value1", e.getMetadata("opensearch.foo_metadata").get(0));
-            assertEquals("value2", e.getMetadata("opensearch.foo_metadata").get(1));
+            assertEquals(2, e.getMetadata("density.foo_metadata").size());
+            assertEquals("value1", e.getMetadata("density.foo_metadata").get(0));
+            assertEquals("value2", e.getMetadata("density.foo_metadata").get(1));
             assertSame(status, e.status());
         }
     }
@@ -685,7 +685,7 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         assertEquals(msg, ex.getMessage());
     }
 
-    public static class UnknownHeaderException extends OpenSearchException {
+    public static class UnknownHeaderException extends DensityException {
         private final RestStatus status;
 
         UnknownHeaderException(String msg, RestStatus status) {
@@ -699,9 +699,9 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         }
     }
 
-    public void testOpenSearchSecurityException() throws IOException {
-        OpenSearchSecurityException ex = new OpenSearchSecurityException("user [{}] is not allowed", RestStatus.UNAUTHORIZED, "foo");
-        OpenSearchSecurityException e = serialize(ex);
+    public void testDensitySecurityException() throws IOException {
+        DensitySecurityException ex = new DensitySecurityException("user [{}] is not allowed", RestStatus.UNAUTHORIZED, "foo");
+        DensitySecurityException e = serialize(ex);
         assertEquals(ex.status(), e.status());
         assertEquals(RestStatus.UNAUTHORIZED, e.status());
     }
@@ -713,165 +713,165 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
     }
 
     public void testThatIdsArePositive() {
-        for (final int id : OpenSearchException.ids()) {
+        for (final int id : DensityException.ids()) {
             assertThat("negative id", id, greaterThanOrEqualTo(0));
         }
     }
 
     public void testThatIdsAreUnique() {
         final Set<Integer> ids = new HashSet<>();
-        for (final int id : OpenSearchException.ids()) {
+        for (final int id : DensityException.ids()) {
             assertTrue("duplicate id", ids.add(id));
         }
     }
 
     public void testIds() {
-        Map<Integer, Class<? extends OpenSearchException>> ids = new HashMap<>();
+        Map<Integer, Class<? extends DensityException>> ids = new HashMap<>();
         ids.put(0, IndexShardSnapshotFailedException.class);
-        ids.put(1, org.opensearch.search.dfs.DfsPhaseExecutionException.class);
-        ids.put(2, org.opensearch.common.util.CancellableThreads.ExecutionCancelledException.class);
-        ids.put(3, org.opensearch.discovery.ClusterManagerNotDiscoveredException.class);
-        ids.put(4, org.opensearch.OpenSearchSecurityException.class);
-        ids.put(5, org.opensearch.index.snapshots.IndexShardRestoreException.class);
-        ids.put(6, org.opensearch.indices.IndexClosedException.class);
-        ids.put(7, org.opensearch.http.BindHttpException.class);
-        ids.put(8, org.opensearch.action.search.ReduceSearchPhaseException.class);
-        ids.put(9, org.opensearch.node.NodeClosedException.class);
-        ids.put(10, org.opensearch.index.engine.SnapshotFailedEngineException.class);
-        ids.put(11, org.opensearch.index.shard.ShardNotFoundException.class);
-        ids.put(12, org.opensearch.transport.ConnectTransportException.class);
-        ids.put(13, org.opensearch.transport.NotSerializableTransportException.class);
-        ids.put(14, org.opensearch.transport.ResponseHandlerFailureTransportException.class);
-        ids.put(15, org.opensearch.indices.IndexCreationException.class);
-        ids.put(16, org.opensearch.index.IndexNotFoundException.class);
-        ids.put(17, org.opensearch.cluster.routing.IllegalShardRoutingStateException.class);
-        ids.put(18, org.opensearch.action.support.broadcast.BroadcastShardOperationFailedException.class);
-        ids.put(19, org.opensearch.ResourceNotFoundException.class);
-        ids.put(20, org.opensearch.transport.ActionTransportException.class);
-        ids.put(21, org.opensearch.OpenSearchGenerationException.class);
+        ids.put(1, org.density.search.dfs.DfsPhaseExecutionException.class);
+        ids.put(2, org.density.common.util.CancellableThreads.ExecutionCancelledException.class);
+        ids.put(3, org.density.discovery.ClusterManagerNotDiscoveredException.class);
+        ids.put(4, org.density.DensitySecurityException.class);
+        ids.put(5, org.density.index.snapshots.IndexShardRestoreException.class);
+        ids.put(6, org.density.indices.IndexClosedException.class);
+        ids.put(7, org.density.http.BindHttpException.class);
+        ids.put(8, org.density.action.search.ReduceSearchPhaseException.class);
+        ids.put(9, org.density.node.NodeClosedException.class);
+        ids.put(10, org.density.index.engine.SnapshotFailedEngineException.class);
+        ids.put(11, org.density.index.shard.ShardNotFoundException.class);
+        ids.put(12, org.density.transport.ConnectTransportException.class);
+        ids.put(13, org.density.transport.NotSerializableTransportException.class);
+        ids.put(14, org.density.transport.ResponseHandlerFailureTransportException.class);
+        ids.put(15, org.density.indices.IndexCreationException.class);
+        ids.put(16, org.density.index.IndexNotFoundException.class);
+        ids.put(17, org.density.cluster.routing.IllegalShardRoutingStateException.class);
+        ids.put(18, org.density.action.support.broadcast.BroadcastShardOperationFailedException.class);
+        ids.put(19, org.density.ResourceNotFoundException.class);
+        ids.put(20, org.density.transport.ActionTransportException.class);
+        ids.put(21, org.density.DensityGenerationException.class);
         ids.put(22, null); // was CreateFailedEngineException
-        ids.put(23, org.opensearch.index.shard.IndexShardStartedException.class);
-        ids.put(24, org.opensearch.search.SearchContextMissingException.class);
-        ids.put(25, org.opensearch.script.GeneralScriptException.class);
+        ids.put(23, org.density.index.shard.IndexShardStartedException.class);
+        ids.put(24, org.density.search.SearchContextMissingException.class);
+        ids.put(25, org.density.script.GeneralScriptException.class);
         ids.put(26, null);
-        ids.put(27, org.opensearch.snapshots.SnapshotCreationException.class);
+        ids.put(27, org.density.snapshots.SnapshotCreationException.class);
         ids.put(28, null); // was DeleteFailedEngineException, deprecated in 6.0 and removed in 7.0
-        ids.put(29, org.opensearch.index.engine.DocumentMissingException.class);
-        ids.put(30, org.opensearch.snapshots.SnapshotException.class);
-        ids.put(31, org.opensearch.indices.InvalidAliasNameException.class);
-        ids.put(32, org.opensearch.indices.InvalidIndexNameException.class);
-        ids.put(33, org.opensearch.indices.IndexPrimaryShardNotAllocatedException.class);
-        ids.put(34, org.opensearch.transport.TransportException.class);
-        ids.put(35, org.opensearch.OpenSearchParseException.class);
-        ids.put(36, org.opensearch.search.SearchException.class);
-        ids.put(37, org.opensearch.index.mapper.MapperException.class);
-        ids.put(38, org.opensearch.indices.InvalidTypeNameException.class);
-        ids.put(39, org.opensearch.snapshots.SnapshotRestoreException.class);
+        ids.put(29, org.density.index.engine.DocumentMissingException.class);
+        ids.put(30, org.density.snapshots.SnapshotException.class);
+        ids.put(31, org.density.indices.InvalidAliasNameException.class);
+        ids.put(32, org.density.indices.InvalidIndexNameException.class);
+        ids.put(33, org.density.indices.IndexPrimaryShardNotAllocatedException.class);
+        ids.put(34, org.density.transport.TransportException.class);
+        ids.put(35, org.density.DensityParseException.class);
+        ids.put(36, org.density.search.SearchException.class);
+        ids.put(37, org.density.index.mapper.MapperException.class);
+        ids.put(38, org.density.indices.InvalidTypeNameException.class);
+        ids.put(39, org.density.snapshots.SnapshotRestoreException.class);
         ids.put(40, ParsingException.class);
-        ids.put(41, org.opensearch.index.shard.IndexShardClosedException.class);
-        ids.put(42, org.opensearch.indices.recovery.RecoverFilesRecoveryException.class);
-        ids.put(43, org.opensearch.index.translog.TruncatedTranslogException.class);
-        ids.put(44, org.opensearch.indices.recovery.RecoveryFailedException.class);
-        ids.put(45, org.opensearch.index.shard.IndexShardRelocatedException.class);
-        ids.put(46, org.opensearch.transport.NodeShouldNotConnectException.class);
+        ids.put(41, org.density.index.shard.IndexShardClosedException.class);
+        ids.put(42, org.density.indices.recovery.RecoverFilesRecoveryException.class);
+        ids.put(43, org.density.index.translog.TruncatedTranslogException.class);
+        ids.put(44, org.density.indices.recovery.RecoveryFailedException.class);
+        ids.put(45, org.density.index.shard.IndexShardRelocatedException.class);
+        ids.put(46, org.density.transport.NodeShouldNotConnectException.class);
         ids.put(47, null);
-        ids.put(48, org.opensearch.index.translog.TranslogCorruptedException.class);
-        ids.put(49, org.opensearch.cluster.block.ClusterBlockException.class);
-        ids.put(50, org.opensearch.search.fetch.FetchPhaseExecutionException.class);
+        ids.put(48, org.density.index.translog.TranslogCorruptedException.class);
+        ids.put(49, org.density.cluster.block.ClusterBlockException.class);
+        ids.put(50, org.density.search.fetch.FetchPhaseExecutionException.class);
         ids.put(51, null);
-        ids.put(52, org.opensearch.index.engine.VersionConflictEngineException.class);
-        ids.put(53, org.opensearch.index.engine.EngineException.class);
+        ids.put(52, org.density.index.engine.VersionConflictEngineException.class);
+        ids.put(53, org.density.index.engine.EngineException.class);
         ids.put(54, null); // was DocumentAlreadyExistsException, which is superseded with VersionConflictEngineException
-        ids.put(55, org.opensearch.action.NoSuchNodeException.class);
-        ids.put(56, org.opensearch.common.settings.SettingsException.class);
-        ids.put(57, org.opensearch.indices.IndexTemplateMissingException.class);
-        ids.put(58, org.opensearch.transport.SendRequestTransportException.class);
-        ids.put(59, null); // was OpenSearchRejectedExecutionException, which is no longer an instance of OpenSearchException
+        ids.put(55, org.density.action.NoSuchNodeException.class);
+        ids.put(56, org.density.common.settings.SettingsException.class);
+        ids.put(57, org.density.indices.IndexTemplateMissingException.class);
+        ids.put(58, org.density.transport.SendRequestTransportException.class);
+        ids.put(59, null); // was DensityRejectedExecutionException, which is no longer an instance of DensityException
         ids.put(60, null); // EarlyTerminationException was removed in 6.0
         ids.put(61, null); // RoutingValidationException was removed in 5.0
         ids.put(62, NotSerializableExceptionWrapper.class);
-        ids.put(63, org.opensearch.indices.AliasFilterParsingException.class);
+        ids.put(63, org.density.indices.AliasFilterParsingException.class);
         ids.put(64, null); // DeleteByQueryFailedEngineException was removed in 3.0
-        ids.put(65, org.opensearch.gateway.GatewayException.class);
-        ids.put(66, org.opensearch.index.shard.IndexShardNotRecoveringException.class);
-        ids.put(67, org.opensearch.http.HttpException.class);
-        ids.put(68, org.opensearch.OpenSearchException.class);
-        ids.put(69, org.opensearch.snapshots.SnapshotMissingException.class);
-        ids.put(70, org.opensearch.action.PrimaryMissingActionException.class);
-        ids.put(71, org.opensearch.action.FailedNodeException.class);
-        ids.put(72, org.opensearch.search.SearchParseException.class);
-        ids.put(73, org.opensearch.snapshots.ConcurrentSnapshotExecutionException.class);
-        ids.put(74, org.opensearch.common.blobstore.BlobStoreException.class);
-        ids.put(75, org.opensearch.cluster.IncompatibleClusterStateVersionException.class);
-        ids.put(76, org.opensearch.index.engine.RecoveryEngineException.class);
-        ids.put(77, org.opensearch.common.util.concurrent.UncategorizedExecutionException.class);
-        ids.put(78, org.opensearch.action.TimestampParsingException.class);
-        ids.put(79, org.opensearch.action.RoutingMissingException.class);
+        ids.put(65, org.density.gateway.GatewayException.class);
+        ids.put(66, org.density.index.shard.IndexShardNotRecoveringException.class);
+        ids.put(67, org.density.http.HttpException.class);
+        ids.put(68, org.density.DensityException.class);
+        ids.put(69, org.density.snapshots.SnapshotMissingException.class);
+        ids.put(70, org.density.action.PrimaryMissingActionException.class);
+        ids.put(71, org.density.action.FailedNodeException.class);
+        ids.put(72, org.density.search.SearchParseException.class);
+        ids.put(73, org.density.snapshots.ConcurrentSnapshotExecutionException.class);
+        ids.put(74, org.density.common.blobstore.BlobStoreException.class);
+        ids.put(75, org.density.cluster.IncompatibleClusterStateVersionException.class);
+        ids.put(76, org.density.index.engine.RecoveryEngineException.class);
+        ids.put(77, org.density.common.util.concurrent.UncategorizedExecutionException.class);
+        ids.put(78, org.density.action.TimestampParsingException.class);
+        ids.put(79, org.density.action.RoutingMissingException.class);
         ids.put(80, null); // was IndexFailedEngineException, deprecated in 6.0 and removed in 7.0
-        ids.put(81, org.opensearch.index.snapshots.IndexShardRestoreFailedException.class);
-        ids.put(82, org.opensearch.repositories.RepositoryException.class);
-        ids.put(83, org.opensearch.transport.ReceiveTimeoutTransportException.class);
-        ids.put(84, org.opensearch.transport.NodeDisconnectedException.class);
+        ids.put(81, org.density.index.snapshots.IndexShardRestoreFailedException.class);
+        ids.put(82, org.density.repositories.RepositoryException.class);
+        ids.put(83, org.density.transport.ReceiveTimeoutTransportException.class);
+        ids.put(84, org.density.transport.NodeDisconnectedException.class);
         ids.put(85, null);
-        ids.put(86, org.opensearch.search.aggregations.AggregationExecutionException.class);
-        ids.put(88, org.opensearch.indices.InvalidIndexTemplateException.class);
-        ids.put(90, org.opensearch.index.engine.RefreshFailedEngineException.class);
-        ids.put(91, org.opensearch.search.aggregations.AggregationInitializationException.class);
-        ids.put(92, org.opensearch.indices.recovery.DelayRecoveryException.class);
+        ids.put(86, org.density.search.aggregations.AggregationExecutionException.class);
+        ids.put(88, org.density.indices.InvalidIndexTemplateException.class);
+        ids.put(90, org.density.index.engine.RefreshFailedEngineException.class);
+        ids.put(91, org.density.search.aggregations.AggregationInitializationException.class);
+        ids.put(92, org.density.indices.recovery.DelayRecoveryException.class);
         ids.put(94, NoNodeAvailableException.class);
         ids.put(95, null);
-        ids.put(96, org.opensearch.snapshots.InvalidSnapshotNameException.class);
-        ids.put(97, org.opensearch.index.shard.IllegalIndexShardStateException.class);
+        ids.put(96, org.density.snapshots.InvalidSnapshotNameException.class);
+        ids.put(97, org.density.index.shard.IllegalIndexShardStateException.class);
         ids.put(98, IndexShardSnapshotException.class);
-        ids.put(99, org.opensearch.index.shard.IndexShardNotStartedException.class);
-        ids.put(100, org.opensearch.action.search.SearchPhaseExecutionException.class);
-        ids.put(101, org.opensearch.transport.ActionNotFoundTransportException.class);
-        ids.put(102, org.opensearch.transport.TransportSerializationException.class);
-        ids.put(103, org.opensearch.transport.RemoteTransportException.class);
-        ids.put(104, org.opensearch.index.engine.EngineCreationFailureException.class);
-        ids.put(105, org.opensearch.cluster.routing.RoutingException.class);
-        ids.put(106, org.opensearch.index.shard.IndexShardRecoveryException.class);
-        ids.put(107, org.opensearch.repositories.RepositoryMissingException.class);
+        ids.put(99, org.density.index.shard.IndexShardNotStartedException.class);
+        ids.put(100, org.density.action.search.SearchPhaseExecutionException.class);
+        ids.put(101, org.density.transport.ActionNotFoundTransportException.class);
+        ids.put(102, org.density.transport.TransportSerializationException.class);
+        ids.put(103, org.density.transport.RemoteTransportException.class);
+        ids.put(104, org.density.index.engine.EngineCreationFailureException.class);
+        ids.put(105, org.density.cluster.routing.RoutingException.class);
+        ids.put(106, org.density.index.shard.IndexShardRecoveryException.class);
+        ids.put(107, org.density.repositories.RepositoryMissingException.class);
         ids.put(108, null);
-        ids.put(109, org.opensearch.index.engine.DocumentSourceMissingException.class);
+        ids.put(109, org.density.index.engine.DocumentSourceMissingException.class);
         ids.put(110, null); // FlushNotAllowedEngineException was removed in 5.0
-        ids.put(111, org.opensearch.common.settings.NoClassSettingsException.class);
-        ids.put(112, org.opensearch.transport.BindTransportException.class);
-        ids.put(113, org.opensearch.rest.action.admin.indices.AliasesNotFoundException.class);
-        ids.put(114, org.opensearch.index.shard.IndexShardRecoveringException.class);
-        ids.put(115, org.opensearch.index.translog.TranslogException.class);
-        ids.put(116, org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException.class);
+        ids.put(111, org.density.common.settings.NoClassSettingsException.class);
+        ids.put(112, org.density.transport.BindTransportException.class);
+        ids.put(113, org.density.rest.action.admin.indices.AliasesNotFoundException.class);
+        ids.put(114, org.density.index.shard.IndexShardRecoveringException.class);
+        ids.put(115, org.density.index.translog.TranslogException.class);
+        ids.put(116, org.density.cluster.metadata.ProcessClusterEventTimeoutException.class);
         ids.put(117, ReplicationOperation.RetryOnPrimaryException.class);
-        ids.put(118, org.opensearch.OpenSearchTimeoutException.class);
-        ids.put(119, org.opensearch.search.query.QueryPhaseExecutionException.class);
-        ids.put(120, org.opensearch.repositories.RepositoryVerificationException.class);
-        ids.put(121, org.opensearch.search.aggregations.InvalidAggregationPathException.class);
+        ids.put(118, org.density.DensityTimeoutException.class);
+        ids.put(119, org.density.search.query.QueryPhaseExecutionException.class);
+        ids.put(120, org.density.repositories.RepositoryVerificationException.class);
+        ids.put(121, org.density.search.aggregations.InvalidAggregationPathException.class);
         ids.put(122, null);
-        ids.put(123, org.opensearch.ResourceAlreadyExistsException.class);
+        ids.put(123, org.density.ResourceAlreadyExistsException.class);
         ids.put(124, null);
         ids.put(125, TcpTransport.HttpRequestOnTransportException.class);
-        ids.put(126, org.opensearch.index.mapper.MapperParsingException.class);
-        ids.put(127, null); // was org.opensearch.search.SearchContextException.class
-        ids.put(128, org.opensearch.search.builder.SearchSourceBuilderException.class);
-        ids.put(129, null); // was org.opensearch.index.engine.EngineClosedException.class
-        ids.put(130, org.opensearch.action.NoShardAvailableActionException.class);
-        ids.put(131, org.opensearch.action.UnavailableShardsException.class);
-        ids.put(132, org.opensearch.index.engine.FlushFailedEngineException.class);
-        ids.put(133, org.opensearch.core.common.breaker.CircuitBreakingException.class);
-        ids.put(134, org.opensearch.transport.NodeNotConnectedException.class);
-        ids.put(135, org.opensearch.index.mapper.StrictDynamicMappingException.class);
-        ids.put(136, org.opensearch.action.support.replication.TransportReplicationAction.RetryOnReplicaException.class);
-        ids.put(137, org.opensearch.indices.TypeMissingException.class);
+        ids.put(126, org.density.index.mapper.MapperParsingException.class);
+        ids.put(127, null); // was org.density.search.SearchContextException.class
+        ids.put(128, org.density.search.builder.SearchSourceBuilderException.class);
+        ids.put(129, null); // was org.density.index.engine.EngineClosedException.class
+        ids.put(130, org.density.action.NoShardAvailableActionException.class);
+        ids.put(131, org.density.action.UnavailableShardsException.class);
+        ids.put(132, org.density.index.engine.FlushFailedEngineException.class);
+        ids.put(133, org.density.core.common.breaker.CircuitBreakingException.class);
+        ids.put(134, org.density.transport.NodeNotConnectedException.class);
+        ids.put(135, org.density.index.mapper.StrictDynamicMappingException.class);
+        ids.put(136, org.density.action.support.replication.TransportReplicationAction.RetryOnReplicaException.class);
+        ids.put(137, org.density.indices.TypeMissingException.class);
         ids.put(138, null);
         ids.put(139, null);
-        ids.put(140, org.opensearch.cluster.coordination.FailedToCommitClusterStateException.class);
-        ids.put(141, org.opensearch.index.query.QueryShardException.class);
+        ids.put(140, org.density.cluster.coordination.FailedToCommitClusterStateException.class);
+        ids.put(141, org.density.index.query.QueryShardException.class);
         ids.put(142, ShardStateAction.NoLongerPrimaryShardException.class);
-        ids.put(143, org.opensearch.script.ScriptException.class);
-        ids.put(144, org.opensearch.cluster.NotClusterManagerException.class);
-        ids.put(145, org.opensearch.OpenSearchStatusException.class);
-        ids.put(146, org.opensearch.core.tasks.TaskCancelledException.class);
-        ids.put(147, org.opensearch.env.ShardLockObtainFailedException.class);
+        ids.put(143, org.density.script.ScriptException.class);
+        ids.put(144, org.density.cluster.NotClusterManagerException.class);
+        ids.put(145, org.density.DensityStatusException.class);
+        ids.put(146, org.density.core.tasks.TaskCancelledException.class);
+        ids.put(147, org.density.env.ShardLockObtainFailedException.class);
         ids.put(148, null);
         ids.put(149, MultiBucketConsumerService.TooManyBucketsException.class);
         ids.put(150, CoordinationStateRejectedException.class);
@@ -904,14 +904,14 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         ids.put(177, StreamException.class);
         ids.put(10001, IndexCreateBlockException.class);
 
-        Map<Class<? extends OpenSearchException>, Integer> reverse = new HashMap<>();
-        for (Map.Entry<Integer, Class<? extends OpenSearchException>> entry : ids.entrySet()) {
+        Map<Class<? extends DensityException>, Integer> reverse = new HashMap<>();
+        for (Map.Entry<Integer, Class<? extends DensityException>> entry : ids.entrySet()) {
             if (entry.getValue() != null) {
                 reverse.put(entry.getValue(), entry.getKey());
             }
         }
 
-        for (final Tuple<Integer, Class<? extends OpenSearchException>> tuple : OpenSearchException.classes()) {
+        for (final Tuple<Integer, Class<? extends DensityException>> tuple : DensityException.classes()) {
             assertNotNull(tuple.v1());
             assertNotNull(
                 tuple.v2().getName() + " not found in ExceptionSerializationTests.testIds. Please add it.",
@@ -920,9 +920,9 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
             assertEquals((int) reverse.get(tuple.v2()), (int) tuple.v1());
         }
 
-        for (Map.Entry<Integer, Class<? extends OpenSearchException>> entry : ids.entrySet()) {
+        for (Map.Entry<Integer, Class<? extends DensityException>> entry : ids.entrySet()) {
             if (entry.getValue() != null) {
-                assertEquals((int) entry.getKey(), OpenSearchException.getId(entry.getValue()));
+                assertEquals((int) entry.getKey(), DensityException.getId(entry.getValue()));
             }
         }
     }
@@ -960,9 +960,9 @@ public class ExceptionSerializationTests extends OpenSearchTestCase {
         }
     }
 
-    public void testOpenSearchRemoteException() throws IOException {
-        OpenSearchStatusException ex = new OpenSearchStatusException("something", RestStatus.TOO_MANY_REQUESTS);
-        OpenSearchStatusException e = serialize(ex);
+    public void testDensityRemoteException() throws IOException {
+        DensityStatusException ex = new DensityStatusException("something", RestStatus.TOO_MANY_REQUESTS);
+        DensityStatusException e = serialize(ex);
         assertEquals(ex.status(), e.status());
         assertEquals(RestStatus.TOO_MANY_REQUESTS, e.status());
     }

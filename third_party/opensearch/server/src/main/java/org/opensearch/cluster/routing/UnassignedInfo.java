@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.ExceptionsHelper;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -63,7 +63,7 @@ import java.util.function.Predicate;
 /**
  * Holds additional information as to why the shard is in unassigned state.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class UnassignedInfo implements ToXContentFragment, Writeable {
@@ -83,7 +83,7 @@ public final class UnassignedInfo implements ToXContentFragment, Writeable {
      * Note, ordering of the enum is important, make sure to add new values
      * at the end and handle version serialization properly.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Reason {
@@ -160,7 +160,7 @@ public final class UnassignedInfo implements ToXContentFragment, Writeable {
      * Note, ordering of the enum is important, make sure to add new values
      * at the end and handle version serialization properly.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum AllocationStatus implements Writeable {
@@ -405,13 +405,13 @@ public final class UnassignedInfo implements ToXContentFragment, Writeable {
     }
 
     /**
-     * A set of nodeIds that failed to complete allocations for this shard. {@link org.opensearch.gateway.ReplicaShardAllocator}
+     * A set of nodeIds that failed to complete allocations for this shard. {@link org.density.gateway.ReplicaShardAllocator}
      * uses this set to avoid repeatedly canceling ongoing recoveries for copies on those nodes although they can perform noop recoveries.
      * This set will be discarded when a shard moves to started. And if a shard is failed while started (i.e., from started to unassigned),
      * the currently assigned node won't be added to this set.
      *
-     * @see org.opensearch.gateway.ReplicaShardAllocator#processExistingRecoveries(RoutingAllocation)
-     * @see org.opensearch.cluster.routing.allocation.AllocationService#applyFailedShards(ClusterState, List, List)
+     * @see org.density.gateway.ReplicaShardAllocator#processExistingRecoveries(RoutingAllocation)
+     * @see org.density.cluster.routing.allocation.AllocationService#applyFailedShards(ClusterState, List, List)
      */
     public Set<String> getFailedNodeIds() {
         return failedNodeIds;

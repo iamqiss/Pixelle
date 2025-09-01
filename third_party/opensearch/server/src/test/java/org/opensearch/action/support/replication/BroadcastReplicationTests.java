@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,49 +25,49 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.Version;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.flush.TransportFlushAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.UnavailableShardsException;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.flush.TransportFlushAction;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.nio.MockNioTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -82,16 +82,16 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithAssignedPrimariesAndOneReplica;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithNoShard;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithAssignedPrimariesAndOneReplica;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithNoShard;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.setState;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class BroadcastReplicationTests extends OpenSearchTestCase {
+public class BroadcastReplicationTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
     private static CircuitBreakerService circuitBreakerService;

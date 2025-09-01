@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.wlm;
+package org.density.action.admin.cluster.wlm;
 
-import org.opensearch.Version;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.stats.WlmStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.Version;
+import org.density.action.FailedNodeException;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
+import org.density.wlm.ResourceType;
+import org.density.wlm.stats.WlmStats;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class WlmStatsResponseTests extends OpenSearchTestCase {
+public class WlmStatsResponseTests extends DensityTestCase {
     ClusterName clusterName = new ClusterName("test-cluster");
     String testWorkloadGroupId = "safjgagnaeekg-3r3fads";
     DiscoveryNode node = new DiscoveryNode(

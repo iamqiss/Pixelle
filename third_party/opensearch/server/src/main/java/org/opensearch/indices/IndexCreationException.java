@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchWrapperException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.DensityWrapperException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
 /**
  * Exception thrown if there is an error creating an index
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class IndexCreationException extends OpenSearchException implements OpenSearchWrapperException {
+public class IndexCreationException extends DensityException implements DensityWrapperException {
 
     public IndexCreationException(String index, Throwable cause) {
         super("failed to create index [{}]", cause, index);

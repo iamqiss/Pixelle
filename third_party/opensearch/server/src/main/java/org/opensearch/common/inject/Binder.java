@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,20 +23,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.binder.AnnotatedBindingBuilder;
-import org.opensearch.common.inject.binder.AnnotatedConstantBindingBuilder;
-import org.opensearch.common.inject.binder.LinkedBindingBuilder;
-import org.opensearch.common.inject.matcher.Matcher;
-import org.opensearch.common.inject.spi.Message;
-import org.opensearch.common.inject.spi.TypeConverter;
-import org.opensearch.common.inject.spi.TypeListener;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.binder.AnnotatedBindingBuilder;
+import org.density.common.inject.binder.AnnotatedConstantBindingBuilder;
+import org.density.common.inject.binder.LinkedBindingBuilder;
+import org.density.common.inject.matcher.Matcher;
+import org.density.common.inject.spi.Message;
+import org.density.common.inject.spi.TypeConverter;
+import org.density.common.inject.spi.TypeListener;
 
 import java.lang.annotation.Annotation;
 
@@ -176,7 +176,7 @@ import java.lang.annotation.Annotation;
  *         .to(BlueService.class);</pre>
  *
  * Differentiating by names is a common enough use case that we provided a
- * standard annotation, {@link org.opensearch.common.inject.name.Named @Named}.  Because of
+ * standard annotation, {@link org.density.common.inject.name.Named @Named}.  Because of
  * Guice's library support, binding by name is quite easier than in the
  * arbitrary binding annotation case we just saw.  However, remember that these
  * names will live in a single flat namespace with all the other names used in
@@ -199,7 +199,7 @@ import java.lang.annotation.Annotation;
  * @author jessewilson@google.com (Jesse Wilson)
  * @author kevinb@google.com (Kevin Bourrillion)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface Binder {

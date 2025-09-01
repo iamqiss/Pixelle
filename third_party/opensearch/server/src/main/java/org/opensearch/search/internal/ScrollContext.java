@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.Scroll;
+import org.density.common.annotation.PublicApi;
+import org.density.search.Scroll;
 
 /**
  * Wrapper around information that needs to stay around when scrolling.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ScrollContext {

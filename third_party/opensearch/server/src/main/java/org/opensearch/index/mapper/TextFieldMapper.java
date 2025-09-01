@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.AnalyzerWrapper;
@@ -69,27 +69,27 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.Version;
-import org.opensearch.common.collect.Iterators;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.PagedBytesIndexFieldData;
-import org.opensearch.index.mapper.Mapper.TypeParser.ParserContext;
-import org.opensearch.index.query.IntervalBuilder;
-import org.opensearch.index.query.IntervalMode;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityProvider;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.common.collect.Iterators;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.PagedBytesIndexFieldData;
+import org.density.index.mapper.Mapper.TypeParser.ParserContext;
+import org.density.index.query.IntervalBuilder;
+import org.density.index.query.IntervalMode;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityProvider;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +106,7 @@ import java.util.function.Supplier;
 /**
  * A {@link FieldMapper} for full-text fields.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TextFieldMapper extends ParametrizedFieldMapper {
 
@@ -117,7 +117,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Default paramters for text fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final double FIELDDATA_MIN_FREQUENCY = 0;
@@ -151,7 +151,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Prefix configuration
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class PrefixConfig implements ToXContent {
         final int minChars;
@@ -213,7 +213,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Frequency filter for field data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class FielddataFrequencyFilter implements ToXContent {
         final double minFreq;
@@ -275,7 +275,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for text fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -493,7 +493,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * A phrase wrapped field analyzer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PhraseWrappedAnalyzer extends AnalyzerWrapper {
 
@@ -518,7 +518,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * A prefix wrapped analyzer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PrefixWrappedAnalyzer extends AnalyzerWrapper {
 
@@ -555,7 +555,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for phrase fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class PhraseFieldType extends StringFieldType {
 
@@ -592,7 +592,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for prefix fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class PrefixFieldType extends StringFieldType {
 
@@ -696,7 +696,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field mapper for phrase fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class PhraseFieldMapper extends FieldMapper {
 
@@ -723,7 +723,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field mapper for prefix fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class PrefixFieldMapper extends FieldMapper {
 
@@ -759,7 +759,7 @@ public class TextFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for text fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TextFieldType extends StringFieldType {
 

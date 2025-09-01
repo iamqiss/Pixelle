@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.secure_sm.policy;
+package org.density.secure_sm.policy;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,11 +43,11 @@ import java.util.function.Function;
 @SuppressWarnings("removal")
 public class PolicyFile extends java.security.Policy {
     public static final Set<String> PERM_CLASSES_TO_SKIP = Set.of(
-        "org.opensearch.secure_sm.ThreadContextPermission",
-        "org.opensearch.secure_sm.ThreadPermission",
-        "org.opensearch.SpecialPermission",
+        "org.density.secure_sm.ThreadContextPermission",
+        "org.density.secure_sm.ThreadPermission",
+        "org.density.SpecialPermission",
         "org.bouncycastle.crypto.CryptoServicesPermission",
-        "org.opensearch.script.ClassPermission",
+        "org.density.script.ClassPermission",
         "javax.security.auth.AuthPermission",
         "javax.security.auth.kerberos.ServicePermission",
         "com.sun.tools.attach.AttachPermission"

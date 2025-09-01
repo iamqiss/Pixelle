@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.script.ScriptService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.script.ScriptService;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 
-public class PipelineFactoryTests extends OpenSearchTestCase {
+public class PipelineFactoryTests extends DensityTestCase {
 
     private final Integer version = randomBoolean() ? randomInt() : null;
     private final String versionString = version != null ? Integer.toString(version) : null;
@@ -84,7 +84,7 @@ public class PipelineFactoryTests extends OpenSearchTestCase {
         try {
             Pipeline.create("_id", pipelineConfig, Collections.emptyMap(), scriptService);
             fail("should fail, missing required [processors] field");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[processors] required property is missing"));
         }
     }
@@ -128,7 +128,7 @@ public class PipelineFactoryTests extends OpenSearchTestCase {
         pipelineConfig.put(Pipeline.ON_FAILURE_KEY, Collections.emptyList());
         Map<String, Processor.Factory> processorRegistry = Collections.singletonMap("test", new TestProcessor.Factory());
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> Pipeline.create("_id", pipelineConfig, processorRegistry, scriptService)
         );
         assertThat(e.getMessage(), equalTo("pipeline [_id] cannot have an empty on_failure option defined"));
@@ -143,7 +143,7 @@ public class PipelineFactoryTests extends OpenSearchTestCase {
         pipelineConfig.put(Pipeline.PROCESSORS_KEY, Collections.singletonList(Collections.singletonMap("test", processorConfig)));
         Map<String, Processor.Factory> processorRegistry = Collections.singletonMap("test", new TestProcessor.Factory());
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> Pipeline.create("_id", pipelineConfig, processorRegistry, scriptService)
         );
         assertThat(e.getMessage(), equalTo("[on_failure] processors list cannot be empty"));
@@ -180,7 +180,7 @@ public class PipelineFactoryTests extends OpenSearchTestCase {
         pipelineConfig.put(Pipeline.PROCESSORS_KEY, Collections.singletonList(Collections.singletonMap("test", processorConfig)));
         Map<String, Processor.Factory> processorRegistry = Collections.singletonMap("test", new TestProcessor.Factory());
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> Pipeline.create("_id", pipelineConfig, processorRegistry, scriptService)
         );
         assertThat(e.getMessage(), equalTo("processor [test] doesn't support one or more provided configuration parameters [unused]"));

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
+import org.density.DensityParseException;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import static java.util.Collections.unmodifiableMap;
  * This class is used to find files that were already snapshotted and clear out files that no longer referenced by any
  * snapshots.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, ToXContentFragment {
 
@@ -181,7 +181,7 @@ public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, To
     /**
      * Fields for blob store index shard snapshot
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String FILES = "files";
@@ -191,7 +191,7 @@ public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, To
     /**
      * Parse fields for blob store index shard snapshots
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class ParseFields {
         static final ParseField FILES = new ParseField("files");
@@ -292,7 +292,7 @@ public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, To
                 token = parser.nextToken();
                 if (token == XContentParser.Token.START_ARRAY) {
                     if (ParseFields.FILES.match(currentFieldName, parser.getDeprecationHandler()) == false) {
-                        throw new OpenSearchParseException("unknown array [{}]", currentFieldName);
+                        throw new DensityParseException("unknown array [{}]", currentFieldName);
                     }
                     while (parser.nextToken() != XContentParser.Token.END_ARRAY) {
                         FileInfo fileInfo = FileInfo.fromXContent(parser);
@@ -300,7 +300,7 @@ public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, To
                     }
                 } else if (token == XContentParser.Token.START_OBJECT) {
                     if (ParseFields.SNAPSHOTS.match(currentFieldName, parser.getDeprecationHandler()) == false) {
-                        throw new OpenSearchParseException("unknown object [{}]", currentFieldName);
+                        throw new DensityParseException("unknown object [{}]", currentFieldName);
                     }
                     while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
                         XContentParserUtils.ensureExpectedToken(XContentParser.Token.FIELD_NAME, token, parser);
@@ -324,7 +324,7 @@ public class BlobStoreIndexShardSnapshots implements Iterable<SnapshotFiles>, To
                         }
                     }
                 } else {
-                    throw new OpenSearchParseException("unexpected token [{}]", token);
+                    throw new DensityParseException("unexpected token [{}]", token);
                 }
             }
         }

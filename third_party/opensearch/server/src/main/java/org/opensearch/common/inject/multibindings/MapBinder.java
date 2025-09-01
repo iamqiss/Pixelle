@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,23 +23,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.multibindings;
+package org.density.common.inject.multibindings;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.binder.LinkedBindingBuilder;
-import org.opensearch.common.inject.multibindings.Multibinder.RealMultibinder;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.ProviderWithDependencies;
-import org.opensearch.common.inject.util.Types;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Inject;
+import org.density.common.inject.Key;
+import org.density.common.inject.Module;
+import org.density.common.inject.Provider;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.binder.LinkedBindingBuilder;
+import org.density.common.inject.multibindings.Multibinder.RealMultibinder;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.ProviderWithDependencies;
+import org.density.common.inject.util.Types;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;
@@ -49,8 +49,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.common.inject.util.Types.newParameterizedType;
-import static org.opensearch.common.inject.util.Types.newParameterizedTypeWithOwner;
+import static org.density.common.inject.util.Types.newParameterizedType;
+import static org.density.common.inject.util.Types.newParameterizedTypeWithOwner;
 
 /**
  * An API to bind multiple map entries separately, only to later inject them as
@@ -107,7 +107,7 @@ import static org.opensearch.common.inject.util.Types.newParameterizedTypeWithOw
  *
  * @author dpb@google.com (David P. Baker)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MapBinder<K, V> {
     private MapBinder() {}
@@ -304,7 +304,7 @@ public abstract class MapBinder<K, V> {
         /**
          * A binder provider with dependencies
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class MapBinderProviderWithDependencies<K, V> implements ProviderWithDependencies<Map<K, Provider<V>>> {
             private Map<K, Provider<V>> providerMap;

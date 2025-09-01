@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.UnicodeUtil;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilders;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.ParameterizedDynamicSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Numbers;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.functionscore.ScoreFunctionBuilders;
+import org.density.indices.IndicesService;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityTestCase;
+import org.density.test.ParameterizedDynamicSettingsDensityIntegTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -88,20 +88,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
-import static org.opensearch.script.MockScriptPlugin.NAME;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFirstHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSecondHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
+import static org.density.script.MockScriptPlugin.NAME;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertFirstHit;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertSecondHit;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -114,7 +114,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 
-public class FieldSortIT extends ParameterizedDynamicSettingsOpenSearchIntegTestCase {
+public class FieldSortIT extends ParameterizedDynamicSettingsDensityIntegTestCase {
     public FieldSortIT(Settings dynamicSettings) {
         super(dynamicSettings);
     }
@@ -2366,8 +2366,8 @@ public class FieldSortIT extends ParameterizedDynamicSettingsOpenSearchIntegTest
         ensureGreen("index");
         for (String invalidField : new String[] { "keyword", "ip" }) {
             for (String numericType : new String[] { "long", "double", "date", "date_nanos" }) {
-                OpenSearchException exc = expectThrows(
-                    OpenSearchException.class,
+                DensityException exc = expectThrows(
+                    DensityException.class,
                     () -> client().prepareSearch()
                         .setQuery(matchAllQuery())
                         .addSort(SortBuilders.fieldSort(invalidField).setNumericType(numericType))
@@ -2654,8 +2654,8 @@ public class FieldSortIT extends ParameterizedDynamicSettingsOpenSearchIntegTest
     public void testSortMixedFloatingAndIntegerNumericFields() throws Exception {
         internalCluster().ensureAtLeastNumDataNodes(3);
         index("long", () -> randomLongBetween(0, (long) 2E53 - 1));
-        index("integer", OpenSearchTestCase::randomInt);
-        index("double", OpenSearchTestCase::randomDouble);
+        index("integer", DensityTestCase::randomInt);
+        index("double", DensityTestCase::randomDouble);
         index("float", () -> randomFloat());
         boolean asc = randomBoolean();
         SearchResponse searchResponse = client().prepareSearch("long", "integer", "double", "float")

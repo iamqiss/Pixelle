@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.filter;
+package org.density.search.aggregations.bucket.filter;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.aggregations.AbstractAggregationBuilder;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.search.aggregations.AbstractAggregationBuilder;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * Aggregation Builder for filter agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilterAggregationBuilder extends AbstractAggregationBuilder<FilterAggregationBuilder> {
     public static final String NAME = "filter";

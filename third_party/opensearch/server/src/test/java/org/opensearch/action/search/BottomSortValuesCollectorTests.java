@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.FieldComparator;
 import org.apache.lucene.search.FieldDoc;
@@ -39,10 +39,10 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.time.DateUtils;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.search.DocValueFormat;
+import org.density.test.DensityTestCase;
 
 import java.time.ZoneId;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.apache.lucene.search.TotalHits.Relation.GREATER_THAN_OR_EQUAL_TO;
 
-public class BottomSortValuesCollectorTests extends OpenSearchTestCase {
+public class BottomSortValuesCollectorTests extends DensityTestCase {
     public void testWithStrings() {
         for (boolean reverse : new boolean[] { true, false }) {
             SortField[] sortFields = new SortField[] { new SortField("foo", SortField.Type.STRING_VAL, reverse) };

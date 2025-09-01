@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.watcher;
+package org.density.watcher;
 
 import java.nio.file.Path;
 
 /**
  * Callback interface that file changes File Watcher is using to notify listeners about changes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface FileChangesListener {
     /**

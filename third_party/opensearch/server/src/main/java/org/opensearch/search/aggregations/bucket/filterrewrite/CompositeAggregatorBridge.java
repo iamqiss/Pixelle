@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;
 
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceConfig;
-import org.opensearch.search.aggregations.bucket.composite.RoundingValuesSource;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceConfig;
+import org.density.search.aggregations.bucket.composite.RoundingValuesSource;
 
 /**
  * For composite aggregation to do optimization when it only has a single date histogram source

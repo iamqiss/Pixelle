@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.DiffableUtils.NonDiffableValueSerializer;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.AbstractRemoteWritableEntityManager;
-import org.opensearch.common.remote.RemoteWriteableEntityBlobStore;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.gateway.remote.model.RemoteClusterBlocks;
-import org.opensearch.gateway.remote.model.RemoteClusterStateCustoms;
-import org.opensearch.gateway.remote.model.RemoteDiscoveryNodes;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.DiffableUtils.NonDiffableValueSerializer;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.AbstractRemoteWritableEntityManager;
+import org.density.common.remote.RemoteWriteableEntityBlobStore;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.gateway.remote.model.RemoteClusterBlocks;
+import org.density.gateway.remote.model.RemoteClusterStateCustoms;
+import org.density.gateway.remote.model.RemoteDiscoveryNodes;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Collections;
 import java.util.Map;
@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * A Manager which provides APIs to upload and download attributes of ClusterState to the {@link RemoteWriteableEntityBlobStore}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteClusterStateAttributesManager extends AbstractRemoteWritableEntityManager {
     public static final String CLUSTER_STATE_ATTRIBUTE = "cluster_state_attribute";

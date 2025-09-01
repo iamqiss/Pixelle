@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.core.util.FileSystemUtils;
+import org.density.common.Booleans;
+import org.density.core.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,13 +43,13 @@ import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 /**
- * Information about a build of OpenSearch.
+ * Information about a build of Density.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Build {
     /**
-     * The current build of OpenSearch. Filled with information scanned at
+     * The current build of Density. Filled with information scanned at
      * startup from the jar.
      */
     public static final Build CURRENT;
@@ -57,7 +57,7 @@ public class Build {
     /**
      * The type of build
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type {
 
@@ -109,30 +109,30 @@ public class Build {
         final String date;
         final boolean isSnapshot;
         final String version;
-        final String distribution = "opensearch";
+        final String distribution = "density";
 
         // these are parsed at startup, and we require that we are able to recognize the values passed in by the startup scripts
-        type = Type.fromDisplayName(System.getProperty("opensearch.distribution.type", "unknown"), true);
+        type = Type.fromDisplayName(System.getProperty("density.distribution.type", "unknown"), true);
 
-        final String opensearchPrefix = distribution;
-        final URL url = getOpenSearchCodeSourceLocation();
+        final String densityPrefix = distribution;
+        final URL url = getDensityCodeSourceLocation();
         final String urlStr = url == null ? "" : url.toString();
         if (urlStr.startsWith("file:/")
-            && (urlStr.endsWith(opensearchPrefix + "-" + Version.CURRENT + ".jar")
+            && (urlStr.endsWith(densityPrefix + "-" + Version.CURRENT + ".jar")
                 || urlStr.matches(
-                    "(.*)" + opensearchPrefix + "(-)?(.*?)" + Version.CURRENT + "(-)?((alpha|beta|rc)[0-9]+)?(-SNAPSHOT)?.jar"
+                    "(.*)" + densityPrefix + "(-)?(.*?)" + Version.CURRENT + "(-)?((alpha|beta|rc)[0-9]+)?(-SNAPSHOT)?.jar"
                 ))) {
             try (JarInputStream jar = new JarInputStream(FileSystemUtils.openFileURLStream(url))) {
                 Manifest manifest = jar.getManifest();
                 hash = manifest.getMainAttributes().getValue("Change");
                 date = manifest.getMainAttributes().getValue("Build-Date");
-                isSnapshot = "true".equals(manifest.getMainAttributes().getValue("X-Compile-OpenSearch-Snapshot"));
-                version = manifest.getMainAttributes().getValue("X-Compile-OpenSearch-Version");
+                isSnapshot = "true".equals(manifest.getMainAttributes().getValue("X-Compile-Density-Snapshot"));
+                version = manifest.getMainAttributes().getValue("X-Compile-Density-Version");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
-            // not running from the official opensearch jar file (unit tests, IDE, uber client jar, shadiness)
+            // not running from the official density jar file (unit tests, IDE, uber client jar, shadiness)
             hash = "unknown";
             date = "unknown";
             version = Version.CURRENT.toString();
@@ -152,19 +152,19 @@ public class Build {
         if (hash == null) {
             throw new IllegalStateException(
                 "Error finding the build hash. "
-                    + "Stopping OpenSearch now so it doesn't run in subtly broken ways. This is likely a build bug."
+                    + "Stopping Density now so it doesn't run in subtly broken ways. This is likely a build bug."
             );
         }
         if (date == null) {
             throw new IllegalStateException(
                 "Error finding the build date. "
-                    + "Stopping OpenSearch now so it doesn't run in subtly broken ways. This is likely a build bug."
+                    + "Stopping Density now so it doesn't run in subtly broken ways. This is likely a build bug."
             );
         }
         if (version == null) {
             throw new IllegalStateException(
                 "Error finding the build version. "
-                    + "Stopping OpenSearch now so it doesn't run in subtly broken ways. This is likely a build bug."
+                    + "Stopping Density now so it doesn't run in subtly broken ways. This is likely a build bug."
             );
         }
 
@@ -174,11 +174,11 @@ public class Build {
     private final boolean isSnapshot;
 
     /**
-     * The location of the code source for OpenSearch
+     * The location of the code source for Density
      *
-     * @return the location of the code source for OpenSearch which may be null
+     * @return the location of the code source for Density which may be null
      */
-    static URL getOpenSearchCodeSourceLocation() {
+    static URL getDensityCodeSourceLocation() {
         final CodeSource codeSource = Build.class.getProtectionDomain().getCodeSource();
         return codeSource == null ? null : codeSource.getLocation();
     }
@@ -207,7 +207,7 @@ public class Build {
     }
 
     /**
-     * Get the distribution name (expected to be OpenSearch; empty if legacy; something else if forked)
+     * Get the distribution name (expected to be Density; empty if legacy; something else if forked)
      * @return distribution name as a string
      */
     public String getDistribution() {

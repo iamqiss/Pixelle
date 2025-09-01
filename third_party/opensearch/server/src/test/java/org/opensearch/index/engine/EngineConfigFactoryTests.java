@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.codec.CodecServiceFactory;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.translog.InternalTranslogFactory;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogDeletionPolicyFactory;
-import org.opensearch.index.translog.TranslogReader;
-import org.opensearch.index.translog.TranslogWriter;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.codec.CodecServiceFactory;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.translog.InternalTranslogFactory;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogDeletionPolicyFactory;
+import org.density.index.translog.TranslogReader;
+import org.density.index.translog.TranslogWriter;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.Plugin;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class EngineConfigFactoryTests extends OpenSearchTestCase {
+public class EngineConfigFactoryTests extends DensityTestCase {
     public void testCreateEngineConfigFromFactory() {
         IndexMetadata meta = IndexMetadata.builder("test")
             .settings(settings(Version.CURRENT))

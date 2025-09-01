@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.disruption;
+package org.density.test.disruption;
 
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.disruption.NetworkDisruption.Bridge;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.DensityTestCase;
+import org.density.test.disruption.NetworkDisruption.Bridge;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class NetworkDisruptionTests extends OpenSearchTestCase {
+public class NetworkDisruptionTests extends DensityTestCase {
 
     public void testTwoPartitions() {
         Set<String> partition1 = generateRandomStringSet(1, 10);

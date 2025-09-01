@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.search.suggest.DirectSpellcheckerSettings;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.index.query.QueryShardContext;
+import org.density.script.TemplateScript;
+import org.density.search.suggest.DirectSpellcheckerSettings;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ import java.util.Map;
 /**
  * Context used during phrase suggestion
  *
- * @opensearch.internal
+ * @density.internal
  */
 class PhraseSuggestionContext extends SuggestionContext {
     static final boolean DEFAULT_COLLATE_PRUNE = false;

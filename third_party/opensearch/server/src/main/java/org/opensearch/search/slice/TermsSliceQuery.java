@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
@@ -61,7 +61,7 @@ import java.io.IOException;
  * a bit set with the documents of all terms whose hash code matches the predicate.
  * <b>NOTE</b>: Documents with no value for that field are ignored.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TermsSliceQuery extends SliceQuery {
     // Fixed seed for computing term hashCode

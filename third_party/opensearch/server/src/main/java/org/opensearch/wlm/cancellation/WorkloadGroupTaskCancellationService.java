@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.cancellation;
+package org.density.wlm.cancellation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.tasks.TaskCancellation;
-import org.opensearch.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WlmMode;
-import org.opensearch.wlm.WorkloadGroupLevelResourceUsageView;
-import org.opensearch.wlm.WorkloadGroupTask;
-import org.opensearch.wlm.WorkloadGroupsStateAccessor;
-import org.opensearch.wlm.WorkloadManagementSettings;
-import org.opensearch.wlm.stats.WorkloadGroupState;
-import org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.tasks.TaskCancellation;
+import org.density.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WlmMode;
+import org.density.wlm.WorkloadGroupLevelResourceUsageView;
+import org.density.wlm.WorkloadGroupTask;
+import org.density.wlm.WorkloadGroupsStateAccessor;
+import org.density.wlm.WorkloadManagementSettings;
+import org.density.wlm.stats.WorkloadGroupState;
+import org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +32,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService.TRACKED_RESOURCES;
+import static org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService.TRACKED_RESOURCES;
 
 /**
  * Manages the cancellation of tasks enforced by WorkloadGroup thresholds on resource usage criteria.

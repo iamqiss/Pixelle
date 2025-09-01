@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
 import org.apache.lucene.search.spell.LevenshteinDistance;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.xcontent.ErrorOnUnknown;
+import org.density.common.collect.Tuple;
+import org.density.core.xcontent.ErrorOnUnknown;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Utility for suggesting source of errors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SuggestingErrorOnUnknown implements ErrorOnUnknown {
     @Override

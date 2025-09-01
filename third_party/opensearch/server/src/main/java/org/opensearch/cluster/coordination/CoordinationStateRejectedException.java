@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
@@ -44,9 +44,9 @@ import java.io.IOException;
  * asynchronous, distributed nature of the system. They will, for example, naturally happen during
  * leader election, if multiple nodes are trying to become leader at the same time.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class CoordinationStateRejectedException extends OpenSearchException {
+public class CoordinationStateRejectedException extends DensityException {
     public CoordinationStateRejectedException(String msg, Object... args) {
         super(msg, args);
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.queries;
+package org.density.lucene.queries;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.DocValues;
@@ -46,8 +46,8 @@ import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.index.mapper.RangeType;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.index.mapper.RangeType;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -77,7 +77,7 @@ import java.util.Objects;
  * @see QueryType
  * @see RangeType.LengthType
  * @see BinaryDocValues
- * @opensearch.internal
+ * @density.internal
  */
 public final class BinaryDocValuesRangeQuery extends Query {
 
@@ -207,7 +207,7 @@ public final class BinaryDocValuesRangeQuery extends Query {
      *   <li>CROSSES: Ranges overlap but neither contains the other</li>
      * </ul>
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum QueryType {
         INTERSECTS {

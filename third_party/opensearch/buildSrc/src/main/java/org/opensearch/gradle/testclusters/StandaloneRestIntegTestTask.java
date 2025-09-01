@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 import groovy.lang.Closure;
 
-import org.opensearch.gradle.FileSystemOperationsAware;
-import org.opensearch.gradle.test.Fixture;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.FileSystemOperationsAware;
+import org.density.gradle.test.Fixture;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
@@ -60,14 +60,14 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Customized version of Gradle {@link Test} task which tracks a collection of {@link OpenSearchCluster} as a task input. We must do this
+ * Customized version of Gradle {@link Test} task which tracks a collection of {@link DensityCluster} as a task input. We must do this
  * as a custom task type because the current {@link org.gradle.api.tasks.TaskInputs} runtime API does not have a way to register
  * {@link Nested} inputs.
  */
 @CacheableTask
 public abstract class StandaloneRestIntegTestTask extends Test implements TestClustersAware, FileSystemOperationsAware {
 
-    private Collection<OpenSearchCluster> clusters = new HashSet<>();
+    private Collection<DensityCluster> clusters = new HashSet<>();
     private Closure<Void> beforeStart;
 
     @Inject
@@ -115,7 +115,7 @@ public abstract class StandaloneRestIntegTestTask extends Test implements TestCl
 
     @Nested
     @Override
-    public Collection<OpenSearchCluster> getClusters() {
+    public Collection<DensityCluster> getClusters() {
         return clusters;
     }
 

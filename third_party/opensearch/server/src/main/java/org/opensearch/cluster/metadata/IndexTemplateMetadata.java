@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,33 +25,33 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VerifiableWriteable;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
+import org.density.DensityParseException;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.Diff;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VerifiableWriteable;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -66,7 +66,7 @@ import java.util.Set;
 /**
  * Metadata for Index Templates
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexTemplateMetadata extends AbstractDiffable<IndexTemplateMetadata> implements VerifiableWriteable {
@@ -286,7 +286,7 @@ public class IndexTemplateMetadata extends AbstractDiffable<IndexTemplateMetadat
     /**
      * Builder of index template metadata.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -503,7 +503,7 @@ public class IndexTemplateMetadata extends AbstractDiffable<IndexTemplateMetadat
                             builder.putAlias(AliasMetadata.Builder.fromXContent(parser));
                         }
                     } else {
-                        throw new OpenSearchParseException("unknown key [{}] for index template", currentFieldName);
+                        throw new DensityParseException("unknown key [{}] for index template", currentFieldName);
                     }
                 } else if (token == XContentParser.Token.START_ARRAY) {
                     if ("mappings".equals(currentFieldName)) {

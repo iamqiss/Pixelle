@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.DataStreamTestHelper;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.DataStreamTestHelper;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.MapperPlugin;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,10 +69,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createBackingIndex;
-import static org.opensearch.cluster.DataStreamTestHelper.createFirstBackingIndex;
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.cluster.metadata.Metadata.Builder.validateDataStreams;
+import static org.density.cluster.DataStreamTestHelper.createBackingIndex;
+import static org.density.cluster.DataStreamTestHelper.createFirstBackingIndex;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.metadata.Metadata.Builder.validateDataStreams;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -83,7 +83,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class MetadataTests extends OpenSearchTestCase {
+public class MetadataTests extends DensityTestCase {
 
     public void testFindAliases() {
         Metadata metadata = Metadata.builder()
@@ -1354,7 +1354,7 @@ public class MetadataTests extends OpenSearchTestCase {
             IndexMetadata idx;
             if (i % 2 == 0 && i < generations) {
                 idx = IndexMetadata.builder("shrink-" + DataStream.getDefaultBackingIndexName(dataStreamName, i))
-                    .settings(OpenSearchTestCase.settings(Version.CURRENT).put("index.hidden", true))
+                    .settings(DensityTestCase.settings(Version.CURRENT).put("index.hidden", true))
                     .numberOfShards(1)
                     .numberOfReplicas(1)
                     .build();

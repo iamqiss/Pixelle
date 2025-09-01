@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.codecs.Codec;
@@ -41,30 +41,30 @@ import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.MemorySizeValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecAliases;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.codec.CodecSettings;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.InternalTranslogFactory;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.index.translog.TranslogDeletionPolicyFactory;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.indices.IndexingMemoryController;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.MemorySizeValue;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecAliases;
+import org.density.index.codec.CodecService;
+import org.density.index.codec.CodecSettings;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.store.Store;
+import org.density.index.translog.InternalTranslogFactory;
+import org.density.index.translog.TranslogConfig;
+import org.density.index.translog.TranslogDeletionPolicyFactory;
+import org.density.index.translog.TranslogFactory;
+import org.density.indices.IndexingMemoryController;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Comparator;
 import java.util.List;
@@ -79,7 +79,7 @@ import java.util.function.Supplier;
  * Once {@link Engine} has been created with this object, changes to this
  * object will affect the {@link Engine} instance.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class EngineConfig {
@@ -254,7 +254,7 @@ public final class EngineConfig {
     private final IndexWriter.IndexReaderWarmer indexReaderWarmer;
 
     /**
-     * Creates a new {@link org.opensearch.index.engine.EngineConfig}
+     * Creates a new {@link org.density.index.engine.EngineConfig}
      */
     private EngineConfig(Builder builder) {
         if (builder.isReadOnlyReplica && builder.indexSettings.isSegRepEnabledOrRemoteNode() == false) {
@@ -279,7 +279,7 @@ public final class EngineConfig {
         // Add an escape hatch in case this change proves problematic - it used
         // to be a fixed amound of RAM: 256 MB.
         // TODO: Remove this escape hatch in 8.x
-        final String escapeHatchProperty = "opensearch.index.memory.max_index_buffer_size";
+        final String escapeHatchProperty = "density.index.memory.max_index_buffer_size";
         String maxBufferSize = System.getProperty(escapeHatchProperty);
         if (maxBufferSize != null) {
             indexingBufferSize = MemorySizeValue.parseBytesSizeValueOrHeapRatio(maxBufferSize, escapeHatchProperty);
@@ -390,22 +390,22 @@ public final class EngineConfig {
 
     /**
      * Returns a thread-pool mainly used to get estimated time stamps from
-     * {@link org.opensearch.threadpool.ThreadPool#relativeTimeInMillis()} and to schedule
-     * async force merge calls on the {@link org.opensearch.threadpool.ThreadPool.Names#FORCE_MERGE} thread-pool
+     * {@link org.density.threadpool.ThreadPool#relativeTimeInMillis()} and to schedule
+     * async force merge calls on the {@link org.density.threadpool.ThreadPool.Names#FORCE_MERGE} thread-pool
      */
     public ThreadPool getThreadPool() {
         return threadPool;
     }
 
     /**
-     * Returns an {@link org.opensearch.index.engine.Engine.Warmer} used to warm new searchers before they are used for searching.
+     * Returns an {@link org.density.index.engine.Engine.Warmer} used to warm new searchers before they are used for searching.
      */
     public Engine.Warmer getWarmer() {
         return warmer;
     }
 
     /**
-     * Returns the {@link org.opensearch.index.store.Store} instance that provides access to the
+     * Returns the {@link org.density.index.store.Store} instance that provides access to the
      * {@link org.apache.lucene.store.Directory} used for the engines {@link org.apache.lucene.index.IndexWriter} to write it's index files
      * to.
      * <p>
@@ -581,7 +581,7 @@ public final class EngineConfig {
      * A supplier supplies tombstone documents which will be used in soft-update methods.
      * The returned document consists only _uid, _seqno, _term and _version fields; other metadata fields are excluded.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface TombstoneDocSupplier {
@@ -628,7 +628,7 @@ public final class EngineConfig {
     /**
      * Builder for EngineConfig class
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "3.3.0")
     public static class Builder {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.annotation.PublicApi;
+import org.density.common.network.CloseableChannel;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
 
 import java.net.InetSocketAddress;
 import java.util.Optional;
@@ -46,7 +46,7 @@ import java.util.Optional;
  * abstraction used by the {@link TcpTransport} and {@link TransportService}. All tcp transport
  * implementations must return channels that adhere to the required method contracts.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface TcpChannel extends CloseableChannel {
@@ -128,7 +128,7 @@ public interface TcpChannel extends CloseableChannel {
     /**
      * Channel statistics
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class ChannelStats {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.transport.TransportMessage;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.transport.TransportMessage;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.hasItems;
 
-public abstract class InboundDecoderTests extends OpenSearchTestCase {
+public abstract class InboundDecoderTests extends DensityTestCase {
 
     protected ThreadContext threadContext;
 

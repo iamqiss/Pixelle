@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.semver;
+package org.density.semver;
 
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.semver.expr.Caret;
-import org.opensearch.semver.expr.Equal;
-import org.opensearch.semver.expr.Expression;
-import org.opensearch.semver.expr.Range;
-import org.opensearch.semver.expr.Tilde;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.semver.expr.Caret;
+import org.density.semver.expr.Equal;
+import org.density.semver.expr.Expression;
+import org.density.semver.expr.Range;
+import org.density.semver.expr.Tilde;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 import static java.util.Arrays.stream;
 
 /**
- * Represents a single semver range that allows for specifying which {@code org.opensearch.Version}s satisfy the range.
+ * Represents a single semver range that allows for specifying which {@code org.density.Version}s satisfy the range.
  * It is composed of a range version and a range operator. Following are the supported operators:
  * <ul>
  *     <li>'=' Requires exact match with the range version. For example, =1.2.3 range would match only 1.2.3</li>
@@ -38,7 +38,7 @@ import static java.util.Arrays.stream;
  *     <li>Explicit ranges: [2.0.0,3.0.0], (2.0.0,3.0.0), [2.0.0,3.0.0), (2.0.0,3.0.0]</li>
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.13.0")
 public class SemverRange implements ToXContentFragment {

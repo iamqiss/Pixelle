@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
-import org.opensearch.cluster.applicationtemplates.SystemTemplate;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata;
-import org.opensearch.cluster.applicationtemplates.TemplateRepositoryMetadata;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.action.UnavailableShardsException;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
+import org.density.cluster.applicationtemplates.SystemTemplate;
+import org.density.cluster.applicationtemplates.SystemTemplateMetadata;
+import org.density.cluster.applicationtemplates.TemplateRepositoryMetadata;
+import org.density.cluster.metadata.Context;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.indices.IndicesService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -76,10 +76,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_WAIT_FOR_ACTIVE_SHARDS;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_WAIT_FOR_ACTIVE_SHARDS;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -89,7 +89,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @ClusterScope(scope = Scope.TEST)
-public class CreateIndexIT extends OpenSearchIntegTestCase {
+public class CreateIndexIT extends DensityIntegTestCase {
 
     public void testCreationDateGenerated() {
         long timeBeforeRequest = System.currentTimeMillis();

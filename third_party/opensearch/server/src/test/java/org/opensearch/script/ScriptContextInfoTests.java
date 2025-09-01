@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.ScriptContextInfo.ScriptMethodInfo;
-import org.opensearch.script.ScriptContextInfo.ScriptMethodInfo.ParameterInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.ScriptContextInfo.ScriptMethodInfo;
+import org.density.script.ScriptContextInfo.ScriptMethodInfo.ParameterInfo;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ScriptContextInfoTests extends OpenSearchTestCase {
+public class ScriptContextInfoTests extends DensityTestCase {
     public interface MinimalContext {
         void execute();
     }
@@ -139,7 +139,7 @@ public class ScriptContextInfoTests extends OpenSearchTestCase {
     }
 
     public void testCustomTypeContext() {
-        String ct = "org.opensearch.script.ScriptContextInfoTests$CustomType";
+        String ct = "org.density.script.ScriptContextInfoTests$CustomType";
         String ct0 = ct + 0;
         String ct1 = ct + 1;
         String ct2 = ct + 2;
@@ -361,19 +361,19 @@ public class ScriptContextInfoTests extends OpenSearchTestCase {
             + "          \"name\": \"weight\""
             + "        },"
             + "        {"
-            + "          \"type\": \"org.opensearch.index.similarity.ScriptedSimilarity$Query\","
+            + "          \"type\": \"org.density.index.similarity.ScriptedSimilarity$Query\","
             + "          \"name\": \"query\""
             + "        },"
             + "        {"
-            + "          \"type\": \"org.opensearch.index.similarity.ScriptedSimilarity$Field\","
+            + "          \"type\": \"org.density.index.similarity.ScriptedSimilarity$Field\","
             + "          \"name\": \"field\""
             + "        },"
             + "        {"
-            + "          \"type\": \"org.opensearch.index.similarity.ScriptedSimilarity$Term\","
+            + "          \"type\": \"org.density.index.similarity.ScriptedSimilarity$Term\","
             + "          \"name\": \"term\""
             + "        },"
             + "        {"
-            + "          \"type\": \"org.opensearch.index.similarity.ScriptedSimilarity$Doc\","
+            + "          \"type\": \"org.density.index.similarity.ScriptedSimilarity$Doc\","
             + "          \"name\": \"doc\""
             + "        }"
             + "      ]"
@@ -406,10 +406,10 @@ public class ScriptContextInfoTests extends OpenSearchTestCase {
                 Collections.unmodifiableList(
                     Arrays.asList(
                         new ParameterInfo("double", "weight"),
-                        new ParameterInfo("org.opensearch.index.similarity.ScriptedSimilarity$Query", "query"),
-                        new ParameterInfo("org.opensearch.index.similarity.ScriptedSimilarity$Field", "field"),
-                        new ParameterInfo("org.opensearch.index.similarity.ScriptedSimilarity$Term", "term"),
-                        new ParameterInfo("org.opensearch.index.similarity.ScriptedSimilarity$Doc", "doc")
+                        new ParameterInfo("org.density.index.similarity.ScriptedSimilarity$Query", "query"),
+                        new ParameterInfo("org.density.index.similarity.ScriptedSimilarity$Field", "field"),
+                        new ParameterInfo("org.density.index.similarity.ScriptedSimilarity$Term", "term"),
+                        new ParameterInfo("org.density.index.similarity.ScriptedSimilarity$Doc", "doc")
                     )
                 )
             ),

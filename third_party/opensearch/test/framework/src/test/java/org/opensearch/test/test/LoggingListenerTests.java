@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.test;
+package org.density.test.test;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestIssueLogging;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.junit.listeners.LoggingListener;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestIssueLogging;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.junit.listeners.LoggingListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 
@@ -51,7 +51,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 
-public class LoggingListenerTests extends OpenSearchTestCase {
+public class LoggingListenerTests extends DensityTestCase {
 
     public void testTestRunStartedSupportsClassInDefaultPackage() throws Exception {
         LoggingListener loggingListener = new LoggingListener();

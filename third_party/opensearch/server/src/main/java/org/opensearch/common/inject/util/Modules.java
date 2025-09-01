@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,25 +23,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.util;
+package org.density.common.inject.util;
 
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Binding;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.inject.PrivateBinder;
-import org.opensearch.common.inject.Scope;
-import org.opensearch.common.inject.spi.DefaultBindingScopingVisitor;
-import org.opensearch.common.inject.spi.DefaultElementVisitor;
-import org.opensearch.common.inject.spi.Element;
-import org.opensearch.common.inject.spi.Elements;
-import org.opensearch.common.inject.spi.PrivateElements;
-import org.opensearch.common.inject.spi.ScopeBinding;
+import org.density.common.inject.AbstractModule;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Binding;
+import org.density.common.inject.Key;
+import org.density.common.inject.Module;
+import org.density.common.inject.PrivateBinder;
+import org.density.common.inject.Scope;
+import org.density.common.inject.spi.DefaultBindingScopingVisitor;
+import org.density.common.inject.spi.DefaultElementVisitor;
+import org.density.common.inject.spi.Element;
+import org.density.common.inject.spi.Elements;
+import org.density.common.inject.spi.PrivateElements;
+import org.density.common.inject.spi.ScopeBinding;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.common.util.set.Sets.newHashSet;
 
 /**
  * Static utility methods for creating and working with instances of {@link Module}.
@@ -61,7 +61,7 @@ import static org.opensearch.common.util.set.Sets.newHashSet;
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Modules {
     private Modules() {}
@@ -131,7 +131,7 @@ public final class Modules {
     /**
      * See the EDSL example at {@link Modules#override(Module[]) override()}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface OverriddenModuleBuilder {
 
@@ -284,7 +284,7 @@ public final class Modules {
     /**
      * A module writer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ModuleWriter extends DefaultElementVisitor<Void> {
         protected final Binder binder;

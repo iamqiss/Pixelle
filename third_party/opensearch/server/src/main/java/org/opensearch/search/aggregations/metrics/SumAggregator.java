@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,42 +25,42 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.DoubleArray;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.StarTreePreComputeCollector;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.StarTreeQueryHelper;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.DoubleArray;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.StarTreePreComputeCollector;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.StarTreeQueryHelper;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedStarTree;
+import static org.density.search.startree.StarTreeQueryHelper.getSupportedStarTree;
 
 /**
  * Aggregate all docs into a single sum value
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SumAggregator extends NumericMetricsAggregator.SingleValue implements StarTreePreComputeCollector {
 

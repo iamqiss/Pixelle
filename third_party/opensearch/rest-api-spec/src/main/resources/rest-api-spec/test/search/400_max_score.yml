@@ -29,7 +29,7 @@ teardown:
       indices.delete:
         index: test_1
 
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/18714
+# related issue: https://github.com/density-project/Density/issues/18714
 ---
 "Test max score with sorting on score firstly":
   - skip:

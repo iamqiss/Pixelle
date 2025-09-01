@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.recycler.Recycler;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.nio.BytesChannelContext;
-import org.opensearch.nio.BytesWriteHandler;
-import org.opensearch.nio.ChannelFactory;
-import org.opensearch.nio.Config;
-import org.opensearch.nio.InboundChannelBuffer;
-import org.opensearch.nio.NioSelector;
-import org.opensearch.nio.NioSelectorGroup;
-import org.opensearch.nio.NioServerSocketChannel;
-import org.opensearch.nio.NioSocketChannel;
-import org.opensearch.nio.Page;
-import org.opensearch.nio.ServerChannelContext;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.InboundPipeline;
-import org.opensearch.transport.StatsTracker;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TcpServerChannel;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.network.NetworkService;
+import org.density.common.recycler.Recycler;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.nio.BytesChannelContext;
+import org.density.nio.BytesWriteHandler;
+import org.density.nio.ChannelFactory;
+import org.density.nio.Config;
+import org.density.nio.InboundChannelBuffer;
+import org.density.nio.NioSelector;
+import org.density.nio.NioSelectorGroup;
+import org.density.nio.NioServerSocketChannel;
+import org.density.nio.NioSocketChannel;
+import org.density.nio.Page;
+import org.density.nio.ServerChannelContext;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.InboundPipeline;
+import org.density.transport.StatsTracker;
+import org.density.transport.TcpChannel;
+import org.density.transport.TcpServerChannel;
+import org.density.transport.TcpTransport;
+import org.density.transport.TransportRequestOptions;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -93,8 +93,8 @@ import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
 
 public class MockNioTransport extends TcpTransport {
     private static final Logger logger = LogManager.getLogger(MockNioTransport.class);
@@ -160,7 +160,7 @@ public class MockNioTransport extends TcpTransport {
             super.doStart();
             success = true;
         } catch (IOException e) {
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         } finally {
             if (success == false) {
                 doStop();

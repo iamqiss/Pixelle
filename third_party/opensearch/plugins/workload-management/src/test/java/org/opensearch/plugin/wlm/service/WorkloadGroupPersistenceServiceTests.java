@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.service;
+package org.density.plugin.wlm.service;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.plugin.wlm.WorkloadManagementTestUtils;
-import org.opensearch.plugin.wlm.action.CreateWorkloadGroupResponse;
-import org.opensearch.plugin.wlm.action.DeleteWorkloadGroupRequest;
-import org.opensearch.plugin.wlm.action.UpdateWorkloadGroupRequest;
-import org.opensearch.plugin.wlm.action.UpdateWorkloadGroupResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
-import org.opensearch.wlm.ResourceType;
+import org.density.ResourceNotFoundException;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.plugin.wlm.WorkloadManagementTestUtils;
+import org.density.plugin.wlm.action.CreateWorkloadGroupResponse;
+import org.density.plugin.wlm.action.DeleteWorkloadGroupRequest;
+import org.density.plugin.wlm.action.UpdateWorkloadGroupRequest;
+import org.density.plugin.wlm.action.UpdateWorkloadGroupResponse;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
+import org.density.wlm.ResourceType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,24 +43,24 @@ import java.util.stream.Collectors;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.cluster.metadata.WorkloadGroup.builder;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_NONE_EXISTED;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_TWO;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils._ID_ONE;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils._ID_TWO;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.assertEqualWorkloadGroups;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.clusterSettings;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.clusterSettingsSet;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.clusterState;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.preparePersistenceServiceSetup;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupList;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupPersistenceService;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupTwo;
-import static org.opensearch.plugin.wlm.action.WorkloadGroupActionTestUtils.updateWorkloadGroupRequest;
-import static org.opensearch.plugin.wlm.service.WorkloadGroupPersistenceService.SOURCE;
-import static org.opensearch.plugin.wlm.service.WorkloadGroupPersistenceService.WORKLOAD_GROUP_COUNT_SETTING_NAME;
+import static org.density.cluster.metadata.WorkloadGroup.builder;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_NONE_EXISTED;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_TWO;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils._ID_ONE;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils._ID_TWO;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.assertEqualWorkloadGroups;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.clusterSettings;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.clusterSettingsSet;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.clusterState;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.preparePersistenceServiceSetup;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupList;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupPersistenceService;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupTwo;
+import static org.density.plugin.wlm.action.WorkloadGroupActionTestUtils.updateWorkloadGroupRequest;
+import static org.density.plugin.wlm.service.WorkloadGroupPersistenceService.SOURCE;
+import static org.density.plugin.wlm.service.WorkloadGroupPersistenceService.WORKLOAD_GROUP_COUNT_SETTING_NAME;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.anyString;
@@ -70,7 +70,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class WorkloadGroupPersistenceServiceTests extends OpenSearchTestCase {
+public class WorkloadGroupPersistenceServiceTests extends DensityTestCase {
 
     /**
      * Test case to validate the creation logic of a WorkloadGroup

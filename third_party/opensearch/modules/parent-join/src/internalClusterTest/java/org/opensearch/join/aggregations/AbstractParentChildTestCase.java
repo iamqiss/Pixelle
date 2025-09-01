@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.aggregations;
+package org.density.join.aggregations;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.join.query.ParentChildTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.join.query.ParentChildTestCase;
+import org.density.transport.client.Requests;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
 /**
  * Small base test-class which combines stuff used for Children and Parent aggregation tests

@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache;
+package org.density.cache;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.info.PluginsAndModules;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cache.store.disk.EhcacheDiskCache;
-import org.opensearch.cache.store.disk.EhcacheThreadLeakFilter;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.info.PluginsAndModules;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.cache.store.disk.EhcacheDiskCache;
+import org.density.cache.store.disk.EhcacheThreadLeakFilter;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.env.NodeEnvironment;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.IndicesRequestCache;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginInfo;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -49,21 +49,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DEFAULT_CACHE_SIZE_IN_BYTES;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_CACHE_EXPIRE_AFTER_ACCESS_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
-import static org.opensearch.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateHistogram;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.cache.EhcacheDiskCacheSettings.DEFAULT_CACHE_SIZE_IN_BYTES;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_CACHE_EXPIRE_AFTER_ACCESS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
+import static org.density.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.dateHistogram;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.greaterThan;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
+@DensityIntegTestCase.ClusterScope(numDataNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
 @ThreadLeakFilters(filters = { EhcacheThreadLeakFilter.class })
-public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
+public class EhcacheDiskCacheIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -114,7 +114,7 @@ public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
         internalCluster().startNode(Settings.builder().put(defaultSettings(DEFAULT_CACHE_SIZE_IN_BYTES, null)).build());
         NodesInfoRequest nodesInfoRequest = new NodesInfoRequest();
         nodesInfoRequest.addMetric(NodesInfoRequest.Metric.PLUGINS.metricName());
-        NodesInfoResponse nodesInfoResponse = OpenSearchIntegTestCase.client().admin().cluster().nodesInfo(nodesInfoRequest).actionGet();
+        NodesInfoResponse nodesInfoResponse = DensityIntegTestCase.client().admin().cluster().nodesInfo(nodesInfoRequest).actionGet();
         List<PluginInfo> pluginInfos = nodesInfoResponse.getNodes()
             .stream()
             .flatMap(
@@ -122,7 +122,7 @@ public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
             )
             .collect(Collectors.toList());
         Assert.assertTrue(
-            pluginInfos.stream().anyMatch(pluginInfo -> pluginInfo.getName().equals("org.opensearch.cache.EhcacheCachePlugin"))
+            pluginInfos.stream().anyMatch(pluginInfo -> pluginInfo.getName().equals("org.density.cache.EhcacheCachePlugin"))
         );
     }
 
@@ -202,7 +202,7 @@ public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
         refreshAndWaitForReplication();
         // Force merge the index to ensure there can be no background merges during the subsequent searches that would invalidate the cache
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge("index").setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
         long perQuerySizeInCacheInBytes = -1;
         for (int iterator = 0; iterator < numberOfIndexedItems; iterator++) {
             SearchResponse resp = client.prepareSearch("index")
@@ -275,7 +275,7 @@ public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
         refreshAndWaitForReplication();
         // Force merge the index to ensure there can be no background merges during the subsequent searches that would invalidate the cache
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge("index").setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
 
         long perQuerySizeInCacheInBytes = -1;
         for (int iterator = 0; iterator < numberOfIndexedItems; iterator++) {
@@ -337,7 +337,7 @@ public class EhcacheDiskCacheIT extends OpenSearchIntegTestCase {
         refreshAndWaitForReplication();
         // Force merge the index to ensure there can be no background merges during the subsequent searches that would invalidate the cache
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge("index").setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
 
         long perQuerySizeInCacheInBytes = -1;
         for (int iterator = 0; iterator < numberOfIndexedItems; iterator++) {

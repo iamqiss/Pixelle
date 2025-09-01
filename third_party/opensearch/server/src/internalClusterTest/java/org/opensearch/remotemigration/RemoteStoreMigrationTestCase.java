@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotemigration;
+package org.density.remotemigration;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.index.query.QueryBuilders;
+import org.density.index.shard.IndexShard;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.SnapshotInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider.CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
 public class RemoteStoreMigrationTestCase extends MigrationBaseTestCase {
     protected int maximumNumberOfReplicas() {
         return 1;
@@ -200,11 +200,11 @@ public class RemoteStoreMigrationTestCase extends MigrationBaseTestCase {
         assertThat("node1 has 0 shards", shardCountByNodeId.get(docRepNodes.get(1)), equalTo(null));
         refresh("test");
         waitForReplication("test");
-        OpenSearchAssertions.assertHitCount(
+        DensityAssertions.assertHitCount(
             client().prepareSearch("test").setTrackTotalHits(true).get(),
             asyncIndexingService.getIndexedDocs()
         );
-        OpenSearchAssertions.assertHitCount(
+        DensityAssertions.assertHitCount(
             client().prepareSearch("test")
                 .setTrackTotalHits(true)// extra paranoia ;)
                 .setQuery(QueryBuilders.termQuery("auto", true))

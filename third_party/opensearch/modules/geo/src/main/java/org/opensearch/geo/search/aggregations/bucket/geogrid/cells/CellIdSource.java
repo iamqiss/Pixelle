@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.cells;
+package org.density.geo.search.aggregations.bucket.geogrid.cells;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.aggregations.support.ValuesSource;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.aggregations.support.ValuesSource;
 
 /**
  * Wrapper class to help convert {@link MultiGeoPointValues}
  * to numeric long values for bucketing.
  *
- * @opensearch.api
+ * @density.api
  */
 public class CellIdSource extends ValuesSource.Numeric {
     private final ValuesSource.GeoPoint valuesSource;
@@ -95,7 +95,7 @@ public class CellIdSource extends ValuesSource.Numeric {
      * The encoder to use to convert a geopoint's (lon, lat, precision) into
      * a long-encoded bucket key for aggregating.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface GeoPointLongEncoder {

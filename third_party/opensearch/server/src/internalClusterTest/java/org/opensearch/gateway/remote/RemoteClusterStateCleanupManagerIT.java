@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.cluster.coordination.PersistedStateStats;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.gateway.remote.model.RemoteRoutingTableBlobStore;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.cluster.coordination.PersistedStateStats;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.discovery.DiscoveryStats;
+import org.density.gateway.remote.model.RemoteRoutingTableBlobStore;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.nio.charset.StandardCharsets;
@@ -35,18 +35,18 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.CLUSTER_STATE_CLEANUP_INTERVAL_DEFAULT;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.REMOTE_CLUSTER_STATE_CLEANUP_INTERVAL_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.RETAINED_MANIFESTS;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.SKIP_CLEANUP_STATE_CHANGES;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
-import static org.opensearch.gateway.remote.RemoteUploadStats.REMOTE_UPLOAD;
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
-import static org.opensearch.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.CLUSTER_STATE_CLEANUP_INTERVAL_DEFAULT;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.REMOTE_CLUSTER_STATE_CLEANUP_INTERVAL_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.RETAINED_MANIFESTS;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.SKIP_CLEANUP_STATE_CHANGES;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
+import static org.density.gateway.remote.RemoteUploadStats.REMOTE_UPLOAD;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
+import static org.density.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteClusterStateCleanupManagerIT extends RemoteStoreBaseIntegTestCase {
 
     private static final String INDEX_NAME = "test-index";

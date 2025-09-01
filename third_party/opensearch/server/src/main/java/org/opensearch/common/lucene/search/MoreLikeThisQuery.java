@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -48,7 +48,7 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.Strings;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -62,7 +62,7 @@ import java.util.Set;
 /**
  * The more like this query.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MoreLikeThisQuery extends Query {
 
@@ -293,7 +293,7 @@ public class MoreLikeThisQuery extends Query {
      * Number of terms that must match the generated query expressed in the
      * common syntax for minimum should match.
      *
-     * @see    org.opensearch.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
+     * @see    org.density.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
      */
     public String getMinimumShouldMatch() {
         return minimumShouldMatch;
@@ -303,7 +303,7 @@ public class MoreLikeThisQuery extends Query {
      * Number of terms that must match the generated query expressed in the
      * common syntax for minimum should match. Defaults to {@code 30%}.
      *
-     * @see    org.opensearch.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
+     * @see    org.density.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
      */
     public void setMinimumShouldMatch(String minimumShouldMatch) {
         this.minimumShouldMatch = minimumShouldMatch;

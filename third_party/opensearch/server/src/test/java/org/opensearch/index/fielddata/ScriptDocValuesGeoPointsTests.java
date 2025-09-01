@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.index.fielddata.ScriptDocValues.GeoPoints;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.index.fielddata.ScriptDocValues.GeoPoints;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ScriptDocValuesGeoPointsTests extends OpenSearchTestCase {
+public class ScriptDocValuesGeoPointsTests extends DensityTestCase {
 
     private static MultiGeoPointValues wrap(GeoPoint[][] points) {
         return new MultiGeoPointValues() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.persistent.PersistentTasksService.WaitForPersistentTaskListener;
-import org.opensearch.persistent.TestPersistentTasksPlugin.State;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestParams;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestTasksRequestBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.ResourceAlreadyExistsException;
+import org.density.ResourceNotFoundException;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.TaskId;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.persistent.PersistentTasksService.WaitForPersistentTaskListener;
+import org.density.persistent.TestPersistentTasksPlugin.State;
+import org.density.persistent.TestPersistentTasksPlugin.TestParams;
+import org.density.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
+import org.density.persistent.TestPersistentTasksPlugin.TestTasksRequestBuilder;
+import org.density.plugins.Plugin;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -56,7 +56,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -64,8 +64,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
-public class PersistentTasksExecutorIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
+public class PersistentTasksExecutorIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

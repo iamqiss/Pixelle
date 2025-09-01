@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,73 +26,73 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.DocWriteResponse.Result;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.ReduceSearchPhaseException;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.reindex.ScrollableHitSource.Hit;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpClient;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.FilterClient;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.DocWriteResponse.Result;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.ReduceSearchPhaseException;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.TransportAction;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.CheckedConsumer;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.reindex.ScrollableHitSource.Hit;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpClient;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.FilterClient;
+import org.density.transport.client.ParentTaskAssigningClient;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -121,9 +121,9 @@ import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.synchronizedSet;
-import static org.opensearch.action.bulk.BackoffPolicy.constantBackoff;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
+import static org.density.action.bulk.BackoffPolicy.constantBackoff;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
@@ -136,7 +136,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.apache.lucene.tests.util.TestUtil.randomSimpleString;
 
-public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
+public class AsyncBulkByScrollActionTests extends DensityTestCase {
     private MyMockClient client;
     private DummyAbstractBulkByScrollRequest testRequest;
     private SearchRequest firstSearchRequest;
@@ -215,7 +215,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
         assertBusy(() -> assertEquals(testRequest.getMaxRetries() + 1, client.searchAttempts.get()));
         assertBusy(() -> assertTrue(listener.isDone()));
         ExecutionException e = expectThrows(ExecutionException.class, () -> listener.get());
-        assertThat(ExceptionsHelper.stackTrace(e), containsString(OpenSearchRejectedExecutionException.class.getSimpleName()));
+        assertThat(ExceptionsHelper.stackTrace(e), containsString(DensityRejectedExecutionException.class.getSimpleName()));
         assertNull("There shouldn't be a search attempt pending that we didn't reject", client.lastSearch.get());
         assertEquals(testRequest.getMaxRetries(), testTask.getStatus().getSearchRetries());
     }
@@ -250,7 +250,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
         client.scrollsToReject = testRequest.getMaxRetries() + randomIntBetween(1, 100);
         assertExactlyOnce(onFail -> {
             Consumer<Exception> validingOnFail = e -> {
-                assertNotNull(ExceptionsHelper.unwrap(e, OpenSearchRejectedExecutionException.class));
+                assertNotNull(ExceptionsHelper.unwrap(e, DensityRejectedExecutionException.class));
                 onFail.run();
             };
             ClientScrollableHitSource hitSource = new ClientScrollableHitSource(
@@ -364,7 +364,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
                 // While we're here we can check that the sleep made it through
                 assertThat(delay.nanos(), greaterThan(0L));
                 assertThat(delay.seconds(), lessThanOrEqualTo(10L));
-                final OpenSearchRejectedExecutionException exception = new OpenSearchRejectedExecutionException("test");
+                final DensityRejectedExecutionException exception = new DensityRejectedExecutionException("test");
                 if (command instanceof AbstractRunnable) {
                     ((AbstractRunnable) command).onRejection(exception);
                     return null;
@@ -376,7 +376,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
         ScrollableHitSource.Response response = new ScrollableHitSource.Response(false, emptyList(), 0, emptyList(), null);
         simulateScrollResponse(new DummyAsyncBulkByScrollAction(), System.nanoTime(), 10, response);
         ExecutionException e = expectThrows(ExecutionException.class, () -> listener.get());
-        assertThat(e.getCause(), instanceOf(OpenSearchRejectedExecutionException.class));
+        assertThat(e.getCause(), instanceOf(DensityRejectedExecutionException.class));
         assertThat(e.getCause(), hasToString(containsString("test")));
         assertThat(client.scrollsCleared, contains(scrollId));
 
@@ -970,7 +970,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
                         responses[i] = new BulkItemResponse(
                             i,
                             item.opType(),
-                            new Failure(response.getIndex(), response.getId(), new OpenSearchRejectedExecutionException())
+                            new Failure(response.getIndex(), response.getId(), new DensityRejectedExecutionException())
                         );
                     } else {
                         responses[i] = new BulkItemResponse(i, item.opType(), response);
@@ -983,7 +983,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
         }
 
         private Exception wrappedRejectedException() {
-            Exception e = new OpenSearchRejectedExecutionException();
+            Exception e = new DensityRejectedExecutionException();
             int wraps = randomIntBetween(0, 4);
             for (int i = 0; i < wraps; i++) {
                 switch (randomIntBetween(0, 2)) {
@@ -994,7 +994,7 @@ public class AsyncBulkByScrollActionTests extends OpenSearchTestCase {
                         e = new ReduceSearchPhaseException("test", "test failure", e, new ShardSearchFailure[0]);
                         continue;
                     case 2:
-                        e = new OpenSearchException(e);
+                        e = new DensityException(e);
                         continue;
                 }
             }

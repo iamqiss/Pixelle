@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.qa.verify_version_constants;
+package org.density.qa.verify_version_constants;
 
-import org.opensearch.Version;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.Version;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.text.ParseException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class VerifyVersionConstantsIT extends OpenSearchRestTestCase {
+public class VerifyVersionConstantsIT extends DensityRestTestCase {
 
     public void testLuceneVersionConstant() throws IOException, ParseException {
         final Response response = client().performRequest(new Request("GET", "/"));
         assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
         final ObjectPath objectPath = ObjectPath.createFromResponse(response);
-        final String opensearchVersionString = objectPath.evaluate("version.number").toString();
-        final Version opensearchVersion = Version.fromString(opensearchVersionString.replace("-SNAPSHOT", ""));
+        final String densityVersionString = objectPath.evaluate("version.number").toString();
+        final Version densityVersion = Version.fromString(densityVersionString.replace("-SNAPSHOT", ""));
         final String luceneVersionString = objectPath.evaluate("version.lucene_version").toString();
         final org.apache.lucene.util.Version luceneVersion = org.apache.lucene.util.Version.parse(luceneVersionString);
-        assertThat(opensearchVersion.luceneVersion, equalTo(luceneVersion));
+        assertThat(densityVersion.luceneVersion, equalTo(luceneVersion));
     }
 
     @Override

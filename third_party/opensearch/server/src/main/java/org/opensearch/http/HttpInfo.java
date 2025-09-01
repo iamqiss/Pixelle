@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.network.InetAddresses;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
 /**
  * Information about an http connection
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class HttpInfo implements ReportingService.Info {
@@ -56,7 +56,7 @@ public class HttpInfo implements ReportingService.Info {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(HttpInfo.class);
 
     /** Deprecated property, just here for deprecation logging in 7.x. */
-    private static final boolean CNAME_IN_PUBLISH_HOST = System.getProperty("opensearch.http.cname_in_publish_address") != null;
+    private static final boolean CNAME_IN_PUBLISH_HOST = System.getProperty("density.http.cname_in_publish_address") != null;
 
     private final BoundTransportAddress address;
     private final long maxContentLength;
@@ -94,7 +94,7 @@ public class HttpInfo implements ReportingService.Info {
         if (CNAME_IN_PUBLISH_HOST) {
             deprecationLogger.deprecate(
                 "cname_in_publish_address",
-                "opensearch.http.cname_in_publish_address system property is deprecated and no longer affects http.publish_address "
+                "density.http.cname_in_publish_address system property is deprecated and no longer affects http.publish_address "
                     + "formatting. Remove this property to get rid of this deprecation warning."
             );
         }

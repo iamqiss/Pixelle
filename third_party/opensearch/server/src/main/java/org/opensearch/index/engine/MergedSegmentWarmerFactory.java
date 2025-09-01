@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.IndexWriter;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.shard.IndexShard;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.transport.TransportService;
 
 /**
  * MergedSegmentWarmerFactory to enable creation of various local on-disk
  * and remote store flavors of {@link IndexWriter.IndexReaderWarmer}
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class MergedSegmentWarmerFactory {

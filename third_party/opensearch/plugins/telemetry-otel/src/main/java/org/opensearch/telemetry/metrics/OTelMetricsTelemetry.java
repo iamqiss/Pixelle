@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.metrics;
+package org.density.telemetry.metrics;
 
-import org.opensearch.common.concurrent.RefCountedReleasable;
-import org.opensearch.telemetry.OTelAttributesConverter;
-import org.opensearch.telemetry.OTelTelemetryPlugin;
-import org.opensearch.telemetry.metrics.tags.Tags;
+import org.density.common.concurrent.RefCountedReleasable;
+import org.density.telemetry.OTelAttributesConverter;
+import org.density.telemetry.OTelTelemetryPlugin;
+import org.density.telemetry.metrics.tags.Tags;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -74,7 +74,7 @@ public class OTelMetricsTelemetry<T extends MeterProvider & Closeable> implement
     }
 
     /**
-     * Creates the Otel Histogram. In {@link org.opensearch.telemetry.tracing.OTelResourceProvider}
+     * Creates the Otel Histogram. In {@link org.density.telemetry.tracing.OTelResourceProvider}
      * we can configure the bucketing/aggregation strategy through view. Default startegy configured
      * is the {@link io.opentelemetry.sdk.metrics.internal.view.Base2ExponentialHistogramAggregation}.
      * @param name        name of the histogram.

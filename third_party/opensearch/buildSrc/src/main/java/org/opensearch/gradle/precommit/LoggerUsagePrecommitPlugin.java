@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.VersionProperties;
-import org.opensearch.gradle.info.BuildParams;
+import org.density.gradle.VersionProperties;
+import org.density.gradle.info.BuildParams;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -44,7 +44,7 @@ public class LoggerUsagePrecommitPlugin extends PrecommitPlugin {
     public TaskProvider<? extends Task> createTask(Project project) {
         Object dependency = BuildParams.isInternal()
             ? project.project(":test:logger-usage")
-            : ("org.opensearch.test:logger-usage:" + VersionProperties.getOpenSearch());
+            : ("org.density.test:logger-usage:" + VersionProperties.getDensity());
 
         Configuration loggerUsageConfig = project.getConfigurations().create("loggerUsagePlugin");
         project.getDependencies().add("loggerUsagePlugin", dependency);

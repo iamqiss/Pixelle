@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.ActionRunnable;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
@@ -53,7 +53,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * default. The action will be retried with exponentially increasing delay periods until the timeout period
  * has been reached.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class RetryableAction<Response> {
@@ -203,7 +203,7 @@ public abstract class RetryableAction<Response> {
                         logger.debug(() -> new ParameterizedMessage("retrying action that failed in {}", delay), e);
                         try {
                             retryTask = threadPool.schedule(runnable, delay, executor);
-                        } catch (OpenSearchRejectedExecutionException ree) {
+                        } catch (DensityRejectedExecutionException ree) {
                             onFinalFailure(ree);
                         }
                     }

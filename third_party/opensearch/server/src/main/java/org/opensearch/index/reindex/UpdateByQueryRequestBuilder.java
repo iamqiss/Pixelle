@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Request builder for updating a document by query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateByQueryRequestBuilder extends AbstractBulkIndexByScrollRequestBuilder<
     UpdateByQueryRequest,
     UpdateByQueryRequestBuilder> {
 
-    public UpdateByQueryRequestBuilder(OpenSearchClient client, ActionType<BulkByScrollResponse> action) {
+    public UpdateByQueryRequestBuilder(DensityClient client, ActionType<BulkByScrollResponse> action) {
         this(client, action, new SearchRequestBuilder(client, SearchAction.INSTANCE));
     }
 
-    private UpdateByQueryRequestBuilder(OpenSearchClient client, ActionType<BulkByScrollResponse> action, SearchRequestBuilder search) {
+    private UpdateByQueryRequestBuilder(DensityClient client, ActionType<BulkByScrollResponse> action, SearchRequestBuilder search) {
         super(client, action, search, new UpdateByQueryRequest(search.request()));
     }
 

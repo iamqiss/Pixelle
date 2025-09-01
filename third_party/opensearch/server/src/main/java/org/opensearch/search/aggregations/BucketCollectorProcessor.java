@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.MultiCollector;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.MinimumScoreCollector;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.query.InternalProfileCollector;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.MinimumScoreCollector;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.query.InternalProfileCollector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.Queue;
  * Processor to perform collector level processing specific to {@link BucketCollector} in different stages like: a) PostCollection
  * after search on each leaf is completed and b) process the collectors to perform reduce after collection is completed
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.10.0")
 public class BucketCollectorProcessor {
@@ -41,7 +41,7 @@ public class BucketCollectorProcessor {
      * perform collection of the documents for a leaf segment. For sequential search case, there is always a single search thread which
      * performs both collection and postCollection on {@link BucketCollector}.
      * <p>
-     * This was originally done in {@link org.opensearch.search.aggregations.AggregationProcessor#postProcess(SearchContext)}. But with
+     * This was originally done in {@link org.density.search.aggregations.AggregationProcessor#postProcess(SearchContext)}. But with
      * concurrent segment search path this needs to be performed here. There are AssertingCodecs in lucene which validates that the
      * DocValues created for a field is always used by the same thread for a request. In concurrent segment search case, the DocValues
      * gets initialized on different threads for different segments (or slices). Whereas the postProcess happens as part of reduce phase

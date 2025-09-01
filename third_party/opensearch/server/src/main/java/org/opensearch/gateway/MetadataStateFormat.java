@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,17 +44,17 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.store.IndexOutputOutputStream;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.store.IndexOutputOutputStream;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,7 +76,7 @@ import java.util.stream.Collectors;
  * XContent based files to one or more directories in a standardized directory structure.
  * @param <T> the type of the XContent base data-structure
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MetadataStateFormat<T> {
     public static final XContentType FORMAT = XContentType.SMILE;

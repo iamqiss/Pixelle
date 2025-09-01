@@ -5,9 +5,9 @@
     [Nick Knize](mailto:nknize@gmail.com) - Fri, 28 May 2021 10:08:05 -0500
 
     EAD -&gt; refs/heads/1.0, tag: refs/tags/1.0.0-rc1, refs/remotes/origin/1.0
-    This commit fixes mixedCluster and rolling upgrades by spoofing OpenSearch
+    This commit fixes mixedCluster and rolling upgrades by spoofing Density
 
-    version 1.0.0 as Legacy version 7.10.2. With this commit an OpenSearch 1.x node
+    version 1.0.0 as Legacy version 7.10.2. With this commit an Density 1.x node
      can join a legacy (&lt;= 7.10.2) cluster and rolling upgrades work as expected.
 
     Mixed clusters will not work beyond the duration of the upgrade since shards
@@ -22,7 +22,7 @@
     [Nick Knize](mailto:nknize@gmail.com) - Fri, 28 May 2021 10:07:06 -0500
 
 
-    This commit changes MainResponse to spoof OpenSearch 1.x version numbers as
+    This commit changes MainResponse to spoof Density 1.x version numbers as
 
     Legacy version number 7.10.2 for legacy clients.
      Signed-off-by: Nicholas Walter Knize &lt;nknize@apache.org&gt;
@@ -135,7 +135,7 @@
     Co-authored-by:
     Vacha Shah &lt;vachshah@amazon.com&gt;
 
-* __Support Data Streams in OpenSearch (#690) (#713)__
+* __Support Data Streams in Density (#690) (#713)__
 
     [Ketan Verma](mailto:ketanv3@users.noreply.github.com) - Thu, 20 May 2021 17:14:28 -0400
 
@@ -197,7 +197,7 @@
     https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8908
      Signed-off-by: Rabi Panda &lt;adnapibar@gmail.com&gt;
 
-* __[1.x] Add read_only block argument to opensearch-node unsafe-bootstrap command #599 (#725)__
+* __[1.x] Add read_only block argument to density-node unsafe-bootstrap command #599 (#725)__
 
     [Harmish](mailto:harmish.lakhani@gmail.com) - Thu, 20 May 2021 17:12:16 -0400
 
@@ -226,17 +226,17 @@
     [Rabi Panda](mailto:adnapibar@gmail.com) - Thu, 20 May 2021 17:11:03 -0400
 
 
-    Changes to fix the failing OpenSearch distribution tests for packages
+    Changes to fix the failing Density distribution tests for packages
     (linux-archive, linux-archive-aarch64, debian, rpm, docker) on supported linux
     distros.
      Signed-off-by: Rabi Panda &lt;adnapibar@gmail.com&gt;
 
-* __Update instructions on debugging OpenSearch. (#689) (#738)__
+* __Update instructions on debugging Density. (#689) (#738)__
 
     [Rabi Panda](mailto:adnapibar@gmail.com) - Thu, 20 May 2021 17:09:59 -0400
 
 
-    Add clear instructions on how to run OpenSearch with debugging mode in
+    Add clear instructions on how to run Density with debugging mode in
     IntelliJ.
     Fixed a few minor typos and grammars.
      Signed-off-by: Rabi Panda &lt;adnapibar@gmail.com&gt;
@@ -405,7 +405,7 @@
     faster with C1 only as expected, like the rest of the unit tests.
      Signed-off-by: Robert Muir &lt;rmuir@apache.org&gt;
 
-* __Replace elastic.co with opensearch.org (#611) (#623)__
+* __Replace elastic.co with density.org (#611) (#623)__
 
     [Nick Knize](mailto:nknize@gmail.com) - Wed, 28 Apr 2021 10:59:36 -0500
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.rollover;
+package org.density.action.admin.indices.rollover;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
 
 import java.util.Objects;
 
 /**
  * Base class for rollover request conditions
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Condition<T> implements NamedWriteable, ToXContentFragment {
@@ -98,7 +98,7 @@ public abstract class Condition<T> implements NamedWriteable, ToXContentFragment
     /**
      * Holder for index stats used to evaluate conditions
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Stats {
@@ -116,7 +116,7 @@ public abstract class Condition<T> implements NamedWriteable, ToXContentFragment
     /**
      * Holder for evaluated condition result
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Result {

@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.read;
+package org.density.common.blobstore.stream.read;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.io.InputStreamContainer;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.io.InputStreamContainer;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * ReadContext is used to encapsulate all data needed by <code>BlobContainer#readBlobAsync</code>
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class ReadContext {
@@ -66,7 +66,7 @@ public class ReadContext {
      * Functional interface defining an instance that can create an async action
      * to create a part of an object represented as an InputStreamContainer.
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     @FunctionalInterface
     @ExperimentalApi
@@ -84,7 +84,7 @@ public class ReadContext {
     /**
      * Builder for {@link ReadContext}.
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     public static class Builder {
         private final long blobSize;

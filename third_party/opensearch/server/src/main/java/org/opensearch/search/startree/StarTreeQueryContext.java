@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree;
+package org.density.search.startree;
 
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregatorFactory;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregatorFactory;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregatorFactory;
-import org.opensearch.search.aggregations.metrics.MetricAggregatorFactory;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.StarTreeFilter;
-import org.opensearch.search.startree.filter.provider.StarTreeFilterProvider;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.query.QueryBuilder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregatorFactory;
+import org.density.search.aggregations.bucket.range.RangeAggregatorFactory;
+import org.density.search.aggregations.bucket.terms.TermsAggregatorFactory;
+import org.density.search.aggregations.metrics.MetricAggregatorFactory;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.StarTreeFilter;
+import org.density.search.startree.filter.provider.StarTreeFilterProvider;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -70,7 +70,7 @@ public class StarTreeQueryContext {
         }
     }
 
-    // TODO : Make changes to change visibility into package private. Handle the same in @org.opensearch.search.SearchServiceStarTreeTests
+    // TODO : Make changes to change visibility into package private. Handle the same in @org.density.search.SearchServiceStarTreeTests
     public StarTreeQueryContext(CompositeDataCubeFieldType compositeMappedFieldType, QueryBuilder baseQueryBuilder, int cacheSize) {
         this.compositeMappedFieldType = compositeMappedFieldType;
         this.baseQueryBuilder = baseQueryBuilder;

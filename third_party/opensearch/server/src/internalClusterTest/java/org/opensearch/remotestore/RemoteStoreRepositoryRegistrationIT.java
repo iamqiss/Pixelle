@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesAction;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster.RestartCallback;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesAction;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster.RestartCallback;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -32,9 +32,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
+import static org.density.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreRepositoryRegistrationIT extends RemoteStoreBaseIntegTestCase {
 
     @Override
@@ -132,7 +132,7 @@ public class RemoteStoreRepositoryRegistrationIT extends RemoteStoreBaseIntegTes
             .get(0);
         Settings.Builder updatedSettings = Settings.builder().put(repositoryMetadata.settings()).put("chunk_size", new ByteSizeValue(20));
         updatedSettings.remove("system_repository");
-        OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+        DensityIntegTestCase.putRepositoryRequestBuilder(
             client.admin().cluster(),
             repositoryMetadata.name(),
             repositoryMetadata.type(),

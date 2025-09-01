@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.DelegatingAnalyzerWrapper;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentContraints;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.ReloadableCustomAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.mapper.Mapper.BuilderContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.InvalidTypeNameException;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.annotation.PublicApi;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentContraints;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.Assertions;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.ReloadableCustomAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.mapper.Mapper.BuilderContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.InvalidTypeNameException;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.script.ScriptService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -91,7 +91,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * The core field mapping service
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MapperService extends AbstractIndexComponent implements Closeable {
@@ -99,7 +99,7 @@ public class MapperService extends AbstractIndexComponent implements Closeable {
     /**
      * The reason why a mapping is being merged.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "1.0.0")
     public enum MergeReason {
@@ -268,7 +268,7 @@ public class MapperService extends AbstractIndexComponent implements Closeable {
         if (INDEX_MAPPER_DYNAMIC_SETTING.exists(indexSettings.getSettings())) {
             deprecationLogger.deprecate(
                 index().getName() + INDEX_MAPPER_DYNAMIC_SETTING.getKey(),
-                "Index [{}] has setting [{}] that is not supported in OpenSearch, its value will be ignored.",
+                "Index [{}] has setting [{}] that is not supported in Density, its value will be ignored.",
                 index().getName(),
                 INDEX_MAPPER_DYNAMIC_SETTING.getKey()
             );

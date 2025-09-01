@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.CollectorManager;
@@ -18,8 +18,8 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -27,7 +27,7 @@ import java.util.Collection;
 /**
  * CollectorManager for the TotalHitCountCollector
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TotalHitCountCollectorManager
     implements

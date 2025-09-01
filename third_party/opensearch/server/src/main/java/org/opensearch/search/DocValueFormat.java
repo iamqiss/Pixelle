@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.document.InetAddressPoint;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
+import org.density.Version;
+import org.density.common.Numbers;
+import org.density.common.annotation.PublicApi;
+import org.density.common.network.InetAddresses;
+import org.density.common.network.NetworkAddress;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.geometry.utils.Geohash;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.search.aggregations.bucket.GeoTileUtils;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -65,7 +65,7 @@ import java.util.function.LongSupplier;
 /**
  * A formatter for values as returned by the fielddata/doc-values APIs.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface DocValueFormat extends NamedWriteable {
@@ -226,7 +226,7 @@ public interface DocValueFormat extends NamedWriteable {
     /**
      * Date time doc value format
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class DateTime implements DocValueFormat {
 
@@ -447,7 +447,7 @@ public interface DocValueFormat extends NamedWriteable {
     /**
      * Decimal doc value format
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class Decimal implements DocValueFormat {
 

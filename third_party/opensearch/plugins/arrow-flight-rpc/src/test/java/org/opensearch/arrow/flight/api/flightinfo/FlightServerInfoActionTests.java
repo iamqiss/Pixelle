@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.api.flightinfo;
+package org.density.arrow.flight.api.flightinfo;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.SetOnce;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.rest.RestActionTestCase;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.SetOnce;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.rest.RestRequest;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.rest.RestActionTestCase;
 import org.junit.Before;
 
 import java.util.Collections;

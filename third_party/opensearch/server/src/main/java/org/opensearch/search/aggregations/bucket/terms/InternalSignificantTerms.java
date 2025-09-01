@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.LocalBucketCountThresholds;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.bucket.LocalBucketCountThresholds;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Objects;
 /**
  * Result of the significant terms aggregation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class InternalSignificantTerms<A extends InternalSignificantTerms<A, B>, B extends InternalSignificantTerms.Bucket<B>>
     extends InternalMultiBucketAggregation<A, B>
@@ -66,7 +66,7 @@ public abstract class InternalSignificantTerms<A extends InternalSignificantTerm
     /**
      * Bucket for a significant terms agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     public abstract static class Bucket<B extends Bucket<B>> extends InternalMultiBucketAggregation.InternalBucket
@@ -75,7 +75,7 @@ public abstract class InternalSignificantTerms<A extends InternalSignificantTerm
         /**
          * Reads a bucket. Should be a constructor reference.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         @FunctionalInterface
         public interface Reader<B extends Bucket<B>> {

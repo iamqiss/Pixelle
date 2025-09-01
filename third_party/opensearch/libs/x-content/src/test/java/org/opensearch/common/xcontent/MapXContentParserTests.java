@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedConsumer;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentParserTests.generateRandomObject;
+import static org.density.common.xcontent.XContentParserTests.generateRandomObject;
 
-public class MapXContentParserTests extends OpenSearchTestCase {
+public class MapXContentParserTests extends DensityTestCase {
 
     public void testSimpleMap() throws IOException {
         compareTokens(builder -> {

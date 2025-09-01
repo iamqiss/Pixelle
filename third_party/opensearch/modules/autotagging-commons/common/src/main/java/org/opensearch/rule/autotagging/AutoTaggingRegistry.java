@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.ResourceNotFoundException;
+import org.density.ResourceNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
  *  This class provides functionality to register and retrieve {@link Attribute} and {@link FeatureType} instances
  *  used for auto-tagging.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class AutoTaggingRegistry {
     /**

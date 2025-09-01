@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.Booleans;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.common.Booleans;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -57,9 +57,9 @@ public class NettyAllocator {
     private static final ByteBufAllocator ALLOCATOR;
     private static final String DESCRIPTION;
 
-    private static final String USE_UNPOOLED = "opensearch.use_unpooled_allocator";
-    private static final String USE_NETTY_DEFAULT = "opensearch.unsafe.use_netty_default_allocator";
-    private static final String USE_NETTY_DEFAULT_CHUNK = "opensearch.unsafe.use_netty_default_chunk_and_page_size";
+    private static final String USE_UNPOOLED = "density.use_unpooled_allocator";
+    private static final String USE_NETTY_DEFAULT = "density.unsafe.use_netty_default_allocator";
+    private static final String USE_NETTY_DEFAULT_CHUNK = "density.unsafe.use_netty_default_chunk_and_page_size";
 
     static {
         if (Booleans.parseBoolean(System.getProperty(USE_NETTY_DEFAULT), false)) {
@@ -67,7 +67,7 @@ public class NettyAllocator {
             SUGGESTED_MAX_ALLOCATION_SIZE = 1024 * 1024;
             DESCRIPTION = "[name=netty_default, suggested_max_allocation_size="
                 + new ByteSizeValue(SUGGESTED_MAX_ALLOCATION_SIZE)
-                + ", factors={opensearch.unsafe.use_netty_default_allocator=true}]";
+                + ", factors={density.unsafe.use_netty_default_allocator=true}]";
         } else {
             final long heapSizeInBytes = JvmInfo.jvmInfo().getMem().getHeapMax().getBytes();
             final boolean g1gcEnabled = Boolean.parseBoolean(JvmInfo.jvmInfo().useG1GC());
@@ -88,7 +88,7 @@ public class NettyAllocator {
                 }
                 DESCRIPTION = "[name=unpooled, suggested_max_allocation_size="
                     + new ByteSizeValue(SUGGESTED_MAX_ALLOCATION_SIZE)
-                    + ", factors={opensearch.unsafe.use_unpooled_allocator="
+                    + ", factors={density.unsafe.use_unpooled_allocator="
                     + System.getProperty(USE_UNPOOLED)
                     + ", g1gc_enabled="
                     + g1gcEnabled
@@ -135,11 +135,11 @@ public class NettyAllocator {
                 int chunkSizeInBytes = pageSize << maxOrder;
                 ByteSizeValue chunkSize = new ByteSizeValue(chunkSizeInBytes);
                 SUGGESTED_MAX_ALLOCATION_SIZE = chunkSizeInBytes;
-                DESCRIPTION = "[name=opensearch_configured, chunk_size="
+                DESCRIPTION = "[name=density_configured, chunk_size="
                     + chunkSize
                     + ", suggested_max_allocation_size="
                     + new ByteSizeValue(SUGGESTED_MAX_ALLOCATION_SIZE)
-                    + ", factors={opensearch.unsafe.use_netty_default_chunk_and_page_size="
+                    + ", factors={density.unsafe.use_netty_default_chunk_and_page_size="
                     + useDefaultChunkAndPageSize()
                     + ", g1gc_enabled="
                     + g1gcEnabled

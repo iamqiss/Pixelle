@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import java.util.Map;
 
@@ -38,7 +38,7 @@ import java.util.Map;
  * Drop processor only returns {@code null} for the execution result to indicate that any document
  * executed by it should not be indexed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DropProcessor extends AbstractProcessor {
 
@@ -61,7 +61,7 @@ public final class DropProcessor extends AbstractProcessor {
     /**
      * A factory for the processor.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Factory implements Processor.Factory {
 

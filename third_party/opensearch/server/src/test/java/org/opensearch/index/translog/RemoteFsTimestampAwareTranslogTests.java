@@ -1,47 +1,47 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.index.translog.transfer.TranslogUploadFailedException;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.Node;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.index.translog.transfer.TranslogUploadFailedException;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.Node;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.repositories.fs.FsRepository;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -63,10 +63,10 @@ import java.util.stream.LongStream;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.translog.RemoteFsTranslog.REMOTE_DELETION_PERMITS;
-import static org.opensearch.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
-import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
+import static org.density.index.translog.RemoteFsTranslog.REMOTE_DELETION_PERMITS;
+import static org.density.index.translog.TranslogDeletionPolicies.createTranslogDeletionPolicy;
+import static org.density.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;

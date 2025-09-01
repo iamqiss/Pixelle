@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.client.AbstractResponseTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
 public class ResizeResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.admin.indices.shrink.ResizeResponse,
+    org.density.action.admin.indices.shrink.ResizeResponse,
     ResizeResponse> {
 
     @Override
-    protected org.opensearch.action.admin.indices.shrink.ResizeResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.admin.indices.shrink.ResizeResponse createServerTestInstance(XContentType xContentType) {
         boolean acked = randomBoolean();
-        return new org.opensearch.action.admin.indices.shrink.ResizeResponse(acked, acked, randomAlphaOfLength(5));
+        return new org.density.action.admin.indices.shrink.ResizeResponse(acked, acked, randomAlphaOfLength(5));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ResizeResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.admin.indices.shrink.ResizeResponse serverTestInstance,
+        org.density.action.admin.indices.shrink.ResizeResponse serverTestInstance,
         ResizeResponse clientInstance
     ) {
         assertEquals(serverTestInstance.isAcknowledged(), clientInstance.isAcknowledged());

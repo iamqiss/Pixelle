@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core;
+package org.density.core;
 
 /**
  * Provides a static final field that can be used to check if assertions are enabled. Since this field might be used elsewhere to check if
  * assertions are enabled, if you are running with assertions enabled for specific packages or classes, you should enable assertions on this
- * class too (e.g., {@code -ea org.opensearch.core.Assertions -ea org.opensearch.cluster.service.ClusterManagerService}).
+ * class too (e.g., {@code -ea org.density.core.Assertions -ea org.density.cluster.service.ClusterManagerService}).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Assertions {
 

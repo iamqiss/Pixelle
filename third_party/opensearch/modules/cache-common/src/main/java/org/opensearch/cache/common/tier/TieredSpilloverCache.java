@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cache.common.policy.TookTimePolicy;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.LoadAwareCacheLoader;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.policy.CachedQueryResult;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ReleasableLock;
+import org.density.cache.common.policy.TookTimePolicy;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.LoadAwareCacheLoader;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.policy.CachedQueryResult;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ReleasableLock;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,16 +49,16 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToLongBiFunction;
 
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.DISK_CACHE_ENABLED_SETTING_MAP;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_DISK_STORE_SIZE;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_ONHEAP_STORE_SIZE;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_SEGMENTS;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_DISK_TIER_POLICY_CONCRETE_SETTINGS_MAP;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_POLICY_CONCRETE_SETTINGS_MAP;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
-import static org.opensearch.common.cache.settings.CacheSettings.INVALID_SEGMENT_COUNT_EXCEPTION_MESSAGE;
-import static org.opensearch.common.cache.settings.CacheSettings.VALID_SEGMENT_COUNT_VALUES;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.DISK_CACHE_ENABLED_SETTING_MAP;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_DISK_STORE_SIZE;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_ONHEAP_STORE_SIZE;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TIERED_SPILLOVER_SEGMENTS;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_DISK_TIER_POLICY_CONCRETE_SETTINGS_MAP;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_POLICY_CONCRETE_SETTINGS_MAP;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
+import static org.density.common.cache.settings.CacheSettings.INVALID_SEGMENT_COUNT_EXCEPTION_MESSAGE;
+import static org.density.common.cache.settings.CacheSettings.VALID_SEGMENT_COUNT_VALUES;
 
 /**
  * This cache spillover the evicted items from heap tier to disk tier. All the new items are first cached on heap
@@ -68,7 +68,7 @@ import static org.opensearch.common.cache.settings.CacheSettings.VALID_SEGMENT_C
  * @param <K> Type of key
  * @param <V> Type of value
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class TieredSpilloverCache<K, V> implements ICache<K, V> {

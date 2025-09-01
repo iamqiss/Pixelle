@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite.composite912;
+package org.density.index.codec.composite.composite912;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.codecs.DocValuesConsumer;
@@ -25,20 +25,20 @@ import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.codec.composite.LuceneDocValuesConsumerFactory;
-import org.opensearch.index.compositeindex.datacube.startree.builder.StarTreesBuilder;
-import org.opensearch.index.compositeindex.datacube.startree.index.CompositeIndexValues;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.util.io.IOUtils;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.codec.composite.LuceneDocValuesConsumerFactory;
+import org.density.index.compositeindex.datacube.startree.builder.StarTreesBuilder;
+import org.density.index.compositeindex.datacube.startree.index.CompositeIndexValues;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * This class write the star tree index and star tree doc values
  * based on the doc values structures of the original index
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class Composite912DocValuesWriter extends DocValuesConsumer {

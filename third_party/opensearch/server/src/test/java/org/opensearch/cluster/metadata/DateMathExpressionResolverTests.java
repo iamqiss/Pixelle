@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver.Context;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver.DateMathExpressionResolver;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver.Context;
+import org.density.cluster.metadata.IndexNameExpressionResolver.DateMathExpressionResolver;
+import org.density.test.DensityTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.joda.time.DateTimeZone.UTC;
 
-public class DateMathExpressionResolverTests extends OpenSearchTestCase {
+public class DateMathExpressionResolverTests extends DensityTestCase {
 
     private final DateMathExpressionResolver expressionResolver = new DateMathExpressionResolver();
     private final Context context = new Context(
@@ -196,7 +196,7 @@ public class DateMathExpressionResolverTests extends OpenSearchTestCase {
 
     public void testExpressionInvalidUnescaped() throws Exception {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> expressionResolver.resolve(context, Arrays.asList("<.mar}vel-{now/d}>"))
         );
         assertThat(e.getMessage(), containsString("invalid dynamic name expression"));
@@ -205,7 +205,7 @@ public class DateMathExpressionResolverTests extends OpenSearchTestCase {
 
     public void testExpressionInvalidDateMathFormat() throws Exception {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> expressionResolver.resolve(context, Arrays.asList("<.marvel-{now/d{}>"))
         );
         assertThat(e.getMessage(), containsString("invalid dynamic name expression"));
@@ -214,7 +214,7 @@ public class DateMathExpressionResolverTests extends OpenSearchTestCase {
 
     public void testExpressionInvalidEmptyDateMathFormat() throws Exception {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> expressionResolver.resolve(context, Arrays.asList("<.marvel-{now/d{}}>"))
         );
         assertThat(e.getMessage(), containsString("invalid dynamic name expression"));
@@ -223,7 +223,7 @@ public class DateMathExpressionResolverTests extends OpenSearchTestCase {
 
     public void testExpressionInvalidOpenEnded() throws Exception {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> expressionResolver.resolve(context, Arrays.asList("<.marvel-{now/d>"))
         );
         assertThat(e.getMessage(), containsString("invalid dynamic name expression"));

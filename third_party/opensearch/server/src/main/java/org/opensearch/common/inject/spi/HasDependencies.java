@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,28 +23,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
 import java.util.Set;
 
 /**
- * Implemented by {@link org.opensearch.common.inject.Binding bindings}, {@link org.opensearch.common.inject.Provider
+ * Implemented by {@link org.density.common.inject.Binding bindings}, {@link org.density.common.inject.Provider
  * providers} and instances that expose their dependencies explicitly.
  *
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface HasDependencies {
 
     /**
      * Returns the known dependencies for this type. If this has dependencies whose values are not
-     * known statically, a dependency for the {@link org.opensearch.common.inject.Injector Injector} will be
+     * known statically, a dependency for the {@link org.density.common.inject.Injector Injector} will be
      * included in the returned set.
      *
      * @return a possibly empty set

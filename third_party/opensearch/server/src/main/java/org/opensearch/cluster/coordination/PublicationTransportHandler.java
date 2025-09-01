@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.IncompatibleClusterStateVersionException;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.TriConsumer;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.gateway.GatewayMetaState.RemotePersistedState;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.BytesTransportRequest;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.Diff;
+import org.density.cluster.IncompatibleClusterStateVersionException;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.TriConsumer;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.gateway.GatewayMetaState.RemotePersistedState;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.BytesTransportRequest;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -72,7 +72,7 @@ import java.util.function.Function;
 /**
  * Transport handler for publication
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PublicationTransportHandler {
 
@@ -237,7 +237,7 @@ public class PublicationTransportHandler {
             if (transportService.getLocalNode().equals(request.getSourceNode())) {
                 return acceptRemoteStateOnLocalNode(request);
             }
-            // TODO Make cluster state download non-blocking: https://github.com/opensearch-project/OpenSearch/issues/14102
+            // TODO Make cluster state download non-blocking: https://github.com/density-project/Density/issues/14102
             ClusterMetadataManifest manifest = remoteClusterStateService.getClusterMetadataManifestByFileName(
                 request.getClusterUUID(),
                 request.getManifestFile()
@@ -416,7 +416,7 @@ public class PublicationTransportHandler {
      * serializing, and compressing the state can be done once and the results shared across publish requests. The
      * {@code PublicationContext} implements this sharing.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class PublicationContext {
 
@@ -461,7 +461,7 @@ public class PublicationTransportHandler {
                         }
                     }
                 } catch (IOException e) {
-                    throw new OpenSearchException("failed to serialize cluster state for publishing to node {}", e, node);
+                    throw new DensityException("failed to serialize cluster state for publishing to node {}", e, node);
                 }
             }
         }
@@ -626,7 +626,7 @@ public class PublicationTransportHandler {
     /**
      * An extension of {@code PublicationContext} to support remote cluster state publication
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class RemotePublicationContext extends PublicationContext {
 

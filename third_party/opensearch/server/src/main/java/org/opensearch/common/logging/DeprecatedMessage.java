@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.core.common.Strings;
+import org.density.common.collect.MapBuilder;
+import org.density.core.common.Strings;
 
 import java.util.Map;
 import java.util.Set;
@@ -43,9 +43,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * A logger message used by {@link DeprecationLogger}.
  * Carries x-opaque-id field if provided in the headers. Will populate the x-opaque-id field in JSON logs.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class DeprecatedMessage extends OpenSearchLogMessage {
+public class DeprecatedMessage extends DensityLogMessage {
     public static final String X_OPAQUE_ID_FIELD_NAME = "x-opaque-id";
 
     // Arbitrary maximum size, should be much larger than unique number of

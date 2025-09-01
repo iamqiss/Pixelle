@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.support.MultiValuesSource;
-import org.opensearch.search.aggregations.support.MultiValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.support.MultiValuesSource;
+import org.density.search.aggregations.support.MultiValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.search.aggregations.metrics.WeightedAvgAggregationBuilder.VALUE_FIELD;
+import static org.density.search.aggregations.metrics.WeightedAvgAggregationBuilder.VALUE_FIELD;
 
 /**
  * Aggregation Factory for weighted_avg agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 class WeightedAvgAggregatorFactory extends MultiValuesSourceAggregatorFactory {
 

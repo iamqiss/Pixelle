@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.telemetry.metrics.Counter;
-import org.opensearch.telemetry.metrics.Histogram;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.tags.Tags;
+import org.density.telemetry.metrics.Counter;
+import org.density.telemetry.metrics.Histogram;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.tags.Tags;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * Class containing metrics (counters/latency) specific to ClusterManager.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ClusterManagerMetrics {
 

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,9 +15,9 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.util.DocIdSetBuilder;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.search.aggregations.BucketCollector;
-import org.opensearch.search.internal.SearchContext;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.search.aggregations.BucketCollector;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,7 +30,7 @@ import static org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
  * <p>
  * This holds the common business logic and delegate aggregator-specific logic to {@link AggregatorBridge}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FilterRewriteOptimizationContext {
 
@@ -163,7 +163,7 @@ public final class FilterRewriteOptimizationContext {
     }
 
     /**
-     * Parameters for {@link org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector.SubAggRangeCollector}
+     * Parameters for {@link org.density.search.aggregations.bucket.filterrewrite.rangecollector.SubAggRangeCollector}
      */
     public record SubAggCollectorParam(BucketCollector collectableSubAggregators, LeafReaderContext leafCtx) {
     }

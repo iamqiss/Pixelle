@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptedMetricAggContexts;
-import org.opensearch.search.SearchParseException;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Nullable;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
+import org.density.script.ScriptedMetricAggContexts;
+import org.density.search.SearchParseException;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * Aggregation Factory for scripted_metrics agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ScriptedMetricAggregatorFactory extends AggregatorFactory {
 

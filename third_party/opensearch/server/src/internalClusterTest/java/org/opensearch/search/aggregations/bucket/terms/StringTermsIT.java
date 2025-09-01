@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,37 +25,37 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilters;
-import org.opensearch.search.aggregations.bucket.terms.Terms.Bucket;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.aggregations.metrics.ExtendedStats;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.aggregations.metrics.Sum;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.query.QueryBuilders;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.search.aggregations.bucket.filter.InternalFilters;
+import org.density.search.aggregations.bucket.terms.Terms.Bucket;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.aggregations.metrics.ExtendedStats;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.aggregations.metrics.Sum;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,22 +63,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.aggregations.AggregationBuilders.avg;
-import static org.opensearch.search.aggregations.AggregationBuilders.extendedStats;
-import static org.opensearch.search.aggregations.AggregationBuilders.filter;
-import static org.opensearch.search.aggregations.AggregationBuilders.stats;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.aggregations.AggregationBuilders.avg;
+import static org.density.search.aggregations.AggregationBuilders.extendedStats;
+import static org.density.search.aggregations.AggregationBuilders.filter;
+import static org.density.search.aggregations.AggregationBuilders.stats;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class StringTermsIT extends BaseStringTermsTestCase {
 
     public StringTermsIT(Settings staticSettings) {
@@ -426,9 +426,9 @@ public class StringTermsIT extends BaseStringTermsTestCase {
                 .get();
             fail("Expected an exception");
         } catch (SearchPhaseExecutionException e) {
-            OpenSearchException[] rootCauses = e.guessRootCauses();
+            DensityException[] rootCauses = e.guessRootCauses();
             if (rootCauses.length == 1) {
-                OpenSearchException rootCause = rootCauses[0];
+                DensityException rootCause = rootCauses[0];
                 if (rootCause instanceof AggregationExecutionException) {
                     AggregationExecutionException aggException = (AggregationExecutionException) rootCause;
                     assertThat(aggException.getMessage(), startsWith("Invalid aggregation order path"));
@@ -676,7 +676,7 @@ public class StringTermsIT extends BaseStringTermsTestCase {
 
                 fail("Expected search to fail when trying to sort terms aggregation by sug-aggregation that doesn't exist");
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -700,7 +700,7 @@ public class StringTermsIT extends BaseStringTermsTestCase {
                         + "which is not of a metrics or single-bucket type"
                 );
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -725,7 +725,7 @@ public class StringTermsIT extends BaseStringTermsTestCase {
                         + " failed shards."
                 );
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -750,7 +750,7 @@ public class StringTermsIT extends BaseStringTermsTestCase {
                         + "where the metric name is not specified"
                 );
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }

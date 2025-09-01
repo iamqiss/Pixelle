@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,162 +25,162 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.action.admin.cluster.configuration.TransportAddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.indices.close.TransportCloseIndexAction;
-import org.opensearch.action.search.CreatePitController;
-import org.opensearch.action.search.SearchRequestSlowLog;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.action.search.TransportSearchAction;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.action.support.DestructiveOperations;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.bootstrap.BootstrapSettings;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.InternalClusterInfoService;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.applicationtemplates.SystemTemplatesService;
-import org.opensearch.cluster.coordination.ClusterBootstrapService;
-import org.opensearch.cluster.coordination.ClusterFormationFailureHelper;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.coordination.ElectionSchedulerFactory;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.coordination.JoinHelper;
-import org.opensearch.cluster.coordination.LagDetector;
-import org.opensearch.cluster.coordination.LeaderChecker;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.coordination.Reconfigurator;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.FilterAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.store.settings.OpenSearchOnHeapCacheSettings;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.HandshakingTransportAddressConnector;
-import org.opensearch.discovery.PeerFinder;
-import org.opensearch.discovery.SeedHostsResolver;
-import org.opensearch.discovery.SettingsBasedSeedHostsProvider;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.DanglingIndicesState;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
-import org.opensearch.gateway.remote.RemoteClusterStateCleanupManager;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.gateway.remote.RemoteIndexMetadataManager;
-import org.opensearch.gateway.remote.model.RemoteRoutingTableBlobStore;
-import org.opensearch.http.HttpTransportSettings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexingPressure;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.ShardIndexingPressureMemoryManager;
-import org.opensearch.index.ShardIndexingPressureSettings;
-import org.opensearch.index.ShardIndexingPressureStore;
-import org.opensearch.index.autoforcemerge.ForceMergeManagerSettings;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.remote.RemoteStorePressureSettings;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.store.remote.filecache.FileCacheSettings;
-import org.opensearch.indices.IndexingMemoryController;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.indices.analysis.HunspellService;
-import org.opensearch.indices.breaker.BreakerSettings;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.PublishCheckpointAction;
-import org.opensearch.indices.store.IndicesStore;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.monitor.fs.FsHealthService;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.monitor.jvm.JvmGcMonitorService;
-import org.opensearch.monitor.jvm.JvmService;
-import org.opensearch.monitor.os.OsService;
-import org.opensearch.monitor.process.ProcessService;
-import org.opensearch.node.Node;
-import org.opensearch.node.Node.DiscoverySettings;
-import org.opensearch.node.NodeRoleSettings;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.node.resource.tracker.ResourceTrackerSettings;
-import org.opensearch.persistent.PersistentTasksClusterService;
-import org.opensearch.persistent.decider.EnableAssignmentDecider;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.ratelimitting.admissioncontrol.AdmissionControlSettings;
-import org.opensearch.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings;
-import org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.backpressure.settings.NodeDuressSettings;
-import org.opensearch.search.backpressure.settings.SearchBackpressureSettings;
-import org.opensearch.search.backpressure.settings.SearchShardTaskSettings;
-import org.opensearch.search.backpressure.settings.SearchTaskSettings;
-import org.opensearch.search.fetch.subphase.highlight.FastVectorHighlighter;
-import org.opensearch.snapshots.InternalSnapshotsInfoService;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.tasks.TaskCancellationMonitoringSettings;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.tasks.consumer.TopNSearchTasksLogger;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.ProxyConnectionStrategy;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.RemoteConnectionStrategy;
-import org.opensearch.transport.SniffConnectionStrategy;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.TransportSettings;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
-import org.opensearch.wlm.WorkloadManagementSettings;
+import org.density.action.admin.cluster.configuration.TransportAddVotingConfigExclusionsAction;
+import org.density.action.admin.indices.close.TransportCloseIndexAction;
+import org.density.action.search.CreatePitController;
+import org.density.action.search.SearchRequestSlowLog;
+import org.density.action.search.SearchRequestStats;
+import org.density.action.search.TransportSearchAction;
+import org.density.action.support.AutoCreateIndex;
+import org.density.action.support.DestructiveOperations;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.bootstrap.BootstrapSettings;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.InternalClusterInfoService;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.applicationtemplates.SystemTemplatesService;
+import org.density.cluster.coordination.ClusterBootstrapService;
+import org.density.cluster.coordination.ClusterFormationFailureHelper;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.coordination.ElectionSchedulerFactory;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.coordination.JoinHelper;
+import org.density.cluster.coordination.LagDetector;
+import org.density.cluster.coordination.LeaderChecker;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.coordination.Reconfigurator;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.FilterAllocationDecider;
+import org.density.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.store.settings.DensityOnHeapCacheSettings;
+import org.density.common.logging.Loggers;
+import org.density.common.network.NetworkModule;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting.Property;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.HandshakingTransportAddressConnector;
+import org.density.discovery.PeerFinder;
+import org.density.discovery.SeedHostsResolver;
+import org.density.discovery.SettingsBasedSeedHostsProvider;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.DanglingIndicesState;
+import org.density.gateway.GatewayService;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.gateway.ShardsBatchGatewayAllocator;
+import org.density.gateway.remote.RemoteClusterStateCleanupManager;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.gateway.remote.RemoteIndexMetadataManager;
+import org.density.gateway.remote.model.RemoteRoutingTableBlobStore;
+import org.density.http.HttpTransportSettings;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.IndexingPressure;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.ShardIndexingPressureMemoryManager;
+import org.density.index.ShardIndexingPressureSettings;
+import org.density.index.ShardIndexingPressureStore;
+import org.density.index.autoforcemerge.ForceMergeManagerSettings;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.remote.RemoteStorePressureSettings;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.store.remote.filecache.FileCacheSettings;
+import org.density.indices.IndexingMemoryController;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.IndicesRequestCache;
+import org.density.indices.IndicesService;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.ShardLimitValidator;
+import org.density.indices.analysis.HunspellService;
+import org.density.indices.breaker.BreakerSettings;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.PublishCheckpointAction;
+import org.density.indices.store.IndicesStore;
+import org.density.ingest.IngestService;
+import org.density.monitor.fs.FsHealthService;
+import org.density.monitor.fs.FsService;
+import org.density.monitor.jvm.JvmGcMonitorService;
+import org.density.monitor.jvm.JvmService;
+import org.density.monitor.os.OsService;
+import org.density.monitor.process.ProcessService;
+import org.density.node.Node;
+import org.density.node.Node.DiscoverySettings;
+import org.density.node.NodeRoleSettings;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.node.resource.tracker.ResourceTrackerSettings;
+import org.density.persistent.PersistentTasksClusterService;
+import org.density.persistent.decider.EnableAssignmentDecider;
+import org.density.plugins.PluginsService;
+import org.density.ratelimitting.admissioncontrol.AdmissionControlSettings;
+import org.density.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings;
+import org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
+import org.density.rest.BaseRestHandler;
+import org.density.script.ScriptService;
+import org.density.search.SearchService;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.backpressure.settings.NodeDuressSettings;
+import org.density.search.backpressure.settings.SearchBackpressureSettings;
+import org.density.search.backpressure.settings.SearchShardTaskSettings;
+import org.density.search.backpressure.settings.SearchTaskSettings;
+import org.density.search.fetch.subphase.highlight.FastVectorHighlighter;
+import org.density.snapshots.InternalSnapshotsInfoService;
+import org.density.snapshots.SnapshotsService;
+import org.density.tasks.TaskCancellationMonitoringSettings;
+import org.density.tasks.TaskManager;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.tasks.consumer.TopNSearchTasksLogger;
+import org.density.telemetry.TelemetrySettings;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.ProxyConnectionStrategy;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.RemoteConnectionStrategy;
+import org.density.transport.SniffConnectionStrategy;
+import org.density.transport.StreamTransportService;
+import org.density.transport.TransportSettings;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
+import org.density.wlm.WorkloadManagementSettings;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -190,14 +190,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static org.opensearch.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_SETTING;
-import static org.opensearch.gateway.remote.RemoteIndexMetadataManager.INDEX_METADATA_UPLOAD_TIMEOUT_SETTING;
-import static org.opensearch.gateway.remote.RemoteManifestManager.METADATA_MANIFEST_UPLOAD_TIMEOUT_SETTING;
+import static org.density.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_SETTING;
+import static org.density.gateway.remote.RemoteIndexMetadataManager.INDEX_METADATA_UPLOAD_TIMEOUT_SETTING;
+import static org.density.gateway.remote.RemoteManifestManager.METADATA_MANIFEST_UPLOAD_TIMEOUT_SETTING;
 
 /**
  * Encapsulates all valid cluster level settings.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ClusterSettings extends AbstractScopedSettings {
@@ -580,8 +580,8 @@ public final class ClusterSettings extends AbstractScopedSettings {
                 ClusterName.CLUSTER_NAME_SETTING,
                 Client.CLIENT_TYPE_SETTING_S,
                 ClusterModule.SHARDS_ALLOCATOR_TYPE_SETTING,
-                OpenSearchExecutors.PROCESSORS_SETTING,
-                OpenSearchExecutors.NODE_PROCESSORS_SETTING,
+                DensityExecutors.PROCESSORS_SETTING,
+                DensityExecutors.NODE_PROCESSORS_SETTING,
                 ThreadContext.DEFAULT_HEADERS_SETTING,
                 Loggers.LOG_DEFAULT_LEVEL_SETTING,
                 Loggers.LOG_LEVEL_SETTING,
@@ -832,10 +832,10 @@ public final class ClusterSettings extends AbstractScopedSettings {
 
                 // Tiered caching settings
                 CacheSettings.getConcreteStoreNameSettingForCacheType(CacheType.INDICES_REQUEST_CACHE),
-                OpenSearchOnHeapCacheSettings.MAXIMUM_SIZE_IN_BYTES.getConcreteSettingForNamespace(
+                DensityOnHeapCacheSettings.MAXIMUM_SIZE_IN_BYTES.getConcreteSettingForNamespace(
                     CacheType.INDICES_REQUEST_CACHE.getSettingPrefix()
                 ),
-                OpenSearchOnHeapCacheSettings.EXPIRE_AFTER_ACCESS_SETTING.getConcreteSettingForNamespace(
+                DensityOnHeapCacheSettings.EXPIRE_AFTER_ACCESS_SETTING.getConcreteSettingForNamespace(
                     CacheType.INDICES_REQUEST_CACHE.getSettingPrefix()
                 ),
 

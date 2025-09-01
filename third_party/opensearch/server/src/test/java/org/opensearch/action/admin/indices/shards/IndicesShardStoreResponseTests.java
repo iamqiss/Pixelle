@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.shards;
+package org.density.action.admin.indices.shards;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.NodeDisconnectedException;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.UUIDs;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
+import org.density.transport.NodeDisconnectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static org.hamcrest.Matchers.equalTo;
 
-public class IndicesShardStoreResponseTests extends OpenSearchTestCase {
+public class IndicesShardStoreResponseTests extends DensityTestCase {
     public void testBasicSerialization() throws Exception {
         final Map<String, Map<Integer, List<IndicesShardStoresResponse.StoreStatus>>> indexStoreStatuses = new HashMap<>();
 

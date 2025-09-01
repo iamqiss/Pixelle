@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -94,7 +94,7 @@ public class RepositoriesSetupPlugin implements Plugin<Project> {
             String revision = matcher.group(1);
             MavenArtifactRepository luceneRepo = repos.maven(repo -> {
                 repo.setName("lucene-snapshots");
-                repo.setUrl("https://ci.opensearch.org/ci/dbc/snapshots/lucene/");
+                repo.setUrl("https://ci.density.org/ci/dbc/snapshots/lucene/");
             });
             repos.exclusiveContent(exclusiveRepo -> {
                 exclusiveRepo.filter(

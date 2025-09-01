@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.coordination.PendingClusterStateStats;
-import org.opensearch.cluster.coordination.PublishClusterStateStats;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterStateStats;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.coordination.PendingClusterStateStats;
+import org.density.cluster.coordination.PublishClusterStateStats;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterStateStats;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.core.action.ActionListener;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 

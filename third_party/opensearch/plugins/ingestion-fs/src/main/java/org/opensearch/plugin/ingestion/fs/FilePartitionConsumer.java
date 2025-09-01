@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.ingestion.fs;
+package org.density.plugin.ingestion.fs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.IngestionShardPointer;
+import org.density.common.SuppressForbidden;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.IngestionShardPointer;
 
 import java.io.BufferedReader;
 import java.io.File;

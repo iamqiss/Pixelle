@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.protobufs.SourceConfigParam;
-import org.opensearch.protobufs.TrackHits;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder.SuggestMode;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchType;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.protobufs.SearchRequestBody;
+import org.density.protobufs.SourceConfigParam;
+import org.density.protobufs.TrackHits;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder.SuggestMode;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.Client;
+import org.density.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
 
 import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 
-public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
+public class SearchRequestProtoUtilsTests extends DensityTestCase {
 
     private NamedWriteableRegistry namedWriteableRegistry;
     private Client mockClient;
@@ -47,10 +47,10 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchRequestWithBasicFields() throws IOException {
         // Create a protobuf SearchRequest with basic fields
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .addIndex("index1")
             .addIndex("index2")
-            .setSearchType(org.opensearch.protobufs.SearchRequest.SearchType.SEARCH_TYPE_QUERY_THEN_FETCH)
+            .setSearchType(org.density.protobufs.SearchRequest.SearchType.SEARCH_TYPE_QUERY_THEN_FETCH)
             .setBatchedReduceSize(10)
             .setPreFilterShardSize(5)
             .setMaxConcurrentShardRequests(20)
@@ -110,7 +110,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
             .build();
 
         // Create a protobuf SearchRequest with the request body
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setRequestBody(requestBody)
             .build();
 
@@ -136,21 +136,21 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithQueryAndSort() throws IOException {
         // Create a protobuf SearchRequest with query and sort
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setQ("field:value")
             .addSort(
-                org.opensearch.protobufs.SearchRequest.SortOrder.newBuilder()
+                org.density.protobufs.SearchRequest.SortOrder.newBuilder()
                     .setField("field1")
-                    .setDirection(org.opensearch.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_ASC)
+                    .setDirection(org.density.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_ASC)
                     .build()
             )
             .addSort(
-                org.opensearch.protobufs.SearchRequest.SortOrder.newBuilder()
+                org.density.protobufs.SearchRequest.SortOrder.newBuilder()
                     .setField("field2")
-                    .setDirection(org.opensearch.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_DESC)
+                    .setDirection(org.density.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_DESC)
                     .build()
             )
-            .addSort(org.opensearch.protobufs.SearchRequest.SortOrder.newBuilder().setField("field3").build())
+            .addSort(org.density.protobufs.SearchRequest.SortOrder.newBuilder().setField("field3").build())
             .build();
 
         // Create a SearchSourceBuilder to populate
@@ -168,7 +168,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithStoredFields() throws IOException {
         // Create a protobuf SearchRequest with stored fields
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .addStoredFields("field1")
             .addStoredFields("field2")
             .addStoredFields("field3")
@@ -192,7 +192,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithDocValueFields() throws IOException {
         // Create a protobuf SearchRequest with doc value fields
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .addDocvalueFields("field1")
             .addDocvalueFields("field2")
             .build();
@@ -211,7 +211,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithSource() throws IOException {
         // Create a protobuf SearchRequest with source context
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setSource(SourceConfigParam.newBuilder().setBoolValue(true).build())
             .addSourceIncludes("include1")
             .addSourceIncludes("include2")
@@ -226,7 +226,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
         // Verify the result
         assertNotNull("SearchSourceBuilder should not be null", searchSourceBuilder);
-        org.opensearch.search.fetch.subphase.FetchSourceContext fetchSourceContext = searchSourceBuilder.fetchSource();
+        org.density.search.fetch.subphase.FetchSourceContext fetchSourceContext = searchSourceBuilder.fetchSource();
         assertNotNull("FetchSourceContext should not be null", fetchSourceContext);
         assertTrue("FetchSource should be true", fetchSourceContext.fetchSource());
         assertArrayEquals("Includes should match", new String[] { "include1", "include2" }, fetchSourceContext.includes());
@@ -235,7 +235,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithTrackTotalHitsBoolean() throws IOException {
         // Create a protobuf SearchRequest with track total hits boolean
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setTrackTotalHits(TrackHits.newBuilder().setBoolValue(true).build())
             .build();
 
@@ -252,7 +252,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithTrackTotalHitsInteger() throws IOException {
         // Create a protobuf SearchRequest with track total hits integer
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setTrackTotalHits(TrackHits.newBuilder().setInt32Value(1000).build())
             .build();
 
@@ -269,7 +269,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithStats() throws IOException {
         // Create a protobuf SearchRequest with stats
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .addStats("stat1")
             .addStats("stat2")
             .build();
@@ -290,11 +290,11 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithSuggest() throws IOException {
         // Create a protobuf SearchRequest with suggest
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setSuggestField("title")
-            .setSuggestText("opensearch")
+            .setSuggestText("density")
             .setSuggestSize(10)
-            .setSuggestMode(org.opensearch.protobufs.SearchRequest.SuggestMode.SUGGEST_MODE_POPULAR)
+            .setSuggestMode(org.density.protobufs.SearchRequest.SuggestMode.SUGGEST_MODE_POPULAR)
             .build();
 
         // Create a SearchSourceBuilder to populate
@@ -309,7 +309,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
         assertNotNull("SuggestBuilder should not be null", suggestBuilder);
         assertEquals("Should have 1 suggestion", 1, suggestBuilder.getSuggestions().size());
         assertTrue("Should contain title suggestion", suggestBuilder.getSuggestions().containsKey("title"));
-        assertEquals("SuggestText should match", "opensearch", suggestBuilder.getSuggestions().get("title").text());
+        assertEquals("SuggestText should match", "density", suggestBuilder.getSuggestions().get("title").text());
         assertEquals("SuggestSize should match", 10, suggestBuilder.getSuggestions().get("title").size().intValue());
         assertEquals(
             "SuggestMode should match",
@@ -320,7 +320,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testCheckProtoTotalHitsWithRestTotalHitsAsInt() throws IOException {
         // Create a protobuf SearchRequest with rest_total_hits_as_int
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setRestTotalHitsAsInt(true)
             .build();
 
@@ -338,7 +338,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testCheckProtoTotalHitsWithTrackTotalHitsUpTo() throws IOException {
         // Create a protobuf SearchRequest with rest_total_hits_as_int and track_total_hits_up_to
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setRestTotalHitsAsInt(true)
             .build();
 
@@ -361,7 +361,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testCheckProtoTotalHitsWithInvalidTrackTotalHitsUpTo() throws IOException {
         // Create a protobuf SearchRequest with rest_total_hits_as_int
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setRestTotalHitsAsInt(true)
             .build();
 
@@ -380,7 +380,7 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithInvalidTerminateAfter() throws IOException {
         // Create a protobuf SearchRequest with invalid terminateAfter
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .setTerminateAfter(-1)
             .build();
 
@@ -401,11 +401,11 @@ public class SearchRequestProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseSearchSourceWithInvalidSortDirection() throws IOException {
         // Create a protobuf SearchRequest with invalid sort direction
-        org.opensearch.protobufs.SearchRequest protoRequest = org.opensearch.protobufs.SearchRequest.newBuilder()
+        org.density.protobufs.SearchRequest protoRequest = org.density.protobufs.SearchRequest.newBuilder()
             .addSort(
-                org.opensearch.protobufs.SearchRequest.SortOrder.newBuilder()
+                org.density.protobufs.SearchRequest.SortOrder.newBuilder()
                     .setField("field1")
-                    .setDirection(org.opensearch.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_UNSPECIFIED)
+                    .setDirection(org.density.protobufs.SearchRequest.SortOrder.Direction.DIRECTION_UNSPECIFIED)
                     .build()
             )
             .build();

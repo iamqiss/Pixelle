@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.AnalyzerWrapper;
@@ -59,14 +59,14 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.common.collect.Iterators;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityProvider;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.collect.Iterators;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityProvider;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.index.mapper.TextFieldMapper.TextFieldType.hasGaps;
+import static org.density.index.mapper.TextFieldMapper.TextFieldType.hasGaps;
 
 /**
  * Mapper for a text field that optimizes itself for as-you-type completion by indexing its content into subfields. Each subfield

@@ -1,29 +1,29 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.indices.replication.SegmentReplicationBaseIT;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.rest.RestStatus;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.indices.replication.SegmentReplicationBaseIT;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,15 +35,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_INDEXING_CHECKPOINTS;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_REPLICATION_LIMIT_STALE_REPLICA_SETTING;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_REPLICATION_TIME_BACKPRESSURE_SETTING;
-import static org.opensearch.index.SegmentReplicationPressureService.SEGMENT_REPLICATION_INDEXING_PRESSURE_ENABLED;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.index.SegmentReplicationPressureService.MAX_INDEXING_CHECKPOINTS;
+import static org.density.index.SegmentReplicationPressureService.MAX_REPLICATION_LIMIT_STALE_REPLICA_SETTING;
+import static org.density.index.SegmentReplicationPressureService.MAX_REPLICATION_TIME_BACKPRESSURE_SETTING;
+import static org.density.index.SegmentReplicationPressureService.SEGMENT_REPLICATION_INDEXING_PRESSURE_ENABLED;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SegmentReplicationPressureIT extends SegmentReplicationBaseIT {
 
     private static final int MAX_CHECKPOINTS_BEHIND = 2;
@@ -100,13 +100,13 @@ public class SegmentReplicationPressureIT extends SegmentReplicationBaseIT {
             refresh(INDEX_NAME);
             // index again while we are stale.
             assertBusy(() -> {
-                expectThrows(OpenSearchRejectedExecutionException.class, () -> {
+                expectThrows(DensityRejectedExecutionException.class, () -> {
                     indexDoc();
                     totalDocs.incrementAndGet();
                 });
             });
             // Try to index one more doc.
-            expectThrows(OpenSearchRejectedExecutionException.class, () -> {
+            expectThrows(DensityRejectedExecutionException.class, () -> {
                 indexDoc();
                 totalDocs.incrementAndGet();
                 refresh(INDEX_NAME);
@@ -162,7 +162,7 @@ public class SegmentReplicationPressureIT extends SegmentReplicationBaseIT {
             refresh(INDEX_NAME);
             // index again while we are stale.
             assertBusy(() -> {
-                expectThrows(OpenSearchRejectedExecutionException.class, () -> {
+                expectThrows(DensityRejectedExecutionException.class, () -> {
                     indexDoc();
                     totalDocs.incrementAndGet();
                 });

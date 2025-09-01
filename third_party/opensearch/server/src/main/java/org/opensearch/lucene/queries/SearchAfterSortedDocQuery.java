@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.queries;
+package org.density.lucene.queries;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ConstantScoreScorer;
@@ -49,7 +49,7 @@ import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.Weight;
-import org.opensearch.common.lucene.Lucene;
+import org.density.common.lucene.Lucene;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ import java.util.Objects;
 /**
  * A {@link Query} that only matches documents that are greater than the provided {@link FieldDoc}.
  * This works only if the index is sorted according to the given search {@link Sort}.
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchAfterSortedDocQuery extends Query {
     private final Sort sort;

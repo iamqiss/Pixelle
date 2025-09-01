@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.node.NodeService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityParseException;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.node.NodeService;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 0, numClientNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
-public class IngestProcessorNotInstalledOnAllNodesIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(numDataNodes = 0, numClientNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
+public class IngestProcessorNotInstalledOnAllNodesIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public IngestProcessorNotInstalledOnAllNodesIT(Settings settings) throws IOException {
         super(settings);
@@ -96,7 +96,7 @@ public class IngestProcessorNotInstalledOnAllNodesIT extends ParameterizedStatic
         try {
             client().admin().cluster().preparePutPipeline("_id", pipelineSource, MediaTypeRegistry.JSON).get();
             fail("exception expected");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("Processor type [test] is not installed on node"));
         }
     }
@@ -109,7 +109,7 @@ public class IngestProcessorNotInstalledOnAllNodesIT extends ParameterizedStatic
         try {
             client().admin().cluster().preparePutPipeline("_id", pipelineSource, MediaTypeRegistry.JSON).get();
             fail("exception expected");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("No processor type exists with name [test]"));
         }
     }

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.exporter.OTelMetricsExporterFactory;
-import org.opensearch.telemetry.tracing.exporter.OTelSpanExporterFactory;
-import org.opensearch.telemetry.tracing.sampler.OTelSamplerFactory;
-import org.opensearch.telemetry.tracing.sampler.RequestSampler;
+import org.density.common.settings.Settings;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.exporter.OTelMetricsExporterFactory;
+import org.density.telemetry.tracing.exporter.OTelSpanExporterFactory;
+import org.density.telemetry.tracing.sampler.OTelSamplerFactory;
+import org.density.telemetry.tracing.sampler.RequestSampler;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -36,9 +36,9 @@ import io.opentelemetry.sdk.trace.export.SpanExporter;
 import io.opentelemetry.sdk.trace.samplers.Sampler;
 import io.opentelemetry.semconv.ServiceAttributes;
 
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_BATCH_SIZE_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_DELAY_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_MAX_QUEUE_SIZE_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_BATCH_SIZE_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_DELAY_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_MAX_QUEUE_SIZE_SETTING;
 
 /**
  * This class encapsulates all OpenTelemetry related resources
@@ -79,7 +79,7 @@ public final class OTelResourceProvider {
         ContextPropagators contextPropagators,
         Sampler sampler
     ) {
-        Resource resource = Resource.create(Attributes.of(ServiceAttributes.SERVICE_NAME, "OpenSearch"));
+        Resource resource = Resource.create(Attributes.of(ServiceAttributes.SERVICE_NAME, "Density"));
         SdkTracerProvider sdkTracerProvider = createSdkTracerProvider(settings, spanExporter, sampler, resource);
         SdkMeterProvider sdkMeterProvider = createSdkMetricProvider(settings, resource);
         return OpenTelemetrySdk.builder()

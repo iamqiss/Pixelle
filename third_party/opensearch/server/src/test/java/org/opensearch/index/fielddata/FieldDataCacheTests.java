@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -43,20 +43,20 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.fielddata.plain.AbstractLeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.plain.PagedBytesIndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.test.FieldMaskingReader;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.fielddata.plain.AbstractLeafOrdinalsFieldData;
+import org.density.index.fielddata.plain.PagedBytesIndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.test.FieldMaskingReader;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class FieldDataCacheTests extends OpenSearchTestCase {
+public class FieldDataCacheTests extends DensityTestCase {
 
     public void testLoadGlobal_neverCacheIfFieldIsMissing() throws Exception {
         Directory dir = newDirectory();
@@ -75,7 +75,7 @@ public class FieldDataCacheTests extends OpenSearchTestCase {
             }
         }
         iw.close();
-        DirectoryReader ir = OpenSearchDirectoryReader.wrap(DirectoryReader.open(dir), new ShardId("_index", "_na_", 0));
+        DirectoryReader ir = DensityDirectoryReader.wrap(DirectoryReader.open(dir), new ShardId("_index", "_na_", 0));
 
         DummyAccountingFieldDataCache fieldDataCache = new DummyAccountingFieldDataCache();
         // Testing SortedSetOrdinalsIndexFieldData:

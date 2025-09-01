@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
+public class CommunityIdProcessorFactoryTests extends DensityTestCase {
     private CommunityIdProcessor.Factory factory;
 
     @Before
@@ -62,7 +62,7 @@ public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[source_ip_field] required property is missing"));
         }
 
@@ -70,7 +70,7 @@ public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[source_ip_field] required property is missing"));
         }
     }
@@ -81,7 +81,7 @@ public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[destination_ip_field] required property is missing"));
         }
 
@@ -90,7 +90,7 @@ public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[destination_ip_field] required property is missing"));
         }
     }
@@ -109,7 +109,7 @@ public class CommunityIdProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), equalTo("[seed] seed must be between 0 and 65535"));
         }
     }

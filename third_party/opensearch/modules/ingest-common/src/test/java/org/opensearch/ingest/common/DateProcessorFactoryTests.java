@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.time.ZoneId;
@@ -47,7 +47,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class DateProcessorFactoryTests extends OpenSearchTestCase {
+public class DateProcessorFactoryTests extends DensityTestCase {
 
     private DateProcessor.Factory factory;
 
@@ -80,7 +80,7 @@ public class DateProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("processor creation should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("[field] required property is missing"));
         }
     }
@@ -95,7 +95,7 @@ public class DateProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("processor creation should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("[formats] required property is missing"));
         }
     }
@@ -143,7 +143,7 @@ public class DateProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("processor creation should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("[formats] property isn't a list, but of type [java.lang.String]"));
         }
     }

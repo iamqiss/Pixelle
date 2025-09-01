@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.remote;
+package org.density.cluster.routing.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.RoutingTableIncrementalDiff;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.remote.RemoteWritableEntityStore;
-import org.opensearch.common.remote.RemoteWriteableEntityBlobStore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.gateway.remote.RemoteStateTransferException;
-import org.opensearch.gateway.remote.model.RemoteRoutingTableBlobStore;
-import org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable;
-import org.opensearch.gateway.remote.routingtable.RemoteRoutingTableDiff;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.Diff;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.RoutingTableIncrementalDiff;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.remote.RemoteWritableEntityStore;
+import org.density.common.remote.RemoteWriteableEntityBlobStore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.compress.Compressor;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.gateway.remote.RemoteStateTransferException;
+import org.density.gateway.remote.model.RemoteRoutingTableBlobStore;
+import org.density.gateway.remote.routingtable.RemoteIndexRoutingTable;
+import org.density.gateway.remote.routingtable.RemoteRoutingTableDiff;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,12 +48,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
 
 /**
  * A Service which provides APIs to upload and download routing table from remote store.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalRemoteRoutingTableService extends AbstractLifecycleComponent implements RemoteRoutingTableService {
 

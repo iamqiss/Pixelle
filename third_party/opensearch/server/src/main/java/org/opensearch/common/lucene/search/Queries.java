@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.BooleanClause;
@@ -46,10 +46,10 @@ import org.apache.lucene.search.QueryVisitor;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.lucene.queries.ExtendedCommonTermsQuery;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.lucene.queries.ExtendedCommonTermsQuery;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -61,7 +61,7 @@ import java.util.regex.Pattern;
 /**
  * Lucene queries class
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Queries {
 
@@ -83,7 +83,7 @@ public class Queries {
     }
 
     public static Query newLenientFieldQuery(String field, RuntimeException e) {
-        String message = OpenSearchException.getExceptionName(e) + ":[" + e.getMessage() + "]";
+        String message = DensityException.getExceptionName(e) + ":[" + e.getMessage() + "]";
         return Queries.newMatchNoDocsQuery("failed [" + field + "] query, caused by " + message);
     }
 
@@ -214,7 +214,7 @@ public class Queries {
     /**
      * Matches no docs w/o rewriting the query
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class MatchNoDocsWithoutRewriteQuery extends Query {
         private final String reason;

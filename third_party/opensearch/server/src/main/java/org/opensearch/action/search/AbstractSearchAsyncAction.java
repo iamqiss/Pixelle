@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.FailAwareWeightedRouting;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceInfo;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.pipeline.PipelinedRequest;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanCreationContext;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.transport.Transport;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.support.TransportActions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.FailAwareWeightedRouting;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.resourcetracker.TaskResourceInfo;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.pipeline.PipelinedRequest;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanCreationContext;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.transport.Transport;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ import java.util.stream.Collectors;
  * The fan out and collect algorithm is traditionally used as the initial phase which can either be a query execution or collection of
  * distributed frequencies
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> extends SearchPhase implements SearchPhaseContext {
     private static final float DEFAULT_INDEX_BOOST = 1.0f;
@@ -423,7 +423,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
             final ShardOperationFailedException[] shardSearchFailures = ExceptionsHelper.groupBy(buildShardFailures());
             Throwable cause = shardSearchFailures.length == 0
                 ? null
-                : OpenSearchException.guessRootCauses(shardSearchFailures[0].getCause())[0];
+                : DensityException.guessRootCauses(shardSearchFailures[0].getCause())[0];
             logger.debug(() -> new ParameterizedMessage("All shards failed for phase: [{}]", getName()), cause);
             onPhaseFailure(currentPhase, "all shards failed", cause);
 
@@ -438,7 +438,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
                     if (logger.isDebugEnabled()) {
                         int numShardFailures = shardSearchFailures.length;
                         shardSearchFailures = ExceptionsHelper.groupBy(shardSearchFailures);
-                        Throwable cause = OpenSearchException.guessRootCauses(shardSearchFailures[0].getCause())[0];
+                        Throwable cause = DensityException.guessRootCauses(shardSearchFailures[0].getCause())[0];
                         logger.debug(
                             () -> new ParameterizedMessage("{} shards failed for phase: [{}]", numShardFailures, getName()),
                             cause
@@ -923,7 +923,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
     /**
      * Pending Executions
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class PendingExecutions {
         private final int permits;

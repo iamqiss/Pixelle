@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.DocValuesSkipIndexType;
@@ -44,13 +44,13 @@ import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fieldvisitor.SingleFieldsVisitor;
-import org.opensearch.index.termvectors.TermVectorsService;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.time.DateFormatter;
+import org.density.common.util.FeatureFlags;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fieldvisitor.SingleFieldsVisitor;
+import org.density.index.termvectors.TermVectorsService;
+import org.density.search.DocValueFormat;
 
 import java.io.IOException;
 import java.time.ZoneId;

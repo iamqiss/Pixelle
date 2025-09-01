@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,79 +26,79 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStats;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.seqno.RetentionLeaseActions;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.indices.recovery.PeerRecoveryTargetService;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.node.Node;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.rest.AbstractRestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.admin.cluster.RestClusterStateAction;
-import org.opensearch.rest.action.admin.cluster.RestGetRepositoriesAction;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.TestCustomMetadata;
-import org.opensearch.test.disruption.BusyClusterManagerServiceDisruption;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStats;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.set.Sets;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.seqno.RetentionLeaseActions;
+import org.density.index.seqno.RetentionLeases;
+import org.density.indices.recovery.PeerRecoveryTargetService;
+import org.density.indices.recovery.RecoveryState;
+import org.density.node.Node;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.rest.AbstractRestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.admin.cluster.RestClusterStateAction;
+import org.density.rest.action.admin.cluster.RestGetRepositoriesAction;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.TestCustomMetadata;
+import org.density.test.disruption.BusyClusterManagerServiceDisruption;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -122,11 +122,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import static org.opensearch.index.seqno.RetentionLeaseActions.RETAIN_ALL;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.index.seqno.RetentionLeaseActions.RETAIN_ALL;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -766,7 +766,7 @@ public class DedicatedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTest
         internalCluster().startNode(nonClusterManagerNode());
         // Register mock repositories
         for (int i = 0; i < 5; i++) {
-            OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+            DensityIntegTestCase.putRepositoryRequestBuilder(
                 clusterAdmin(),
                 "test-repo" + i,
                 "mock",
@@ -777,7 +777,7 @@ public class DedicatedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTest
             ).get();
         }
         logger.info("--> make sure that properly setup repository can be registered on all nodes");
-        OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+        DensityIntegTestCase.putRepositoryRequestBuilder(
             clusterAdmin(),
             "test-repo-0",
             "fs",

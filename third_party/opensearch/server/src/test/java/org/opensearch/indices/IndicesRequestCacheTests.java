@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -44,57 +44,57 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.module.CacheModule;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.stats.ImmutableCacheStats;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.store.OpenSearchOnHeapCache;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.AbstractBytesReference;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.cache.request.ShardRequestCache;
-import org.opensearch.index.engine.MergedSegmentWarmerFactory;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentPublisher;
-import org.opensearch.indices.replication.checkpoint.ReferencedSegmentsPublisher;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.node.Node;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.CheckedSupplier;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.module.CacheModule;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.stats.ImmutableCacheStats;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.store.DensityOnHeapCache;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.AbstractBytesReference;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentHelper;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.cache.request.ShardRequestCache;
+import org.density.index.engine.MergedSegmentWarmerFactory;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.indices.replication.checkpoint.MergedSegmentPublisher;
+import org.density.indices.replication.checkpoint.ReferencedSegmentsPublisher;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.node.Node;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -118,15 +118,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.indices.IndicesRequestCache.INDEX_DIMENSION_NAME;
-import static org.opensearch.indices.IndicesRequestCache.INDICES_CACHE_QUERY_SIZE;
-import static org.opensearch.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_STALENESS_THRESHOLD_SETTING;
-import static org.opensearch.indices.IndicesRequestCache.SHARD_ID_DIMENSION_NAME;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.indices.IndicesRequestCache.INDEX_DIMENSION_NAME;
+import static org.density.indices.IndicesRequestCache.INDICES_CACHE_QUERY_SIZE;
+import static org.density.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_STALENESS_THRESHOLD_SETTING;
+import static org.density.indices.IndicesRequestCache.SHARD_ID_DIMENSION_NAME;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
+public class IndicesRequestCacheTests extends DensitySingleNodeTestCase {
     private ThreadPool threadPool;
     private IndexWriter writer;
     private Directory dir;
@@ -828,7 +828,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
             .put(INDICES_CACHE_QUERY_SIZE.getKey(), 1000 + "b")
             .put(
                 CacheSettings.getConcreteStoreNameSettingForCacheType(CacheType.INDICES_REQUEST_CACHE).getKey(),
-                OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME
+                DensityOnHeapCache.DensityOnHeapCacheFactory.NAME
             )
             .build();
         cache = getIndicesRequestCache(settings);
@@ -856,7 +856,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
     }
 
     private DirectoryReader getReader(IndexWriter writer, ShardId shardId) throws IOException {
-        return OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
+        return DensityDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
     }
 
     private Loader getLoader(DirectoryReader reader) {
@@ -878,7 +878,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
     }
 
     private String getReaderCacheKeyId(DirectoryReader reader) {
-        OpenSearchDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (OpenSearchDirectoryReader.DelegatingCacheHelper) reader
+        DensityDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (DensityDirectoryReader.DelegatingCacheHelper) reader
             .getReaderCacheHelper();
         return delegatingCacheHelper.getDelegatingCacheKey().getId();
     }
@@ -933,7 +933,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
             writer = new IndexWriter(dir, newIndexWriterConfig());
         }
         writer.updateDocument(new Term("id", "0"), newDoc(0, "bar"));
-        DirectoryReader secondReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
+        DirectoryReader secondReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
 
         List<DirectoryReader> readersToClose = new ArrayList<>();
         List<DirectoryReader> readersToKeep = new ArrayList<>();
@@ -942,7 +942,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
             for (int i = 0; i < numShards; i++) {
                 IndexShard indexShard = indexService.getShard(i);
                 IndicesService.IndexShardCacheEntity entity = new IndicesService.IndexShardCacheEntity(indexShard);
-                DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
+                DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
                 if (indexService == indexToClose) {
                     readersToClose.add(reader);
                 } else {
@@ -1005,8 +1005,8 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
         cache = getIndicesRequestCache(settings);
 
         writer.addDocument(newDoc(0, "foo"));
-        DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
-        DirectoryReader secondReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
+        DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
+        DirectoryReader secondReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
 
         // Get 2 entries into the cache
         cache.getOrCompute(getEntity(indexShard), getLoader(reader), reader, getTermBytes());
@@ -1041,7 +1041,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
             writer.addDocument(newDoc(0, "foo"));
             DirectoryReader reader = getReader(writer, indexShard.shardId());
             writer.updateDocument(new Term("id", "0"), newDoc(0, "bar"));
-            DirectoryReader secondReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
+            DirectoryReader secondReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
 
             BytesReference value1 = cache.getOrCompute(getEntity(indexShard), getLoader(reader), reader, getTermBytes());
             assertEquals("foo", value1.streamInput().readString());
@@ -1069,7 +1069,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
         writer.updateDocument(new Term("id", "0"), newDoc(0, "bar"));
         DirectoryReader secondReader = getReader(writer, indexShard.shardId());
         writer.updateDocument(new Term("id", "0"), newDoc(0, "baz"));
-        DirectoryReader thirdReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
+        DirectoryReader thirdReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "bar", 1));
 
         BytesReference value1 = cache.getOrCompute(getEntity(indexShard), getLoader(reader), reader, getTermBytes());
         assertEquals("foo", value1.streamInput().readString());
@@ -1231,11 +1231,11 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
     public void testEqualsKey() throws IOException {
         ShardId shardId = new ShardId("foo", "bar", 1);
         ShardId shardId1 = new ShardId("foo1", "bar1", 2);
-        IndexReader reader1 = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
-        String rKey1 = ((OpenSearchDirectoryReader) reader1).getDelegatingCacheHelper().getDelegatingCacheKey().getId();
+        IndexReader reader1 = DensityDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
+        String rKey1 = ((DensityDirectoryReader) reader1).getDelegatingCacheHelper().getDelegatingCacheKey().getId();
         writer.addDocument(new Document());
-        IndexReader reader2 = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
-        String rKey2 = ((OpenSearchDirectoryReader) reader2).getDelegatingCacheHelper().getDelegatingCacheKey().getId();
+        IndexReader reader2 = DensityDirectoryReader.wrap(DirectoryReader.open(writer), shardId);
+        String rKey2 = ((DensityDirectoryReader) reader2).getDelegatingCacheHelper().getDelegatingCacheKey().getId();
         IOUtils.close(reader1, reader2, writer, dir);
         IndexShard indexShard = mock(IndexShard.class);
         when(indexShard.state()).thenReturn(IndexShardState.STARTED);
@@ -1307,7 +1307,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
                 writer.addDocument(newDoc(j, generateString(randomIntBetween(4, 50))));
             }
             writerMap.put(indexShard, writer);
-            DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
+            DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
             readerMap.put(indexShard, reader);
         }
 
@@ -1378,7 +1378,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
         IndexWriter writer = new IndexWriter(dir, newIndexWriterConfig());
         writer.addDocument(newDoc(0, "foo"));
         writer.addDocument(newDoc(1, "hack"));
-        DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
+        DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
         Loader loader = new Loader(reader, 0);
 
         // Set clean interval to a high value as we will do it manually here.
@@ -1442,7 +1442,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
         writer = new IndexWriter(dir, newIndexWriterConfig());
         writer.addDocument(newDoc(0, "foo"));
         writer.addDocument(newDoc(1, "hack"));
-        reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
+        reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
         loader = new Loader(reader, 0);
         cacheEntity = new IndicesService.IndexShardCacheEntity(indexShard);
         termQuery = new TermQueryBuilder("id", "bar");
@@ -1485,7 +1485,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
         IndexWriter writer = new IndexWriter(dir, newIndexWriterConfig());
         writer.addDocument(newDoc(0, "foo"));
         writer.addDocument(newDoc(1, "hack"));
-        DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
+        DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), indexShard.shardId());
         Loader loader = new Loader(reader, 0);
 
         // Set clean interval to a high value as we will do it manually here.
@@ -1533,7 +1533,7 @@ public class IndicesRequestCacheTests extends OpenSearchSingleNodeTestCase {
 
     private void allowDeprecationWarning() {
         assertWarnings(
-            "[indices.requests.cache.size] setting was deprecated in OpenSearch and will be removed in a future release! See the breaking changes documentation for the next major version."
+            "[indices.requests.cache.size] setting was deprecated in Density and will be removed in a future release! See the breaking changes documentation for the next major version."
         );
     }
 

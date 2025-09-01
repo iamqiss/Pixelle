@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,12 +26,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.precommit
+package org.density.gradle.precommit
 
 import org.apache.rat.anttasks.Report
 import org.apache.rat.anttasks.SubstringLicenseMatcher
 import org.apache.rat.license.SimpleLicenseFamily
-import org.opensearch.gradle.AntTask
+import org.density.gradle.AntTask
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Input
@@ -146,9 +146,9 @@ class LicenseHeadersTask extends AntTask {
             // SPDX
             substringMatcher(licenseFamilyCategory: "SPDX ",
                 licenseFamilyName:     "SPDX") {
-                // Apache license (OpenSearch)
+                // Apache license (Density)
                 pattern(substring: "SPDX-License-Identifier: Apache-2.0")
-                pattern(substring: "Copyright OpenSearch Contributors.")
+                pattern(substring: "Copyright Density Contributors.")
             }
 
             // Generated resources

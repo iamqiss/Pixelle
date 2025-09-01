@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.index.fieldvisitor.CustomFieldsVisitor;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestSearchContext;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchShardTask;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.index.fieldvisitor.CustomFieldsVisitor;
+import org.density.index.fieldvisitor.FieldsVisitor;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.search.SearchShardTarget;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
+import org.density.test.TestSearchContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FetchPhaseTests extends OpenSearchTestCase {
+public class FetchPhaseTests extends DensityTestCase {
     public void testSequentialDocs() {
         FetchPhase.DocIdToIndex[] docs = new FetchPhase.DocIdToIndex[10];
         int start = randomIntBetween(0, Short.MAX_VALUE);

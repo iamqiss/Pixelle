@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.section;
+package org.density.test.rest.yaml.section;
 
-import org.opensearch.client.NodeSelector;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.client.NodeSelector;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

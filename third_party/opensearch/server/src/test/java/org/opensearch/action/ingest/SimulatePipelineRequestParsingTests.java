@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.index.VersionType;
-import org.opensearch.ingest.CompoundProcessor;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.ingest.Pipeline;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.TestProcessor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.index.VersionType;
+import org.density.ingest.CompoundProcessor;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.IngestService;
+import org.density.ingest.Pipeline;
+import org.density.ingest.Processor;
+import org.density.ingest.TestProcessor;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -52,22 +52,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.action.ingest.SimulatePipelineRequest.Fields;
-import static org.opensearch.action.ingest.SimulatePipelineRequest.SIMULATED_PIPELINE_ID;
-import static org.opensearch.ingest.IngestDocument.Metadata.ID;
-import static org.opensearch.ingest.IngestDocument.Metadata.IF_PRIMARY_TERM;
-import static org.opensearch.ingest.IngestDocument.Metadata.IF_SEQ_NO;
-import static org.opensearch.ingest.IngestDocument.Metadata.INDEX;
-import static org.opensearch.ingest.IngestDocument.Metadata.ROUTING;
-import static org.opensearch.ingest.IngestDocument.Metadata.VERSION;
-import static org.opensearch.ingest.IngestDocument.Metadata.VERSION_TYPE;
+import static org.density.action.ingest.SimulatePipelineRequest.Fields;
+import static org.density.action.ingest.SimulatePipelineRequest.SIMULATED_PIPELINE_ID;
+import static org.density.ingest.IngestDocument.Metadata.ID;
+import static org.density.ingest.IngestDocument.Metadata.IF_PRIMARY_TERM;
+import static org.density.ingest.IngestDocument.Metadata.IF_SEQ_NO;
+import static org.density.ingest.IngestDocument.Metadata.INDEX;
+import static org.density.ingest.IngestDocument.Metadata.ROUTING;
+import static org.density.ingest.IngestDocument.Metadata.VERSION;
+import static org.density.ingest.IngestDocument.Metadata.VERSION_TYPE;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SimulatePipelineRequestParsingTests extends OpenSearchTestCase {
+public class SimulatePipelineRequestParsingTests extends DensityTestCase {
 
     private IngestService ingestService;
 
@@ -289,7 +289,7 @@ public class SimulatePipelineRequestParsingTests extends OpenSearchTestCase {
         requestContent.put(Fields.DOCS, docs);
         requestContent.put(Fields.PIPELINE, pipelineConfig);
         Exception e3 = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> SimulatePipelineRequest.parse(requestContent, false, ingestService)
         );
         assertThat(e3.getMessage(), containsString("required property is missing"));

@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer;
+package org.density.common.blobstore.transfer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.CheckedTriFunction;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.StreamContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeInputStream;
-import org.opensearch.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
-import org.opensearch.common.blobstore.transfer.stream.ResettableCheckedInputStream;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.common.util.ByteUtils;
+import org.density.common.CheckedTriFunction;
+import org.density.common.SetOnce;
+import org.density.common.StreamContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.stream.OffsetRangeInputStream;
+import org.density.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
+import org.density.common.blobstore.transfer.stream.ResettableCheckedInputStream;
+import org.density.common.io.InputStreamContainer;
+import org.density.common.util.ByteUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -38,7 +38,7 @@ import com.jcraft.jzlib.JZlib;
 /**
  * RemoteTransferContainer is an encapsulation for managing file transfers.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteTransferContainer implements Closeable {
 

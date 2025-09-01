@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
-import org.opensearch.test.InternalMultiBucketAggregationTestCase;
+import org.density.common.Rounding;
+import org.density.common.unit.TimeValue;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.test.InternalMultiBucketAggregationTestCase;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static org.opensearch.common.unit.TimeValue.timeValueHours;
-import static org.opensearch.common.unit.TimeValue.timeValueMinutes;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
+import static org.density.common.unit.TimeValue.timeValueHours;
+import static org.density.common.unit.TimeValue.timeValueMinutes;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
 
 public class InternalDateHistogramTests extends InternalMultiBucketAggregationTestCase<InternalDateHistogram> {
 

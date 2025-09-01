@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.NoOpEngine;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.IndexShardTestUtils;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.translog.Translog;
+import org.density.Version;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.common.Randomness;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.NoOpEngine;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.IndexShardTestUtils;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.translog.Translog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;

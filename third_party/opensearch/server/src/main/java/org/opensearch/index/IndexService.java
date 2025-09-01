@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.DirectoryReader;
@@ -40,81 +40,81 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLock;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.gateway.WriteStateException;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.cache.IndexCache;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.cache.query.QueryCache;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.MergedSegmentWarmerFactory;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.IndexFieldDataService;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.SearchIndexNameMatcher;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.IndexingOperationListener;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.cluster.IndicesClusterStateService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentPublisher;
-import org.opensearch.indices.replication.checkpoint.ReferencedSegmentsPublisher;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.Nullable;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLock;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.gateway.MetadataStateFormat;
+import org.density.gateway.WriteStateException;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.cache.IndexCache;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.cache.query.QueryCache;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.MergedSegmentWarmerFactory;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.IndexFieldDataService;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.SearchIndexNameMatcher;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.IndexingOperationListener;
+import org.density.index.shard.SearchOperationListener;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.index.shard.ShardPath;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogFactory;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.cluster.IndicesClusterStateService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.checkpoint.MergedSegmentPublisher;
+import org.density.indices.replication.checkpoint.ReferencedSegmentsPublisher;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.plugins.IndexStorePlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -138,13 +138,13 @@ import java.util.function.Supplier;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.common.collect.MapBuilder.newMapBuilder;
-import static org.opensearch.index.remote.RemoteMigrationIndexMetadataUpdater.indexHasRemoteStoreSettings;
+import static org.density.common.collect.MapBuilder.newMapBuilder;
+import static org.density.index.remote.RemoteMigrationIndexMetadataUpdater.indexHasRemoteStoreSettings;
 
 /**
- * The main OpenSearch index service
+ * The main Density index service
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexService extends AbstractIndexComponent implements IndicesClusterStateService.AllocatedIndex<IndexShard> {
@@ -467,7 +467,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * Context for index creation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum IndexCreationContext {
@@ -708,9 +708,9 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
                 // Currently, we create 2 instances of store for remote store backed indices: store and remoteStore.
                 // As there can be only one shardlock acquired for a given shard, the lock is shared between store and remoteStore.
                 // This creates an issue when we are deleting the index as it results in closing both store and remoteStore.
-                // Sample test failure: https://github.com/opensearch-project/OpenSearch/issues/13871
+                // Sample test failure: https://github.com/density-project/Density/issues/13871
                 // The following method provides ShardLock that is not maintained by NodeEnvironment.
-                // As part of https://github.com/opensearch-project/OpenSearch/issues/13075, we want to move away from keeping 2
+                // As part of https://github.com/density-project/Density/issues/13075, we want to move away from keeping 2
                 // store instances.
                 ShardLock remoteStoreLock = new ShardLock(shardId) {
                     @Override
@@ -1097,7 +1097,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * Cache listener for bitsets
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class BitsetCacheListener implements BitsetFilterCache.Listener {
         final IndexService indexService;
@@ -1311,7 +1311,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * Shard Store Deleter Interface
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface ShardStoreDeleter {
@@ -1434,7 +1434,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * Base asynchronous task
      *
-     * @opensearch.internal
+     * @density.internal
      */
     abstract static class BaseAsyncTask extends AbstractAsyncTask {
 
@@ -1461,7 +1461,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * FSyncs the translog for all shards of this index in a defined interval.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class AsyncTranslogFSync extends BaseAsyncTask {
 
@@ -1558,7 +1558,7 @@ public class IndexService extends AbstractIndexComponent implements IndicesClust
     /**
      * Publish primary shard referenced segments in a defined interval.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class AsyncPublishReferencedSegmentsTask extends BaseAsyncTask {
 

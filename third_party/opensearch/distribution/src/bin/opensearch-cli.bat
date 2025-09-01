@@ -1,28 +1,28 @@
-call "%~dp0opensearch-env.bat" || exit /b 1
+call "%~dp0density-env.bat" || exit /b 1
 
-if defined OPENSEARCH_ADDITIONAL_SOURCES (
-  for %%a in ("%OPENSEARCH_ADDITIONAL_SOURCES:;=","%") do (
+if defined DENSITY_ADDITIONAL_SOURCES (
+  for %%a in ("%DENSITY_ADDITIONAL_SOURCES:;=","%") do (
     call "%~dp0%%a"
   )
 )
 
-if defined OPENSEARCH_ADDITIONAL_CLASSPATH_DIRECTORIES (
-  for %%a in ("%OPENSEARCH_ADDITIONAL_CLASSPATH_DIRECTORIES:;=","%") do (
-    set OPENSEARCH_CLASSPATH=!OPENSEARCH_CLASSPATH!;!OPENSEARCH_HOME!/%%a/*
+if defined DENSITY_ADDITIONAL_CLASSPATH_DIRECTORIES (
+  for %%a in ("%DENSITY_ADDITIONAL_CLASSPATH_DIRECTORIES:;=","%") do (
+    set DENSITY_CLASSPATH=!DENSITY_CLASSPATH!;!DENSITY_HOME!/%%a/*
   )
 )
 
 rem use a small heap size for the CLI tools, and thus the serial collector to
-rem avoid stealing many CPU cycles; a user can override by setting OPENSEARCH_JAVA_OPTS
-set OPENSEARCH_JAVA_OPTS=-Xms4m -Xmx64m -XX:+UseSerialGC %OPENSEARCH_JAVA_OPTS%
+rem avoid stealing many CPU cycles; a user can override by setting DENSITY_JAVA_OPTS
+set DENSITY_JAVA_OPTS=-Xms4m -Xmx64m -XX:+UseSerialGC %DENSITY_JAVA_OPTS%
 
 "%JAVA%" ^
-  %OPENSEARCH_JAVA_OPTS% ^
-  -Dopensearch.path.home="%OPENSEARCH_HOME%" ^
-  -Dopensearch.path.conf="%OPENSEARCH_PATH_CONF%" ^
-  -Dopensearch.distribution.type="%OPENSEARCH_DISTRIBUTION_TYPE%" ^
-  -cp "%OPENSEARCH_CLASSPATH%" ^
-  "%OPENSEARCH_MAIN_CLASS%" ^
+  %DENSITY_JAVA_OPTS% ^
+  -Ddensity.path.home="%DENSITY_HOME%" ^
+  -Ddensity.path.conf="%DENSITY_PATH_CONF%" ^
+  -Ddensity.distribution.type="%DENSITY_DISTRIBUTION_TYPE%" ^
+  -cp "%DENSITY_CLASSPATH%" ^
+  "%DENSITY_MAIN_CLASS%" ^
   %*
 
 exit /b %ERRORLEVEL%

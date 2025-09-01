@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.document;
+package org.density.rest.action.document;
 
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.VersionType;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.core.common.Strings;
+import org.density.core.rest.RestStatus;
+import org.density.index.VersionType;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestActions;
+import org.density.rest.action.RestToXContentListener;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.core.rest.RestStatus.NOT_FOUND;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.HEAD;
+import static org.density.core.rest.RestStatus.NOT_FOUND;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.HEAD;
 
 /**
  * Transport action to get a document
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestGetAction extends BaseRestHandler {
 

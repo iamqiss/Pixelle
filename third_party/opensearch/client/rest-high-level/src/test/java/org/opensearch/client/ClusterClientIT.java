@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.cluster.RemoteConnectionInfo;
-import org.opensearch.client.cluster.RemoteInfoRequest;
-import org.opensearch.client.cluster.RemoteInfoResponse;
-import org.opensearch.client.cluster.SniffModeInfo;
-import org.opensearch.client.indices.ComponentTemplatesExistRequest;
-import org.opensearch.client.indices.DeleteComponentTemplateRequest;
-import org.opensearch.client.indices.GetComponentTemplatesRequest;
-import org.opensearch.client.indices.GetComponentTemplatesResponse;
-import org.opensearch.client.indices.PutComponentTemplateRequest;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.cluster.health.ClusterShardHealth;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.SniffConnectionStrategy;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.cluster.RemoteConnectionInfo;
+import org.density.client.cluster.RemoteInfoRequest;
+import org.density.client.cluster.RemoteInfoResponse;
+import org.density.client.cluster.SniffModeInfo;
+import org.density.client.indices.ComponentTemplatesExistRequest;
+import org.density.client.indices.DeleteComponentTemplateRequest;
+import org.density.client.indices.GetComponentTemplatesRequest;
+import org.density.client.indices.GetComponentTemplatesResponse;
+import org.density.client.indices.PutComponentTemplateRequest;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.cluster.health.ClusterShardHealth;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.cluster.metadata.Template;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.SniffConnectionStrategy;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -77,13 +77,13 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ClusterClientIT extends OpenSearchRestHighLevelClientTestCase {
+public class ClusterClientIT extends DensityRestHighLevelClientTestCase {
 
     public void testClusterPutSettings() throws IOException {
         final String transientSettingKey = RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING.getKey();
@@ -151,8 +151,8 @@ public class ClusterClientIT extends OpenSearchRestHighLevelClientTestCase {
         ClusterUpdateSettingsRequest clusterUpdateSettingsRequest = new ClusterUpdateSettingsRequest();
         clusterUpdateSettingsRequest.transientSettings(Settings.builder().put(setting, value).build());
 
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(
                 clusterUpdateSettingsRequest,
                 highLevelClient().cluster()::putSettings,
@@ -162,7 +162,7 @@ public class ClusterClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(exception.status(), equalTo(RestStatus.BAD_REQUEST));
         assertThat(
             exception.getMessage(),
-            equalTo("OpenSearch exception [type=settings_exception, reason=transient setting [" + setting + "], not recognized]")
+            equalTo("Density exception [type=settings_exception, reason=transient setting [" + setting + "], not recognized]")
         );
     }
 
@@ -432,8 +432,8 @@ public class ClusterClientIT extends OpenSearchRestHighLevelClientTestCase {
         );
         assertThat(response.isAcknowledged(), equalTo(true));
 
-        OpenSearchStatusException statusException = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException statusException = expectThrows(
+            DensityStatusException.class,
             () -> execute(
                 getComponentTemplatesRequest,
                 highLevelClient().cluster()::getComponentTemplate,

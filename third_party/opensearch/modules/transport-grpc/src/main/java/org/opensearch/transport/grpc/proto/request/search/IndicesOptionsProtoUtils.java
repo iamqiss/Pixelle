@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.rest.RestRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.protobufs.SearchRequest;
+import org.density.rest.RestRequest;
 
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.opensearch.action.support.IndicesOptions.WildcardStates.CLOSED;
-import static org.opensearch.action.support.IndicesOptions.WildcardStates.HIDDEN;
-import static org.opensearch.action.support.IndicesOptions.WildcardStates.OPEN;
-import static org.opensearch.action.support.IndicesOptions.fromOptions;
+import static org.density.action.support.IndicesOptions.WildcardStates.CLOSED;
+import static org.density.action.support.IndicesOptions.WildcardStates.HIDDEN;
+import static org.density.action.support.IndicesOptions.WildcardStates.OPEN;
+import static org.density.action.support.IndicesOptions.fromOptions;
 
 /**
- * Utility class for converting IndicesOptions between OpenSearch and Protocol Buffers formats.
+ * Utility class for converting IndicesOptions between Density and Protocol Buffers formats.
  * This class provides methods to extract and transform indices options from Protocol Buffer requests
  * to ensure proper handling of index wildcards, unavailable indices, and other index-related settings.
  */
@@ -39,7 +39,7 @@ public class IndicesOptionsProtoUtils {
      * @param defaultSettings the default IndicesOptions to use if not specified in the request
      * @return the IndicesOptions based on the request parameters
      */
-    protected static IndicesOptions fromRequest(org.opensearch.protobufs.SearchRequest request, IndicesOptions defaultSettings) {
+    protected static IndicesOptions fromRequest(org.density.protobufs.SearchRequest request, IndicesOptions defaultSettings) {
         return fromProtoParameters(request, defaultSettings);
     }
 

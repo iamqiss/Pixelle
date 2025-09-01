@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -9,10 +9,10 @@
 /*
  * Based on code from the Apache Lucene project (https://github.com/apache/lucene) under the Apache License, version 2.0.
  * Copyright 2001-2022 The Apache Software Foundation
- * Modifications (C) OpenSearch Contributors. All Rights Reserved.
+ * Modifications (C) Density Contributors. All Rights Reserved.
  */
 
-package org.opensearch.index.codec.fuzzy;
+package org.density.index.codec.fuzzy;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +35,7 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -47,7 +47,7 @@ import java.util.Map;
 
 /**
  * Based on Lucene's BloomFilterPostingsFormat.
- * Discussion with Lucene community based on which the decision to have this in OpenSearch code was taken
+ * Discussion with Lucene community based on which the decision to have this in Density code was taken
  * is captured here: https://github.com/apache/lucene/issues/12986
  *
  * The class deals with persisting the bloom filter through the postings format,

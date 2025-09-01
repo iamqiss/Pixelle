@@ -1,21 +1,21 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
 
 /**
  * This class contains all the settings which are required and owned by {TODO link ShardIndexingPressure}. These will be
  * referenced/used in ShardIndexingPressure, as well as its dependent components, i.e.
  * {TODO link ShardIndexingPressureMemoryManager} and {TODO link ShardIndexingPressureStore}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ShardIndexingPressureSettings {
 

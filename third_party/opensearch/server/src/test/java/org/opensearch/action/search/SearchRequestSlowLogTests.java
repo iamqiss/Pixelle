@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.logging.MockAppender;
-import org.opensearch.common.logging.SlowLogLevel;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.service.ClusterService;
+import org.density.common.logging.Loggers;
+import org.density.common.logging.MockAppender;
+import org.density.common.logging.SlowLogLevel;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -70,7 +70,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SearchRequestSlowLogTests extends OpenSearchTestCase {
+public class SearchRequestSlowLogTests extends DensityTestCase {
     static MockAppender appender;
     static Logger logger = LogManager.getLogger(SearchRequestSlowLog.CLUSTER_SEARCH_REQUEST_SLOWLOG_PREFIX + ".SearchRequestSlowLog");
 
@@ -355,7 +355,7 @@ public class SearchRequestSlowLogTests extends OpenSearchTestCase {
             new SearchRequestSlowLog(clusterService);
             fail();
         } catch (IllegalArgumentException ex) {
-            final String expected = "No enum constant org.opensearch.common.logging.SlowLogLevel.NOT A LEVEL";
+            final String expected = "No enum constant org.density.common.logging.SlowLogLevel.NOT A LEVEL";
             assertThat(ex, hasToString(containsString(expected)));
             assertThat(ex, instanceOf(IllegalArgumentException.class));
         }

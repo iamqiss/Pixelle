@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.util.iterable.Iterables;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.snapshots.IndexShardRestoreFailedException;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.SnapshotFiles;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.store.remote.directory.RemoteSnapshotDirectory;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.snapshots.SnapshotId;
+import org.density.common.lucene.Lucene;
+import org.density.common.util.iterable.Iterables;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.snapshots.IndexShardRestoreFailedException;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.snapshots.blobstore.SnapshotFiles;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.store.remote.directory.RemoteSnapshotDirectory;
+import org.density.indices.recovery.RecoveryState;
+import org.density.snapshots.SnapshotId;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ import static java.util.Collections.unmodifiableMap;
  * for the source, and perform the copies. Implementers must implement the functionality of opening the
  * underlying file streams for snapshotted lucene file.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class FileRestoreContext {
 

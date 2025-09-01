@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.util.Collection;
 
-public class RankFeatureMetaFieldMapperTests extends OpenSearchSingleNodeTestCase {
+public class RankFeatureMetaFieldMapperTests extends DensitySingleNodeTestCase {
 
     IndexService indexService;
     DocumentMapperParser parser;

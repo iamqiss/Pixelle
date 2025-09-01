@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.concurrent.CountDownLatch;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class CountDownTests extends OpenSearchTestCase {
+public class CountDownTests extends DensityTestCase {
     public void testConcurrent() throws InterruptedException {
         final AtomicInteger count = new AtomicInteger(0);
         final CountDown countDown = new CountDown(scaledRandomIntBetween(10, 1000));

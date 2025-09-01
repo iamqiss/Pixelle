@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.ResourceNotFoundException;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,7 +73,7 @@ import java.util.Map;
  * The source recovery accepts recovery requests from other peer shards and start the recovery process from this
  * source shard to the target shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PeerRecoverySourceService extends AbstractLifecycleComponent implements IndexEventListener, ClusterStateListener {
 
@@ -82,7 +82,7 @@ public class PeerRecoverySourceService extends AbstractLifecycleComponent implem
     /**
      * The internal actions
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Actions {
         public static final String START_RECOVERY = "internal:index/shard/recovery/start_recovery";

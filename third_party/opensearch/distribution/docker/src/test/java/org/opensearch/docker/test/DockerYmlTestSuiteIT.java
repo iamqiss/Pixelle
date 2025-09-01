@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.docker.test;
+package org.density.docker.test;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import org.junit.Before;
-import org.opensearch.client.Request;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.rest.yaml.ClientYamlTestCandidate;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.client.Request;
+import org.density.common.settings.Settings;
+import org.density.test.rest.yaml.ClientYamlTestCandidate;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 
 import java.io.IOException;
 
-public class DockerYmlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
+public class DockerYmlTestSuiteIT extends DensityClientYamlSuiteTestCase {
 
     public DockerYmlTestSuiteIT(ClientYamlTestCandidate testCandidate) {
         super(testCandidate);
@@ -55,10 +55,10 @@ public class DockerYmlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
     protected String getTestRestCluster() {
         return new StringBuilder()
             .append("localhost:")
-            .append(getProperty("test.fixtures.opensearch-1.tcp.9200"))
+            .append(getProperty("test.fixtures.density-1.tcp.9200"))
             .append(",")
             .append("localhost:")
-            .append(getProperty("test.fixtures.opensearch-2.tcp.9200"))
+            .append(getProperty("test.fixtures.density-2.tcp.9200"))
             .toString();
     }
 
@@ -71,7 +71,7 @@ public class DockerYmlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
         String value = System.getProperty(key);
         if (value == null) {
             throw new IllegalStateException("Could not find system properties from test.fixtures. " +
-                "This test expects to run with the opensearch.test.fixtures Gradle plugin");
+                "This test expects to run with the density.test.fixtures Gradle plugin");
         }
         return value;
     }

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree;
+package org.density.index.compositeindex.datacube.startree;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Star tree index specific configuration
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreeFieldConfiguration implements ToXContent {
@@ -51,7 +51,7 @@ public class StarTreeFieldConfiguration implements ToXContent {
     /**
      * Star tree build mode using which sorting and aggregations are performed during index creation.
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     @ExperimentalApi
     public enum StarTreeBuildMode {

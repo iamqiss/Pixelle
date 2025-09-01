@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata.fieldcomparator;
+package org.density.index.fielddata.fieldcomparator;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
@@ -16,20 +16,20 @@ import org.apache.lucene.search.LeafFieldComparator;
 import org.apache.lucene.search.Pruning;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.LongToSortedNumericUnsignedLongValues;
-import org.opensearch.index.fielddata.SortedNumericUnsignedLongValues;
-import org.opensearch.index.search.comparators.UnsignedLongComparator;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.Numbers;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.LongToSortedNumericUnsignedLongValues;
+import org.density.index.fielddata.SortedNumericUnsignedLongValues;
+import org.density.index.search.comparators.UnsignedLongComparator;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -37,7 +37,7 @@ import java.math.BigInteger;
 /**
  * Comparator source for unsigned long values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UnsignedLongValuesComparatorSource extends IndexFieldData.XFieldComparatorSource {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,8 +65,8 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoTimeout;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoTimeout;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
@@ -74,7 +74,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class MinimumClusterManagerNodesIT extends OpenSearchIntegTestCase {
+public class MinimumClusterManagerNodesIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -250,7 +250,7 @@ public class MinimumClusterManagerNodesIT extends OpenSearchIntegTestCase {
         }
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/14289")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/14289")
     public void testThreeNodesNoClusterManagerBlock() throws Exception {
         internalCluster().setBootstrapClusterManagerNodeIndex(2);
 

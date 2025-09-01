@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.search.SearchService;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.OriginSettingClient;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.search.SearchService;
+import org.density.tasks.CancellableTask;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.OriginSettingClient;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
+import static org.density.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
 
 /**
  * Utility to cancel a timeout task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TimeoutTaskCancellationUtility {
 
@@ -127,7 +127,7 @@ public class TimeoutTaskCancellationUtility {
      * If either a response/failure is received before timeout then the scheduled task is cancelled and response/failure is sent back to
      * the original listener.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TimeoutRunnableListener<Response> implements ActionListener<Response>, Runnable {
 

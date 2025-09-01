@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.backwards;
+package org.density.backwards;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,7 +27,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class SearchingIT extends OpenSearchRestTestCase {
+public class SearchingIT extends DensityRestTestCase {
     public void testMultiGet() throws Exception {
         final Set<HttpHost> nodes = buildNodes();
 

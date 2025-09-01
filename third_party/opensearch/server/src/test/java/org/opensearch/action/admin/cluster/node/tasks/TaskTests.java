@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchAction;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityTestCase;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.tasks.TaskInfoTests.randomResourceStats;
+import static org.density.tasks.TaskInfoTests.randomResourceStats;
 
-public class TaskTests extends OpenSearchTestCase {
+public class TaskTests extends DensityTestCase {
 
     public void testTaskInfoToString() {
         String nodeId = randomAlphaOfLength(10);

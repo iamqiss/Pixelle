@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -26,48 +26,48 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.subphase.ExplainPhase;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchDocValuesPhase;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsPhase;
-import org.opensearch.search.fetch.subphase.FetchScorePhase;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FetchSourcePhase;
-import org.opensearch.search.fetch.subphase.FetchVersionPhase;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.fetch.subphase.MatchedQueriesPhase;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.SeqNoPrimaryTermPhase;
-import org.opensearch.search.fetch.subphase.highlight.FieldHighlightContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.fetch.subphase.highlight.HighlightPhase;
-import org.opensearch.search.fetch.subphase.highlight.Highlighter;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.SubSearchContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.Profilers;
-import org.opensearch.search.profile.fetch.FetchProfiler;
-import org.opensearch.search.profile.fetch.FetchTimingType;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.core.common.text.Text;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHit;
+import org.density.search.fetch.subphase.ExplainPhase;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchDocValuesPhase;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.FetchFieldsPhase;
+import org.density.search.fetch.subphase.FetchScorePhase;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FetchSourcePhase;
+import org.density.search.fetch.subphase.FetchVersionPhase;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.fetch.subphase.MatchedQueriesPhase;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.SeqNoPrimaryTermPhase;
+import org.density.search.fetch.subphase.highlight.FieldHighlightContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.fetch.subphase.highlight.HighlightPhase;
+import org.density.search.fetch.subphase.highlight.Highlighter;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.SubSearchContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.Profilers;
+import org.density.search.profile.fetch.FetchProfiler;
+import org.density.search.profile.fetch.FetchTimingType;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -350,7 +350,7 @@ public class FetchProfilePhaseTests extends IndexShardTestCase {
             when(documentMapper.typeText()).thenReturn(new Text("_doc"));
 
             // Mock the sourceMapper
-            org.opensearch.index.mapper.SourceFieldMapper sourceFieldMapper = mock(org.opensearch.index.mapper.SourceFieldMapper.class);
+            org.density.index.mapper.SourceFieldMapper sourceFieldMapper = mock(org.density.index.mapper.SourceFieldMapper.class);
             when(sourceFieldMapper.enabled()).thenReturn(true);
             when(documentMapper.sourceMapper()).thenReturn(sourceFieldMapper);
 

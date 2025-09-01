@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.stats.IndexingPressurePerShardStats;
-import org.opensearch.index.stats.IndexingPressureStats;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.stats.IndexingPressurePerShardStats;
+import org.density.index.stats.IndexingPressureStats;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
 
-public class ShardIndexingPressureTests extends OpenSearchTestCase {
+public class ShardIndexingPressureTests extends DensityTestCase {
     private final Settings settings = Settings.builder()
         .put(IndexingPressure.MAX_INDEXING_BYTES.getKey(), "10KB")
         .put(ShardIndexingPressureSettings.SHARD_INDEXING_PRESSURE_ENABLED.getKey(), true)
@@ -131,7 +131,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
         ) {
             if (randomBoolean()) {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId, 1024 * 2, false)
                 );
                 IndexingPressureStats nodeStats = shardIndexingPressure.stats();
@@ -144,7 +144,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
                 assertEquals(1, shardStats.getCoordinatingNodeLimitsBreachedRejections());
             } else {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> shardIndexingPressure.markPrimaryOperationStarted(shardId, 1024 * 2, false)
                 );
                 IndexingPressureStats nodeStats = shardIndexingPressure.stats();
@@ -229,7 +229,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
             assertEquals(1024 * 12, shardIndexingPressure.shardStats().getIndexingPressureShardStats(shardId).getCurrentReplicaBytes());
             // Replica will be rejected once we cross 15KB Shard Limit
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markReplicaOperationStarted(shardId, 1024 * 2, false)
             );
             IndexingPressureStats nodeStats = shardIndexingPressure.stats();
@@ -448,7 +448,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
                 Releasable coordinating1 = shardIndexingPressure.markCoordinatingOperationStarted(shardId, 1 * 1024, false)
             ) {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId, 1 * 1024, false)
                 );
             }
@@ -458,7 +458,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
                 Releasable primary1 = shardIndexingPressure.markPrimaryOperationStarted(shardId, 1 * 1024, false)
             ) {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> shardIndexingPressure.markPrimaryOperationStarted(shardId, 1 * 1024, false)
                 );
             }
@@ -515,7 +515,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
             Releasable replica1 = shardIndexingPressure.markReplicaOperationStarted(shardId, 2 * 1024, false)
         ) {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markReplicaOperationStarted(shardId, 2 * 1024, false)
             );
         }
@@ -684,12 +684,12 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
         }
         if (randomBoolean) {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId, 8 * 1024, false)
             );
         } else {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markPrimaryOperationStarted(shardId, 8 * 1024, false)
             );
         }
@@ -746,7 +746,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
         }
 
         expectThrows(
-            OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException.class,
             () -> shardIndexingPressure.markReplicaOperationStarted(shardId, 12 * 1024, false)
         );
 
@@ -926,7 +926,7 @@ public class ShardIndexingPressureTests extends OpenSearchTestCase {
         Index index = new Index("IndexName", "UUID");
         ShardId shardId = new ShardId(index, 0);
         expectThrows(
-            OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException.class,
             () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId, 1024 * 11, false)
         );
         try (Releasable ignore = shardIndexingPressure.markCoordinatingOperationStarted(shardId, 11 * 1024, true)) {

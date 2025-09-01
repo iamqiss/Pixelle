@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree.filter;
+package org.density.search.startree.filter;
 
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,12 +25,12 @@ public class StarTreeFilter {
 
     public StarTreeFilter(Map<String, List<DimensionFilter>> dimensionFilterMap) {
         // TODO: Evaluate wrapping of List<DimensionFilter> to expose a single effective sub-dimension field
-        // https://github.com/opensearch-project/OpenSearch/issues/18477
+        // https://github.com/density-project/Density/issues/18477
         this.dimensionFilterMap = dimensionFilterMap;
     }
 
     public List<DimensionFilter> getFiltersForDimension(String dimension) {
-        // TODO: Refactor with https://github.com/opensearch-project/OpenSearch/issues/18477
+        // TODO: Refactor with https://github.com/density-project/Density/issues/18477
         return dimensionFilterMap.containsKey(dimension)
             ? dimensionFilterMap.get(dimension)
             : dimensionFilterMap.values()
@@ -45,7 +45,7 @@ public class StarTreeFilter {
     }
 
     public Set<String> getMatchingDimensions() {
-        // TODO: Refactor with: https://github.com/opensearch-project/OpenSearch/issues/18477
+        // TODO: Refactor with: https://github.com/density-project/Density/issues/18477
         Set<String> matchingDimensions = new HashSet<>();
         for (Map.Entry<String, List<DimensionFilter>> entry : dimensionFilterMap.entrySet()) {
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {

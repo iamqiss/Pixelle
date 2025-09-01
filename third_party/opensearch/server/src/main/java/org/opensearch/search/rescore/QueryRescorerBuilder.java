@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.rescore.QueryRescorer.QueryRescoreContext;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.rescore.QueryRescorer.QueryRescoreContext;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * Builds a query rescorer object
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QueryRescorerBuilder extends RescorerBuilder<QueryRescorerBuilder> {
     public static final String NAME = "query";

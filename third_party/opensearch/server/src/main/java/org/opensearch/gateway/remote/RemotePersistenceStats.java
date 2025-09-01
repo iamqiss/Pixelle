@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.coordination.PersistedStateStats;
+import org.density.cluster.coordination.PersistedStateStats;
 
 /**
  * Remote state related extended stats.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemotePersistenceStats {
 

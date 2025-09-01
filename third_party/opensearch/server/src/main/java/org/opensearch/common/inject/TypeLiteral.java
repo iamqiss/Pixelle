@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,15 +23,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.internal.MoreTypes;
-import org.opensearch.common.inject.util.Types;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.internal.MoreTypes;
+import org.density.common.inject.util.Types;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -46,7 +46,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.common.inject.internal.MoreTypes.canonicalize;
+import static org.density.common.inject.internal.MoreTypes.canonicalize;
 
 /**
  * Represents a generic type {@code T}. Java doesn't yet provide a way to
@@ -78,7 +78,7 @@ import static org.opensearch.common.inject.internal.MoreTypes.canonicalize;
  * @author crazybob@google.com (Bob Lee)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TypeLiteral<T> {
@@ -273,7 +273,7 @@ public class TypeLiteral<T> {
      * @param supertype a superclass of, or interface implemented by, this.
      * @since 2.0
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public TypeLiteral<?> getSupertype(Class<?> supertype) {
         if (!supertype.isAssignableFrom(rawType)) {

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc;
+package org.density.transport.grpc;
 
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.protobufs.SearchResponse;
-import org.opensearch.protobufs.services.SearchServiceGrpc;
-import org.opensearch.transport.grpc.ssl.NettyGrpcClient;
+import org.density.protobufs.SearchRequest;
+import org.density.protobufs.SearchRequestBody;
+import org.density.protobufs.SearchResponse;
+import org.density.protobufs.services.SearchServiceGrpc;
+import org.density.transport.grpc.ssl.NettyGrpcClient;
 
 import io.grpc.ManagedChannel;
 

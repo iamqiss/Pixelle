@@ -1,7 +1,7 @@
 {
   "delete_script":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/script-apis/delete-script/",
+      "url":"https://density.org/docs/latest/api-reference/script-apis/delete-script/",
       "description":"Deletes a script."
     },
     "stability":"stable",

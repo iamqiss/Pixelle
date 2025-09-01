@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.action.support.IndicesOptions;
+import org.density.common.annotation.PublicApi;
 
 /**
- * Needs to be implemented by all {@link org.opensearch.action.ActionRequest} subclasses that relate to
+ * Needs to be implemented by all {@link org.density.action.ActionRequest} subclasses that relate to
  * one or more indices. Allows to retrieve which indices the action relates to.
  * In case of internal requests originated during the distributed execution of an external request,
  * they will still return the indices that the original request related to.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndicesRequest {
@@ -69,7 +69,7 @@ public interface IndicesRequest {
     /**
      * Replaceable interface.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Replaceable extends IndicesRequest {
         /**

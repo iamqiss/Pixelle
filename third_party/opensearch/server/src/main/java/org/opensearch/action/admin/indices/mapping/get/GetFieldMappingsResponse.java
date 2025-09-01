@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.get;
+package org.density.action.admin.indices.mapping.get;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,8 +58,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Response object for {@link GetFieldMappingsRequest} API
@@ -67,7 +67,7 @@ import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalCons
  * Note: there is a new class with the same name for the Java HLRC that uses a typeless format.
  * Any changes done to this class should go to that client class as well.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetFieldMappingsResponse extends ActionResponse implements ToXContentObject {
@@ -186,7 +186,7 @@ public class GetFieldMappingsResponse extends ActionResponse implements ToXConte
     /**
      * Metadata for field mappings for toXContent
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class FieldMappingMetadata implements ToXContentFragment {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder;
-import org.opensearch.search.suggest.phrase.Laplace;
-import org.opensearch.search.suggest.phrase.LinearInterpolation;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.opensearch.search.suggest.phrase.StupidBackoff;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder.SuggestMode;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.DensityException;
+import org.density.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.plugins.Plugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.TemplateScript;
+import org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder;
+import org.density.search.suggest.phrase.Laplace;
+import org.density.search.suggest.phrase.LinearInterpolation;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.search.suggest.phrase.StupidBackoff;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder.SuggestMode;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -72,18 +72,18 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.suggest.SuggestBuilders.phraseSuggestion;
-import static org.opensearch.search.suggest.SuggestBuilders.termSuggestion;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSuggestion;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSuggestionPhraseCollateMatchExists;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSuggestionSize;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.suggest.SuggestBuilders.phraseSuggestion;
+import static org.density.search.suggest.SuggestBuilders.termSuggestion;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertSuggestion;
+import static org.density.test.hamcrest.DensityAssertions.assertSuggestionPhraseCollateMatchExists;
+import static org.density.test.hamcrest.DensityAssertions.assertSuggestionSize;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
@@ -95,7 +95,7 @@ import static org.hamcrest.Matchers.nullValue;
  * possible these tests should declare for the first request, make the request, modify the configuration for the next request, make that
  * request, modify again, request again, etc.  This makes it very obvious what changes between requests.
  */
-public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SuggestSearchIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public SuggestSearchIT(Settings settings) {
         super(settings);
     }
@@ -817,7 +817,7 @@ public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegT
             "simple",
             termSuggestion("field1").size(10).minDocFreq(0).suggestMode(SuggestMode.ALWAYS)
         );
-        OpenSearchAssertions.assertSuggestionSize(suggest, 0, 3, "simple");
+        DensityAssertions.assertSuggestionSize(suggest, 0, 3, "simple");
     }
 
     // see #3469
@@ -873,8 +873,8 @@ public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegT
                     .addSuggestion("did_you_mean", phraseSuggestion("name").maxErrors(5.0f))
             )
             .get();
-        OpenSearchAssertions.assertNoFailures(searchResponse);
-        OpenSearchAssertions.assertSuggestion(searchResponse.getSuggest(), 0, 0, "did_you_mean", "testing suggestions");
+        DensityAssertions.assertNoFailures(searchResponse);
+        DensityAssertions.assertSuggestion(searchResponse.getSuggest(), 0, 0, "did_you_mean", "testing suggestions");
     }
 
     // see #3469
@@ -1352,7 +1352,7 @@ public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegT
         try {
             searchSuggest("united states house of representatives elections in washington 2006", numShards.numPrimaries, namedSuggestion);
             fail("Post query error has been swallowed");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             // expected
         }
 
@@ -1386,7 +1386,7 @@ public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegT
         try {
             searchSuggest("united states house of representatives elections in washington 2006", numShards.numPrimaries, namedSuggestion);
             fail("Post filter error has been swallowed");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             // expected
         }
 
@@ -1402,7 +1402,7 @@ public class SuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegT
         try {
             searchSuggest("united states house of representatives elections in washington 2006", numShards.numPrimaries, namedSuggestion);
             fail("Malformed query (lack of additional params) should fail");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             // expected
         }
 

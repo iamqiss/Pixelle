@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.store.OutputStreamIndexOutput;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.store.IndexOutputOutputStream;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.store.IndexOutputOutputStream;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,7 +28,7 @@ import java.util.Objects;
 /**
  * Provides common methods, variables that can be used by the implementors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BaseBlobStoreFormat<T extends ToXContent> {
 

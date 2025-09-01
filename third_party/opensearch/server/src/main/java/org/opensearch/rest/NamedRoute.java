@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.TransportService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * A named Route
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.7.0")
 public class NamedRoute extends RestHandler.Route {
@@ -107,7 +107,7 @@ public class NamedRoute extends RestHandler.Route {
          * Builds a new instance of {@link NamedRoute} based on the provided parameters.
          *
          * @return a new instance of {@link NamedRoute}
-         * @throws OpenSearchException if the route name is invalid
+         * @throws DensityException if the route name is invalid
          */
         public NamedRoute build() {
             checkIfFieldsAreSet();
@@ -129,7 +129,7 @@ public class NamedRoute extends RestHandler.Route {
             }
             for (String actionName : legacyActionNames) {
                 if (!TransportService.isValidActionName(actionName)) {
-                    throw new OpenSearchException(
+                    throw new DensityException(
                         "Invalid action name [" + actionName + "]. It must start with one of: " + TransportService.VALID_ACTION_PREFIXES
                     );
                 }
@@ -142,7 +142,7 @@ public class NamedRoute extends RestHandler.Route {
     private NamedRoute(Builder builder) {
         super(builder.method, builder.path);
         if (!isValidRouteName(builder.uniqueName)) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "Invalid route name specified. The route name may include the following characters"
                     + " 'a-z', 'A-Z', '0-9', ':', '/', '*', '_' and be less than "
                     + MAX_LENGTH_OF_ACTION_NAME

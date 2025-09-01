@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.common.Strings;
+import org.density.common.util.FeatureFlags;
+import org.density.core.common.Strings;
 
 import java.text.ParsePosition;
 import java.time.DateTimeException;
@@ -70,24 +70,24 @@ class JavaDateFormatter implements DateFormatter {
 
     private final String format;
     private final String printFormat;
-    private final OpenSearchDateTimePrinter printer;
-    private final List<OpenSearchDateTimeFormatter> parsers;
+    private final DensityDateTimePrinter printer;
+    private final List<DensityDateTimeFormatter> parsers;
     private final JavaDateFormatter roundupParser;
     private final Boolean canCacheLastParsedFormatter;
-    private volatile OpenSearchDateTimeFormatter lastParsedformatter = null;
+    private volatile DensityDateTimeFormatter lastParsedformatter = null;
 
     /**
      * A round up formatter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class RoundUpFormatter extends JavaDateFormatter {
 
-        RoundUpFormatter(String format, List<OpenSearchDateTimeFormatter> roundUpParsers) {
+        RoundUpFormatter(String format, List<DensityDateTimeFormatter> roundUpParsers) {
             super(format, firstFrom(roundUpParsers), null, roundUpParsers);
         }
 
-        private static OpenSearchDateTimeFormatter firstFrom(List<OpenSearchDateTimeFormatter> roundUpParsers) {
+        private static DensityDateTimeFormatter firstFrom(List<DensityDateTimeFormatter> roundUpParsers) {
             return roundUpParsers.get(0);
         }
 
@@ -101,9 +101,9 @@ class JavaDateFormatter implements DateFormatter {
     JavaDateFormatter(
         String format,
         String printFormat,
-        OpenSearchDateTimePrinter printer,
+        DensityDateTimePrinter printer,
         Boolean canCacheLastParsedFormatter,
-        OpenSearchDateTimeFormatter... parsers
+        DensityDateTimeFormatter... parsers
     ) {
         this(format, printFormat, printer, ROUND_UP_BASE_FIELDS, canCacheLastParsedFormatter, parsers);
     }
@@ -112,7 +112,7 @@ class JavaDateFormatter implements DateFormatter {
         this(format, format, wrapFormatter(printer), false, wrapAllFormatters(parsers));
     }
 
-    JavaDateFormatter(String format, OpenSearchDateTimePrinter printer, OpenSearchDateTimeFormatter... parsers) {
+    JavaDateFormatter(String format, DensityDateTimePrinter printer, DensityDateTimeFormatter... parsers) {
         this(format, format, printer, false, parsers);
     }
 
@@ -131,19 +131,19 @@ class JavaDateFormatter implements DateFormatter {
     JavaDateFormatter(
         String format,
         String printFormat,
-        OpenSearchDateTimePrinter printer,
+        DensityDateTimePrinter printer,
         BiConsumer<DateTimeFormatterBuilder, DateTimeFormatter> roundupParserConsumer,
         Boolean canCacheLastParsedFormatter,
-        OpenSearchDateTimeFormatter... parsers
+        DensityDateTimeFormatter... parsers
     ) {
         if (printer == null) {
             throw new IllegalArgumentException("printer may not be null");
         }
-        long distinctZones = Arrays.stream(parsers).map(OpenSearchDateTimeFormatter::getZone).distinct().count();
+        long distinctZones = Arrays.stream(parsers).map(DensityDateTimeFormatter::getZone).distinct().count();
         if (distinctZones > 1) {
             throw new IllegalArgumentException("formatters must have the same time zone");
         }
-        long distinctLocales = Arrays.stream(parsers).map(OpenSearchDateTimeFormatter::getLocale).distinct().count();
+        long distinctLocales = Arrays.stream(parsers).map(DensityDateTimeFormatter::getLocale).distinct().count();
         if (distinctLocales > 1) {
             throw new IllegalArgumentException("formatters must have the same locale");
         }
@@ -153,7 +153,7 @@ class JavaDateFormatter implements DateFormatter {
         this.canCacheLastParsedFormatter = canCacheLastParsedFormatter;
 
         if (parsers.length == 0) {
-            this.parsers = Collections.singletonList((OpenSearchDateTimeFormatter) printer);
+            this.parsers = Collections.singletonList((DensityDateTimeFormatter) printer);
         } else {
             this.parsers = Arrays.asList(parsers);
         }
@@ -185,7 +185,7 @@ class JavaDateFormatter implements DateFormatter {
     ) {
         if (format.contains("||") == false) {
             List<DateTimeFormatter> roundUpParsers = new ArrayList<>();
-            for (OpenSearchDateTimeFormatter customparser : this.parsers) {
+            for (DensityDateTimeFormatter customparser : this.parsers) {
                 DateTimeFormatter parser = customparser.getFormatter();
                 DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
                 builder.append(parser);
@@ -206,12 +206,12 @@ class JavaDateFormatter implements DateFormatter {
         assert formatters.size() > 0;
         assert printFormatter != null;
 
-        List<OpenSearchDateTimeFormatter> parsers = new ArrayList<>(formatters.size());
-        List<OpenSearchDateTimeFormatter> roundUpParsers = new ArrayList<>(formatters.size());
+        List<DensityDateTimeFormatter> parsers = new ArrayList<>(formatters.size());
+        List<DensityDateTimeFormatter> roundUpParsers = new ArrayList<>(formatters.size());
 
         assert printFormatter instanceof JavaDateFormatter;
         JavaDateFormatter javaPrintFormatter = (JavaDateFormatter) printFormatter;
-        OpenSearchDateTimePrinter printer = javaPrintFormatter.getPrinter();
+        DensityDateTimePrinter printer = javaPrintFormatter.getPrinter();
         for (DateFormatter formatter : formatters) {
             assert formatter instanceof JavaDateFormatter;
             JavaDateFormatter javaDateFormatter = (JavaDateFormatter) formatter;
@@ -232,9 +232,9 @@ class JavaDateFormatter implements DateFormatter {
     private JavaDateFormatter(
         String format,
         String printFormat,
-        OpenSearchDateTimePrinter printer,
-        List<OpenSearchDateTimeFormatter> roundUpParsers,
-        List<OpenSearchDateTimeFormatter> parsers,
+        DensityDateTimePrinter printer,
+        List<DensityDateTimeFormatter> roundUpParsers,
+        List<DensityDateTimeFormatter> parsers,
         Boolean canCacheLastParsedFormatter
     ) {
         this.format = format;
@@ -256,9 +256,9 @@ class JavaDateFormatter implements DateFormatter {
 
     private JavaDateFormatter(
         String format,
-        OpenSearchDateTimePrinter printer,
-        List<OpenSearchDateTimeFormatter> roundUpParsers,
-        List<OpenSearchDateTimeFormatter> parsers
+        DensityDateTimePrinter printer,
+        List<DensityDateTimeFormatter> roundUpParsers,
+        List<DensityDateTimeFormatter> parsers
     ) {
         this(format, format, printer, roundUpParsers, parsers, false);
     }
@@ -267,7 +267,7 @@ class JavaDateFormatter implements DateFormatter {
         return roundupParser;
     }
 
-    OpenSearchDateTimePrinter getPrinter() {
+    DensityDateTimePrinter getPrinter() {
         return printer;
     }
 
@@ -308,7 +308,7 @@ class JavaDateFormatter implements DateFormatter {
                     return (TemporalAccessor) object;
                 }
             }
-            for (OpenSearchDateTimeFormatter formatter : parsers) {
+            for (DensityDateTimeFormatter formatter : parsers) {
                 ParsePosition pos = new ParsePosition(0);
                 object = formatter.parseObject(input, pos);
                 if (parsingSucceeded(object, input, pos)) {
@@ -326,15 +326,15 @@ class JavaDateFormatter implements DateFormatter {
         return object != null && pos.getIndex() == input.length();
     }
 
-    private static OpenSearchDateTimeFormatter wrapFormatter(DateTimeFormatter formatter) {
-        return new OpenSearchDateTimeFormatter(formatter);
+    private static DensityDateTimeFormatter wrapFormatter(DateTimeFormatter formatter) {
+        return new DensityDateTimeFormatter(formatter);
     }
 
-    private static OpenSearchDateTimeFormatter[] wrapAllFormatters(DateTimeFormatter... formatters) {
-        return Arrays.stream(formatters).map(JavaDateFormatter::wrapFormatter).toArray(OpenSearchDateTimeFormatter[]::new);
+    private static DensityDateTimeFormatter[] wrapAllFormatters(DateTimeFormatter... formatters) {
+        return Arrays.stream(formatters).map(JavaDateFormatter::wrapFormatter).toArray(DensityDateTimeFormatter[]::new);
     }
 
-    private static List<OpenSearchDateTimeFormatter> wrapAllFormatters(List<DateTimeFormatter> formatters) {
+    private static List<DensityDateTimeFormatter> wrapAllFormatters(List<DateTimeFormatter> formatters) {
         return formatters.stream().map(JavaDateFormatter::wrapFormatter).collect(Collectors.toList());
     }
 
@@ -344,10 +344,10 @@ class JavaDateFormatter implements DateFormatter {
         if (zoneId.equals(zone())) {
             return this;
         }
-        List<OpenSearchDateTimeFormatter> parsers = new ArrayList<>(
+        List<DensityDateTimeFormatter> parsers = new ArrayList<>(
             this.parsers.stream().map(p -> p.withZone(zoneId)).collect(Collectors.toList())
         );
-        List<OpenSearchDateTimeFormatter> roundUpParsers = this.roundupParser.getParsers()
+        List<DensityDateTimeFormatter> roundUpParsers = this.roundupParser.getParsers()
             .stream()
             .map(p -> p.withZone(zoneId))
             .collect(Collectors.toList());
@@ -360,10 +360,10 @@ class JavaDateFormatter implements DateFormatter {
         if (locale.equals(locale())) {
             return this;
         }
-        List<OpenSearchDateTimeFormatter> parsers = new ArrayList<>(
+        List<DensityDateTimeFormatter> parsers = new ArrayList<>(
             this.parsers.stream().map(p -> p.withLocale(locale)).collect(Collectors.toList())
         );
-        List<OpenSearchDateTimeFormatter> roundUpParsers = this.roundupParser.getParsers()
+        List<DensityDateTimeFormatter> roundUpParsers = this.roundupParser.getParsers()
             .stream()
             .map(p -> p.withLocale(locale))
             .collect(Collectors.toList());
@@ -422,7 +422,7 @@ class JavaDateFormatter implements DateFormatter {
         return String.format(Locale.ROOT, "format[%s] locale[%s]", format, locale());
     }
 
-    Collection<OpenSearchDateTimeFormatter> getParsers() {
+    Collection<DensityDateTimeFormatter> getParsers() {
         return parsers;
     }
 }

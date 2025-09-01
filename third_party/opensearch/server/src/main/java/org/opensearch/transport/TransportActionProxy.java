@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.transport.TransportResponse;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -48,7 +48,7 @@ import java.util.function.Function;
  * node that acts as a request proxy to the target node. This is useful if a node is not directly connected to a target node but is
  * connected to an intermediate node that establishes a transitive connection.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TransportActionProxy {
 
@@ -57,7 +57,7 @@ public final class TransportActionProxy {
     /**
      * Handler for proxy requests
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ProxyRequestHandler<T extends ProxyRequest> implements TransportRequestHandler<T> {
 
@@ -91,7 +91,7 @@ public final class TransportActionProxy {
     /**
      * Handler for the proxy response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ProxyResponseHandler<T extends TransportResponse> implements TransportResponseHandler<T> {
 
@@ -135,7 +135,7 @@ public final class TransportActionProxy {
     /**
      * The proxy request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ProxyRequest<T extends TransportRequest> extends TransportRequest {
         final T wrapped;

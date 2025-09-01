@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.DoubleArray;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.metrics.MetricsAggregator;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.DoubleArray;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.metrics.MetricsAggregator;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.Map;
  * Abstract class for doing the {@link GeoBounds} Aggregation over fields of type geo_shape and geo_point.
  *
  * @param <T> Class extending the {@link ValuesSource} which will provide the data on which aggregation will happen.
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractGeoBoundsAggregator<T extends ValuesSource> extends MetricsAggregator {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistClass;
-import org.opensearch.painless.spi.AllowlistLoader;
-import org.opensearch.painless.spi.AllowlistMethod;
-import org.opensearch.painless.spi.annotation.AllowlistAnnotationParser;
-import org.opensearch.painless.spi.annotation.DeprecatedAnnotation;
-import org.opensearch.painless.spi.annotation.NoImportAnnotation;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistClass;
+import org.density.painless.spi.AllowlistLoader;
+import org.density.painless.spi.AllowlistMethod;
+import org.density.painless.spi.annotation.AllowlistAnnotationParser;
+import org.density.painless.spi.annotation.DeprecatedAnnotation;
+import org.density.painless.spi.annotation.NoImportAnnotation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,13 +48,13 @@ public class AllowlistLoaderTests extends ScriptTestCase {
         Map<String, AllowlistAnnotationParser> parsers = new HashMap<>(AllowlistAnnotationParser.BASE_ANNOTATION_PARSERS);
 
         RuntimeException expected = expectThrows(RuntimeException.class, () -> {
-            AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.opensearch.painless.annotation.unknown");
+            AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.density.painless.annotation.unknown");
         });
         assertEquals("invalid annotation: parser not found for [unknownAnnotation] [@unknownAnnotation]", expected.getCause().getMessage());
         assertEquals(IllegalArgumentException.class, expected.getCause().getClass());
 
         expected = expectThrows(RuntimeException.class, () -> {
-            AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.opensearch.painless.annotation.unknown_with_options");
+            AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.density.painless.annotation.unknown_with_options");
         });
         assertEquals(
             "invalid annotation: parser not found for [unknownAnootationWithMessage] [@unknownAnootationWithMessage[arg=\"arg value\"]]",
@@ -66,7 +66,7 @@ public class AllowlistLoaderTests extends ScriptTestCase {
     public void testAnnotations() {
         Map<String, AllowlistAnnotationParser> parsers = new HashMap<>(AllowlistAnnotationParser.BASE_ANNOTATION_PARSERS);
         parsers.put(AnnotationTestObject.TestAnnotation.NAME, AnnotationTestObject.TestAnnotationParser.INSTANCE);
-        Allowlist allowlist = AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.opensearch.painless.annotation");
+        Allowlist allowlist = AllowlistLoader.loadFromResourceFiles(Allowlist.class, parsers, "org.density.painless.annotation");
 
         assertEquals(1, allowlist.allowlistClasses.size());
 

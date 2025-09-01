@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.cluster.coordination.MockSinglePrioritizingExecutor;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.cluster.service.FakeThreadPoolClusterManagerService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.node.Node;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpClient;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.cluster.coordination.MockSinglePrioritizingExecutor;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.cluster.service.ClusterService;
+import org.density.cluster.service.FakeThreadPoolClusterManagerService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.node.Node;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpClient;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.cluster.InternalClusterInfoService.INTERNAL_CLUSTER_INFO_UPDATE_INTERVAL_SETTING;
+import static org.density.cluster.InternalClusterInfoService.INTERNAL_CLUSTER_INFO_UPDATE_INTERVAL_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 
-public class InternalClusterInfoServiceSchedulingTests extends OpenSearchTestCase {
+public class InternalClusterInfoServiceSchedulingTests extends DensityTestCase {
 
     public void testScheduling() {
         final DiscoveryNode discoveryNode = new DiscoveryNode("test", buildNewFakeTransportAddress(), Version.CURRENT);
@@ -85,7 +85,7 @@ public class InternalClusterInfoServiceSchedulingTests extends OpenSearchTestCas
 
         final ClusterApplierService clusterApplierService = new ClusterApplierService("test", settings, clusterSettings, threadPool) {
             @Override
-            protected PrioritizedOpenSearchThreadPoolExecutor createThreadPoolExecutor() {
+            protected PrioritizedDensityThreadPoolExecutor createThreadPoolExecutor() {
                 return new MockSinglePrioritizingExecutor("mock-executor", deterministicTaskQueue, threadPool);
             }
         };

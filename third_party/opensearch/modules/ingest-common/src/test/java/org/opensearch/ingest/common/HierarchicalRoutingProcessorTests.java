@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class HierarchicalRoutingProcessorTests extends OpenSearchTestCase {
+public class HierarchicalRoutingProcessorTests extends DensityTestCase {
 
     public void testBasicRouting() throws Exception {
         IngestDocument ingestDocument = createTestDocument("/company/department/team/file.txt");
@@ -201,8 +201,8 @@ public class HierarchicalRoutingProcessorTests extends OpenSearchTestCase {
     public void testFactoryValidation() throws Exception {
         // Test invalid anchor depth
         Map<String, Object> config1 = createConfig("path_field", 0, "/", false, true);
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> new HierarchicalRoutingProcessor.Factory().create(null, "test", null, config1)
         );
         assertThat(exception.getMessage(), containsString("must be greater than 0"));
@@ -210,7 +210,7 @@ public class HierarchicalRoutingProcessorTests extends OpenSearchTestCase {
         // Test empty path separator
         Map<String, Object> config2 = createConfig("path_field", 2, "", false, true);
         exception = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> new HierarchicalRoutingProcessor.Factory().create(null, "test", null, config2)
         );
         assertThat(exception.getMessage(), containsString("cannot be null or empty"));
@@ -218,7 +218,7 @@ public class HierarchicalRoutingProcessorTests extends OpenSearchTestCase {
         // Test null path field
         Map<String, Object> config3 = createConfig(null, 2, "/", false, true);
         exception = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> new HierarchicalRoutingProcessor.Factory().create(null, "test", null, config3)
         );
         assertThat(exception.getMessage(), containsString("required property is missing"));

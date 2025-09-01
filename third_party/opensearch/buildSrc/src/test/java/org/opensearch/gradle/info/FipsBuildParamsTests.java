@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle.info;
+package org.density.gradle.info;
 
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.test.GradleUnitTestCase;
 
 import java.util.function.Function;
 

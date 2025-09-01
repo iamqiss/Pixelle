@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
@@ -40,18 +40,18 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.query.MatchPhraseQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.index.query.SimpleQueryStringBuilder;
-import org.opensearch.index.query.SimpleQueryStringFlag;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.settings.Settings;
+import org.density.index.IndexService;
+import org.density.index.query.MatchPhraseQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.index.query.SimpleQueryStringBuilder;
+import org.density.index.query.SimpleQueryStringFlag;
+import org.density.index.search.MatchQuery;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Makes sure that graph analysis is disabled with shingle filters of different size
  */
-public class DisableGraphQueryTests extends OpenSearchSingleNodeTestCase {
+public class DisableGraphQueryTests extends DensitySingleNodeTestCase {
     private static IndexService indexService;
     private static QueryShardContext shardContext;
     private static Query expectedQuery;

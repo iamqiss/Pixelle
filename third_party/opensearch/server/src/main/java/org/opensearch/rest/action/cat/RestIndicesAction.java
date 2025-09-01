@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.pagination.IndexPaginationStrategy;
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Table;
-import org.opensearch.common.breaker.ResponseLimitBreachedException;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.rest.action.list.AbstractListAction;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.pagination.IndexPaginationStrategy;
+import org.density.action.pagination.PageToken;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Table;
+import org.density.common.breaker.ResponseLimitBreachedException;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.index.IndexSettings;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.rest.action.list.AbstractListAction;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -87,14 +87,14 @@ import java.util.stream.StreamSupport;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest.DEFAULT_CLUSTER_MANAGER_NODE_TIMEOUT;
-import static org.opensearch.common.breaker.ResponseLimitSettings.LimitEntity.INDICES;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.action.support.clustermanager.ClusterManagerNodeRequest.DEFAULT_CLUSTER_MANAGER_NODE_TIMEOUT;
+import static org.density.common.breaker.ResponseLimitSettings.LimitEntity.INDICES;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _cat API action to list indices
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestIndicesAction extends AbstractListAction {
 
@@ -147,7 +147,7 @@ public class RestIndicesAction extends AbstractListAction {
         if (request.hasParam("master_timeout")) {
             deprecationLogger.deprecate("cat_indices_master_timeout_parameter", MASTER_TIMEOUT_DEPRECATED_MESSAGE);
             if (request.hasParam("cluster_manager_timeout")) {
-                throw new OpenSearchParseException(DUPLICATE_PARAMETER_ERROR_MESSAGE);
+                throw new DensityParseException(DUPLICATE_PARAMETER_ERROR_MESSAGE);
             }
             clusterManagerTimeout = request.paramAsTime("master_timeout", DEFAULT_CLUSTER_MANAGER_NODE_TIMEOUT);
         }

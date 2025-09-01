@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test;
+package org.density.gradle.test;
 
-import org.opensearch.gradle.vagrant.VagrantMachine;
-import org.opensearch.gradle.vagrant.VagrantShellTask;
+import org.density.gradle.vagrant.VagrantMachine;
+import org.density.gradle.vagrant.VagrantShellTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.options.Option;

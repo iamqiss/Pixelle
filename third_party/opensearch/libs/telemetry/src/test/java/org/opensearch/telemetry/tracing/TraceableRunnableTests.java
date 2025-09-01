@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.telemetry.tracing.runnable.TraceableRunnable;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.telemetry.tracing.MockSpan;
-import org.opensearch.test.telemetry.tracing.MockTracingTelemetry;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.telemetry.tracing.runnable.TraceableRunnable;
+import org.density.test.DensityTestCase;
+import org.density.test.telemetry.tracing.MockSpan;
+import org.density.test.telemetry.tracing.MockTracingTelemetry;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class TraceableRunnableTests extends OpenSearchTestCase {
+public class TraceableRunnableTests extends DensityTestCase {
 
     private final ThreadContextBasedTracerContextStorage contextStorage = new ThreadContextBasedTracerContextStorage(
         new ThreadContext(Settings.EMPTY),

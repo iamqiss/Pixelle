@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.logging.OpenSearchLogMessage;
-import org.opensearch.common.logging.SlowLogLevel;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.tasks.Task;
+import org.density.common.logging.Loggers;
+import org.density.common.logging.DensityLogMessage;
+import org.density.common.logging.SlowLogLevel;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.shard.SearchOperationListener;
+import org.density.search.internal.SearchContext;
+import org.density.tasks.Task;
 
 import java.nio.charset.Charset;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import java.util.stream.Stream;
 /**
  * The search time slow log implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchSlowLog implements SearchOperationListener {
     private static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -213,9 +213,9 @@ public final class SearchSlowLog implements SearchOperationListener {
     /**
      * Search slow log message
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    static final class SearchSlowLogMessage extends OpenSearchLogMessage {
+    static final class SearchSlowLogMessage extends DensityLogMessage {
 
         SearchSlowLogMessage(SearchContext context, long tookInNanos) {
             super(prepareMap(context, tookInNanos), message(context, tookInNanos));

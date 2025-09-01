@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
+package org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
 
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresResponse;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.protobufs.ShardFailure;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse;
+import org.density.action.admin.indices.shards.IndicesShardStoresResponse;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.rest.RestStatus;
+import org.density.protobufs.ShardFailure;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class DefaultShardOperationFailedExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class DefaultShardOperationFailedExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithDefaultShardOperationFailedException() throws IOException {
         // Create a real DefaultShardOperationFailedException

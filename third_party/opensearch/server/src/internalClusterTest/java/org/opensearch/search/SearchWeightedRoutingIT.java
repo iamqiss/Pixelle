@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.PreferenceBasedSearchNotAllowedException;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.cluster.routing.WeightedRoutingStats;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.PreferenceBasedSearchNotAllowedException;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.cluster.routing.WeightedRoutingStats;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.query.QueryBuilders;
+import org.density.index.search.stats.SearchStats;
+import org.density.plugins.Plugin;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -57,15 +57,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.action.search.SearchRequestStats.SEARCH_REQUEST_STATS_ENABLED_KEY;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.action.search.SearchRequestStats.SEARCH_REQUEST_STATS_ENABLED_KEY;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 3)
-public class SearchWeightedRoutingIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 3)
+public class SearchWeightedRoutingIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -480,7 +480,7 @@ public class SearchWeightedRoutingIT extends OpenSearchIntegTestCase {
      * Assertions are put to make sure such shard search requests are served by data node in zone c.
      * @throws IOException throws exception
      */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/10673")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/10673")
     public void testShardRoutingWithNetworkDisruption_FailOpenEnabled() throws Exception {
 
         Settings commonSettings = Settings.builder()
@@ -979,7 +979,7 @@ public class SearchWeightedRoutingIT extends OpenSearchIntegTestCase {
      * MultiGet with fail open enabled. No request failure on network disruption
      * @throws IOException throws exception
      */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/10755")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/10755")
     public void testMultiGetWithNetworkDisruption_FailOpenEnabled() throws Exception {
 
         Settings commonSettings = Settings.builder()
@@ -1124,7 +1124,7 @@ public class SearchWeightedRoutingIT extends OpenSearchIntegTestCase {
     /**
      * Assert that preference search with custom string doesn't hit a node in weighed away az
      */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8030")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8030")
     public void testStrictWeightedRoutingWithCustomString() {
         Settings commonSettings = Settings.builder()
             .put("cluster.routing.allocation.awareness.attributes", "zone")

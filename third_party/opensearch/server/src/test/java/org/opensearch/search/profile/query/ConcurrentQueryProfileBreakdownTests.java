@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -25,12 +25,12 @@ import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.store.Directory;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.profile.ProfileMetricTests;
-import org.opensearch.search.profile.ProfileMetricUtil;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.profile.ProfileMetricTests;
+import org.density.search.profile.ProfileMetricUtil;
+import org.density.search.profile.Timer;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collection;
@@ -39,14 +39,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.profile.Timer.TIMING_TYPE_COUNT_SUFFIX;
-import static org.opensearch.search.profile.Timer.TIMING_TYPE_START_TIME_SUFFIX;
-import static org.opensearch.search.profile.query.ConcurrentQueryProfileBreakdown.MIN_PREFIX;
-import static org.opensearch.search.profile.query.ConcurrentQueryProfileBreakdown.SLICE_END_TIME_SUFFIX;
-import static org.opensearch.search.profile.query.ConcurrentQueryProfileBreakdown.SLICE_START_TIME_SUFFIX;
+import static org.density.search.profile.Timer.TIMING_TYPE_COUNT_SUFFIX;
+import static org.density.search.profile.Timer.TIMING_TYPE_START_TIME_SUFFIX;
+import static org.density.search.profile.query.ConcurrentQueryProfileBreakdown.MIN_PREFIX;
+import static org.density.search.profile.query.ConcurrentQueryProfileBreakdown.SLICE_END_TIME_SUFFIX;
+import static org.density.search.profile.query.ConcurrentQueryProfileBreakdown.SLICE_START_TIME_SUFFIX;
 import static org.mockito.Mockito.mock;
 
-public class ConcurrentQueryProfileBreakdownTests extends OpenSearchTestCase {
+public class ConcurrentQueryProfileBreakdownTests extends DensityTestCase {
     private ConcurrentQueryProfileBreakdown testQueryProfileBreakdown;
     private ConcurrentQueryProfileBreakdown testQueryProfileBreakdownCombined;
     private Timer createWeightTimer;

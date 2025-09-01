@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
-import org.opensearch.cli.Command;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.UserException;
-import org.opensearch.env.Environment;
+import org.density.cli.Command;
+import org.density.cli.ExitCodes;
+import org.density.cli.UserException;
+import org.density.env.Environment;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,86 +26,86 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.action.fieldcaps.FieldCapabilities;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.client.core.CountRequest;
-import org.opensearch.client.core.CountResponse;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.ScriptQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.join.aggregations.Children;
-import org.opensearch.join.aggregations.ChildrenAggregationBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.mustache.MultiSearchTemplateRequest;
-import org.opensearch.script.mustache.MultiSearchTemplateResponse;
-import org.opensearch.script.mustache.MultiSearchTemplateResponse.Item;
-import org.opensearch.script.mustache.SearchTemplateRequest;
-import org.opensearch.script.mustache.SearchTemplateResponse;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregation;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.composite.TermsValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.range.Range;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.RareTerms;
-import org.opensearch.search.aggregations.bucket.terms.RareTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.matrix.stats.MatrixStats;
-import org.opensearch.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.WeightedAvg;
-import org.opensearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
-import org.opensearch.search.aggregations.support.MultiTermsValuesSourceConfig;
-import org.opensearch.search.aggregations.support.MultiValuesSourceFieldConfig;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.explain.ExplainResponse;
+import org.density.action.fieldcaps.FieldCapabilities;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.client.core.CountRequest;
+import org.density.client.core.CountResponse;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Rectangle;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.ScriptQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.join.aggregations.Children;
+import org.density.join.aggregations.ChildrenAggregationBuilder;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.script.mustache.MultiSearchTemplateRequest;
+import org.density.script.mustache.MultiSearchTemplateResponse;
+import org.density.script.mustache.MultiSearchTemplateResponse.Item;
+import org.density.script.mustache.SearchTemplateRequest;
+import org.density.script.mustache.SearchTemplateResponse;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.composite.CompositeAggregation;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.search.aggregations.bucket.composite.TermsValuesSourceBuilder;
+import org.density.search.aggregations.bucket.range.Range;
+import org.density.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.RareTerms;
+import org.density.search.aggregations.bucket.terms.RareTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.matrix.stats.MatrixStats;
+import org.density.search.aggregations.matrix.stats.MatrixStatsAggregationBuilder;
+import org.density.search.aggregations.metrics.WeightedAvg;
+import org.density.search.aggregations.metrics.WeightedAvgAggregationBuilder;
+import org.density.search.aggregations.support.MultiTermsValuesSourceConfig;
+import org.density.search.aggregations.support.MultiValuesSourceFieldConfig;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.hamcrest.Matchers;
@@ -121,9 +121,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.geoShapeQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.geoShapeQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.containsString;
@@ -135,7 +135,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
+public class SearchIT extends DensityRestHighLevelClientTestCase {
 
     @Before
     public void indexDocuments() throws IOException {
@@ -425,8 +425,8 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
             searchSourceBuilder.size(0);
             searchRequest.source(searchSourceBuilder);
 
-            OpenSearchStatusException exception = expectThrows(
-                OpenSearchStatusException.class,
+            DensityStatusException exception = expectThrows(
+                DensityStatusException.class,
                 () -> execute(searchRequest, highLevelClient()::search, highLevelClient()::searchAsync)
             );
             assertEquals(RestStatus.BAD_REQUEST, exception.status());
@@ -1055,13 +1055,13 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
             assertTrue(clearScrollResponse.isSucceeded());
 
             SearchScrollRequest scrollRequest = new SearchScrollRequest(searchResponse.getScrollId()).scroll(TimeValue.timeValueMinutes(2));
-            OpenSearchStatusException exception = expectThrows(
-                OpenSearchStatusException.class,
+            DensityStatusException exception = expectThrows(
+                DensityStatusException.class,
                 () -> execute(scrollRequest, highLevelClient()::scroll, highLevelClient()::scrollAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
-            assertThat(exception.getRootCause(), instanceOf(OpenSearchException.class));
-            OpenSearchException rootCause = (OpenSearchException) exception.getRootCause();
+            assertThat(exception.getRootCause(), instanceOf(DensityException.class));
+            DensityException rootCause = (DensityException) exception.getRootCause();
             assertThat(rootCause.getMessage(), containsString("No search context found for"));
         }
     }
@@ -1392,8 +1392,8 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
         searchTemplateRequest.setScript("non-existent");
         searchTemplateRequest.setScriptParams(Collections.emptyMap());
 
-        OpenSearchStatusException exception = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException exception = expectThrows(
+            DensityStatusException.class,
             () -> execute(searchTemplateRequest, highLevelClient()::searchTemplate, highLevelClient()::searchTemplateAsync)
         );
 
@@ -1511,8 +1511,8 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
         multiSearchTemplateRequest.add(badRequest2);
 
         // The whole HTTP request should fail if no nested search requests are valid
-        OpenSearchStatusException exception = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException exception = expectThrows(
+            DensityStatusException.class,
             () -> execute(multiSearchTemplateRequest, highLevelClient()::msearchTemplate, highLevelClient()::msearchTemplateAsync)
         );
 
@@ -1584,15 +1584,15 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
         {
             ExplainRequest explainRequest = new ExplainRequest("non_existent_index", "1");
             explainRequest.query(QueryBuilders.matchQuery("field", "value"));
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(explainRequest, highLevelClient()::explain, highLevelClient()::explainAsync)
             );
             assertThat(exception.status(), equalTo(RestStatus.NOT_FOUND));
             assertThat(exception.getIndex().getName(), equalTo("non_existent_index"));
             assertThat(
                 exception.getDetailedMessage(),
-                containsString("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+                containsString("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
             );
         }
         {
@@ -1752,8 +1752,8 @@ public class SearchIT extends OpenSearchRestHighLevelClientTestCase {
     public void testFieldCapsWithNonExistentIndices() {
         FieldCapabilitiesRequest request = new FieldCapabilitiesRequest().indices("non-existent").fields("rating");
 
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(request, highLevelClient()::fieldCaps, highLevelClient()::fieldCapsAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());

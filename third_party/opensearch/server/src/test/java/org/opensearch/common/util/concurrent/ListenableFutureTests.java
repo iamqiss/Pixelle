@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 
 import java.util.concurrent.BrokenBarrierException;
@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.Matchers.is;
 
-public class ListenableFutureTests extends OpenSearchTestCase {
+public class ListenableFutureTests extends DensityTestCase {
 
     private ExecutorService executorService;
     private ThreadContext threadContext = new ThreadContext(Settings.EMPTY);
@@ -65,7 +65,7 @@ public class ListenableFutureTests extends OpenSearchTestCase {
         for (int i = 0; i < numberOfListeners; i++) {
             future.addListener(
                 ActionListener.wrap(notifications::incrementAndGet),
-                OpenSearchExecutors.newDirectExecutorService(),
+                DensityExecutors.newDirectExecutorService(),
                 threadContext
             );
         }
@@ -84,7 +84,7 @@ public class ListenableFutureTests extends OpenSearchTestCase {
             future.addListener(ActionListener.wrap(s -> fail("this should never be called"), e -> {
                 assertEquals(exception, e);
                 notifications.incrementAndGet();
-            }), OpenSearchExecutors.newDirectExecutorService(), threadContext);
+            }), DensityExecutors.newDirectExecutorService(), threadContext);
         }
 
         future.onFailure(exception);
@@ -96,11 +96,11 @@ public class ListenableFutureTests extends OpenSearchTestCase {
         final int numberOfThreads = scaledRandomIntBetween(2, 32);
         final int completingThread = randomIntBetween(0, numberOfThreads - 1);
         final ListenableFuture<String> future = new ListenableFuture<>();
-        executorService = OpenSearchExecutors.newFixed(
+        executorService = DensityExecutors.newFixed(
             "testConcurrentListenerRegistrationAndCompletion",
             numberOfThreads,
             1000,
-            OpenSearchExecutors.daemonThreadFactory("listener"),
+            DensityExecutors.daemonThreadFactory("listener"),
             threadContext
         );
         final CyclicBarrier barrier = new CyclicBarrier(1 + numberOfThreads);

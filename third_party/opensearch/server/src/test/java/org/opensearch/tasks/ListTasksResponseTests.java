@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceStats;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.core.tasks.resourcetracker.TaskThreadUsage;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.core.common.Strings;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.TaskResourceStats;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.core.tasks.resourcetracker.TaskThreadUsage;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -162,16 +162,16 @@ public class ListTasksResponseTests extends AbstractXContentTestCase<ListTasksRe
         assertOnTaskFailures(newInstance.getTaskFailures(), expectedInstance.getTaskFailures());
     }
 
-    protected static void assertOnNodeFailures(List<OpenSearchException> nodeFailures, List<OpenSearchException> expectedFailures) {
+    protected static void assertOnNodeFailures(List<DensityException> nodeFailures, List<DensityException> expectedFailures) {
         assertThat(nodeFailures.size(), equalTo(expectedFailures.size()));
         for (int i = 0; i < nodeFailures.size(); i++) {
-            OpenSearchException newException = nodeFailures.get(i);
-            OpenSearchException expectedException = expectedFailures.get(i);
-            assertThat(newException.getMetadata("opensearch.node_id").get(0), equalTo(((FailedNodeException) expectedException).nodeId()));
-            assertThat(newException.getMessage(), equalTo("OpenSearch exception [type=failed_node_exception, reason=error message]"));
-            assertThat(newException.getCause(), instanceOf(OpenSearchException.class));
-            OpenSearchException cause = (OpenSearchException) newException.getCause();
-            assertThat(cause.getMessage(), equalTo("OpenSearch exception [type=connect_exception, reason=null]"));
+            DensityException newException = nodeFailures.get(i);
+            DensityException expectedException = expectedFailures.get(i);
+            assertThat(newException.getMetadata("density.node_id").get(0), equalTo(((FailedNodeException) expectedException).nodeId()));
+            assertThat(newException.getMessage(), equalTo("Density exception [type=failed_node_exception, reason=error message]"));
+            assertThat(newException.getCause(), instanceOf(DensityException.class));
+            DensityException cause = (DensityException) newException.getCause();
+            assertThat(cause.getMessage(), equalTo("Density exception [type=connect_exception, reason=null]"));
         }
     }
 
@@ -183,9 +183,9 @@ public class ListTasksResponseTests extends AbstractXContentTestCase<ListTasksRe
             assertThat(newFailure.getNodeId(), equalTo(expectedFailure.getNodeId()));
             assertThat(newFailure.getTaskId(), equalTo(expectedFailure.getTaskId()));
             assertThat(newFailure.getStatus(), equalTo(expectedFailure.getStatus()));
-            assertThat(newFailure.getCause(), instanceOf(OpenSearchException.class));
-            OpenSearchException cause = (OpenSearchException) newFailure.getCause();
-            assertThat(cause.getMessage(), equalTo("OpenSearch exception [type=illegal_state_exception, reason=null]"));
+            assertThat(newFailure.getCause(), instanceOf(DensityException.class));
+            DensityException cause = (DensityException) newFailure.getCause();
+            assertThat(cause.getMessage(), equalTo("Density exception [type=illegal_state_exception, reason=null]"));
         }
     }
 

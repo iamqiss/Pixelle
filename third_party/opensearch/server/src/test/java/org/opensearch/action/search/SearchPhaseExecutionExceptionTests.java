@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.TimestampParsingException;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.indices.InvalidIndexTemplateException;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.action.OriginalIndices;
+import org.density.action.TimestampParsingException;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.indices.InvalidIndexTemplateException;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 
-public class SearchPhaseExecutionExceptionTests extends OpenSearchTestCase {
+public class SearchPhaseExecutionExceptionTests extends DensityTestCase {
 
     public void testToXContent() throws IOException {
         SearchPhaseExecutionException exception = new SearchPhaseExecutionException(
@@ -137,10 +137,10 @@ public class SearchPhaseExecutionExceptionTests extends OpenSearchTestCase {
 
         BytesReference exceptionBytes = toShuffledXContent(actual, xContent.mediaType(), ToXContent.EMPTY_PARAMS, randomBoolean());
 
-        OpenSearchException parsedException;
+        DensityException parsedException;
         try (XContentParser parser = createParser(xContent, exceptionBytes)) {
             assertEquals(XContentParser.Token.START_OBJECT, parser.nextToken());
-            parsedException = OpenSearchException.fromXContent(parser);
+            parsedException = DensityException.fromXContent(parser);
             assertEquals(XContentParser.Token.END_OBJECT, parser.currentToken());
             assertNull(parser.nextToken());
         }
@@ -148,7 +148,7 @@ public class SearchPhaseExecutionExceptionTests extends OpenSearchTestCase {
         assertNotNull(parsedException);
         assertThat(parsedException.getHeaderKeys(), hasSize(0));
         assertThat(parsedException.getMetadataKeys(), hasSize(1));
-        assertThat(parsedException.getMetadata("opensearch.phase"), hasItem(phase));
+        assertThat(parsedException.getMetadata("density.phase"), hasItem(phase));
         // SearchPhaseExecutionException has no cause field
         assertNull(parsedException.getCause());
     }
@@ -159,7 +159,7 @@ public class SearchPhaseExecutionExceptionTests extends OpenSearchTestCase {
         SearchPhaseExecutionException actual = new SearchPhaseExecutionException(
             phase,
             "unexpected failures",
-            new OpenSearchRejectedExecutionException("OpenSearch rejected execution of fetch phase"),
+            new DensityRejectedExecutionException("Density rejected execution of fetch phase"),
             searchShardFailures
         );
 
@@ -188,7 +188,7 @@ public class SearchPhaseExecutionExceptionTests extends OpenSearchTestCase {
         SearchPhaseExecutionException actual = new SearchPhaseExecutionException(
             phase,
             "unexpected failures",
-            new OpenSearchRejectedExecutionException("OpenSearch rejected execution of fetch phase"),
+            new DensityRejectedExecutionException("Density rejected execution of fetch phase"),
             shardSearchFailures
         );
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VersionedNamedWriteable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.Discovery;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VersionedNamedWriteable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.Discovery;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -74,7 +74,7 @@ import java.util.Set;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.cluster.coordination.Coordinator.ZEN1_BWC_TERM;
+import static org.density.cluster.coordination.Coordinator.ZEN1_BWC_TERM;
 
 /**
  * Represents the current state of the cluster.
@@ -98,7 +98,7 @@ import static org.opensearch.cluster.coordination.Coordinator.ZEN1_BWC_TERM;
  * throws the {@link IncompatibleClusterStateVersionException}, which causes the publishing mechanism to send
  * a full version of the cluster state to the node on which this exception was thrown.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterState implements ToXContentFragment, Diffable<ClusterState> {
@@ -108,7 +108,7 @@ public class ClusterState implements ToXContentFragment, Diffable<ClusterState> 
     /**
      * An interface that implementors use when a class requires a client to maybe have a feature.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface FeatureAware {
 
@@ -141,7 +141,7 @@ public class ClusterState implements ToXContentFragment, Diffable<ClusterState> 
     /**
      * Custom cluster state.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Custom extends NamedDiffable<Custom>, ToXContentFragment, FeatureAware {
@@ -415,7 +415,7 @@ public class ClusterState implements ToXContentFragment, Diffable<ClusterState> 
     /**
      * Metrics for cluster state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Metric {
         VERSION("version"),
@@ -599,7 +599,7 @@ public class ClusterState implements ToXContentFragment, Diffable<ClusterState> 
     /**
      * Builder for cluster state.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -802,7 +802,7 @@ public class ClusterState implements ToXContentFragment, Diffable<ClusterState> 
     /**
      * The cluster state diff.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ClusterStateDiff implements Diff<ClusterState> {
 

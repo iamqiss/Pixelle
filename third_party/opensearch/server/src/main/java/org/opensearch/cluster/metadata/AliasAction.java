@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.action.admin.indices.AliasesNotFoundException;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.common.Nullable;
+import org.density.core.common.Strings;
+import org.density.rest.action.admin.indices.AliasesNotFoundException;
 
 /**
  * Individual operation to perform on the cluster state as part of an {@link IndicesAliasesRequest}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AliasAction {
     private final String index;
@@ -78,7 +78,7 @@ public abstract class AliasAction {
     /**
      * Validate a new alias.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface NewAliasValidator {
@@ -88,7 +88,7 @@ public abstract class AliasAction {
     /**
      * Operation to add an alias to an index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Add extends AliasAction {
         private final String alias;
@@ -192,7 +192,7 @@ public abstract class AliasAction {
     /**
      * Operation to remove an alias from an index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Remove extends AliasAction {
         private final String alias;
@@ -240,7 +240,7 @@ public abstract class AliasAction {
      * Operation to remove an index. This is an "alias action" because it allows us to remove an index at the same time as we remove add an
      * alias to replace it.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RemoveIndex extends AliasAction {
         public RemoveIndex(String index) {

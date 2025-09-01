@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.reactor.netty4;
+package org.density.http.reactor.netty4;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class ReactorHttpClient implements Closeable {
     public ReactorHttpClient(boolean compression, boolean secure) {
         this.compression = compression;
         this.secure = secure;
-        this.useHttp11Only = OpenSearchTestCase.randomBoolean();
+        this.useHttp11Only = DensityTestCase.randomBoolean();
     }
 
     public static ReactorHttpClient create() {

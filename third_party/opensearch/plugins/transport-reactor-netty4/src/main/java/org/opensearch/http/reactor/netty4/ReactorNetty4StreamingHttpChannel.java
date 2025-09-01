@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http.reactor.netty4;
+package org.density.http.reactor.netty4;
 
-import org.opensearch.common.concurrent.CompletableContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.http.HttpChunk;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.http.StreamingHttpChannel;
-import org.opensearch.transport.reactor.netty4.Netty4Utils;
+import org.density.common.concurrent.CompletableContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.http.HttpChunk;
+import org.density.http.HttpResponse;
+import org.density.http.StreamingHttpChannel;
+import org.density.transport.reactor.netty4.Netty4Utils;
 
 import java.net.InetSocketAddress;
 import java.util.List;

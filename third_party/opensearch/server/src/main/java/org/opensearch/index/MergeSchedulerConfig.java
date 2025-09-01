@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.index.ConcurrentMergeScheduler;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
 
 /**
  * The merge scheduler (<code>ConcurrentMergeScheduler</code>) controls the execution of
@@ -51,7 +51,7 @@ import org.opensearch.common.util.concurrent.OpenSearchExecutors;
  * <li> <code>index.merge.scheduler.max_thread_count</code>:
  * <p>
  *     The maximum number of threads that may be merging at once. Defaults to
- *     <code>Math.max(1, Math.min(4, {@link OpenSearchExecutors#allocatedProcessors(Settings)} / 2))</code>
+ *     <code>Math.max(1, Math.min(4, {@link DensityExecutors#allocatedProcessors(Settings)} / 2))</code>
  *     which works well for a good solid-state-disk (SSD).  If your index is on
  *     spinning platter drives instead, decrease this to 1.
  *
@@ -65,14 +65,14 @@ import org.opensearch.common.util.concurrent.OpenSearchExecutors;
  *     move higher to allow merges to keep up with ongoing indexing.
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class MergeSchedulerConfig {
 
     public static final Setting<Integer> MAX_THREAD_COUNT_SETTING = new Setting<>(
         "index.merge.scheduler.max_thread_count",
-        (s) -> Integer.toString(Math.max(1, Math.min(4, OpenSearchExecutors.allocatedProcessors(s) / 2))),
+        (s) -> Integer.toString(Math.max(1, Math.min(4, DensityExecutors.allocatedProcessors(s) / 2))),
         (s) -> Setting.parseInt(s, 1, "index.merge.scheduler.max_thread_count"),
         Property.Dynamic,
         Property.IndexScope

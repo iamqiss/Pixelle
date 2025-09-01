@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.index.remote.RemoteStoreEnums.DataCategory;
-import org.opensearch.index.remote.RemoteStoreEnums.DataType;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy.ShardDataPathInput;
-import org.opensearch.index.remote.RemoteStorePathStrategy.SnapshotShardPathInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.blobstore.BlobPath;
+import org.density.index.remote.RemoteStoreEnums.DataCategory;
+import org.density.index.remote.RemoteStoreEnums.DataType;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy.ShardDataPathInput;
+import org.density.index.remote.RemoteStorePathStrategy.SnapshotShardPathInput;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_COMPOSITE_1;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.FIXED;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.HASHED_INFIX;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.parseString;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
+import static org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_COMPOSITE_1;
+import static org.density.index.remote.RemoteStoreEnums.PathType.FIXED;
+import static org.density.index.remote.RemoteStoreEnums.PathType.HASHED_INFIX;
+import static org.density.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
+import static org.density.index.remote.RemoteStoreEnums.PathType.parseString;
 
-public class RemoteStoreEnumsTests extends OpenSearchTestCase {
+public class RemoteStoreEnumsTests extends DensityTestCase {
 
     private static final String SEPARATOR = "/";
 

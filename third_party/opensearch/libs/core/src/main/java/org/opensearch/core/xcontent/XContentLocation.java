@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
 /**
  * Simple data structure representing the line and column number of a position
@@ -38,7 +38,7 @@ package org.opensearch.core.xcontent;
  * position of a parsing error to end users and consequently have line and
  * column numbers starting from 1.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class XContentLocation {
 

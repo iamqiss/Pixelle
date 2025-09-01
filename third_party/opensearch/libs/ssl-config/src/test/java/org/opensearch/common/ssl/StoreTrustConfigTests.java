@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.ssl;
+package org.density.common.ssl;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import javax.net.ssl.TrustManagerFactory;
@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.nullValue;
 
-public class StoreTrustConfigTests extends OpenSearchTestCase {
+public class StoreTrustConfigTests extends DensityTestCase {
 
     private static final char[] P12_PASS = "p12-pass".toCharArray();
     private static final char[] JKS_PASS = "jks-pass".toCharArray();

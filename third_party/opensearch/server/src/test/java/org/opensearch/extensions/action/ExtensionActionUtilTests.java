@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.action;
+package org.density.extensions.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -24,12 +24,12 @@ import java.nio.charset.StandardCharsets;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.extensions.action.ExtensionActionUtil.UNIT_SEPARATOR;
-import static org.opensearch.extensions.action.ExtensionActionUtil.createProxyRequestBytes;
+import static org.density.extensions.action.ExtensionActionUtil.UNIT_SEPARATOR;
+import static org.density.extensions.action.ExtensionActionUtil.createProxyRequestBytes;
 
-public class ExtensionActionUtilTests extends OpenSearchTestCase {
+public class ExtensionActionUtilTests extends DensityTestCase {
     private byte[] myBytes;
-    private final String actionName = "org.opensearch.action.MyExampleRequest";
+    private final String actionName = "org.density.action.MyExampleRequest";
     private final byte[] actionNameBytes = MyExampleRequest.class.getName().getBytes(StandardCharsets.UTF_8);
 
     @Before

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 
-public class NodeRoleSettingsTests extends OpenSearchTestCase {
+public class NodeRoleSettingsTests extends DensityTestCase {
 
     /**
      * Validate cluster_manager role and master role can not coexist in a node.

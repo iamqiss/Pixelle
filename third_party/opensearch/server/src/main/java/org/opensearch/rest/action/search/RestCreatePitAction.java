@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.search;
+package org.density.rest.action.search;
 
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * Rest action for creating PIT context

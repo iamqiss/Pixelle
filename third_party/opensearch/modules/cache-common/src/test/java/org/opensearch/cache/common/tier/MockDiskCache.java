@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.LoadAwareCacheLoader;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.serializer.Serializer;
-import org.opensearch.common.cache.stats.CacheStatsHolder;
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolder;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.stats.NoopCacheStatsHolder;
-import org.opensearch.common.cache.store.builders.ICacheBuilder;
-import org.opensearch.common.cache.store.config.CacheConfig;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.LoadAwareCacheLoader;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.serializer.Serializer;
+import org.density.common.cache.stats.CacheStatsHolder;
+import org.density.common.cache.stats.DefaultCacheStatsHolder;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.stats.NoopCacheStatsHolder;
+import org.density.common.cache.store.builders.ICacheBuilder;
+import org.density.common.cache.store.config.CacheConfig;
 
 import java.util.Iterator;
 import java.util.List;

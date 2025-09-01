@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.action.main.MainResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.Build;
+import org.density.Version;
+import org.density.action.main.MainResponse;
+import org.density.cluster.ClusterName;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +52,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class RestMainActionTests extends OpenSearchTestCase {
+public class RestMainActionTests extends DensityTestCase {
 
     public void testHeadResponse() throws Exception {
         final String nodeName = "node1";

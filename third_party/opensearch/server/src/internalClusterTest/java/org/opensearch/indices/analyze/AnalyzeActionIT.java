@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analyze;
+package org.density.indices.analyze;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.analyze.AnalyzeAction;
-import org.opensearch.action.admin.indices.analyze.AnalyzeRequestBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.MockKeywordPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.analyze.AnalyzeAction;
+import org.density.action.admin.indices.analyze.AnalyzeRequestBuilder;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.MockKeywordPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 import org.hamcrest.core.IsNull;
 
 import java.io.IOException;
@@ -50,14 +50,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
 @ClusterScope(minNumDataNodes = 2)
-public class AnalyzeActionIT extends OpenSearchIntegTestCase {
+public class AnalyzeActionIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.disruption;
+package org.density.test.disruption;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.test.InternalTestCluster;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -111,7 +111,7 @@ public class NetworkDisruption implements ServiceDisruptionScheme {
      * Ensures that all nodes in the cluster are connected to each other.
      * <p>
      * Some network disruptions may leave nodes that are not the cluster-manager disconnected from each other.
-     * {@link org.opensearch.cluster.NodeConnectionsService} will eventually reconnect but it's
+     * {@link org.density.cluster.NodeConnectionsService} will eventually reconnect but it's
      * handy to be able to ensure this happens faster
      */
     public static void ensureFullyConnectedCluster(InternalTestCluster cluster) {

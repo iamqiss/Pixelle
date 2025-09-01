@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.unit.DistanceUnit.Distance;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.unit.DistanceUnit.Distance;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -50,9 +50,9 @@ import org.locationtech.spatial4j.shape.Circle;
 /**
  * Builds a circle geometry
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class CircleBuilder extends ShapeBuilder<Circle, org.opensearch.geometry.Circle, CircleBuilder> {
+public class CircleBuilder extends ShapeBuilder<Circle, org.density.geometry.Circle, CircleBuilder> {
 
     public static final ParseField FIELD_RADIUS = new ParseField("radius");
     public static final GeoShapeType TYPE = GeoShapeType.CIRCLE;
@@ -123,7 +123,7 @@ public class CircleBuilder extends ShapeBuilder<Circle, org.opensearch.geometry.
 
     /**
      * Set the radius of the circle
-     * @param radius radius of the circle (see {@link org.opensearch.common.unit.DistanceUnit.Distance})
+     * @param radius radius of the circle (see {@link org.density.common.unit.DistanceUnit.Distance})
      * @return this
      */
     public CircleBuilder radius(Distance radius) {
@@ -182,8 +182,8 @@ public class CircleBuilder extends ShapeBuilder<Circle, org.opensearch.geometry.
     }
 
     @Override
-    public org.opensearch.geometry.Circle buildGeometry() {
-        return new org.opensearch.geometry.Circle(center.x, center.y, unit.toMeters(radius));
+    public org.density.geometry.Circle buildGeometry() {
+        return new org.density.geometry.Circle(center.x, center.y, unit.toMeters(radius));
     }
 
     @Override

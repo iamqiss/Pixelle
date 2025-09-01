@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.RemoteSegmentFileChunkWriter;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.transport.EmptyTransportResponseHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.RemoteSegmentFileChunkWriter;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.transport.EmptyTransportResponseHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -58,7 +58,7 @@ import java.util.function.Consumer;
 /**
  * Target handler for remote recovery
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteRecoveryTargetHandler implements RecoveryTargetHandler {
 

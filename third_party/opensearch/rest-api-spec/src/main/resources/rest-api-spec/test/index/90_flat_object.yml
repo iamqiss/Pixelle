@@ -176,7 +176,7 @@ teardown:
   - match: { test.mappings.properties.ISBN13.type:  keyword     }
   - match: { test.mappings.properties.catalog.type: flat_object }
   - match: { test.mappings.properties.required_matches.type: long }
-  # https://github.com/opensearch-project/OpenSearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
+  # https://github.com/density-project/Density/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
   - length: { test.mappings.properties: 4 }
   - length: { test.mappings.properties.catalog: 1 }
 

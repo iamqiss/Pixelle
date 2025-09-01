@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.stats.SortBy;
-import org.opensearch.wlm.stats.SortOrder;
-import org.opensearch.wlm.stats.WlmStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.wlm.WlmStatsResponse;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.test.DensityTestCase;
+import org.density.wlm.ResourceType;
+import org.density.wlm.stats.SortBy;
+import org.density.wlm.stats.SortOrder;
+import org.density.wlm.stats.WlmStats;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import java.util.OptionalInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class WlmPaginationStrategyTests extends OpenSearchTestCase {
+public class WlmPaginationStrategyTests extends DensityTestCase {
     private WlmStatsResponse mockResponse(int count) {
         List<WlmStats> stats = generateRandomWlmStats(count);
         return new WlmStatsResponse(ClusterName.DEFAULT, stats, Collections.emptyList());
@@ -107,7 +107,7 @@ public class WlmPaginationStrategyTests extends OpenSearchTestCase {
 
         WlmStatsResponse response = mockResponse(5);
 
-        OpenSearchParseException thrown = assertThrows(OpenSearchParseException.class, () -> {
+        DensityParseException thrown = assertThrows(DensityParseException.class, () -> {
             new WlmPaginationStrategy(pageSize, nextToken, sortBy, sortOrder, response);
         });
 
@@ -217,8 +217,8 @@ public class WlmPaginationStrategyTests extends OpenSearchTestCase {
     public void testTokenStructureValidationFailure() {
         String malformedToken = PaginationStrategy.encryptStringToken("abc|def|ghi"); // only 3 parts, not 6
 
-        OpenSearchParseException ex = assertThrows(
-            OpenSearchParseException.class,
+        DensityParseException ex = assertThrows(
+            DensityParseException.class,
             () -> new WlmPaginationStrategy(5, malformedToken, SortBy.NODE_ID, SortOrder.DESC, mockResponse(1))
         );
 
@@ -297,7 +297,7 @@ public class WlmPaginationStrategyTests extends OpenSearchTestCase {
     public void testInvalidTokenStructureTooShort() {
         String token = PaginationStrategy.encryptStringToken("a|b|c");
 
-        OpenSearchParseException ex = assertThrows(OpenSearchParseException.class, () -> new WlmPaginationStrategy.WlmStrategyToken(token));
+        DensityParseException ex = assertThrows(DensityParseException.class, () -> new WlmPaginationStrategy.WlmStrategyToken(token));
 
         assertTrue(ex.getMessage().contains("Invalid pagination token format"));
     }
@@ -306,7 +306,7 @@ public class WlmPaginationStrategyTests extends OpenSearchTestCase {
         // SortOrder and SortBy are blank
         String token = PaginationStrategy.encryptStringToken("node1|group1|3|hashval||");
 
-        OpenSearchParseException ex = assertThrows(OpenSearchParseException.class, () -> new WlmPaginationStrategy.WlmStrategyToken(token));
+        DensityParseException ex = assertThrows(DensityParseException.class, () -> new WlmPaginationStrategy.WlmStrategyToken(token));
 
         assertTrue(ex.getMessage().contains("Invalid pagination token format"));
     }
@@ -333,7 +333,7 @@ public class WlmPaginationStrategyTests extends OpenSearchTestCase {
 
         WlmPaginationStrategy.WlmStrategyToken token = new WlmPaginationStrategy.WlmStrategyToken(tokenStr);
 
-        OpenSearchParseException ex = assertThrows(OpenSearchParseException.class, () -> strategy.getStartIndex(statsList, token));
+        DensityParseException ex = assertThrows(DensityParseException.class, () -> strategy.getStartIndex(statsList, token));
         assertTrue(ex.getMessage().contains("Invalid or outdated token"));
     }
 }

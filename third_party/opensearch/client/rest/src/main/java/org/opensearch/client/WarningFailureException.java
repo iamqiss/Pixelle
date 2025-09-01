@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import java.io.IOException;
 
-import static org.opensearch.client.ResponseException.buildMessage;
+import static org.density.client.ResponseException.buildMessage;
 
 /**
  * This exception is used to indicate that one or more {@link Response#getWarnings()} exist
@@ -42,7 +42,7 @@ import static org.opensearch.client.ResponseException.buildMessage;
  * {@link RestClientBuilder#setStrictDeprecationMode(boolean)} to `true`.
  */
 // This class extends RuntimeException in order to deal with wrapping that is done in FutureUtils on exception.
-// if the exception is not of type OpenSearchException or RuntimeException it will be wrapped in a UncategorizedExecutionException
+// if the exception is not of type DensityException or RuntimeException it will be wrapped in a UncategorizedExecutionException
 public final class WarningFailureException extends RuntimeException {
 
     private final Response response;

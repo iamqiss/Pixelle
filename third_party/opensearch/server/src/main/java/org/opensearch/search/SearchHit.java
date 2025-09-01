@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.search.Explanation;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.transport.RemoteClusterAware;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.document.DocumentField;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.text.Text;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.lookup.SourceLookup;
+import org.density.transport.RemoteClusterAware;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,19 +83,19 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.common.lucene.Lucene.readExplanation;
-import static org.opensearch.common.lucene.Lucene.writeExplanation;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureFieldName;
+import static org.density.common.lucene.Lucene.readExplanation;
+import static org.density.common.lucene.Lucene.writeExplanation;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureFieldName;
 
 /**
  * A single search hit.
  *
  * @see SearchHits
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SearchHit implements Writeable, ToXContentObject, Iterable<DocumentField> {
@@ -372,7 +372,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
             this.source = CompressorRegistry.uncompressIfNeeded(this.source);
             return this.source;
         } catch (IOException e) {
-            throw new OpenSearchParseException("failed to decompress source", e);
+            throw new DensityParseException("failed to decompress source", e);
         }
     }
 
@@ -403,7 +403,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
         try {
             return XContentHelper.convertToJson(getSourceRef(), false);
         } catch (IOException e) {
-            throw new OpenSearchParseException("failed to convert source to a json string");
+            throw new DensityParseException("failed to convert source to a json string");
         }
     }
 
@@ -627,7 +627,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
     /**
      * Fields in a search hit used for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Fields {
         static final String _INDEX = "_index";
@@ -780,7 +780,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
      * This parser outputs a temporary map of the objects needed to create the
      * SearchHit instead of directly creating the SearchHit. The reason for this
      * is that this way we can reuse the parser when parsing xContent from
-     * {@link org.opensearch.search.suggest.completion.CompletionSuggestion.Entry.Option} which unfortunately inlines
+     * {@link org.density.search.suggest.completion.CompletionSuggestion.Entry.Option} which unfortunately inlines
      * the output of
      * {@link #toInnerXContent(XContentBuilder, ToXContent.Params)}
      * of the included search hit. The output of the map is used to create the
@@ -1066,7 +1066,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
     /**
      * Encapsulates the nested identity of a hit.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class NestedIdentity implements Writeable, ToXContentFragment {

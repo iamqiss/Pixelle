@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightStream;
 import org.apache.arrow.memory.BufferAllocator;
@@ -16,9 +16,9 @@ import org.apache.arrow.vector.types.pojo.ArrowType;
 import org.apache.arrow.vector.types.pojo.Field;
 import org.apache.arrow.vector.types.pojo.FieldType;
 import org.apache.arrow.vector.types.pojo.Schema;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class FlightStreamReaderTests extends OpenSearchTestCase {
+public class FlightStreamReaderTests extends DensityTestCase {
 
     private FlightStream mockFlightStream;
 

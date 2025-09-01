@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import org.opensearch.packaging.util.Installation;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.ServerUtils;
-import org.opensearch.packaging.util.Shell;
-import org.opensearch.packaging.util.Shell.Result;
+import org.density.packaging.util.Installation;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.ServerUtils;
+import org.density.packaging.util.Shell;
+import org.density.packaging.util.Shell.Result;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -58,25 +58,25 @@ import java.util.stream.Collectors;
 
 import static java.nio.file.attribute.PosixFilePermissions.fromString;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.packaging.util.Docker.chownWithPrivilegeEscalation;
-import static org.opensearch.packaging.util.Docker.copyFromContainer;
-import static org.opensearch.packaging.util.Docker.existsInContainer;
-import static org.opensearch.packaging.util.Docker.getContainerLogs;
-import static org.opensearch.packaging.util.Docker.getImageLabels;
-import static org.opensearch.packaging.util.Docker.getImageName;
-import static org.opensearch.packaging.util.Docker.getJson;
-import static org.opensearch.packaging.util.Docker.mkDirWithPrivilegeEscalation;
-import static org.opensearch.packaging.util.Docker.removeContainer;
-import static org.opensearch.packaging.util.Docker.rmDirWithPrivilegeEscalation;
-import static org.opensearch.packaging.util.Docker.runContainer;
-import static org.opensearch.packaging.util.Docker.runContainerExpectingFailure;
-import static org.opensearch.packaging.util.Docker.verifyContainerInstallation;
-import static org.opensearch.packaging.util.Docker.waitForOpenSearch;
-import static org.opensearch.packaging.util.FileMatcher.p600;
-import static org.opensearch.packaging.util.FileMatcher.p644;
-import static org.opensearch.packaging.util.FileMatcher.p660;
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.FileUtils.rm;
+import static org.density.packaging.util.Docker.chownWithPrivilegeEscalation;
+import static org.density.packaging.util.Docker.copyFromContainer;
+import static org.density.packaging.util.Docker.existsInContainer;
+import static org.density.packaging.util.Docker.getContainerLogs;
+import static org.density.packaging.util.Docker.getImageLabels;
+import static org.density.packaging.util.Docker.getImageName;
+import static org.density.packaging.util.Docker.getJson;
+import static org.density.packaging.util.Docker.mkDirWithPrivilegeEscalation;
+import static org.density.packaging.util.Docker.removeContainer;
+import static org.density.packaging.util.Docker.rmDirWithPrivilegeEscalation;
+import static org.density.packaging.util.Docker.runContainer;
+import static org.density.packaging.util.Docker.runContainerExpectingFailure;
+import static org.density.packaging.util.Docker.verifyContainerInstallation;
+import static org.density.packaging.util.Docker.waitForDensity;
+import static org.density.packaging.util.FileMatcher.p600;
+import static org.density.packaging.util.FileMatcher.p644;
+import static org.density.packaging.util.FileMatcher.p660;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.FileUtils.rm;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.emptyString;
@@ -152,18 +152,18 @@ public class DockerTests extends PackagingTestCase {
      * is minimally functional.
      */
     public void test050BasicApiTests() throws Exception {
-        waitForOpenSearch(installation);
+        waitForDensity(installation);
 
         assertTrue(existsInContainer(installation.logs.resolve("gc.log")));
 
-        ServerUtils.runOpenSearchTests();
+        ServerUtils.runDensityTests();
     }
 
     /**
      * Check that the default config can be overridden using a bind mount, and that env vars are respected
      */
     public void test070BindMountCustomPathConfAndJvmOptions() throws Exception {
-        copyFromContainer(installation.config("opensearch.yml"), tempDir.resolve("opensearch.yml"));
+        copyFromContainer(installation.config("density.yml"), tempDir.resolve("density.yml"));
         copyFromContainer(installation.config("log4j2.properties"), tempDir.resolve("log4j2.properties"));
 
         // we have to disable Log4j from using JMX lest it will hit a security
@@ -175,15 +175,15 @@ public class DockerTests extends PackagingTestCase {
         // Make the temp directory and contents accessible when bind-mounted.
         Files.setPosixFilePermissions(tempDir, fromString("rwxrwxrwx"));
         // These permissions are necessary to run the tests under Vagrant
-        Files.setPosixFilePermissions(tempDir.resolve("opensearch.yml"), p644);
+        Files.setPosixFilePermissions(tempDir.resolve("density.yml"), p644);
         Files.setPosixFilePermissions(tempDir.resolve("log4j2.properties"), p644);
 
         // Restart the container
-        final Map<Path, Path> volumes = singletonMap(tempDir, Paths.get("/usr/share/opensearch/config"));
-        final Map<String, String> envVars = singletonMap("OPENSEARCH_JAVA_OPTS", "-XX:-UseCompressedOops");
+        final Map<Path, Path> volumes = singletonMap(tempDir, Paths.get("/usr/share/density/config"));
+        final Map<String, String> envVars = singletonMap("DENSITY_JAVA_OPTS", "-XX:-UseCompressedOops");
         runContainer(distribution(), volumes, envVars);
 
-        waitForOpenSearch(installation);
+        waitForDensity(installation);
 
         final JsonNode nodes = getJson("_nodes").get("nodes");
         final String nodeId = nodes.fieldNames().next();
@@ -211,7 +211,7 @@ public class DockerTests extends PackagingTestCase {
 
             runContainer(distribution(), volumes, null);
 
-            waitForOpenSearch(installation);
+            waitForDensity(installation);
 
             final JsonNode nodes = getJson("_nodes");
 
@@ -228,7 +228,7 @@ public class DockerTests extends PackagingTestCase {
     }
 
     /**
-     * Check that it is possible to run OpenSearch under a different user and group to the default.
+     * Check that it is possible to run Density under a different user and group to the default.
      */
     public void test072RunEsAsDifferentUserAndGroup() throws Exception {
         assumeFalse(Platforms.WINDOWS);
@@ -242,7 +242,7 @@ public class DockerTests extends PackagingTestCase {
         Files.createDirectory(tempEsDataDir);
         Files.createDirectory(tempEsLogsDir);
 
-        copyFromContainer(installation.config("opensearch.yml"), tempEsConfigDir);
+        copyFromContainer(installation.config("density.yml"), tempEsConfigDir);
         copyFromContainer(installation.config("jvm.options"), tempEsConfigDir);
         copyFromContainer(installation.config("log4j2.properties"), tempEsConfigDir);
 
@@ -259,7 +259,7 @@ public class DockerTests extends PackagingTestCase {
         // Restart the container
         runContainer(distribution(), volumes, null, 501, 501);
 
-        waitForOpenSearch(installation);
+        waitForDensity(installation);
     }
 
     /**
@@ -271,8 +271,8 @@ public class DockerTests extends PackagingTestCase {
         Files.write(tempDir.resolve(passwordFilename), "other_hunter2\n".getBytes(StandardCharsets.UTF_8));
 
         Map<String, String> envVars = new HashMap<>();
-        envVars.put("OPENSEARCH_PASSWORD", "hunter2");
-        envVars.put("OPENSEARCH_PASSWORD_FILE", "/run/secrets/" + passwordFilename);
+        envVars.put("DENSITY_PASSWORD", "hunter2");
+        envVars.put("DENSITY_PASSWORD_FILE", "/run/secrets/" + passwordFilename);
 
         // File permissions need to be secured in order for the ES wrapper to accept
         // them for populating env var values
@@ -284,7 +284,7 @@ public class DockerTests extends PackagingTestCase {
 
         assertThat(
             dockerLogs.stderr,
-            containsString("ERROR: Both OPENSEARCH_PASSWORD_FILE and OPENSEARCH_PASSWORD are set. These are mutually exclusive.")
+            containsString("ERROR: Both DENSITY_PASSWORD_FILE and DENSITY_PASSWORD are set. These are mutually exclusive.")
         );
     }
 
@@ -297,7 +297,7 @@ public class DockerTests extends PackagingTestCase {
 
         Files.write(tempDir.resolve(passwordFilename), "hunter2\n".getBytes(StandardCharsets.UTF_8));
 
-        Map<String, String> envVars = singletonMap("OPENSEARCH_PASSWORD_FILE", "/run/secrets/" + passwordFilename);
+        Map<String, String> envVars = singletonMap("DENSITY_PASSWORD_FILE", "/run/secrets/" + passwordFilename);
 
         // Set invalid file permissions
         Files.setPosixFilePermissions(tempDir.resolve(passwordFilename), p660);
@@ -310,15 +310,15 @@ public class DockerTests extends PackagingTestCase {
         assertThat(
             dockerLogs.stderr,
             containsString(
-                "ERROR: File /run/secrets/" + passwordFilename + " from OPENSEARCH_PASSWORD_FILE must have file permissions 400 or 600"
+                "ERROR: File /run/secrets/" + passwordFilename + " from DENSITY_PASSWORD_FILE must have file permissions 400 or 600"
             )
         );
     }
 
     /**
-     * Check that the OpenSearch-shard tool is shipped in the Docker image and is executable.
+     * Check that the Density-shard tool is shipped in the Docker image and is executable.
      */
-    public void test091OpenSearchShardCliPackaging() {
+    public void test091DensityShardCliPackaging() {
         final Installation.Executables bin = installation.executables();
 
         final Result result = sh.run(bin.shardTool + " -h");
@@ -326,14 +326,14 @@ public class DockerTests extends PackagingTestCase {
     }
 
     /**
-     * Check that the OpenSearch-shard tool is shipped in the Docker image and is executable.
+     * Check that the Density-shard tool is shipped in the Docker image and is executable.
      */
-    public void test092OpenSearchNodeCliPackaging() {
+    public void test092DensityNodeCliPackaging() {
         final Installation.Executables bin = installation.executables();
 
         final Result result = sh.run(bin.nodeTool + " -h");
         assertThat(
-            "Failed to find expected message about the OpenSearch-shard CLI tool",
+            "Failed to find expected message about the Density-shard CLI tool",
             result.stdout,
             containsString("A CLI tool to " + "do unsafe cluster and index manipulations on current node")
         );
@@ -350,7 +350,7 @@ public class DockerTests extends PackagingTestCase {
      * Check that there are no files with a GID other than 0.
      */
     public void test101AllFilesAreGroupZero() {
-        // Run a `find` command in a new container without OpenSearch running, so
+        // Run a `find` command in a new container without Density running, so
         // that the results aren't subject to sporadic failures from files appearing /
         // disappearing while `find` is traversing the filesystem.
         //
@@ -372,12 +372,12 @@ public class DockerTests extends PackagingTestCase {
         final Map<String, String> labels = getImageLabels(distribution);
 
         final Map<String, String> staticLabels = new HashMap<>();
-        staticLabels.put("name", "OpenSearch");
+        staticLabels.put("name", "Density");
         staticLabels.put("schema-version", "1.0");
-        staticLabels.put("url", "https://www.opensearch.co/products/opensearch");
-        staticLabels.put("usage", "https://www.opensearch.co/guide/en/opensearch/reference/index.html");
-        staticLabels.put("vcs-url", "https://github.com/opensearch/opensearch");
-        staticLabels.put("vendor", "OpenSearch");
+        staticLabels.put("url", "https://www.density.co/products/density");
+        staticLabels.put("usage", "https://www.density.co/guide/en/density/reference/index.html");
+        staticLabels.put("vcs-url", "https://github.com/density/density");
+        staticLabels.put("vendor", "Density");
 
         staticLabels.put("license", "Apache-2.0");
 
@@ -409,11 +409,11 @@ public class DockerTests extends PackagingTestCase {
         final Map<String, String> labels = getImageLabels(distribution);
 
         final Map<String, String> staticLabels = new HashMap<>();
-        staticLabels.put("title", "OpenSearch");
-        staticLabels.put("url", "https://www.opensearch.co/products/opensearch");
-        staticLabels.put("documentation", "https://www.opensearch.co/guide/en/opensearch/reference/index.html");
-        staticLabels.put("source", "https://github.com/opensearch/opensearch");
-        staticLabels.put("vendor", "OpenSearch");
+        staticLabels.put("title", "Density");
+        staticLabels.put("url", "https://www.density.co/products/density");
+        staticLabels.put("documentation", "https://www.density.co/guide/en/density/reference/index.html");
+        staticLabels.put("source", "https://github.com/density/density");
+        staticLabels.put("vendor", "Density");
 
         staticLabels.put("licenses", "Apache-2.0");
 
@@ -438,10 +438,10 @@ public class DockerTests extends PackagingTestCase {
     }
 
     /**
-     * Check that the container logs contain the expected content for OpenSearch itself.
+     * Check that the container logs contain the expected content for Density itself.
      */
-    public void test120DockerLogsIncludeOpenSearchLogs() throws Exception {
-        waitForOpenSearch(installation);
+    public void test120DockerLogsIncludeDensityLogs() throws Exception {
+        waitForDensity(installation);
         final Result containerLogs = getContainerLogs();
 
         assertThat("Container logs don't contain abbreviated class names", containerLogs.stdout, containsString("o.e.n.Node"));
@@ -463,7 +463,7 @@ public class DockerTests extends PackagingTestCase {
         assertThat(fields, arrayWithSize(3));
         assertThat("Incorrect UID", fields[0], equalTo("1000"));
         assertThat("Incorrect GID", fields[1], equalTo("0"));
-        assertThat("Incorrect username", fields[2], equalTo("opensearch"));
+        assertThat("Incorrect username", fields[2], equalTo("density"));
     }
 
     /**
@@ -490,7 +490,7 @@ public class DockerTests extends PackagingTestCase {
      * Check that Opensearch reports per-node cgroup information.
      */
     public void test140CgroupOsStatsAreAvailable() throws Exception {
-        waitForOpenSearch(installation);
+        waitForDensity(installation);
 
         final JsonNode nodes = getJson("_nodes/stats/os").get("nodes");
 

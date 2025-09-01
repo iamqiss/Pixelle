@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.SortedNumericDocValuesField;
@@ -19,17 +19,17 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalSum;
-import org.opensearch.search.internal.SearchContext;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.plugins.SearchPlugin;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalSum;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.List;
@@ -83,7 +83,7 @@ public class AggregatorCancellationTests extends AggregatorTestCase {
                 );
 
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> searchAndReduce(
                         searcher,
                         new MatchAllDocsQuery(),
@@ -183,7 +183,7 @@ public class AggregatorCancellationTests extends AggregatorTestCase {
         }
 
         protected void checkCancelled() {
-            throw new OpenSearchRejectedExecutionException("The request has been cancelled");
+            throw new DensityRejectedExecutionException("The request has been cancelled");
         }
 
         @Override

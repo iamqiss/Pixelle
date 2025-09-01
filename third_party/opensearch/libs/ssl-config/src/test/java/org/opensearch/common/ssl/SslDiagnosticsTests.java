@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.ssl;
+package org.density.common.ssl;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Nullable;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import javax.net.ssl.SSLSession;
@@ -59,7 +59,7 @@ import java.util.stream.Stream;
 
 import org.mockito.Mockito;
 
-public class SslDiagnosticsTests extends OpenSearchTestCase {
+public class SslDiagnosticsTests extends DensityTestCase {
 
     // Some constants for use in mock certificates
     private static final byte[] MOCK_ENCODING_1 = { 0x61, 0x62, 0x63, 0x64, 0x65, 0x66 };
@@ -487,7 +487,7 @@ public class SslDiagnosticsTests extends OpenSearchTestCase {
             chain,
             SslDiagnostics.PeerType.SERVER,
             session,
-            "foo.monitoring.exporters.opensearch.ssl",
+            "foo.monitoring.exporters.density.ssl",
             trustIssuers
         );
         assertThat(
@@ -500,7 +500,7 @@ public class SslDiagnosticsTests extends OpenSearchTestCase {
                     + "];"
                     + " the certificate does not have any DNS/IP subject alternative names;"
                     + " the certificate is self-issued;"
-                    + " the [CN=foo,DC=example,DC=com] certificate is trusted in this ssl context ([foo.monitoring.exporters.opensearch.ssl])"
+                    + " the [CN=foo,DC=example,DC=com] certificate is trusted in this ssl context ([foo.monitoring.exporters.density.ssl])"
             )
         );
     }

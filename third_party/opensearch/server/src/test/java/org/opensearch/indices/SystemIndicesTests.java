@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SystemIndexPlugin;
-import org.opensearch.tasks.TaskResultsService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.plugins.SystemIndexPlugin;
+import org.density.tasks.TaskResultsService;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,12 +50,12 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.tasks.TaskResultsService.TASK_INDEX;
+import static org.density.tasks.TaskResultsService.TASK_INDEX;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-public class SystemIndicesTests extends OpenSearchTestCase {
+public class SystemIndicesTests extends DensityTestCase {
 
     public void testBasicOverlappingPatterns() {
         SystemIndexDescriptor broadPattern = new SystemIndexDescriptor(".a*c*", "test");

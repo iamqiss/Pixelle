@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks.cancel;
+package org.density.action.admin.cluster.node.tasks.cancel;
 
-import org.opensearch.action.support.tasks.TasksRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.tasks.TasksRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for the request to cancel tasks running on the specified nodes
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CancelTasksRequestBuilder extends TasksRequestBuilder<CancelTasksRequest, CancelTasksResponse, CancelTasksRequestBuilder> {
 
-    public CancelTasksRequestBuilder(OpenSearchClient client, CancelTasksAction action) {
+    public CancelTasksRequestBuilder(DensityClient client, CancelTasksAction action) {
         super(client, action, new CancelTasksRequest());
     }
 

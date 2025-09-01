@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.identity.ManagedIdentityCredential;
@@ -40,18 +40,18 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.common.implementation.Constants;
 import com.azure.storage.common.implementation.connectionstring.StorageConnectionString;
 import com.azure.storage.common.implementation.connectionstring.StorageEndpoint;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.settings.SecureSetting;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.AffixSetting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.common.Nullable;
+import org.density.common.TriFunction;
+import org.density.common.collect.MapBuilder;
+import org.density.common.settings.SecureSetting;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.AffixSetting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.settings.SecureString;
 
 import java.net.InetAddress;
 import java.net.URI;

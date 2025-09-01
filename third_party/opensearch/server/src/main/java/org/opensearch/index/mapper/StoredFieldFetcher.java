@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.index.fieldvisitor.SingleFieldsVisitor;
+import org.density.index.fieldvisitor.SingleFieldsVisitor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  * FieldValueFetcher for stored fields, it uses {@link SingleFieldsVisitor} to fetch the
  * field value(s) from stored fields which supports all kind of primitive types
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StoredFieldFetcher extends FieldValueFetcher {
 

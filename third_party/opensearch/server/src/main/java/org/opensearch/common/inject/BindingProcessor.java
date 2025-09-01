@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,44 +23,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Annotations;
-import org.opensearch.common.inject.internal.BindingImpl;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.ExposedBindingImpl;
-import org.opensearch.common.inject.internal.InstanceBindingImpl;
-import org.opensearch.common.inject.internal.InternalFactory;
-import org.opensearch.common.inject.internal.LinkedBindingImpl;
-import org.opensearch.common.inject.internal.LinkedProviderBindingImpl;
-import org.opensearch.common.inject.internal.ProviderInstanceBindingImpl;
-import org.opensearch.common.inject.internal.ProviderMethod;
-import org.opensearch.common.inject.internal.Scoping;
-import org.opensearch.common.inject.internal.UntargettedBindingImpl;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.ConstructorBinding;
-import org.opensearch.common.inject.spi.ConvertedConstantBinding;
-import org.opensearch.common.inject.spi.ExposedBinding;
-import org.opensearch.common.inject.spi.InjectionPoint;
-import org.opensearch.common.inject.spi.InstanceBinding;
-import org.opensearch.common.inject.spi.LinkedKeyBinding;
-import org.opensearch.common.inject.spi.PrivateElements;
-import org.opensearch.common.inject.spi.ProviderBinding;
-import org.opensearch.common.inject.spi.ProviderInstanceBinding;
-import org.opensearch.common.inject.spi.ProviderKeyBinding;
-import org.opensearch.common.inject.spi.UntargettedBinding;
+import org.density.common.inject.internal.Annotations;
+import org.density.common.inject.internal.BindingImpl;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.ExposedBindingImpl;
+import org.density.common.inject.internal.InstanceBindingImpl;
+import org.density.common.inject.internal.InternalFactory;
+import org.density.common.inject.internal.LinkedBindingImpl;
+import org.density.common.inject.internal.LinkedProviderBindingImpl;
+import org.density.common.inject.internal.ProviderInstanceBindingImpl;
+import org.density.common.inject.internal.ProviderMethod;
+import org.density.common.inject.internal.Scoping;
+import org.density.common.inject.internal.UntargettedBindingImpl;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.ConstructorBinding;
+import org.density.common.inject.spi.ConvertedConstantBinding;
+import org.density.common.inject.spi.ExposedBinding;
+import org.density.common.inject.spi.InjectionPoint;
+import org.density.common.inject.spi.InstanceBinding;
+import org.density.common.inject.spi.LinkedKeyBinding;
+import org.density.common.inject.spi.PrivateElements;
+import org.density.common.inject.spi.ProviderBinding;
+import org.density.common.inject.spi.ProviderInstanceBinding;
+import org.density.common.inject.spi.ProviderKeyBinding;
+import org.density.common.inject.spi.UntargettedBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.common.util.set.Sets.newHashSet;
 
 /**
  * Handles {@link Binder#bind} and {@link Binder#bindConstant} elements.
@@ -68,7 +68,7 @@ import static org.opensearch.common.util.set.Sets.newHashSet;
  * @author crazybob@google.com (Bob Lee)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class BindingProcessor extends AbstractProcessor {
 
@@ -317,7 +317,7 @@ class BindingProcessor extends AbstractProcessor {
     /**
      * A listener for a process creation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface CreationListener {
         void notify(Errors errors);

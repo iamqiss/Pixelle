@@ -1,7 +1,7 @@
 {
   "nodes.reload_secure_settings":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/nodes-apis/nodes-reload-secure/",
+      "url":"https://density.org/docs/latest/api-reference/nodes-apis/nodes-reload-secure/",
       "description":"Reloads secure settings."
     },
     "stability":"stable",
@@ -34,7 +34,7 @@
       }
     },
     "body": {
-      "description": "An object containing the password for the opensearch keystore",
+      "description": "An object containing the password for the density keystore",
       "required": false
     }
   }

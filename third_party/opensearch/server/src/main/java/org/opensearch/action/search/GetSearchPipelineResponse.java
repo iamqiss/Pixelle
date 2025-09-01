@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.pipeline.PipelineConfiguration;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.pipeline.PipelineConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,12 +28,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * transport response for getting a search pipeline
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.7.0")
 public class GetSearchPipelineResponse extends ActionResponse implements StatusToXContentObject {

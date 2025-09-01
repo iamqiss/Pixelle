@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +61,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.index.RandomCreateIndexGenerator.randomIndexSettings;
-import static org.opensearch.index.RandomCreateIndexGenerator.randomMappingFields;
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.index.RandomCreateIndexGenerator.randomIndexSettings;
+import static org.density.index.RandomCreateIndexGenerator.randomMappingFields;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GetIndexTemplatesResponseTests extends OpenSearchTestCase {
+public class GetIndexTemplatesResponseTests extends DensityTestCase {
 
     static final String mappingString = "{\"properties\":{\"f1\": {\"type\":\"text\"},\"f2\": {\"type\":\"keyword\"}}}";
 
@@ -83,16 +83,16 @@ public class GetIndexTemplatesResponseTests extends OpenSearchTestCase {
             .test();
     }
 
-    public void testParsingFromOpenSearchResponse() throws IOException {
+    public void testParsingFromDensityResponse() throws IOException {
         for (int runs = 0; runs < 20; runs++) {
-            org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse esResponse =
-                new org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse(new ArrayList<>());
+            org.density.action.admin.indices.template.get.GetIndexTemplatesResponse esResponse =
+                new org.density.action.admin.indices.template.get.GetIndexTemplatesResponse(new ArrayList<>());
 
             XContentType xContentType = randomFrom(XContentType.values());
             int numTemplates = randomIntBetween(0, 32);
             for (int i = 0; i < numTemplates; i++) {
-                org.opensearch.cluster.metadata.IndexTemplateMetadata.Builder esIMD =
-                    new org.opensearch.cluster.metadata.IndexTemplateMetadata.Builder(
+                org.density.cluster.metadata.IndexTemplateMetadata.Builder esIMD =
+                    new org.density.cluster.metadata.IndexTemplateMetadata.Builder(
                         String.format(Locale.ROOT, "%02d ", i) + randomAlphaOfLength(4)
                     );
                 esIMD.patterns(Arrays.asList(generateRandomStringArray(32, 4, false, false)));
@@ -123,7 +123,7 @@ public class GetIndexTemplatesResponseTests extends OpenSearchTestCase {
 
                 response.getIndexTemplates().sort(Comparator.comparing(IndexTemplateMetadata::name));
                 for (int i = 0; i < numTemplates; i++) {
-                    org.opensearch.cluster.metadata.IndexTemplateMetadata esIMD = esResponse.getIndexTemplates().get(i);
+                    org.density.cluster.metadata.IndexTemplateMetadata esIMD = esResponse.getIndexTemplates().get(i);
                     IndexTemplateMetadata result = response.getIndexTemplates().get(i);
 
                     assertThat(result.patterns(), equalTo(esIMD.patterns()));
@@ -208,11 +208,11 @@ public class GetIndexTemplatesResponseTests extends OpenSearchTestCase {
 
         // Create a server-side counterpart for the client-side class and call toXContent on it
 
-        List<org.opensearch.cluster.metadata.IndexTemplateMetadata> serverIndexTemplates = new ArrayList<>();
+        List<org.density.cluster.metadata.IndexTemplateMetadata> serverIndexTemplates = new ArrayList<>();
         List<IndexTemplateMetadata> clientIndexTemplates = response.getIndexTemplates();
         for (IndexTemplateMetadata clientITMD : clientIndexTemplates) {
-            org.opensearch.cluster.metadata.IndexTemplateMetadata.Builder serverTemplateBuilder =
-                org.opensearch.cluster.metadata.IndexTemplateMetadata.builder(clientITMD.name());
+            org.density.cluster.metadata.IndexTemplateMetadata.Builder serverTemplateBuilder =
+                org.density.cluster.metadata.IndexTemplateMetadata.builder(clientITMD.name());
 
             serverTemplateBuilder.patterns(clientITMD.patterns());
 
@@ -231,8 +231,8 @@ public class GetIndexTemplatesResponseTests extends OpenSearchTestCase {
             serverIndexTemplates.add(serverTemplateBuilder.build());
 
         }
-        org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse serverResponse =
-            new org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse(serverIndexTemplates);
+        org.density.action.admin.indices.template.get.GetIndexTemplatesResponse serverResponse =
+            new org.density.action.admin.indices.template.get.GetIndexTemplatesResponse(serverIndexTemplates);
         serverResponse.toXContent(builder, ToXContent.EMPTY_PARAMS);
     }
 

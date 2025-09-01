@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.common.StreamContext;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.DecryptedRangedStreamProvider;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.StreamContext;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.DecryptedRangedStreamProvider;
+import org.density.common.io.InputStreamContainer;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * EncryptedBlobContainer is an encrypted BlobContainer that is backed by a
  * {@link AsyncMultiStreamBlobContainer}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AsyncMultiStreamEncryptedBlobContainer<T, U> extends EncryptedBlobContainer<T, U> implements AsyncMultiStreamBlobContainer {
 

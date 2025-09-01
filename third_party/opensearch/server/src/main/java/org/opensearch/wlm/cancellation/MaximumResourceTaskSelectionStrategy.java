@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.cancellation;
+package org.density.wlm.cancellation;
 
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
+import static org.density.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
 
 /**
  * Represents the highest resource consuming task first selection strategy.

@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsResponse;
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.action.pagination.WlmPaginationStrategy;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Table;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.stats.SortBy;
-import org.opensearch.wlm.stats.SortOrder;
-import org.opensearch.wlm.stats.WlmStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.wlm.WlmStatsResponse;
+import org.density.action.pagination.PageToken;
+import org.density.action.pagination.WlmPaginationStrategy;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Table;
+import org.density.core.rest.RestStatus;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
+import org.density.wlm.ResourceType;
+import org.density.wlm.stats.SortBy;
+import org.density.wlm.stats.SortOrder;
+import org.density.wlm.stats.WlmStats;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RestWlmStatsActionTests extends OpenSearchTestCase {
+public class RestWlmStatsActionTests extends DensityTestCase {
 
     private RestWlmStatsAction action;
 
@@ -67,13 +67,13 @@ public class RestWlmStatsActionTests extends OpenSearchTestCase {
     public void testParsePageSizeNegative() {
         RestRequest request = mock(RestRequest.class);
         when(request.paramAsInt("size", 10)).thenReturn(-5);
-        expectThrows(OpenSearchParseException.class, () -> action.parsePageSize(request));
+        expectThrows(DensityParseException.class, () -> action.parsePageSize(request));
     }
 
     public void testParsePageSizeTooLarge() {
         RestRequest request = mock(RestRequest.class);
         when(request.paramAsInt("size", 10)).thenReturn(102);
-        expectThrows(OpenSearchParseException.class, () -> action.parsePageSize(request));
+        expectThrows(DensityParseException.class, () -> action.parsePageSize(request));
     }
 
     public void testParseSortByValid() {
@@ -82,7 +82,7 @@ public class RestWlmStatsActionTests extends OpenSearchTestCase {
     }
 
     public void testParseSortByInvalid() {
-        expectThrows(OpenSearchParseException.class, () -> action.parseSortBy("invalid_key"));
+        expectThrows(DensityParseException.class, () -> action.parseSortBy("invalid_key"));
     }
 
     public void testParseSortOrderValid() {
@@ -91,7 +91,7 @@ public class RestWlmStatsActionTests extends OpenSearchTestCase {
     }
 
     public void testParseSortOrderInvalid() {
-        expectThrows(OpenSearchParseException.class, () -> action.parseSortOrder("upside_down"));
+        expectThrows(DensityParseException.class, () -> action.parseSortOrder("upside_down"));
     }
 
     public void testCreateTableWithHeaders() {
@@ -156,7 +156,7 @@ public class RestWlmStatsActionTests extends OpenSearchTestCase {
             10,
             SortBy.NODE_ID,
             SortOrder.ASC,
-            new OpenSearchParseException("forced failure")
+            new DensityParseException("forced failure")
         );
 
         assertNotNull(capturedResponse[0]);

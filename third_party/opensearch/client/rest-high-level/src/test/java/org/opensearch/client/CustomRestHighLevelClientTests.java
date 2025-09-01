@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.core5.http.ContentType;
@@ -41,17 +41,17 @@ import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.hc.core5.http.message.RequestLine;
 import org.apache.hc.core5.http.message.StatusLine;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.action.main.MainRequest;
-import org.opensearch.action.main.MainResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Build;
+import org.density.Version;
+import org.density.action.main.MainRequest;
+import org.density.action.main.MainResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.common.SuppressForbidden;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentHelper;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -74,7 +74,7 @@ import static org.mockito.Mockito.when;
 /**
  * Test and demonstrates how {@link RestHighLevelClient} can be extended to support custom endpoints.
  */
-public class CustomRestHighLevelClientTests extends OpenSearchTestCase {
+public class CustomRestHighLevelClientTests extends DensityTestCase {
 
     private static final String ENDPOINT = "/_custom";
 
@@ -162,7 +162,7 @@ public class CustomRestHighLevelClientTests extends OpenSearchTestCase {
     }
 
     /**
-     * Mocks the synchronous request execution like if it was executed by OpenSearch.
+     * Mocks the synchronous request execution like if it was executed by Density.
      */
     private Response mockPerformRequest(Request request) throws IOException {
         assertThat(request.getOptions().getHeaders(), hasSize(1));

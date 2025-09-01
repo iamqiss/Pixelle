@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
-import org.opensearch.gradle.EmptyDirTask;
-import org.opensearch.gradle.tar.SymbolicLinkPreservingTar;
+import org.density.gradle.EmptyDirTask;
+import org.density.gradle.tar.SymbolicLinkPreservingTar;
 import org.gradle.api.Action;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
@@ -55,12 +55,12 @@ import org.gradle.internal.os.OperatingSystem;
 
 import java.io.File;
 
-import static org.opensearch.gradle.util.Util.capitalize;
+import static org.density.gradle.util.Util.capitalize;
 import static org.gradle.api.internal.artifacts.ArtifactAttributes.ARTIFACT_FORMAT;
 
 /**
  * Provides a DSL and common configurations to define different types of
- * OpenSearch distribution archives. See ':distribution:archives'.
+ * Density distribution archives. See ':distribution:archives'.
  * <p>
  * This configures the default artifacts for the distribution specific
  * subprojects. We have subprojects for two reasons:
@@ -156,7 +156,7 @@ public class InternalDistributionArchiveSetupPlugin implements Plugin<Project> {
         project.getTasks().withType(AbstractArchiveTask.class).configureEach(t -> {
             String subdir = archiveTaskToSubprojectName(t.getName());
             t.getDestinationDirectory().set(project.file(subdir + "/build/distributions"));
-            t.getArchiveBaseName().set("opensearch-min");
+            t.getArchiveBaseName().set("density-min");
         });
     }
 

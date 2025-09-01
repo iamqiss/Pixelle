@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.policy;
+package org.density.common.cache.policy;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.query.QuerySearchResult;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.query.QuerySearchResult;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
  * to decide whether to admit a given BytesReference. Also handles serialization/deserialization of the underlying QuerySearchResult,
  * which is all that is needed outside the cache. At policy checking time, this spares us from having to create an entire
  * short-lived QuerySearchResult object just to read a few values.
- * @opensearch.internal
+ * @density.internal
  */
 public class CachedQueryResult {
     private final PolicyValues policyValues;
@@ -64,7 +64,7 @@ public class CachedQueryResult {
      * A class containing information needed for all cache policies
      *  to decide whether to admit a given value.
      *
-     *  @opensearch.experimental
+     *  @density.experimental
      */
     @ExperimentalApi
     public static class PolicyValues implements Writeable {

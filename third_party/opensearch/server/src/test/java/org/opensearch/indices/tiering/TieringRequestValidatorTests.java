@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.tiering;
+package org.density.indices.tiering;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.tiering.TieringValidationResult;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexModule;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.indices.tiering.TieringValidationResult;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexModule;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,21 +34,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.opensearch.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_DISK_FLOOD_STAGE_WATERMARK_SETTING;
-import static org.opensearch.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_HIGH_DISK_WATERMARK_SETTING;
-import static org.opensearch.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_LOW_DISK_WATERMARK_SETTING;
-import static org.opensearch.indices.tiering.TieringRequestValidator.getEligibleNodes;
-import static org.opensearch.indices.tiering.TieringRequestValidator.getIndexPrimaryStoreSize;
-import static org.opensearch.indices.tiering.TieringRequestValidator.getTotalAvailableBytesInWarmTier;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateDiskThresholdWaterMarkNotBreached;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateEligibleNodesCapacity;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateHotIndex;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateIndexHealth;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateOpenIndex;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateRemoteStoreIndex;
-import static org.opensearch.indices.tiering.TieringRequestValidator.validateWarmNodes;
+import static org.density.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_DISK_FLOOD_STAGE_WATERMARK_SETTING;
+import static org.density.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_HIGH_DISK_WATERMARK_SETTING;
+import static org.density.cluster.routing.allocation.DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_LOW_DISK_WATERMARK_SETTING;
+import static org.density.indices.tiering.TieringRequestValidator.getEligibleNodes;
+import static org.density.indices.tiering.TieringRequestValidator.getIndexPrimaryStoreSize;
+import static org.density.indices.tiering.TieringRequestValidator.getTotalAvailableBytesInWarmTier;
+import static org.density.indices.tiering.TieringRequestValidator.validateDiskThresholdWaterMarkNotBreached;
+import static org.density.indices.tiering.TieringRequestValidator.validateEligibleNodesCapacity;
+import static org.density.indices.tiering.TieringRequestValidator.validateHotIndex;
+import static org.density.indices.tiering.TieringRequestValidator.validateIndexHealth;
+import static org.density.indices.tiering.TieringRequestValidator.validateOpenIndex;
+import static org.density.indices.tiering.TieringRequestValidator.validateRemoteStoreIndex;
+import static org.density.indices.tiering.TieringRequestValidator.validateWarmNodes;
 
-public class TieringRequestValidatorTests extends OpenSearchTestCase {
+public class TieringRequestValidatorTests extends DensityTestCase {
 
     public void testValidateWarmNodes() {
         ClusterState clusterStateWithWarmNodes = ClusterState.builder(ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube;
+package org.density.index.compositeindex.datacube;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.Mapper;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -23,14 +23,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.compositeindex.datacube.DateDimension.CALENDAR_INTERVALS;
-import static org.opensearch.index.compositeindex.datacube.IpDimension.IP;
-import static org.opensearch.index.compositeindex.datacube.OrdinalDimension.ORDINAL;
+import static org.density.index.compositeindex.datacube.DateDimension.CALENDAR_INTERVALS;
+import static org.density.index.compositeindex.datacube.IpDimension.IP;
+import static org.density.index.compositeindex.datacube.OrdinalDimension.ORDINAL;
 
 /**
  * Dimension factory class mainly used to parse and create dimension from the mappings
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class DimensionFactory {

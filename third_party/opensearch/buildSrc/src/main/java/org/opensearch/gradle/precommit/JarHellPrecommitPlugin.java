@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.util.Util;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.util.Util;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -44,11 +44,11 @@ public class JarHellPrecommitPlugin extends PrecommitPlugin {
     @Override
     public TaskProvider<? extends Task> createTask(Project project) {
         Configuration jarHellConfig = project.getConfigurations().create("jarHell");
-        if (BuildParams.isInternal() && project.getPath().equals(":libs:opensearch-common") == false) {
+        if (BuildParams.isInternal() && project.getPath().equals(":libs:density-common") == false) {
             // External plugins will depend on this already via transitive dependencies.
             // Internal projects are not all plugins, so make sure the check is available
             // we are not doing this for this project itself to avoid jar hell with itself
-            project.getDependencies().add("jarHell", project.project(":libs:opensearch-common"));
+            project.getDependencies().add("jarHell", project.project(":libs:density-common"));
         }
 
         TaskProvider<JarHellTask> jarHell = project.getTasks().register("jarHell", JarHellTask.class);
@@ -59,7 +59,7 @@ public class JarHellPrecommitPlugin extends PrecommitPlugin {
             t.dependsOn(jarHellConfig, testClassesTask);
 
             // if this a plugin, we need to add dependency on pluginProperties task
-            project.getPluginManager().withPlugin("opensearch.opensearchplugin", plugin -> {
+            project.getPluginManager().withPlugin("density.densityplugin", plugin -> {
                 Task propertiesTask = project.getTasks().getByName("pluginProperties");
                 t.dependsOn(jarHellConfig, testClassesTask, propertiesTask);
             });

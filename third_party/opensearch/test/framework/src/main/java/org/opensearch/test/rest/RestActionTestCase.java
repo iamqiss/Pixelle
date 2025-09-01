@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.rest.RestController;
+import org.density.rest.RestRequest;
+import org.density.tasks.Task;
+import org.density.tasks.TaskListener;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -58,7 +58,7 @@ import java.util.function.BiFunction;
  * A common base class for Rest*ActionTests. Provides access to a {@link RestController}
  * that can be used to register individual REST actions, and test request handling.
  */
-public abstract class RestActionTestCase extends OpenSearchTestCase {
+public abstract class RestActionTestCase extends DensityTestCase {
     private RestController controller;
     protected VerifyingClient verifyingClient;
 

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree.filter.provider;
+package org.density.search.startree.filter.provider;
 
 import org.apache.lucene.document.DoublePoint;
 import org.apache.lucene.document.FloatPoint;
@@ -15,22 +15,22 @@ import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.sandbox.document.HalfFloatPoint;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper.KeywordFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.ExactMatchDimFilter;
-import org.opensearch.search.startree.filter.MatchNoneFilter;
-import org.opensearch.search.startree.filter.RangeMatchDimFilter;
+import org.density.common.Numbers;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.Lucene;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper.KeywordFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.ExactMatchDimFilter;
+import org.density.search.startree.filter.MatchNoneFilter;
+import org.density.search.startree.filter.RangeMatchDimFilter;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -40,16 +40,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.BYTE;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.FLOAT;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.HALF_FLOAT;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.INTEGER;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.LONG;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.SHORT;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.UNSIGNED_LONG;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.hasDecimalPart;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.signum;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.BYTE;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.FLOAT;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.HALF_FLOAT;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.INTEGER;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.SHORT;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.UNSIGNED_LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.hasDecimalPart;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.signum;
 
 /**
  * Generates the @{@link DimensionFilter} raw values and the @{@link MappedFieldType} of the dimension.
@@ -160,11 +160,11 @@ public interface DimensionFilterMapper {
             new FloatFieldMapperNumeric(),
             DOUBLE.typeName(),
             new DoubleFieldMapperNumeric(),
-            org.opensearch.index.mapper.KeywordFieldMapper.CONTENT_TYPE,
+            org.density.index.mapper.KeywordFieldMapper.CONTENT_TYPE,
             new KeywordFieldMapper(),
             UNSIGNED_LONG.typeName(),
             new UnsignedLongFieldMapperNumeric(),
-            org.opensearch.index.mapper.IpFieldMapper.CONTENT_TYPE,
+            org.density.index.mapper.IpFieldMapper.CONTENT_TYPE,
             new IpFieldMapper()
         );
 

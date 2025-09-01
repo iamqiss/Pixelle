@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,13 +28,13 @@
  * under the License.
  */
 
-import org.opensearch.gradle.Architecture
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.info.BuildParams
+import org.density.gradle.Architecture
+import org.density.gradle.VersionProperties
+import org.density.gradle.info.BuildParams
 
-apply plugin: 'opensearch.standalone-rest-test'
-apply plugin: 'opensearch.test.fixtures'
-apply plugin: 'opensearch.internal-distribution-download'
+apply plugin: 'density.standalone-rest-test'
+apply plugin: 'density.test.fixtures'
+apply plugin: 'density.internal-distribution-download'
 
 testFixtures.useFixture()
 
@@ -42,17 +42,17 @@ dependencies {
   testImplementation project(':client:rest-high-level')
 }
 
-opensearch_distributions {
+density_distributions {
   docker {
     type = 'docker'
     architecture = Architecture.current()
-    version = VersionProperties.getOpenSearch()
+    version = VersionProperties.getDensity()
     failIfUnavailable = false // This ensures we skip this testing if Docker is unavailable
   }
 }
 
 tasks.named("preProcessFixture").configure {
-  dependsOn opensearch_distributions.docker
+  dependsOn density_distributions.docker
   // always run the task, otherwise the folders won't be created
   outputs.upToDateWhen { 
     false 

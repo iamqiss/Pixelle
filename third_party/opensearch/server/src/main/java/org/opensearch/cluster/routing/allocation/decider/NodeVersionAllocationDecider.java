@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.SnapshotRecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.replication.common.ReplicationType;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RecoverySource.SnapshotRecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.Settings;
+import org.density.indices.replication.common.ReplicationType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
  * on the lowest level since it might have already written segments that use a new postings format or codec that is not
  * available on the target node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeVersionAllocationDecider extends AllocationDecider {
 

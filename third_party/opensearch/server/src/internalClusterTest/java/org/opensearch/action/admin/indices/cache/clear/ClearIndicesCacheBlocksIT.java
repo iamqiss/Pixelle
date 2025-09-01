@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.cache.clear;
+package org.density.action.admin.indices.cache.clear;
 
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.equalTo;
 
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class ClearIndicesCacheBlocksIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class ClearIndicesCacheBlocksIT extends DensityIntegTestCase {
     public void testClearIndicesCacheWithBlocks() {
         createIndex("test");
         ensureGreen("test");

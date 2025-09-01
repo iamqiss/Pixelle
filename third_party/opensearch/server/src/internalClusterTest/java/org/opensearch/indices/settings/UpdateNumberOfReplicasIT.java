@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.settings;
+package org.density.indices.settings;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.EnumSet;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class UpdateNumberOfReplicasIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class UpdateNumberOfReplicasIT extends DensityIntegTestCase {
     @Override
     protected int maximumNumberOfReplicas() {
         return 1;

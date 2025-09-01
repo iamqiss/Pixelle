@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.expression;
+package org.density.script.expression;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.update.UpdateRequestBuilder;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilders;
-import org.opensearch.index.query.functionscore.ScriptScoreFunctionBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.aggregations.pipeline.SimpleValue;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.update.UpdateRequestBuilder;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.functionscore.ScoreFunctionBuilders;
+import org.density.index.query.functionscore.ScriptScoreFunctionBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.aggregations.pipeline.SimpleValue;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,20 +66,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.histogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.PipelineAggregatorBuilders.bucketScript;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.histogram;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.PipelineAggregatorBuilders.bucketScript;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
 // TODO: please convert to unit tests!
-public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class MoreExpressionIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public MoreExpressionIT(Settings staticSettings) {
         super(staticSettings);
@@ -175,7 +175,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
     }
 
     public void testDateMethods() throws Exception {
-        OpenSearchAssertions.assertAcked(prepareCreate("test").setMapping("date0", "type=date", "date1", "type=date"));
+        DensityAssertions.assertAcked(prepareCreate("test").setMapping("date0", "type=date", "date1", "type=date"));
         ensureGreen("test");
         indexRandom(
             true,
@@ -205,7 +205,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
     }
 
     public void testDateObjectMethods() throws Exception {
-        OpenSearchAssertions.assertAcked(prepareCreate("test").setMapping("date0", "type=date", "date1", "type=date"));
+        DensityAssertions.assertAcked(prepareCreate("test").setMapping("date0", "type=date", "date1", "type=date"));
         ensureGreen("test");
         indexRandom(
             true,
@@ -235,7 +235,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
     }
 
     public void testMultiValueMethods() throws Exception {
-        OpenSearchAssertions.assertAcked(
+        DensityAssertions.assertAcked(
             prepareCreate("test").setMapping("double0", "type=double", "double1", "type=double", "double2", "type=double")
         );
         ensureGreen("test");
@@ -339,7 +339,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
     }
 
     public void testInvalidDateMethodCall() throws Exception {
-        OpenSearchAssertions.assertAcked(prepareCreate("test").setMapping("double", "type=double"));
+        DensityAssertions.assertAcked(prepareCreate("test").setMapping("double", "type=double"));
         ensureGreen("test");
         indexRandom(true, client().prepareIndex("test").setId("1").setSource("double", "178000000.0"));
         try {
@@ -360,7 +360,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
     }
 
     public void testSparseField() throws Exception {
-        OpenSearchAssertions.assertAcked(prepareCreate("test").setMapping("x", "type=long", "y", "type=long"));
+        DensityAssertions.assertAcked(prepareCreate("test").setMapping("x", "type=long", "y", "type=long"));
         ensureGreen("test");
         indexRandom(
             true,
@@ -368,7 +368,7 @@ public class MoreExpressionIT extends ParameterizedStaticSettingsOpenSearchInteg
             client().prepareIndex("test").setId("2").setSource("id", 2, "y", 2)
         );
         SearchResponse rsp = buildRequest("doc['x'] + 1").get();
-        OpenSearchAssertions.assertSearchResponse(rsp);
+        DensityAssertions.assertSearchResponse(rsp);
         SearchHits hits = rsp.getHits();
         assertEquals(2, rsp.getHits().getTotalHits().value());
         assertEquals(5.0, hits.getAt(0).field("foo").getValue(), 0.0D);

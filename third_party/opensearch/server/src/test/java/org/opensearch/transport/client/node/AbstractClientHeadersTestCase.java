@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client.node;
+package org.density.transport.client.node;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteAction;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotAction;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsAction;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptAction;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheAction;
-import org.opensearch.action.admin.indices.create.CreateIndexAction;
-import org.opensearch.action.admin.indices.flush.FlushAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.delete.DeleteAction;
-import org.opensearch.action.get.GetAction;
-import org.opensearch.action.index.IndexAction;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.reroute.ClusterRerouteAction;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotAction;
+import org.density.action.admin.cluster.stats.ClusterStatsAction;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptAction;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheAction;
+import org.density.action.admin.indices.create.CreateIndexAction;
+import org.density.action.admin.indices.flush.FlushAction;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.delete.DeleteAction;
+import org.density.action.get.GetAction;
+import org.density.action.index.IndexAction;
+import org.density.action.search.SearchAction;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.env.Environment;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public abstract class AbstractClientHeadersTestCase extends OpenSearchTestCase {
+public abstract class AbstractClientHeadersTestCase extends DensityTestCase {
 
     protected static final Settings HEADER_SETTINGS = Settings.builder()
         .put(ThreadContext.PREFIX + ".key1", "val1")

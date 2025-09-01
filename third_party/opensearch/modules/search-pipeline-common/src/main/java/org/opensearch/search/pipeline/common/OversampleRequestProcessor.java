@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.pipeline.AbstractProcessor;
-import org.opensearch.search.pipeline.PipelineProcessingContext;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
-import org.opensearch.search.pipeline.StatefulSearchRequestProcessor;
-import org.opensearch.search.pipeline.common.helpers.ContextUtils;
+import org.density.action.search.SearchRequest;
+import org.density.ingest.ConfigurationUtils;
+import org.density.search.SearchService;
+import org.density.search.pipeline.AbstractProcessor;
+import org.density.search.pipeline.PipelineProcessingContext;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchRequestProcessor;
+import org.density.search.pipeline.StatefulSearchRequestProcessor;
+import org.density.search.pipeline.common.helpers.ContextUtils;
 
 import java.util.Map;
 
-import static org.opensearch.search.pipeline.common.helpers.ContextUtils.applyContextPrefix;
+import static org.density.search.pipeline.common.helpers.ContextUtils.applyContextPrefix;
 
 /**
  * Multiplies the "size" parameter on the {@link SearchRequest} by the given scaling factor, storing the original value

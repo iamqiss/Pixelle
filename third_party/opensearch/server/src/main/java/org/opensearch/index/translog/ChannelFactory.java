@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -42,7 +42,7 @@ import java.nio.file.StandardOpenOption;
 /**
  * only for testing until we have a disk-full FileSystem
  *
- * @opensearch.api
+ * @density.api
  */
 @FunctionalInterface
 @PublicApi(since = "1.0.0")

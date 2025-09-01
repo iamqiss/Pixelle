@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.client.TimedRequest;
-import org.opensearch.client.Validatable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.ActiveShardCount;
+import org.density.client.TimedRequest;
+import org.density.client.Validatable;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,12 +60,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
 
 /**
  * A request to create an index.
  *
- * @opensearch.api
+ * @density.api
  */
 public class CreateIndexRequest extends TimedRequest implements Validatable, ToXContentObject {
     static final ParseField MAPPINGS = new ParseField("mappings");
@@ -190,7 +190,7 @@ public class CreateIndexRequest extends TimedRequest implements Validatable, ToX
             builder.map(source);
             return mapping(BytesReference.bytes(builder), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -222,7 +222,7 @@ public class CreateIndexRequest extends TimedRequest implements Validatable, ToX
             builder.map(source);
             return aliases(BytesReference.bytes(builder), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -260,7 +260,7 @@ public class CreateIndexRequest extends TimedRequest implements Validatable, ToX
             }
             return this;
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse aliases", e);
+            throw new DensityParseException("Failed to parse aliases", e);
         }
     }
 

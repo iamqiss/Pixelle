@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.OpenSearchNetty4IntegTestCase;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.transport.Netty4BlockingPlugin;
+import org.density.DensityNetty4IntegTestCase;
+import org.density.core.common.transport.TransportAddress;
+import org.density.http.HttpServerTransport;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.transport.Netty4BlockingPlugin;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 
 @ClusterScope(scope = Scope.TEST, supportsDedicatedMasters = false, numDataNodes = 1)
-public class Netty4HeaderVerifierIT extends OpenSearchNetty4IntegTestCase {
+public class Netty4HeaderVerifierIT extends DensityNetty4IntegTestCase {
 
     @Override
     protected boolean addMockHttpTransport() {

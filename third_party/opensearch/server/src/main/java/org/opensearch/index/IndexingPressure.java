@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.index.stats.IndexingPressureStats;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.index.stats.IndexingPressureStats;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -48,7 +48,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Tracks indexing memory pressure
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexingPressure {
 
@@ -104,7 +104,7 @@ public class IndexingPressure {
             long totalBytesWithoutOperation = totalBytes - bytes;
             this.currentCombinedCoordinatingAndPrimaryBytes.getAndAdd(-bytes);
             this.coordinatingRejections.getAndIncrement();
-            throw new OpenSearchRejectedExecutionException(
+            throw new DensityRejectedExecutionException(
                 "rejected execution of coordinating operation ["
                     + "coordinating_and_primary_bytes="
                     + bytesWithoutOperation
@@ -148,7 +148,7 @@ public class IndexingPressure {
             long totalBytesWithoutOperation = totalBytes - bytes;
             this.currentCombinedCoordinatingAndPrimaryBytes.getAndAdd(-bytes);
             this.primaryRejections.getAndIncrement();
-            throw new OpenSearchRejectedExecutionException(
+            throw new DensityRejectedExecutionException(
                 "rejected execution of primary operation ["
                     + "coordinating_and_primary_bytes="
                     + bytesWithoutOperation
@@ -183,7 +183,7 @@ public class IndexingPressure {
             long replicaBytesWithoutOperation = replicaWriteBytes - bytes;
             this.currentReplicaBytes.getAndAdd(-bytes);
             this.replicaRejections.getAndIncrement();
-            throw new OpenSearchRejectedExecutionException(
+            throw new DensityRejectedExecutionException(
                 "rejected execution of replica operation ["
                     + "replica_bytes="
                     + replicaBytesWithoutOperation

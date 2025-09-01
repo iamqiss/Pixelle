@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
 
 import java.io.Closeable;
 import java.util.Collections;
@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * An interface for storing blobs.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface BlobStore extends Closeable {
 

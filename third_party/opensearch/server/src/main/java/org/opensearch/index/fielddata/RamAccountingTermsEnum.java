@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.FilteredTermsEnum;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.index.fielddata.plain.AbstractIndexOrdinalsFieldData;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.index.fielddata.plain.AbstractIndexOrdinalsFieldData;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ import java.io.IOException;
  * every time {@code .next(...)} is called. Proxies all methods to the original
  * TermsEnum otherwise.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RamAccountingTermsEnum extends FilteredTermsEnum {
 

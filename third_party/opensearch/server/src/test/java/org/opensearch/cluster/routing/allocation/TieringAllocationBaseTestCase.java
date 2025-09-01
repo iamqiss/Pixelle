@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
 
-import static org.opensearch.index.IndexModule.INDEX_TIERING_STATE;
+import static org.density.index.IndexModule.INDEX_TIERING_STATE;
 
 @SuppressForbidden(reason = "feature flag overrides")
 public abstract class TieringAllocationBaseTestCase extends RemoteShardsBalancerBaseTestCase {

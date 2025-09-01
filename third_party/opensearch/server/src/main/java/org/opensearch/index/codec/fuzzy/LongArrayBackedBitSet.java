@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.fuzzy;
+package org.density.index.codec.fuzzy;
 
 import org.apache.lucene.store.DataOutput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.BigArrays;
+import org.density.common.util.LongArray;
+import org.density.common.util.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.IOException;

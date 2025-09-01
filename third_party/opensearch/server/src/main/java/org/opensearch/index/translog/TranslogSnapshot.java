@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.io.Channels;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamInput;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.common.io.Channels;
+import org.density.core.common.io.stream.BufferedChecksumStreamInput;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import java.nio.ByteBuffer;
 /**
  * A snapshot of translog operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class TranslogSnapshot extends BaseTranslogReader {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,15 +46,15 @@ import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.UsageTrackingQueryCachingPolicy;
 import org.apache.lucene.search.Weight;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.ShardCoreKeyMap;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.cache.query.QueryCacheStats;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.ShardCoreKeyMap;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.cache.query.QueryCacheStats;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -69,7 +69,7 @@ import java.util.function.Predicate;
 /**
  * The query cache for indices
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesQueryCache implements QueryCache, Closeable {
@@ -144,9 +144,9 @@ public class IndicesQueryCache implements QueryCache, Closeable {
         float skipCacheFactor = INDICES_QUERIES_CACHE_SKIP_CACHE_FACTOR.get(settings);
         logger.debug("using [node] query cache with size [{}] max filter count [{}] skipCacheFactor [{}]", size, count, skipCacheFactor);
         if (INDICES_QUERIES_CACHE_ALL_SEGMENTS_SETTING.get(settings)) {
-            cache = new OpenSearchLRUQueryCache(count, size.getBytes(), context -> true, 1f);
+            cache = new DensityLRUQueryCache(count, size.getBytes(), context -> true, 1f);
         } else {
-            cache = new OpenSearchLRUQueryCache(count, size.getBytes());
+            cache = new DensityLRUQueryCache(count, size.getBytes());
             cache.setSkipCacheFactor(skipCacheFactor);
             if (clusterSettings != null) {
                 clusterSettings.addSettingsUpdateConsumer(INDICES_QUERIES_CACHE_SKIP_CACHE_FACTOR, this::setSkipCacheFactor);
@@ -271,7 +271,7 @@ public class IndicesQueryCache implements QueryCache, Closeable {
     /**
      * Statistics for the indices query cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Stats implements Cloneable {
 
@@ -311,7 +311,7 @@ public class IndicesQueryCache implements QueryCache, Closeable {
     /**
      * Statistics and Counts
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class StatsAndCount {
         volatile int count;
@@ -340,13 +340,13 @@ public class IndicesQueryCache implements QueryCache, Closeable {
         shardStats.remove(shardId);
     }
 
-    private class OpenSearchLRUQueryCache extends LRUQueryCache {
+    private class DensityLRUQueryCache extends LRUQueryCache {
 
-        OpenSearchLRUQueryCache(int maxSize, long maxRamBytesUsed, Predicate<LeafReaderContext> leavesToCache, float skipFactor) {
+        DensityLRUQueryCache(int maxSize, long maxRamBytesUsed, Predicate<LeafReaderContext> leavesToCache, float skipFactor) {
             super(maxSize, maxRamBytesUsed, leavesToCache, skipFactor);
         }
 
-        OpenSearchLRUQueryCache(int maxSize, long maxRamBytesUsed) {
+        DensityLRUQueryCache(int maxSize, long maxRamBytesUsed) {
             super(maxSize, maxRamBytesUsed);
         }
 

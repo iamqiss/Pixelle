@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.search.similarities.AfterEffect;
 import org.apache.lucene.search.similarities.AfterEffectB;
@@ -64,10 +64,10 @@ import org.apache.lucene.search.similarities.NormalizationH2;
 import org.apache.lucene.search.similarities.NormalizationH3;
 import org.apache.lucene.search.similarities.NormalizationZ;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.Version;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.lucene.similarity.LegacyBM25Similarity;
+import org.density.Version;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.lucene.similarity.LegacyBM25Similarity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -80,7 +80,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * A provider for similarity computations
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class SimilarityProviders {
 

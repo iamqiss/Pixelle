@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.SimpleMessage;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.apache.logging.log4j.core.Filter.Result;
 
-public class RateLimitingFilterTests extends OpenSearchTestCase {
+public class RateLimitingFilterTests extends DensityTestCase {
 
     private RateLimitingFilter filter;
 

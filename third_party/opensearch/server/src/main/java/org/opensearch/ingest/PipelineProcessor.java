@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.script.TemplateScript;
+import org.density.script.TemplateScript;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -40,7 +40,7 @@ import java.util.function.BiConsumer;
 /**
  * Processes an ingest pipeline
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PipelineProcessor extends AbstractProcessor {
 
@@ -94,7 +94,7 @@ public class PipelineProcessor extends AbstractProcessor {
     /**
      * Factory for the processor.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Factory implements Processor.Factory {
 

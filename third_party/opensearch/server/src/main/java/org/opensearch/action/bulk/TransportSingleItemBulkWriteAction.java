@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.WriteResponse;
-import org.opensearch.action.support.replication.ReplicatedWriteRequest;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.WriteResponse;
+import org.density.action.support.replication.ReplicatedWriteRequest;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.Writeable;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
 
 /**
  * use transport bulk action directly
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Deprecated
 public abstract class TransportSingleItemBulkWriteAction<

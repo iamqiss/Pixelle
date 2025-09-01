@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractSerializingTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractSerializingTestCase;
 
 import java.io.IOException;
 

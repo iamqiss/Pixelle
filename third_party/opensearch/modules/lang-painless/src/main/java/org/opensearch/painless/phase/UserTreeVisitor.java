@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,57 +26,57 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.node.EAssignment;
-import org.opensearch.painless.node.EBinary;
-import org.opensearch.painless.node.EBooleanComp;
-import org.opensearch.painless.node.EBooleanConstant;
-import org.opensearch.painless.node.EBrace;
-import org.opensearch.painless.node.ECall;
-import org.opensearch.painless.node.ECallLocal;
-import org.opensearch.painless.node.EComp;
-import org.opensearch.painless.node.EConditional;
-import org.opensearch.painless.node.EDecimal;
-import org.opensearch.painless.node.EDot;
-import org.opensearch.painless.node.EElvis;
-import org.opensearch.painless.node.EExplicit;
-import org.opensearch.painless.node.EFunctionRef;
-import org.opensearch.painless.node.EInstanceof;
-import org.opensearch.painless.node.ELambda;
-import org.opensearch.painless.node.EListInit;
-import org.opensearch.painless.node.EMapInit;
-import org.opensearch.painless.node.ENewArray;
-import org.opensearch.painless.node.ENewArrayFunctionRef;
-import org.opensearch.painless.node.ENewObj;
-import org.opensearch.painless.node.ENull;
-import org.opensearch.painless.node.ENumeric;
-import org.opensearch.painless.node.ERegex;
-import org.opensearch.painless.node.EString;
-import org.opensearch.painless.node.ESymbol;
-import org.opensearch.painless.node.EUnary;
-import org.opensearch.painless.node.SBlock;
-import org.opensearch.painless.node.SBreak;
-import org.opensearch.painless.node.SCatch;
-import org.opensearch.painless.node.SClass;
-import org.opensearch.painless.node.SContinue;
-import org.opensearch.painless.node.SDeclBlock;
-import org.opensearch.painless.node.SDeclaration;
-import org.opensearch.painless.node.SDo;
-import org.opensearch.painless.node.SEach;
-import org.opensearch.painless.node.SExpression;
-import org.opensearch.painless.node.SFor;
-import org.opensearch.painless.node.SFunction;
-import org.opensearch.painless.node.SIf;
-import org.opensearch.painless.node.SIfElse;
-import org.opensearch.painless.node.SReturn;
-import org.opensearch.painless.node.SThrow;
-import org.opensearch.painless.node.STry;
-import org.opensearch.painless.node.SWhile;
+import org.density.painless.node.EAssignment;
+import org.density.painless.node.EBinary;
+import org.density.painless.node.EBooleanComp;
+import org.density.painless.node.EBooleanConstant;
+import org.density.painless.node.EBrace;
+import org.density.painless.node.ECall;
+import org.density.painless.node.ECallLocal;
+import org.density.painless.node.EComp;
+import org.density.painless.node.EConditional;
+import org.density.painless.node.EDecimal;
+import org.density.painless.node.EDot;
+import org.density.painless.node.EElvis;
+import org.density.painless.node.EExplicit;
+import org.density.painless.node.EFunctionRef;
+import org.density.painless.node.EInstanceof;
+import org.density.painless.node.ELambda;
+import org.density.painless.node.EListInit;
+import org.density.painless.node.EMapInit;
+import org.density.painless.node.ENewArray;
+import org.density.painless.node.ENewArrayFunctionRef;
+import org.density.painless.node.ENewObj;
+import org.density.painless.node.ENull;
+import org.density.painless.node.ENumeric;
+import org.density.painless.node.ERegex;
+import org.density.painless.node.EString;
+import org.density.painless.node.ESymbol;
+import org.density.painless.node.EUnary;
+import org.density.painless.node.SBlock;
+import org.density.painless.node.SBreak;
+import org.density.painless.node.SCatch;
+import org.density.painless.node.SClass;
+import org.density.painless.node.SContinue;
+import org.density.painless.node.SDeclBlock;
+import org.density.painless.node.SDeclaration;
+import org.density.painless.node.SDo;
+import org.density.painless.node.SEach;
+import org.density.painless.node.SExpression;
+import org.density.painless.node.SFor;
+import org.density.painless.node.SFunction;
+import org.density.painless.node.SIf;
+import org.density.painless.node.SIfElse;
+import org.density.painless.node.SReturn;
+import org.density.painless.node.SThrow;
+import org.density.painless.node.STry;
+import org.density.painless.node.SWhile;
 
 public interface UserTreeVisitor<Scope> {
 

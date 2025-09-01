@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import com.sun.jna.Library;
 import com.sun.jna.Memory;
@@ -43,7 +43,7 @@ import com.sun.jna.ptr.PointerByReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.io.IOUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -67,7 +67,7 @@ import java.util.Map;
  * On Linux BPF Filters are installed using either {@code seccomp(2)} (3.17+) or {@code prctl(2)} (3.5+). {@code seccomp(2)}
  * is preferred, as it allows filters to be applied to any existing threads in the process, and one motivation
  * here is to protect against bugs in the JVM. Otherwise, code will fall back to the {@code prctl(2)} method
- * which will at least protect opensearch application threads.
+ * which will at least protect density application threads.
  * <p>
  * Linux BPF filters will return {@code EACCES} (Access Denied) for the following system calls:
  * <ul>
@@ -103,7 +103,7 @@ import java.util.Map;
  * @see <a href="https://docs.oracle.com/cd/E23824_01/html/821-1456/prbac-2.html">
  *      https://docs.oracle.com/cd/E23824_01/html/821-1456/prbac-2.html</a>
  *
- * @opensearch.internal
+ * @density.internal
  */
 // not an example of how to write code!!!
 final class SystemCallFilter {
@@ -144,7 +144,7 @@ final class SystemCallFilter {
     static final int SECCOMP_SET_MODE_FILTER = 1;   // since Linux 3.17
     static final int SECCOMP_FILTER_FLAG_TSYNC = 1;   // since Linux 3.17
 
-    /** otherwise, we can use prctl(2), which will at least protect OpenSearch application threads */
+    /** otherwise, we can use prctl(2), which will at least protect Density application threads */
     static final int PR_GET_NO_NEW_PRIVS = 39;   // since Linux 3.5
     static final int PR_SET_NO_NEW_PRIVS = 38;   // since Linux 3.5
     static final int PR_GET_SECCOMP = 21;   // since Linux 2.6.23

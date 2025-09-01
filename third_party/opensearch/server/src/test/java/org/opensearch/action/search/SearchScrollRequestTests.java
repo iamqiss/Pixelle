@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentHelper;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.Matchers.startsWith;
 
-public class SearchScrollRequestTests extends OpenSearchTestCase {
+public class SearchScrollRequestTests extends DensityTestCase {
 
     public void testSerialization() throws Exception {
         SearchScrollRequest searchScrollRequest = createSearchScrollRequest();

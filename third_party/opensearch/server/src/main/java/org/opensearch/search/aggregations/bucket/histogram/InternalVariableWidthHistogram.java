@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.KeyComparable;
-import org.opensearch.search.aggregations.bucket.IteratorAndCurrent;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.KeyComparable;
+import org.density.search.aggregations.bucket.IteratorAndCurrent;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import java.util.Objects;
 /**
  * Aggregator supplier interface for an internal variable width histogram agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalVariableWidthHistogram extends InternalMultiBucketAggregation<
     InternalVariableWidthHistogram,
@@ -65,14 +65,14 @@ public class InternalVariableWidthHistogram extends InternalMultiBucketAggregati
     /**
      * Bucket for an internal variable width histogram
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Bucket extends InternalMultiBucketAggregation.InternalBucket implements Histogram.Bucket, KeyComparable<Bucket> {
 
         /**
          * Bounds of the bucket
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class BucketBounds {
             public double min;
@@ -232,7 +232,7 @@ public class InternalVariableWidthHistogram extends InternalMultiBucketAggregati
     /**
      * Information about an empty bucket
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class EmptyBucketInfo {
 

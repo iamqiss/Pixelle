@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
@@ -43,15 +43,15 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.store.ByteBuffersDirectory;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchModule;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -61,9 +61,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 
-public abstract class SmoothingModelTestCase extends OpenSearchTestCase {
+public abstract class SmoothingModelTestCase extends DensityTestCase {
 
     private static NamedWriteableRegistry namedWriteableRegistry;
 
@@ -160,7 +160,7 @@ public abstract class SmoothingModelTestCase extends OpenSearchTestCase {
     }
 
     private SmoothingModel copy(SmoothingModel original) throws IOException {
-        return OpenSearchTestCase.copyWriteable(
+        return DensityTestCase.copyWriteable(
             original,
             namedWriteableRegistry,
             namedWriteableRegistry.getReader(SmoothingModel.class, original.getWriteableName())

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -115,7 +115,7 @@ public class GetAliasesResponseTests extends AbstractXContentTestCase<GetAliases
         assertNull(newInstance.getException());
     }
 
-    public void testFromXContentWithOpenSearchException() throws IOException {
+    public void testFromXContentWithDensityException() throws IOException {
         String xContent = "{"
             + "  \"error\": {"
             + "    \"root_cause\": ["
@@ -144,7 +144,7 @@ public class GetAliasesResponseTests extends AbstractXContentTestCase<GetAliases
             assertThat(getAliasesResponse.status(), equalTo(RestStatus.NOT_FOUND));
             assertThat(
                 getAliasesResponse.getException().getMessage(),
-                equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]")
+                equalTo("Density exception [type=index_not_found_exception, reason=no such index [index]]")
             );
         }
     }

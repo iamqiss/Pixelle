@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.tasks.TaskManager;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -75,7 +75,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.instanceOf;
 
-public abstract class InboundHandlerTests extends OpenSearchTestCase {
+public abstract class InboundHandlerTests extends DensityTestCase {
 
     public abstract BytesReference serializeOutboundRequest(
         ThreadContext threadContext,
@@ -234,7 +234,7 @@ public abstract class InboundHandlerTests extends OpenSearchTestCase {
         byte responseStatus = TransportStatus.setResponse((byte) 0);
         if (isError) {
             responseStatus = TransportStatus.setError(responseStatus);
-            transportChannel.sendResponse(new OpenSearchException("boom"));
+            transportChannel.sendResponse(new DensityException("boom"));
         } else {
             transportChannel.sendResponse(new TestResponse(responseValue));
         }
@@ -248,7 +248,7 @@ public abstract class InboundHandlerTests extends OpenSearchTestCase {
 
         if (isError) {
             assertThat(exceptionCaptor.get(), instanceOf(RemoteTransportException.class));
-            assertThat(exceptionCaptor.get().getCause(), instanceOf(OpenSearchException.class));
+            assertThat(exceptionCaptor.get().getCause(), instanceOf(DensityException.class));
             assertEquals("boom", exceptionCaptor.get().getCause().getMessage());
         } else {
             assertEquals(responseValue, responseCaptor.get().value);
@@ -693,7 +693,7 @@ public abstract class InboundHandlerTests extends OpenSearchTestCase {
                 final StreamInput streamInput = new InputStreamStreamInput(new InputStream() {
                     @Override
                     public int read() {
-                        throw new OpenSearchException("unreadable handshake");
+                        throw new DensityException("unreadable handshake");
                     }
                 });
                 streamInput.setVersion(remoteVersion);

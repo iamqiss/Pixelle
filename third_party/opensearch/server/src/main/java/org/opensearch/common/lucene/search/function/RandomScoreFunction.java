@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.util.StringHelper;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.BitMixer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
+import org.density.common.Nullable;
+import org.density.common.util.BitMixer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.fielddata.SortedBinaryDocValues;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -46,7 +46,7 @@ import java.util.Objects;
 /**
  * Pseudo randomly generate a score for each {@link LeafScoreFunction#score}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RandomScoreFunction extends ScoreFunction {
 

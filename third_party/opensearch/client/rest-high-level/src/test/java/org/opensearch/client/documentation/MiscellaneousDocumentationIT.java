@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.core.MainResponse;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.RequestOptions;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.client.core.MainResponse;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ import java.io.IOException;
  * Documentation for miscellaneous APIs in the high level java client.
  * Code wrapped in {@code tag} and {@code end} tags is included in the docs.
  */
-public class MiscellaneousDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class MiscellaneousDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     public void testMain() throws IOException {
         RestHighLevelClient client = highLevelClient();

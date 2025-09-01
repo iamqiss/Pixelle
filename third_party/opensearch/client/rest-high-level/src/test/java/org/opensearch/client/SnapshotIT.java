@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.RestoreInfo;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.DensityException;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.RestoreInfo;
+import org.density.snapshots.SnapshotInfo;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -72,7 +72,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class SnapshotIT extends OpenSearchRestHighLevelClientTestCase {
+public class SnapshotIT extends DensityRestHighLevelClientTestCase {
 
     private AcknowledgedResponse createTestRepository(String repository, String type, String settings) throws IOException {
         PutRepositoryRequest request = new PutRepositoryRequest(repository);
@@ -122,15 +122,15 @@ public class SnapshotIT extends OpenSearchRestHighLevelClientTestCase {
     public void testSnapshotGetRepositoriesNonExistent() {
         String repository = "doesnotexist";
         GetRepositoriesRequest request = new GetRepositoriesRequest(new String[] { repository });
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(request, highLevelClient().snapshot()::getRepository, highLevelClient().snapshot()::getRepositoryAsync)
         );
 
         assertThat(exception.status(), equalTo(RestStatus.NOT_FOUND));
         assertThat(
             exception.getMessage(),
-            equalTo("OpenSearch exception [type=repository_missing_exception, reason=[" + repository + "] missing]")
+            equalTo("Density exception [type=repository_missing_exception, reason=[" + repository + "] missing]")
         );
     }
 

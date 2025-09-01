@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.set;
+package org.density.common.util.set;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -50,9 +50,9 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * OpenSearch sets.
+ * Density sets.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Sets {
     private Sets() {}
@@ -122,7 +122,7 @@ public final class Sets {
     /**
      * A sorted set collector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SortedSetCollector<T> implements Collector<T, SortedSet<T>, SortedSet<T>> {
 

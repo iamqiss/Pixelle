@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore.fs;
+package org.density.common.blobstore.fs;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
+import org.density.DensityException;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,7 +44,7 @@ import java.nio.file.Path;
 /**
  * FileSystem blob store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FsBlobStore implements BlobStore {
 
@@ -81,7 +81,7 @@ public class FsBlobStore implements BlobStore {
         try {
             return new FsBlobContainer(this, path, buildAndCreate(path));
         } catch (IOException ex) {
-            throw new OpenSearchException("failed to create blob container", ex);
+            throw new DensityException("failed to create blob container", ex);
         }
     }
 

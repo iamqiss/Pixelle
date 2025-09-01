@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.node.resource.tracker.NodeResourceUsageTracker;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.node.resource.tracker.NodeResourceUsageTracker;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.Map;

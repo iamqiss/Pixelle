@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractDiffableSerializationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.Diff;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractDiffableSerializationTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -188,7 +188,7 @@ public class ComponentTemplateTests extends AbstractDiffableSerializationTestCas
             case 1:
                 return new ComponentTemplate(
                     orig.template(),
-                    randomValueOtherThan(orig.version(), OpenSearchTestCase::randomNonNegativeLong),
+                    randomValueOtherThan(orig.version(), DensityTestCase::randomNonNegativeLong),
                     orig.metadata()
                 );
             case 2:

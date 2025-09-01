@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
@@ -45,9 +45,9 @@ import org.locationtech.spatial4j.shape.Point;
 /**
  * Builds a point geometry
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class PointBuilder extends ShapeBuilder<Point, org.opensearch.geometry.Point, PointBuilder> {
+public class PointBuilder extends ShapeBuilder<Point, org.density.geometry.Point, PointBuilder> {
     public static final GeoShapeType TYPE = GeoShapeType.POINT;
 
     /**
@@ -107,8 +107,8 @@ public class PointBuilder extends ShapeBuilder<Point, org.opensearch.geometry.Po
     }
 
     @Override
-    public org.opensearch.geometry.Point buildGeometry() {
-        return new org.opensearch.geometry.Point(coordinates.get(0).x, coordinates.get(0).y);
+    public org.density.geometry.Point buildGeometry() {
+        return new org.density.geometry.Point(coordinates.get(0).x, coordinates.get(0).y);
     }
 
     @Override

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.segments;
+package org.density.action.admin.indices.segments;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Transport request for retrieving PITs segment information
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.3.0")
 public class PitSegmentsRequest extends BroadcastRequest<PitSegmentsRequest> {

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.index.NoMergePolicy;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.settings.Setting;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
 
 import static org.apache.lucene.index.LogMergePolicy.DEFAULT_MAX_MERGE_DOCS;
 import static org.apache.lucene.index.LogMergePolicy.DEFAULT_NO_CFS_RATIO;
@@ -42,7 +42,7 @@ import static org.apache.lucene.index.LogMergePolicy.DEFAULT_NO_CFS_RATIO;
  * This can lead to inefficiencies in range queries on timestamps, as the number of segments to be scanned
  * within a given timestamp range could become high.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LogByteSizeMergePolicyProvider implements MergePolicyProvider {
     private final LogByteSizeMergePolicy logByteSizeMergePolicy = new LogByteSizeMergePolicy();

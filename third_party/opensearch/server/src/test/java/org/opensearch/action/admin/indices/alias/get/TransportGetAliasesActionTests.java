@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias.get;
+package org.density.action.admin.indices.alias.get;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.indices.SystemIndices;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TransportGetAliasesActionTests extends OpenSearchTestCase {
+public class TransportGetAliasesActionTests extends DensityTestCase {
     private final SystemIndices EMPTY_SYSTEM_INDICES = new SystemIndices(Collections.emptyMap());
 
     public void testPostProcess() {

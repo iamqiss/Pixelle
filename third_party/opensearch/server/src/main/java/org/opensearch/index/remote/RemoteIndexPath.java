@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.remote.RemoteStoreEnums.DataCategory;
-import org.opensearch.index.remote.RemoteStoreEnums.DataType;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy.PathInput;
-import org.opensearch.index.remote.RemoteStorePathStrategy.ShardDataPathInput;
-import org.opensearch.indices.RemoteStoreSettings;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.BlobPath;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.remote.RemoteStoreEnums.DataCategory;
+import org.density.index.remote.RemoteStoreEnums.DataType;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy.PathInput;
+import org.density.index.remote.RemoteStorePathStrategy.ShardDataPathInput;
+import org.density.indices.RemoteStoreSettings;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -30,16 +30,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.index.remote.RemoteStorePathStrategy.isCompatible;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.remote.RemoteStorePathStrategy.isCompatible;
 
 /**
  * Remote index path information.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class RemoteIndexPath implements ToXContentFragment {

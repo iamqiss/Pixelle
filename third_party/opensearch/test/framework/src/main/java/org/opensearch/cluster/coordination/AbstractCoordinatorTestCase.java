@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 
@@ -37,70 +37,70 @@ import org.apache.logging.log4j.CloseableThreadContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.coordination.AbstractCoordinatorTestCase.Cluster.ClusterNode;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.Coordinator.Mode;
-import org.opensearch.cluster.coordination.LinearizabilityChecker.History;
-import org.opensearch.cluster.coordination.LinearizabilityChecker.SequentialSpec;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.cluster.service.FakeThreadPoolClusterManagerService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.ClusterStateUpdaters;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.gateway.MockGatewayMetaState;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.disruption.DisruptableMockTransport;
-import org.opensearch.test.disruption.DisruptableMockTransport.ConnectionStatus;
-import org.opensearch.test.telemetry.TestInMemoryMetricsRegistry;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.coordination.AbstractCoordinatorTestCase.Cluster.ClusterNode;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.Coordinator.Mode;
+import org.density.cluster.coordination.LinearizabilityChecker.History;
+import org.density.cluster.coordination.LinearizabilityChecker.SequentialSpec;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterService;
+import org.density.cluster.service.FakeThreadPoolClusterManagerService;
+import org.density.common.Nullable;
+import org.density.common.Randomness;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.SeedHostsProvider;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.ClusterStateUpdaters;
+import org.density.gateway.GatewayService;
+import org.density.gateway.MockGatewayMetaState;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.repositories.RepositoriesService;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.disruption.DisruptableMockTransport;
+import org.density.test.disruption.DisruptableMockTransport.ConnectionStatus;
+import org.density.test.telemetry.TestInMemoryMetricsRegistry;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportService;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -134,30 +134,30 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
-import static org.opensearch.cluster.coordination.AbstractCoordinatorTestCase.Cluster.DEFAULT_DELAY_VARIABILITY;
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.BOOTSTRAP_PLACEHOLDER_PREFIX;
-import static org.opensearch.cluster.coordination.CoordinationStateTestCluster.clusterState;
-import static org.opensearch.cluster.coordination.Coordinator.Mode.CANDIDATE;
-import static org.opensearch.cluster.coordination.Coordinator.Mode.FOLLOWER;
-import static org.opensearch.cluster.coordination.Coordinator.Mode.LEADER;
-import static org.opensearch.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_BACK_OFF_TIME_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_DURATION_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ID;
-import static org.opensearch.cluster.coordination.Reconfigurator.CLUSTER_AUTO_SHRINK_VOTING_CONFIGURATION;
-import static org.opensearch.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_SETTING;
-import static org.opensearch.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
-import static org.opensearch.transport.TransportSettings.CONNECT_TIMEOUT;
+import static org.density.cluster.coordination.AbstractCoordinatorTestCase.Cluster.DEFAULT_DELAY_VARIABILITY;
+import static org.density.cluster.coordination.ClusterBootstrapService.BOOTSTRAP_PLACEHOLDER_PREFIX;
+import static org.density.cluster.coordination.CoordinationStateTestCluster.clusterState;
+import static org.density.cluster.coordination.Coordinator.Mode.CANDIDATE;
+import static org.density.cluster.coordination.Coordinator.Mode.FOLLOWER;
+import static org.density.cluster.coordination.Coordinator.Mode.LEADER;
+import static org.density.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_BACK_OFF_TIME_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_DURATION_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ID;
+import static org.density.cluster.coordination.Reconfigurator.CLUSTER_AUTO_SHRINK_VOTING_CONFIGURATION;
+import static org.density.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_SETTING;
+import static org.density.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.transport.TransportService.NOOP_TRANSPORT_INTERCEPTOR;
+import static org.density.transport.TransportSettings.CONNECT_TIMEOUT;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -169,7 +169,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class AbstractCoordinatorTestCase extends OpenSearchTestCase {
+public class AbstractCoordinatorTestCase extends DensityTestCase {
 
     protected final List<NodeEnvironment> nodeEnvironments = new ArrayList<>();
     protected final Set<Cluster.MockPersistedState> openPersistedStates = new HashSet<>();
@@ -1171,7 +1171,7 @@ public class AbstractCoordinatorTestCase extends OpenSearchTestCase {
                 final Collection<BiConsumer<DiscoveryNode, ClusterState>> onJoinValidators = Collections.singletonList(
                     (dn, cs) -> extraJoinValidators.forEach(validator -> validator.accept(dn, cs))
                 );
-                final AllocationService allocationService = OpenSearchAllocationTestCase.createAllocationService(Settings.EMPTY);
+                final AllocationService allocationService = DensityAllocationTestCase.createAllocationService(Settings.EMPTY);
                 coordinator = new Coordinator(
                     "test_node",
                     settings,
@@ -1646,13 +1646,13 @@ public class AbstractCoordinatorTestCase extends OpenSearchTestCase {
                             + newClusterState.version();
                         break;
                     case FAIL:
-                        throw new OpenSearchException("simulated cluster state applier failure");
+                        throw new DensityException("simulated cluster state applier failure");
                 }
             });
         }
 
         @Override
-        protected PrioritizedOpenSearchThreadPoolExecutor createThreadPoolExecutor() {
+        protected PrioritizedDensityThreadPoolExecutor createThreadPoolExecutor() {
             return new MockSinglePrioritizingExecutor(nodeName, deterministicTaskQueue, threadPool);
         }
 

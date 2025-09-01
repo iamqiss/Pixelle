@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.DirectoryFileTransferTracker;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.DirectoryFileTransferTracker;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.remote.RemoteSegmentTransferTracker.currentTimeMsUsingSystemNanos;
+import static org.density.index.remote.RemoteSegmentTransferTracker.currentTimeMsUsingSystemNanos;
 
-public class RemoteSegmentTransferTrackerTests extends OpenSearchTestCase {
+public class RemoteSegmentTransferTrackerTests extends DensityTestCase {
     private RemoteStoreStatsTrackerFactory remoteStoreStatsTrackerFactory;
     private ClusterService clusterService;
 

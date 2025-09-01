@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.resync;
+package org.density.action.resync;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.translog.Translog;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class ResyncReplicationRequestTests extends OpenSearchTestCase {
+public class ResyncReplicationRequestTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         final byte[] bytes = "{}".getBytes(StandardCharsets.UTF_8);

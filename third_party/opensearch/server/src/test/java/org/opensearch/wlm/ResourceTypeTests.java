@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class ResourceTypeTests extends OpenSearchTestCase {
+public class ResourceTypeTests extends DensityTestCase {
 
     public void testFromName() {
         assertSame(ResourceType.CPU, ResourceType.fromName("cpu"));

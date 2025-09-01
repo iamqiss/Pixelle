@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.ParsedAggregation;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.ParsedAggregation;
 
 import java.io.IOException;
 
-import static org.opensearch.common.geo.GeoBoundingBox.BOTTOM_RIGHT_FIELD;
-import static org.opensearch.common.geo.GeoBoundingBox.BOUNDS_FIELD;
-import static org.opensearch.common.geo.GeoBoundingBox.LAT_FIELD;
-import static org.opensearch.common.geo.GeoBoundingBox.LON_FIELD;
-import static org.opensearch.common.geo.GeoBoundingBox.TOP_LEFT_FIELD;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.common.geo.GeoBoundingBox.BOTTOM_RIGHT_FIELD;
+import static org.density.common.geo.GeoBoundingBox.BOUNDS_FIELD;
+import static org.density.common.geo.GeoBoundingBox.LAT_FIELD;
+import static org.density.common.geo.GeoBoundingBox.LON_FIELD;
+import static org.density.common.geo.GeoBoundingBox.TOP_LEFT_FIELD;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * A geo bounds agg result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedGeoBounds extends ParsedAggregation implements GeoBounds {
 

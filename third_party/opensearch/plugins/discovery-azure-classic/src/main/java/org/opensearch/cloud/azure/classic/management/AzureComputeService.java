@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cloud.azure.classic.management;
+package org.density.cloud.azure.classic.management;
 
 import com.microsoft.windowsazure.core.utils.KeyStoreType;
 import com.microsoft.windowsazure.management.compute.models.HostedServiceGetDetailedResponse;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.discovery.azure.classic.AzureSeedHostsProvider;
-import org.opensearch.discovery.azure.classic.AzureSeedHostsProvider.Deployment;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.discovery.azure.classic.AzureSeedHostsProvider;
+import org.density.discovery.azure.classic.AzureSeedHostsProvider.Deployment;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -105,7 +105,7 @@ public interface AzureComputeService {
         );
         public static final Setting<String> ENDPOINT_NAME_SETTING = new Setting<>(
             "discovery.azure.endpoint.name",
-            "opensearch",
+            "density",
             Function.identity(),
             Property.NodeScope
         );

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -49,7 +49,7 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.io.IOUtils;
 
 import java.io.CharArrayReader;
 import java.io.IOException;
@@ -68,7 +68,7 @@ import static java.lang.Math.round;
 /**
  * Generates the phrase directly from the IndexReader
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DirectCandidateGenerator extends CandidateGenerator {
 
@@ -127,7 +127,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     }
 
     /* (non-Javadoc)
-     * @see org.opensearch.search.suggest.phrase.CandidateGenerator#isKnownWord(org.apache.lucene.util.BytesRef)
+     * @see org.density.search.suggest.phrase.CandidateGenerator#isKnownWord(org.apache.lucene.util.BytesRef)
      */
     @Override
     public boolean isKnownWord(BytesRef term) throws IOException {
@@ -135,7 +135,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     }
 
     /* (non-Javadoc)
-     * @see org.opensearch.search.suggest.phrase.CandidateGenerator#frequency(org.apache.lucene.util.BytesRef)
+     * @see org.density.search.suggest.phrase.CandidateGenerator#frequency(org.apache.lucene.util.BytesRef)
      */
     @Override
     public TermStats termStats(BytesRef term) throws IOException {
@@ -281,7 +281,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     /**
      * Token consumer for a direct candidate
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class TokenConsumer {
         protected CharTermAttribute charTermAttr;
@@ -307,7 +307,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     /**
      * Candidate set of terms
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CandidateSet {
         public Candidate[] candidates;
@@ -341,7 +341,7 @@ public final class DirectCandidateGenerator extends CandidateGenerator {
     /**
      * Candidate term
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Candidate implements Comparable<Candidate> {
         public static final Candidate[] EMPTY = new Candidate[0];

@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.meta;
+package org.density.index.compositeindex.datacube.startree.fileformats.meta;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.mapper.CompositeMappedFieldType;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
-import static org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
+import static org.density.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
+import static org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
 
 /**
  * The utility class for serializing the metadata of a star-tree data structure.
  * The metadata includes information about the dimensions, metrics, and other relevant details
  * related to the star tree.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class StarTreeMetadataWriter {
 

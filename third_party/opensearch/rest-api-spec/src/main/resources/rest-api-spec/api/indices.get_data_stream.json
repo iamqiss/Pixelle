@@ -1,7 +1,7 @@
 {
   "indices.get_data_stream":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/im-plugin/data-streams/",
+      "url":"https://density.org/docs/latest/im-plugin/data-streams/",
       "description":"Returns data streams."
     },
     "stability":"experimental",

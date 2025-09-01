@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskResponse;
-import org.opensearch.action.support.PlainListenableActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskResponse;
+import org.density.action.support.PlainListenableActionFuture;
+import org.density.common.settings.Settings;
+import org.density.core.tasks.TaskId;
+import org.density.plugins.Plugin;
+import org.density.tasks.Task;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,7 +54,7 @@ import static java.util.Collections.singletonMap;
  * Makes sure that tasks that attempt to store themselves on completion retry if
  * they don't succeed at first.
  */
-public class TaskStorageRetryIT extends OpenSearchSingleNodeTestCase {
+public class TaskStorageRetryIT extends DensitySingleNodeTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
         return Arrays.asList(TestTaskPlugin.class);

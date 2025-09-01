@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.watcher;
+package org.density.watcher;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Abstract resource watcher framework, which handles adding and removing listeners
  * and calling resource observer.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractResourceWatcher<Listener> implements ResourceWatcher {
     private final List<Listener> listeners = new CopyOnWriteArrayList<>();

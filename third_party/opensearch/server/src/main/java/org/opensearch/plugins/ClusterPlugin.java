@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.ShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import java.util.function.Supplier;
 /**
  * An extension point for {@link Plugin} implementations to customer behavior of cluster management.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface ClusterPlugin {
 
@@ -80,7 +80,7 @@ public interface ClusterPlugin {
     /**
      * Return {@link ExistingShardsAllocator} implementations added by this plugin; the index setting
      * {@link ExistingShardsAllocator#EXISTING_SHARDS_ALLOCATOR_SETTING} sets the key of the allocator to use to allocate its shards. The
-     * default allocator is {@link org.opensearch.gateway.GatewayAllocator}.
+     * default allocator is {@link org.density.gateway.GatewayAllocator}.
      */
     default Map<String, ExistingShardsAllocator> getExistingShardsAllocators() {
         return Collections.emptyMap();

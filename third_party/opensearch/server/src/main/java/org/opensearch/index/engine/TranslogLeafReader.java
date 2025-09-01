@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.codecs.StoredFieldsReader;
 import org.apache.lucene.index.BinaryDocValues;
@@ -62,18 +62,18 @@ import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.SequentialStoredFieldsLeafReader;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.translog.Translog;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.SequentialStoredFieldsLeafReader;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.Uid;
+import org.density.index.translog.Translog;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -84,7 +84,7 @@ import static org.apache.lucene.index.DirectoryReader.open;
 /**
  * Internal class that mocks a single doc read from the transaction log as a leaf reader.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TranslogLeafReader extends LeafReader {
 

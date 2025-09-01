@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,75 +26,75 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.support.replication.ReplicationMode;
-import org.opensearch.action.support.replication.ReplicationTask;
-import org.opensearch.action.support.replication.TransportReplicationAction.ReplicaResponse;
-import org.opensearch.action.support.replication.TransportWriteAction.WritePrimaryResult;
-import org.opensearch.action.update.UpdateHelper;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.Mapping;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.RootObjectMapper;
-import org.opensearch.index.remote.RemoteStorePressureService;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TestTransportChannel;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.Version;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.LatchedActionListener;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.support.replication.ReplicationMode;
+import org.density.action.support.replication.ReplicationTask;
+import org.density.action.support.replication.TransportReplicationAction.ReplicaResponse;
+import org.density.action.support.replication.TransportWriteAction.WritePrimaryResult;
+import org.density.action.update.UpdateHelper;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.IndexingPressureService;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.Mapping;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.RootObjectMapper;
+import org.density.index.remote.RemoteStorePressureService;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TestTransportChannel;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportService;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.index.remote.RemoteStoreTestsHelper.createIndexSettings;
+import static org.density.index.remote.RemoteStoreTestsHelper.createIndexSettings;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
@@ -244,7 +244,7 @@ public class TransportShardBulkActionTests extends IndexShardTestCase {
         // Preemptively abort one of the bulk items, but allow the others to proceed
         BulkItemRequest rejectItem = randomFrom(items);
         RestStatus rejectionStatus = randomFrom(RestStatus.BAD_REQUEST, RestStatus.CONFLICT, RestStatus.FORBIDDEN, RestStatus.LOCKED);
-        final OpenSearchStatusException rejectionCause = new OpenSearchStatusException("testing rejection", rejectionStatus);
+        final DensityStatusException rejectionCause = new DensityStatusException("testing rejection", rejectionStatus);
         rejectItem.abort("index", rejectionCause);
 
         final CountDownLatch latch = new CountDownLatch(1);
@@ -569,7 +569,7 @@ public class TransportShardBulkActionTests extends IndexShardTestCase {
 
         IndexRequest updateResponse = new IndexRequest("index").id("id").source(Requests.INDEX_CONTENT_TYPE, "field", "value");
 
-        Exception err = new OpenSearchException("I'm dead <(x.x)>");
+        Exception err = new DensityException("I'm dead <(x.x)>");
         Engine.IndexResult indexResult = new Engine.IndexResult(err, 0, 0, 0);
         IndexShard shard = mock(IndexShard.class);
         when(shard.applyIndexOperationOnPrimary(anyLong(), any(), any(), anyLong(), anyLong(), anyLong(), anyBoolean())).thenReturn(
@@ -792,7 +792,7 @@ public class TransportShardBulkActionTests extends IndexShardTestCase {
         IndexShard shard = mock(IndexShard.class);
 
         UpdateHelper updateHelper = mock(UpdateHelper.class);
-        final OpenSearchException err = new OpenSearchException("oops");
+        final DensityException err = new DensityException("oops");
         when(updateHelper.prepare(any(), eq(shard), any())).thenThrow(err);
         BulkItemRequest[] items = new BulkItemRequest[] { primaryRequest };
         BulkShardRequest bulkShardRequest = new BulkShardRequest(shardId, RefreshPolicy.NONE, items);
@@ -1341,7 +1341,7 @@ public class TransportShardBulkActionTests extends IndexShardTestCase {
                 mappingUpdate,
                 success2
             );
-            when(shard.getFailedIndexResult(any(OpenSearchRejectedExecutionException.class), anyLong())).thenCallRealMethod();
+            when(shard.getFailedIndexResult(any(DensityRejectedExecutionException.class), anyLong())).thenCallRealMethod();
             when(shard.mapperService()).thenReturn(mock(MapperService.class));
 
             randomlySetIgnoredPrimaryResponse(items[0]);
@@ -1395,7 +1395,7 @@ public class TransportShardBulkActionTests extends IndexShardTestCase {
             assertTrue(primaryResponse2.isFailed());
             assertNull(primaryResponse2.getResponse());
             assertEquals(primaryResponse2.status(), RestStatus.TOO_MANY_REQUESTS);
-            assertThat(primaryResponse2.getFailure().getCause(), instanceOf(OpenSearchRejectedExecutionException.class));
+            assertThat(primaryResponse2.getFailure().getCause(), instanceOf(DensityRejectedExecutionException.class));
 
             closeShards(shard);
         } finally {

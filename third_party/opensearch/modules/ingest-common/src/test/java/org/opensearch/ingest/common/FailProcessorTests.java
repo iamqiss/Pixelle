@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class FailProcessorTests extends OpenSearchTestCase {
+public class FailProcessorTests extends DensityTestCase {
 
     public void test() throws Exception {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());

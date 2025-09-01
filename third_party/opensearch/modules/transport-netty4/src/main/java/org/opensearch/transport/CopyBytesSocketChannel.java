@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -40,14 +40,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.SuppressForbidden;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -75,7 +75,7 @@ import static io.netty.channel.internal.ChannelUtils.MAX_BYTES_PER_GATHERING_WRI
 public class CopyBytesSocketChannel extends Netty4NioSocketChannel {
 
     private static final int MAX_BYTES_PER_WRITE = StrictMath.toIntExact(
-        ByteSizeValue.parseBytesSizeValue(System.getProperty("opensearch.transport.buffer.size", "1m"), "opensearch.transport.buffer.size")
+        ByteSizeValue.parseBytesSizeValue(System.getProperty("density.transport.buffer.size", "1m"), "density.transport.buffer.size")
             .getBytes()
     );
 

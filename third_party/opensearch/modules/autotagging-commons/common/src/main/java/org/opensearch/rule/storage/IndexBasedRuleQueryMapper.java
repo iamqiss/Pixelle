@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.storage;
+package org.density.rule.storage;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.rule.RuleQueryMapper;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.autotagging.Attribute;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.rule.RuleQueryMapper;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.autotagging.Attribute;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * This class is used to build opensearch index based query object
+ * This class is used to build density index based query object
  */
 @ExperimentalApi
 public class IndexBasedRuleQueryMapper implements RuleQueryMapper<QueryBuilder> {

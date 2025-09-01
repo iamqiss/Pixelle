@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.netty4.Netty4HttpServerTransport;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpServerTransport;
+import org.density.http.netty4.Netty4HttpServerTransport;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;

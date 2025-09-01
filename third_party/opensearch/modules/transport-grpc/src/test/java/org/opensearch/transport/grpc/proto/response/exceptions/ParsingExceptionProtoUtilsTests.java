@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions;
+package org.density.transport.grpc.proto.response.exceptions;
 
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.ParsingException;
+import org.density.protobufs.ObjectMap;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
-import static org.opensearch.core.common.ParsingException.UNKNOWN_POSITION;
+import static org.density.core.common.ParsingException.UNKNOWN_POSITION;
 
-public class ParsingExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class ParsingExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testMetadataToProtoWithPositionInfo() {
         // Create a ParsingException with line and column information

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.functionscore;
+package org.density.search.functionscore;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.Version;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery.ScoreMode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilders;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.action.ActionFuture;
+import org.density.common.geo.GeoPoint;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.FunctionScoreQuery.ScoreMode;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
+import org.density.index.query.functionscore.ScoreFunctionBuilders;
+import org.density.search.MultiValueMode;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.VersionUtils;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -66,22 +66,22 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.constantScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.exponentialDecayFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.gaussDecayFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.linearDecayFunction;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertOrderedSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
-import static org.opensearch.transport.client.Requests.indexRequest;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.constantScoreQuery;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.exponentialDecayFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.gaussDecayFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.linearDecayFunction;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertOrderedSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
+import static org.density.transport.client.Requests.indexRequest;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.closeTo;
@@ -90,7 +90,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 
-public class DecayFunctionScoreIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class DecayFunctionScoreIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public DecayFunctionScoreIT(Settings staticSettings) {
         super(staticSettings);

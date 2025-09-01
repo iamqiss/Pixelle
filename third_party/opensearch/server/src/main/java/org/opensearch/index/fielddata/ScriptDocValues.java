@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.geometry.utils.Geohash;
+import org.density.common.Numbers;
+import org.density.common.annotation.PublicApi;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.time.DateUtils;
+import org.density.geometry.utils.Geohash;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -61,7 +61,7 @@ import java.util.function.UnaryOperator;
  * return as a single {@link ScriptDocValues} instance can be reused to return
  * values form multiple documents.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class ScriptDocValues<T> extends AbstractList<T> {
@@ -100,7 +100,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Long values for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Longs extends ScriptDocValues<Long> {
         private final SortedNumericDocValues in;
@@ -159,7 +159,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Date values for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Dates extends ScriptDocValues<ZonedDateTime> {
 
@@ -240,7 +240,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Double values for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Doubles extends ScriptDocValues<Double> {
 
@@ -301,7 +301,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Geo points for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class GeoPoints extends ScriptDocValues<GeoPoint> {
 
@@ -426,7 +426,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Boolean values for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Booleans extends ScriptDocValues<Boolean> {
 
@@ -491,7 +491,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Base class for binary script doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     abstract static class BinaryScriptDocValues<T> extends ScriptDocValues<T> {
 
@@ -542,7 +542,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * String class for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Strings extends BinaryScriptDocValues<String> {
         public Strings(SortedBinaryDocValues in) {
@@ -575,7 +575,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * BytesRef values for scripted doc values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class BytesRefs extends BinaryScriptDocValues<BytesRef> {
 
@@ -608,7 +608,7 @@ public abstract class ScriptDocValues<T> extends AbstractList<T> {
     /**
      * Unsigned long values for scripted doc values (returned as {@link BigInteger})
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class UnsignedLongs extends ScriptDocValues<BigInteger> {
         private final SortedNumericDocValues in;

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.storage.IndexBasedRuleQueryMapper;
-import org.opensearch.rule.utils.RuleTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.storage.IndexBasedRuleQueryMapper;
+import org.density.rule.utils.RuleTestUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 
-public class IndexStoredRuleUtilsTests extends OpenSearchTestCase {
+public class IndexStoredRuleUtilsTests extends DensityTestCase {
     RuleQueryMapper<QueryBuilder> sut;
 
     public void setUp() throws Exception {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.ThreadInterruptedException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -49,7 +49,7 @@ import java.util.Set;
  * <p>
  * Cancellation policy: This class does not support external interruption via <code>Thread#interrupt()</code>. Always use #cancel() instead.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CancellableThreads {
@@ -185,7 +185,7 @@ public class CancellableThreads {
     /**
      * Interruptible interface
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Interruptible extends IOInterruptible {
@@ -195,7 +195,7 @@ public class CancellableThreads {
     /**
      * IO Interruptible
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface IOInterruptible {
@@ -205,9 +205,9 @@ public class CancellableThreads {
     /**
      * Thrown if there is an error cancelling execution
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static class ExecutionCancelledException extends OpenSearchException {
+    public static class ExecutionCancelledException extends DensityException {
 
         public ExecutionCancelledException(String msg) {
             super(msg);
@@ -228,7 +228,7 @@ public class CancellableThreads {
     /**
      * Called when a thread is cancelled
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")

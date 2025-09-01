@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,33 +25,33 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.OpenSearchNodeCommand;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cli.MockTerminal;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.DensityNodeCommand;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.CheckedConsumer;
+import org.density.common.CheckedRunnable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 
@@ -62,22 +62,22 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.opensearch.env.NodeRepurposeCommand.NO_CLEANUP;
-import static org.opensearch.env.NodeRepurposeCommand.NO_DATA_TO_CLEAN_UP_FOUND;
-import static org.opensearch.env.NodeRepurposeCommand.NO_FILE_CACHE_DATA_TO_CLEAN_UP_FOUND;
-import static org.opensearch.env.NodeRepurposeCommand.NO_SHARD_DATA_TO_CLEAN_UP_FOUND;
-import static org.opensearch.node.Node.NODE_SEARCH_CACHE_SIZE_SETTING;
-import static org.opensearch.test.NodeRoles.addRoles;
-import static org.opensearch.test.NodeRoles.clusterManagerNode;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
-import static org.opensearch.test.NodeRoles.nonDataNode;
-import static org.opensearch.test.NodeRoles.onlyRole;
-import static org.opensearch.test.NodeRoles.removeRoles;
+import static org.density.env.NodeRepurposeCommand.NO_CLEANUP;
+import static org.density.env.NodeRepurposeCommand.NO_DATA_TO_CLEAN_UP_FOUND;
+import static org.density.env.NodeRepurposeCommand.NO_FILE_CACHE_DATA_TO_CLEAN_UP_FOUND;
+import static org.density.env.NodeRepurposeCommand.NO_SHARD_DATA_TO_CLEAN_UP_FOUND;
+import static org.density.node.Node.NODE_SEARCH_CACHE_SIZE_SETTING;
+import static org.density.test.NodeRoles.addRoles;
+import static org.density.test.NodeRoles.clusterManagerNode;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
+import static org.density.test.NodeRoles.nonDataNode;
+import static org.density.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.removeRoles;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
-public class NodeRepurposeCommandTests extends OpenSearchTestCase {
+public class NodeRepurposeCommandTests extends DensityTestCase {
 
     private static final Index INDEX = new Index("testIndex", "testUUID");
     private Settings dataClusterManagerSettings;
@@ -144,7 +144,7 @@ public class NodeRepurposeCommandTests extends OpenSearchTestCase {
         if (randomBoolean()) {
             try (NodeEnvironment env = new NodeEnvironment(noDataClusterManagerSettings, environment)) {
                 try (
-                    PersistedClusterStateService.Writer writer = OpenSearchNodeCommand.createPersistedClusterStateService(
+                    PersistedClusterStateService.Writer writer = DensityNodeCommand.createPersistedClusterStateService(
                         Settings.EMPTY,
                         env.nodeDataPaths()
                     ).createWriter()
@@ -172,7 +172,7 @@ public class NodeRepurposeCommandTests extends OpenSearchTestCase {
             )
         ) {
             assertThat(
-                expectThrows(OpenSearchException.class, () -> verifyNoQuestions(noDataNoClusterManagerSettings, null)).getMessage(),
+                expectThrows(DensityException.class, () -> verifyNoQuestions(noDataNoClusterManagerSettings, null)).getMessage(),
                 containsString(NodeRepurposeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG)
             );
         }
@@ -317,8 +317,8 @@ public class NodeRepurposeCommandTests extends OpenSearchTestCase {
         withTerminal(verbose, outputMatcher, terminal -> {
             terminal.addTextInput(randomFrom("yy", "Yy", "n", "yes", "true", "N", "no"));
             verifyUnchangedDataFiles(() -> {
-                OpenSearchException exception = expectThrows(
-                    OpenSearchException.class,
+                DensityException exception = expectThrows(
+                    DensityException.class,
                     () -> executeRepurposeCommand(terminal, settings, 0)
                 );
                 assertThat(exception.getMessage(), containsString(NodeRepurposeCommand.ABORTED_BY_USER_MSG));
@@ -362,7 +362,7 @@ public class NodeRepurposeCommandTests extends OpenSearchTestCase {
         try (NodeEnvironment env = new NodeEnvironment(settings, environment)) {
             if (writeClusterState) {
                 try (
-                    PersistedClusterStateService.Writer writer = OpenSearchNodeCommand.createPersistedClusterStateService(
+                    PersistedClusterStateService.Writer writer = DensityNodeCommand.createPersistedClusterStateService(
                         Settings.EMPTY,
                         env.nodeDataPaths()
                     ).createWriter()

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.BulkByScrollTask.StatusOrException;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.DensityException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.BulkByScrollTask.StatusOrException;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -57,7 +57,7 @@ public class BulkByScrollTaskStatusOrExceptionTests extends AbstractXContentTest
 
     static StatusOrException createTestInstanceWithExceptions() {
         if (randomBoolean()) {
-            return new StatusOrException(new OpenSearchException("test_exception"));
+            return new StatusOrException(new DensityException("test_exception"));
         } else {
             return new StatusOrException(BulkByScrollTaskStatusTests.randomStatus());
         }

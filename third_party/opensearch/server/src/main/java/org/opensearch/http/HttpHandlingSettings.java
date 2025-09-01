@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.settings.Settings;
+import org.density.common.settings.Settings;
 
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ENABLED;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_COMPRESSION;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_COMPRESSION_LEVEL;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_DETAILED_ERRORS_ENABLED;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_CHUNK_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_INITIAL_LINE_LENGTH;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_READ_TIMEOUT;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_RESET_COOKIES;
-import static org.opensearch.http.HttpTransportSettings.SETTING_PIPELINING_MAX_EVENTS;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ENABLED;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_COMPRESSION;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_COMPRESSION_LEVEL;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_DETAILED_ERRORS_ENABLED;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_CHUNK_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_INITIAL_LINE_LENGTH;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_READ_TIMEOUT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_RESET_COOKIES;
+import static org.density.http.HttpTransportSettings.SETTING_PIPELINING_MAX_EVENTS;
 
 /**
  * HTTP Settings
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HttpHandlingSettings {
 

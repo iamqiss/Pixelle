@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.TieredMergePolicyProvider;
-import org.opensearch.indices.replication.checkpoint.RemoteStorePublishMergedSegmentRequest;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.index.IndexSettings;
+import org.density.index.TieredMergePolicyProvider;
+import org.density.indices.replication.checkpoint.RemoteStorePublishMergedSegmentRequest;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.nio.file.Path;
@@ -30,7 +30,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreMergedSegmentWarmerIT extends SegmentReplicationBaseIT {
     private Path absolutePath;
 

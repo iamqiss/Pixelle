@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.logging.LoggerMessageFormat;
-import org.opensearch.tasks.Task;
+import org.density.Build;
+import org.density.Version;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.logging.LoggerMessageFormat;
+import org.density.tasks.Task;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -54,14 +54,14 @@ import java.util.regex.Pattern;
  * Use <code>HeaderWarning.addWarning(message,params)</code>. Message will be formatted according to RFC7234.
  * The result will be returned as HTTP response headers.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HeaderWarning {
     /**
      * Regular expression to test if a string matches the RFC7234 specification for warning headers. This pattern assumes that the warn code
-     * is always 299. Further, this pattern assumes that the warn agent represents a version of OpenSearch including the build hash.
+     * is always 299. Further, this pattern assumes that the warn agent represents a version of Density including the build hash.
      */
-    public static final Pattern WARNING_HEADER_PATTERN = Pattern.compile("299 OpenSearch-" + // warn code
+    public static final Pattern WARNING_HEADER_PATTERN = Pattern.compile("299 Density-" + // warn code
         "\\d+\\.\\d+\\.\\d+(?:-(?:alpha|beta|rc)\\d+)?(?:-SNAPSHOT)?-" + // warn agent
         "(?:[a-f0-9]{7}(?:[a-f0-9]{33})?|unknown) " + // warn agent
         "\"((?:\t| |!|[\\x23-\\x5B]|[\\x5D-\\x7E]|[\\x80-\\xFF]|\\\\|\\\\\")*)\"( " + // quoted warning value, captured
@@ -85,7 +85,7 @@ public class HeaderWarning {
      */
     private static final String WARNING_PREFIX = String.format(
         Locale.ROOT,
-        "299 OpenSearch-%s%s-%s",
+        "299 Density-%s%s-%s",
         Version.CURRENT.toString(),
         Build.CURRENT.isSnapshot() ? "-SNAPSHOT" : "",
         Build.CURRENT.hash()
@@ -165,7 +165,7 @@ public class HeaderWarning {
 
     /**
      * Extracts the warning value from the value of a warning header that is formatted according to RFC 7234. That is, given a string
-     * {@code 299 OpenSearch-6.0.0 "warning value"}, the return value of this method would be {@code warning value}.
+     * {@code 299 Density-6.0.0 "warning value"}, the return value of this method would be {@code warning value}.
      *
      * @param s the value of a warning header formatted according to RFC 7234.
      * @return the extracted warning value

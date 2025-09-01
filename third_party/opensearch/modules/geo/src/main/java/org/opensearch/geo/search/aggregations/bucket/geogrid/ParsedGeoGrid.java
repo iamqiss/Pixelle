@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.common.CheckedFunction;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.function.Supplier;
 /**
  * A geo grid result parsed between nodes
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class ParsedGeoGrid extends ParsedMultiBucketAggregation<ParsedGeoGridBucket> implements GeoGrid {
 

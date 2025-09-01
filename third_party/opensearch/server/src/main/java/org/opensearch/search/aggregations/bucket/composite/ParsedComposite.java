@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * A composite result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedComposite extends ParsedMultiBucketAggregation<ParsedComposite.ParsedBucket> implements CompositeAggregation {
     private static final ObjectParser<ParsedComposite, Void> PARSER = new ObjectParser<>(
@@ -109,7 +109,7 @@ public class ParsedComposite extends ParsedMultiBucketAggregation<ParsedComposit
     /**
      * Parsed bucket for the parsed composite agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ParsedBucket extends ParsedMultiBucketAggregation.ParsedBucket implements CompositeAggregation.Bucket {
         private Map<String, Object> key;

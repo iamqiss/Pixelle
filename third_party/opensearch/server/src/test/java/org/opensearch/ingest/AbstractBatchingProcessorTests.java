@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class AbstractBatchingProcessorTests extends OpenSearchTestCase {
+public class AbstractBatchingProcessorTests extends DensityTestCase {
 
     public void testBatchExecute_emptyInput() {
         DummyProcessor processor = new DummyProcessor(3);
@@ -94,7 +94,7 @@ public class AbstractBatchingProcessorTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("batch_size", 0);
         DummyProcessor.DummyProcessorFactory factory = new DummyProcessor.DummyProcessorFactory("DummyProcessor");
-        OpenSearchParseException exception = assertThrows(OpenSearchParseException.class, () -> factory.create(config));
+        DensityParseException exception = assertThrows(DensityParseException.class, () -> factory.create(config));
         assertEquals("[batch_size] batch size must be a positive integer", exception.getMessage());
     }
 
@@ -147,7 +147,7 @@ public class AbstractBatchingProcessorTests extends OpenSearchTestCase {
             }
 
             public AbstractBatchingProcessor create(Map<String, Object> config) throws Exception {
-                final Map<String, org.opensearch.ingest.Processor.Factory> processorFactories = new HashMap<>();
+                final Map<String, org.density.ingest.Processor.Factory> processorFactories = new HashMap<>();
                 return super.create(processorFactories, "tag", "description", config);
             }
 

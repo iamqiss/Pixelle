@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.Engine.Operation.Origin;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.shard.IndexingOperationListener;
-import org.opensearch.ingest.IngestTestPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.TaskInfo;
+import org.density.ExceptionsHelper;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.common.action.ActionFuture;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexModule;
+import org.density.index.engine.Engine;
+import org.density.index.engine.Engine.Operation.Origin;
+import org.density.index.query.QueryBuilders;
+import org.density.index.shard.IndexingOperationListener;
+import org.density.ingest.IngestTestPlugin;
+import org.density.plugins.Plugin;
+import org.density.tasks.TaskInfo;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 
@@ -62,9 +62,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.stats;
+package org.density.action.admin.cluster.node.stats;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.support.nodes.NodesOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.support.nodes.NodesOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
- * Transport builder for obtaining OpenSearch Node Stats
+ * Transport builder for obtaining Density Node Stats
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NodesStatsRequestBuilder extends NodesOperationRequestBuilder<
@@ -48,7 +48,7 @@ public class NodesStatsRequestBuilder extends NodesOperationRequestBuilder<
     NodesStatsResponse,
     NodesStatsRequestBuilder> {
 
-    public NodesStatsRequestBuilder(OpenSearchClient client, NodesStatsAction action) {
+    public NodesStatsRequestBuilder(DensityClient client, NodesStatsAction action) {
         super(client, action, new NodesStatsRequest());
     }
 

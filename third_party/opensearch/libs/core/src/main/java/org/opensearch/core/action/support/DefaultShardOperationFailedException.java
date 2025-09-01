@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.action.support;
+package org.density.core.action.support;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.core.ParseField;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
-import static org.opensearch.ExceptionsHelper.detailedMessage;
-import static org.opensearch.OpenSearchException.generateThrowableXContent;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.ExceptionsHelper.detailedMessage;
+import static org.density.DensityException.generateThrowableXContent;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * Exception for a default shard operation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DefaultShardOperationFailedException extends ShardOperationFailedException implements Writeable {
 
@@ -70,7 +70,7 @@ public class DefaultShardOperationFailedException extends ShardOperationFailedEx
     protected static <T extends DefaultShardOperationFailedException> void declareFields(ConstructingObjectParser<T, Void> objectParser) {
         objectParser.declareString(constructorArg(), new ParseField(INDEX));
         objectParser.declareInt(constructorArg(), new ParseField(SHARD_ID));
-        objectParser.declareObject(constructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField(REASON));
+        objectParser.declareObject(constructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField(REASON));
     }
 
     static {
@@ -83,7 +83,7 @@ public class DefaultShardOperationFailedException extends ShardOperationFailedEx
         readFrom(in, this);
     }
 
-    public DefaultShardOperationFailedException(OpenSearchException e) {
+    public DefaultShardOperationFailedException(DensityException e) {
         super(
             e.getIndex() == null ? null : e.getIndex().getName(),
             e.getShardId() == null ? -1 : e.getShardId().getId(),

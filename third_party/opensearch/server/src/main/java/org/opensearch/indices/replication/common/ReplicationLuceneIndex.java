@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.common;
+package org.density.indices.replication.common;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.indices.recovery.RecoveryState;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.indices.recovery.RecoveryState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.Map;
  * Represents the Lucene Index (set of files on a single shard) involved
  * in the replication process.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ReplicationLuceneIndex extends ReplicationTimer implements ToXContentFragment, Writeable {
@@ -310,7 +310,7 @@ public final class ReplicationLuceneIndex extends ReplicationTimer implements To
     /**
      * Details about the files
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class FilesDetails implements ToXContentFragment, Writeable {
         protected final Map<String, FileMetadata> fileMetadataMap = new HashMap<>();
@@ -395,7 +395,7 @@ public final class ReplicationLuceneIndex extends ReplicationTimer implements To
     /**
      * Metadata about a file
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class FileMetadata implements ToXContentObject, Writeable {
@@ -502,7 +502,7 @@ public final class ReplicationLuceneIndex extends ReplicationTimer implements To
     /**
      * Duplicates many of Field names in {@link RecoveryState}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String TOTAL_TIME = "total_time";

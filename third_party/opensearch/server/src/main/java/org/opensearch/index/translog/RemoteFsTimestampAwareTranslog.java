@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.Loggers;
+import org.density.core.action.ActionListener;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
+import static org.density.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
 
 /**
  * A Translog implementation which syncs local FS with a remote store
@@ -51,7 +51,7 @@ import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.ME
  * created. This implementation is also aware of pinned timestamp and makes
  * sure data against pinned timestamp is retained.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteFsTimestampAwareTranslog extends RemoteFsTranslog {
 

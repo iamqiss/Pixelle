@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -50,21 +50,21 @@ import org.bouncycastle.openpgp.PGPUtil;
 import org.bouncycastle.openpgp.jcajce.JcaPGPObjectFactory;
 import org.bouncycastle.openpgp.operator.jcajce.JcaKeyFingerprintCalculator;
 import org.bouncycastle.openpgp.operator.jcajce.JcaPGPContentVerifierBuilderProvider;
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.hash.MessageDigests;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.Platforms;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginsService;
+import org.density.Build;
+import org.density.Version;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.SuppressForbidden;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.common.collect.Tuple;
+import org.density.common.hash.MessageDigests;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.plugins.Platforms;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginsService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,14 +106,14 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cli.Terminal.Verbosity.VERBOSE;
+import static org.density.cli.Terminal.Verbosity.VERBOSE;
 
 /**
- * A command for the plugin cli to install a plugin into opensearch.
+ * A command for the plugin cli to install a plugin into density.
  * <p>
  * The install command takes a plugin id, which may be any of the following:
  * <ul>
- * <li>An official opensearch plugin name</li>
+ * <li>An official density plugin name</li>
  * <li>Maven coordinates to a plugin zip</li>
  * <li>A URL to a plugin zip</li>
  * </ul>
@@ -124,18 +124,18 @@ import static org.opensearch.cli.Terminal.Verbosity.VERBOSE;
  * The installation process first extracts the plugin files into a temporary
  * directory in order to verify the plugin satisfies the following requirements:
  * <ul>
- * <li>Jar hell does not exist, either between the plugin's own jars, or with opensearch</li>
- * <li>The plugin is not a module already provided with opensearch</li>
+ * <li>Jar hell does not exist, either between the plugin's own jars, or with density</li>
+ * <li>The plugin is not a module already provided with density</li>
  * <li>If the plugin contains extra security permissions, the policy file is validated</li>
  * </ul>
  * <p>
  * A plugin may also contain an optional {@code bin} directory which contains scripts. The
- * scripts will be installed into a subdirectory of the opensearch bin directory, using
+ * scripts will be installed into a subdirectory of the density bin directory, using
  * the name of the plugin, and the scripts will be marked executable.
  * <p>
  * A plugin may also contain an optional {@code config} directory which contains configuration
  * files specific to the plugin. The config files be installed into a subdirectory of the
- * opensearch config directory, using the name of the plugin. If any files to be installed
+ * density config directory, using the name of the plugin. If any files to be installed
  * already exist, they will be skipped.
  */
 class InstallPluginCommand extends EnvironmentAwareCommand {
@@ -230,13 +230,13 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
 
         // List possible plugin id inputs
         terminal.println("The install command takes a plugin id, which may be any of the following:");
-        terminal.println("  An official opensearch plugin name");
+        terminal.println("  An official density plugin name");
         terminal.println("  Maven coordinates to a plugin zip");
         terminal.println("  A URL to a plugin zip");
         terminal.println("  A local zip file");
         terminal.println("");
 
-        // List official opensearch plugin names
+        // List official density plugin names
         terminal.println("The following official plugins may be installed by name:");
         for (String plugin : OFFICIAL_PLUGINS) {
             terminal.println("  " + plugin);
@@ -308,8 +308,8 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
     private Path download(Terminal terminal, String pluginId, Path tmpDir, boolean isBatch) throws Exception {
 
         if (OFFICIAL_PLUGINS.contains(pluginId)) {
-            final String url = getOpenSearchUrl(terminal, Version.CURRENT, isSnapshot(), pluginId, Platforms.PLATFORM_NAME);
-            terminal.println("-> Downloading " + pluginId + " from opensearch");
+            final String url = getDensityUrl(terminal, Version.CURRENT, isSnapshot(), pluginId, Platforms.PLATFORM_NAME);
+            terminal.println("-> Downloading " + pluginId + " from density");
             return downloadAndValidate(terminal, url, tmpDir, true, isBatch);
         }
 
@@ -339,8 +339,8 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         return Build.CURRENT.isSnapshot();
     }
 
-    /** Returns the url for an official opensearch plugin. */
-    private String getOpenSearchUrl(
+    /** Returns the url for an official density plugin. */
+    private String getDensityUrl(
         final Terminal terminal,
         final Version version,
         final boolean isSnapshot,
@@ -351,14 +351,14 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         if (isSnapshot == true) {
             baseUrl = String.format(
                 Locale.ROOT,
-                "https://artifacts.opensearch.org/snapshots/plugins/%s/%s",
+                "https://artifacts.density.org/snapshots/plugins/%s/%s",
                 pluginId,
                 Build.CURRENT.getQualifiedVersion()
             );
         } else {
             baseUrl = String.format(
                 Locale.ROOT,
-                "https://artifacts.opensearch.org/releases/plugins/%s/%s",
+                "https://artifacts.density.org/releases/plugins/%s/%s",
                 pluginId,
                 Build.CURRENT.getQualifiedVersion()
             );
@@ -377,7 +377,7 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         return String.format(Locale.ROOT, "%s/%s-%s.zip", baseUrl, pluginId, Build.CURRENT.getQualifiedVersion());
     }
 
-    /** Returns the url for an opensearch plugin in maven. */
+    /** Returns the url for an density plugin in maven. */
     private String getMavenUrl(Terminal terminal, String[] coordinates, String platform) throws IOException {
         final String groupId = coordinates[0].replace(".", "/");
         final String artifactId = coordinates[1];
@@ -402,7 +402,7 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         URL url = URI.create(urlString).toURL();
         assert "https".equals(url.getProtocol()) : "Use of https protocol is required";
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.addRequestProperty("User-Agent", "opensearch-plugin-installer");
+        urlConnection.addRequestProperty("User-Agent", "density-plugin-installer");
         urlConnection.setRequestMethod("HEAD");
         urlConnection.connect();
         return urlConnection.getResponseCode() == 200;
@@ -430,7 +430,7 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         URL url = URI.create(urlString).toURL();
         Path zip = Files.createTempFile(tmpDir, null, ".zip");
         URLConnection urlConnection = url.openConnection();
-        urlConnection.addRequestProperty("User-Agent", "opensearch-plugin-installer");
+        urlConnection.addRequestProperty("User-Agent", "density-plugin-installer");
         try (
             InputStream in = isBatch
                 ? urlConnection.getInputStream()
@@ -604,7 +604,7 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
 
     /**
      * Verify the signature of the downloaded plugin ZIP. The signature is obtained from the source of the downloaded plugin by appending
-     * ".sig" to the URL. It is expected that the plugin is signed with the OpenSearch Release signing key with ID 4E9275EE6BA2427F for 3.0.0 or above.
+     * ".sig" to the URL. It is expected that the plugin is signed with the Density Release signing key with ID 4E9275EE6BA2427F for 3.0.0 or above.
      *
      * @param zip       the path to the downloaded plugin ZIP
      * @param urlString the URL source of the downloade plugin ZIP
@@ -704,11 +704,11 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
             byte[] buffer = new byte[8192];
             while (entries.hasMoreElements()) {
                 entry = entries.nextElement();
-                if (entry.getName().startsWith("opensearch/")) {
+                if (entry.getName().startsWith("density/")) {
                     throw new UserException(
                         PLUGIN_MALFORMED,
                         "This plugin was built with an older plugin structure."
-                            + " Contact the plugin author to remove the intermediate \"opensearch\" directory within the plugin zip."
+                            + " Contact the plugin author to remove the intermediate \"density\" directory within the plugin zip."
                     );
                 }
                 Path targetFile = target.resolve(entry.getName());
@@ -845,7 +845,7 @@ class InstallPluginCommand extends EnvironmentAwareCommand {
         throws Exception {
         final PluginInfo info = loadPluginInfo(terminal, tmpRoot, env);
         // read optional security policy (extra permissions), if it exists, confirm or warn the user
-        Path policy = tmpRoot.resolve(PluginInfo.OPENSEARCH_PLUGIN_POLICY);
+        Path policy = tmpRoot.resolve(PluginInfo.DENSITY_PLUGIN_POLICY);
         final Set<String> permissions;
         if (Files.exists(policy)) {
             permissions = PluginSecurity.parsePermissions(policy, env.tmpDir());

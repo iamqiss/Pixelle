@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.ToXContentObject;
 
 /**
  * {@link PersistentTaskState} represents the state of the persistent tasks, as it
  * is persisted in the cluster state.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface PersistentTaskState extends ToXContentObject, NamedWriteable {}

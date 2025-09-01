@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.mapping;
+package org.density.indices.mapping;
 
 import org.junit.Before;
 
-import static org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import static org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import static org.density.test.DensityIntegTestCase.ClusterScope;
+import static org.density.test.DensityIntegTestCase.Scope;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
 public class DedicatedClusterManagerGetFieldMappingIT extends SimpleGetFieldMappingsIT {

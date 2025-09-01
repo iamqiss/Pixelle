@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.admin.cluster.allocation.ClusterAllocationExplainResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MockEngineFactoryPlugin;
-import org.opensearch.index.translog.TestTranslog;
-import org.opensearch.index.translog.TranslogCorruptedException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.engine.MockEngineSupport;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.ExceptionsHelper;
+import org.density.action.admin.cluster.allocation.ClusterAllocationExplainResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexSettings;
+import org.density.index.MockEngineFactoryPlugin;
+import org.density.index.translog.TestTranslog;
+import org.density.index.translog.TranslogCorruptedException;
+import org.density.indices.IndicesService;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.engine.MockEngineSupport;
+import org.density.test.transport.MockTransportService;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -64,8 +64,8 @@ import static org.hamcrest.Matchers.nullValue;
 /**
  * Integration test for corrupted translog files
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 0)
-public class CorruptedTranslogIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 0)
+public class CorruptedTranslogIT extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Arrays.asList(MockTransportService.TestPlugin.class, MockEngineFactoryPlugin.class);

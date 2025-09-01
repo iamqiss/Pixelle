@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginTestUtil;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cli.ExitCodes;
+import org.density.cli.MockTerminal;
+import org.density.cli.UserException;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginTestUtil;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -54,7 +54,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @LuceneTestCase.SuppressFileSystems("*")
-public class ListPluginsCommandTests extends OpenSearchTestCase {
+public class ListPluginsCommandTests extends DensityTestCase {
 
     private Path home;
     private Environment env;
@@ -119,7 +119,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
             name,
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             "1.8",
@@ -168,7 +168,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
                 "Name: fake_plugin",
                 "Description: fake desc",
                 "Version: 1.0",
-                "OpenSearch Version: " + Version.CURRENT.toString(),
+                "Density Version: " + Version.CURRENT.toString(),
                 "Java Version: 1.8",
                 "Native Controller: false",
                 "Extended Plugins: []",
@@ -191,7 +191,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
                 "Name: fake_plugin1",
                 "Description: fake desc 1",
                 "Version: 1.0",
-                "OpenSearch Version: " + Version.CURRENT.toString(),
+                "Density Version: " + Version.CURRENT.toString(),
                 "Java Version: 1.8",
                 "Native Controller: true",
                 "Extended Plugins: []",
@@ -215,7 +215,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
                 "Name: fake_plugin1",
                 "Description: fake desc 1",
                 "Version: 1.0",
-                "OpenSearch Version: " + Version.CURRENT.toString(),
+                "Density Version: " + Version.CURRENT.toString(),
                 "Java Version: 1.8",
                 "Native Controller: false",
                 "Extended Plugins: []",
@@ -226,7 +226,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
                 "Name: fake_plugin2",
                 "Description: fake desc 2",
                 "Version: 1.0",
-                "OpenSearch Version: " + Version.CURRENT.toString(),
+                "Density Version: " + Version.CURRENT.toString(),
                 "Java Version: 1.8",
                 "Native Controller: false",
                 "Extended Plugins: []",
@@ -249,14 +249,14 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
         final Path pluginDir = env.pluginsDir().resolve("fake1");
         Files.createDirectories(pluginDir);
         NoSuchFileException e = expectThrows(NoSuchFileException.class, () -> listPlugins(home));
-        assertEquals(pluginDir.resolve(PluginInfo.OPENSEARCH_PLUGIN_PROPERTIES).toString(), e.getFile());
+        assertEquals(pluginDir.resolve(PluginInfo.DENSITY_PLUGIN_PROPERTIES).toString(), e.getFile());
     }
 
     public void testPluginWithWrongDescriptorFile() throws Exception {
         final Path pluginDir = env.pluginsDir().resolve("fake1");
         PluginTestUtil.writePluginProperties(pluginDir, "description", "fake desc");
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> listPlugins(home));
-        final Path descriptorPath = pluginDir.resolve(PluginInfo.OPENSEARCH_PLUGIN_PROPERTIES);
+        final Path descriptorPath = pluginDir.resolve(PluginInfo.DENSITY_PLUGIN_PROPERTIES);
         assertEquals("property [name] is missing in [" + descriptorPath.toString() + "]", e.getMessage());
     }
 
@@ -269,7 +269,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
             "fake_plugin1",
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.fromString("5.0.0").toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -279,7 +279,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
         buildFakePlugin(env, "fake desc 2", "fake_plugin2", "org.fake2");
 
         MockTerminal terminal = listPlugins(home);
-        String message = "plugin [fake_plugin1] was built for OpenSearch version 5.0.0 and is not compatible with " + Version.CURRENT;
+        String message = "plugin [fake_plugin1] was built for Density version 5.0.0 and is not compatible with " + Version.CURRENT;
         assertEquals("fake_plugin1\nfake_plugin2\n", terminal.getOutput());
         assertEquals("WARNING: " + message + "\n", terminal.getErrorOutput());
 
@@ -298,7 +298,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
             "version",
             "1.0",
             "dependencies",
-            "{opensearch:\"" + Version.CURRENT + "\"}",
+            "{density:\"" + Version.CURRENT + "\"}",
             "java.version",
             System.getProperty("java.specification.version"),
             "classname",
@@ -314,7 +314,7 @@ public class ListPluginsCommandTests extends OpenSearchTestCase {
                 "Name: fake_plugin1",
                 "Description: fake desc 1",
                 "Version: 1.0",
-                "OpenSearch Version: " + Version.CURRENT.toString(),
+                "Density Version: " + Version.CURRENT.toString(),
                 "Java Version: " + System.getProperty("java.specification.version"),
                 "Native Controller: false",
                 "Extended Plugins: []",

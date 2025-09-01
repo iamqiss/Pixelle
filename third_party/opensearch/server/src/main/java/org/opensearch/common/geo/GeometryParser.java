@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.utils.GeometryValidator;
-import org.opensearch.geometry.utils.StandardValidator;
-import org.opensearch.geometry.utils.WellKnownText;
+import org.density.DensityParseException;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Point;
+import org.density.geometry.utils.GeometryValidator;
+import org.density.geometry.utils.StandardValidator;
+import org.density.geometry.utils.WellKnownText;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -54,7 +54,7 @@ import java.util.Map;
 /**
  * An utility class with a geometry parser methods supporting different shape representation formats
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class GeometryParser {
 
@@ -102,7 +102,7 @@ public final class GeometryParser {
             // We don't know the format of the original geometry - so going with default
             return new GeoJsonGeometryFormat(geoJsonParser);
         } else {
-            throw new OpenSearchParseException("shape must be an object consisting of type and coordinates");
+            throw new DensityParseException("shape must be an object consisting of type and coordinates");
         }
     }
 
@@ -117,7 +117,7 @@ public final class GeometryParser {
      * <p>
      * Json structure: valid geojson definition
      */
-    public Geometry parseGeometry(Object value) throws OpenSearchParseException {
+    public Geometry parseGeometry(Object value) throws DensityParseException {
         if (value instanceof List) {
             List<?> values = (List<?>) value;
             if (values.size() == 2 && values.get(0) instanceof Number) {
@@ -150,7 +150,7 @@ public final class GeometryParser {
             }
 
         } catch (IOException | ParseException ex) {
-            throw new OpenSearchParseException("error parsing geometry ", ex);
+            throw new DensityParseException("error parsing geometry ", ex);
         }
     }
 

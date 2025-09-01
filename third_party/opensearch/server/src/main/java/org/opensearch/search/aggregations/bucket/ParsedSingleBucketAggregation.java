@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.ParsedAggregation;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.ParsedAggregation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * A base class for all the single bucket aggregations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ParsedSingleBucketAggregation extends ParsedAggregation implements SingleBucketAggregation {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -48,9 +48,9 @@ import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.Bits;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.CheckedFunction;
+import org.density.common.lucene.Lucene;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 import java.util.List;

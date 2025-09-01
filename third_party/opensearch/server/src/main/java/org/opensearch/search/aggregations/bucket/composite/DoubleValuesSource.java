@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitArray;
-import org.opensearch.common.util.DoubleArray;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
+import org.density.common.CheckedFunction;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitArray;
+import org.density.common.util.DoubleArray;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
 
 import java.io.IOException;
 
 /**
  * A {@link SingleDimensionValuesSource} for doubles.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class DoubleValuesSource extends SingleDimensionValuesSource<Double> {
     private final CheckedFunction<LeafReaderContext, SortedNumericDoubleValues, IOException> docValuesFunc;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,78 +25,78 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.InternalClusterInfoService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLock;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.CommitStats;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.MergedSegmentWarmerFactory;
-import org.opensearch.index.engine.NoOpEngine;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.InternalTranslogFactory;
-import org.opensearch.index.translog.TestTranslog;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentPublisher;
-import org.opensearch.indices.replication.checkpoint.ReferencedSegmentsPublisher;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.InternalClusterInfoService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.CheckedRunnable;
+import org.density.common.UUIDs;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLock;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.engine.CommitStats;
+import org.density.index.engine.Engine;
+import org.density.index.engine.MergedSegmentWarmerFactory;
+import org.density.index.engine.NoOpEngine;
+import org.density.index.flush.FlushStats;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.InternalTranslogFactory;
+import org.density.index.translog.TestTranslog;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogStats;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.checkpoint.MergedSegmentPublisher;
+import org.density.indices.replication.checkpoint.ReferencedSegmentsPublisher;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.plugins.Plugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -123,16 +123,16 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.NONE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.routing.TestShardRouting.newShardRouting;
-import static org.opensearch.index.shard.IndexShardTestCase.getTranslog;
-import static org.opensearch.index.shard.IndexShardTestCase.recoverFromStore;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.action.support.WriteRequest.RefreshPolicy.NONE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.routing.TestShardRouting.newShardRouting;
+import static org.density.index.shard.IndexShardTestCase.getTranslog;
+import static org.density.index.shard.IndexShardTestCase.recoverFromStore;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -142,7 +142,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.randomAsciiLettersOfLength;
 import static org.mockito.Mockito.mock;
 
-public class IndexShardIT extends OpenSearchSingleNodeTestCase {
+public class IndexShardIT extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
@@ -727,7 +727,7 @@ public class IndexShardIT extends OpenSearchSingleNodeTestCase {
             mock(Function.class),
             new MergedSegmentWarmerFactory(null, null, null),
             false,
-            OpenSearchTestCase::randomBoolean,
+            DensityTestCase::randomBoolean,
             () -> indexService.getIndexSettings().getRefreshInterval(),
             indexService.getRefreshMutex(),
             clusterService.getClusterApplierService(),
@@ -833,7 +833,7 @@ public class IndexShardIT extends OpenSearchSingleNodeTestCase {
     }
 
     /**
-     * Test that the {@link org.opensearch.index.engine.NoOpEngine} takes precedence over other
+     * Test that the {@link org.density.index.engine.NoOpEngine} takes precedence over other
      * engine factories if the index is closed.
      */
     public void testNoOpEngineFactoryTakesPrecedence() {

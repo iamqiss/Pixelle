@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshots;
-import org.opensearch.index.snapshots.blobstore.IndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.SnapshotFiles;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.ActionRunnable;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.UUIDs;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexNotFoundException;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshots;
+import org.density.index.snapshots.blobstore.IndexShardSnapshot;
+import org.density.index.snapshots.blobstore.SnapshotFiles;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -64,12 +64,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class CloneSnapshotIT extends AbstractSnapshotIntegTestCase {
 
     public void testShardClone() throws Exception {

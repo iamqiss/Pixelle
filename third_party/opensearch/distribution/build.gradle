@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -30,13 +30,13 @@
 
 
 import org.apache.tools.ant.filters.FixCrLfFilter
-import org.opensearch.gradle.ConcatFilesTask
-import org.opensearch.gradle.DependenciesInfoTask
-import org.opensearch.gradle.MavenFilteringHack
-import org.opensearch.gradle.NoticeTask
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.JavaPackageType
+import org.density.gradle.ConcatFilesTask
+import org.density.gradle.DependenciesInfoTask
+import org.density.gradle.MavenFilteringHack
+import org.density.gradle.NoticeTask
+import org.density.gradle.VersionProperties
+import org.density.gradle.info.BuildParams
+import org.density.gradle.JavaPackageType
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -53,7 +53,7 @@ tasks.register("generateDependenciesReport", ConcatFilesTask) {
   dependsOn rootProject.allprojects.collect { it.tasks.withType(DependenciesInfoTask) }
   files = fileTree(dir: project.rootDir, include: '**/dependencies.csv')
   headerLine = "name,version,url,license,sourceURL"
-  target = new File(System.getProperty('csv') ?: "${project.buildDir}/reports/dependencies/opensearch-dependencies.csv")
+  target = new File(System.getProperty('csv') ?: "${project.buildDir}/reports/dependencies/density-dependencies.csv")
 
   // explicitly add our dependency on the JDK
   String jdkVersion = VersionProperties.versions.get('bundled_jdk')
@@ -157,7 +157,7 @@ void copyModule(TaskProvider<Sync> copyTask, Project module) {
       exclude 'config/log4j2.properties'
 
       eachFile { details ->
-        String name = module.plugins.hasPlugin('opensearch.opensearchplugin') ? module.opensearchplugin.name : module.opensearch_meta_plugin.name
+        String name = module.plugins.hasPlugin('density.densityplugin') ? module.densityplugin.name : module.density_meta_plugin.name
         // Copy all non config/bin files
         // Note these might be unde a subdirectory in the case of a meta plugin
         if ((details.relativePath.pathString ==~ /([^\/]+\/)?(config|bin)\/.*/) == false) {
@@ -240,7 +240,7 @@ project.rootProject.subprojects.findAll { it.parent.path == ':modules' }.each { 
 }
 
 // copy all sandbox modules if the distribution is a snapshot
-if (VersionProperties.isOpenSearchSnapshot()) {
+if (VersionProperties.isDensitySnapshot()) {
   Properties sysProps = System.getProperties();
   // setting this property to false will exclude the sandbox modules from the distribution
   final String enableSandbox = sysProps.getProperty("sandbox.enabled", "true");
@@ -275,9 +275,9 @@ project(':test:external-modules').subprojects.each { Project testModule ->
 
 configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
 
-  apply plugin: 'opensearch.jdk-download'
-  apply plugin: 'opensearch.jre-download'
-  apply plugin: 'opensearch.repositories'
+  apply plugin: 'density.jdk-download'
+  apply plugin: 'density.jre-download'
+  apply plugin: 'density.repositories'
 
   // Setup all required JDKs
   project.jdks {
@@ -327,7 +327,7 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
 
   dependencies {
     libs project(':server')
-    libs project(':libs:opensearch-plugin-classloader')
+    libs project(':libs:density-plugin-classloader')
     libs project(':distribution:tools:java-version-checker')
     libs project(':distribution:tools:launchers')
 
@@ -365,7 +365,7 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
           exclude '**/*-javadoc.jar'
           exclude '**/*-sources.jar'
           // strip the version since jvm.options is using agent without version
-          rename("opensearch-agent-${project.version}.jar", "opensearch-agent.jar")
+          rename("density-agent-${project.version}.jar", "density-agent.jar")
         }
       }
     }
@@ -524,7 +524,7 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
 
 /**
  * Build some variables that are replaced in the packages. This includes both
- * scripts like bin/opensearch and bin/opensearch-plugin that a user might run and also
+ * scripts like bin/density and bin/density-plugin that a user might run and also
  * scripts like postinst which are run as part of the installation.
  *
  * <dl>
@@ -536,18 +536,18 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
  *  <dt>path.conf</dt>
  *  <dd>The default directory from which to load configuration. This is used in
  *    the packaging scripts, but in that context it is always
- *    /etc/opensearch. Its also used in bin/opensearch-plugin, where it is
- *    /etc/opensearch for the os packages but $OPENSEARCH_HOME/config otherwise.</dd>
+ *    /etc/density. Its also used in bin/density-plugin, where it is
+ *    /etc/density for the os packages but $DENSITY_HOME/config otherwise.</dd>
  *  <dt>path.env</dt>
- *  <dd>The env file sourced before bin/opensearch to set environment
- *    variables. Think /etc/defaults/opensearch.</dd>
+ *  <dd>The env file sourced before bin/density to set environment
+ *    variables. Think /etc/defaults/density.</dd>
  *  <dt>heap.min and heap.max</dt>
  *  <dd>Default min and max heap</dd>
  *  <dt>scripts.footer</dt>
  *  <dd>Footer appended to control scripts embedded in the distribution that is
  *    (almost) entirely there for cosmetic reasons.</dd>
  *  <dt>stopping.timeout</dt>
- *  <dd>RPM's init script needs to wait for opensearch to stop before
+ *  <dd>RPM's init script needs to wait for density to stop before
  *    returning from stop and it needs a maximum time to wait. This is it. One
  *    day. DEB retries forever.</dd>
  * </dl>
@@ -555,8 +555,8 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
 subprojects {
   ext.expansionsForDistribution = { distributionType, jdk ->
     final String defaultHeapSize = "1g"
-    final String packagingPathData = "path.data: /var/lib/opensearch"
-    final String pathLogs = "/var/log/opensearch"
+    final String packagingPathData = "path.data: /var/lib/density"
+    final String pathLogs = "/var/log/density"
     final String packagingPathLogs = "path.logs: ${pathLogs}"
     final String packagingLoggc = "${pathLogs}/gc.log"
 
@@ -571,9 +571,9 @@ subprojects {
       'project.version': version,
 
       'path.conf': [
-        'deb': '/etc/opensearch',
-        'rpm': '/etc/opensearch',
-        'def': '"$OPENSEARCH_HOME"/config'
+        'deb': '/etc/density',
+        'rpm': '/etc/density',
+        'def': '"$DENSITY_HOME"/config'
       ],
       'path.data': [
         'deb': packagingPathData,
@@ -581,16 +581,16 @@ subprojects {
         'def': '#path.data: /path/to/data'
       ],
       'path.env': [
-        'deb': '/etc/default/opensearch',
-        'rpm': '/etc/sysconfig/opensearch',
+        'deb': '/etc/default/density',
+        'rpm': '/etc/sysconfig/density',
         /* There isn't one of these files for tar or zip but its important to
           make an empty string here so the script can properly skip it. */
-        'def': 'if [ -z "$OPENSEARCH_PATH_CONF" ]; then OPENSEARCH_PATH_CONF="$OPENSEARCH_HOME"/config; done',
+        'def': 'if [ -z "$DENSITY_PATH_CONF" ]; then DENSITY_PATH_CONF="$DENSITY_HOME"/config; done',
       ],
       'source.path.env': [
-        'deb': 'source /etc/default/opensearch',
-        'rpm': 'source /etc/sysconfig/opensearch',
-        'def': 'if [ -z "$OPENSEARCH_PATH_CONF" ]; then OPENSEARCH_PATH_CONF="$OPENSEARCH_HOME"/config; fi',
+        'deb': 'source /etc/default/density',
+        'rpm': 'source /etc/sysconfig/density',
+        'def': 'if [ -z "$DENSITY_PATH_CONF" ]; then DENSITY_PATH_CONF="$DENSITY_HOME"/config; fi',
       ],
       'path.logs': [
         'deb': packagingPathLogs,
@@ -607,14 +607,14 @@ subprojects {
       'heap.max': defaultHeapSize,
 
       'heap.dump.path': [
-        'deb': "-XX:HeapDumpPath=/var/lib/opensearch",
-        'rpm': "-XX:HeapDumpPath=/var/lib/opensearch",
+        'deb': "-XX:HeapDumpPath=/var/lib/density",
+        'rpm': "-XX:HeapDumpPath=/var/lib/density",
         'def': "-XX:HeapDumpPath=data"
       ],
 
       'error.file': [
-        'deb': "-XX:ErrorFile=/var/log/opensearch/hs_err_pid%p.log",
-        'rpm': "-XX:ErrorFile=/var/log/opensearch/hs_err_pid%p.log",
+        'deb': "-XX:ErrorFile=/var/log/density/hs_err_pid%p.log",
+        'rpm': "-XX:ErrorFile=/var/log/density/hs_err_pid%p.log",
         'def': "-XX:ErrorFile=logs/hs_err_pid%p.log"
       ],
 
@@ -629,14 +629,14 @@ subprojects {
         'def': footer
       ],
 
-      'opensearch.distribution.type': [
+      'density.distribution.type': [
         'deb': 'deb',
         'rpm': 'rpm',
         'tar': 'tar',
         'zip': 'zip'
       ],
 
-      'opensearch.bundled_jdk': [
+      'density.bundled_jdk': [
         'def': jdk != JavaPackageType.NONE ? true : false
       ],
 

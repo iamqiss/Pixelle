@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +49,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 
 /**
  * see issue #9023
@@ -59,7 +59,7 @@ public class BalanceUnbalancedClusterTests extends CatAllocationTestCase {
     @Override
     protected Path getCatPath() throws IOException {
         Path tmp = createTempDir();
-        try (InputStream stream = Files.newInputStream(getDataPath("/org/opensearch/cluster/routing/issue_9023.zip"))) {
+        try (InputStream stream = Files.newInputStream(getDataPath("/org/density/cluster/routing/issue_9023.zip"))) {
             TestUtil.unzip(stream, tmp);
         }
         return tmp.resolve("issue_9023");
@@ -78,7 +78,7 @@ public class BalanceUnbalancedClusterTests extends CatAllocationTestCase {
         ClusterState clusterState = ClusterState.builder(state).metadata(metadata).routingTable(initialRoutingTable).build();
         clusterState = strategy.reroute(clusterState, "reroute");
         while (clusterState.routingTable().shardsWithState(INITIALIZING).isEmpty() == false) {
-            clusterState = OpenSearchAllocationTestCase.startInitializingShardsAndReroute(strategy, clusterState);
+            clusterState = DensityAllocationTestCase.startInitializingShardsAndReroute(strategy, clusterState);
         }
         Map<String, Integer> counts = new HashMap<>();
         for (IndexShardRoutingTable table : clusterState.routingTable().index(index)) {

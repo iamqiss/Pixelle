@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.test.DensityTestCase;
 
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.opensearch.rest.NamedRoute.MAX_LENGTH_OF_ACTION_NAME;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.NamedRoute.MAX_LENGTH_OF_ACTION_NAME;
+import static org.density.rest.RestRequest.Method.GET;
 
-public class NamedRouteTests extends OpenSearchTestCase {
+public class NamedRouteTests extends DensityTestCase {
 
     public void testNamedRouteWithEmptyName() {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("").build();
             fail("Expected NamedRoute to throw exception on empty name provided");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("Invalid route name specified"));
         }
     }
@@ -32,7 +32,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo bar").build();
             fail("Expected NamedRoute to throw exception on name containing space name provided");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("Invalid route name specified"));
         }
     }
@@ -41,7 +41,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo@bar!").build();
             fail("Expected NamedRoute to throw exception on name containing invalid characters name provided");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("Invalid route name specified"));
         }
     }
@@ -51,7 +51,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
             String repeated = new String(new char[MAX_LENGTH_OF_ACTION_NAME + 1]).replace("\0", "x");
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName(repeated).build();
             fail("Expected NamedRoute to throw exception on name over maximum length supplied");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("Invalid route name specified"));
         }
     }
@@ -59,7 +59,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
     public void testNamedRouteWithValidActionName() {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar").build();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to throw exception on valid action name");
         }
     }
@@ -67,7 +67,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
     public void testNamedRouteWithValidActionNameWithForwardSlash() {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar:baz").build();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to throw exception on valid action name");
         }
     }
@@ -75,7 +75,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
     public void testNamedRouteWithValidActionNameWithWildcard() {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar/*").build();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to throw exception on valid action name");
         }
     }
@@ -83,7 +83,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
     public void testNamedRouteWithValidActionNameWithUnderscore() {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar_baz").build();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to throw exception on valid action name");
         }
     }
@@ -92,7 +92,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar").legacyActionNames(null).build();
             assertTrue(r.actionNames().isEmpty());
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to pass with an invalid legacy action name");
         }
     }
@@ -105,7 +105,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
                 .legacyActionNames(Set.of("foo:bar-legacy"))
                 .build();
             fail("Did not expect NamedRoute to pass with an invalid legacy action name");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertTrue(e.getMessage().contains("Invalid action name [foo:bar-legacy]. It must start with one of:"));
         }
     }
@@ -115,7 +115,7 @@ public class NamedRouteTests extends OpenSearchTestCase {
         try {
             NamedRoute r = new NamedRoute.Builder().method(GET).path("foo/bar").uniqueName("foo:bar_baz").handler(fooHandler).build();
             assertEquals(r.handler(), fooHandler);
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             fail("Did not expect NamedRoute to throw exception");
         }
     }

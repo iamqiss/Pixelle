@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesClusterStateUpdateRequest;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.metadata.AliasAction.NewAliasValidator;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.IndicesService;
+import org.density.DensityException;
+import org.density.action.admin.indices.alias.IndicesAliasesClusterStateUpdateRequest;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.metadata.AliasAction.NewAliasValidator;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.mapper.MapperService;
+import org.density.indices.IndicesService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,13 +61,13 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.cluster.service.ClusterManagerTask.INDEX_ALIASES;
-import static org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
+import static org.density.cluster.service.ClusterManagerTask.INDEX_ALIASES;
+import static org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
 
 /**
  * Service responsible for submitting add and remove aliases requests
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataIndexAliasesService {
 
@@ -181,7 +181,7 @@ public class MetadataIndexAliasesService {
                                     indexService = indicesService.createIndex(index, emptyList(), false);
                                     indicesToClose.add(index.getIndex());
                                 } catch (IOException e) {
-                                    throw new OpenSearchException("Failed to create temporary index for parsing the alias", e);
+                                    throw new DensityException("Failed to create temporary index for parsing the alias", e);
                                 }
                                 indexService.mapperService().merge(index, MapperService.MergeReason.MAPPING_RECOVERY);
                             }

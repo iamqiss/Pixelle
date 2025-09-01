@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,11 +14,11 @@ import org.apache.lucene.index.SegmentWriteState;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.RandomAccessInput;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.util.io.IOUtils;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -46,7 +46,7 @@ import java.util.Map;
  * <p>The set of 'star-tree.documents' files is maintained, and a tracker array is used to keep track of the start document ID for each file.
  * Once the number of files reaches a set threshold, the files are merged.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreeDocsFileManager extends AbstractDocumentsFileManager implements Closeable {

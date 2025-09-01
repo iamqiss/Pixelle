@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.document.get;
+package org.density.transport.grpc.proto.response.document.get;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.InlineGetDictUserDefined;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.protobufs.ResponseItem;
-import org.opensearch.transport.grpc.proto.response.document.common.DocumentFieldProtoUtils;
+import org.density.common.document.DocumentField;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.InlineGetDictUserDefined;
+import org.density.protobufs.ObjectMap;
+import org.density.protobufs.ResponseItem;
+import org.density.transport.grpc.proto.response.document.common.DocumentFieldProtoUtils;
 
 /**
  * Utility class for converting GetResult objects to Protocol Buffers.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -41,30 +41,30 @@ import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.query.SpatialArgs;
 import org.apache.lucene.spatial.query.SpatialOperation;
 import org.apache.lucene.spatial.query.UnsupportedSpatialOperation;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Priority;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.SearchHit;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Priority;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.Streams;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.search.SearchHit;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.VersionUtils;
 import org.junit.BeforeClass;
 
 import java.io.ByteArrayOutputStream;
@@ -82,23 +82,23 @@ import org.locationtech.spatial4j.distance.DistanceUtils;
 import org.locationtech.spatial4j.exception.InvalidShapeException;
 import org.locationtech.spatial4j.shape.Shape;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.geometry.utils.Geohash.addNeighbors;
-import static org.opensearch.index.query.QueryBuilders.geoBoundingBoxQuery;
-import static org.opensearch.index.query.QueryBuilders.geoDistanceQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFirstHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.geometry.utils.Geohash.addNeighbors;
+import static org.density.index.query.QueryBuilders.geoBoundingBoxQuery;
+import static org.density.index.query.QueryBuilders.geoDistanceQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertFirstHit;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class GeoFilterIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class GeoFilterIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public GeoFilterIT(Settings staticSettings) {
         super(staticSettings);
@@ -403,7 +403,7 @@ public class GeoFilterIT extends ParameterizedStaticSettingsOpenSearchIntegTestC
     }
 
     public void testBulk() throws Exception {
-        byte[] bulkAction = unZipData("/org/opensearch/search/geo/gzippedmap.gz");
+        byte[] bulkAction = unZipData("/org/density/search/geo/gzippedmap.gz");
         Version version = VersionUtils.randomIndexCompatibleVersion(random());
         Settings settings = Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, version).build();
         XContentBuilder xContentBuilder = XContentFactory.jsonBuilder()

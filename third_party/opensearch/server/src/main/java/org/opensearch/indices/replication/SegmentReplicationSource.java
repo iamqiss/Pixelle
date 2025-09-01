@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.util.CancellableThreads.ExecutionCancelledException;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.common.util.CancellableThreads.ExecutionCancelledException;
+import org.density.core.action.ActionListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.function.BiConsumer;
 /**
  * Represents the source of a replication event.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface SegmentReplicationSource {
 
@@ -89,7 +89,7 @@ public interface SegmentReplicationSource {
     /**
      * Directory wrapper that records copy process for replication statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ReplicationStatsDirectoryWrapper extends FilterDirectory {
         private final BiConsumer<String, Long> fileProgressTracker;

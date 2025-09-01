@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.io.IOException;
 
 /**
  * The search result callback returned by reduce phase of the collector manager.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.0.0")
 public interface ReduceableSearchResult {

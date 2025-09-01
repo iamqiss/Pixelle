@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.util.concurrent.DensityExecutors;
 
 import java.io.IOException;
 import java.lang.ref.Cleaner;
@@ -23,13 +23,13 @@ import java.nio.file.Path;
  * Extension of {@link FileCachedIndexInput} for full files for handling clones and slices
  * Since Lucene does not guarantee that it will close the clones/slices, we have created a Cleaner which handles closing of the clones/slices when they become phantom reachable
  * https://github.com/apache/lucene/blob/8340b01c3cc229f33584ce2178b07b8984daa6a9/lucene/core/src/java/org/apache/lucene/store/IndexInput.java#L32-L33
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class FullFileCachedIndexInput extends FileCachedIndexInput {
     private static final Logger logger = LogManager.getLogger(FullFileCachedIndexInput.class);
     private final IndexInputHolder indexInputHolder;
-    private static final Cleaner CLEANER = Cleaner.create(OpenSearchExecutors.daemonThreadFactory("index-input-cleaner"));
+    private static final Cleaner CLEANER = Cleaner.create(DensityExecutors.daemonThreadFactory("index-input-cleaner"));
 
     public FullFileCachedIndexInput(FileCache cache, Path filePath, IndexInput underlyingIndexInput) {
         this(cache, filePath, underlyingIndexInput, false);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.mapping;
+package org.density.indices.mapping;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.Priority;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.Priority;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class SimpleGetMappingsIT extends OpenSearchIntegTestCase {
+public class SimpleGetMappingsIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

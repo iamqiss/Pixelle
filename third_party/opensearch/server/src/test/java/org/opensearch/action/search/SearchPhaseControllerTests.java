@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 
@@ -44,60 +44,60 @@ import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.TotalHits.Relation;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.profile.NetworkTime;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.aggregation.AggregationProfileShardResult;
-import org.opensearch.search.profile.fetch.FetchProfileShardResult;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.profile.query.QueryProfileShardResult;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.suggest.SortBy;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
-import org.opensearch.search.suggest.phrase.PhraseSuggestion;
-import org.opensearch.search.suggest.term.TermSuggestion;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.OriginalIndices;
+import org.density.common.UUIDs;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.text.Text;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchModule;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.profile.NetworkTime;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.aggregation.AggregationProfileShardResult;
+import org.density.search.profile.fetch.FetchProfileShardResult;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.profile.query.QueryProfileShardResult;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.suggest.SortBy;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.completion.CompletionSuggestion;
+import org.density.search.suggest.phrase.PhraseSuggestion;
+import org.density.search.suggest.term.TermSuggestion;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -126,9 +126,9 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class SearchPhaseControllerTests extends OpenSearchTestCase {
+public class SearchPhaseControllerTests extends DensityTestCase {
     private ThreadPool threadPool;
-    private OpenSearchThreadPoolExecutor fixedExecutor;
+    private DensityThreadPoolExecutor fixedExecutor;
     private SearchPhaseController searchPhaseController;
     private List<Boolean> reductions;
 
@@ -163,11 +163,11 @@ public class SearchPhaseControllerTests extends OpenSearchTestCase {
             };
         });
         threadPool = new TestThreadPool(SearchPhaseControllerTests.class.getName());
-        fixedExecutor = OpenSearchExecutors.newFixed(
+        fixedExecutor = DensityExecutors.newFixed(
             "test",
             1,
             10,
-            OpenSearchExecutors.daemonThreadFactory("test"),
+            DensityExecutors.daemonThreadFactory("test"),
             threadPool.getThreadContext()
         );
     }

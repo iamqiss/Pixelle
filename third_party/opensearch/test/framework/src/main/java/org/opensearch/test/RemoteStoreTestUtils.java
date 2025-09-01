@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.SegmentInfos;
@@ -14,11 +14,11 @@ import org.apache.lucene.store.ByteBuffersDataOutput;
 import org.apache.lucene.store.ByteBuffersIndexOutput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
+import static org.density.test.DensityTestCase.randomIntBetween;
 
 /**
  * Utilities for remote store related operations used across one or more tests.

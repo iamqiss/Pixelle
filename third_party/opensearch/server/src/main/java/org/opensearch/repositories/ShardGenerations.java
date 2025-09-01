@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 /**
  * Generations of shards for snapshots
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ShardGenerations {
@@ -58,7 +58,7 @@ public final class ShardGenerations {
 
     /**
      * Special generation that signifies that a shard is new and the repository does not yet contain a valid
-     * {@link org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob for it.
+     * {@link org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob for it.
      */
     public static final String NEW_SHARD_GEN = "_new";
 
@@ -121,7 +121,7 @@ public final class ShardGenerations {
     }
 
     /**
-     * Get the generation of the {@link org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob for a given index
+     * Get the generation of the {@link org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob for a given index
      * and shard.
      * There are three special kinds of generations that can be returned here.
      * <ul>
@@ -134,7 +134,7 @@ public final class ShardGenerations {
      *
      * @param indexId IndexId
      * @param shardId Shard Id
-     * @return generation of the {@link org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob
+     * @return generation of the {@link org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshots} blob
      */
     @Nullable
     public String getShardGen(IndexId indexId, int shardId) {
@@ -179,7 +179,7 @@ public final class ShardGenerations {
     /**
      * Builder for the shard generations.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Builder {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,22 +23,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.spi.Message;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.spi.Message;
 
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.common.util.set.Sets.newHashSet;
 
 /**
  * Thrown when a programming error such as a misplaced annotation, illegal binding, or unsupported
@@ -47,7 +47,7 @@ import static org.opensearch.common.util.set.Sets.newHashSet;
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ConfigurationException extends RuntimeException {

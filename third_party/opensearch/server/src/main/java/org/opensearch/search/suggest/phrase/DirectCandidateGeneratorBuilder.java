@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.search.spell.DirectSpellChecker;
 import org.apache.lucene.search.spell.JaroWinklerDistance;
@@ -40,16 +40,16 @@ import org.apache.lucene.search.spell.NGramDistance;
 import org.apache.lucene.search.spell.StringDistance;
 import org.apache.lucene.search.spell.SuggestMode;
 import org.apache.lucene.util.automaton.LevenshteinAutomata;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.search.suggest.SortBy;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder.CandidateGenerator;
+import org.density.ExceptionsHelper;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
+import org.density.search.suggest.SortBy;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder.CandidateGenerator;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -59,7 +59,7 @@ import java.util.function.Consumer;
 /**
  * Builder for a phrase candidate directly retrieved from an IndexReader
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DirectCandidateGeneratorBuilder implements CandidateGenerator {
 

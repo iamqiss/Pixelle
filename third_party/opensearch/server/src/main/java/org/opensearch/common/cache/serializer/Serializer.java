@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.serializer;
+package org.density.common.cache.serializer;
 
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 /**
  * Defines an interface for serializers, to be used by pluggable caches.
  * T is the class of the original object, and U is the serialized class.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface Serializer<T, U> {

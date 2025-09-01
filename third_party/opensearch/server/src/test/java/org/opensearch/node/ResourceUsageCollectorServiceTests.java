@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.node.resource.tracker.ResourceTrackerSettings;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.transport.TransportAddress;
+import org.density.node.resource.tracker.ResourceTrackerSettings;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 
 import java.util.Map;
@@ -27,15 +27,15 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * Tests for ResourceUsageCollectorService where we test collect method, get method and whether schedulers
  * are working as expected
  */
-public class ResourceUsageCollectorServiceTests extends OpenSearchSingleNodeTestCase {
+public class ResourceUsageCollectorServiceTests extends DensitySingleNodeTestCase {
     @Override
     protected boolean resetNodeAfterTest() {
         return true;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.search.aggregations.bucket;
+package org.density.test.search.aggregations.bucket;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.bucket.terms.SignificantTerms;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -48,11 +48,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.significantTerms;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.OpenSearchIntegTestCase.client;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.search.aggregations.AggregationBuilders.significantTerms;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.DensityIntegTestCase.client;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
 public class SharedSignificantTermsTestMethods {
@@ -61,9 +61,9 @@ public class SharedSignificantTermsTestMethods {
     public static final String TEXT_FIELD = "text";
     public static final String CLASS_FIELD = "class";
 
-    public static void aggregateAndCheckFromSeveralShards(OpenSearchIntegTestCase testCase) throws ExecutionException,
+    public static void aggregateAndCheckFromSeveralShards(DensityIntegTestCase testCase) throws ExecutionException,
         InterruptedException {
-        String type = OpenSearchTestCase.randomBoolean() ? "text" : "keyword";
+        String type = DensityTestCase.randomBoolean() ? "text" : "keyword";
         String settings = "{\"index.number_of_shards\": 7, \"index.number_of_routing_shards\": 7, \"index.number_of_replicas\": 0}";
         index01Docs(type, settings, testCase);
         testCase.ensureGreen();
@@ -71,7 +71,7 @@ public class SharedSignificantTermsTestMethods {
         checkSignificantTermsAggregationCorrect(testCase);
     }
 
-    private static void checkSignificantTermsAggregationCorrect(OpenSearchIntegTestCase testCase) {
+    private static void checkSignificantTermsAggregationCorrect(DensityIntegTestCase testCase) {
         SearchResponse response = client().prepareSearch(INDEX_NAME)
             .addAggregation(terms("class").field(CLASS_FIELD).subAggregation(significantTerms("sig_terms").field(TEXT_FIELD)))
             .execute()
@@ -91,7 +91,7 @@ public class SharedSignificantTermsTestMethods {
         }
     }
 
-    public static void index01Docs(String type, String settings, OpenSearchIntegTestCase testCase) throws ExecutionException,
+    public static void index01Docs(String type, String settings, DensityIntegTestCase testCase) throws ExecutionException,
         InterruptedException {
         String textMappings = "type=" + type;
         if (type.equals("text")) {
@@ -114,7 +114,7 @@ public class SharedSignificantTermsTestMethods {
         testCase.indexRandom(true, false, indexRequestBuilderList);
     }
 
-    public static void index01DocsWithRouting(String type, String settings, OpenSearchIntegTestCase testCase) throws ExecutionException,
+    public static void index01DocsWithRouting(String type, String settings, DensityIntegTestCase testCase) throws ExecutionException,
         InterruptedException {
         String textMappings = "type=" + type;
         if (type.equals("text")) {

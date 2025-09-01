@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.stats;
+package org.density.search.stats;
 
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.metrics.Sum;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.search.stats.SearchStats;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.metrics.Sum;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
@@ -29,8 +29,8 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 /**
  * Integration tests for search statistics related to star-tree.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class StarTreeSearchStatsIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE)
+public class StarTreeSearchStatsIT extends DensityIntegTestCase {
 
     private static final String STARTREE_INDEX_NAME = "test_startree";
     private static final String REGULAR_INDEX_NAME = "test_regular";

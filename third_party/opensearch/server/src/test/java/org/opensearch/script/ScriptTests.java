@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -55,7 +55,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class ScriptTests extends OpenSearchTestCase {
+public class ScriptTests extends DensityTestCase {
 
     public void testScriptParsing() throws IOException {
         Script expectedScript = createScript();
@@ -188,7 +188,7 @@ public class ScriptTests extends OpenSearchTestCase {
             assertEquals("Script value should be a String or a Map", exc.getMessage());
         }
         {
-            OpenSearchParseException exc = expectThrows(OpenSearchParseException.class, () -> Script.parse(Collections.emptyMap()));
+            DensityParseException exc = expectThrows(DensityParseException.class, () -> Script.parse(Collections.emptyMap()));
             assertEquals("Expected one of [source] or [id] fields, but found none", exc.getMessage());
         }
     }
@@ -197,7 +197,7 @@ public class ScriptTests extends OpenSearchTestCase {
         Map<String, Object> map = new HashMap<>();
         map.put("source", "doc['my_field']");
         map.put("options", 3);
-        OpenSearchParseException exc = expectThrows(OpenSearchParseException.class, () -> Script.parse(map));
+        DensityParseException exc = expectThrows(DensityParseException.class, () -> Script.parse(map));
         assertEquals("Value must be of type Map: [options]", exc.getMessage());
     }
 
@@ -205,7 +205,7 @@ public class ScriptTests extends OpenSearchTestCase {
         Map<String, Object> map = new HashMap<>();
         map.put("source", "doc['my_field']");
         map.put("params", 3);
-        OpenSearchParseException exc = expectThrows(OpenSearchParseException.class, () -> Script.parse(map));
+        DensityParseException exc = expectThrows(DensityParseException.class, () -> Script.parse(map));
         assertEquals("Value must be of type Map: [params]", exc.getMessage());
     }
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.set;
+package org.density.common.util.set;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.test.DensityTestCase;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class SetsTests extends OpenSearchTestCase {
+public class SetsTests extends DensityTestCase {
 
     public void testDifference() {
         final int endExclusive = randomIntBetween(0, 256);

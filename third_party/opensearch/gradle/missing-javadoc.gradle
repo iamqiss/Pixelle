@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -36,7 +36,7 @@ allprojects {
     }
 
     dependencies {
-      missingdoclet "org.opensearch:missing-doclet"
+      missingdoclet "org.density:missing-doclet"
     }
 
     ext {
@@ -45,7 +45,7 @@ allprojects {
     }
 
     // TODO: Add missingJavadoc checks to precommit plugin
-    // See https://github.com/opensearch-project/OpenSearch/issues/221
+    // See https://github.com/density-project/Density/issues/221
     // Currently the missingJavadoc task fails due to missing documentation
     // across multiple modules. Once javadocs are added, we can
     // add this task to precommit plugin.
@@ -79,7 +79,7 @@ allprojects {
 
 // Below modules are temporarily excluded for missingJavadoc checks.
 // Currently all these modules fail the check due to missing javadocs.
-// See https://github.com/opensearch-project/OpenSearch/issues/221
+// See https://github.com/density-project/Density/issues/221
 // When you add javadocs for a module, please ensure the missingJavadoc check
 // succeeds after removing that module from below list.
 // You can then remove that module from this exclusion list,
@@ -97,15 +97,15 @@ configure([
   project(":client:client-benchmark-noop-api-plugin"),
   project(":client:rest-high-level"),
   project(":client:test"),
-  project(":libs:opensearch-cli"),
-  project(":libs:opensearch-dissect"),
-  project(":libs:opensearch-geo"),
-  project(":libs:opensearch-grok"),
-  project(":libs:opensearch-nio"),
-  project(":libs:opensearch-plugin-classloader"),
-  project(":libs:opensearch-secure-sm"),
-  project(":libs:opensearch-ssl-config"),
-  project(":libs:opensearch-x-content"),
+  project(":libs:density-cli"),
+  project(":libs:density-dissect"),
+  project(":libs:density-geo"),
+  project(":libs:density-grok"),
+  project(":libs:density-nio"),
+  project(":libs:density-plugin-classloader"),
+  project(":libs:density-secure-sm"),
+  project(":libs:density-ssl-config"),
+  project(":libs:density-x-content"),
   project(":libs:agent-sm:agent-policy"),
   project(":modules:aggs-matrix-stats"),
   project(":modules:analysis-common"),
@@ -118,7 +118,7 @@ configure([
   project(":modules:lang-painless"),
   project(":modules:lang-painless:spi"),
   project(":modules:mapper-extras"),
-  project(":modules:opensearch-dashboards"),
+  project(":modules:density-dashboards"),
   project(":modules:parent-join"),
   project(":modules:percolator"),
   project(":modules:rank-eval"),
@@ -168,9 +168,9 @@ configure([
 }
 
 configure([
-  project(":libs:opensearch-common"),
-  project(":libs:opensearch-core"),
-  project(":libs:opensearch-compress"),
+  project(":libs:density-common"),
+  project(":libs:density-core"),
+  project(":libs:density-compress"),
   project(":server")
 ]) {
   project.tasks.withType(MissingJavadocTask) {
@@ -267,8 +267,8 @@ class MissingJavadocTask extends DefaultTask {
     def opts = []
     opts << [ '-overview', project.file("${srcDirs[0]}/overview.html") ]
     opts << [ '-sourcepath', srcDirs.join(File.pathSeparator) ]
-    if (project.getGroup().toString().startsWith('org.opensearch')) {
-      opts << [ '-subpackages', 'org.opensearch']
+    if (project.getGroup().toString().startsWith('org.density')) {
+      opts << [ '-subpackages', 'org.density']
     } else {
       opts << [ '-subpackages', project.getGroup().toString()]
     }
@@ -291,10 +291,10 @@ class MissingJavadocTask extends DefaultTask {
       opts << [ '-classpath', classpath.asPath ]
     }
 
-    opts << [ '-tag', 'opensearch.experimental:a:WARNING: This API is experimental and might change in incompatible ways in the next release.' ]
-    opts << [ '-tag', 'opensearch.internal:a:NOTE: This API is for internal purposes only and might change in incompatible ways in the next release.' ]
+    opts << [ '-tag', 'density.experimental:a:WARNING: This API is experimental and might change in incompatible ways in the next release.' ]
+    opts << [ '-tag', 'density.internal:a:NOTE: This API is for internal purposes only and might change in incompatible ways in the next release.' ]
 
-    opts << [ '-doclet', "org.opensearch.missingdoclet.MissingDoclet" ]
+    opts << [ '-doclet', "org.density.missingdoclet.MissingDoclet" ]
     opts << [ '-docletpath', docletpath.asPath ]
     opts << [ '--missing-level', javadocMissingLevel ]
     if (javadocMissingIgnore) {

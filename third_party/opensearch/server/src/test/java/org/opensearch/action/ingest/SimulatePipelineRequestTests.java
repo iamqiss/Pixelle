@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class SimulatePipelineRequestTests extends OpenSearchTestCase {
+public class SimulatePipelineRequestTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         SimulatePipelineRequest request = new SimulatePipelineRequest(new BytesArray(""), MediaTypeRegistry.JSON);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.action.ActionType;
+import org.density.common.settings.Settings;
+import org.density.transport.TransportRequestOptions;
 
 /**
  * Transport action for bulk indexing
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BulkAction extends ActionType<BulkResponse> {
 

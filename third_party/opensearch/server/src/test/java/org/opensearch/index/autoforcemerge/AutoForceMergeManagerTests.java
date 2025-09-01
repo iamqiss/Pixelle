@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.autoforcemerge;
+package org.density.index.autoforcemerge;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.monitor.MonitorService;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.monitor.jvm.JvmService;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.os.OsService;
-import org.opensearch.monitor.os.OsStats;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.set.Sets;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.translog.TranslogStats;
+import org.density.indices.IndicesService;
+import org.density.monitor.MonitorService;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.fs.FsService;
+import org.density.monitor.jvm.JvmService;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.os.OsService;
+import org.density.monitor.os.OsStats;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 import org.junit.After;
 import org.junit.Before;
 
@@ -58,8 +58,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doThrow;
@@ -69,7 +69,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AutoForceMergeManagerTests extends OpenSearchTestCase {
+public class AutoForceMergeManagerTests extends DensityTestCase {
 
     private ClusterService clusterService;
     private IndicesService indicesService;
@@ -126,7 +126,7 @@ public class AutoForceMergeManagerTests extends OpenSearchTestCase {
         when(jvmService.stats()).thenReturn(jvmStats);
         when(jvmStats.getMem()).thenReturn(jvm);
 
-        allocatedProcessors = OpenSearchExecutors.allocatedProcessors(Settings.EMPTY);
+        allocatedProcessors = DensityExecutors.allocatedProcessors(Settings.EMPTY);
     }
 
     @After

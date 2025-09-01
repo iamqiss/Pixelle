@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.index;
+package org.density.action.index;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.support.WriteRequestBuilder;
-import org.opensearch.action.support.replication.ReplicationRequestBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.support.WriteRequestBuilder;
+import org.density.action.support.replication.ReplicationRequestBuilder;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * An index document action request builder.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexRequestBuilder extends ReplicationRequestBuilder<IndexRequest, IndexResponse, IndexRequestBuilder>
     implements
         WriteRequestBuilder<IndexRequestBuilder> {
 
-    public IndexRequestBuilder(OpenSearchClient client, IndexAction action) {
+    public IndexRequestBuilder(DensityClient client, IndexAction action) {
         super(client, action, new IndexRequest());
     }
 
-    public IndexRequestBuilder(OpenSearchClient client, IndexAction action, @Nullable String index) {
+    public IndexRequestBuilder(DensityClient client, IndexAction action, @Nullable String index) {
         super(client, action, new IndexRequest(index));
     }
 
@@ -185,7 +185,7 @@ public class IndexRequestBuilder extends ReplicationRequestBuilder<IndexRequest,
     }
 
     /**
-     * Set to {@code true} to force this index to use {@link org.opensearch.action.index.IndexRequest.OpType#CREATE}.
+     * Set to {@code true} to force this index to use {@link org.density.action.index.IndexRequest.OpType#CREATE}.
      */
     public IndexRequestBuilder setCreate(boolean create) {
         request.create(create);
@@ -214,7 +214,7 @@ public class IndexRequestBuilder extends ReplicationRequestBuilder<IndexRequest,
      * sequence number. Must be used in combination with {@link #setIfPrimaryTerm(long)}
      *
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public IndexRequestBuilder setIfSeqNo(long seqNo) {
         request.setIfSeqNo(seqNo);
@@ -226,7 +226,7 @@ public class IndexRequestBuilder extends ReplicationRequestBuilder<IndexRequest,
      * primary term. Must be used in combination with {@link #setIfSeqNo(long)}
      *
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public IndexRequestBuilder setIfPrimaryTerm(long term) {
         request.setIfPrimaryTerm(term);

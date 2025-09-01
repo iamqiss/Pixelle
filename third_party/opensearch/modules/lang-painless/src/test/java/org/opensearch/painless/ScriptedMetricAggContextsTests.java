@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.memory.MemoryIndex;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptedMetricAggContexts;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.settings.Settings;
+import org.density.painless.spi.Allowlist;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptedMetricAggContexts;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TranslogTransferMetadataHandlerTests extends OpenSearchTestCase {
+public class TranslogTransferMetadataHandlerTests extends DensityTestCase {
     private TranslogTransferMetadataHandler handler;
 
     @Before

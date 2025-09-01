@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.common.lucene.search.function.ScriptScoreFunction;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.Script;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.common.lucene.search.function.ScriptScoreFunction;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.script.ScoreScript;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -52,7 +52,7 @@ import java.util.Objects;
  * A function that uses a script to compute or influence the score of documents
  * that match with the inner query or filter.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptScoreFunctionBuilder extends ScoreFunctionBuilder<ScriptScoreFunctionBuilder> {
     public static final String NAME = "script_score";

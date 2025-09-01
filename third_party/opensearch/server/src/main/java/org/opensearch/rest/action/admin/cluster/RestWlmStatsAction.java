@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsRequest;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsResponse;
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.action.pagination.WlmPaginationStrategy;
-import org.opensearch.common.Table;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.rest.action.cat.RestTable;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.stats.SortBy;
-import org.opensearch.wlm.stats.SortOrder;
-import org.opensearch.wlm.stats.WlmStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.wlm.WlmStatsRequest;
+import org.density.action.admin.cluster.wlm.WlmStatsResponse;
+import org.density.action.pagination.PageToken;
+import org.density.action.pagination.WlmPaginationStrategy;
+import org.density.common.Table;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestActions;
+import org.density.rest.action.RestResponseListener;
+import org.density.rest.action.cat.RestTable;
+import org.density.transport.client.node.NodeClient;
+import org.density.wlm.ResourceType;
+import org.density.wlm.stats.SortBy;
+import org.density.wlm.stats.SortOrder;
+import org.density.wlm.stats.WlmStats;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,12 +42,12 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * Transport action to get Workload Management stats
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class RestWlmStatsAction extends BaseRestHandler {
 
@@ -119,7 +119,7 @@ public class RestWlmStatsAction extends BaseRestHandler {
                     buildTable(paginatedTable, paginatedStats, paginationStrategy);
 
                     return RestTable.buildResponse(paginatedTable, channel);
-                } catch (OpenSearchParseException e) {
+                } catch (DensityParseException e) {
                     handlePaginationError(channel, nextToken, pageSize, sortBy, sortOrder, e);
                     return null;
                 }
@@ -127,26 +127,26 @@ public class RestWlmStatsAction extends BaseRestHandler {
         });
     }
 
-    protected SortBy parseSortBy(String sortByParam) throws OpenSearchParseException {
+    protected SortBy parseSortBy(String sortByParam) throws DensityParseException {
         try {
             return SortBy.fromString(sortByParam);
         } catch (IllegalArgumentException e) {
-            throw new OpenSearchParseException("Invalid value for 'sort'. Allowed: 'node_id', 'workload_group'", e);
+            throw new DensityParseException("Invalid value for 'sort'. Allowed: 'node_id', 'workload_group'", e);
         }
     }
 
-    protected SortOrder parseSortOrder(String sortOrderParam) throws OpenSearchParseException {
+    protected SortOrder parseSortOrder(String sortOrderParam) throws DensityParseException {
         try {
             return SortOrder.fromString(sortOrderParam);
         } catch (IllegalArgumentException e) {
-            throw new OpenSearchParseException("Invalid value for 'order'. Allowed: 'asc', 'desc'", e);
+            throw new DensityParseException("Invalid value for 'order'. Allowed: 'asc', 'desc'", e);
         }
     }
 
     protected int parsePageSize(RestRequest request) {
         int pageSize = request.paramAsInt("size", DEFAULT_PAGE_SIZE);
         if (pageSize <= 0 || pageSize > MAX_PAGE_SIZE) {
-            throw new OpenSearchParseException("Invalid value for 'size'. Allowed range: 1 to " + MAX_PAGE_SIZE);
+            throw new DensityParseException("Invalid value for 'size'. Allowed range: 1 to " + MAX_PAGE_SIZE);
         }
         return pageSize;
     }
@@ -157,7 +157,7 @@ public class RestWlmStatsAction extends BaseRestHandler {
         int pageSize,
         SortBy sortBy,
         SortOrder sortOrder,
-        OpenSearchParseException e
+        DensityParseException e
     ) throws IOException {
         String userMessage = "Pagination state has changed (e.g., new workload groups added or removed). "
             + "Please restart pagination from the beginning by omitting the 'next_token' parameter.";

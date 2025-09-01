@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.indices.SystemIndices;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.MapperPlugin;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class MetadataIndexUpgradeServiceTests extends OpenSearchTestCase {
+public class MetadataIndexUpgradeServiceTests extends DensityTestCase {
 
     public void testArchiveBrokenIndexSettings() {
         MetadataIndexUpgradeService service = getMetadataIndexUpgradeService();
@@ -150,7 +150,7 @@ public class MetadataIndexUpgradeServiceTests extends OpenSearchTestCase {
                 + "but the minimum compatible version is ["
                 + minCompat
                 + "]."
-                + " It should be re-indexed in OpenSearch "
+                + " It should be re-indexed in Density "
                 + minCompat.major
                 + ".x before upgrading to "
                 + Version.CURRENT.toString()

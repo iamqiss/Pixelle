@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.MergePolicy;
 import org.apache.lucene.sandbox.index.MergeOnFlushMergePolicy;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.node.Node;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.search.pipeline.SearchPipelineService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.Loggers;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.ingest.IngestService;
+import org.density.node.Node;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.search.pipeline.SearchPipelineService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,18 +68,18 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-import static org.opensearch.Version.V_2_7_0;
-import static org.opensearch.index.codec.fuzzy.FuzzySetParameters.DEFAULT_FALSE_POSITIVE_PROBABILITY;
-import static org.opensearch.index.mapper.MapperService.INDEX_MAPPING_DEPTH_LIMIT_SETTING;
-import static org.opensearch.index.mapper.MapperService.INDEX_MAPPING_FIELD_NAME_LENGTH_LIMIT_SETTING;
-import static org.opensearch.index.mapper.MapperService.INDEX_MAPPING_NESTED_DOCS_LIMIT_SETTING;
-import static org.opensearch.index.mapper.MapperService.INDEX_MAPPING_NESTED_FIELDS_LIMIT_SETTING;
-import static org.opensearch.index.mapper.MapperService.INDEX_MAPPING_TOTAL_FIELDS_LIMIT_SETTING;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_DEFAULT_SLICE_COUNT_VALUE;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MIN_SLICE_COUNT_VALUE;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+import static org.density.Version.V_2_7_0;
+import static org.density.index.codec.fuzzy.FuzzySetParameters.DEFAULT_FALSE_POSITIVE_PROBABILITY;
+import static org.density.index.mapper.MapperService.INDEX_MAPPING_DEPTH_LIMIT_SETTING;
+import static org.density.index.mapper.MapperService.INDEX_MAPPING_FIELD_NAME_LENGTH_LIMIT_SETTING;
+import static org.density.index.mapper.MapperService.INDEX_MAPPING_NESTED_DOCS_LIMIT_SETTING;
+import static org.density.index.mapper.MapperService.INDEX_MAPPING_NESTED_FIELDS_LIMIT_SETTING;
+import static org.density.index.mapper.MapperService.INDEX_MAPPING_TOTAL_FIELDS_LIMIT_SETTING;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_DEFAULT_SLICE_COUNT_VALUE;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MIN_SLICE_COUNT_VALUE;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
 
 /**
  * This class encapsulates all index level settings and handles settings updates.
@@ -88,7 +88,7 @@ import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE
  * a settings consumer at index creation via {@link IndexModule#addSettingsUpdateConsumer(Setting, Consumer)} that will
  * be called for each settings update.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexSettings {
@@ -1103,9 +1103,9 @@ public final class IndexSettings {
         derivedSourceEnabled = scopedSettings.get(INDEX_DERIVED_SOURCE_SETTING);
         derivedSourceEnabledForTranslog = scopedSettings.get(INDEX_DERIVED_SOURCE_TRANSLOG_ENABLED_SETTING);
         scopedSettings.addSettingsUpdateConsumer(INDEX_DERIVED_SOURCE_TRANSLOG_ENABLED_SETTING, this::setDerivedSourceEnabledForTranslog);
-        /* There was unintentional breaking change got introduced with [OpenSearch-6424](https://github.com/opensearch-project/OpenSearch/pull/6424) (version 2.7).
+        /* There was unintentional breaking change got introduced with [Density-6424](https://github.com/density-project/Density/pull/6424) (version 2.7).
          * For indices created prior version (prior to 2.7) which has IndexSort type, they used to type cast the SortField.Type
-         * to higher bytes size like integer to long. This behavior was changed from OpenSearch 2.7 version not to
+         * to higher bytes size like integer to long. This behavior was changed from Density 2.7 version not to
          * up cast the SortField to gain some sort query optimizations.
          * Now this sortField (IndexSort) is stored in SegmentInfo and we need to maintain backward compatibility for them.
          */
@@ -1988,7 +1988,7 @@ public final class IndexSettings {
 
     /**
      * Returns true if the this index should be searched throttled ie. using the
-     * {@link org.opensearch.threadpool.ThreadPool.Names#SEARCH_THROTTLED} thread-pool
+     * {@link org.density.threadpool.ThreadPool.Names#SEARCH_THROTTLED} thread-pool
      */
     public boolean isSearchThrottled() {
         return searchThrottled;

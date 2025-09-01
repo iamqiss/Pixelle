@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
 plugins {
-  id 'opensearch.build' apply false
+  id 'density.build' apply false
 }
 
 allprojects {
   apply plugin: 'java'
-  apply plugin: 'opensearch.build'
+  apply plugin: 'density.build'
 
   repositories {
     mavenCentral()
@@ -51,10 +51,10 @@ project(':all_classes_in_tasks') {
 project(':not_implementing_base') {
   testingConventions.naming {
     Tests {
-      baseClass 'org.opensearch.gradle.testkit.Unit'
+      baseClass 'org.density.gradle.testkit.Unit'
     }
     IT {
-      baseClass 'org.opensearch.gradle.testkit.Integration'
+      baseClass 'org.density.gradle.testkit.Integration'
     }
   }
   test {
@@ -81,10 +81,10 @@ project(':valid_setup_with_base') {
   }
   testingConventions.naming {
     Tests {
-      baseClass 'org.opensearch.gradle.testkit.Unit'
+      baseClass 'org.density.gradle.testkit.Unit'
     }
     IT {
-      baseClass 'org.opensearch.gradle.testkit.Integration'
+      baseClass 'org.density.gradle.testkit.Integration'
     }
   }
 }

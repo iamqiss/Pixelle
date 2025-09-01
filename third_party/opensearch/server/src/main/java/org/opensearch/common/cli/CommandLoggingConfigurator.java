@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.cli;
+package org.density.common.cli;
 
 import org.apache.logging.log4j.Level;
-import org.opensearch.common.logging.LogConfigurator;
-import org.opensearch.common.settings.Settings;
+import org.density.common.logging.LogConfigurator;
+import org.density.common.settings.Settings;
 
 /**
- * Holder class for method to configure logging without OpenSearch configuration files for use in CLI tools that will not read such
+ * Holder class for method to configure logging without Density configuration files for use in CLI tools that will not read such
  * files.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CommandLoggingConfigurator {
 
     /**
-     * Configures logging without OpenSearch configuration files based on the system property "opensearch.logger.level" only. As such, any
+     * Configures logging without Density configuration files based on the system property "density.logger.level" only. As such, any
      * logging will be written to the console.
      */
     public static void configureLoggingWithoutConfig() {
         // initialize default for es.logger.level because we will not read the log4j2.properties
-        final String loggerLevel = System.getProperty("opensearch.logger.level", Level.INFO.name());
+        final String loggerLevel = System.getProperty("density.logger.level", Level.INFO.name());
         final Settings settings = Settings.builder().put("logger.level", loggerLevel).build();
         LogConfigurator.configureWithoutConfig(settings);
     }

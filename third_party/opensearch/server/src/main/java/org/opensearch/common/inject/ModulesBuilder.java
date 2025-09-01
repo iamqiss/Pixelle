@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * A modules builder
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ModulesBuilder implements Iterable<Module> {
 
@@ -59,7 +59,7 @@ public class ModulesBuilder implements Iterable<Module> {
     public Injector createInjector() {
         Injector injector = Guice.createInjector(modules);
         ((InjectorImpl) injector).clearCache();
-        // in OpenSearch, we always create all instances as if they are eager singletons
+        // in Density, we always create all instances as if they are eager singletons
         // this allows for considerable memory savings (no need to store construction info) as well as cycles
         ((InjectorImpl) injector).readOnlyAllSingletons();
         return injector;

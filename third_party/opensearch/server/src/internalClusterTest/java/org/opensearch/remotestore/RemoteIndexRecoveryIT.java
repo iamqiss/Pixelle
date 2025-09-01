@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.recovery.IndexRecoveryIT;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.indices.recovery.IndexRecoveryIT;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -25,10 +25,10 @@ import org.junit.Before;
 
 import java.nio.file.Path;
 
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
-import static org.opensearch.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
+import static org.density.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteIndexRecoveryIT extends IndexRecoveryIT {
 
     protected static final String REPOSITORY_NAME = "test-remote-store-repo";
@@ -128,55 +128,55 @@ public class RemoteIndexRecoveryIT extends IndexRecoveryIT {
         // History retention not applicable for remote store
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testReservesBytesDuringPeerRecoveryPhaseOne() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testAllocateEmptyPrimaryResetsGlobalCheckpoint() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testDoesNotCopyOperationsInSafeCommit() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testRepeatedRecovery() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testDisconnectsWhileRecovering() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testTransientErrorsDuringRecoveryAreRetried() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testDoNotInfinitelyWaitForMapping() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testDisconnectsDuringRecovery() {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8919")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8919")
     @Override
     public void testReplicaRecovery() {
 

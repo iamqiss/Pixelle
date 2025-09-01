@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /**
- * Specification of REST endpoints used to convert YAML {@code do} sections into actual calls to OpenSearch.
+ * Specification of REST endpoints used to convert YAML {@code do} sections into actual calls to Density.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.restspec;
+package org.density.test.rest.yaml.restspec;

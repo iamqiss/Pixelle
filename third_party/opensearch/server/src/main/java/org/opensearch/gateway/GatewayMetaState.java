@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.CoordinationState.PersistedState;
-import org.opensearch.cluster.coordination.InMemoryPersistedState;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.coordination.PersistedStateStats;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Manifest;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexUpgradeService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.NodeMetadata;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.index.recovery.RemoteStoreRestoreService;
-import org.opensearch.node.Node;
-import org.opensearch.plugins.MetadataUpgrader;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.CoordinationState.PersistedState;
+import org.density.cluster.coordination.InMemoryPersistedState;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.coordination.PersistedStateStats;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Manifest;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexUpgradeService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.common.util.io.IOUtils;
+import org.density.env.NodeMetadata;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.index.recovery.RemoteStoreRestoreService;
+import org.density.node.Node;
+import org.density.plugins.MetadataUpgrader;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.Closeable;
 import java.io.IOError;
@@ -87,8 +87,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
 
 /**
  * Loads (and maybe upgrades) cluster metadata at startup, and persistently stores cluster metadata for future restarts.
@@ -98,7 +98,7 @@ import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteS
  * stale or incomplete. Cluster-manager-eligible nodes must perform an election to find a complete and non-stale state, and cluster-manager-ineligible nodes
  * receive the real cluster state from the elected cluster-manager after joining the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GatewayMetaState implements Closeable {
 
@@ -227,7 +227,7 @@ public class GatewayMetaState implements Closeable {
                     persistedStateRegistry.addPersistedState(PersistedStateType.REMOTE, remotePersistedState);
                 }
             } catch (IOException e) {
-                throw new OpenSearchException("failed to load metadata", e);
+                throw new DensityException("failed to load metadata", e);
             }
         } else {
             final long currentTerm = 0L;
@@ -238,7 +238,7 @@ public class GatewayMetaState implements Closeable {
                 try (PersistedClusterStateService.Writer persistenceWriter = persistedClusterStateService.createWriter()) {
                     persistenceWriter.writeFullStateAndCommit(currentTerm, clusterState);
                 } catch (IOException e) {
-                    throw new OpenSearchException("failed to load metadata", e);
+                    throw new DensityException("failed to load metadata", e);
                 }
                 try {
                     // delete legacy cluster state files
@@ -436,7 +436,7 @@ public class GatewayMetaState implements Closeable {
 
         static final String THREAD_NAME = "AsyncLucenePersistedState#updateTask";
 
-        private final OpenSearchThreadPoolExecutor threadPoolExecutor;
+        private final DensityThreadPoolExecutor threadPoolExecutor;
         private final PersistedState persistedState;
 
         boolean newCurrentTermQueued = false;
@@ -447,7 +447,7 @@ public class GatewayMetaState implements Closeable {
         AsyncLucenePersistedState(Settings settings, ThreadPool threadPool, PersistedState persistedState) {
             super(persistedState.getCurrentTerm(), persistedState.getLastAcceptedState());
             final String nodeName = Objects.requireNonNull(Node.NODE_NAME_SETTING.get(settings));
-            threadPoolExecutor = OpenSearchExecutors.newFixed(
+            threadPoolExecutor = DensityExecutors.newFixed(
                 nodeName + "/" + THREAD_NAME,
                 1,
                 1,
@@ -592,7 +592,7 @@ public class GatewayMetaState implements Closeable {
 
             // In the common case it's actually sufficient to commit() the existing state and not do any indexing. For instance,
             // this is true if there's only one data path on this cluster-manager node, and the commit we just loaded was already written
-            // out by this version of OpenSearch. TODO TBD should we avoid indexing when possible?
+            // out by this version of Density. TODO TBD should we avoid indexing when possible?
             final PersistedClusterStateService.Writer writer = persistedClusterStateService.createWriter();
             try {
                 // During remote state restore, there will be non empty metadata getting persisted with cluster UUID as

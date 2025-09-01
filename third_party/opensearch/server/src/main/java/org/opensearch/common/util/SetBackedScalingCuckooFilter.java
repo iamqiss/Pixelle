@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.common.hash.MurmurHash3;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ import java.util.function.Consumer;
  * This datastructure scales as more values are inserted by growing the list of CuckooFilters.
  * Final size is dependent on the cardinality of data inserted, and the precision specified.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SetBackedScalingCuckooFilter implements Writeable {
 

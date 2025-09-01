@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.ack.AckedRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
+import org.density.cluster.ack.AckedRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
 
 /**
  * An extension interface to {@link ClusterStateUpdateTask} that allows to be notified when
  * all the nodes have acknowledged a cluster state update request
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AckedClusterStateUpdateTask<Response> extends ClusterStateUpdateTask implements AckedClusterStateTaskListener {
 

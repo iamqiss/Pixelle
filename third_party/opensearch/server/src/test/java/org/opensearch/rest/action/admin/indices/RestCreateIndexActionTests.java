@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class RestCreateIndexActionTests extends OpenSearchTestCase {
+public class RestCreateIndexActionTests extends DensityTestCase {
 
     public void testPrepareTypelessRequest() throws IOException {
         XContentBuilder content = XContentFactory.jsonBuilder()

@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache.stats;
+package org.density.index.store.remote.utils.cache.stats;
 
-import org.opensearch.index.store.remote.utils.cache.RefCountedCache;
+import org.density.index.store.remote.utils.cache.RefCountedCache;
 
 import java.util.function.BiFunction;
 
@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
  * Accumulates statistics during the operation of a {@link RefCountedCache} for presentation by
  * {@link RefCountedCache#stats}. This is solely intended for consumption by {@code Cache} implementors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface StatsCounter<K, V> {
 

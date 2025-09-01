@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.search.GenericSearchExtBuilder;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.pipeline.ProcessorExecutionDetail;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.suggest.Suggest;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.rest.action.RestActions;
+import org.density.search.GenericSearchExtBuilder;
+import org.density.search.SearchExtBuilder;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.pipeline.ProcessorExecutionDetail;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.suggest.Suggest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,14 +73,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static org.opensearch.action.search.SearchResponseSections.EXT_FIELD;
-import static org.opensearch.action.search.SearchResponseSections.PROCESSOR_RESULT_FIELD;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.action.search.SearchResponseSections.EXT_FIELD;
+import static org.density.action.search.SearchResponseSections.PROCESSOR_RESULT_FIELD;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * A response of a search request.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchResponse extends ActionResponse implements StatusToXContentObject {
@@ -295,7 +295,7 @@ public class SearchResponse extends ActionResponse implements StatusToXContentOb
     }
 
     /**
-     * If scrolling was enabled ({@link SearchRequest#scroll(org.opensearch.search.Scroll)}, the
+     * If scrolling was enabled ({@link SearchRequest#scroll(org.density.search.Scroll)}, the
      * scroll id that can be used to continue scrolling.
      */
     public String getScrollId() {
@@ -584,7 +584,7 @@ public class SearchResponse extends ActionResponse implements StatusToXContentOb
      * Holds info about the clusters that the search was executed on: how many in total, how many of them were successful
      * and how many of them were skipped.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Clusters implements ToXContentFragment, Writeable {
@@ -689,7 +689,7 @@ public class SearchResponse extends ActionResponse implements StatusToXContentOb
      * Holds info about the clusters that the search was executed on: how many in total, how many of them were successful
      * and how many of them were skipped.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class PhaseTook implements ToXContentFragment, Writeable {

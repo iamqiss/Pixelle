@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.fetch.subphase.FieldAndFormat;
 
 /**
- * Utility class for converting FieldAndFormat Protocol Buffers to OpenSearch objects.
+ * Utility class for converting FieldAndFormat Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of field and format
- * specifications into their corresponding OpenSearch FieldAndFormat implementations for search operations.
+ * specifications into their corresponding Density FieldAndFormat implementations for search operations.
  */
 public class FieldAndFormatProtoUtils {
 
@@ -22,7 +22,7 @@ public class FieldAndFormatProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer FieldAndFormat to an OpenSearch FieldAndFormat object.
+     * Converts a Protocol Buffer FieldAndFormat to an Density FieldAndFormat object.
      * Similar to {@link FieldAndFormat#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates a properly configured
      * FieldAndFormat with the appropriate field name and format settings.
@@ -30,7 +30,7 @@ public class FieldAndFormatProtoUtils {
      * @param fieldAndFormatProto The Protocol Buffer FieldAndFormat to convert
      * @return A configured FieldAndFormat instance
      */
-    protected static FieldAndFormat fromProto(org.opensearch.protobufs.FieldAndFormat fieldAndFormatProto) {
+    protected static FieldAndFormat fromProto(org.density.protobufs.FieldAndFormat fieldAndFormatProto) {
 
         // TODO how is this field used?
         // fieldAndFormatProto.getIncludeUnmapped();

@@ -1,3 +1,3 @@
 ## Releasing
 
-This project follows [OpenSearch project branching, labelling, and releasing](https://github.com/opensearch-project/.github/blob/main/RELEASING.md).
+This project follows [Density project branching, labelling, and releasing](https://github.com/density-project/.github/blob/main/RELEASING.md).

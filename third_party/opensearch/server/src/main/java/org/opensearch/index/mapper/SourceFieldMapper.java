@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -38,22 +38,22 @@ import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -65,7 +65,7 @@ import java.util.function.Function;
 /**
  * Internal field mapper for storing source (and recovery source)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SourceFieldMapper extends MetadataFieldMapper {
@@ -80,7 +80,7 @@ public class SourceFieldMapper extends MetadataFieldMapper {
     /**
      * Default parameters for source fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final String NAME = SourceFieldMapper.NAME;
@@ -103,7 +103,7 @@ public class SourceFieldMapper extends MetadataFieldMapper {
     /**
      * Builder for source fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends MetadataFieldMapper.Builder {
 
@@ -127,7 +127,7 @@ public class SourceFieldMapper extends MetadataFieldMapper {
          * Recovery source gets added if source is disabled or there are filters that are applied on _source using
          * {@link #includes}/{@link #excludes}, which has the possibility to change the original document provided by
          * customer. Recovery source is not a permanent field and gets removed during merges. Refer this merge
-         * policy: org.opensearch.index.engine.RecoverySourcePruneMergePolicy
+         * policy: org.density.index.engine.RecoverySourcePruneMergePolicy
          * <p>
          * The main reason for adding the _recovery_source was to ensure Peer to Peer recovery if segments
          * are not flushed to the disk. If you are disabling the recovery source, then ensure that you are calling
@@ -204,7 +204,7 @@ public class SourceFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for source field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SourceFieldType extends MappedFieldType {
 

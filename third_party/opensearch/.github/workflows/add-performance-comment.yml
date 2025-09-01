@@ -24,5 +24,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Hello!\nWe have added a performance benchmark workflow that runs by adding a comment on the PR.\n Please refer https://github.com/opensearch-project/OpenSearch/blob/main/PERFORMANCE_BENCHMARKS.md on how to run benchmarks on pull requests."
+              body: "Hello!\nWe have added a performance benchmark workflow that runs by adding a comment on the PR.\n Please refer https://github.com/density-project/Density/blob/main/PERFORMANCE_BENCHMARKS.md on how to run benchmarks on pull requests."
             })

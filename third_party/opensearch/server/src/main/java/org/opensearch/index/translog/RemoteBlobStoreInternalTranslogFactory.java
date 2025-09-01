@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.function.BooleanSupplier;
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 /**
  * Translog Factory for the remotefs  translog {@link RemoteFsTranslog}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteBlobStoreInternalTranslogFactory implements TranslogFactory {
 

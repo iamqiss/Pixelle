@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.rest.RestActionTestCase;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestRequest;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.rest.RestActionTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class RestClusterAddWeightedRoutingActionTests extends RestActionTestCase
         Map<String, String> params = new HashMap<>();
         String req = "[\"us-east-1c\" : \"1\", \"us-east-1d\":\"1\", \"us-east-1a\":\"0\"]";
         RestRequest restRequest = buildRestRequest(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterPutWeightedRoutingAction.createRequest(restRequest));
+        assertThrows(DensityParseException.class, () -> RestClusterPutWeightedRoutingAction.createRequest(restRequest));
     }
 
     public void testCreateRequest_MalformedRequestBody() throws IOException {
@@ -64,7 +64,7 @@ public class RestClusterAddWeightedRoutingActionTests extends RestActionTestCase
     public void testCreateRequest_EmptyRequestBody() throws IOException {
         String req = "{}";
         RestRequest restRequest = buildRestRequest(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterPutWeightedRoutingAction.createRequest(restRequest));
+        assertThrows(DensityParseException.class, () -> RestClusterPutWeightedRoutingAction.createRequest(restRequest));
     }
 
     private RestRequest buildRestRequest(String content) {

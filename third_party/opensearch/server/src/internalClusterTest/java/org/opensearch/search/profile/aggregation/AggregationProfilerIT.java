@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.aggregation;
+package org.density.search.profile.aggregation;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.global.Global;
-import org.opensearch.search.aggregations.bucket.sampler.DiversifiedOrdinalsSamplerAggregator;
-import org.opensearch.search.aggregations.bucket.terms.GlobalOrdinalsStringTermsAggregator;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.fetch.FetchProfileShardResult;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.profile.query.QueryProfileShardResult;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.global.Global;
+import org.density.search.aggregations.bucket.sampler.DiversifiedOrdinalsSamplerAggregator;
+import org.density.search.aggregations.bucket.terms.GlobalOrdinalsStringTermsAggregator;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.fetch.FetchProfileShardResult;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.profile.query.QueryProfileShardResult;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.hamcrest.core.IsNull;
 
 import java.util.ArrayList;
@@ -64,18 +64,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.avg;
-import static org.opensearch.search.aggregations.AggregationBuilders.diversifiedSampler;
-import static org.opensearch.search.aggregations.AggregationBuilders.global;
-import static org.opensearch.search.aggregations.AggregationBuilders.histogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.stats;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.search.aggregations.AggregationBuilders.topHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.avg;
+import static org.density.search.aggregations.AggregationBuilders.diversifiedSampler;
+import static org.density.search.aggregations.AggregationBuilders.global;
+import static org.density.search.aggregations.AggregationBuilders.histogram;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.stats;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.aggregations.AggregationBuilders.topHits;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -86,8 +86,8 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class AggregationProfilerIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class AggregationProfilerIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String BUILD_LEAF_COLLECTOR = AggregationTimingType.BUILD_LEAF_COLLECTOR.toString();
     private static final String COLLECT = AggregationTimingType.COLLECT.toString();

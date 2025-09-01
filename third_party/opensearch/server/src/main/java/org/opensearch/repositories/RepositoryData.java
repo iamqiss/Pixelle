@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotState;
+import org.density.DensityParseException;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
  * A class that represents the data in a repository, as captured in the
  * repository's index blob.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class RepositoryData {
@@ -279,7 +279,7 @@ public final class RepositoryData {
 
     /**
      * Returns a map of {@link IndexId} to a collection of {@link String} containing all the {@link IndexId} and the
-     * {@link org.opensearch.cluster.metadata.IndexMetadata} blob name in it that can be removed after removing the given snapshot from
+     * {@link org.density.cluster.metadata.IndexMetadata} blob name in it that can be removed after removing the given snapshot from
      * the repository.
      * NOTE: Does not return a mapping for {@link IndexId} values that will be removed completely from the repository.
      *
@@ -316,7 +316,7 @@ public final class RepositoryData {
      *                         generations indexed by the shard id they correspond to must be supplied.
      * @param indexMetaBlobs   Map of index metadata blob uuids
      * @param newIdentifiers   Map of new index metadata blob uuids keyed by the identifiers of the
-     *                         {@link org.opensearch.cluster.metadata.IndexMetadata} in them
+     *                         {@link org.density.cluster.metadata.IndexMetadata} in them
      */
     public RepositoryData addSnapshot(
         final SnapshotId snapshotId,
@@ -813,7 +813,7 @@ public final class RepositoryData {
                                 // A snapshotted index references a snapshot which does not exist in
                                 // the list of snapshots. This can happen when multiple clusters in
                                 // different versions create or delete snapshot in the same repository.
-                                throw new OpenSearchParseException(
+                                throw new DensityParseException(
                                     "Detected a corrupted repository, index "
                                         + new IndexId(indexName, id, pathType)
                                         + " references an unknown snapshot uuid ["

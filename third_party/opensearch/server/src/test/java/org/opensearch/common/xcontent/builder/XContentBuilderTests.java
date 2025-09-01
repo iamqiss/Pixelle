@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.builder;
+package org.density.common.xcontent.builder;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentOpenSearchExtension;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentGenerator;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.io.PathUtils;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentDensityExtension;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentGenerator;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,7 +64,7 @@ import java.util.TimeZone;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class XContentBuilderTests extends OpenSearchTestCase {
+public class XContentBuilderTests extends DensityTestCase {
     public void testPrettyWithLfAtEnd() throws Exception {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         XContentGenerator generator = MediaTypeRegistry.JSON.xContent().createGenerator(os);
@@ -192,9 +192,9 @@ public class XContentBuilderTests extends OpenSearchTestCase {
 
     public void testDateTypesConversion() throws Exception {
         Date date = new Date();
-        String expectedDate = XContentOpenSearchExtension.DEFAULT_FORMATTER.format(date.toInstant());
+        String expectedDate = XContentDensityExtension.DEFAULT_FORMATTER.format(date.toInstant());
         Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"), Locale.ROOT);
-        String expectedCalendar = XContentOpenSearchExtension.DEFAULT_FORMATTER.format(calendar.toInstant());
+        String expectedCalendar = XContentDensityExtension.DEFAULT_FORMATTER.format(calendar.toInstant());
         XContentBuilder builder = MediaTypeRegistry.contentBuilder(MediaTypeRegistry.JSON);
         builder.startObject().timeField("date", date).endObject();
         assertThat(builder.toString(), equalTo("{\"date\":\"" + expectedDate + "\"}"));

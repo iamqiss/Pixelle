@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
-import org.opensearch.index.store.remote.filecache.FileCacheSettings;
-import org.opensearch.index.store.remote.filecache.FileCacheStats;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
-import org.opensearch.test.gateway.TestGatewayAllocator;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
+import org.density.index.store.remote.filecache.FileCacheSettings;
+import org.density.index.store.remote.filecache.FileCacheStats;
+import org.density.snapshots.EmptySnapshotsInfoService;
+import org.density.test.gateway.TestGatewayAllocator;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -70,7 +70,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class WarmDiskThresholdDeciderTests extends OpenSearchAllocationTestCase {
+public class WarmDiskThresholdDeciderTests extends DensityAllocationTestCase {
 
     WarmDiskThresholdDecider makeDecider(Settings settings) {
         return new WarmDiskThresholdDecider(settings, new ClusterSettings(settings, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS));
@@ -271,7 +271,7 @@ public class WarmDiskThresholdDeciderTests extends OpenSearchAllocationTestCase 
         Set<DiscoveryNodeRole> defaultWithWarmRole = new HashSet<>(CLUSTER_MANAGER_DATA_ROLES);
         defaultWithWarmRole.add(DiscoveryNodeRole.WARM_ROLE);
 
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .nodes(DiscoveryNodes.builder().add(newNode("node1", defaultWithWarmRole)).add(newNode("node2", defaultWithWarmRole)))
@@ -338,7 +338,7 @@ public class WarmDiskThresholdDeciderTests extends OpenSearchAllocationTestCase 
         Set<DiscoveryNodeRole> defaultWithWarmRole = new HashSet<>(CLUSTER_MANAGER_DATA_ROLES);
         defaultWithWarmRole.add(DiscoveryNodeRole.WARM_ROLE);
 
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .nodes(DiscoveryNodes.builder().add(newNode("node1", defaultWithWarmRole)).add(newNode("node2", defaultWithWarmRole)))
@@ -415,7 +415,7 @@ public class WarmDiskThresholdDeciderTests extends OpenSearchAllocationTestCase 
         Set<DiscoveryNodeRole> defaultWithWarmRole = new HashSet<>(CLUSTER_MANAGER_DATA_ROLES);
         defaultWithWarmRole.add(DiscoveryNodeRole.WARM_ROLE);
 
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .nodes(DiscoveryNodes.builder().add(newNode("node1", defaultWithWarmRole)).add(newNode("node2", defaultWithWarmRole)))

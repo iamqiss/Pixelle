@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class MultiTermVectorsResponseTests extends OpenSearchTestCase {
+public class MultiTermVectorsResponseTests extends DensityTestCase {
 
     public void testFromXContent() throws IOException {
         xContentTester(this::createParser, this::createTestInstance, this::toXContent, MultiTermVectorsResponse::fromXContent)

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
-import org.opensearch.action.admin.indices.rollover.RolloverResponse;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.core.index.Index;
+import org.density.action.admin.indices.rollover.RolloverResponse;
+import org.density.cluster.metadata.DataStream;
+import org.density.core.index.Index;
 
 import java.util.Collections;
 import java.util.stream.Collectors;

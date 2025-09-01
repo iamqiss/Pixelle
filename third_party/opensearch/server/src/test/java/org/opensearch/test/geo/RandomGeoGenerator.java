@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.geo;
+package org.density.test.geo;
 
-import org.opensearch.common.geo.GeoPoint;
+import org.density.common.geo.GeoPoint;
 
 import java.util.Random;
 
 /**
  * Random geo generation utilities for randomized {@code geo_point} type testing
- * does not depend on jts or spatial4j. Use {@link org.opensearch.test.geo.RandomShapeGenerator}
+ * does not depend on jts or spatial4j. Use {@link org.density.test.geo.RandomShapeGenerator}
  * to create random OGC compliant shapes.
  */
 public class RandomGeoGenerator {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class CollectorResultTests extends OpenSearchTestCase {
+public class CollectorResultTests extends DensityTestCase {
 
     public static CollectorResult createTestItem(int depth, boolean concurrentSearchEnabled) {
         String name = randomAlphaOfLengthBetween(5, 10);

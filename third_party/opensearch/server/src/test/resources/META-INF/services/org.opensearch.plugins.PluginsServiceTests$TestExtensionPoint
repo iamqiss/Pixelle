@@ -17,5 +17,5 @@
 # under the License.
 #
 
-org.opensearch.plugins.PluginsServiceTests$TestExtension1
-org.opensearch.plugins.PluginsServiceTests$TestExtension2
+org.density.plugins.PluginsServiceTests$TestExtension1
+org.density.plugins.PluginsServiceTests$TestExtension2

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core.tasks;
+package org.density.client.core.tasks;
 
-import org.opensearch.client.tasks.GetTaskResponse;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceStats;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.core.tasks.resourcetracker.TaskThreadUsage;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.tasks.RawTaskStatus;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.client.tasks.GetTaskResponse;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.TaskResourceStats;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.core.tasks.resourcetracker.TaskThreadUsage;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.tasks.RawTaskStatus;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class GetTaskResponseTests extends OpenSearchTestCase {
+public class GetTaskResponseTests extends DensityTestCase {
 
     public void testFromXContent() throws IOException {
         xContentTester(this::createParser, this::createTestInstance, this::toXContent, GetTaskResponse::fromXContent).supportsUnknownFields(

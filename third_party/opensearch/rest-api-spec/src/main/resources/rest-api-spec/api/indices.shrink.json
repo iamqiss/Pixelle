@@ -1,7 +1,7 @@
 {
   "indices.shrink":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/index-apis/shrink-index/",
+      "url":"https://density.org/docs/latest/api-reference/index-apis/shrink-index/",
       "description":"Allow to shrink an existing index into a new index with fewer primary shards."
     },
     "stability":"stable",

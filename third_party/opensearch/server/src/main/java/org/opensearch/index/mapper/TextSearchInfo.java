@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.similarity.SimilarityProvider;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.Lucene;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.similarity.SimilarityProvider;
 
 /**
  * Encapsulates information about how to perform text searches over a field
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TextSearchInfo {
@@ -147,7 +147,7 @@ public class TextSearchInfo {
     /**
      * What sort of term vectors are available
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum TermVector {

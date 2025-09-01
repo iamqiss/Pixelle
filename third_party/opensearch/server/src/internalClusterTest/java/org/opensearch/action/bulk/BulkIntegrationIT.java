@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.ingest.IngestTestPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.ingest.IngestTestPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -62,11 +62,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.action.DocWriteResponse.Result.CREATED;
-import static org.opensearch.action.DocWriteResponse.Result.UPDATED;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.action.DocWriteResponse.Result.CREATED;
+import static org.density.action.DocWriteResponse.Result.UPDATED;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -74,14 +74,14 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.oneOf;
 
-public class BulkIntegrationIT extends OpenSearchIntegTestCase {
+public class BulkIntegrationIT extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Arrays.asList(IngestTestPlugin.class);
     }
 
     public void testBulkIndexCreatesMapping() throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/bulk-log.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/bulk-log.json");
         BulkRequestBuilder bulkBuilder = client().prepareBulk();
         bulkBuilder.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
         bulkBuilder.get();
@@ -151,7 +151,7 @@ public class BulkIntegrationIT extends OpenSearchIntegTestCase {
 
     public void testBulkWithGlobalDefaults() throws Exception {
         // all requests in the json are missing index and type parameters: "_index" : "test", "_type" : "type1",
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk-missing-index-type.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk-missing-index-type.json");
         {
             BulkRequestBuilder bulkBuilder = client().prepareBulk();
             bulkBuilder.add(bulkAction.getBytes(StandardCharsets.UTF_8), 0, bulkAction.length(), null, MediaTypeRegistry.JSON);
@@ -204,7 +204,7 @@ public class BulkIntegrationIT extends OpenSearchIntegTestCase {
                         .get();
                     assertThat(response.getResult(), is(oneOf(CREATED, UPDATED)));
                     logger.info("--> index id={} seq_no={}", response.getId(), response.getSeqNo());
-                } catch (OpenSearchException ignore) {
+                } catch (DensityException ignore) {
                     logger.info("--> fail to index id={}", id);
                 }
             }

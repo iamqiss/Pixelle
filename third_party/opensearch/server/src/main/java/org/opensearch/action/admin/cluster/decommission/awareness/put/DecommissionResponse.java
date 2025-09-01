@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.decommission.awareness.put;
+package org.density.action.admin.cluster.decommission.awareness.put;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentObject;
 
 import java.io.IOException;
 
 /**
  * Response for decommission request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class DecommissionResponse extends AcknowledgedResponse implements ToXContentObject {

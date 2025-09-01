@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -53,42 +53,42 @@ import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ParametrizedFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.index.mapper.SourceValueFetcher;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.BoostingQueryBuilder;
-import org.opensearch.index.query.ConstantScoreQueryBuilder;
-import org.opensearch.index.query.DisMaxQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.collect.Tuple;
+import org.density.common.hash.MurmurHash3;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ParametrizedFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
+import org.density.index.mapper.SourceValueFetcher;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.mapper.ValueFetcher;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.BoostingQueryBuilder;
+import org.density.index.query.ConstantScoreQueryBuilder;
+import org.density.index.query.DisMaxQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.Rewriteable;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -101,7 +101,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 public class PercolatorFieldMapper extends ParametrizedFieldMapper {
 

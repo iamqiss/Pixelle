@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.routing.allocation.decider.Decision.Type;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.allocation.decider.Decision.Type;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.cluster.routing.allocation.decider.Decision.Type.NO;
-import static org.opensearch.cluster.routing.allocation.decider.Decision.Type.THROTTLE;
-import static org.opensearch.cluster.routing.allocation.decider.Decision.Type.YES;
+import static org.density.cluster.routing.allocation.decider.Decision.Type.NO;
+import static org.density.cluster.routing.allocation.decider.Decision.Type.THROTTLE;
+import static org.density.cluster.routing.allocation.decider.Decision.Type.YES;
 
 /**
  * A class for unit testing the {@link Decision} class.
  */
-public class DecisionTests extends OpenSearchTestCase {
+public class DecisionTests extends DensityTestCase {
 
     /**
      * Tests {@link Type#higherThan(Type)}

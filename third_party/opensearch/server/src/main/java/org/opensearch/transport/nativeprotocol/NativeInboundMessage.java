@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.common.annotation.DeprecatedApi;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.transport.Header;
-import org.opensearch.transport.InboundMessage;
+import org.density.common.annotation.DeprecatedApi;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.transport.Header;
+import org.density.transport.InboundMessage;
 
 /**
  * Inbound data as a message

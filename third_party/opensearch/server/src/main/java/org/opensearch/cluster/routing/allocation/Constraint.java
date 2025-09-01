@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsBalancer;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.ShardsBalancer;
 
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.predicateKeyToWeightMap;
+import static org.density.cluster.routing.allocation.ConstraintTypes.predicateKeyToWeightMap;
 
 /**
  * Defines a constraint useful to de-prioritize certain nodes as target of unassigned shards used in {@link AllocationConstraints} or
  * re-balancing target used in {@link RebalanceConstraints}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Constraint implements Predicate<Constraint.ConstraintParams> {
 

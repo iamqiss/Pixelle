@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,37 +25,37 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.ScoreMode;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.StarTreePreComputeCollector;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.StarTreeQueryHelper;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.LongArray;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.StarTreePreComputeCollector;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.StarTreeQueryHelper;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedStarTree;
+import static org.density.search.startree.StarTreeQueryHelper.getSupportedStarTree;
 
 /**
  * A field data based aggregator that counts the number of values a specific field has within the aggregation context.
@@ -63,7 +63,7 @@ import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedSta
  * This aggregator works in a multi-bucket mode, that is, when serves as a sub-aggregator, a single aggregator instance aggregates the
  * counts for all buckets owned by the parent aggregator)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ValueCountAggregator extends NumericMetricsAggregator.SingleValue implements StarTreePreComputeCollector {
 

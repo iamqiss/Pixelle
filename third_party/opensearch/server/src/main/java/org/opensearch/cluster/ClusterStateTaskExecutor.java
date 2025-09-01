@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
 
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Interface that updates the cluster state based on the task
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ClusterStateTaskExecutor<T> {
@@ -95,7 +95,7 @@ public interface ClusterStateTaskExecutor<T> {
      * Represents the result of a batched execution of cluster state update tasks
      * @param <T> the type of the cluster state update task
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class ClusterTasksResult<T> {
@@ -120,7 +120,7 @@ public interface ClusterStateTaskExecutor<T> {
         /**
          * Builder for cluster state task.
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public static class Builder<T> {
@@ -167,7 +167,7 @@ public interface ClusterStateTaskExecutor<T> {
     /**
      * The task result.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class TaskResult {
         private final Exception failure;

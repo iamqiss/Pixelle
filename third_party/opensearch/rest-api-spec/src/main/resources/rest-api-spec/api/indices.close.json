@@ -1,7 +1,7 @@
 {
   "indices.close":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/index-apis/close-index/",
+      "url":"https://density.org/docs/latest/api-reference/index-apis/close-index/",
       "description":"Closes an index."
     },
     "stability":"stable",

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -49,10 +49,10 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.search.Queries;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -68,7 +68,7 @@ import java.util.Set;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class FreqTermsEnumTests extends OpenSearchTestCase {
+public class FreqTermsEnumTests extends DensityTestCase {
 
     private String[] terms;
     private IndexWriter iw;

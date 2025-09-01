@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.get;
+package org.density.index.get;
 
 import org.apache.lucene.index.DocValuesSkipIndexType;
 import org.apache.lucene.index.DocValuesType;
@@ -42,39 +42,39 @@ import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.TranslogLeafReader;
-import org.opensearch.index.fieldvisitor.CustomFieldsVisitor;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.shard.AbstractIndexShardComponent;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.TranslogLeafReader;
+import org.density.index.fieldvisitor.CustomFieldsVisitor;
+import org.density.index.fieldvisitor.FieldsVisitor;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.Uid;
+import org.density.index.shard.AbstractIndexShardComponent;
+import org.density.index.shard.IndexShard;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -84,13 +84,13 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Gets an index shard
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ShardGetService extends AbstractIndexShardComponent {
@@ -167,7 +167,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
     }
 
     /**
-     * Returns {@link GetResult} based on the specified {@link org.opensearch.index.engine.Engine.GetResult} argument.
+     * Returns {@link GetResult} based on the specified {@link org.density.index.engine.Engine.GetResult} argument.
      * This method basically loads specified fields for the associated document in the engineGetResult.
      * This method load the fields from the Lucene index and not from transaction log and therefore isn't realtime.
      * <p>
@@ -281,7 +281,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
             try {
                 docIdAndVersion.reader.storedFields().document(docIdAndVersion.docId, fieldVisitor);
             } catch (IOException e) {
-                throw new OpenSearchException("Failed to get id [" + id + "]", e);
+                throw new DensityException("Failed to get id [" + id + "]", e);
             }
             source = fieldVisitor.source();
 
@@ -293,7 +293,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
                     try {
                         source = indexShard.mapperService().documentMapper().sourceMapper().applyFilters(source, null);
                     } catch (IOException e) {
-                        throw new OpenSearchException("Failed to reapply filters for [" + id + "] after reading from translog", e);
+                        throw new DensityException("Failed to reapply filters for [" + id + "] after reading from translog", e);
                     }
                 } else {
                     // Slow path: recreate stored fields from original source
@@ -385,7 +385,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
                 try {
                     source = BytesReference.bytes(MediaTypeRegistry.contentBuilder(sourceContentType).map(sourceAsMap));
                 } catch (IOException e) {
-                    throw new OpenSearchException("Failed to get id [" + id + "] with includes/excludes set", e);
+                    throw new DensityException("Failed to get id [" + id + "] with includes/excludes set", e);
                 }
             }
         }
@@ -399,7 +399,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
             try {
                 source = docMapper.sourceMapper().applyFilters(source, null);
             } catch (IOException e) {
-                throw new OpenSearchException("Failed to reapply filters for [" + id + "] after reading from translog", e);
+                throw new DensityException("Failed to reapply filters for [" + id + "] after reading from translog", e);
             }
         }
 
@@ -413,7 +413,7 @@ public final class ShardGetService extends AbstractIndexShardComponent {
             try {
                 source = BytesReference.bytes(MediaTypeRegistry.contentBuilder(sourceContentType).map(sourceAsMap));
             } catch (IOException e) {
-                throw new OpenSearchException("Failed to get id [" + id + "] with includes/excludes set", e);
+                throw new DensityException("Failed to get id [" + id + "] with includes/excludes set", e);
             }
         }
 

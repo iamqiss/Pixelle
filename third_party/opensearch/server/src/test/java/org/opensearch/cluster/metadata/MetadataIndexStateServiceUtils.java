@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.core.index.Index;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.core.index.Index;
 
 import java.util.Map;
 

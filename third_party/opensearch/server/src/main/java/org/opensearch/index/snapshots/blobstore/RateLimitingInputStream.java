@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.common.StreamLimiter;
+import org.density.common.StreamLimiter;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -43,7 +43,7 @@ import java.util.function.Supplier;
 /**
  * Rate limiting wrapper for InputStream
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RateLimitingInputStream extends FilterInputStream {
 

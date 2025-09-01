@@ -1,7 +1,7 @@
 {
   "cluster.allocation_explain":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/cluster-api/cluster-allocation/",
+      "url":"https://density.org/docs/latest/api-reference/cluster-api/cluster-allocation/",
       "description":"Provides explanations for shard allocations in the cluster."
     },
     "stability":"stable",

@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.coordination.PersistedStateStats;
+import org.density.cluster.coordination.PersistedStateStats;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Download stats for remote state
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteDownloadStats extends PersistedStateStats {
     static final String CHECKSUM_VALIDATION_FAILED_COUNT = "checksum_validation_failed_count";

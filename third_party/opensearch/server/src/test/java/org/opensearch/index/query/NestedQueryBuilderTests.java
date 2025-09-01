@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -40,24 +40,24 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.search.approximate.ApproximateMatchAllQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.search.approximate.ApproximateMatchAllQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -68,8 +68,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
-import static org.opensearch.index.query.InnerHitBuilderTests.randomNestedInnerHits;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
+import static org.density.index.query.InnerHitBuilderTests.randomNestedInnerHits;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -129,7 +129,7 @@ public class NestedQueryBuilderTests extends AbstractQueryTestCase<NestedQueryBu
 
     @Override
     protected void doAssertLuceneQuery(NestedQueryBuilder queryBuilder, Query query, QueryShardContext context) throws IOException {
-        assertThat(query, instanceOf(OpenSearchToParentBlockJoinQuery.class));
+        assertThat(query, instanceOf(DensityToParentBlockJoinQuery.class));
         // TODO how to assert this?
         if (queryBuilder.innerHit() != null) {
             // have to rewrite again because the provided queryBuilder hasn't been rewritten (directly returned from
@@ -460,7 +460,7 @@ public class NestedQueryBuilderTests extends AbstractQueryTestCase<NestedQueryBu
         when(queryShardContext.allowExpensiveQueries()).thenReturn(false);
 
         NestedQueryBuilder queryBuilder = new NestedQueryBuilder("path", new MatchAllQueryBuilder(), ScoreMode.None);
-        OpenSearchException e = expectThrows(OpenSearchException.class, () -> queryBuilder.toQuery(queryShardContext));
+        DensityException e = expectThrows(DensityException.class, () -> queryBuilder.toQuery(queryShardContext));
         assertEquals("[joining] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", e.getMessage());
     }
 
@@ -489,7 +489,7 @@ public class NestedQueryBuilderTests extends AbstractQueryTestCase<NestedQueryBu
     public void testNestedDepthAllowed() throws Exception {
         ThrowingConsumer<QueryShardContext> check = (context) -> {
             NestedQueryBuilder queryBuilder = new NestedQueryBuilder("nested1", new MatchAllQueryBuilder(), ScoreMode.None);
-            OpenSearchToParentBlockJoinQuery blockJoinQuery = (OpenSearchToParentBlockJoinQuery) queryBuilder.toQuery(context);
+            DensityToParentBlockJoinQuery blockJoinQuery = (DensityToParentBlockJoinQuery) queryBuilder.toQuery(context);
             Optional<BooleanClause> childLeg = ((BooleanQuery) blockJoinQuery.getChildQuery()).clauses()
                 .stream()
                 .filter(c -> c.occur() == BooleanClause.Occur.MUST)
@@ -533,7 +533,7 @@ public class NestedQueryBuilderTests extends AbstractQueryTestCase<NestedQueryBu
             assertEquals(
                 "Can parse joins one by one without breaching depth limit",
                 2,
-                bool.clauses().stream().filter(c -> c.query() instanceof OpenSearchToParentBlockJoinQuery).count()
+                bool.clauses().stream().filter(c -> c.query() instanceof DensityToParentBlockJoinQuery).count()
             );
         }
     }
@@ -547,7 +547,7 @@ public class NestedQueryBuilderTests extends AbstractQueryTestCase<NestedQueryBu
                 ScoreMode.None
             );
             Query depth2Query = depth2.toQuery(ctx);
-            assertTrue(depth2Query instanceof OpenSearchToParentBlockJoinQuery);
+            assertTrue(depth2Query instanceof DensityToParentBlockJoinQuery);
         });
     }
 

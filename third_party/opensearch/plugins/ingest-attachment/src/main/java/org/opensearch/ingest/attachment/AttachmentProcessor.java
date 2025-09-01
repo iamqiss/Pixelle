@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
 import org.apache.tika.exception.ZeroByteFileException;
 import org.apache.tika.langdetect.optimaize.OptimaizeLangDetector;
 import org.apache.tika.language.detect.LanguageResult;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.metadata.TikaCoreProperties;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
+import org.density.DensityParseException;
+import org.density.core.common.Strings;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -51,12 +51,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
-import static org.opensearch.ingest.ConfigurationUtils.readBooleanProperty;
-import static org.opensearch.ingest.ConfigurationUtils.readIntProperty;
-import static org.opensearch.ingest.ConfigurationUtils.readOptionalList;
-import static org.opensearch.ingest.ConfigurationUtils.readOptionalStringProperty;
-import static org.opensearch.ingest.ConfigurationUtils.readStringProperty;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.readBooleanProperty;
+import static org.density.ingest.ConfigurationUtils.readIntProperty;
+import static org.density.ingest.ConfigurationUtils.readOptionalList;
+import static org.density.ingest.ConfigurationUtils.readOptionalStringProperty;
+import static org.density.ingest.ConfigurationUtils.readStringProperty;
 
 public final class AttachmentProcessor extends AbstractProcessor {
 
@@ -125,7 +125,7 @@ public final class AttachmentProcessor extends AbstractProcessor {
             // tika 1.17 throws an exception when the InputStream has 0 bytes.
             // previously, it did not mind. This is here to preserve that behavior.
         } catch (Exception e) {
-            throw new OpenSearchParseException("Error parsing document in field [{}]", e, field);
+            throw new DensityParseException("Error parsing document in field [{}]", e, field);
         }
 
         if (properties.contains(Property.CONTENT) && Strings.hasLength(parsedContent)) {

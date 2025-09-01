@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 public class IndexTemplateMetadata {
 

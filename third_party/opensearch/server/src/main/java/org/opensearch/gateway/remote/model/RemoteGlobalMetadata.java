@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
-import org.opensearch.repositories.blobstore.ChecksumBlobStoreFormat;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.io.Streams;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.BlobPathParameters;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
+import org.density.repositories.blobstore.ChecksumBlobStoreFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.METADATA_NAME_FORMAT;
+import static org.density.gateway.remote.RemoteClusterStateUtils.METADATA_NAME_FORMAT;
 
 /**
  * Wrapper class for uploading/downloading global metadata ({@link Metadata}) to/from remote blob store

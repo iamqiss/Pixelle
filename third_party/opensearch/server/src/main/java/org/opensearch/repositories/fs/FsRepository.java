@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.fs;
+package org.density.repositories.fs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ import java.util.function.Function;
  *      Defaults to not chucked.</dd>
  * </dl>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FsRepository extends BlobStoreRepository {
     private static final Logger logger = LogManager.getLogger(FsRepository.class);

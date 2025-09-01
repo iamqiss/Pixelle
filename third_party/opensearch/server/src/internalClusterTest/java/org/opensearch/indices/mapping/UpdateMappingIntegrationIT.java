@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.mapping;
+package org.density.indices.mapping;
 
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.indices.IndicesService;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 import org.hamcrest.Matchers;
 
 import java.util.ArrayList;
@@ -66,17 +66,17 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UpdateMappingIntegrationIT extends OpenSearchIntegTestCase {
+public class UpdateMappingIntegrationIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

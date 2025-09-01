@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.recovery.RecoveryState.Stage;
-import org.opensearch.indices.recovery.RecoveryState.Translog;
-import org.opensearch.indices.recovery.RecoveryState.VerifyIndex;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex.FileMetadata;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.recovery.RecoveryState.Stage;
+import org.density.indices.recovery.RecoveryState.Translog;
+import org.density.indices.recovery.RecoveryState.VerifyIndex;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationLuceneIndex.FileMetadata;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.test.VersionUtils.randomVersion;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.either;
@@ -67,7 +67,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.startsWith;
 
-public class RecoveryTargetTests extends OpenSearchTestCase {
+public class RecoveryTargetTests extends DensityTestCase {
     abstract class Streamer<T extends Writeable> extends Thread {
         private T lastRead;
         private final AtomicBoolean shouldStop;

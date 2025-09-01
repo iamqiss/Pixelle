@@ -1,7 +1,7 @@
 {
   "tasks.get":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/tasks/",
+      "url":"https://density.org/docs/latest/api-reference/tasks/",
       "description":"Returns information about a task."
     },
     "stability":"experimental",

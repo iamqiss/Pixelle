@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
-import org.opensearch.index.engine.IngestionEngine;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.common.Nullable;
+import org.density.common.metrics.CounterMetric;
+import org.density.index.IndexSettings;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
+import org.density.index.engine.IngestionEngine;
 
 import java.util.Comparator;
 import java.util.List;

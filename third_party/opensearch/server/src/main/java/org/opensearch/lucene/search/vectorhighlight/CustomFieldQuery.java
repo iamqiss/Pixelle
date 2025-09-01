@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.search.vectorhighlight;
+package org.density.lucene.search.vectorhighlight;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -45,10 +45,10 @@ import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
 import org.apache.lucene.search.vectorhighlight.FieldQuery;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.lucene.queries.BlendedTermQuery;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.lucene.queries.BlendedTermQuery;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -57,14 +57,14 @@ import java.util.Collection;
 // TODO: remove me!
 /**
  * Custom implementation of Lucene's {@link FieldQuery} that extends highlighting capabilities
- * to support additional OpenSearch-specific query types and complex queries.
+ * to support additional Density-specific query types and complex queries.
  * <p>
  * This class enhances the standard Lucene vector highlighting by providing special handling for:
  * <ul>
  *   <li>Boost queries</li>
  *   <li>Span term queries</li>
  *   <li>Constant score queries</li>
- *   <li>Function score queries (both OpenSearch and Lucene variants)</li>
+ *   <li>Function score queries (both Density and Lucene variants)</li>
  *   <li>Multi-phrase prefix queries</li>
  *   <li>Multi-phrase queries</li>
  *   <li>Blended term queries</li>
@@ -80,7 +80,7 @@ import java.util.Collection;
  *
  * @see FastVectorHighlighter
  * @see FieldQuery
- * @opensearch.internal
+ * @density.internal
  */
 public class CustomFieldQuery extends FieldQuery {
 
@@ -128,8 +128,8 @@ public class CustomFieldQuery extends FieldQuery {
             for (Term term : synQuery.getTerms()) {
                 flatten(new TermQuery(term), searcher, flatQueries, boost);
             }
-        } else if (sourceQuery instanceof OpenSearchToParentBlockJoinQuery) {
-            Query childQuery = ((OpenSearchToParentBlockJoinQuery) sourceQuery).getChildQuery();
+        } else if (sourceQuery instanceof DensityToParentBlockJoinQuery) {
+            Query childQuery = ((DensityToParentBlockJoinQuery) sourceQuery).getChildQuery();
             if (childQuery != null) {
                 flatten(childQuery, searcher, flatQueries, boost);
             }

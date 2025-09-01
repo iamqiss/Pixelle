@@ -1,48 +1,48 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.indices.get.GetIndexRequest;
-import org.opensearch.action.admin.indices.get.GetIndexResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.remotestore.mocks.MockFsMetadataSupportedRepositoryPlugin;
-import org.opensearch.remotestore.multipart.mocks.MockFsRepositoryPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.indices.get.GetIndexRequest;
+import org.density.action.admin.indices.get.GetIndexResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.remotestore.mocks.MockFsMetadataSupportedRepositoryPlugin;
+import org.density.remotestore.multipart.mocks.MockFsRepositoryPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 
 import java.io.IOException;
@@ -61,12 +61,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.repositories.fs.ReloadableFsRepository.REPOSITORIES_FAILRATE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.repositories.fs.ReloadableFsRepository.REPOSITORIES_FAILRATE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class RemoteStoreBaseIntegTestCase extends OpenSearchIntegTestCase {
+public class RemoteStoreBaseIntegTestCase extends DensityIntegTestCase {
     protected static final String REPOSITORY_NAME = "test-remote-store-repo";
     protected static final String REPOSITORY_2_NAME = "test-remote-store-repo-2";
     protected static final String REPOSITORY_3_NAME = "test-remote-store-repo-3";

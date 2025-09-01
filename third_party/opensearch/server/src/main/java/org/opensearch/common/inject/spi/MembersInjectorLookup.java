@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,22 +23,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.MembersInjector;
-import org.opensearch.common.inject.TypeLiteral;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Binder;
+import org.density.common.inject.MembersInjector;
+import org.density.common.inject.TypeLiteral;
 
 import java.util.Objects;
 
 /**
  * A lookup of the members injector for a type. Lookups are created explicitly in a module using
- * {@link org.opensearch.common.inject.Binder#getMembersInjector(Class) getMembersInjector()} statements:
+ * {@link org.density.common.inject.Binder#getMembersInjector(Class) getMembersInjector()} statements:
  * <pre>
  *     MembersInjector&lt;PaymentService&gt; membersInjector
  *         = getMembersInjector(PaymentService.class);</pre>
@@ -46,7 +46,7 @@ import java.util.Objects;
  * @author crazybob@google.com (Bob Lee)
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class MembersInjectorLookup<T> implements Element {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 /**
  * Specialization of {@link IndexFieldData} for histograms.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IndexHistogramFieldData implements IndexFieldData<LeafHistogramFieldData> {
     protected final String fieldName;

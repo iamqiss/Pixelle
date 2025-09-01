@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
-import org.opensearch.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNode;
 
 import java.net.UnknownHostException;
 
@@ -28,7 +28,7 @@ import java.net.UnknownHostException;
  * }
  * </code></pre>
  *
- * @opensearch.internal
+ * @density.internal
  */
 @FunctionalInterface
 public interface ExtensionReader {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.Channels;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.Channels;
+import org.density.common.util.io.IOUtils;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -48,12 +48,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.index.translog.Translog.getCommitCheckpointFileName;
+import static org.density.index.translog.Translog.getCommitCheckpointFileName;
 
 /**
  * an immutable translog filereader
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TranslogReader extends BaseTranslogReader implements Closeable {

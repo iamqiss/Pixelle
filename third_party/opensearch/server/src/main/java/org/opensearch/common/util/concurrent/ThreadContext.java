@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.ContextPreservingActionListener;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.http.HttpTransportSettings;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskThreadContextStatePropagator;
-import org.opensearch.transport.client.OriginSettingClient;
+import org.density.action.support.ContextPreservingActionListener;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.http.HttpTransportSettings;
+import org.density.tasks.Task;
+import org.density.tasks.TaskThreadContextStatePropagator;
+import org.density.transport.client.OriginSettingClient;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -68,17 +68,17 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_WARNING_HEADER_COUNT;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_WARNING_HEADER_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_WARNING_HEADER_COUNT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_WARNING_HEADER_SIZE;
 
 /**
  * A ThreadContext is a map of string headers and a transient map of keyed objects that are associated with
  * a thread. It allows to store and retrieve header information across method calls, network calls as well as threads spawned from a
- * thread that has a {@link ThreadContext} associated with. Threads spawned from a {@link org.opensearch.threadpool.ThreadPool}
+ * thread that has a {@link ThreadContext} associated with. Threads spawned from a {@link org.density.threadpool.ThreadPool}
  * have out of the box support for {@link ThreadContext} and all threads spawned will inherit the {@link ThreadContext} from the thread
  * that it is forking from.". Network calls will also preserve the senders headers automatically.
  * <p>
- * Consumers of ThreadContext usually don't need to interact with adding or stashing contexts. Every opensearch thread is managed by
+ * Consumers of ThreadContext usually don't need to interact with adding or stashing contexts. Every density thread is managed by
  * a thread pool or executor being responsible for stashing and restoring the threads context. For instance if a network request is
  * received, all headers are deserialized from the network and directly added as the headers of the threads {@link ThreadContext}
  * (see {@link #readHeaders(StreamInput)}. In order to not modify the context that is currently active on this thread the network code
@@ -98,7 +98,7 @@ import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_WARNING
  *     // previous context is restored on StoredContext#close()
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ThreadContext implements Writeable {
@@ -212,7 +212,7 @@ public final class ThreadContext implements Writeable {
      *
      * Add an entry in the grant portion of the policy file like this:
      *
-     * permission org.opensearch.secure_sm.ThreadContextPermission "stashWithOrigin";
+     * permission org.density.secure_sm.ThreadContextPermission "stashWithOrigin";
      */
     @SuppressWarnings("removal")
     public StoredContext stashWithOrigin(String origin) {
@@ -231,7 +231,7 @@ public final class ThreadContext implements Writeable {
      *
      * Add an entry in the grant portion of the policy file like this:
      *
-     * permission org.opensearch.secure_sm.ThreadContextPermission "stashAndMergeHeaders";
+     * permission org.density.secure_sm.ThreadContextPermission "stashAndMergeHeaders";
      */
     @SuppressWarnings("removal")
     public StoredContext stashAndMergeHeaders(Map<String, String> headers) {
@@ -586,7 +586,7 @@ public final class ThreadContext implements Writeable {
      *
      * Add an entry in the grant portion of the policy file like this:
      *
-     * permission org.opensearch.secure_sm.ThreadContextPermission "markAsSystemContext";
+     * permission org.density.secure_sm.ThreadContextPermission "markAsSystemContext";
      */
     @SuppressWarnings("removal")
     public void markAsSystemContext() {
@@ -603,7 +603,7 @@ public final class ThreadContext implements Writeable {
     /**
      * A stored context
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -991,7 +991,7 @@ public final class ThreadContext implements Writeable {
     /**
      * Collector based on a linked hash set
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinkedHashSetCollector<T> implements Collector<T, Set<T>, Set<T>> {
         @Override

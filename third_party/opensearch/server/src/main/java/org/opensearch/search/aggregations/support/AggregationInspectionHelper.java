@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,52 +25,52 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.search.aggregations.bucket.adjacency.InternalAdjacencyMatrix;
-import org.opensearch.search.aggregations.bucket.composite.InternalComposite;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilter;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilters;
-import org.opensearch.search.aggregations.bucket.global.InternalGlobal;
-import org.opensearch.search.aggregations.bucket.histogram.InternalAutoDateHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.InternalDateHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.InternalHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram;
-import org.opensearch.search.aggregations.bucket.missing.InternalMissing;
-import org.opensearch.search.aggregations.bucket.nested.InternalNested;
-import org.opensearch.search.aggregations.bucket.nested.InternalReverseNested;
-import org.opensearch.search.aggregations.bucket.range.InternalRange;
-import org.opensearch.search.aggregations.bucket.sampler.InternalSampler;
-import org.opensearch.search.aggregations.bucket.sampler.UnmappedSampler;
-import org.opensearch.search.aggregations.bucket.terms.InternalSignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.InternalTerms;
-import org.opensearch.search.aggregations.bucket.terms.UnmappedSignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.UnmappedTerms;
-import org.opensearch.search.aggregations.metrics.InternalAvg;
-import org.opensearch.search.aggregations.metrics.InternalCardinality;
-import org.opensearch.search.aggregations.metrics.InternalExtendedStats;
-import org.opensearch.search.aggregations.metrics.InternalGeoCentroid;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentileRanks;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentiles;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.InternalMedianAbsoluteDeviation;
-import org.opensearch.search.aggregations.metrics.InternalMin;
-import org.opensearch.search.aggregations.metrics.InternalScriptedMetric;
-import org.opensearch.search.aggregations.metrics.InternalStats;
-import org.opensearch.search.aggregations.metrics.InternalSum;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentileRanks;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentiles;
-import org.opensearch.search.aggregations.metrics.InternalTopHits;
-import org.opensearch.search.aggregations.metrics.InternalValueCount;
-import org.opensearch.search.aggregations.metrics.InternalWeightedAvg;
-import org.opensearch.search.aggregations.metrics.MetricInspectionHelper;
-import org.opensearch.search.aggregations.pipeline.InternalBucketMetricValue;
-import org.opensearch.search.aggregations.pipeline.InternalPercentilesBucket;
-import org.opensearch.search.aggregations.pipeline.InternalSimpleValue;
+import org.density.search.aggregations.bucket.adjacency.InternalAdjacencyMatrix;
+import org.density.search.aggregations.bucket.composite.InternalComposite;
+import org.density.search.aggregations.bucket.filter.InternalFilter;
+import org.density.search.aggregations.bucket.filter.InternalFilters;
+import org.density.search.aggregations.bucket.global.InternalGlobal;
+import org.density.search.aggregations.bucket.histogram.InternalAutoDateHistogram;
+import org.density.search.aggregations.bucket.histogram.InternalDateHistogram;
+import org.density.search.aggregations.bucket.histogram.InternalHistogram;
+import org.density.search.aggregations.bucket.histogram.InternalVariableWidthHistogram;
+import org.density.search.aggregations.bucket.missing.InternalMissing;
+import org.density.search.aggregations.bucket.nested.InternalNested;
+import org.density.search.aggregations.bucket.nested.InternalReverseNested;
+import org.density.search.aggregations.bucket.range.InternalRange;
+import org.density.search.aggregations.bucket.sampler.InternalSampler;
+import org.density.search.aggregations.bucket.sampler.UnmappedSampler;
+import org.density.search.aggregations.bucket.terms.InternalSignificantTerms;
+import org.density.search.aggregations.bucket.terms.InternalTerms;
+import org.density.search.aggregations.bucket.terms.UnmappedSignificantTerms;
+import org.density.search.aggregations.bucket.terms.UnmappedTerms;
+import org.density.search.aggregations.metrics.InternalAvg;
+import org.density.search.aggregations.metrics.InternalCardinality;
+import org.density.search.aggregations.metrics.InternalExtendedStats;
+import org.density.search.aggregations.metrics.InternalGeoCentroid;
+import org.density.search.aggregations.metrics.InternalHDRPercentileRanks;
+import org.density.search.aggregations.metrics.InternalHDRPercentiles;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.InternalMedianAbsoluteDeviation;
+import org.density.search.aggregations.metrics.InternalMin;
+import org.density.search.aggregations.metrics.InternalScriptedMetric;
+import org.density.search.aggregations.metrics.InternalStats;
+import org.density.search.aggregations.metrics.InternalSum;
+import org.density.search.aggregations.metrics.InternalTDigestPercentileRanks;
+import org.density.search.aggregations.metrics.InternalTDigestPercentiles;
+import org.density.search.aggregations.metrics.InternalTopHits;
+import org.density.search.aggregations.metrics.InternalValueCount;
+import org.density.search.aggregations.metrics.InternalWeightedAvg;
+import org.density.search.aggregations.metrics.MetricInspectionHelper;
+import org.density.search.aggregations.pipeline.InternalBucketMetricValue;
+import org.density.search.aggregations.pipeline.InternalPercentilesBucket;
+import org.density.search.aggregations.pipeline.InternalSimpleValue;
 
 import java.util.stream.StreamSupport;
 
@@ -87,7 +87,7 @@ import java.util.stream.StreamSupport;
  * by these helpers since most share InternalSimpleValue and it's not clear which pipeline
  * generated the value.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AggregationInspectionHelper {
     public static <A extends InternalTerms<A, B>, B extends InternalTerms.Bucket<B>> boolean hasValue(InternalTerms<A, B> agg) {

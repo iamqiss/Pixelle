@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client;
+package org.density.transport.client;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.Task;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.Task;
 
 /**
  * A {@linkplain Client} that sets the parent task on all requests that it makes. Use this to conveniently implement actions that cause
  * many other actions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParentTaskAssigningClient extends FilterClient {
     private final TaskId parentTask;

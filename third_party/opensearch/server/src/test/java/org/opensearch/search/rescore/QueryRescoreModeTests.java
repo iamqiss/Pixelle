@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ import java.io.IOException;
  * Test fixing the ordinals and names in {@link QueryRescoreMode}. These should not be changed since we
  * use the names in the parser and the ordinals in serialization.
  */
-public class QueryRescoreModeTests extends OpenSearchTestCase {
+public class QueryRescoreModeTests extends DensityTestCase {
 
     /**
      * Test @link {@link QueryRescoreMode} enum ordinals and names, since serialization relies on it

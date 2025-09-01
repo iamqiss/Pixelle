@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.document.DocumentField;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SourceLookup;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,7 +55,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 
-public class FieldFetcherTests extends OpenSearchSingleNodeTestCase {
+public class FieldFetcherTests extends DensitySingleNodeTestCase {
 
     public void testLeafValues() throws IOException {
         MapperService mapperService = createMapperService();

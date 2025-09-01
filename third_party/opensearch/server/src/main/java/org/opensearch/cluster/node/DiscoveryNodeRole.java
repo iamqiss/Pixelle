@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.transport.RemoteClusterService;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.transport.RemoteClusterService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,7 +52,7 @@ import java.util.TreeSet;
 /**
  * Represents a node role.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class DiscoveryNodeRole implements Comparable<DiscoveryNodeRole> {
@@ -200,7 +200,7 @@ public abstract class DiscoveryNodeRole implements Comparable<DiscoveryNodeRole>
 
         @Override
         public Setting<Boolean> legacySetting() {
-            // copy the setting here so we can mark it private in org.opensearch.node.Node
+            // copy the setting here so we can mark it private in org.density.node.Node
             return Setting.boolSetting("node.data", true, Property.Deprecated, Property.NodeScope);
         }
 
@@ -213,7 +213,7 @@ public abstract class DiscoveryNodeRole implements Comparable<DiscoveryNodeRole>
 
         @Override
         public Setting<Boolean> legacySetting() {
-            // copy the setting here so we can mark it private in org.opensearch.node.Node
+            // copy the setting here so we can mark it private in org.density.node.Node
             return Setting.boolSetting("node.ingest", true, Property.Deprecated, Property.NodeScope);
         }
 
@@ -228,7 +228,7 @@ public abstract class DiscoveryNodeRole implements Comparable<DiscoveryNodeRole>
 
         @Override
         public Setting<Boolean> legacySetting() {
-            // copy the setting here so we can mark it private in org.opensearch.node.Node
+            // copy the setting here so we can mark it private in org.density.node.Node
             // As of 2.0, set the default value to 'false', so that MASTER_ROLE isn't added as a default value of NODE_ROLES_SETTING
             return Setting.boolSetting("node.master", false, Property.Deprecated, Property.NodeScope);
         }
@@ -285,7 +285,7 @@ public abstract class DiscoveryNodeRole implements Comparable<DiscoveryNodeRole>
 
         @Override
         public Setting<Boolean> legacySetting() {
-            // copy the setting here so we can mark it private in org.opensearch.node.Node
+            // copy the setting here so we can mark it private in org.density.node.Node
             return Setting.boolSetting(
                 "node.remote_cluster_client",
                 RemoteClusterService.ENABLE_REMOTE_CLUSTERS,

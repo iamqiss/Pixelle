@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.painless.antlr.Walker;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistLoader;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.painless.antlr.Walker;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistLoader;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptException;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import java.util.Map;
 
 import junit.framework.AssertionFailedError;
 
-import static org.opensearch.painless.action.PainlessExecuteAction.PainlessTestScript;
+import static org.density.painless.action.PainlessExecuteAction.PainlessTestScript;
 import static org.hamcrest.Matchers.hasSize;
 
 /**
@@ -56,14 +56,14 @@ import static org.hamcrest.Matchers.hasSize;
  * <p>
  * Typically just asserts the output of {@code exec()}
  */
-public abstract class ScriptTestCase extends OpenSearchTestCase {
+public abstract class ScriptTestCase extends DensityTestCase {
     private static final PainlessScriptEngine SCRIPT_ENGINE = new PainlessScriptEngine(Settings.EMPTY, newDefaultContexts());
 
-    /** Creates a new contexts map with PainlessTextScript = org.opensearch.painless.test */
+    /** Creates a new contexts map with PainlessTextScript = org.density.painless.test */
     protected static Map<ScriptContext<?>, List<Allowlist>> newDefaultContexts() {
         Map<ScriptContext<?>, List<Allowlist>> contexts = new HashMap<>();
         List<Allowlist> allowlists = new ArrayList<>(Allowlist.BASE_ALLOWLISTS);
-        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.opensearch.painless.test"));
+        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.density.painless.test"));
         contexts.put(PainlessTestScript.CONTEXT, allowlists);
         return contexts;
     }

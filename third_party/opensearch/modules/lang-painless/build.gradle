@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,16 +28,16 @@
  * under the License.
  */
 
-import org.opensearch.gradle.testclusters.DefaultTestClustersTask;
+import org.density.gradle.testclusters.DefaultTestClustersTask;
 import com.github.jengelman.gradle.plugins.shadow.ShadowBasePlugin
 
-apply plugin: 'opensearch.validate-rest-spec'
-apply plugin: 'opensearch.yaml-rest-test'
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.validate-rest-spec'
+apply plugin: 'density.yaml-rest-test'
+apply plugin: 'density.internal-cluster-test'
 
-opensearchplugin {
-  description = 'An easy, safe and fast scripting language for OpenSearch'
-  classname = 'org.opensearch.painless.PainlessModulePlugin'
+densityplugin {
+  description = 'An easy, safe and fast scripting language for Density'
+  classname = 'org.density.painless.PainlessModulePlugin'
 }
 
 ext {
@@ -48,9 +48,9 @@ ext {
 testClusters.all {
   module ':modules:mapper-extras'
   module ':modules:aggs-matrix-stats'
-  systemProperty 'opensearch.scripting.update.ctx_in_params', 'false'
+  systemProperty 'density.scripting.update.ctx_in_params', 'false'
   // TODO: remove this once cname is prepended to transport.publish_address by default in 8.0
-  systemProperty 'opensearch.transport.cname_in_publish_address', 'true'
+  systemProperty 'density.transport.cname_in_publish_address', 'true'
 }
 
 dependencies {
@@ -80,7 +80,7 @@ tasks.named("test").configure {
 tasks.register("apiJavadoc", Javadoc) {
   source = sourceSets.main.allJava
   classpath = sourceSets.main.runtimeClasspath
-  include '**/org/opensearch/painless/api/'
+  include '**/org/density/painless/api/'
   destinationDir = new File(file(java.docsDir), 'apiJavadoc')
 }
 
@@ -122,7 +122,7 @@ tasks.register("generateContextDoc", DefaultTestClustersTask) {
   doFirst {
     def execOps = project.objects.newInstance(InjectedExecOps)
     execOps.execOps.javaexec {
-      mainClass = 'org.opensearch.painless.ContextDocGenerator'
+      mainClass = 'org.density.painless.ContextDocGenerator'
       classpath = sourceSets.doc.runtimeClasspath
       systemProperty "cluster.uri", "${-> testClusters.generateContextCluster.singleNode().getAllHttpSocketURI().get(0)}"
     }.assertNormalExitValue()
@@ -142,7 +142,7 @@ dependencies {
 }
 
 String grammarPath = 'src/main/antlr'
-String outputPath = 'src/main/java/org/opensearch/painless/antlr'
+String outputPath = 'src/main/java/org/density/painless/antlr'
 
 tasks.register("cleanGenerated", Delete) {
   delete fileTree(grammarPath) {
@@ -162,7 +162,7 @@ tasks.register("regenLexer", JavaExec) {
   systemProperty 'user.country', 'US'
   systemProperty 'user.variant', ''
   args '-Werror',
-    '-package', 'org.opensearch.painless.antlr',
+    '-package', 'org.density.painless.antlr',
     '-o', outputPath,
     "${file(grammarPath)}/PainlessLexer.g4"
 }
@@ -176,7 +176,7 @@ tasks.register("regenParser", JavaExec) {
   systemProperty 'user.country', 'US'
   systemProperty 'user.variant', ''
   args '-Werror',
-    '-package', 'org.opensearch.painless.antlr',
+    '-package', 'org.density.painless.antlr',
     '-no-listener',
     '-visitor',
     // '-Xlog',

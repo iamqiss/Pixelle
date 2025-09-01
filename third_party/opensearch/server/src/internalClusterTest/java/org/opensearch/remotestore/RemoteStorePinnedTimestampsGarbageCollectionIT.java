@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,14 +30,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.opensearch.index.IndexSettings.INDEX_REMOTE_TRANSLOG_KEEP_EXTRA_GEN_SETTING;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.index.IndexSettings.INDEX_REMOTE_TRANSLOG_KEEP_EXTRA_GEN_SETTING;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 
-@LuceneTestCase.AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/16088")
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@LuceneTestCase.AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/16088")
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStorePinnedTimestampsGarbageCollectionIT extends RemoteStoreBaseIntegTestCase {
     static final String INDEX_NAME = "remote-store-test-idx-1";
 

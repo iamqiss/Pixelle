@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.spi;
+package org.density.arrow.spi;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.tasks.TaskId;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.tasks.TaskId;
 
 /**
  * Interface for managing Arrow data streams between producers and consumers.

@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.stats;
+package org.density.wlm.stats;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.AbstractWireSerializingTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.wlm.ResourceType;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.AbstractWireSerializingTestCase;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.wlm.ResourceType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -79,7 +79,7 @@ public class WorkloadGroupStatsTests extends AbstractWireSerializingTestCase<Wor
         );
         DiscoveryNode discoveryNode = new DiscoveryNode(
             "node",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             emptyMap(),
             DiscoveryNodeRole.BUILT_IN_ROLES,
             VersionUtils.randomCompatibleVersion(random(), Version.CURRENT)

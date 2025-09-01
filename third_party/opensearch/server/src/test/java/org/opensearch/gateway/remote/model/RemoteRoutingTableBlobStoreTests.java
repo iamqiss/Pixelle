@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.gateway.remote.routingtable.RemoteIndexRoutingTable;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_TABLE;
+import static org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_BASE64;
+import static org.density.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RemoteRoutingTableBlobStoreTests extends OpenSearchTestCase {
+public class RemoteRoutingTableBlobStoreTests extends DensityTestCase {
 
     private RemoteRoutingTableBlobStore<IndexRoutingTable, RemoteIndexRoutingTable> remoteIndexRoutingTableStore;
     ClusterSettings clusterSettings;

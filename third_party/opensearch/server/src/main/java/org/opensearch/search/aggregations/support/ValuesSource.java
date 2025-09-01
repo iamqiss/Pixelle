@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.DocValues;
@@ -41,33 +41,33 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Scorable;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.Rounding.Prepared;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.ScorerAware;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.index.fielddata.AbstractSortingNumericDocValues;
-import org.opensearch.index.fielddata.DocValueBits;
-import org.opensearch.index.fielddata.GeoShapeValue;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.LeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.SortingBinaryDocValues;
-import org.opensearch.index.fielddata.SortingNumericDoubleValues;
-import org.opensearch.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.support.ValuesSource.Bytes.WithScript.BytesValues;
-import org.opensearch.search.aggregations.support.values.ScriptBytesValues;
-import org.opensearch.search.aggregations.support.values.ScriptDoubleValues;
-import org.opensearch.search.aggregations.support.values.ScriptLongValues;
+import org.density.common.Rounding;
+import org.density.common.Rounding.Prepared;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.ScorerAware;
+import org.density.core.common.util.CollectionUtils;
+import org.density.index.fielddata.AbstractSortingNumericDocValues;
+import org.density.index.fielddata.DocValueBits;
+import org.density.index.fielddata.GeoShapeValue;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.LeafOrdinalsFieldData;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.SortingBinaryDocValues;
+import org.density.index.fielddata.SortingNumericDoubleValues;
+import org.density.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
+import org.density.index.mapper.RangeType;
+import org.density.script.AggregationScript;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.support.ValuesSource.Bytes.WithScript.BytesValues;
+import org.density.search.aggregations.support.values.ScriptBytesValues;
+import org.density.search.aggregations.support.values.ScriptDoubleValues;
+import org.density.search.aggregations.support.values.ScriptLongValues;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -76,7 +76,7 @@ import java.util.function.LongUnaryOperator;
 /**
  * Base class for a ValuesSource; the primitive data for an agg
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class ValuesSource {
@@ -116,7 +116,7 @@ public abstract class ValuesSource {
     /**
      * Range type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Range extends ValuesSource {
         private final RangeType rangeType;
@@ -135,7 +135,7 @@ public abstract class ValuesSource {
         @Override
         public DocValueBits docsWithValue(LeafReaderContext context) throws IOException {
             final SortedBinaryDocValues bytes = bytesValues(context);
-            return org.opensearch.index.fielddata.FieldData.docsWithValue(bytes);
+            return org.density.index.fielddata.FieldData.docsWithValue(bytes);
         }
 
         @Override
@@ -152,14 +152,14 @@ public abstract class ValuesSource {
     /**
      * Bytes type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Bytes extends ValuesSource {
 
         @Override
         public DocValueBits docsWithValue(LeafReaderContext context) throws IOException {
             final SortedBinaryDocValues bytes = bytesValues(context);
-            return org.opensearch.index.fielddata.FieldData.docsWithValue(bytes);
+            return org.density.index.fielddata.FieldData.docsWithValue(bytes);
         }
 
         @Override
@@ -170,7 +170,7 @@ public abstract class ValuesSource {
         /**
          * Provides ordinals for bytes
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public abstract static class WithOrdinals extends Bytes {
 
@@ -188,7 +188,7 @@ public abstract class ValuesSource {
 
                 @Override
                 public SortedBinaryDocValues bytesValues(LeafReaderContext context) throws IOException {
-                    return org.opensearch.index.fielddata.FieldData.emptySortedBinary();
+                    return org.density.index.fielddata.FieldData.emptySortedBinary();
                 }
 
                 @Override
@@ -201,7 +201,7 @@ public abstract class ValuesSource {
             @Override
             public DocValueBits docsWithValue(LeafReaderContext context) throws IOException {
                 final SortedSetDocValues ordinals = ordinalsValues(context);
-                return org.opensearch.index.fielddata.FieldData.docsWithValue(ordinals);
+                return org.density.index.fielddata.FieldData.docsWithValue(ordinals);
             }
 
             public abstract SortedSetDocValues ordinalsValues(LeafReaderContext context) throws IOException;
@@ -239,7 +239,7 @@ public abstract class ValuesSource {
             /**
              * Field data for the bytes values source
              *
-             * @opensearch.internal
+             * @density.internal
              */
             public static class FieldData extends WithOrdinals {
 
@@ -294,7 +294,7 @@ public abstract class ValuesSource {
         /**
          * Field data without ordinals
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class FieldData extends Bytes {
 
@@ -314,7 +314,7 @@ public abstract class ValuesSource {
         /**
          * {@link ValuesSource} implementation for stand alone scripts returning a Bytes value
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Script extends Bytes {
 
@@ -339,7 +339,7 @@ public abstract class ValuesSource {
         /**
          * {@link ValuesSource} subclass for Bytes fields with a Value Script applied
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class WithScript extends Bytes {
 
@@ -364,7 +364,7 @@ public abstract class ValuesSource {
             /**
              * Bytes values
              *
-             * @opensearch.internal
+             * @density.internal
              */
             static class BytesValues extends SortingBinaryDocValues implements ScorerAware {
 
@@ -409,7 +409,7 @@ public abstract class ValuesSource {
     /**
      * Numeric values source type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Numeric extends ValuesSource {
 
@@ -432,12 +432,12 @@ public abstract class ValuesSource {
 
             @Override
             public SortedNumericDoubleValues doubleValues(LeafReaderContext context) throws IOException {
-                return org.opensearch.index.fielddata.FieldData.emptySortedNumericDoubles();
+                return org.density.index.fielddata.FieldData.emptySortedNumericDoubles();
             }
 
             @Override
             public SortedBinaryDocValues bytesValues(LeafReaderContext context) throws IOException {
-                return org.opensearch.index.fielddata.FieldData.emptySortedBinary();
+                return org.density.index.fielddata.FieldData.emptySortedBinary();
             }
 
         };
@@ -458,10 +458,10 @@ public abstract class ValuesSource {
         public DocValueBits docsWithValue(LeafReaderContext context) throws IOException {
             if (isFloatingPoint() || isBigInteger()) {
                 final SortedNumericDoubleValues values = doubleValues(context);
-                return org.opensearch.index.fielddata.FieldData.docsWithValue(values);
+                return org.density.index.fielddata.FieldData.docsWithValue(values);
             } else {
                 final SortedNumericDocValues values = longValues(context);
-                return org.opensearch.index.fielddata.FieldData.docsWithValue(values);
+                return org.density.index.fielddata.FieldData.docsWithValue(values);
             }
         }
 
@@ -473,7 +473,7 @@ public abstract class ValuesSource {
         /**
          * {@link ValuesSource} subclass for Numeric fields with a Value Script applied
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class WithScript extends Numeric {
 
@@ -518,7 +518,7 @@ public abstract class ValuesSource {
             /**
              * Long values source type
              *
-             * @opensearch.internal
+             * @density.internal
              */
             static class LongValues extends AbstractSortingNumericDocValues implements ScorerAware {
 
@@ -554,7 +554,7 @@ public abstract class ValuesSource {
             /**
              * Double values source type
              *
-             * @opensearch.internal
+             * @density.internal
              */
             static class DoubleValues extends SortingNumericDoubleValues implements ScorerAware {
 
@@ -596,7 +596,7 @@ public abstract class ValuesSource {
         /**
          * Field data for numerics
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class FieldData extends Numeric {
 
@@ -639,7 +639,7 @@ public abstract class ValuesSource {
         /**
          * {@link ValuesSource} implementation for stand alone scripts returning a Numeric value
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Script extends Numeric {
             private final AggregationScript.LeafFactory script;
@@ -686,7 +686,7 @@ public abstract class ValuesSource {
     /**
      * Geo point values source
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class GeoPoint extends ValuesSource {
 
@@ -694,12 +694,12 @@ public abstract class ValuesSource {
 
             @Override
             public MultiGeoPointValues geoPointValues(LeafReaderContext context) {
-                return org.opensearch.index.fielddata.FieldData.emptyMultiGeoPoints();
+                return org.density.index.fielddata.FieldData.emptyMultiGeoPoints();
             }
 
             @Override
             public SortedBinaryDocValues bytesValues(LeafReaderContext context) throws IOException {
-                return org.opensearch.index.fielddata.FieldData.emptySortedBinary();
+                return org.density.index.fielddata.FieldData.emptySortedBinary();
             }
 
         };
@@ -707,7 +707,7 @@ public abstract class ValuesSource {
         @Override
         public DocValueBits docsWithValue(LeafReaderContext context) throws IOException {
             final MultiGeoPointValues geoPoints = geoPointValues(context);
-            return org.opensearch.index.fielddata.FieldData.docsWithValue(geoPoints);
+            return org.density.index.fielddata.FieldData.docsWithValue(geoPoints);
         }
 
         @Override
@@ -720,7 +720,7 @@ public abstract class ValuesSource {
         /**
          * Field data for geo point values source
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Fielddata extends GeoPoint {
 
@@ -735,7 +735,7 @@ public abstract class ValuesSource {
                 return indexFieldData.load(context).getBytesValues();
             }
 
-            public org.opensearch.index.fielddata.MultiGeoPointValues geoPointValues(LeafReaderContext context) {
+            public org.density.index.fielddata.MultiGeoPointValues geoPointValues(LeafReaderContext context) {
                 return indexFieldData.load(context).getGeoPointValues();
             }
         }
@@ -754,7 +754,7 @@ public abstract class ValuesSource {
              */
             @Override
             public GeoShapeValue getGeoShapeValues(LeafReaderContext context) {
-                return org.opensearch.index.fielddata.FieldData.emptyGeoShape();
+                return org.density.index.fielddata.FieldData.emptyGeoShape();
             }
 
             /**
@@ -762,19 +762,19 @@ public abstract class ValuesSource {
              */
             @Override
             public SortedBinaryDocValues bytesValues(LeafReaderContext context) throws IOException {
-                return org.opensearch.index.fielddata.FieldData.emptySortedBinary();
+                return org.density.index.fielddata.FieldData.emptySortedBinary();
             }
         };
 
         /**
-         * This is getting used in the {@link org.opensearch.search.aggregations.bucket.missing.MissingAggregator}
+         * This is getting used in the {@link org.density.search.aggregations.bucket.missing.MissingAggregator}
          * @param context {@link LeafReaderContext}
          * @return DocValueBits
          */
         @Override
         public DocValueBits docsWithValue(LeafReaderContext context) {
             final GeoShapeValue geoShapeValue = getGeoShapeValues(context);
-            return org.opensearch.index.fielddata.FieldData.docsWithValue(geoShapeValue);
+            return org.density.index.fielddata.FieldData.docsWithValue(geoShapeValue);
         }
 
         @Override
@@ -792,7 +792,7 @@ public abstract class ValuesSource {
         /**
          * Field data for geo shape values source
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class FieldData extends GeoShape {
 

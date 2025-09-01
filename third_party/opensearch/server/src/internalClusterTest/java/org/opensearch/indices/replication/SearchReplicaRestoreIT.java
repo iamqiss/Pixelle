@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.remotestore.RemoteSnapshotIT;
-import org.opensearch.snapshots.SnapshotRestoreException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.remotestore.RemoteSnapshotIT;
+import org.density.snapshots.SnapshotRestoreException;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.List;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SearchReplicaRestoreIT extends RemoteSnapshotIT {
 
     private static final String INDEX_NAME = "test-idx-1";

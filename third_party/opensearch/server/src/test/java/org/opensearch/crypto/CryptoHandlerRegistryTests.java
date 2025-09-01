@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.crypto;
+package org.density.crypto;
 
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.MasterKeyProvider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.CryptoKeyProviderPlugin;
-import org.opensearch.plugins.CryptoPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.MasterKeyProvider;
+import org.density.common.settings.Settings;
+import org.density.plugins.CryptoKeyProviderPlugin;
+import org.density.plugins.CryptoPlugin;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.UUID;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-public class CryptoHandlerRegistryTests extends OpenSearchTestCase {
+public class CryptoHandlerRegistryTests extends DensityTestCase {
 
     private TestCryptoHandlerRegistry cryptoManagerRegistry;
     private String pluginTypeWithCreationFailure;

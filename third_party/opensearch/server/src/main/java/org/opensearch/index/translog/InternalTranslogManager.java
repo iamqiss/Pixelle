@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.LifecycleAware;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.translog.listener.TranslogEventListener;
-import org.opensearch.index.translog.transfer.TranslogUploadFailedException;
+import org.density.common.lease.Releasable;
+import org.density.common.logging.Loggers;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.LifecycleAware;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.translog.listener.TranslogEventListener;
+import org.density.index.translog.transfer.TranslogUploadFailedException;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,9 +31,9 @@ import java.util.stream.Stream;
 
 /**
  * The {@link TranslogManager} implementation capable of orchestrating all read/write {@link Translog} operations for
- * the {@link org.opensearch.index.engine.InternalEngine}
+ * the {@link org.density.index.engine.InternalEngine}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalTranslogManager implements TranslogManager {
 
@@ -214,7 +214,7 @@ public class InternalTranslogManager implements TranslogManager {
 
     /**
      * checks and removes translog files that no longer need to be retained. See
-     * {@link org.opensearch.index.translog.TranslogDeletionPolicy} for details
+     * {@link org.density.index.translog.TranslogDeletionPolicy} for details
      */
     @Override
     public void trimUnreferencedTranslogFiles() throws TranslogException {

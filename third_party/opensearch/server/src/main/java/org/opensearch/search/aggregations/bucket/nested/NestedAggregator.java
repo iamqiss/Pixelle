@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.nested;
+package org.density.search.aggregations.bucket.nested;
 
 import org.apache.lucene.index.IndexReaderContext;
 import org.apache.lucene.index.LeafReaderContext;
@@ -43,31 +43,31 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.core.ParseField;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregator;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.search.Queries;
+import org.density.core.ParseField;
+import org.density.index.mapper.ObjectMapper;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.SingleBucketAggregator;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.mapper.ObjectMapper.Nested.isParent;
+import static org.density.index.mapper.ObjectMapper.Nested.isParent;
 
 /**
  * Aggregate all docs that match a nested path
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NestedAggregator extends BucketsAggregator implements SingleBucketAggregator {
 
@@ -268,7 +268,7 @@ public class NestedAggregator extends BucketsAggregator implements SingleBucketA
     /**
      * A cached scorable doc
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class CachedScorable extends Scorable {
         float score;

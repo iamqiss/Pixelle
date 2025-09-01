@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.suggest.phrase.WordScorer.WordScorerFactory;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.suggest.phrase.WordScorer.WordScorerFactory;
 
 import java.io.IOException;
 
 /**
  * Smooths the scoring calculation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SmoothingModel implements NamedWriteable, ToXContentFragment {
 

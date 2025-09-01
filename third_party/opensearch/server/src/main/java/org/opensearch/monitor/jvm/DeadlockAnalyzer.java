@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -48,7 +48,7 @@ import static java.util.Collections.unmodifiableSet;
 /**
  * Analyzes Operating System deadlocks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DeadlockAnalyzer {
 
@@ -143,7 +143,7 @@ public class DeadlockAnalyzer {
     /**
      * The deadlock being analyzed.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Deadlock {
         private final ThreadInfo members[];

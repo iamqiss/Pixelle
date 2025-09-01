@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.expertscript;
+package org.density.example.expertscript;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.ScoreScript.LeafFactory;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptFactory;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.script.ScoreScript;
+import org.density.script.ScoreScript.LeafFactory;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptFactory;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

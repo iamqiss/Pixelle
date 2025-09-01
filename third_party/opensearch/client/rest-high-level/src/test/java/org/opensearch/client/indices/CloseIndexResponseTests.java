@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ShardsAcknowledgedResponse;
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.transport.ActionNotFoundTransportException;
+import org.density.DensityStatusException;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ShardsAcknowledgedResponse;
+import org.density.client.AbstractResponseTestCase;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexNotFoundException;
+import org.density.transport.ActionNotFoundTransportException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,34 +60,34 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 public class CloseIndexResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.admin.indices.close.CloseIndexResponse,
+    org.density.action.admin.indices.close.CloseIndexResponse,
     CloseIndexResponse> {
 
     @Override
-    protected org.opensearch.action.admin.indices.close.CloseIndexResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.admin.indices.close.CloseIndexResponse createServerTestInstance(XContentType xContentType) {
         boolean acknowledged = true;
         final String[] indicesNames = generateRandomStringArray(10, 10, false, true);
 
-        final List<org.opensearch.action.admin.indices.close.CloseIndexResponse.IndexResult> indexResults = new ArrayList<>();
+        final List<org.density.action.admin.indices.close.CloseIndexResponse.IndexResult> indexResults = new ArrayList<>();
         for (String indexName : indicesNames) {
             final Index index = new Index(indexName, randomAlphaOfLength(5));
             if (randomBoolean()) {
-                indexResults.add(new org.opensearch.action.admin.indices.close.CloseIndexResponse.IndexResult(index));
+                indexResults.add(new org.density.action.admin.indices.close.CloseIndexResponse.IndexResult(index));
             } else {
                 if (randomBoolean()) {
                     acknowledged = false;
                     Exception exception = randomFrom(new IndexNotFoundException(index), new ActionNotFoundTransportException("test"));
-                    indexResults.add(new org.opensearch.action.admin.indices.close.CloseIndexResponse.IndexResult(index, exception));
+                    indexResults.add(new org.density.action.admin.indices.close.CloseIndexResponse.IndexResult(index, exception));
                 } else {
                     final int nbShards = randomIntBetween(1, 5);
-                    org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult[] shards =
-                        new org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult[nbShards];
+                    org.density.action.admin.indices.close.CloseIndexResponse.ShardResult[] shards =
+                        new org.density.action.admin.indices.close.CloseIndexResponse.ShardResult[nbShards];
                     for (int i = 0; i < nbShards; i++) {
-                        org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure[] failures = null;
+                        org.density.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure[] failures = null;
                         if (randomBoolean()) {
                             acknowledged = false;
                             int nbFailures = randomIntBetween(1, 3);
-                            failures = new org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure[nbFailures];
+                            failures = new org.density.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure[nbFailures];
                             for (int j = 0; j < failures.length; j++) {
                                 String nodeId = null;
                                 if (frequently()) {
@@ -96,15 +96,15 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
                                 failures[j] = newFailure(indexName, i, nodeId);
                             }
                         }
-                        shards[i] = new org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult(i, failures);
+                        shards[i] = new org.density.action.admin.indices.close.CloseIndexResponse.ShardResult(i, failures);
                     }
-                    indexResults.add(new org.opensearch.action.admin.indices.close.CloseIndexResponse.IndexResult(index, shards));
+                    indexResults.add(new org.density.action.admin.indices.close.CloseIndexResponse.IndexResult(index, shards));
                 }
             }
         }
 
         final boolean shardsAcknowledged = acknowledged ? randomBoolean() : false;
-        return new org.opensearch.action.admin.indices.close.CloseIndexResponse(acknowledged, shardsAcknowledged, indexResults);
+        return new org.density.action.admin.indices.close.CloseIndexResponse(acknowledged, shardsAcknowledged, indexResults);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        final org.opensearch.action.admin.indices.close.CloseIndexResponse serverInstance,
+        final org.density.action.admin.indices.close.CloseIndexResponse serverInstance,
         final CloseIndexResponse clientInstance
     ) {
         assertNotSame(serverInstance, clientInstance);
@@ -145,10 +145,10 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
             if (expectedIndexResult.getShards() != null) {
                 assertThat(actualIndexResult.getException(), nullValue());
 
-                List<org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult> failedShardResults = Arrays.stream(
+                List<org.density.action.admin.indices.close.CloseIndexResponse.ShardResult> failedShardResults = Arrays.stream(
                     expectedIndexResult.getShards()
                 )
-                    .filter(org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult::hasFailures)
+                    .filter(org.density.action.admin.indices.close.CloseIndexResponse.ShardResult::hasFailures)
                     .collect(Collectors.toList());
 
                 if (failedShardResults.isEmpty()) {
@@ -173,7 +173,7 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
                     assertThat(actualShardResult.getFailures().length, equalTo(failedShardResult.getFailures().length));
 
                     for (int i = 0; i < failedShardResult.getFailures().length; i++) {
-                        org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure expectedFailure = failedShardResult
+                        org.density.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure expectedFailure = failedShardResult
                             .getFailures()[i];
                         CloseIndexResponse.ShardResult.Failure actualFailure = actualShardResult.getFailures()[i];
                         assertThat(actualFailure.getNodeId(), equalTo(expectedFailure.getNodeId()));
@@ -229,7 +229,7 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
         }
     }
 
-    private org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure newFailure(
+    private org.density.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure newFailure(
         final String indexName,
         final int shard,
         final String nodeId
@@ -238,8 +238,8 @@ public class CloseIndexResponseTests extends AbstractResponseTestCase<
             new IndexNotFoundException(indexName),
             new ActionNotFoundTransportException("test"),
             new IOException("boom", new NullPointerException()),
-            new OpenSearchStatusException("something", RestStatus.TOO_MANY_REQUESTS)
+            new DensityStatusException("something", RestStatus.TOO_MANY_REQUESTS)
         );
-        return new org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure(indexName, shard, exception, nodeId);
+        return new org.density.action.admin.indices.close.CloseIndexResponse.ShardResult.Failure(indexName, shard, exception, nodeId);
     }
 }

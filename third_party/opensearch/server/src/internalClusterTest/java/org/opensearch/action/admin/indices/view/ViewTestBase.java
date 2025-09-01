@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.view;
+package org.density.action.admin.indices.view;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.test.BackgroundIndexer;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-public abstract class ViewTestBase extends OpenSearchIntegTestCase {
+public abstract class ViewTestBase extends DensityIntegTestCase {
 
     protected int createIndexWithDocs(final String indexName) throws Exception {
         createIndex(indexName);

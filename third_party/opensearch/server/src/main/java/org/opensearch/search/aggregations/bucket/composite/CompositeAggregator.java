@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -58,28 +58,28 @@ import org.apache.lucene.search.comparators.LongComparator;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.CollectionUtil;
 import org.apache.lucene.util.RoaringDocIdSet;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.index.IndexSortConfig;
-import org.opensearch.lucene.queries.SearchAfterSortedDocQuery;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketCollector;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.MultiBucketCollector;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.filterrewrite.CompositeAggregatorBridge;
-import org.opensearch.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.searchafter.SearchAfterBuilder;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.common.Rounding;
+import org.density.common.lease.Releasables;
+import org.density.index.IndexSortConfig;
+import org.density.lucene.queries.SearchAfterSortedDocQuery;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketCollector;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.MultiBucketCollector;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.filterrewrite.CompositeAggregatorBridge;
+import org.density.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.internal.SearchContext;
+import org.density.search.searchafter.SearchAfterBuilder;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,13 +92,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.LongUnaryOperator;
 
-import static org.opensearch.search.aggregations.MultiBucketConsumerService.MAX_BUCKET_SETTING;
-import static org.opensearch.search.aggregations.bucket.filterrewrite.AggregatorBridge.segmentMatchAll;
+import static org.density.search.aggregations.MultiBucketConsumerService.MAX_BUCKET_SETTING;
+import static org.density.search.aggregations.bucket.filterrewrite.AggregatorBridge.segmentMatchAll;
 
 /**
  * Main aggregator that aggregates docs from multiple aggregations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CompositeAggregator extends BucketsAggregator {
     private final int size;
@@ -730,7 +730,7 @@ public final class CompositeAggregator extends BucketsAggregator {
     /**
      * An entry in the composite aggregator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private record Entry(LeafReaderContext context, DocIdSet docIdSet) {
     }

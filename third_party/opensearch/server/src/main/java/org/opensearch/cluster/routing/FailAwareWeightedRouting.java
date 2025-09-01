@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.SearchShardIterator;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.search.SearchShardTarget;
+import org.density.DensityException;
+import org.density.action.search.SearchShardIterator;
+import org.density.cluster.ClusterState;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.search.SearchShardTarget;
 
 import java.util.List;
 
-import static org.opensearch.cluster.routing.OperationRouting.IGNORE_WEIGHTED_SHARD_ROUTING;
+import static org.density.cluster.routing.OperationRouting.IGNORE_WEIGHTED_SHARD_ROUTING;
 
 /**
  * This class contains logic to find next shard to retry search request in case of failure from other shard copy.
@@ -49,9 +49,9 @@ public class FailAwareWeightedRouting {
      * @return true if exception is due to cluster availability issues
      */
     private boolean isInternalFailure(Exception exception) {
-        if (exception instanceof OpenSearchException) {
+        if (exception instanceof DensityException) {
             // checking for 5xx failures
-            return internalErrorRestStatusList.contains(((OpenSearchException) exception).status());
+            return internalErrorRestStatusList.contains(((DensityException) exception).status());
         }
         return false;
     }

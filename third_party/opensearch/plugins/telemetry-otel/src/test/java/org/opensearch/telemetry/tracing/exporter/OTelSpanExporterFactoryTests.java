@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.exporter;
+package org.density.telemetry.tracing.exporter;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.telemetry.OTelTelemetrySettings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.telemetry.OTelTelemetrySettings;
+import org.density.test.DensityTestCase;
 
 import io.opentelemetry.exporter.logging.LoggingSpanExporter;
 import io.opentelemetry.sdk.trace.export.SpanExporter;
 
-public class OTelSpanExporterFactoryTests extends OpenSearchTestCase {
+public class OTelSpanExporterFactoryTests extends DensityTestCase {
 
     public void testSpanExporterDefault() {
         Settings settings = Settings.builder().build();
@@ -43,12 +43,12 @@ public class OTelSpanExporterFactoryTests extends OpenSearchTestCase {
         Settings settings = Settings.builder()
             .put(
                 OTelTelemetrySettings.OTEL_TRACER_SPAN_EXPORTER_CLASS_SETTING.getKey(),
-                "org.opensearch.telemetry.tracing.exporter.DummySpanExporter"
+                "org.density.telemetry.tracing.exporter.DummySpanExporter"
             )
             .build();
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> OTelSpanExporterFactory.create(settings));
         assertEquals(
-            "SpanExporter instantiation failed for class [org.opensearch.telemetry.tracing.exporter.DummySpanExporter]",
+            "SpanExporter instantiation failed for class [org.density.telemetry.tracing.exporter.DummySpanExporter]",
             exception.getMessage()
         );
     }
@@ -67,7 +67,7 @@ public class OTelSpanExporterFactoryTests extends OpenSearchTestCase {
         Settings settings = Settings.builder()
             .put(
                 OTelTelemetrySettings.OTEL_TRACER_SPAN_EXPORTER_CLASS_SETTING.getKey(),
-                "org.opensearch.telemetry.tracing.exporter.DummySpanExporterWithGetDefault"
+                "org.density.telemetry.tracing.exporter.DummySpanExporterWithGetDefault"
             )
             .build();
 

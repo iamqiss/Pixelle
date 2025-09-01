@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight;
+package org.density.arrow.flight;
 
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.arrow.flight.transport.FlightStreamPlugin;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchResponse;
+import org.density.arrow.flight.transport.FlightStreamPlugin;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentType;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
+import static org.density.common.util.FeatureFlags.STREAM_TRANSPORT;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, minNumDataNodes = 3, maxNumDataNodes = 3)
-public class FlightTransportIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, minNumDataNodes = 3, maxNumDataNodes = 3)
+public class FlightTransportIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

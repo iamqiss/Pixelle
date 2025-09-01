@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.query.ReduceableSearchResult;
+import org.density.common.CheckedFunction;
+import org.density.search.internal.SearchContext;
+import org.density.search.query.ReduceableSearchResult;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * Common {@link CollectorManager} used by both concurrent and non-concurrent aggregation path and also for global and non-global
  * aggregation operators
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AggregationCollectorManager implements CollectorManager<Collector, ReduceableSearchResult> {
     protected final SearchContext context;

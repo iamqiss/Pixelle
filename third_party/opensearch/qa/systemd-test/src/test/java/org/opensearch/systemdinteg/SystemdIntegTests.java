@@ -1,16 +1,16 @@
 /*
 * SPDX-License-Identifier: Apache-2.0
 *
-* The OpenSearch Contributors require contributions made to
+* The Density Contributors require contributions made to
 * this file be licensed under the Apache-2.0 license or a
 * compatible open source license.
 */
 /*
-* Modifications Copyright OpenSearch Contributors. See
+* Modifications Copyright Density Contributors. See
 * GitHub history for details.
 */
 
-package org.opensearch.systemdinteg;
+package org.density.systemdinteg;
 import org.apache.lucene.tests.util.LuceneTestCase;
 
 import org.apache.hc.core5.http.HttpHeaders;
@@ -42,20 +42,20 @@ import static org.junit.Assert.assertNotEquals;
 
 public class SystemdIntegTests extends LuceneTestCase {
 
-    private static String opensearchPid;
+    private static String densityPid;
 
     @BeforeClass
     public static void setup() throws IOException, InterruptedException {
-        opensearchPid = getOpenSearchPid();
+        densityPid = getDensityPid();
 
-        if (opensearchPid.isEmpty()) {
-            throw new RuntimeException("Failed to find OpenSearch process ID");
+        if (densityPid.isEmpty()) {
+            throw new RuntimeException("Failed to find Density process ID");
         }
     }
 
-    private static String getOpenSearchPid() throws IOException, InterruptedException {
-        String command = "systemctl show --property=MainPID opensearch";
-        String output = executeCommand(command, "Failed to get OpenSearch PID");
+    private static String getDensityPid() throws IOException, InterruptedException {
+        String command = "systemctl show --property=MainPID density";
+        String output = executeCommand(command, "Failed to get Density PID");
         return output.replace("MainPID=", "").trim();
     }
 
@@ -65,12 +65,12 @@ public class SystemdIntegTests extends LuceneTestCase {
     }
 
     private boolean checkPathReadable(String path) throws IOException, InterruptedException {
-        String command = String.format(Locale.ROOT, "sudo su opensearch -s /bin/sh -c 'test -r %s && echo true || echo false'", path);
+        String command = String.format(Locale.ROOT, "sudo su density -s /bin/sh -c 'test -r %s && echo true || echo false'", path);
         return Boolean.parseBoolean(executeCommand(command, "Failed to check read permission"));
     }
 
     private boolean checkPathWritable(String path) throws IOException, InterruptedException {
-        String command = String.format(Locale.ROOT, "sudo su opensearch -s /bin/sh -c 'test -w %s && echo true || echo false'", path);
+        String command = String.format(Locale.ROOT, "sudo su density -s /bin/sh -c 'test -w %s && echo true || echo false'", path);
         return Boolean.parseBoolean(executeCommand(command, "Failed to check write permission"));
     }
 
@@ -112,25 +112,25 @@ public class SystemdIntegTests extends LuceneTestCase {
     }
 
     public void testReadWritePaths() throws IOException, InterruptedException {
-        String[] readWritePaths = {"/var/log/opensearch", "/var/lib/opensearch"};
+        String[] readWritePaths = {"/var/log/density", "/var/lib/density"};
         for (String path : readWritePaths) {
             assertTrue("Path should exist: " + path, checkPathExists(path));
             assertTrue("Path should be readable: " + path, checkPathReadable(path));
             assertTrue("Path should be writable: " + path, checkPathWritable(path));
             String ownership = getPathOwnership(path);
-            assertTrue("Path should be owned by opensearch:opensearch or opensearch:adm", ownership.equals("opensearch:opensearch") || ownership.equals("opensearch:adm"));
+            assertTrue("Path should be owned by density:density or density:adm", ownership.equals("density:density") || ownership.equals("density:adm"));
         }
     }
 
     public void testMaxProcesses() throws IOException, InterruptedException {
-        String limits = executeCommand("sudo su -c 'cat /proc/" + opensearchPid + "/limits'", "Failed to read process limits");
+        String limits = executeCommand("sudo su -c 'cat /proc/" + densityPid + "/limits'", "Failed to read process limits");
         assertTrue("Max processes limit should be 4096 or unlimited", 
                 limits.contains("Max processes             4096                 4096") ||
                 limits.contains("Max processes             unlimited            unlimited"));
     }
 
     public void testFileDescriptorLimit() throws IOException, InterruptedException {
-        String limits = executeCommand("sudo su -c 'cat /proc/" + opensearchPid + "/limits'", "Failed to read process limits");
+        String limits = executeCommand("sudo su -c 'cat /proc/" + densityPid + "/limits'", "Failed to read process limits");
         assertTrue("File descriptor limit should be at least 65535", 
                 limits.contains("Max open files            65535                65535") ||
                 limits.contains("Max open files            unlimited            unlimited"));
@@ -138,17 +138,17 @@ public class SystemdIntegTests extends LuceneTestCase {
 
     public void testSeccompEnabled() throws IOException, InterruptedException {
         // Check if Seccomp is enabled
-        String seccomp = executeCommand("grep \"^Seccomp:\" /proc/" + opensearchPid + "/status", "Failed to read Seccomp status");
+        String seccomp = executeCommand("grep \"^Seccomp:\" /proc/" + densityPid + "/status", "Failed to read Seccomp status");
         int seccompValue = Integer.parseInt(seccomp.split(":\\s*")[1].trim());
         assertNotEquals("Seccomp should be enabled", 0, seccompValue);
     }
 
     public void testRebootSysCall() throws IOException, InterruptedException {
-        String rebootResult = executeCommand("sudo su opensearch -c 'kill -s SIGHUP 1' 2>&1 || echo 'Operation not permitted'", "Failed to test reboot system call");
+        String rebootResult = executeCommand("sudo su density -c 'kill -s SIGHUP 1' 2>&1 || echo 'Operation not permitted'", "Failed to test reboot system call");
         assertTrue("Reboot system call should be blocked", rebootResult.contains("Operation not permitted"));
     }
 
-    public void testOpenSearchProcessCannotExit() throws IOException, InterruptedException {
+    public void testDensityProcessCannotExit() throws IOException, InterruptedException {
 
         String scriptPath;
         try {
@@ -160,19 +160,19 @@ public class SystemdIntegTests extends LuceneTestCase {
         if (scriptPath == null) {
             throw new IllegalStateException("Could not find terminate.sh script in resources");
         }
-        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath, opensearchPid);
+        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath, densityPid);
         Process process = processBuilder.start();
 
         // Wait a moment for any potential termination to take effect
         Thread.sleep(2000);
 
-        // Verify the OpenSearch service status
+        // Verify the Density service status
         String serviceStatus = executeCommand(
-            "systemctl is-active opensearch",
-            "Failed to check OpenSearch service status"
+            "systemctl is-active density",
+            "Failed to check Density service status"
         );
 
-        assertEquals("OpenSearch service should be active", "active", serviceStatus.trim());
+        assertEquals("Density service should be active", "active", serviceStatus.trim());
     }
 
 }

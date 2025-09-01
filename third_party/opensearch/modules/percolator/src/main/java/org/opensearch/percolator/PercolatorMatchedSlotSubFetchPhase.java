@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.BooleanClause;
@@ -44,11 +44,11 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BitSetIterator;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.search.Queries;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.percolator.PercolatorHighlightSubFetchPhase.locatePercolatorQuery;
+import static org.density.percolator.PercolatorHighlightSubFetchPhase.locatePercolatorQuery;
 import static org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
 
 /**

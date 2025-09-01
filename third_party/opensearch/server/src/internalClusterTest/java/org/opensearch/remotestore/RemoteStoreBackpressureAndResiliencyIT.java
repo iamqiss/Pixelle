@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStats;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.UncategorizedExecutionException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexServiceTestUtils;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStats;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.UncategorizedExecutionException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.index.IndexServiceTestUtils;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.repositories.RepositoriesService;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.DensityIntegTestCase;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.remote.RemoteStorePressureSettings.MIN_CONSECUTIVE_FAILURES_LIMIT;
-import static org.opensearch.index.remote.RemoteStorePressureSettings.REMOTE_REFRESH_SEGMENT_PRESSURE_ENABLED;
+import static org.density.index.remote.RemoteStorePressureSettings.MIN_CONSECUTIVE_FAILURES_LIMIT;
+import static org.density.index.remote.RemoteStorePressureSettings.REMOTE_REFRESH_SEGMENT_PRESSURE_ENABLED;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreBackpressureAndResiliencyIT extends AbstractRemoteStoreMockRepositoryIntegTestCase {
     public void testWritesRejectedDueToConsecutiveFailureBreach() throws Exception {
         // Here the doc size of the request remains same throughout the test. After initial indexing, all remote store interactions
@@ -92,8 +92,8 @@ public class RemoteStoreBackpressureAndResiliencyIT extends AbstractRemoteStoreM
 
         jsonString = generateString(onFailureDocSize);
         BytesReference onFailureSource = new BytesArray(jsonString);
-        OpenSearchRejectedExecutionException ex = assertThrows(
-            OpenSearchRejectedExecutionException.class,
+        DensityRejectedExecutionException ex = assertThrows(
+            DensityRejectedExecutionException.class,
             () -> indexDocAndRefresh(onFailureSource, onFailureDocsToIndex)
         );
         assertTrue(ex.getMessage().contains("rejected execution on primary shard"));
@@ -167,7 +167,7 @@ public class RemoteStoreBackpressureAndResiliencyIT extends AbstractRemoteStoreM
     }
 
     /**
-     * Fixes <a href="https://github.com/opensearch-project/OpenSearch/issues/10398">Github#10398</a>
+     * Fixes <a href="https://github.com/density-project/Density/issues/10398">Github#10398</a>
      */
     public void testAsyncTrimTaskSucceeds() {
         Path location = randomRepoPath().toAbsolutePath();
@@ -197,7 +197,7 @@ public class RemoteStoreBackpressureAndResiliencyIT extends AbstractRemoteStoreM
     }
 
     /**
-     * Fixes <a href="https://github.com/opensearch-project/OpenSearch/issues/10400">Github#10400</a>
+     * Fixes <a href="https://github.com/density-project/Density/issues/10400">Github#10400</a>
      */
     public void testSkipLoadGlobalCheckpointToReplicationTracker() {
         Path location = randomRepoPath().toAbsolutePath();

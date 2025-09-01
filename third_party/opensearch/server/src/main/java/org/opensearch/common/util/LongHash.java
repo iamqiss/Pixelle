@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.lease.Releasable;
+import org.density.common.lease.Releasable;
 
 /**
  * Specialized hash table implementation similar to BytesRefHash that maps
@@ -41,7 +41,7 @@ import org.opensearch.common.lease.Releasable;
  * a multiple of 2 for faster identification of buckets.
  * This class is not thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // IDs are internally stored as id + 1 so that 0 encodes for an empty slot
 public final class LongHash extends AbstractHash {

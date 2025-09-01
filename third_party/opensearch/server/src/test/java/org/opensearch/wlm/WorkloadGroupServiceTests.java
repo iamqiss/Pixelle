@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.cancellation.TaskSelectionStrategy;
-import org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService;
-import org.opensearch.wlm.stats.WorkloadGroupState;
-import org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
+import org.density.action.search.SearchTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.cluster.service.ClusterService;
+import org.density.common.unit.TimeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.search.backpressure.trackers.NodeDuressTrackers;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.cancellation.TaskSelectionStrategy;
+import org.density.wlm.cancellation.WorkloadGroupTaskCancellationService;
+import org.density.wlm.stats.WorkloadGroupState;
+import org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +38,7 @@ import java.util.function.BooleanSupplier;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.opensearch.wlm.tracker.ResourceUsageCalculatorTests.createMockTaskWithResourceStats;
+import static org.density.wlm.tracker.ResourceUsageCalculatorTests.createMockTaskWithResourceStats;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class WorkloadGroupServiceTests extends OpenSearchTestCase {
+public class WorkloadGroupServiceTests extends DensityTestCase {
     public static final String WORKLOAD_GROUP_ID = "workloadGroupId1";
     private WorkloadGroupService workloadGroupService;
     private WorkloadGroupTaskCancellationService mockCancellationService;
@@ -235,7 +235,7 @@ public class WorkloadGroupServiceTests extends OpenSearchTestCase {
         );
         when(mockWorkloadManagementSettings.getWlmMode()).thenReturn(WlmMode.ENABLED);
         when(mockNodeDuressTrackers.isNodeInDuress()).thenReturn(true);
-        assertThrows(OpenSearchRejectedExecutionException.class, () -> workloadGroupService.rejectIfNeeded("workloadGroupId1"));
+        assertThrows(DensityRejectedExecutionException.class, () -> workloadGroupService.rejectIfNeeded("workloadGroupId1"));
     }
 
     public void testRejectIfNeeded_whenWorkloadGroupIsSoftMode() {
@@ -345,7 +345,7 @@ public class WorkloadGroupServiceTests extends OpenSearchTestCase {
             new HashSet<>()
         );
         when(mockWorkloadManagementSettings.getWlmMode()).thenReturn(WlmMode.ENABLED);
-        assertThrows(OpenSearchRejectedExecutionException.class, () -> workloadGroupService.rejectIfNeeded("workloadGroupId1"));
+        assertThrows(DensityRejectedExecutionException.class, () -> workloadGroupService.rejectIfNeeded("workloadGroupId1"));
 
         // verify the check to compare the current usage and limit
         // this should happen 3 times => 1 to check whether the resource limit has the TRACKED resource type and 1 to get the value

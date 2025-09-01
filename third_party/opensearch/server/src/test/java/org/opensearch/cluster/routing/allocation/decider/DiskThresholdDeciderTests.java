@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,60 +26,60 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.UnassignedInfo.Reason;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommands;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
-import org.opensearch.index.store.remote.filecache.FileCacheStats;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
-import org.opensearch.snapshots.InternalSnapshotsInfoService.SnapshotShard;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotShardSizeInfo;
-import org.opensearch.test.gateway.TestGatewayAllocator;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.UnassignedInfo.Reason;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.command.AllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommands;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
+import org.density.index.store.remote.filecache.FileCacheStats;
+import org.density.node.NodeResourceUsageStats;
+import org.density.repositories.IndexId;
+import org.density.snapshots.EmptySnapshotsInfoService;
+import org.density.snapshots.InternalSnapshotsInfoService.SnapshotShard;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotShardSizeInfo;
+import org.density.test.gateway.TestGatewayAllocator;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -92,18 +92,18 @@ import java.util.concurrent.atomic.AtomicReference;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
-import static org.opensearch.cluster.routing.ShardRoutingState.RELOCATING;
-import static org.opensearch.cluster.routing.ShardRoutingState.STARTED;
-import static org.opensearch.cluster.routing.ShardRoutingState.UNASSIGNED;
-import static org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_REBALANCE_ENABLE_SETTING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.RELOCATING;
+import static org.density.cluster.routing.ShardRoutingState.STARTED;
+import static org.density.cluster.routing.ShardRoutingState.UNASSIGNED;
+import static org.density.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_REBALANCE_ENABLE_SETTING;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 
-public class DiskThresholdDeciderTests extends OpenSearchAllocationTestCase {
+public class DiskThresholdDeciderTests extends DensityAllocationTestCase {
 
     DiskThresholdDecider makeDecider(Settings settings) {
         return new DiskThresholdDecider(settings, new ClusterSettings(settings, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS));
@@ -619,7 +619,7 @@ public class DiskThresholdDeciderTests extends OpenSearchAllocationTestCase {
         logShardStates(clusterState);
         // primary shard already has been relocated away - this is a wrong expectation as we don't really move
         // primary first unless explicitly set by setting. This is caught with PR
-        // https://github.com/opensearch-project/OpenSearch/pull/15239/
+        // https://github.com/density-project/Density/pull/15239/
         // as it randomises nodes to check for potential moves
         // assertThat(clusterState.getRoutingNodes().node(nodeWithPrimary).size(), equalTo(0));
         // assertThat(clusterState.getRoutingNodes().node(nodeWithoutPrimary).size(), equalTo(1));

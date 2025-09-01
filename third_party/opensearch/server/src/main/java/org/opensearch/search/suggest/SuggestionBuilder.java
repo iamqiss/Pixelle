@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.BytesRefs;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -55,7 +55,7 @@ import java.util.Objects;
 /**
  * Base class for the different suggestion implementations.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implements NamedWriteable, ToXContentFragment {
@@ -294,7 +294,7 @@ public abstract class SuggestionBuilder<T extends SuggestionBuilder<T>> implemen
             }
         }
         if (suggestionBuilder == null) {
-            throw new OpenSearchParseException("missing suggestion object");
+            throw new DensityParseException("missing suggestion object");
         }
         if (suggestText != null) {
             suggestionBuilder.text(suggestText);

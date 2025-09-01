@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.tasks;
+package org.density.client.tasks;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.client.AbstractResponseTestCase;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -64,21 +64,21 @@ import static java.util.Collections.emptySet;
 
 public class CancelTasksResponseTests extends AbstractResponseTestCase<
     CancelTasksResponseTests.ByNodeCancelTasksResponse,
-    org.opensearch.client.tasks.CancelTasksResponse> {
+    org.density.client.tasks.CancelTasksResponse> {
 
     private static String NODE_ID = "node_id";
 
     @Override
     protected CancelTasksResponseTests.ByNodeCancelTasksResponse createServerTestInstance(XContentType xContentType) {
-        List<org.opensearch.tasks.TaskInfo> tasks = new ArrayList<>();
+        List<org.density.tasks.TaskInfo> tasks = new ArrayList<>();
         List<TaskOperationFailure> taskFailures = new ArrayList<>();
-        List<OpenSearchException> nodeFailures = new ArrayList<>();
+        List<DensityException> nodeFailures = new ArrayList<>();
 
         for (int i = 0; i < randomIntBetween(1, 4); i++) {
             taskFailures.add(new TaskOperationFailure(randomAlphaOfLength(4), (long) i, new RuntimeException(randomAlphaOfLength(4))));
         }
         for (int i = 0; i < randomIntBetween(1, 4); i++) {
-            nodeFailures.add(new OpenSearchException(new RuntimeException(randomAlphaOfLength(10))));
+            nodeFailures.add(new DensityException(new RuntimeException(randomAlphaOfLength(10))));
         }
 
         for (int i = 0; i < 4; i++) {
@@ -89,7 +89,7 @@ public class CancelTasksResponseTests extends AbstractResponseTestCase<
                 cancellationStartTime = randomNonNegativeLong();
             }
             tasks.add(
-                new org.opensearch.tasks.TaskInfo(
+                new org.density.tasks.TaskInfo(
                     new TaskId(NODE_ID, (long) i),
                     randomAlphaOfLength(4),
                     randomAlphaOfLength(4),
@@ -111,24 +111,24 @@ public class CancelTasksResponseTests extends AbstractResponseTestCase<
     }
 
     @Override
-    protected org.opensearch.client.tasks.CancelTasksResponse doParseToClientInstance(XContentParser parser) throws IOException {
-        return org.opensearch.client.tasks.CancelTasksResponse.fromXContent(parser);
+    protected org.density.client.tasks.CancelTasksResponse doParseToClientInstance(XContentParser parser) throws IOException {
+        return org.density.client.tasks.CancelTasksResponse.fromXContent(parser);
     }
 
     @Override
     protected void assertInstances(
         ByNodeCancelTasksResponse serverTestInstance,
-        org.opensearch.client.tasks.CancelTasksResponse clientInstance
+        org.density.client.tasks.CancelTasksResponse clientInstance
     ) {
 
         // checking tasks
         List<TaskInfo> sTasks = serverTestInstance.getTasks();
-        List<org.opensearch.client.tasks.TaskInfo> cTasks = clientInstance.getTasks();
-        Map<org.opensearch.client.tasks.TaskId, org.opensearch.client.tasks.TaskInfo> cTasksMap = cTasks.stream()
-            .collect(Collectors.toMap(org.opensearch.client.tasks.TaskInfo::getTaskId, Function.identity()));
+        List<org.density.client.tasks.TaskInfo> cTasks = clientInstance.getTasks();
+        Map<org.density.client.tasks.TaskId, org.density.client.tasks.TaskInfo> cTasksMap = cTasks.stream()
+            .collect(Collectors.toMap(org.density.client.tasks.TaskInfo::getTaskId, Function.identity()));
         for (TaskInfo ti : sTasks) {
-            org.opensearch.client.tasks.TaskInfo taskInfo = cTasksMap.get(
-                new org.opensearch.client.tasks.TaskId(ti.getTaskId().getNodeId(), ti.getTaskId().getId())
+            org.density.client.tasks.TaskInfo taskInfo = cTasksMap.get(
+                new org.density.client.tasks.TaskId(ti.getTaskId().getNodeId(), ti.getTaskId().getId())
             );
             assertEquals(ti.getAction(), taskInfo.getAction());
             assertEquals(ti.getDescription(), taskInfo.getDescription());
@@ -148,24 +148,24 @@ public class CancelTasksResponseTests extends AbstractResponseTestCase<
         }
 
         // checking failures
-        List<OpenSearchException> serverNodeFailures = serverTestInstance.getNodeFailures();
-        List<org.opensearch.client.tasks.OpenSearchException> cNodeFailures = clientInstance.getNodeFailures();
+        List<DensityException> serverNodeFailures = serverTestInstance.getNodeFailures();
+        List<org.density.client.tasks.DensityException> cNodeFailures = clientInstance.getNodeFailures();
         List<String> sExceptionsMessages = serverNodeFailures.stream()
-            .map(x -> org.opensearch.client.tasks.OpenSearchException.buildMessage("exception", x.getMessage(), null))
+            .map(x -> org.density.client.tasks.DensityException.buildMessage("exception", x.getMessage(), null))
             .collect(Collectors.toList());
 
         List<String> cExceptionsMessages = cNodeFailures.stream()
-            .map(org.opensearch.client.tasks.OpenSearchException::getMsg)
+            .map(org.density.client.tasks.DensityException::getMsg)
             .collect(Collectors.toList());
         assertEquals(new HashSet<>(sExceptionsMessages), new HashSet<>(cExceptionsMessages));
 
         List<TaskOperationFailure> sTaskFailures = serverTestInstance.getTaskFailures();
-        List<org.opensearch.client.tasks.TaskOperationFailure> cTaskFailures = clientInstance.getTaskFailures();
+        List<org.density.client.tasks.TaskOperationFailure> cTaskFailures = clientInstance.getTaskFailures();
 
-        Map<Long, org.opensearch.client.tasks.TaskOperationFailure> cTasksFailuresMap = cTaskFailures.stream()
-            .collect(Collectors.toMap(org.opensearch.client.tasks.TaskOperationFailure::getTaskId, Function.identity()));
+        Map<Long, org.density.client.tasks.TaskOperationFailure> cTasksFailuresMap = cTaskFailures.stream()
+            .collect(Collectors.toMap(org.density.client.tasks.TaskOperationFailure::getTaskId, Function.identity()));
         for (TaskOperationFailure tof : sTaskFailures) {
-            org.opensearch.client.tasks.TaskOperationFailure failure = cTasksFailuresMap.get(tof.getTaskId());
+            org.density.client.tasks.TaskOperationFailure failure = cTasksFailuresMap.get(tof.getTaskId());
             assertEquals(tof.getNodeId(), failure.getNodeId());
             assertTrue(failure.getReason().getMsg().contains("runtime_exception"));
             assertTrue(failure.getStatus().contains("" + tof.getStatus().name()));
@@ -216,7 +216,7 @@ public class CancelTasksResponseTests extends AbstractResponseTestCase<
         ByNodeCancelTasksResponse(
             List<TaskInfo> tasks,
             List<TaskOperationFailure> taskFailures,
-            List<? extends OpenSearchException> nodeFailures
+            List<? extends DensityException> nodeFailures
         ) {
             super(tasks, taskFailures, nodeFailures);
         }

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pit;
+package org.density.search.pit;
 
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.common.SetOnce;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.search.RestDeletePitAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.common.SetOnce;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestRequest;
+import org.density.rest.action.search.RestDeletePitAction;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Collections;
 
@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.hasSize;
 /**
  * Tests to verify the behavior of rest delete pit action for list delete and delete all PIT endpoints
  */
-public class RestDeletePitActionTests extends OpenSearchTestCase {
+public class RestDeletePitActionTests extends DensityTestCase {
     public void testParseDeletePitRequestWithInvalidJsonThrowsException() throws Exception {
         RestDeletePitAction action = new RestDeletePitAction();
         RestRequest request = new FakeRestRequest.Builder(xContentRegistry()).withContent(

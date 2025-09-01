@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexModule;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexModule;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
-import static org.opensearch.indices.IndicesService.CLUSTER_INDEX_RESTRICT_REPLICATION_TYPE_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_SETTING_REPLICATION_TYPE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
+import static org.density.indices.IndicesService.CLUSTER_INDEX_RESTRICT_REPLICATION_TYPE_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_SETTING_REPLICATION_TYPE;
 import static org.hamcrest.Matchers.hasSize;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class SegmentReplicationClusterSettingIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class SegmentReplicationClusterSettingIT extends DensityIntegTestCase {
 
     protected static final String INDEX_NAME = "test-idx-1";
     private static final String SYSTEM_INDEX_NAME = ".test-system-index";

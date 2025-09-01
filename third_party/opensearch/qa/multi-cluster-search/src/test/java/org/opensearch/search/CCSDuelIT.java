@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,79 +26,79 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.tests.util.TimeUnits;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.bulk.BulkProcessor;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.CreateIndexResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.join.query.HasChildQueryBuilder;
-import org.opensearch.join.query.HasParentQueryBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.CardinalityAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.rescore.QueryRescoreMode;
-import org.opensearch.search.rescore.QueryRescorerBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder;
-import org.opensearch.search.suggest.phrase.PhraseSuggestion;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestion;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.test.NotEqualMessageBuilder;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.core.action.ActionListener;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.bulk.BulkProcessor;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.client.RequestOptions;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.CreateIndexResponse;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentHelper;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.join.query.HasChildQueryBuilder;
+import org.density.join.query.HasParentQueryBuilder;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.CardinalityAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.density.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.rescore.QueryRescoreMode;
+import org.density.search.rescore.QueryRescorerBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.completion.CompletionSuggestionBuilder;
+import org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder;
+import org.density.search.suggest.phrase.PhraseSuggestion;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestion;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.test.NotEqualMessageBuilder;
+import org.density.test.rest.DensityRestTestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 
@@ -133,7 +133,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
  * such parameter, hence we want to verify that results are the same in both scenarios.
  */
 @TimeoutSuite(millis = 5 * TimeUnits.MINUTE) // to account for slow as hell VMs
-public class CCSDuelIT extends OpenSearchRestTestCase {
+public class CCSDuelIT extends DensityRestTestCase {
 
     private static final String INDEX_NAME = "ccs_duel_index";
     private static final String REMOTE_INDEX_NAME = "my_remote_cluster:" + INDEX_NAME;
@@ -828,7 +828,7 @@ public class CCSDuelIT extends OpenSearchRestTestCase {
     @SuppressWarnings("unchecked")
     private static Map<String, Object> responseToMap(SearchResponse response) throws IOException {
         BytesReference bytesReference = XContentHelper.toXContent(response, MediaTypeRegistry.JSON, false);
-        Map<String, Object> responseMap = org.opensearch.common.xcontent.XContentHelper.convertToMap(bytesReference, false, MediaTypeRegistry.JSON).v2();
+        Map<String, Object> responseMap = org.density.common.xcontent.XContentHelper.convertToMap(bytesReference, false, MediaTypeRegistry.JSON).v2();
         assertNotNull(responseMap.put("took", -1));
         responseMap.remove("num_reduce_phases");
         Map<String, Object> profile = (Map<String, Object>) responseMap.get("profile");

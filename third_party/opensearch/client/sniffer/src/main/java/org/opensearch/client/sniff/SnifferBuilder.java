@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff;
+package org.density.client.sniff;
 
-import org.opensearch.client.RestClient;
+import org.density.client.RestClient;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +58,7 @@ public final class SnifferBuilder {
     private NodesSniffer nodesSniffer;
 
     /**
-     * Creates a new builder instance by providing the {@link RestClient} that will be used to communicate with opensearch
+     * Creates a new builder instance by providing the {@link RestClient} that will be used to communicate with density
      */
     SnifferBuilder(RestClient restClient) {
         Objects.requireNonNull(restClient, "restClient cannot be null");
@@ -94,8 +94,8 @@ public final class SnifferBuilder {
     }
 
     /**
-     * Sets the {@link NodesSniffer} to be used to read hosts. A default instance of {@link OpenSearchNodesSniffer}
-     * is created when not provided. This method can be used to change the configuration of the {@link OpenSearchNodesSniffer},
+     * Sets the {@link NodesSniffer} to be used to read hosts. A default instance of {@link DensityNodesSniffer}
+     * is created when not provided. This method can be used to change the configuration of the {@link DensityNodesSniffer},
      * or to provide a different implementation (e.g. in case hosts need to taken from a different source).
      *
      * @param nodesSniffer the {@link NodesSniffer} instance to be used.
@@ -111,7 +111,7 @@ public final class SnifferBuilder {
      */
     public Sniffer build() {
         if (nodesSniffer == null) {
-            this.nodesSniffer = new OpenSearchNodesSniffer(restClient);
+            this.nodesSniffer = new DensityNodesSniffer(restClient);
         }
         return new Sniffer(restClient, nodesSniffer, sniffIntervalMillis, sniffAfterFailureDelayMillis);
     }

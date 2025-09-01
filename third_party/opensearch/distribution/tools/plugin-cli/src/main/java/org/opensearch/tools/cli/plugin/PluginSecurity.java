@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.Terminal.Verbosity;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.secure_sm.policy.PolicyFile;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.Terminal.Verbosity;
+import org.density.cli.UserException;
+import org.density.common.util.io.IOUtils;
+import org.density.secure_sm.policy.PolicyFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
 /**
  * Security Policy for Plugins
  *
- * @opensearch.api
+ * @density.api
  */
 class PluginSecurity {
 

@@ -1,13 +1,13 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index.reindex.spi;
+package org.density.index.reindex.spi;
 
 import org.apache.hc.core5.http.HttpRequestInterceptor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.index.reindex.ReindexRequest;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.index.reindex.ReindexRequest;
 
 import java.util.Optional;
 

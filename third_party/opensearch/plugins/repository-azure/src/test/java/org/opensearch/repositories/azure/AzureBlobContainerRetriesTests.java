@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -38,27 +38,27 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.models.ParallelTransferOptions;
 import com.azure.storage.common.policy.RequestRetryOptions;
 import com.azure.storage.common.policy.RetryPolicyType;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.RestUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.SuppressForbidden;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.collect.Tuple;
+import org.density.common.io.Streams;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.network.InetAddresses;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.rest.RestUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -91,13 +91,13 @@ import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.HttpResources;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.opensearch.repositories.azure.AzureRepository.Repository.CONTAINER_SETTING;
-import static org.opensearch.repositories.azure.AzureStorageSettings.ACCOUNT_SETTING;
-import static org.opensearch.repositories.azure.AzureStorageSettings.ENDPOINT_SUFFIX_SETTING;
-import static org.opensearch.repositories.azure.AzureStorageSettings.KEY_SETTING;
-import static org.opensearch.repositories.azure.AzureStorageSettings.MAX_RETRIES_SETTING;
-import static org.opensearch.repositories.azure.AzureStorageSettings.TIMEOUT_SETTING;
-import static org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase.randomBytes;
+import static org.density.repositories.azure.AzureRepository.Repository.CONTAINER_SETTING;
+import static org.density.repositories.azure.AzureStorageSettings.ACCOUNT_SETTING;
+import static org.density.repositories.azure.AzureStorageSettings.ENDPOINT_SUFFIX_SETTING;
+import static org.density.repositories.azure.AzureStorageSettings.KEY_SETTING;
+import static org.density.repositories.azure.AzureStorageSettings.MAX_RETRIES_SETTING;
+import static org.density.repositories.azure.AzureStorageSettings.TIMEOUT_SETTING;
+import static org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase.randomBytes;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -109,7 +109,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
  * This class tests how a {@link AzureBlobContainer} and its underlying SDK client are retrying requests when reading or writing blobs.
  */
 @SuppressForbidden(reason = "use a http server")
-public class AzureBlobContainerRetriesTests extends OpenSearchTestCase {
+public class AzureBlobContainerRetriesTests extends DensityTestCase {
 
     private static final long MAX_RANGE_VAL = Long.MAX_VALUE - 1L;
 

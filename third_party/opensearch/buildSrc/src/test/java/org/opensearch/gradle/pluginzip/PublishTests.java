@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle.pluginzip;
+package org.density.gradle.pluginzip;
 
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.test.GradleUnitTestCase;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.testkit.runner.BuildResult;
@@ -55,14 +55,14 @@ public class PublishTests extends GradleUnitTestCase {
     }
 
     /**
-     * This test is used to verify that adding the 'opensearch.pluginzip' to the project
+     * This test is used to verify that adding the 'density.pluginzip' to the project
      * adds some other transitive plugins and tasks under the hood. This is basically
      * a behavioral test of the {@link Publish#apply(Project)} method.
      * <p>
      * This is equivalent of having a build.gradle script with just the following section:
      * <pre>
      *     plugins {
-     *       id 'opensearch.pluginzip'
+     *       id 'density.pluginzip'
      *     }
      * </pre>
      */
@@ -112,11 +112,11 @@ public class PublishTests extends GradleUnitTestCase {
         assertEquals(4, project.getPlugins().size());
         // ... of the following types:
         assertNotNull(
-            "Project is expected to have OpenSearch pluginzip Publish plugin",
-            project.getPlugins().findPlugin(org.opensearch.gradle.pluginzip.Publish.class)
+            "Project is expected to have Density pluginzip Publish plugin",
+            project.getPlugins().findPlugin(org.density.gradle.pluginzip.Publish.class)
         );
         assertNotNull(
-            "Project is expected to have MavenPublishPlugin (applied from OpenSearch pluginzip plugin)",
+            "Project is expected to have MavenPublishPlugin (applied from Density pluginzip plugin)",
             project.getPlugins().findPlugin(org.gradle.api.publish.maven.plugins.MavenPublishPlugin.class)
         );
         assertNotNull(
@@ -124,7 +124,7 @@ public class PublishTests extends GradleUnitTestCase {
             project.getPlugins().findPlugin(org.gradle.api.publish.plugins.PublishingPlugin.class)
         );
         assertNotNull(
-            "Project is expected to have nebula MavenNebulaPublishPlugin plugin (applied from OpenSearch pluginzip plugin)",
+            "Project is expected to have nebula MavenNebulaPublishPlugin plugin (applied from Density pluginzip plugin)",
             project.getPlugins().findPlugin(nebula.plugin.publishing.maven.MavenNebulaPublishPlugin.class)
         );
     }
@@ -183,7 +183,7 @@ public class PublishTests extends GradleUnitTestCase {
         GradleRunner runner = prepareGradleRunnerFromTemplate("missingPublications.gradle", "build", "-m");
         BuildResult result = runner.build();
 
-        assertTrue(result.getOutput().contains("Plugin 'opensearch.pluginzip' is applied but no 'pluginZip' publication is defined."));
+        assertTrue(result.getOutput().contains("Plugin 'density.pluginzip' is applied but no 'pluginZip' publication is defined."));
     }
 
     @Test
@@ -292,7 +292,7 @@ public class PublishTests extends GradleUnitTestCase {
                         "build",
                         "local-staging-repo",
                         "org",
-                        "opensearch",
+                        "density",
                         PROJECT_NAME,
                         "2.0.0.0",
                         PROJECT_NAME + "-2.0.0.0.pom"
@@ -301,7 +301,7 @@ public class PublishTests extends GradleUnitTestCase {
             )
         );
         assertEquals(model.getVersion(), "2.0.0.0");
-        assertEquals(model.getGroupId(), "org.opensearch");
+        assertEquals(model.getGroupId(), "org.density");
     }
 
     /**

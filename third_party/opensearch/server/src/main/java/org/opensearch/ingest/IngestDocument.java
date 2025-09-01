@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.script.TemplateScript;
+import org.density.core.common.Strings;
+import org.density.core.common.util.CollectionUtils;
+import org.density.index.VersionType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.script.TemplateScript;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -61,7 +61,7 @@ import java.util.function.BiConsumer;
 /**
  * Represents a single document being captured before indexing and holds the source and metadata (like id, type and index).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IngestDocument {
 
@@ -105,7 +105,7 @@ public final class IngestDocument {
     }
 
     /**
-     * Constructor needed for testing that allows to create a new {@link IngestDocument} given the provided opensearch metadata,
+     * Constructor needed for testing that allows to create a new {@link IngestDocument} given the provided density metadata,
      * source and ingest metadata. This is needed because the ingest metadata will be initialized with the current timestamp at
      * init time, which makes equality comparisons impossible in tests.
      */
@@ -853,7 +853,7 @@ public final class IngestDocument {
     /**
      * The ingest metadata.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Metadata {
         INDEX(IndexFieldMapper.NAME),

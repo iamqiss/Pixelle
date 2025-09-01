@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.Version;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.opensearch.node.NodeResourceUsageStats.Fields.CPU_UTILIZATION_PERCENT;
-import static org.opensearch.node.NodeResourceUsageStats.Fields.IO_USAGE_STATS;
-import static org.opensearch.node.NodeResourceUsageStats.Fields.MEMORY_UTILIZATION_PERCENT;
-import static org.opensearch.node.NodeResourceUsageStats.Fields.TIMESTAMP;
+import static org.density.node.NodeResourceUsageStats.Fields.CPU_UTILIZATION_PERCENT;
+import static org.density.node.NodeResourceUsageStats.Fields.IO_USAGE_STATS;
+import static org.density.node.NodeResourceUsageStats.Fields.MEMORY_UTILIZATION_PERCENT;
+import static org.density.node.NodeResourceUsageStats.Fields.TIMESTAMP;
 
 /**
  * This represents the resource usage stats of a node along with the timestamp at which the stats object was created
@@ -133,7 +133,7 @@ public class NodeResourceUsageStats implements Writeable, ToXContentFragment {
     /**
      * Fields used for statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String TIMESTAMP = "timestamp";

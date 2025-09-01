@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fields;
+package org.density.search.fields;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.lookup.FieldLookup;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.Numbers;
+import org.density.common.collect.MapBuilder;
+import org.density.common.document.DocumentField;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateUtils;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.lookup.FieldLookup;
+import org.density.search.sort.SortOrder;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -87,17 +87,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.util.set.Sets.newHashSet;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
-import static org.opensearch.transport.client.Requests.refreshRequest;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.util.set.Sets.newHashSet;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
+import static org.density.transport.client.Requests.refreshRequest;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -105,7 +105,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SearchFieldsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SearchFieldsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SearchFieldsIT(Settings staticSettings) {
         super(staticSettings);

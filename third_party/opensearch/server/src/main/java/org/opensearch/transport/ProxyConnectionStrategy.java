@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -57,12 +57,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.intSetting;
 
 /**
  * Connect through a proxy
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ProxyConnectionStrategy extends RemoteConnectionStrategy {
 
@@ -346,7 +346,7 @@ public class ProxyConnectionStrategy extends RemoteConnectionStrategy {
     /**
      * Contains information about the proxy mode
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ProxyModeInfo implements RemoteConnectionInfo.ModeInfo {
 

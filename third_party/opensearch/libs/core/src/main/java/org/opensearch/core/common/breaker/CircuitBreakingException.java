@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.breaker;
+package org.density.core.common.breaker;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
 /**
  * Exception thrown when the circuit breaker trips
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class CircuitBreakingException extends OpenSearchException {
+public class CircuitBreakingException extends DensityException {
 
     /** The number of bytes wanted */
     private final long bytesWanted;

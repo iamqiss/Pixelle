@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.identity.tokens.BasicAuthToken;
-import org.opensearch.rest.RestRequest;
+import org.density.core.common.Strings;
+import org.density.identity.tokens.AuthToken;
+import org.density.identity.tokens.BasicAuthToken;
+import org.density.rest.RestRequest;
 
 import java.util.Collections;
 import java.util.Optional;

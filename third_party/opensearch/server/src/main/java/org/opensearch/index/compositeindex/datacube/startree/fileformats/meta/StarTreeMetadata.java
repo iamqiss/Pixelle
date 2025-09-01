@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.meta;
+package org.density.index.compositeindex.datacube.startree.fileformats.meta;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.compositeindex.CompositeIndexMetadata;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.compositeindex.CompositeIndexMetadata;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
+import org.density.index.mapper.CompositeMappedFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.Set;
 /**
  * Holds the associated metadata for the building of star-tree.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreeMetadata extends CompositeIndexMetadata {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.tasks;
+package org.density.client.tasks;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * cancel tasks response that contains
@@ -48,7 +48,7 @@ import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalCons
  */
 public class CancelTasksResponse extends ListTasksResponse {
 
-    CancelTasksResponse(List<NodeData> nodesInfoData, List<TaskOperationFailure> taskFailures, List<OpenSearchException> nodeFailures) {
+    CancelTasksResponse(List<NodeData> nodesInfoData, List<TaskOperationFailure> taskFailures, List<DensityException> nodeFailures) {
         super(nodesInfoData, taskFailures, nodeFailures);
     }
 
@@ -67,7 +67,7 @@ public class CancelTasksResponse extends ListTasksResponse {
                 @SuppressWarnings("unchecked")
                 List<TaskOperationFailure> tasksFailures = (List<TaskOperationFailure>) constructingObjects[i++];
                 @SuppressWarnings("unchecked")
-                List<OpenSearchException> nodeFailures = (List<OpenSearchException>) constructingObjects[i++];
+                List<DensityException> nodeFailures = (List<DensityException>) constructingObjects[i++];
                 @SuppressWarnings("unchecked")
                 List<NodeData> nodesInfoData = (List<NodeData>) constructingObjects[i];
                 return new CancelTasksResponse(nodesInfoData, tasksFailures, nodeFailures);
@@ -79,7 +79,7 @@ public class CancelTasksResponse extends ListTasksResponse {
             (p, c) -> TaskOperationFailure.fromXContent(p),
             new ParseField("task_failures")
         );
-        parser.declareObjectArray(optionalConstructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField("node_failures"));
+        parser.declareObjectArray(optionalConstructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField("node_failures"));
         parser.declareNamedObjects(optionalConstructorArg(), NodeData.PARSER, new ParseField("nodes"));
         PARSER = parser;
     }

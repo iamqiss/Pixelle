@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.main;
+package org.density.action.main;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.Build;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Objects;
 
 /**
- * The main response of opensearch
+ * The main response of density
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MainResponse extends ActionResponse implements ToXContentObject {
 
@@ -59,7 +59,7 @@ public class MainResponse extends ActionResponse implements ToXContentObject {
     private ClusterName clusterName;
     private String clusterUuid;
     private Build build;
-    public static final String TAGLINE = "The OpenSearch Project: https://opensearch.org/";
+    public static final String TAGLINE = "The Density Project: https://density.org/";
 
     MainResponse() {}
 

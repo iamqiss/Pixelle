@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.engine;
+package org.density.test.engine;
 
 import org.apache.lucene.index.FilterDirectoryReader;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineException;
-import org.opensearch.index.engine.InternalEngine;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineException;
+import org.density.index.engine.InternalEngine;
 
 import java.io.IOException;
 import java.util.function.Function;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.XContent;
+import org.density.rest.RestRequest.Method;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 /**
  * Handler for REST requests
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 @FunctionalInterface
@@ -139,7 +139,7 @@ public interface RestHandler {
     /**
      * Wrapper for a handler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class Wrapper implements RestHandler {
         private final RestHandler delegate;
@@ -207,7 +207,7 @@ public interface RestHandler {
     /**
      * Route for the request.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class Route {
@@ -260,7 +260,7 @@ public interface RestHandler {
     /**
      * Represents an API that has been deprecated and is slated for removal.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class DeprecatedRoute extends Route {
@@ -281,7 +281,7 @@ public interface RestHandler {
      * Represents an API that has had its {@code path} or {@code method} changed. Holds both the
      * new and previous {@code path} and {@code method} combination.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class ReplacedRoute extends Route {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestBuilderListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.regex.Regex;
+import org.density.core.common.Strings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestBuilderListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -60,13 +60,13 @@ import java.util.TreeSet;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.HEAD;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.HEAD;
 
 /**
  * The REST handler for get alias and head alias APIs.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestGetAliasesAction extends BaseRestHandler {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -60,17 +60,17 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.search.RandomApproximationQuery;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.util.io.IOUtils;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.Timer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -93,7 +93,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class QueryProfilerTests extends OpenSearchTestCase {
+public class QueryProfilerTests extends DensityTestCase {
     private Directory dir;
     private IndexReader reader;
     private ContextIndexSearcher searcher;

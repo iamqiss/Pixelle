@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.script.BucketAggregationSelectorScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.script.BucketAggregationSelectorScript;
+import org.density.script.Script;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
+import static org.density.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
 
 /**
  * Aggregate all docs into a selected bucket
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BucketSelectorPipelineAggregator extends PipelineAggregator {
     private GapPolicy gapPolicy;

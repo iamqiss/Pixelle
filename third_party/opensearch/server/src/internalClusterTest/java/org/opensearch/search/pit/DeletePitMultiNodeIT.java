@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pit;
+package org.density.search.pit;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.search.CreatePitAction;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitAction;
-import org.opensearch.action.search.DeletePitInfo;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchContextMissingException;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.search.CreatePitAction;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitAction;
+import org.density.action.search.DeletePitInfo;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchContextMissingException;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
 import static org.hamcrest.Matchers.blankOrNullString;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -51,8 +51,8 @@ import static org.hamcrest.Matchers.not;
 /**
  * Multi node integration tests for delete PIT use cases
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 2)
-public class DeletePitMultiNodeIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 2)
+public class DeletePitMultiNodeIT extends DensityIntegTestCase {
 
     @Before
     public void setupIndex() throws ExecutionException, InterruptedException {
@@ -290,7 +290,7 @@ public class DeletePitMultiNodeIT extends OpenSearchIntegTestCase {
                     throw new AssertionError(e);
                 }
             });
-            threads[i].setName("opensearch[node_s_0][search]");
+            threads[i].setName("density[node_s_0][search]");
             threads[i].start();
         }
         deleted.set(true);

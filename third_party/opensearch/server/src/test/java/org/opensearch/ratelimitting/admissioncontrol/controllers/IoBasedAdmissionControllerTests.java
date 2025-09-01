@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.controllers;
+package org.density.ratelimitting.admissioncontrol.controllers;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
-import org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
+import org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import org.mockito.Mockito;
 
-public class IoBasedAdmissionControllerTests extends OpenSearchTestCase {
+public class IoBasedAdmissionControllerTests extends DensityTestCase {
     private ClusterService clusterService;
     private ThreadPool threadPool;
     IoBasedAdmissionController admissionController = null;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.metrics.MaxMetric;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.metrics.MaxMetric;
+import org.density.common.metrics.MeanMetric;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  * Internal class that maintains relevant indexing statistics / metrics.
  * @see IndexShard
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class InternalIndexingStats implements IndexingOperationListener {
     private final StatsHolder totalStats = new StatsHolder();
@@ -142,7 +142,7 @@ final class InternalIndexingStats implements IndexingOperationListener {
     /**
      * Holder for base indexing statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class StatsHolder {
         private final MeanMetric indexMetric = new MeanMetric();

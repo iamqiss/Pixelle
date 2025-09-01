@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -65,8 +65,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
 
 /**
  * A request to create an index template.
@@ -279,7 +279,7 @@ public class PutIndexTemplateRequest extends ClusterManagerNodeRequest<PutIndexT
                 throw new UncheckedIOException("failed to convert source to json", e);
             }
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -337,7 +337,7 @@ public class PutIndexTemplateRequest extends ClusterManagerNodeRequest<PutIndexT
             } else if (name.equals("aliases")) {
                 aliases((Map<String, Object>) entry.getValue());
             } else {
-                throw new OpenSearchParseException("unknown key [{}] in the template ", name);
+                throw new DensityParseException("unknown key [{}] in the template ", name);
             }
         }
         return this;
@@ -424,7 +424,7 @@ public class PutIndexTemplateRequest extends ClusterManagerNodeRequest<PutIndexT
             builder.map(source);
             return aliases(BytesReference.bytes(builder));
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -461,7 +461,7 @@ public class PutIndexTemplateRequest extends ClusterManagerNodeRequest<PutIndexT
             }
             return this;
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse aliases", e);
+            throw new DensityParseException("Failed to parse aliases", e);
         }
     }
 

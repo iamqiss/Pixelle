@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.FeatureField;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.index.mapper.MapperExtrasModulePlugin;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.RankFeatureQueryBuilder.ScoreFunction;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.common.compress.CompressedXContent;
+import org.density.index.mapper.MapperExtrasModulePlugin;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.RankFeatureQueryBuilder.ScoreFunction;
+import org.density.plugins.Plugin;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 
 import java.io.IOException;
 import java.util.ArrayList;

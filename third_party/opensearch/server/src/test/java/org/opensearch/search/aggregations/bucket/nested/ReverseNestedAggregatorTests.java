@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.nested;
+package org.density.search.aggregations.bucket.nested;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -40,19 +40,19 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.terms.LongTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.terms.LongTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,9 +64,9 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.nested;
-import static org.opensearch.search.aggregations.AggregationBuilders.reverseNested;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.nested;
+import static org.density.search.aggregations.AggregationBuilders.reverseNested;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ReverseNestedAggregatorTests extends AggregatorTestCase {

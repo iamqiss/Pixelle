@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,16 +23,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.binder.AnnotatedBindingBuilder;
-import org.opensearch.common.inject.binder.AnnotatedElementBuilder;
-import org.opensearch.common.inject.binder.LinkedBindingBuilder;
-import org.opensearch.common.inject.spi.Message;
+import org.density.common.inject.binder.AnnotatedBindingBuilder;
+import org.density.common.inject.binder.AnnotatedElementBuilder;
+import org.density.common.inject.binder.LinkedBindingBuilder;
+import org.density.common.inject.spi.Message;
 
 /**
  * A module whose configuration information is hidden from its environment by default. Only bindings
@@ -46,7 +46,7 @@ import org.opensearch.common.inject.spi.Message;
  * environment is the root.
  * <p>
  * Guice EDSL bindings can be exposed with {@link #expose(Class) expose()}. {@literal @}{@link
- * org.opensearch.common.inject.Provides Provides} bindings can be exposed with the {@literal @}{@link
+ * org.density.common.inject.Provides Provides} bindings can be exposed with the {@literal @}{@link
  * Exposed} annotation:
  * <pre>
  * public class FooBarBazModule extends PrivateModule {
@@ -84,7 +84,7 @@ import org.opensearch.common.inject.spi.Message;
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PrivateModule implements Module {
 

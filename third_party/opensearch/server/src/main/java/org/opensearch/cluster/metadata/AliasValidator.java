@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.indices.InvalidAliasNameException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.common.Nullable;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.indices.InvalidAliasNameException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Function;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * Validator for an alias, to be used before adding an alias to the index metadata
  * and make sure the alias is valid
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AliasValidator {
     /**
@@ -69,7 +69,7 @@ public class AliasValidator {
     }
 
     /**
-     * Allows to validate an {@link org.opensearch.cluster.metadata.AliasMetadata} and make sure
+     * Allows to validate an {@link org.density.cluster.metadata.AliasMetadata} and make sure
      * it's valid before it gets added to the index metadata. Doesn't validate the alias filter.
      * @throws IllegalArgumentException if the alias is not valid
      */
@@ -123,7 +123,7 @@ public class AliasValidator {
 
     /**
      * Validates an alias filter by parsing it using the
-     * provided {@link org.opensearch.index.query.QueryShardContext}
+     * provided {@link org.density.index.query.QueryShardContext}
      * @throws IllegalArgumentException if the filter is not valid
      */
     public void validateAliasFilter(
@@ -146,7 +146,7 @@ public class AliasValidator {
 
     /**
      * Validates an alias filter by parsing it using the
-     * provided {@link org.opensearch.index.query.QueryShardContext}
+     * provided {@link org.density.index.query.QueryShardContext}
      * @throws IllegalArgumentException if the filter is not valid
      */
     public void validateAliasFilter(

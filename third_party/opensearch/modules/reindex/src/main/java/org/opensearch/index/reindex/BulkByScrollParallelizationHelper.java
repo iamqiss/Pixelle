@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.transport.client.Client;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.search.SearchRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.tasks.TaskId;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.slice.SliceBuilder;
+import org.density.transport.client.Client;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
@@ -40,14 +40,14 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.SimpleCollector;
 import org.apache.lucene.search.Weight;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.MinimumScoreCollector;
-import org.opensearch.common.lucene.search.FilteredCollector;
-import org.opensearch.search.aggregations.AggregationCollectorManager;
-import org.opensearch.search.aggregations.BucketCollector;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.profile.query.InternalProfileCollector;
-import org.opensearch.search.profile.query.InternalProfileCollectorManager;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.MinimumScoreCollector;
+import org.density.common.lucene.search.FilteredCollector;
+import org.density.search.aggregations.AggregationCollectorManager;
+import org.density.search.aggregations.BucketCollector;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.profile.query.InternalProfileCollector;
+import org.density.search.profile.query.InternalProfileCollectorManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,15 +55,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_MIN_SCORE;
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_MULTI;
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_POST_FILTER;
-import static org.opensearch.search.profile.query.CollectorResult.REASON_SEARCH_TERMINATE_AFTER_COUNT;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_MIN_SCORE;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_MULTI;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_POST_FILTER;
+import static org.density.search.profile.query.CollectorResult.REASON_SEARCH_TERMINATE_AFTER_COUNT;
 
 /**
  * The context used during query collection
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class QueryCollectorContext {

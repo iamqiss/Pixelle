@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.IngestDocument.Metadata;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.ingest.ValueSource;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.set.Sets;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.IngestDocument.Metadata;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.ingest.TestTemplateService;
+import org.density.ingest.ValueSource;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +57,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
-public class AppendProcessorTests extends OpenSearchTestCase {
+public class AppendProcessorTests extends DensityTestCase {
 
     public void testAppendValuesToExistingList() throws Exception {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());

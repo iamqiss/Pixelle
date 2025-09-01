@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
+package org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ShardFailure;
-import org.opensearch.snapshots.SnapshotShardFailure;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ShardFailure;
+import org.density.snapshots.SnapshotShardFailure;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class ShardOperationFailedExceptionProtoUtils {
     }
 
     /**
-     * This method is similar to {@link org.opensearch.core.action.ShardOperationFailedException#toXContent(XContentBuilder, ToXContent.Params)}
+     * This method is similar to {@link org.density.core.action.ShardOperationFailedException#toXContent(XContentBuilder, ToXContent.Params)}
      * This method is overridden by various exception classes, which are hardcoded here.
      *
      * @param exception The ShardOperationFailedException to convert metadata from

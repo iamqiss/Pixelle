@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.protobufs.TermQuery;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.QueryContainer;
+import org.density.protobufs.TermQuery;
+import org.density.test.DensityTestCase;
 
-public class TermQueryBuilderProtoConverterTests extends OpenSearchTestCase {
+public class TermQueryBuilderProtoConverterTests extends DensityTestCase {
 
     private TermQueryBuilderProtoConverter converter;
 

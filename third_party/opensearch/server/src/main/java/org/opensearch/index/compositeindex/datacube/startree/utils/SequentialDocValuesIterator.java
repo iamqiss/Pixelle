@@ -2,18 +2,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.utils;
+package org.density.index.compositeindex.datacube.startree.utils;
 
 import org.apache.lucene.util.LongValues;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ import java.io.IOException;
  * In case of merge , this will be reading the entries of star tree values and in case of flush this will go through
  * the actual segment documents.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class SequentialDocValuesIterator {

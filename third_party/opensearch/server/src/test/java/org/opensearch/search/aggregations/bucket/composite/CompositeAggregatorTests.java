@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.FieldExistsQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.composite.BaseCompositeAggregatorTestCase;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.TopHits;
-import org.opensearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.sort.SortOrder;
+import org.density.DensityParseException;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.composite.BaseCompositeAggregatorTestCase;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.TopHits;
+import org.density.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -1572,8 +1572,8 @@ public class CompositeAggregatorTests extends BaseCompositeAggregatorTestCase {
     }
 
     public void testThatDateHistogramFailsFormatAfter() throws IOException {
-        OpenSearchParseException exc = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exc = expectThrows(
+            DensityParseException.class,
             () -> testSearchCase(Arrays.asList(new MatchAllDocsQuery(), new FieldExistsQuery("date")), Collections.emptyList(), () -> {
                 DateHistogramValuesSourceBuilder histo = new DateHistogramValuesSourceBuilder("date").field("date")
                     .dateHistogramInterval(DateHistogramInterval.days(1))
@@ -1587,7 +1587,7 @@ public class CompositeAggregatorTests extends BaseCompositeAggregatorTestCase {
         assertThat(exc.getCause().getMessage(), containsString("now() is not supported in [after] key"));
 
         exc = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> testSearchCase(Arrays.asList(new MatchAllDocsQuery(), new FieldExistsQuery("date")), Collections.emptyList(), () -> {
                 DateHistogramValuesSourceBuilder histo = new DateHistogramValuesSourceBuilder("date").field("date")
                     .dateHistogramInterval(DateHistogramInterval.days(1))

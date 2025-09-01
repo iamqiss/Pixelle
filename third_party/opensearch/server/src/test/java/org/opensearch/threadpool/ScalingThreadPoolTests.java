@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ScalingThreadPoolTests extends OpenSearchThreadPoolTestCase {
+public class ScalingThreadPoolTests extends DensityThreadPoolTestCase {
 
     @ParametersFactory
     public static Collection<Object[]> scalingThreadPools() {
@@ -110,8 +110,8 @@ public class ScalingThreadPoolTests extends OpenSearchThreadPoolTestCase {
 
         runScalingThreadPoolTest(builder.build(), (clusterSettings, threadPool) -> {
             final Executor executor = threadPool.executor(threadPoolName);
-            assertThat(executor, instanceOf(OpenSearchThreadPoolExecutor.class));
-            final OpenSearchThreadPoolExecutor openSearchThreadPoolExecutor = (OpenSearchThreadPoolExecutor) executor;
+            assertThat(executor, instanceOf(DensityThreadPoolExecutor.class));
+            final DensityThreadPoolExecutor openSearchThreadPoolExecutor = (DensityThreadPoolExecutor) executor;
             final ThreadPool.Info info = info(threadPool, threadPoolName);
 
             assertThat(info.getName(), equalTo(threadPoolName));

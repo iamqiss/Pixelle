@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * A binary range agg result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedBinaryRange extends ParsedMultiBucketAggregation<ParsedBinaryRange.ParsedBucket> implements Range {
 
@@ -85,7 +85,7 @@ public class ParsedBinaryRange extends ParsedMultiBucketAggregation<ParsedBinary
     /**
      * Parsed bucket for a binary range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ParsedBucket extends ParsedMultiBucketAggregation.ParsedBucket implements Range.Bucket {
 

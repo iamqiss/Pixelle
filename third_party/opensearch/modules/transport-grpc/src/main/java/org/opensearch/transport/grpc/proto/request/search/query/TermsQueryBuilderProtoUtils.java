@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
 import com.google.protobuf.ProtocolStringList;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.protobufs.TermsLookupField;
-import org.opensearch.protobufs.TermsLookupFieldStringArrayMap;
-import org.opensearch.protobufs.TermsQueryField;
-import org.opensearch.protobufs.ValueType;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.protobufs.TermsLookupField;
+import org.density.protobufs.TermsLookupFieldStringArrayMap;
+import org.density.protobufs.TermsQueryField;
+import org.density.protobufs.ValueType;
 
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.maybeConvertToBytesRef;
+import static org.density.index.query.AbstractQueryBuilder.maybeConvertToBytesRef;
 
 /**
- * Utility class for converting TermQuery Protocol Buffers to OpenSearch objects.
+ * Utility class for converting TermQuery Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of term queries
- * into their corresponding OpenSearch TermQueryBuilder implementations for search operations.
+ * into their corresponding Density TermQueryBuilder implementations for search operations.
  */
 public class TermsQueryBuilderProtoUtils {
 
@@ -38,7 +38,7 @@ public class TermsQueryBuilderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer TermQuery map to an OpenSearch TermQueryBuilder.
+     * Converts a Protocol Buffer TermQuery map to an Density TermQueryBuilder.
      * Similar to {@link TermsQueryBuilder#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates a properly configured
      * TermQueryBuilder with the appropriate field name, value, boost, query name,
@@ -117,7 +117,7 @@ public class TermsQueryBuilderProtoUtils {
     /**
      * Parses a protobuf ScriptLanguage to a String representation
      *
-     * See {@link org.opensearch.index.query.TermsQueryBuilder.ValueType#fromString(String)}  }
+     * See {@link org.density.index.query.TermsQueryBuilder.ValueType#fromString(String)}  }
      * *
      * @param valueType the Protocol Buffer ValueType to convert
      * @return the string representation of the script language

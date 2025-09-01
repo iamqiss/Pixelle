@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.ActiveShardsObserver;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ack.ClusterStateUpdateRequest;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ObjectPath;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityStatusException;
+import org.density.ResourceAlreadyExistsException;
+import org.density.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.ActiveShardsObserver;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ack.ClusterStateUpdateRequest;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ObjectPath;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -62,12 +62,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_DATA_STREAM;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_DATA_STREAM;
 
 /**
  * Creates a data stream of metadata
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataCreateDataStreamService {
 
@@ -140,7 +140,7 @@ public class MetadataCreateDataStreamService {
     /**
      * A request to create a data stream cluster state update
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class CreateDataStreamClusterStateUpdateRequest extends ClusterStateUpdateRequest {
 
@@ -186,10 +186,10 @@ public class MetadataCreateDataStreamService {
         try {
             currentState = metadataCreateIndexService.applyCreateIndexRequest(currentState, createIndexRequest, false);
         } catch (ResourceAlreadyExistsException e) {
-            // Rethrow as OpenSearchStatusException, so that bulk transport action doesn't ignore it during
+            // Rethrow as DensityStatusException, so that bulk transport action doesn't ignore it during
             // auto index/data stream creation.
             // (otherwise bulk execution fails later, because data stream will also not have been created)
-            throw new OpenSearchStatusException(
+            throw new DensityStatusException(
                 "data stream could not be created because backing index [{}] already exists",
                 RestStatus.BAD_REQUEST,
                 e,

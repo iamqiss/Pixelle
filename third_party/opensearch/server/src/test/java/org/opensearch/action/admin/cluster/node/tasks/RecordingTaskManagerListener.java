@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.tasks.MockTaskManagerListener;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.test.tasks.MockTaskManagerListener;
 
 import java.util.ArrayList;
 import java.util.Collections;

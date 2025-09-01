@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.TemplateScript;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;

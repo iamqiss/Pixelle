@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.MultiTermQuery;
@@ -38,7 +38,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.RegexpQuery;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
+import org.density.DensityException;
 
 public class RoutingFieldTypeTests extends FieldTypeTestCase {
 
@@ -48,7 +48,7 @@ public class RoutingFieldTypeTests extends FieldTypeTestCase {
         Query expected = new PrefixQuery(new Term("_routing", new BytesRef("foo*")));
         assertEquals(expected, ft.prefixQuery("foo*", MultiTermQuery.CONSTANT_SCORE_BLENDED_REWRITE, MOCK_QSC));
 
-        OpenSearchException ee = expectThrows(OpenSearchException.class, () -> ft.prefixQuery("foo*", null, MOCK_QSC_DISALLOW_EXPENSIVE));
+        DensityException ee = expectThrows(DensityException.class, () -> ft.prefixQuery("foo*", null, MOCK_QSC_DISALLOW_EXPENSIVE));
         assertEquals(
             "[prefix] queries cannot be executed when 'search.allow_expensive_queries' is set to false. "
                 + "For optimised prefix queries on text fields please enable [index_prefixes].",
@@ -62,8 +62,8 @@ public class RoutingFieldTypeTests extends FieldTypeTestCase {
         Query expected = new RegexpQuery(new Term("_routing", new BytesRef("foo?")));
         assertEquals(expected, ft.regexpQuery("foo?", 0, 0, 10, MultiTermQuery.CONSTANT_SCORE_BLENDED_REWRITE, MOCK_QSC));
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.regexpQuery("foo?", randomInt(10), 0, randomInt(10) + 1, null, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals("[regexp] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", ee.getMessage());
@@ -75,8 +75,8 @@ public class RoutingFieldTypeTests extends FieldTypeTestCase {
         Query expected = new WildcardQuery(new Term("_routing", new BytesRef("foo*")));
         assertEquals(expected, ft.wildcardQuery("foo*", MultiTermQuery.CONSTANT_SCORE_BLENDED_REWRITE, MOCK_QSC));
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.wildcardQuery("valu*", null, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals("[wildcard] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", ee.getMessage());

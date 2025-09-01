@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.status;
+package org.density.action.admin.cluster.snapshots.status;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotShardsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.ActionType;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotShardsService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Transport action that collects snapshot shard statuses from data nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesSnapshotsStatus extends TransportNodesAction<
     TransportNodesSnapshotsStatus.Request,
@@ -141,14 +141,14 @@ public class TransportNodesSnapshotsStatus extends TransportNodesAction<
             }
             return new NodeSnapshotStatus(clusterService.localNode(), unmodifiableMap(snapshotMapBuilder));
         } catch (Exception e) {
-            throw new OpenSearchException("failed to load metadata", e);
+            throw new DensityException("failed to load metadata", e);
         }
     }
 
     /**
      * Inner Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends BaseNodesRequest<Request> {
 
@@ -179,7 +179,7 @@ public class TransportNodesSnapshotsStatus extends TransportNodesAction<
     /**
      * Inner Node Snapshot Status
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodesSnapshotStatus extends BaseNodesResponse<NodeSnapshotStatus> {
 
@@ -205,7 +205,7 @@ public class TransportNodesSnapshotsStatus extends TransportNodesAction<
     /**
      * Inner Node Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeRequest extends TransportRequest {
 
@@ -230,7 +230,7 @@ public class TransportNodesSnapshotsStatus extends TransportNodesAction<
     /**
      * Inner Node Shapshot Status
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeSnapshotStatus extends BaseNodeResponse {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.PersistedClusterStateService;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.gateway.PersistedClusterStateService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -51,9 +51,9 @@ import java.util.List;
 /**
  * Removes custom settings
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class RemoveSettingsCommand extends OpenSearchNodeCommand {
+public class RemoveSettingsCommand extends DensityNodeCommand {
 
     static final String SETTINGS_REMOVED_MSG = "Settings were successfully removed from the cluster state";
     static final String CONFIRMATION_MSG = DELIMITER

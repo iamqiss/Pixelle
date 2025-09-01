@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,7 +78,7 @@ public class VersionUtils {
             previousMajor.addAll(splitByMinor(majorVersions.getOrDefault(7, Collections.emptyList())));
         }
         // TODO: remove oldVersions, we should only ever have 2 majors in Version
-        // rebasing OpenSearch to 1.0.0 means the previous major version was Legacy 7.0.0
+        // rebasing Density to 1.0.0 means the previous major version was Legacy 7.0.0
         int previousMajorID = current.major == 1 ? 7 : current.major - 1;
         oldVersions.addAll(splitByMinor(majorVersions.getOrDefault(previousMajorID - 1, Collections.emptyList())));
         previousMajor.addAll(splitByMinor(majorVersions.getOrDefault(previousMajorID, Collections.emptyList())));
@@ -105,7 +105,7 @@ public class VersionUtils {
             stableVersions = currentMajor;
         }
 
-        // remove last minor unless it's the first OpenSearch version.
+        // remove last minor unless it's the first Density version.
         // all Legacy ES versions are released, so we don't exclude any.
         if (current.equals(V_1_0_0) == false) {
             List<Version> lastMinorLine = stableVersions.get(stableVersions.size() - 1);
@@ -166,7 +166,7 @@ public class VersionUtils {
     private static final List<Version> RELEASED_VERSIONS;
     private static final List<Version> UNRELEASED_VERSIONS;
     private static final List<Version> ALL_VERSIONS;
-    private static final List<Version> ALL_OPENSEARCH_VERSIONS;
+    private static final List<Version> ALL_DENSITY_VERSIONS;
     private static final List<Version> ALL_LEGACY_VERSIONS;
 
     static {
@@ -179,7 +179,7 @@ public class VersionUtils {
         Collections.sort(allVersions);
         ALL_VERSIONS = Collections.unmodifiableList(allVersions);
         // @todo remove this when legacy support is no longer needed
-        ALL_OPENSEARCH_VERSIONS = ALL_VERSIONS.stream().filter(v -> v.major < 6).collect(Collectors.toList());
+        ALL_DENSITY_VERSIONS = ALL_VERSIONS.stream().filter(v -> v.major < 6).collect(Collectors.toList());
         ALL_LEGACY_VERSIONS = ALL_VERSIONS.stream().filter(v -> v.major >= 6).collect(Collectors.toList());
     }
 
@@ -204,9 +204,9 @@ public class VersionUtils {
         return ALL_VERSIONS;
     }
 
-    /** Returns an immutable, sorted list containing all opensearch versions; released and unreleased */
-    public static List<Version> allOpenSearchVersions() {
-        return ALL_OPENSEARCH_VERSIONS;
+    /** Returns an immutable, sorted list containing all density versions; released and unreleased */
+    public static List<Version> allDensityVersions() {
+        return ALL_DENSITY_VERSIONS;
     }
 
     /** Returns an immutable, sorted list containing all legacy versions; released and unreleased */
@@ -266,10 +266,10 @@ public class VersionUtils {
     }
 
     /**
-     * Return a random {@link Version} from all available opensearch versions.
+     * Return a random {@link Version} from all available density versions.
      **/
-    public static Version randomOpenSearchVersion(Random random) {
-        return ALL_OPENSEARCH_VERSIONS.get(random.nextInt(ALL_OPENSEARCH_VERSIONS.size()));
+    public static Version randomDensityVersion(Random random) {
+        return ALL_DENSITY_VERSIONS.get(random.nextInt(ALL_DENSITY_VERSIONS.size()));
     }
 
     /**

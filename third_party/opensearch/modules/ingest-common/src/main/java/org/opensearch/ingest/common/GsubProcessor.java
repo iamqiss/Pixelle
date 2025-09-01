@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
-import static org.opensearch.ingest.ConfigurationUtils.readStringProperty;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.readStringProperty;
 
 /**
  * Processor that allows to search for patterns in field content and replace them with corresponding string replacement.

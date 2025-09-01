@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.monitor.fs;
+package org.density.monitor.fs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheSettings;
-import org.opensearch.indices.IndicesService;
+import org.density.common.settings.Settings;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheSettings;
+import org.density.indices.IndicesService;
 
-import static org.opensearch.monitor.fs.FsProbe.adjustForHugeFilesystems;
+import static org.density.monitor.fs.FsProbe.adjustForHugeFilesystems;
 
 /**
  * FileSystem service implementation for warm nodes that calculates disk usage
  * based on file cache size and remote data ratio instead of actual physical disk usage.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WarmFsService extends FsService {
 

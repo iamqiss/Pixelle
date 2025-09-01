@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.InvertableType;
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.document.StoredValue;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.BytesBinaryIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.BytesBinaryIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -64,7 +64,7 @@ import java.util.function.Supplier;
 /**
  * A mapper for binary fields
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BinaryFieldMapper extends ParametrizedFieldMapper {
 
@@ -77,7 +77,7 @@ public class BinaryFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for the binary field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -116,7 +116,7 @@ public class BinaryFieldMapper extends ParametrizedFieldMapper {
     /**
      * Binary field type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class BinaryFieldType extends MappedFieldType {
 
@@ -238,13 +238,13 @@ public class BinaryFieldMapper extends ParametrizedFieldMapper {
     /**
      * Custom binary doc values field for the binary field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CustomBinaryDocValuesField extends CustomDocValuesField {
 
         // We considered using a TreeSet instead of an ArrayList here.
         // Benchmarks show that ArrayList performs much better
-        // For details, see: https://github.com/opensearch-project/OpenSearch/pull/9426
+        // For details, see: https://github.com/density-project/Density/pull/9426
         // Benchmarks are in CustomBinaryDocValuesFiledBenchmark
         private final ArrayList<byte[]> bytesList;
 
@@ -275,7 +275,7 @@ public class BinaryFieldMapper extends ParametrizedFieldMapper {
                     return out.bytes().toBytesRef();
                 }
             } catch (IOException e) {
-                throw new OpenSearchException("Failed to get binary value", e);
+                throw new DensityException("Failed to get binary value", e);
             }
 
         }

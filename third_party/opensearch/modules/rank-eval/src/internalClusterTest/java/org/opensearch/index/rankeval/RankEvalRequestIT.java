@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.rankeval.PrecisionAtK.Detail;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.settings.Settings;
+import org.density.index.IndexNotFoundException;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.rankeval.PrecisionAtK.Detail;
+import org.density.indices.IndexClosedException;
+import org.density.plugins.Plugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import static org.opensearch.index.rankeval.EvaluationMetric.filterUnratedDocuments;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.rankeval.EvaluationMetric.filterUnratedDocuments;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class RankEvalRequestIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class RankEvalRequestIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private static final String TEST_INDEX = "test";
     private static final String INDEX_ALIAS = "alias0";
@@ -290,7 +290,7 @@ public class RankEvalRequestIT extends ParameterizedStaticSettingsOpenSearchInte
 
         RankEvalResponse response = client().execute(RankEvalAction.INSTANCE, builder.request()).actionGet();
         assertEquals(1, response.getFailures().size());
-        OpenSearchException[] rootCauses = OpenSearchException.guessRootCauses(response.getFailures().get("broken_query"));
+        DensityException[] rootCauses = DensityException.guessRootCauses(response.getFailures().get("broken_query"));
         assertEquals("java.lang.NumberFormatException: For input string: \"noStringOnNumericFields\"", rootCauses[0].getCause().toString());
     }
 

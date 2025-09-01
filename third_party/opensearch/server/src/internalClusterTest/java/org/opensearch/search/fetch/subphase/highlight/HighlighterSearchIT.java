@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
@@ -43,40 +43,40 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.tests.analysis.MockAnalyzer;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.tests.util.TimeUnits;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.AbstractIndexAnalyzerProvider;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.RandomScoreFunctionBuilder;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder.Field;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.MockKeywordPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.AbstractIndexAnalyzerProvider;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.RandomScoreFunctionBuilder;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder.Field;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.MockKeywordPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
@@ -92,35 +92,35 @@ import java.util.Map;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.boostingQuery;
-import static org.opensearch.index.query.QueryBuilders.commonTermsQuery;
-import static org.opensearch.index.query.QueryBuilders.constantScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.existsQuery;
-import static org.opensearch.index.query.QueryBuilders.fuzzyQuery;
-import static org.opensearch.index.query.QueryBuilders.matchPhraseQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.multiMatchQuery;
-import static org.opensearch.index.query.QueryBuilders.nestedQuery;
-import static org.opensearch.index.query.QueryBuilders.prefixQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.regexpQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.QueryBuilders.wildcardQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.builder.SearchSourceBuilder.highlight;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHighlight;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNotHighlighted;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
-import static org.opensearch.test.hamcrest.RegexMatcher.matches;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.boostingQuery;
+import static org.density.index.query.QueryBuilders.commonTermsQuery;
+import static org.density.index.query.QueryBuilders.constantScoreQuery;
+import static org.density.index.query.QueryBuilders.existsQuery;
+import static org.density.index.query.QueryBuilders.fuzzyQuery;
+import static org.density.index.query.QueryBuilders.matchPhraseQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.multiMatchQuery;
+import static org.density.index.query.QueryBuilders.nestedQuery;
+import static org.density.index.query.QueryBuilders.prefixQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.regexpQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.wildcardQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.builder.SearchSourceBuilder.highlight;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertHighlight;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertNotHighlighted;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.RegexMatcher.matches;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -129,9 +129,9 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
-// Higher timeout to accommodate large number of tests in this class. See https://github.com/opensearch-project/OpenSearch/issues/12119
+// Higher timeout to accommodate large number of tests in this class. See https://github.com/density-project/Density/issues/12119
 @TimeoutSuite(millis = 35 * TimeUnits.MINUTE)
-public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class HighlighterSearchIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     // TODO as we move analyzers out of the core we need to move some of these into HighlighterWithAnalyzersTests
     private static final String[] ALL_TYPES = new String[] { "plain", "fvh", "unified" };
@@ -442,7 +442,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 .setSource(
                     XContentFactory.jsonBuilder()
                         .startObject()
-                        .field("title", "This is a test on the highlighting bug present in opensearch")
+                        .field("title", "This is a test on the highlighting bug present in density")
                         .startArray("attachments")
                         .startObject()
                         .field("body", "attachment 1")
@@ -462,7 +462,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             .get();
 
         for (int i = 0; i < indexRequestBuilders.length; i++) {
-            assertHighlight(search, i, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in opensearch"));
+            assertHighlight(search, i, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in density"));
         }
 
         search = client().prepareSearch()
@@ -509,7 +509,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 .setSource(
                     XContentFactory.jsonBuilder()
                         .startObject()
-                        .field("title", "This is a test on the highlighting bug present in opensearch")
+                        .field("title", "This is a test on the highlighting bug present in density")
                         .startArray("attachments")
                         .startObject()
                         .field("body", "attachment 1")
@@ -529,7 +529,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             .get();
 
         for (int i = 0; i < indexRequestBuilders.length; i++) {
-            assertHighlight(search, i, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in opensearch"));
+            assertHighlight(search, i, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in density"));
         }
 
         search = client().prepareSearch()
@@ -578,7 +578,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                         .startObject()
                         .array(
                             "title",
-                            "This is a test on the highlighting bug present in opensearch. Hopefully it works.",
+                            "This is a test on the highlighting bug present in density. Hopefully it works.",
                             "This is the second bug to perform highlighting on."
                         )
                         .startArray("attachments")
@@ -606,7 +606,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 i,
                 "title",
                 0,
-                equalTo("This is a test on the highlighting <em>bug</em> present in opensearch. Hopefully it works.")
+                equalTo("This is a test on the highlighting <em>bug</em> present in density. Hopefully it works.")
             );
             assertHighlight(search, i, "title", 1, 2, equalTo("This is the second <em>bug</em> to perform highlighting on."));
         }
@@ -623,7 +623,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 i,
                 "title",
                 0,
-                equalTo("This is a test on the highlighting <em>bug</em> present in opensearch. Hopefully it works.")
+                equalTo("This is a test on the highlighting <em>bug</em> present in density. Hopefully it works.")
             );
             assertHighlight(search, i, "title", 1, 2, equalTo("This is the second <em>bug</em> to perform highlighting on."));
         }
@@ -649,7 +649,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             )
         );
 
-        String[] titles = new String[] { "This is a test on the highlighting bug present in opensearch", "The bug is bugging us" };
+        String[] titles = new String[] { "This is a test on the highlighting bug present in density", "The bug is bugging us" };
         indexRandom(false, client().prepareIndex("test").setId("1").setSource("title", titles, "titleTV", titles));
 
         indexRandom(
@@ -662,9 +662,9 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             .highlighter(new HighlightBuilder().field("title", -1, 2).field("titleTV", -1, 2).requireFieldMatch(false))
             .get();
 
-        assertHighlight(search, 0, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in opensearch"));
+        assertHighlight(search, 0, "title", 0, equalTo("This is a test on the highlighting <em>bug</em> present in density"));
         assertHighlight(search, 0, "title", 1, 2, equalTo("The <em>bug</em> is bugging us"));
-        assertHighlight(search, 0, "titleTV", 0, equalTo("This is a test on the highlighting <em>bug</em> present in opensearch"));
+        assertHighlight(search, 0, "titleTV", 0, equalTo("This is a test on the highlighting <em>bug</em> present in density"));
         assertHighlight(search, 0, "titleTV", 1, 2, equalTo("The <em>bug</em> is bugging us"));
 
         search = client().prepareSearch()
@@ -1362,7 +1362,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
         for (int i = 0; i < 5; i++) {
             indexRequestBuilders[i] = client().prepareIndex("test")
                 .setId(Integer.toString(i))
-                .setSource("title", "This is a test on the highlighting bug present in opensearch");
+                .setSource("title", "This is a test on the highlighting bug present in density");
         }
         indexRandom(true, indexRequestBuilders);
 
@@ -1378,7 +1378,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 "title",
                 0,
                 1,
-                equalTo("This is a test on the highlighting <em>bug</em> " + "present in opensearch")
+                equalTo("This is a test on the highlighting <em>bug</em> " + "present in density")
             );
         }
     }
@@ -1390,7 +1390,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
         for (int i = 0; i < 5; i++) {
             indexRequestBuilders[i] = client().prepareIndex("test")
                 .setId(Integer.toString(i))
-                .setSource("title", "This is a test on the highlighting bug present in opensearch");
+                .setSource("title", "This is a test on the highlighting bug present in density");
         }
         indexRandom(true, indexRequestBuilders);
 
@@ -1401,7 +1401,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
 
         for (int i = 0; i < 5; i++) {
             // LUCENE 3.1 UPGRADE: Caused adding the space at the end...
-            assertHighlight(search, i, "title", 0, 1, equalTo("highlighting <em>bug</em> present in opensearch"));
+            assertHighlight(search, i, "title", 0, 1, equalTo("highlighting <em>bug</em> present in density"));
         }
     }
 
@@ -1412,7 +1412,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
         for (int i = 0; i < indexRequestBuilders.length; i++) {
             indexRequestBuilders[i] = client().prepareIndex("test")
                 .setId(Integer.toString(i))
-                .setSource("title", "This is a html escaping highlighting test for *&? opensearch");
+                .setSource("title", "This is a html escaping highlighting test for *&? density");
         }
         indexRandom(true, indexRequestBuilders);
 
@@ -1433,7 +1433,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
         for (int i = 0; i < 5; i++) {
             indexRequestBuilders[i] = client().prepareIndex("test")
                 .setId(Integer.toString(i))
-                .setSource("title", "This is a html escaping highlighting test for *&? opensearch");
+                .setSource("title", "This is a html escaping highlighting test for *&? density");
         }
         indexRandom(true, indexRequestBuilders);
 
@@ -1443,7 +1443,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             .get();
 
         for (int i = 0; i < 5; i++) {
-            assertHighlight(search, i, "title", 0, 1, equalTo(" highlighting <em>test</em> for *&amp;? opensearch"));
+            assertHighlight(search, i, "title", 0, 1, equalTo(" highlighting <em>test</em> for *&amp;? density"));
         }
     }
 
@@ -1981,7 +1981,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
 
         client().prepareIndex("test")
             .setId("1")
-            .setSource("text", "opensearch test", "byte", 25, "short", 42, "int", 100, "long", -1, "float", 3.2f, "double", 42.42)
+            .setSource("text", "density test", "byte", 25, "short", 42, "int", 100, "long", -1, "float", 3.2f, "double", 42.42)
             .get();
         refresh();
         indexRandomForConcurrentSearch("test");
@@ -2005,7 +2005,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
             ).setMapping("text", "type=text,analyzer=my_analyzer")
         );
         ensureGreen();
-        client().prepareIndex("test").setId("1").setSource("text", "opensearch test").get();
+        client().prepareIndex("test").setId("1").setSource("text", "density test").get();
         refresh();
         indexRandomForConcurrentSearch("test");
 
@@ -2610,7 +2610,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
         for (int i = 0; i < 5; i++) {
             indexRequestBuilders[i] = client().prepareIndex("test")
                 .setId(Integer.toString(i))
-                .setSource("title", "This is a html escaping highlighting test for *&? opensearch");
+                .setSource("title", "This is a html escaping highlighting test for *&? density");
         }
         indexRandom(true, indexRequestBuilders);
 
@@ -2626,7 +2626,7 @@ public class HighlighterSearchIT extends ParameterizedStaticSettingsOpenSearchIn
                 "title",
                 0,
                 1,
-                equalTo("This is a html escaping highlighting <em>test</em> for *&amp;? opensearch")
+                equalTo("This is a html escaping highlighting <em>test</em> for *&amp;? density")
             );
         }
     }

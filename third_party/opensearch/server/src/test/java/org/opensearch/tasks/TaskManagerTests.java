@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.action.admin.cluster.node.tasks.TransportTasksActionTests;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.RunnableTaskExecutionListener;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.FakeTcpChannel;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.node.tasks.TransportTasksActionTests;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.RunnableTaskExecutionListener;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.FakeTcpChannel;
+import org.density.transport.TcpChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -68,7 +68,7 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.in;
 import static org.mockito.Mockito.mock;
 
-public class TaskManagerTests extends OpenSearchTestCase {
+public class TaskManagerTests extends DensityTestCase {
     private ThreadPool threadPool;
     private AtomicReference<RunnableTaskExecutionListener> runnableTaskListener;
 

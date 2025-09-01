@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
 
 import java.util.Iterator;
 
 /**
  * Utility class for keeping track of a current item in an iterator
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IteratorAndCurrent<B extends InternalMultiBucketAggregation.InternalBucket> implements Iterator<B> {
     private final Iterator<B> iterator;

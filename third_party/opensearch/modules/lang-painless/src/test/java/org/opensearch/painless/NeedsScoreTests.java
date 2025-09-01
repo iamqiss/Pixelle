@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.script.NumberSortScript;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.settings.Settings;
+import org.density.index.IndexService;
+import org.density.index.query.QueryShardContext;
+import org.density.painless.spi.Allowlist;
+import org.density.script.NumberSortScript;
+import org.density.script.ScriptContext;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ import java.util.Map;
  * Test that needsScores() is reported correctly depending on whether _score is used
  */
 // TODO: can we test this better? this is a port of the ExpressionsTests method.
-public class NeedsScoreTests extends OpenSearchSingleNodeTestCase {
+public class NeedsScoreTests extends DensitySingleNodeTestCase {
 
     public void testNeedsScores() {
         IndexService index = createIndexWithSimpleMappings("test", Settings.EMPTY, "d", "type=double");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityException;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public abstract class AbstractBroadcastResponseTestCase<T extends BroadcastRespo
         if (failedShards > 0) {
             failures = new ArrayList<>();
             for (int i = 0; i < failedShards; i++) {
-                OpenSearchException exception = new OpenSearchException("exception message " + i);
+                DensityException exception = new DensityException("exception message " + i);
                 String index = randomAlphaOfLengthBetween(3, 10);
                 exception.setIndex(new Index(index, "_na_"));
                 exception.setShard(new ShardId(index, "_na_", i));
@@ -114,13 +114,13 @@ public abstract class AbstractBroadcastResponseTestCase<T extends BroadcastRespo
     public void testFailuresDeduplication() throws IOException {
         List<DefaultShardOperationFailedException> failures = new ArrayList<>();
         Index index = new Index("test", "_na_");
-        OpenSearchException exception1 = new OpenSearchException("foo", new IllegalArgumentException("bar"));
+        DensityException exception1 = new DensityException("foo", new IllegalArgumentException("bar"));
         exception1.setIndex(index);
         exception1.setShard(new ShardId(index, 0));
-        OpenSearchException exception2 = new OpenSearchException("foo", new IllegalArgumentException("bar"));
+        DensityException exception2 = new DensityException("foo", new IllegalArgumentException("bar"));
         exception2.setIndex(index);
         exception2.setShard(new ShardId(index, 1));
-        OpenSearchException exception3 = new OpenSearchException("fizz", new IllegalStateException("buzz"));
+        DensityException exception3 = new DensityException("fizz", new IllegalStateException("buzz"));
         exception3.setIndex(index);
         exception3.setShard(new ShardId(index, 2));
         failures.add(new DefaultShardOperationFailedException(exception1));

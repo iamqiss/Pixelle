@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.Decision.Type;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.Decision.Type;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ import static java.util.Collections.emptySet;
 /**
  * Unit tests for the {@link MoveDecision} class.
  */
-public class MoveDecisionTests extends OpenSearchTestCase {
+public class MoveDecisionTests extends DensityTestCase {
 
     public void testCachedDecisions() {
         // cached stay decision

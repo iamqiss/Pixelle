@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.matrix.stats;
+package org.density.search.aggregations.matrix.stats;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.search.aggregations.matrix.MatrixAggregationModulePlugin;
-import org.opensearch.search.aggregations.matrix.stats.InternalMatrixStats.Fields;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.test.InternalAggregationTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.ParseField;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.plugins.SearchPlugin;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.search.aggregations.matrix.MatrixAggregationModulePlugin;
+import org.density.search.aggregations.matrix.stats.InternalMatrixStats.Fields;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.test.InternalAggregationTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;

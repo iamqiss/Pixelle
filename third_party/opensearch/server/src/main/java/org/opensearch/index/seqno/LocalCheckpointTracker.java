@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * This class generates sequences numbers and keeps track of the so-called "local checkpoint" which is the highest number for which all
  * previous sequence numbers have been processed (inclusive).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LocalCheckpointTracker {
 

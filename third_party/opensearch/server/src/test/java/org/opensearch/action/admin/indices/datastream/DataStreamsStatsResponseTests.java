@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.DensityException;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +79,7 @@ public class DataStreamsStatsResponseTests extends AbstractWireSerializingTestCa
                 new DefaultShardOperationFailedException(
                     randomAlphaOfLength(8).toLowerCase(Locale.getDefault()),
                     randomInt(totalShards),
-                    new OpenSearchException("boom")
+                    new DensityException("boom")
                 )
             );
         }

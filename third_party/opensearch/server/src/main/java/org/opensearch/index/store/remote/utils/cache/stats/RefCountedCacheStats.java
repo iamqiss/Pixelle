@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache.stats;
+package org.density.index.store.remote.utils.cache.stats;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.store.remote.utils.cache.RefCountedCache;
+import org.density.common.annotation.PublicApi;
+import org.density.index.store.remote.utils.cache.RefCountedCache;
 
 import java.util.Objects;
 
 /**
  * Statistics about the performance of a {@link RefCountedCache}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.7.0")
 public final class RefCountedCacheStats implements IRefCountedCacheStats {

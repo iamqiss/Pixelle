@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.NoSuchFileException;
 
-public class FileLockInfoTests extends OpenSearchTestCase {
+public class FileLockInfoTests extends DensityTestCase {
     String testMetadata = "testMetadata";
     String testAcquirerId = "testAcquirerId";
     String testAcquirerId2 = "ZxZ4Wh89SXyEPmSYAHrIrQ";

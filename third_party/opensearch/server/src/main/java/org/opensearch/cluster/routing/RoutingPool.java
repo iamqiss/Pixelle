@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.util.FeatureFlags;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.util.FeatureFlags;
 
-import static org.opensearch.action.admin.indices.tiering.TieringUtils.isWarmIndex;
+import static org.density.action.admin.indices.tiering.TieringUtils.isWarmIndex;
 
 /**
  *  {@link RoutingPool} defines the different node types based on the assigned capabilities. The methods
  *  help decide the capabilities of a specific node as well as an index or shard based on the index configuration.
  *  These methods help with allocation decisions and determining shard classification with the allocation process.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum RoutingPool {
     LOCAL_ONLY,

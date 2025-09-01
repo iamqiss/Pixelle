@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -27,12 +27,12 @@
 
 /**
  * Support for running user provided scripts (in the request, in cluster state, etc) in portions of various requests
- * ({@link org.opensearch.common.lucene.search.function.FunctionScoreQuery}, {@link org.opensearch.search.aggregations.Aggregation},
- * {@link org.opensearch.action.update.UpdateAction}, etc). Pluggable via implementing {@link org.opensearch.plugins.ScriptPlugin}.
+ * ({@link org.density.common.lucene.search.function.FunctionScoreQuery}, {@link org.density.search.aggregations.Aggregation},
+ * {@link org.density.action.update.UpdateAction}, etc). Pluggable via implementing {@link org.density.plugins.ScriptPlugin}.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;

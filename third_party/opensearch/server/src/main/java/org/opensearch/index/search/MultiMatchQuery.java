@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -41,12 +41,12 @@ import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.queries.BlendedTermQuery;
+import org.density.common.lucene.search.Queries;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.queries.BlendedTermQuery;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.common.lucene.search.Queries.newLenientFieldQuery;
+import static org.density.common.lucene.search.Queries.newLenientFieldQuery;
 
 /**
  * Foundation multi match query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiMatchQuery extends MatchQuery {
 
@@ -348,7 +348,7 @@ public class MultiMatchQuery extends MatchQuery {
     /**
      * Holder for a field and it's boost value
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class FieldAndBoost {
         final MappedFieldType fieldType;

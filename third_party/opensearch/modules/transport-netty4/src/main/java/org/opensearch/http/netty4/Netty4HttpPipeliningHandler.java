@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.http.HttpPipelinedRequest;
-import org.opensearch.http.HttpPipelinedResponse;
-import org.opensearch.http.HttpPipeliningAggregator;
+import org.density.common.collect.Tuple;
+import org.density.http.HttpPipelinedRequest;
+import org.density.http.HttpPipelinedResponse;
+import org.density.http.HttpPipeliningAggregator;
 
 import java.nio.channels.ClosedChannelException;
 import java.util.List;

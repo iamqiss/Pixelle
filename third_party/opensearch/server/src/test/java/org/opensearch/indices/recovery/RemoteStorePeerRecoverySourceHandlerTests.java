@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.replication.OpenSearchIndexLevelReplicationTestCase;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.common.UUIDs;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.mapper.MapperService;
+import org.density.index.replication.DensityIndexLevelReplicationTestCase;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.IndexSettingsModule;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -56,11 +56,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteStorePeerRecoverySourceHandlerTests extends OpenSearchIndexLevelReplicationTestCase {
+public class RemoteStorePeerRecoverySourceHandlerTests extends DensityIndexLevelReplicationTestCase {
 
     private static final IndexSettings INDEX_SETTINGS = IndexSettingsModule.newIndexSettings(
         "index",
-        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT).build()
+        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT).build()
     );
     private final ShardId shardId = new ShardId(INDEX_SETTINGS.getIndex(), 1);
 
@@ -125,7 +125,7 @@ public class RemoteStorePeerRecoverySourceHandlerTests extends OpenSearchIndexLe
         when(shard.seqNoStats()).thenReturn(mock(SeqNoStats.class));
         when(shard.segmentStats(anyBoolean(), anyBoolean())).thenReturn(mock(SegmentsStats.class));
         when(shard.isRelocatedPrimary()).thenReturn(false);
-        final org.opensearch.index.shard.ReplicationGroup replicationGroup = mock(org.opensearch.index.shard.ReplicationGroup.class);
+        final org.density.index.shard.ReplicationGroup replicationGroup = mock(org.density.index.shard.ReplicationGroup.class);
         final IndexShardRoutingTable routingTable = mock(IndexShardRoutingTable.class);
         when(routingTable.getByAllocationId(anyString())).thenReturn(null);
         when(shard.getReplicationGroup()).thenReturn(replicationGroup);

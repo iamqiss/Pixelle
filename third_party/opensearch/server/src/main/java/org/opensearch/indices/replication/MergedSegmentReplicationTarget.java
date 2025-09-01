@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.StepListener;
-import org.opensearch.common.UUIDs;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationListener;
+import org.density.action.StepListener;
+import org.density.common.UUIDs;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.MergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationListener;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -22,7 +22,7 @@ import java.util.function.BiConsumer;
 /**
  * Represents the target of a merged segment replication event.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MergedSegmentReplicationTarget extends AbstractSegmentReplicationTarget {
     public final static String MERGE_REPLICATION_PREFIX = "merge.";

@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.core.common.transport.BoundTransportAddress;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.transport.PortsRange;
+import org.density.core.common.transport.BoundTransportAddress;
 
 import java.util.List;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.settings.Setting.affixKeySetting;
+import static org.density.common.settings.Setting.affixKeySetting;
 
 /**
  * Auxiliary transports are lifecycle components with an associated port range.
  * These pluggable client/server transport implementations have their lifecycle managed by Node.
  *
  * Auxiliary transports are additionally defined by a port range on which they bind. Opening permissions on these
- * ports is awkward as {@link org.opensearch.bootstrap.Security} is configured previous to Node initialization during
+ * ports is awkward as {@link org.density.bootstrap.Security} is configured previous to Node initialization during
  * bootstrap. To allow pluggable AuxTransports access to configurable port ranges we require the port range be provided
- * through an {@link org.opensearch.common.settings.Setting.AffixSetting} of the form 'AUX_SETTINGS_PREFIX.{aux-transport-key}.ports'.
+ * through an {@link org.density.common.settings.Setting.AffixSetting} of the form 'AUX_SETTINGS_PREFIX.{aux-transport-key}.ports'.
  */
 @ExperimentalApi
 public abstract class AuxTransport extends AbstractLifecycleComponent {

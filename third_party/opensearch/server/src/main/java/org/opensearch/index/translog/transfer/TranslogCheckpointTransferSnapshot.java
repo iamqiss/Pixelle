@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.index.translog.TranslogReader;
+import org.density.common.collect.Tuple;
+import org.density.index.translog.TranslogReader;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -23,14 +23,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.opensearch.index.translog.transfer.FileSnapshot.CheckpointFileSnapshot;
-import static org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import static org.opensearch.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
+import static org.density.index.translog.transfer.FileSnapshot.CheckpointFileSnapshot;
+import static org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import static org.density.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
 
 /**
  * Implementation for a {@link TransferSnapshot} which builds the snapshot from the translog and checkpoint files present on the local-disk
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogCheckpointTransferSnapshot implements TransferSnapshot, Closeable {
 

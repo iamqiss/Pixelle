@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.highlight.Encoder;
 import org.apache.lucene.search.vectorhighlight.BaseFragmentsBuilder;
@@ -44,17 +44,17 @@ import org.apache.lucene.search.vectorhighlight.SimpleBoundaryScanner;
 import org.apache.lucene.search.vectorhighlight.SimpleFieldFragList;
 import org.apache.lucene.search.vectorhighlight.SimpleFragListBuilder;
 import org.apache.lucene.search.vectorhighlight.SingleFragListBuilder;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.lucene.search.vectorhighlight.CustomFieldQuery;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext.Field;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext.FieldOptions;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.text.Text;
+import org.density.core.common.util.CollectionUtils;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.lucene.search.vectorhighlight.CustomFieldQuery;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext.Field;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext.FieldOptions;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.text.BreakIterator;
@@ -67,7 +67,7 @@ import java.util.function.Function;
 /**
  * Uses Lucene's Fast Vector Highlighting
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FastVectorHighlighter implements Highlighter {
     private static final BoundaryScanner DEFAULT_SIMPLE_BOUNDARY_SCANNER = new SimpleBoundaryScanner();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.annotatedtext;
+package org.density.index.mapper.annotatedtext;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.AnalyzerWrapper;
@@ -44,18 +44,18 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.ParametrizedFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.mapper.TextParams;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.similarity.SimilarityProvider;
+import org.density.DensityParseException;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.ParametrizedFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.mapper.TextParams;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.similarity.SimilarityProvider;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -220,7 +220,7 @@ public class AnnotatedTextFieldMapper extends ParametrizedFieldMapper {
                     String[] kv = pair.split("=");
                     try {
                         if (kv.length == 2) {
-                            throw new OpenSearchParseException("key=value pairs are not supported in annotations");
+                            throw new DensityParseException("key=value pairs are not supported in annotations");
                         }
                         if (kv.length == 1) {
                             // Check "=" sign wasn't in the pair string
@@ -233,7 +233,7 @@ public class AnnotatedTextFieldMapper extends ParametrizedFieldMapper {
                             annotations.add(new AnnotationToken(startOffset, endOffset, value));
                         }
                     } catch (UnsupportedEncodingException e) {
-                        throw new OpenSearchParseException("Unsupported encoding parsing annotated text", e);
+                        throw new DensityParseException("Unsupported encoding parsing annotated text", e);
                     }
                 }
             }

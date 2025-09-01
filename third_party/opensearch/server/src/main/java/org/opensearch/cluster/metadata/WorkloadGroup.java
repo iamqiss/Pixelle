@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
-import org.opensearch.wlm.ResourceType;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.Diff;
+import org.density.common.UUIDs;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
+import org.density.wlm.ResourceType;
 import org.joda.time.Instant;
 
 import java.io.IOException;

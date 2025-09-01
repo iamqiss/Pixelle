@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.benchmark.index.mapper;
+package org.density.benchmark.index.mapper;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.BinaryFieldMapper;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;

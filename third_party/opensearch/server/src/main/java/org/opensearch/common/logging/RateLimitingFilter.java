@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
@@ -49,12 +49,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.common.logging.DeprecatedMessage.X_OPAQUE_ID_FIELD_NAME;
+import static org.density.common.logging.DeprecatedMessage.X_OPAQUE_ID_FIELD_NAME;
 
 /**
  * Filter that is rate limiting
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Plugin(name = "RateLimitingFilter", category = Node.CATEGORY, elementType = Filter.ELEMENT_TYPE)
 public class RateLimitingFilter extends AbstractFilter {
@@ -82,11 +82,11 @@ public class RateLimitingFilter extends AbstractFilter {
     }
 
     public Result filter(Message message) {
-        if (message instanceof OpenSearchLogMessage) {
-            final OpenSearchLogMessage opensearchLogMessage = (OpenSearchLogMessage) message;
+        if (message instanceof DensityLogMessage) {
+            final DensityLogMessage densityLogMessage = (DensityLogMessage) message;
 
-            String xOpaqueId = opensearchLogMessage.getValueFor(X_OPAQUE_ID_FIELD_NAME);
-            final String key = opensearchLogMessage.getValueFor("key");
+            String xOpaqueId = densityLogMessage.getValueFor(X_OPAQUE_ID_FIELD_NAME);
+            final String key = densityLogMessage.getValueFor("key");
 
             return lruKeyCache.add(xOpaqueId + key) ? Result.ACCEPT : Result.DENY;
 

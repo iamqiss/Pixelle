@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.common.joda.Joda;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.joda.Joda;
+import org.density.test.DensityTestCase;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class DateFormattersTests extends OpenSearchTestCase {
+public class DateFormattersTests extends DensityTestCase {
 
     public void testWeekBasedDates() {
         // as per WeekFields.ISO first week starts on Monday and has minimum 4 days

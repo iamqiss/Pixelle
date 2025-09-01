@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TestRequest;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.test.DensityTestCase;
+import org.density.transport.TestRequest;
 
 import java.io.IOException;
 
-public class NativeOutboundMessageTests extends OpenSearchTestCase {
+public class NativeOutboundMessageTests extends DensityTestCase {
 
     public void testNativeOutboundMessageRequestSerialization() throws IOException {
         NativeOutboundMessage.Request message = new NativeOutboundMessage.Request(

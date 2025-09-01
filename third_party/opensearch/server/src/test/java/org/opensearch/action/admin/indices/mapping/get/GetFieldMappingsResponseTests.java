@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.get;
+package org.density.action.admin.indices.mapping.get;
 
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsResponse.FieldMappingMetadata;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsResponse.FieldMappingMetadata;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.path.PathTrie;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.http.HttpChunk;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.path.PathTrie;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.Streams;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.http.HttpChunk;
+import org.density.http.HttpServerTransport;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -77,24 +77,24 @@ import java.util.stream.Collectors;
 import org.reactivestreams.Subscriber;
 import reactor.core.publisher.Mono;
 
-import static org.opensearch.cluster.metadata.IndexNameExpressionResolver.SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY;
-import static org.opensearch.core.rest.RestStatus.BAD_REQUEST;
-import static org.opensearch.core.rest.RestStatus.INTERNAL_SERVER_ERROR;
-import static org.opensearch.core.rest.RestStatus.METHOD_NOT_ALLOWED;
-import static org.opensearch.core.rest.RestStatus.NOT_ACCEPTABLE;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.rest.BytesRestResponse.TEXT_CONTENT_TYPE;
+import static org.density.cluster.metadata.IndexNameExpressionResolver.SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY;
+import static org.density.core.rest.RestStatus.BAD_REQUEST;
+import static org.density.core.rest.RestStatus.INTERNAL_SERVER_ERROR;
+import static org.density.core.rest.RestStatus.METHOD_NOT_ALLOWED;
+import static org.density.core.rest.RestStatus.NOT_ACCEPTABLE;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.rest.BytesRestResponse.TEXT_CONTENT_TYPE;
 
 /**
- * OpenSearch REST controller
+ * Density REST controller
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestController implements HttpServerTransport.Dispatcher {
 
     private static final Logger logger = LogManager.getLogger(RestController.class);
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(RestController.class);
-    private static final String OPENSEARCH_PRODUCT_ORIGIN_HTTP_HEADER = "X-opensearch-product-origin";
+    private static final String DENSITY_PRODUCT_ORIGIN_HTTP_HEADER = "X-density-product-origin";
 
     private static final BytesReference FAVICON_RESPONSE;
 
@@ -300,11 +300,11 @@ public class RestController implements HttpServerTransport.Dispatcher {
         try {
             final Exception e;
             if (cause == null) {
-                e = new OpenSearchException("unknown cause");
+                e = new DensityException("unknown cause");
             } else if (cause instanceof Exception) {
                 e = (Exception) cause;
             } else {
-                e = new OpenSearchException(cause);
+                e = new DensityException(cause);
             }
             channel.sendResponse(new BytesRestResponse(channel, BAD_REQUEST, e));
         } catch (final IOException e) {
@@ -371,8 +371,8 @@ public class RestController implements HttpServerTransport.Dispatcher {
             if (handler.allowsUnsafeBuffers() == false) {
                 request.ensureSafeBuffers();
             }
-            if (handler.allowSystemIndexAccessByDefault() == false && request.header(OPENSEARCH_PRODUCT_ORIGIN_HTTP_HEADER) == null) {
-                // The OPENSEARCH_PRODUCT_ORIGIN_HTTP_HEADER indicates that the request is coming from an OpenSearch product with a plan
+            if (handler.allowSystemIndexAccessByDefault() == false && request.header(DENSITY_PRODUCT_ORIGIN_HTTP_HEADER) == null) {
+                // The DENSITY_PRODUCT_ORIGIN_HTTP_HEADER indicates that the request is coming from an Density product with a plan
                 // to move away from direct access to system indices, and thus deprecation warnings should not be emitted.
                 // This header is intended for internal use only.
                 client.threadPool().getThreadContext().putHeader(SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY, Boolean.FALSE.toString());

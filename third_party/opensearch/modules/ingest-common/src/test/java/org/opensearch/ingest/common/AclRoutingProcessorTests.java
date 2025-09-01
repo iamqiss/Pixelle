@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AclRoutingProcessorTests extends OpenSearchTestCase {
+public class AclRoutingProcessorTests extends DensityTestCase {
 
     public void testAclRouting() throws Exception {
         Map<String, Object> document = new HashMap<>();
@@ -136,7 +136,7 @@ public class AclRoutingProcessorTests extends OpenSearchTestCase {
 
         Map<String, Object> config = new HashMap<>();
 
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[acl_field] required property is missing"));
     }
 

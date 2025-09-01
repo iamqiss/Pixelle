@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodeStatsTests;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.shard.IndexingStats;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Build;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodeStatsTests;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.shard.IndexingStats;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.StoreStats;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -74,10 +74,10 @@ import java.util.TreeMap;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ClusterStatsNodesTests extends OpenSearchTestCase {
+public class ClusterStatsNodesTests extends DensityTestCase {
 
     /**
      * Test that empty transport/http types are not printed out as part

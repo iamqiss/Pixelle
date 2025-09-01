@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.search.uhighlight;
+package org.density.lucene.search.uhighlight;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.Term;
@@ -48,10 +48,10 @@ import org.apache.lucene.search.uhighlight.Passage;
 import org.apache.lucene.search.uhighlight.PassageFormatter;
 import org.apache.lucene.search.uhighlight.PassageScorer;
 import org.apache.lucene.search.uhighlight.UnifiedHighlighter;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.index.IndexSettings;
+import org.density.common.CheckedSupplier;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.index.IndexSettings;
 
 import java.io.IOException;
 import java.text.BreakIterator;

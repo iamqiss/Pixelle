@@ -4,11 +4,11 @@ This plugin provides empty REST and transport endpoints for bulk indexing and se
 
 ### Build Instructions
 
-Build the plugin with `gradle :client:client-benchmark-noop-api-plugin:assemble` from the OpenSearch root project directory.
+Build the plugin with `gradle :client:client-benchmark-noop-api-plugin:assemble` from the Density root project directory.
 
 ### Installation Instructions
 
-After, the binary has been built, install it with `bin/opensearch-plugin install file:///full/path/to/noop-plugin.zip`.
+After, the binary has been built, install it with `bin/density-plugin install file:///full/path/to/noop-plugin.zip`.
 
 ### Usage
 
@@ -19,5 +19,5 @@ The plugin provides two REST endpoints:
 
 The corresponding transport actions are:
 
-* `org.opensearch.plugin.noop.action.bulk.TransportNoopBulkAction`
-* `org.opensearch.plugin.noop.action.search.TransportNoopSearchAction`
+* `org.density.plugin.noop.action.bulk.TransportNoopBulkAction`
+* `org.density.plugin.noop.action.search.TransportNoopSearchAction`

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchSecurityException;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.EmptyTransportResponseHandler;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensitySecurityException;
+import org.density.action.StepListener;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.GroupedActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.transport.TransportResponse;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.EmptyTransportResponseHandler;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -60,7 +60,7 @@ import java.util.List;
 /**
  * Service used to cancel a task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TaskCancellationService {
     public static final String BAN_PARENT_ACTION_NAME = "internal:admin/tasks/ban";
@@ -157,7 +157,7 @@ public class TaskCancellationService {
 
                     @Override
                     public void handleException(TransportException exp) {
-                        assert ExceptionsHelper.unwrapCause(exp) instanceof OpenSearchSecurityException == false;
+                        assert ExceptionsHelper.unwrapCause(exp) instanceof DensitySecurityException == false;
                         logger.warn("Cannot send ban for tasks with the parent [{}] to the node [{}]", taskId, node);
                         groupedListener.onFailure(exp);
                     }
@@ -173,7 +173,7 @@ public class TaskCancellationService {
             transportService.sendRequest(node, BAN_PARENT_ACTION_NAME, request, new EmptyTransportResponseHandler(ThreadPool.Names.SAME) {
                 @Override
                 public void handleException(TransportException exp) {
-                    assert ExceptionsHelper.unwrapCause(exp) instanceof OpenSearchSecurityException == false;
+                    assert ExceptionsHelper.unwrapCause(exp) instanceof DensitySecurityException == false;
                     logger.info("failed to remove the parent ban for task {} on node {}", request.parentTaskId, node);
                 }
             });

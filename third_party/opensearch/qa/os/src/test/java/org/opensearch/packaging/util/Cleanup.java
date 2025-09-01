@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,67 +40,67 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.opensearch.packaging.test.PackagingTestCase.getRootTempDir;
-import static org.opensearch.packaging.util.FileUtils.lsGlob;
-import static org.opensearch.packaging.util.Platforms.isDPKG;
-import static org.opensearch.packaging.util.Platforms.isRPM;
-import static org.opensearch.packaging.util.Platforms.isSystemd;
+import static org.density.packaging.test.PackagingTestCase.getRootTempDir;
+import static org.density.packaging.util.FileUtils.lsGlob;
+import static org.density.packaging.util.Platforms.isDPKG;
+import static org.density.packaging.util.Platforms.isRPM;
+import static org.density.packaging.util.Platforms.isSystemd;
 
 public class Cleanup {
 
-    private static final List<String> OPENSEARCH_FILES_LINUX = Arrays.asList(
-        "/usr/share/opensearch",
-        "/etc/opensearch/opensearch.keystore",
-        "/etc/opensearch",
-        "/var/lib/opensearch",
-        "/var/log/opensearch",
-        "/etc/default/opensearch",
-        "/etc/sysconfig/opensearch",
-        "/var/run/opensearch",
-        "/usr/share/doc/opensearch",
-        "/usr/lib/systemd/system/opensearch.conf",
-        "/usr/lib/tmpfiles.d/opensearch.conf",
-        "/usr/lib/sysctl.d/opensearch.conf"
+    private static final List<String> DENSITY_FILES_LINUX = Arrays.asList(
+        "/usr/share/density",
+        "/etc/density/density.keystore",
+        "/etc/density",
+        "/var/lib/density",
+        "/var/log/density",
+        "/etc/default/density",
+        "/etc/sysconfig/density",
+        "/var/run/density",
+        "/usr/share/doc/density",
+        "/usr/lib/systemd/system/density.conf",
+        "/usr/lib/tmpfiles.d/density.conf",
+        "/usr/lib/sysctl.d/density.conf"
     );
 
     // todo
-    private static final List<String> OPENSEARCH_FILES_WINDOWS = Collections.emptyList();
+    private static final List<String> DENSITY_FILES_WINDOWS = Collections.emptyList();
 
     public static void cleanEverything() throws Exception {
         final Shell sh = new Shell();
 
-        // kill opensearch processes
+        // kill density processes
         Platforms.onLinux(() -> {
-            sh.runIgnoreExitCode("pkill -u opensearch");
-            sh.runIgnoreExitCode("ps aux | grep -i 'org.opensearch.bootstrap.OpenSearch' | awk {'print $2'} | xargs kill -9");
+            sh.runIgnoreExitCode("pkill -u density");
+            sh.runIgnoreExitCode("ps aux | grep -i 'org.density.bootstrap.Density' | awk {'print $2'} | xargs kill -9");
         });
 
         Platforms.onWindows(() -> {
             // the view of processes returned by Get-Process doesn't expose command line arguments, so we use WMI here
             sh.runIgnoreExitCode(
                 "Get-WmiObject Win32_Process | "
-                    + "Where-Object { $_.CommandLine -Match 'org.opensearch.bootstrap.OpenSearch' } | "
+                    + "Where-Object { $_.CommandLine -Match 'org.density.bootstrap.Density' } | "
                     + "ForEach-Object { $_.Terminate() }"
             );
         });
 
         Platforms.onLinux(Cleanup::purgePackagesLinux);
 
-        // remove opensearch users
+        // remove density users
         Platforms.onLinux(() -> {
-            sh.runIgnoreExitCode("userdel opensearch");
-            sh.runIgnoreExitCode("groupdel opensearch");
+            sh.runIgnoreExitCode("userdel density");
+            sh.runIgnoreExitCode("groupdel density");
         });
         // when we run es as a role user on windows, add the equivalent here
 
         // delete files that may still exist
-        lsGlob(getRootTempDir(), "opensearch*").forEach(FileUtils::rm);
-        final List<String> filesToDelete = Platforms.WINDOWS ? OPENSEARCH_FILES_WINDOWS : OPENSEARCH_FILES_LINUX;
+        lsGlob(getRootTempDir(), "density*").forEach(FileUtils::rm);
+        final List<String> filesToDelete = Platforms.WINDOWS ? DENSITY_FILES_WINDOWS : DENSITY_FILES_LINUX;
         // windows needs leniency due to asinine releasing of file locking async from a process exiting
         Consumer<? super Path> rm = Platforms.WINDOWS ? FileUtils::rmWithRetries : FileUtils::rm;
         filesToDelete.stream().map(Paths::get).filter(Files::exists).forEach(rm);
 
-        // disable opensearch service
+        // disable density service
         // todo add this for windows when adding tests for service intallation
         if (Platforms.LINUX && isSystemd()) {
             sh.run("systemctl unmask systemd-sysctl.service");
@@ -112,12 +112,12 @@ public class Cleanup {
 
         if (isRPM()) {
             // Doing rpm erase on both packages in one command will remove neither since both cannot be installed
-            // this may leave behind config files in /etc/opensearch, but a later step in this cleanup will get them
-            sh.runIgnoreExitCode("rpm --quiet -e opensearch");
+            // this may leave behind config files in /etc/density, but a later step in this cleanup will get them
+            sh.runIgnoreExitCode("rpm --quiet -e density");
         }
 
         if (isDPKG()) {
-            sh.runIgnoreExitCode("dpkg --purge opensearch");
+            sh.runIgnoreExitCode("dpkg --purge density");
         }
     }
 }

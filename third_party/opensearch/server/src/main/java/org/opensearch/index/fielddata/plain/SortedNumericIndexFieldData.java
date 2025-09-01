@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.DocValuesType;
@@ -41,24 +41,24 @@ import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.sandbox.document.HalfFloatPoint;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.fieldcomparator.LongValuesComparatorSource;
-import org.opensearch.index.mapper.DocValueFetcher;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.common.Numbers;
+import org.density.common.time.DateUtils;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.fieldcomparator.LongValuesComparatorSource;
+import org.density.index.mapper.DocValueFetcher;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -70,14 +70,14 @@ import java.util.Objects;
  * FieldData backed by {@link LeafReader#getSortedNumericDocValues(String)}
  * @see DocValuesType#SORTED_NUMERIC
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SortedNumericIndexFieldData extends IndexNumericFieldData {
 
     /**
      * Builder for sorted numeric index field data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder implements IndexFieldData.Builder {
         private final String name;
@@ -242,7 +242,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
      * {@link DocValues#unwrapSingleton(SortedNumericDocValues)} will return
      * the underlying single-valued NumericDocValues representation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedNumericLongFieldData extends LeafLongFieldData {
         final LeafReader reader;
@@ -282,7 +282,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
      * {@link FieldData#unwrapSingleton(SortedNumericDoubleValues)} will return
      * the underlying single-valued NumericDoubleValues representation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedNumericHalfFloatFieldData extends LeafDoubleFieldData {
         final LeafReader reader;
@@ -319,7 +319,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
     /**
      * Wraps a NumericDocValues and exposes a single 16-bit float per document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SingleHalfFloatValues extends NumericDoubleValues {
         final NumericDocValues in;
@@ -347,7 +347,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
     /**
      * Wraps a SortedNumericDocValues and exposes multiple 16-bit floats per document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class MultiHalfFloatValues extends SortedNumericDoubleValues {
         final SortedNumericDocValues in;
@@ -390,7 +390,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
      * {@link FieldData#unwrapSingleton(SortedNumericDoubleValues)} will return
      * the underlying single-valued NumericDoubleValues representation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedNumericFloatFieldData extends LeafDoubleFieldData {
         final LeafReader reader;
@@ -427,7 +427,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
     /**
      * Wraps a NumericDocValues and exposes a single 32-bit float per document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SingleFloatValues extends NumericDoubleValues {
         final NumericDocValues in;
@@ -455,7 +455,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
     /**
      * Wraps a SortedNumericDocValues and exposes multiple 32-bit floats per document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class MultiFloatValues extends SortedNumericDoubleValues {
         final SortedNumericDocValues in;
@@ -498,7 +498,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
      * {@link FieldData#unwrapSingleton(SortedNumericDoubleValues)} will return
      * the underlying single-valued NumericDoubleValues representation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedNumericDoubleFieldData extends LeafDoubleFieldData {
         final LeafReader reader;
@@ -529,7 +529,7 @@ public class SortedNumericIndexFieldData extends IndexNumericFieldData {
     /**
      * Wraps a NumericDocValues and exposes a single 64-bit double per document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedNumericUnsignedLongFieldData implements LeafNumericFieldData {
         final LeafReader reader;

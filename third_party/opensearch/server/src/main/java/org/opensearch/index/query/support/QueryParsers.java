@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.support;
+package org.density.index.query.support;
 
 import org.apache.lucene.search.MultiTermQuery;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.DeprecationHandler;
+import org.density.common.Nullable;
+import org.density.core.ParseField;
+import org.density.core.xcontent.DeprecationHandler;
 
 /**
  * Utility class for Query Parsers
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class QueryParsers {
 

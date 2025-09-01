@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
 /**
  * An aggregation that collects significant terms in comparison to a background set.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface SignificantTerms extends MultiBucketsAggregation, Iterable<SignificantTerms.Bucket> {
 
     /**
      * Bucket for significant terms
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Bucket extends MultiBucketsAggregation.Bucket {
 

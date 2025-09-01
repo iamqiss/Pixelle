@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.suggest.stats;
+package org.density.index.suggest.stats;
 
-import org.opensearch.common.FieldMemoryStats;
-import org.opensearch.common.FieldMemoryStatsTests;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.FieldMemoryStats;
+import org.density.common.FieldMemoryStatsTests;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class CompletionsStatsTests extends OpenSearchTestCase {
+public class CompletionsStatsTests extends DensityTestCase {
 
     public void testSerialize() throws IOException {
         FieldMemoryStats map = randomBoolean() ? null : FieldMemoryStatsTests.randomFieldMemoryStats();

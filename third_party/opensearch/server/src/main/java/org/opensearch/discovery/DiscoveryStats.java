@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.coordination.PendingClusterStateStats;
-import org.opensearch.cluster.coordination.PublishClusterStateStats;
-import org.opensearch.cluster.service.ClusterStateStats;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.Version;
+import org.density.cluster.coordination.PendingClusterStateStats;
+import org.density.cluster.coordination.PublishClusterStateStats;
+import org.density.cluster.service.ClusterStateStats;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
 /**
  * Stores discovery stats
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiscoveryStats implements Writeable, ToXContentFragment {
 

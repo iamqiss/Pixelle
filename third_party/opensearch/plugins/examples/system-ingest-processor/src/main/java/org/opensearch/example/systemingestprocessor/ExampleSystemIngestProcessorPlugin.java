@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.example.systemingestprocessor;
+package org.density.example.systemingestprocessor;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.ingest.Processor;
-import org.opensearch.plugins.IngestPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.common.settings.Setting;
+import org.density.ingest.Processor;
+import org.density.plugins.IngestPlugin;
+import org.density.plugins.Plugin;
 
 import java.util.List;
 import java.util.Map;

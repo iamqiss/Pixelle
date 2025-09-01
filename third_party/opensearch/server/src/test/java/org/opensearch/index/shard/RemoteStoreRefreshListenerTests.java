@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.IndexFileNames;
 import org.apache.lucene.index.SegmentInfos;
@@ -14,35 +14,35 @@ import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.tests.store.BaseDirectoryWrapper;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.store.RemoteDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.store.RemoteDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils;
+import org.density.index.store.Store;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.ClusterServiceUtils;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 
 import java.io.IOException;
@@ -56,10 +56,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.mockito.stubbing.Answer;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
-import static org.opensearch.test.RemoteStoreTestUtils.createMetadataFileBytes;
-import static org.opensearch.test.RemoteStoreTestUtils.getDummyMetadata;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
+import static org.density.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
+import static org.density.test.RemoteStoreTestUtils.createMetadataFileBytes;
+import static org.density.test.RemoteStoreTestUtils.getDummyMetadata;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -182,7 +182,7 @@ public class RemoteStoreRefreshListenerTests extends IndexShardTestCase {
         // Methods used in the constructor of RemoteSegmentTrackerListener have been mocked to reproduce specific exceptions
         // to test the failure modes possible during construction of RemoteSegmentTrackerListener object.
         Settings indexSettings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             .put(SETTING_REPLICATION_TYPE, ReplicationType.SEGMENT)
             .build();
         indexShard = newStartedShard(false, indexSettings, new NRTReplicationEngineFactory());
@@ -346,7 +346,7 @@ public class RemoteStoreRefreshListenerTests extends IndexShardTestCase {
         }
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/9773")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/9773")
     public void testReplicaPromotion() throws IOException, InterruptedException {
         setup(false, 3);
         remoteStoreRefreshListener.afterRefresh(true);

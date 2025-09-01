@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.get.GetIndexRequest;
-import org.opensearch.action.admin.indices.get.GetIndexResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.snapshots.AbstractSnapshotIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.get.GetIndexRequest;
+import org.density.action.admin.indices.get.GetIndexResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.indices.IndicesService;
+import org.density.snapshots.AbstractSnapshotIntegTestCase;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.indices.IndicesService.CLUSTER_DEFAULT_INDEX_MAX_MERGE_AT_ONCE_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_DEFAULT_INDEX_MAX_MERGE_AT_ONCE_SETTING;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 2)
 public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
 
     @Override
@@ -64,7 +64,7 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         internalCluster().startClusterManagerOnlyNode();
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/18056")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/18056")
     public void testClusterLevelDefaultUpdatesMergePolicy() throws ExecutionException, InterruptedException {
         String clusterManagerName = internalCluster().getClusterManagerName();
         List<String> dataNodes = new ArrayList<>(internalCluster().getDataNodeNames());
@@ -77,7 +77,7 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         IndicesService indicesService = internalCluster().getInstance(IndicesService.class, randomFrom(dataNodes));
         String uuid = getIndexResponse.getSettings().get(indexName).get(IndexMetadata.SETTING_INDEX_UUID);
         IndexService indexService = indicesService.indexService(new Index(indexName, uuid));
-        assertEquals(30, ((OpenSearchTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(30, ((DensityTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
 
         client(clusterManagerName).admin()
             .cluster()
@@ -93,8 +93,8 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         indicesService = internalCluster().getInstance(IndicesService.class, randomFrom(dataNodes));
         uuid = getIndexResponse.getSettings().get(indexName).get(IndexMetadata.SETTING_INDEX_UUID);
         IndexService secondIndexService = indicesService.indexService(new Index(indexName, uuid));
-        assertEquals(20, ((OpenSearchTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(20, ((OpenSearchTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(20, ((DensityTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(20, ((DensityTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
 
         // Create index with index level override in settings
         indexName = "log-myindex-3";
@@ -108,7 +108,7 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         indicesService = internalCluster().getInstance(IndicesService.class, randomFrom(dataNodes));
         uuid = getIndexResponse.getSettings().get(indexName).get(IndexMetadata.SETTING_INDEX_UUID);
         IndexService thirdIndexService = indicesService.indexService(new Index(indexName, uuid));
-        assertEquals(15, ((OpenSearchTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(15, ((DensityTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
 
         // changing cluster level default should only affect indices without index level override
         client(clusterManagerName).admin()
@@ -116,9 +116,9 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
             .prepareUpdateSettings()
             .setTransientSettings(Settings.builder().put(CLUSTER_DEFAULT_INDEX_MAX_MERGE_AT_ONCE_SETTING.getKey(), 35))
             .get();
-        assertEquals(35, ((OpenSearchTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(35, ((OpenSearchTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(15, ((OpenSearchTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(15, ((DensityTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
 
         // removing index level override should pick up the cluster level default
         UpdateSettingsRequestBuilder builder = client().admin().indices().prepareUpdateSettings(indexName);
@@ -127,9 +127,9 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         );
         builder.execute().actionGet();
 
-        assertEquals(35, ((OpenSearchTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(35, ((OpenSearchTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(35, ((OpenSearchTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
 
         // update index level setting to override cluster level default
         builder = client().admin().indices().prepareUpdateSettings(indexName);
@@ -138,8 +138,8 @@ public class ClusterMaxMergesAtOnceIT extends AbstractSnapshotIntegTestCase {
         );
         builder.execute().actionGet();
 
-        assertEquals(35, ((OpenSearchTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(35, ((OpenSearchTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
-        assertEquals(17, ((OpenSearchTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) indexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(35, ((DensityTieredMergePolicy) secondIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
+        assertEquals(17, ((DensityTieredMergePolicy) thirdIndexService.getIndexSettings().getMergePolicy(true)).getMaxMergeAtOnce());
     }
 }

@@ -1,52 +1,52 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.ActionModule;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.ClusterSettingsResponse;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.discovery.InitializeExtensionRequest;
-import org.opensearch.discovery.InitializeExtensionResponse;
-import org.opensearch.env.EnvironmentSettingsResponse;
-import org.opensearch.extensions.ExtensionsSettings.Extension;
-import org.opensearch.extensions.action.ExtensionActionRequest;
-import org.opensearch.extensions.action.ExtensionActionResponse;
-import org.opensearch.extensions.action.ExtensionTransportActionsHandler;
-import org.opensearch.extensions.action.RegisterTransportActionsRequest;
-import org.opensearch.extensions.action.RemoteExtensionActionResponse;
-import org.opensearch.extensions.action.TransportActionRequestFromExtension;
-import org.opensearch.extensions.rest.RegisterRestActionsRequest;
-import org.opensearch.extensions.rest.RestActionsRequestHandler;
-import org.opensearch.extensions.settings.CustomSettingsRequestHandler;
-import org.opensearch.extensions.settings.RegisterCustomSettingsRequest;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.ActionModule;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.ClusterSettingsResponse;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
+import org.density.discovery.InitializeExtensionRequest;
+import org.density.discovery.InitializeExtensionResponse;
+import org.density.env.EnvironmentSettingsResponse;
+import org.density.extensions.ExtensionsSettings.Extension;
+import org.density.extensions.action.ExtensionActionRequest;
+import org.density.extensions.action.ExtensionActionResponse;
+import org.density.extensions.action.ExtensionTransportActionsHandler;
+import org.density.extensions.action.RegisterTransportActionsRequest;
+import org.density.extensions.action.RemoteExtensionActionResponse;
+import org.density.extensions.action.TransportActionRequestFromExtension;
+import org.density.extensions.rest.RegisterRestActionsRequest;
+import org.density.extensions.rest.RestActionsRequestHandler;
+import org.density.extensions.settings.CustomSettingsRequestHandler;
+import org.density.extensions.settings.RegisterCustomSettingsRequest;
+import org.density.identity.IdentityService;
+import org.density.identity.tokens.AuthToken;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -59,9 +59,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * The main class for managing Extension communication with the OpenSearch Node.
+ * The main class for managing Extension communication with the Density Node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ExtensionsManager {
     public static final String REQUEST_EXTENSION_ACTION_NAME = "internal:discovery/extensions";
@@ -82,12 +82,12 @@ public class ExtensionsManager {
     private static final Logger logger = LogManager.getLogger(ExtensionsManager.class);
 
     /**
-     * Enum for OpenSearch Requests
+     * Enum for Density Requests
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static enum OpenSearchRequestType {
-        REQUEST_OPENSEARCH_NAMED_WRITEABLE_REGISTRY
+    public static enum DensityRequestType {
+        REQUEST_DENSITY_NAMED_WRITEABLE_REGISTRY
     }
 
     private ExtensionTransportActionsHandler extensionTransportActionsHandler;
@@ -196,7 +196,7 @@ public class ExtensionsManager {
     }
 
     /**
-     * Handles Transport Request from {@link org.opensearch.extensions.action.ExtensionTransportAction} which was invoked by an extension via {@link ExtensionTransportActionsHandler}.
+     * Handles Transport Request from {@link org.density.extensions.action.ExtensionTransportAction} which was invoked by an extension via {@link ExtensionTransportActionsHandler}.
      *
      * @param request which was sent by an extension.
      */
@@ -205,7 +205,7 @@ public class ExtensionsManager {
     }
 
     /**
-     * Handles Transport Request from {@link org.opensearch.extensions.action.ExtensionTransportAction} which was invoked by OpenSearch or a plugin
+     * Handles Transport Request from {@link org.density.extensions.action.ExtensionTransportAction} which was invoked by Density or a plugin
      *
      * @param request which was sent by an extension.
      */
@@ -334,8 +334,8 @@ public class ExtensionsManager {
         validateField("extension host address", extension.getHostAddress());
         validateField("extension port", extension.getPort());
         validateField("extension version", extension.getVersion());
-        validateField("opensearch version", extension.getOpensearchVersion());
-        validateField("minimum opensearch version", extension.getMinimumCompatibleVersion());
+        validateField("density version", extension.getOpensearchVersion());
+        validateField("minimum density version", extension.getMinimumCompatibleVersion());
         if (extensionIdMap.containsKey(extension.getUniqueId())) {
             throw new IOException("Duplicate uniqueId [" + extension.getUniqueId() + "]. Did not load extension: " + extension);
         }
@@ -420,7 +420,7 @@ public class ExtensionsManager {
     /**
      * Handles an {@link ExtensionRequest}.
      *
-     * @param extensionRequest  The request to handle, of a type defined in the {@link org.opensearch.extensions.proto.ExtensionRequestProto.RequestType} enum.
+     * @param extensionRequest  The request to handle, of a type defined in the {@link org.density.extensions.proto.ExtensionRequestProto.RequestType} enum.
      * @return  an Response matching the request.
      * @throws Exception if the request is not handled properly.
      */

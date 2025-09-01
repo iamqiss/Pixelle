@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.SearchScript;
-import org.opensearch.search.pipeline.AbstractProcessor;
-import org.opensearch.search.pipeline.PipelineProcessingContext;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
-import org.opensearch.search.pipeline.StatefulSearchRequestProcessor;
+import org.density.action.search.SearchRequest;
+import org.density.common.Nullable;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.script.ScriptException;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.SearchScript;
+import org.density.search.pipeline.AbstractProcessor;
+import org.density.search.pipeline.PipelineProcessingContext;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchRequestProcessor;
+import org.density.search.pipeline.StatefulSearchRequestProcessor;
 
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Processor that evaluates a script with a search request in its context

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.coordination.LeaderChecker;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.Strings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.LongGCDisruption;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.NetworkDisruption.NetworkLinkDisruptionType;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
-import org.opensearch.test.disruption.SingleNodeDisruption;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.coordination.LeaderChecker;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.common.Strings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.LongGCDisruption;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.NetworkDisruption.NetworkLinkDisruptionType;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.disruption.SingleNodeDisruption;
+import org.density.test.transport.MockTransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,8 +78,8 @@ import static org.junit.Assume.assumeThat;
  * Tests relating to the loss of the cluster-manager, but which work with the default fault detection settings which are rather lenient and will
  * not detect a cluster-manager failure too quickly.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class StableClusterManagerDisruptionIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class StableClusterManagerDisruptionIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

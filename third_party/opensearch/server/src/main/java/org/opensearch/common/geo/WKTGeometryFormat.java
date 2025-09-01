@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.utils.WellKnownText;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.utils.WellKnownText;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -44,7 +44,7 @@ import java.text.ParseException;
 /**
  * Well Known Text Format
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WKTGeometryFormat implements GeometryFormat<Geometry> {
     public static final String NAME = "wkt";

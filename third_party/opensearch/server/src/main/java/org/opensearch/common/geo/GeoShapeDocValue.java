@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.LatLonShape;
@@ -16,18 +16,18 @@ import org.apache.lucene.geo.LatLonGeometry;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.mapper.GeoShapeIndexer;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Rectangle;
+import org.density.index.mapper.GeoShapeIndexer;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * This class is an OpenSearch Internal representation of lucene {@link LatLonShapeDocValuesField} for GeoShape.
+ * This class is an Density Internal representation of lucene {@link LatLonShapeDocValuesField} for GeoShape.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeDocValue extends ShapeDocValue {
     private static final String FIELD_NAME = "missingField";

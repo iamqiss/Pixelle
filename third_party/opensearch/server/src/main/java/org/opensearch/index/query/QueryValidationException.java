@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.common.ValidationException;
+import org.density.common.ValidationException;
 
 import java.util.List;
 
 /**
  * This exception can be used to indicate various reasons why validation of a query has failed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QueryValidationException extends ValidationException {
 

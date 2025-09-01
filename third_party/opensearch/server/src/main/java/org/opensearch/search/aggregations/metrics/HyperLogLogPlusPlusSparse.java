@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.IntArray;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.IntArray;
 
 /**
  * AbstractHyperLogLogPlusPlus instance that only supports linear counting. The maximum number of hashes supported
@@ -44,7 +44,7 @@ import org.opensearch.common.util.IntArray;
  * This structure expects all the added values to be distinct and therefore there are no checks
  * if an element has been previously added.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class HyperLogLogPlusPlusSparse extends AbstractHyperLogLogPlusPlus implements Releasable {
 
@@ -101,7 +101,7 @@ final class HyperLogLogPlusPlusSparse extends AbstractHyperLogLogPlusPlus implem
     /**
      * The plus plus
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinearCounting extends AbstractLinearCounting implements Releasable {
 
@@ -197,7 +197,7 @@ final class HyperLogLogPlusPlusSparse extends AbstractHyperLogLogPlusPlus implem
     /**
      * The plus plus iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinearCountingIterator implements AbstractLinearCounting.HashesIterator {
 

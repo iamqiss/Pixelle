@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,12 +26,12 @@
  */
 
 /**
- * Allow to build a {@link org.opensearch.node.Node} which is a
+ * Allow to build a {@link org.density.node.Node} which is a
  * node within the cluster.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;

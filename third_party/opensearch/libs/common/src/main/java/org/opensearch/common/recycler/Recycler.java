@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.recycler;
+package org.density.common.recycler;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lease.Releasable;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lease.Releasable;
 
 /**
  * A recycled object, note, implementations should support calling obtain and then recycle
  * on different threads.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public interface Recycler<T> {
@@ -47,7 +47,7 @@ public interface Recycler<T> {
     /**
      * Base factory interface
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Factory<T> {
         Recycler<T> build();
@@ -56,7 +56,7 @@ public interface Recycler<T> {
     /**
      * Generic for recycler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface C<T> {
 
@@ -73,7 +73,7 @@ public interface Recycler<T> {
     /**
      * Generic releasable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @ExperimentalApi
     interface V<T> extends Releasable {

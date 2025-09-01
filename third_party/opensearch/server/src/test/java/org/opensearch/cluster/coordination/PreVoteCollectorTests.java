@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.monitor.StatusInfo;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransport;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -61,18 +61,18 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.coordination.PreVoteCollector.REQUEST_PRE_VOTE_ACTION_NAME;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.threadpool.ThreadPool.Names.SAME;
+import static org.density.cluster.coordination.PreVoteCollector.REQUEST_PRE_VOTE_ACTION_NAME;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.threadpool.ThreadPool.Names.SAME;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public class PreVoteCollectorTests extends OpenSearchTestCase {
+public class PreVoteCollectorTests extends DensityTestCase {
 
     private DeterministicTaskQueue deterministicTaskQueue;
     private PreVoteCollector preVoteCollector;

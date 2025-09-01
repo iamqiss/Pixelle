@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.HttpHost;
 
@@ -41,7 +41,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Metadata about an {@link HttpHost} running OpenSearch.
+ * Metadata about an {@link HttpHost} running Density.
  */
 public class Node {
     /**
@@ -59,12 +59,12 @@ public class Node {
      */
     private final String name;
     /**
-     * Version of OpenSearch that the node is running or {@code null}
+     * Version of Density that the node is running or {@code null}
      * if we don't know the version.
      */
     private final String version;
     /**
-     * Roles that the OpenSearch process on the host has or {@code null}
+     * Roles that the Density process on the host has or {@code null}
      * if we don't know what roles the node has.
      */
     private final Roles roles;
@@ -81,8 +81,8 @@ public class Node {
      * @param host       primary host address
      * @param boundHosts addresses on which the host is listening
      * @param name       name of the node
-     * @param version    version of OpenSearch
-     * @param roles      roles that the OpenSearch process has on the host
+     * @param version    version of Density
+     * @param roles      roles that the Density process has on the host
      * @param attributes attributes declared on the node
      */
     public Node(HttpHost host, Set<HttpHost> boundHosts, String name, String version, Roles roles, Map<String, List<String>> attributes) {
@@ -130,7 +130,7 @@ public class Node {
     }
 
     /**
-     * Version of OpenSearch that the node is running or {@code null}
+     * Version of Density that the node is running or {@code null}
      * if we don't know the version.
      */
     public String getVersion() {
@@ -138,7 +138,7 @@ public class Node {
     }
 
     /**
-     * Roles that the OpenSearch process on the host has or {@code null}
+     * Roles that the Density process on the host has or {@code null}
      * if we don't know what roles the node has.
      */
     public Roles getRoles() {
@@ -204,7 +204,7 @@ public class Node {
     }
 
     /**
-     * Role information about an OpenSearch process.
+     * Role information about an Density process.
      */
     public static final class Roles {
 

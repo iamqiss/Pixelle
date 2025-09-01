@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.node.Node;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.node.Node;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.index.seqno.RetentionLeaseActions.RETAIN_ALL;
+import static org.density.index.seqno.RetentionLeaseActions.RETAIN_ALL;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -58,7 +58,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasToString;
 
-public class RetentionLeaseActionsTests extends OpenSearchSingleNodeTestCase {
+public class RetentionLeaseActionsTests extends DensitySingleNodeTestCase {
 
     public void testAddAction() {
         final Settings settings = Settings.builder()

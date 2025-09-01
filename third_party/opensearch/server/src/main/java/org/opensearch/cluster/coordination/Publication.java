@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ClusterStatePublisher.AckListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.TransportException;
+import org.density.DensityException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ClusterStatePublisher.AckListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.TransportException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ import java.util.stream.Collectors;
 /**
  * Publication task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class Publication {
 
@@ -104,7 +104,7 @@ public abstract class Publication {
         if (applyCommitRequest.isPresent() == false) {
             logger.debug("cancel: [{}] cancelled before committing (reason: {})", this, reason);
             // fail all current publications
-            final Exception e = new OpenSearchException("publication cancelled before committing: " + reason);
+            final Exception e = new DensityException("publication cancelled before committing: " + reason);
             publicationTargets.stream().filter(PublicationTarget::isActive).forEach(pt -> pt.setFailed(e));
         }
         onPossibleCompletion();
@@ -258,7 +258,7 @@ public abstract class Publication {
     /**
      * A publication target.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class PublicationTarget {
         private final DiscoveryNode discoveryNode;
@@ -333,7 +333,7 @@ public abstract class Publication {
         void onFaultyNode(DiscoveryNode faultyNode) {
             if (isActive() && discoveryNode.equals(faultyNode)) {
                 logger.debug("onFaultyNode: [{}] is faulty, failing target in publication {}", faultyNode, Publication.this);
-                setFailed(new OpenSearchException("faulty node"));
+                setFailed(new DensityException("faulty node"));
                 onPossibleCommitFailure();
             }
         }
@@ -374,7 +374,7 @@ public abstract class Publication {
         /**
          * A handler for a publish response.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private class PublishResponseHandler implements ActionListener<PublishWithJoinResponse> {
 
@@ -420,7 +420,7 @@ public abstract class Publication {
         /**
          * An apply commit response handler.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private class ApplyCommitResponseHandler implements ActionListener<TransportResponse.Empty> {
 

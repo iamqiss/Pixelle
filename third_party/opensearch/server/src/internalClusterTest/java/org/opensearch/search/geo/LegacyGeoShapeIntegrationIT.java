@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.geometry.Circle;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.geometry.Circle;
+import org.density.index.IndexService;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.indices.IndicesService;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.index.query.QueryBuilders.geoShapeQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.query.QueryBuilders.geoShapeQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class LegacyGeoShapeIntegrationIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class LegacyGeoShapeIntegrationIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public LegacyGeoShapeIntegrationIT(Settings staticSettings) {
         super(staticSettings);
@@ -288,8 +288,8 @@ public class LegacyGeoShapeIntegrationIT extends ParameterizedStaticSettingsOpen
             assertAcked(client().admin().cluster().updateSettings(updateSettingsRequest).actionGet());
 
             // Set search.allow_expensive_queries to "false" => assert failure
-            OpenSearchException e = expectThrows(
-                OpenSearchException.class,
+            DensityException e = expectThrows(
+                DensityException.class,
                 () -> client().prepareSearch("test").setQuery(geoShapeQuery("shape", new Circle(30, 50, 77000))).get()
             );
             assertEquals(

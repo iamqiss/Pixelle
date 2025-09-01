@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.routing;
+package org.density.routing;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.termvectors.MultiTermVectorsResponse;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.DocWriteRequest;
+import org.density.action.RoutingMissingException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.explain.ExplainResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.termvectors.MultiTermVectorsResponse;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.OperationRouting;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Requests;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SimpleRoutingIT extends OpenSearchIntegTestCase {
+public class SimpleRoutingIT extends DensityIntegTestCase {
 
     @Override
     protected int minimumNumberOfShards() {
@@ -383,7 +383,7 @@ public class SimpleRoutingIT extends OpenSearchIntegTestCase {
         try {
             client().prepareIndex(indexOrAlias()).setId("1").setSource("field", "value1").get();
             fail("index with missing routing when routing is required should fail");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.unwrapCause(), instanceOf(RoutingMissingException.class));
         }
 
@@ -396,7 +396,7 @@ public class SimpleRoutingIT extends OpenSearchIntegTestCase {
         try {
             client().prepareDelete(indexOrAlias(), "1").get();
             fail("delete with missing routing when routing is required should fail");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.unwrapCause(), instanceOf(RoutingMissingException.class));
         }
 
@@ -414,7 +414,7 @@ public class SimpleRoutingIT extends OpenSearchIntegTestCase {
         try {
             client().prepareUpdate(indexOrAlias(), "1").setDoc(Requests.INDEX_CONTENT_TYPE, "field", "value2").execute().actionGet();
             fail("update with missing routing when routing is required should fail");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.unwrapCause(), instanceOf(RoutingMissingException.class));
         }
 

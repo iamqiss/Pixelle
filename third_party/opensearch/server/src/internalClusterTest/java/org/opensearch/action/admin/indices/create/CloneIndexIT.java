@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.seqno.SeqNoStats;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.VersionUtils;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 
-public class CloneIndexIT extends OpenSearchIntegTestCase {
+public class CloneIndexIT extends DensityIntegTestCase {
 
     @Override
     protected boolean forbidPrivateIndexSettings() {

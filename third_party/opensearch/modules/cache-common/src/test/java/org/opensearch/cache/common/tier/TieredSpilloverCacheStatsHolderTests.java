@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.cache.stats.CacheStats;
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolder;
-import org.opensearch.common.cache.stats.ImmutableCacheStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.cache.stats.CacheStats;
+import org.density.common.cache.stats.DefaultCacheStatsHolder;
+import org.density.common.cache.stats.ImmutableCacheStats;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,11 +23,11 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_VALUES;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_VALUES;
 
-public class TieredSpilloverCacheStatsHolderTests extends OpenSearchTestCase {
+public class TieredSpilloverCacheStatsHolderTests extends DensityTestCase {
     // These are modified from DefaultCacheStatsHolderTests.java to account for the tiers. Because we can't add a dependency on server.test,
     // we can't reuse the same code.
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.termvectors;
+package org.density.index.termvectors;
 
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,12 +51,12 @@ import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TermVectorsServiceTests extends OpenSearchSingleNodeTestCase {
+public class TermVectorsServiceTests extends DensitySingleNodeTestCase {
 
     public void testTook() throws Exception {
         XContentBuilder mapping = jsonBuilder().startObject()

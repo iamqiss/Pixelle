@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.cluster.ClusterState;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.Collection;
 
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 @ThreadLeakFilters(filters = { HdfsClientThreadLeakFilter.class })
-public class HdfsTests extends OpenSearchSingleNodeTestCase {
+public class HdfsTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
@@ -69,7 +69,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
             .put("path", "foo")
             .put("chunk_size", randomIntBetween(100, 1000) + "k")
             .put("compress", randomBoolean());
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "hdfs", settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "hdfs", settings);
 
         createIndex("test-idx-1");
         createIndex("test-idx-2");
@@ -160,7 +160,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
 
     public void testMissingUri() {
         try {
-            OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo1", "hdfs", Settings.builder());
+            DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo1", "hdfs", Settings.builder());
             fail();
         } catch (RepositoryException e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
@@ -171,7 +171,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
     public void testEmptyUri() {
         try {
             Settings.Builder settings = Settings.builder().put("uri", "/path");
-            OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo", "hdfs", settings);
+            DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo", "hdfs", settings);
             fail();
         } catch (RepositoryException e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
@@ -182,7 +182,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
     public void testNonHdfsUri() {
         try {
             Settings.Builder settings = Settings.builder().put("uri", "file:///");
-            OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo", "hdfs", settings);
+            DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo", "hdfs", settings);
             fail();
         } catch (RepositoryException e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
@@ -193,7 +193,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
     public void testPathSpecifiedInHdfs() {
         try {
             Settings.Builder settings = Settings.builder().put("uri", "hdfs:///some/path");
-            OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo2", "hdfs", settings);
+            DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo2", "hdfs", settings);
             fail();
         } catch (RepositoryException e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);
@@ -204,7 +204,7 @@ public class HdfsTests extends OpenSearchSingleNodeTestCase {
     public void testMissingPath() {
         try {
             Settings.Builder settings = Settings.builder().put("uri", "hdfs:///");
-            OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo3", "hdfs", settings);
+            DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo3", "hdfs", settings);
             fail();
         } catch (RepositoryException e) {
             assertTrue(e.getCause() instanceof IllegalArgumentException);

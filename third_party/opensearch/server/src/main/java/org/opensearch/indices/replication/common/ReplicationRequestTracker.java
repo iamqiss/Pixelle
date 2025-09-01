@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.replication.common;
+package org.density.indices.replication.common;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
+import org.density.common.Nullable;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.action.ActionListener;
+import org.density.index.seqno.LocalCheckpointTracker;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
 
 /**
  * Tracks replication requests
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationRequestTracker {
 
@@ -69,7 +69,7 @@ public class ReplicationRequestTracker {
         if (checkpointTracker.hasProcessed(requestSeqNo)) {
             final ListenableFuture<Void> existingFuture = ongoingRequests.get(requestSeqNo);
             if (existingFuture != null) {
-                existingFuture.addListener(listener, OpenSearchExecutors.newDirectExecutorService());
+                existingFuture.addListener(listener, DensityExecutors.newDirectExecutorService());
             } else {
                 listener.onResponse(null);
             }
@@ -90,7 +90,7 @@ public class ReplicationRequestTracker {
                     // We do not remove the future to cache the error for retried requests
                     listener.onFailure(e);
                 }
-            }, OpenSearchExecutors.newDirectExecutorService());
+            }, DensityExecutors.newDirectExecutorService());
             return future;
         }
     }

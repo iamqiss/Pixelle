@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.sort;
+package org.density.transport.grpc.proto.request.search.sort;
 
-import org.opensearch.search.sort.SortOrder;
+import org.density.search.sort.SortOrder;
 
 /**
- * Utility class for converting SortOrder Protocol Buffers to OpenSearch objects.
+ * Utility class for converting SortOrder Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of sort orders
- * from various sort types into their corresponding OpenSearch SortOrder enums for search operations.
+ * from various sort types into their corresponding Density SortOrder enums for search operations.
  */
 public class SortOrderProtoUtils {
 
@@ -21,15 +21,15 @@ public class SortOrderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer ScoreSort.SortOrder to an OpenSearch SortOrder.
+     * Converts a Protocol Buffer ScoreSort.SortOrder to an Density SortOrder.
      * Similar to {@link SortOrder#fromString(String)}, this method maps the Protocol Buffer
-     * sort order enum values to their corresponding OpenSearch SortOrder values.
+     * sort order enum values to their corresponding Density SortOrder values.
      *
      * @param sortOrder The Protocol Buffer ScoreSort.SortOrder to convert
-     * @return The corresponding OpenSearch SortOrder
+     * @return The corresponding Density SortOrder
      * @throws IllegalArgumentException if the sort order is unspecified or invalid
      */
-    public static SortOrder fromProto(org.opensearch.protobufs.SortOrder sortOrder) {
+    public static SortOrder fromProto(org.density.protobufs.SortOrder sortOrder) {
         switch (sortOrder) {
             case SORT_ORDER_ASC:
                 return SortOrder.ASC;

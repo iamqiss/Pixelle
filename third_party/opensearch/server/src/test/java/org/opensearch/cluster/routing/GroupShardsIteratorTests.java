@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.action.OriginalIndicesTests;
-import org.opensearch.action.search.SearchShardIterator;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.OriginalIndicesTests;
+import org.density.action.search.SearchShardIterator;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.STARTED;
+import static org.density.cluster.routing.ShardRoutingState.STARTED;
 
-public class GroupShardsIteratorTests extends OpenSearchTestCase {
+public class GroupShardsIteratorTests extends DensityTestCase {
 
     public static List<ShardRouting> randomShardRoutings(ShardId shardId) {
         return randomShardRoutings(shardId, randomIntBetween(0, 2));

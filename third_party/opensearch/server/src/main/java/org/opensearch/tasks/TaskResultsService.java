@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OriginSettingClient;
-import org.opensearch.transport.client.Requests;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.ResourceAlreadyExistsException;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.Streams;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.OriginSettingClient;
+import org.density.transport.client.Requests;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,13 +67,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.opensearch.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 
 /**
  * Service that can store task results.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TaskResultsService {
 
@@ -172,7 +172,7 @@ public class TaskResultsService {
             taskResult.toXContent(builder, ToXContent.EMPTY_PARAMS);
             index.setSource(builder);
         } catch (IOException e) {
-            throw new OpenSearchException("Couldn't convert task result to XContent for [{}]", e, taskResult.getTask());
+            throw new DensityException("Couldn't convert task result to XContent for [{}]", e, taskResult.getTask());
         }
         doStoreResult(STORE_BACKOFF_POLICY.iterator(), index, listener);
     }
@@ -186,7 +186,7 @@ public class TaskResultsService {
 
             @Override
             public void onFailure(Exception e) {
-                if (false == (e instanceof OpenSearchRejectedExecutionException) || false == backoff.hasNext()) {
+                if (false == (e instanceof DensityRejectedExecutionException) || false == backoff.hasNext()) {
                     listener.onFailure(e);
                 } else {
                     TimeValue wait = backoff.next();

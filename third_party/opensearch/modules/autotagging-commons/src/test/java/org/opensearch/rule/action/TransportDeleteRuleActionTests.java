@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.RulePersistenceServiceRegistry;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.RulePersistenceServiceRegistry;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportDeleteRuleActionTests extends OpenSearchTestCase {
+public class TransportDeleteRuleActionTests extends DensityTestCase {
     TransportDeleteRuleAction sut;
 
     public void testExecute() {

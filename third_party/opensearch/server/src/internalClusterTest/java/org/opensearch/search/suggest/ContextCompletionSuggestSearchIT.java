@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressCodecs;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.suggest.CompletionSuggestSearchIT.CompletionMappingBuilder;
-import org.opensearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.opensearch.search.suggest.completion.context.CategoryContextMapping;
-import org.opensearch.search.suggest.completion.context.CategoryQueryContext;
-import org.opensearch.search.suggest.completion.context.ContextBuilder;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.GeoContextMapping;
-import org.opensearch.search.suggest.completion.context.GeoQueryContext;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.suggest.CompletionSuggestSearchIT.CompletionMappingBuilder;
+import org.density.search.suggest.completion.CompletionSuggestionBuilder;
+import org.density.search.suggest.completion.context.CategoryContextMapping;
+import org.density.search.suggest.completion.context.CategoryQueryContext;
+import org.density.search.suggest.completion.context.ContextBuilder;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.GeoContextMapping;
+import org.density.search.suggest.completion.context.GeoQueryContext;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,14 +65,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 @SuppressCodecs("*") // requires custom completion format
-public class ContextCompletionSuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class ContextCompletionSuggestSearchIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public ContextCompletionSuggestSearchIT(Settings settings) {
         super(settings);
     }

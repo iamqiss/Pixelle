@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geo.GeometryTestUtils;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geo.GeometryTestUtils;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
-public class GeometryIndexerTests extends OpenSearchTestCase {
+public class GeometryIndexerTests extends DensityTestCase {
 
     GeoShapeIndexer indexer = new GeoShapeIndexer(true, "test");
 

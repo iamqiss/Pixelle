@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.Build;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.io.stream.ReleasableBytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.AbstractRestChannel;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
+import org.density.Build;
+import org.density.common.Nullable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.io.stream.ReleasableBytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.network.CloseableChannel;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.rest.AbstractRestChannel;
+import org.density.rest.RestChannel;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.tasks.Task.X_OPAQUE_ID;
+import static org.density.tasks.Task.X_OPAQUE_ID;
 
 /**
  * The default rest channel for incoming requests. This class implements the basic logic for sending a rest
  * response. It will set necessary headers and ensure that bytes are released after the response is sent.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class DefaultRestChannel extends AbstractRestChannel implements RestChannel {
 
@@ -70,8 +70,8 @@ class DefaultRestChannel extends AbstractRestChannel implements RestChannel {
     static final String CONTENT_TYPE = "content-type";
     static final String CONTENT_LENGTH = "content-length";
     static final String SET_COOKIE = "set-cookie";
-    static final String SERVER_VERSION = "X-OpenSearch-Version";
-    static final String SERVER_VERSION_VALUE = "OpenSearch/"
+    static final String SERVER_VERSION = "X-Density-Version";
+    static final String SERVER_VERSION_VALUE = "Density/"
         + Build.CURRENT.getQualifiedVersion()
         + " ("
         + Build.CURRENT.getDistribution()

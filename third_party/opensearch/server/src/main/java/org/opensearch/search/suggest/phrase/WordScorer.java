@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiTerms;
@@ -37,17 +37,17 @@ import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.common.lucene.index.FreqTermsEnum;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.search.suggest.phrase.DirectCandidateGenerator.Candidate;
-import org.opensearch.search.suggest.phrase.DirectCandidateGenerator.CandidateSet;
+import org.density.common.lucene.index.FreqTermsEnum;
+import org.density.common.util.BigArrays;
+import org.density.search.suggest.phrase.DirectCandidateGenerator.Candidate;
+import org.density.search.suggest.phrase.DirectCandidateGenerator.CandidateSet;
 
 import java.io.IOException;
 
 /**
  * Scores by words
  *
- * @opensearch.internal
+ * @density.internal
  */
 // TODO public for tests
 public abstract class WordScorer {
@@ -136,7 +136,7 @@ public abstract class WordScorer {
     /**
      * Factory for a new scorer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface WordScorerFactory {
         WordScorer newScorer(IndexReader reader, Terms terms, String field, double realWordLikelihood, BytesRef separator)

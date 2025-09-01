@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.index.reindex.BulkByScrollParallelizationHelper.sliceIntoSubRequests;
-import static org.opensearch.search.RandomSearchRequestGenerator.randomSearchRequest;
-import static org.opensearch.search.RandomSearchRequestGenerator.randomSearchSourceBuilder;
+import static org.density.index.reindex.BulkByScrollParallelizationHelper.sliceIntoSubRequests;
+import static org.density.search.RandomSearchRequestGenerator.randomSearchRequest;
+import static org.density.search.RandomSearchRequestGenerator.randomSearchSourceBuilder;
 
-public class BulkByScrollParallelizationHelperTests extends OpenSearchTestCase {
+public class BulkByScrollParallelizationHelperTests extends DensityTestCase {
     public void testSliceIntoSubRequests() throws IOException {
         SearchRequest searchRequest = randomSearchRequest(
             () -> randomSearchSourceBuilder(() -> null, () -> null, () -> null, () -> emptyList(), () -> null)

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.AbstractXContentParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.FieldNamesFieldMapper.FieldNamesFieldType;
+import org.density.common.Explicit;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.AbstractXContentParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.FieldNamesFieldMapper.FieldNamesFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,9 +63,9 @@ import java.util.TreeMap;
 import java.util.stream.StreamSupport;
 
 /**
- * The base OpenSearch Field Mapper
+ * The base Density Field Mapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class FieldMapper extends Mapper implements Cloneable {
@@ -79,7 +79,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     /**
      * Base builder for all field mappers
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder<T extends Builder<T>> extends Mapper.Builder<T> {
 
@@ -686,7 +686,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     /**
      * Multi field implementation used across field mappers
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class MultiFields implements Iterable<Mapper> {
@@ -698,7 +698,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
         /**
          * Concrete builder for field mappers
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Builder {
 
@@ -821,7 +821,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
     /**
      * Represents a list of fields with optional boost factor where the current field should be copied to
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class CopyTo {
@@ -852,7 +852,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
         /**
          * Builder for the copyTo field
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Builder {
             private final List<String> copyToBuilders = new ArrayList<>();

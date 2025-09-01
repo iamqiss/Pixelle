@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class JvmStatsTests extends OpenSearchTestCase {
+public class JvmStatsTests extends DensityTestCase {
     public void testJvmStats() throws IOException {
         JvmStats stats = JvmStats.jvmStats();
         assertNotNull(stats);

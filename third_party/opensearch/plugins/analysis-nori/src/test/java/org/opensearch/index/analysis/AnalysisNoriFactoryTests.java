@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.ko.KoreanTokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisFactoryTestCase;
-import org.opensearch.plugin.analysis.nori.AnalysisNoriPlugin;
+import org.density.indices.analysis.AnalysisFactoryTestCase;
+import org.density.plugin.analysis.nori.AnalysisNoriPlugin;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.StepListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.FileChunkWriter;
-import org.opensearch.indices.recovery.MultiChunkTransfer;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.CopyState;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.transport.Transports;
+import org.density.DensityException;
+import org.density.action.StepListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.logging.Loggers;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.FileChunkWriter;
+import org.density.indices.recovery.MultiChunkTransfer;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.CopyState;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.transport.Transports;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import java.util.function.Consumer;
 /**
  * Orchestrates sending requested segment files to a target shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SegmentReplicationSourceHandler {
 
@@ -116,9 +116,9 @@ class SegmentReplicationSourceHandler {
 
         final ReplicationTimer timer = new ReplicationTimer();
         if (isReplicating.compareAndSet(false, true) == false) {
-            throw new OpenSearchException("Replication to {} is already running.", shard.shardId());
+            throw new DensityException("Replication to {} is already running.", shard.shardId());
         }
-        future.addListener(listener, OpenSearchExecutors.newDirectExecutorService());
+        future.addListener(listener, DensityExecutors.newDirectExecutorService());
         final Closeable releaseResources = () -> IOUtils.close(resources);
         try {
             timer.start();

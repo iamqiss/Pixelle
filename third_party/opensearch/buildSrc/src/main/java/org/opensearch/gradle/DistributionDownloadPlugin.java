@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
-import org.opensearch.gradle.OpenSearchDistribution.Platform;
-import org.opensearch.gradle.OpenSearchDistribution.Type;
-import org.opensearch.gradle.docker.DockerSupportPlugin;
-import org.opensearch.gradle.docker.DockerSupportService;
-import org.opensearch.gradle.transform.SymbolicLinkPreservingUntarTransform;
-import org.opensearch.gradle.transform.UnzipTransform;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.DensityDistribution.Platform;
+import org.density.gradle.DensityDistribution.Type;
+import org.density.gradle.docker.DockerSupportPlugin;
+import org.density.gradle.docker.DockerSupportService;
+import org.density.gradle.transform.SymbolicLinkPreservingUntarTransform;
+import org.density.gradle.transform.UnzipTransform;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -54,29 +54,29 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * A plugin to manage getting and extracting distributions of OpenSearch.
+ * A plugin to manage getting and extracting distributions of Density.
  * <p>
  * The plugin provides hooks to register custom distribution resolutions.
- * This plugin resolves distributions from the OpenSearch downloads service if
+ * This plugin resolves distributions from the Density downloads service if
  * no registered resolution strategy can resolve to a distribution.
  */
 public class DistributionDownloadPlugin implements Plugin<Project> {
 
-    static final String RESOLUTION_CONTAINER_NAME = "opensearch_distributions_resolutions";
-    private static final String CONTAINER_NAME = "opensearch_distributions";
-    private static final String FAKE_IVY_GROUP = "opensearch-distribution";
-    private static final String FAKE_SNAPSHOT_IVY_GROUP = "opensearch-distribution-snapshot";
-    private static final String DOWNLOAD_REPO_NAME = "opensearch-downloads";
-    private static final String SNAPSHOT_REPO_NAME = "opensearch-snapshots";
-    public static final String DISTRO_EXTRACTED_CONFIG_PREFIX = "opensearch_distro_extracted_";
+    static final String RESOLUTION_CONTAINER_NAME = "density_distributions_resolutions";
+    private static final String CONTAINER_NAME = "density_distributions";
+    private static final String FAKE_IVY_GROUP = "density-distribution";
+    private static final String FAKE_SNAPSHOT_IVY_GROUP = "density-distribution-snapshot";
+    private static final String DOWNLOAD_REPO_NAME = "density-downloads";
+    private static final String SNAPSHOT_REPO_NAME = "density-snapshots";
+    public static final String DISTRO_EXTRACTED_CONFIG_PREFIX = "density_distro_extracted_";
 
-    private static final String RELEASE_PATTERN_LAYOUT = "/core/opensearch/[revision]/[module]-min-[revision](-[classifier]).[ext]";
+    private static final String RELEASE_PATTERN_LAYOUT = "/core/density/[revision]/[module]-min-[revision](-[classifier]).[ext]";
     private static final String SNAPSHOT_PATTERN_LAYOUT =
-        "/snapshots/core/opensearch/[revision]/[module]-min-[revision](-[classifier])-latest.[ext]";
+        "/snapshots/core/density/[revision]/[module]-min-[revision](-[classifier])-latest.[ext]";
     private static final String BUNDLE_PATTERN_LAYOUT =
-        "/ci/dbc/distribution-build-opensearch/[revision]/latest/linux/x64/tar/dist/opensearch/[module]-[revision](-[classifier]).[ext]";
+        "/ci/dbc/distribution-build-density/[revision]/latest/linux/x64/tar/dist/density/[module]-[revision](-[classifier]).[ext]";
 
-    private NamedDomainObjectContainer<OpenSearchDistribution> distributionsContainer;
+    private NamedDomainObjectContainer<DensityDistribution> distributionsContainer;
     private NamedDomainObjectContainer<DistributionResolution> distributionsResolutionStrategiesContainer;
 
     @Override
@@ -105,11 +105,11 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
     }
 
     private void setupDistributionContainer(Project project, Provider<DockerSupportService> dockerSupport) {
-        distributionsContainer = project.container(OpenSearchDistribution.class, name -> {
-            Configuration fileConfiguration = project.getConfigurations().create("opensearch_distro_file_" + name);
+        distributionsContainer = project.container(DensityDistribution.class, name -> {
+            Configuration fileConfiguration = project.getConfigurations().create("density_distro_file_" + name);
             Configuration extractedConfiguration = project.getConfigurations().create(DISTRO_EXTRACTED_CONFIG_PREFIX + name);
             extractedConfiguration.getAttributes().attribute(ArtifactAttributes.ARTIFACT_FORMAT, ArtifactTypeDefinition.DIRECTORY_TYPE);
-            return new OpenSearchDistribution(name, project.getObjects(), dockerSupport, fileConfiguration, extractedConfiguration);
+            return new DensityDistribution(name, project.getObjects(), dockerSupport, fileConfiguration, extractedConfiguration);
         });
         project.getExtensions().add(CONTAINER_NAME, distributionsContainer);
     }
@@ -124,8 +124,8 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
     }
 
     @SuppressWarnings("unchecked")
-    public static NamedDomainObjectContainer<OpenSearchDistribution> getContainer(Project project) {
-        return (NamedDomainObjectContainer<OpenSearchDistribution>) project.getExtensions().getByName(CONTAINER_NAME);
+    public static NamedDomainObjectContainer<DensityDistribution> getContainer(Project project) {
+        return (NamedDomainObjectContainer<DensityDistribution>) project.getExtensions().getByName(CONTAINER_NAME);
     }
 
     @SuppressWarnings("unchecked")
@@ -135,7 +135,7 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
 
     // pkg private for tests
     void setupDistributions(Project project) {
-        for (OpenSearchDistribution distribution : distributionsContainer) {
+        for (DensityDistribution distribution : distributionsContainer) {
             distribution.finalizeValues();
             DependencyHandler dependencies = project.getDependencies();
             // for the distribution as a file, just depend on the artifact directly
@@ -150,7 +150,7 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
         }
     }
 
-    private DistributionDependency resolveDependencyNotation(Project p, OpenSearchDistribution distribution) {
+    private DistributionDependency resolveDependencyNotation(Project p, DensityDistribution distribution) {
         return distributionsResolutionStrategiesContainer.stream()
             .sorted(Comparator.comparingInt(DistributionResolution::getPriority))
             .map(r -> r.getResolver().resolve(p, distribution))
@@ -187,14 +187,14 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
         }
         switch (distributionDownloadType) {
             case "bundle":
-                addIvyRepo(project, DOWNLOAD_REPO_NAME, "https://ci.opensearch.org", FAKE_IVY_GROUP, BUNDLE_PATTERN_LAYOUT);
-                addIvyRepo(project, SNAPSHOT_REPO_NAME, "https://ci.opensearch.org", FAKE_SNAPSHOT_IVY_GROUP, BUNDLE_PATTERN_LAYOUT);
+                addIvyRepo(project, DOWNLOAD_REPO_NAME, "https://ci.density.org", FAKE_IVY_GROUP, BUNDLE_PATTERN_LAYOUT);
+                addIvyRepo(project, SNAPSHOT_REPO_NAME, "https://ci.density.org", FAKE_SNAPSHOT_IVY_GROUP, BUNDLE_PATTERN_LAYOUT);
                 break;
             case "min":
                 addIvyRepo(
                     project,
                     DOWNLOAD_REPO_NAME,
-                    "https://artifacts.opensearch.org",
+                    "https://artifacts.density.org",
                     FAKE_IVY_GROUP,
                     "/releases" + RELEASE_PATTERN_LAYOUT,
                     "/release-candidates" + RELEASE_PATTERN_LAYOUT
@@ -202,7 +202,7 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
                 addIvyRepo(
                     project,
                     SNAPSHOT_REPO_NAME,
-                    "https://artifacts.opensearch.org",
+                    "https://artifacts.density.org",
                     FAKE_SNAPSHOT_IVY_GROUP,
                     SNAPSHOT_PATTERN_LAYOUT
                 );
@@ -218,12 +218,12 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
      * The returned object is suitable to be passed to {@link DependencyHandler}.
      * The concrete type of the object will be a set of maven coordinates as a {@link String}.
      * Maven coordinates point to either the integ-test-zip coordinates on maven central, or a set of artificial
-     * coordinates that resolve to the OpenSearch download service through an ivy repository.
+     * coordinates that resolve to the Density download service through an ivy repository.
      */
-    private String dependencyNotation(OpenSearchDistribution distribution) {
+    private String dependencyNotation(DensityDistribution distribution) {
         Version distroVersion = Version.fromString(distribution.getVersion());
         if (distribution.getType() == Type.INTEG_TEST_ZIP) {
-            return "org.opensearch.distribution.integ-test-zip:opensearch:" + distribution.getVersion() + "@zip";
+            return "org.density.distribution.integ-test-zip:density:" + distribution.getVersion() + "@zip";
         }
 
         String extension = distribution.getType().toString();
@@ -255,6 +255,6 @@ public class DistributionDownloadPlugin implements Plugin<Project> {
         }
 
         String group = distribution.getVersion().endsWith("-SNAPSHOT") ? FAKE_SNAPSHOT_IVY_GROUP : FAKE_IVY_GROUP;
-        return group + ":opensearch" + ":" + distribution.getVersion() + classifier + "@" + extension;
+        return group + ":density" + ":" + distribution.getVersion() + classifier + "@" + extension;
     }
 }

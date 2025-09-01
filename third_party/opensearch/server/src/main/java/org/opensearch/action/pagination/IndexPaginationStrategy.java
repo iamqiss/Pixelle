@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
+import org.density.DensityParseException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * This strategy can be used by the Rest APIs wanting to paginate the responses based on Indices.
  * The strategy considers create timestamps of indices as the keys to iterate over pages.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexPaginationStrategy implements PaginationStrategy<String> {
     private static final String DEFAULT_INDICES_PAGINATED_ENTITY = "indices";
@@ -190,15 +190,15 @@ public class IndexPaginationStrategy implements PaginationStrategy<String> {
             String decryptedToken = PaginationStrategy.decryptStringToken(requestedTokenStr);
             final String[] decryptedTokenElements = decryptedToken.split(SPLIT_REGEX);
             if (decryptedTokenElements.length != 2) {
-                throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
             }
             try {
                 long creationTimeOfLastRespondedIndex = Long.parseLong(decryptedTokenElements[CREATE_TIME_POS_IN_TOKEN]);
                 if (creationTimeOfLastRespondedIndex <= 0) {
-                    throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                    throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
                 }
             } catch (NumberFormatException exception) {
-                throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
             }
         }
     }

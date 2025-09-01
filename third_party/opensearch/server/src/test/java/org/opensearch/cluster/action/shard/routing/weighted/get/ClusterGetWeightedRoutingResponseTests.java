@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.action.shard.routing.weighted.get;
+package org.density.cluster.action.shard.routing.weighted.get;
 
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.Map;

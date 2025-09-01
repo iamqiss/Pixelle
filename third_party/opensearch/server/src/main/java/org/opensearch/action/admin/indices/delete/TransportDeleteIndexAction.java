@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.delete;
+package org.density.action.admin.indices.delete;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.DestructiveOperations;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.MetadataDeleteIndexService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.DestructiveOperations;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.MetadataDeleteIndexService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -61,7 +61,7 @@ import java.util.Set;
 /**
  * Delete index action.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportDeleteIndexAction extends TransportClusterManagerNodeAction<DeleteIndexRequest, AcknowledgedResponse> {
 

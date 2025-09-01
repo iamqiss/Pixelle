@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.env.Environment;
+import org.density.cli.Terminal;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.env.Environment;
 
 /**
  * A sub-command for the keystore CLI that enables upgrading the keystore format.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpgradeKeyStoreCommand extends BaseKeyStoreCommand {
 

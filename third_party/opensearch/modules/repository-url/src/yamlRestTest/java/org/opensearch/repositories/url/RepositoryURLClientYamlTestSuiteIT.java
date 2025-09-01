@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.url;
+package org.density.repositories.url;
 
 import com.carrotsearch.randomizedtesting.annotations.Name;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
@@ -38,18 +38,18 @@ import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.junit.annotations.TestIssueLogging;
-import org.opensearch.test.rest.yaml.ClientYamlTestCandidate;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.junit.annotations.TestIssueLogging;
+import org.density.test.rest.yaml.ClientYamlTestCandidate;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -58,13 +58,13 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 
-@TestIssueLogging(value = "_root:TRACE", issueUrl = "https://github.com/opensearch-project/OpenSearch/issues/9117")
-public class RepositoryURLClientYamlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
+@TestIssueLogging(value = "_root:TRACE", issueUrl = "https://github.com/density-project/Density/issues/9117")
+public class RepositoryURLClientYamlTestSuiteIT extends DensityClientYamlSuiteTestCase {
 
     public RepositoryURLClientYamlTestSuiteIT(@Name("yaml") ClientYamlTestCandidate testCandidate) {
         super(testCandidate);
@@ -72,7 +72,7 @@ public class RepositoryURLClientYamlTestSuiteIT extends OpenSearchClientYamlSuit
 
     @ParametersFactory
     public static Iterable<Object[]> parameters() throws Exception {
-        return OpenSearchClientYamlSuiteTestCase.createParameters();
+        return DensityClientYamlSuiteTestCase.createParameters();
     }
 
     /**

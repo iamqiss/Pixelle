@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotemigration;
+package org.density.remotemigration;
 
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.index.remote.RemoteIndexPath;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.settings.Settings;
+import org.density.core.util.FileSystemUtils;
+import org.density.index.remote.RemoteIndexPath;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteMigrationIndexMetadataUpdateIT extends MigrationBaseTestCase {
     /**
      * Scenario:

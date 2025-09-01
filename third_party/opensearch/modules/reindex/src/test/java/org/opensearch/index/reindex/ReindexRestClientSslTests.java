@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsExchange;
 import com.sun.net.httpserver.HttpsParameters;
 import com.sun.net.httpserver.HttpsServer;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.ssl.PemKeyConfig;
-import org.opensearch.common.ssl.PemTrustConfig;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.common.ssl.PemKeyConfig;
+import org.density.common.ssl.PemTrustConfig;
+import org.density.core.common.bytes.BytesArray;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.test.DensityTestCase;
+import org.density.watcher.ResourceWatcherService;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -82,7 +82,7 @@ import static org.mockito.Mockito.mock;
  * right SSL keys + trust settings.
  */
 @SuppressForbidden(reason = "use http server")
-public class ReindexRestClientSslTests extends OpenSearchTestCase {
+public class ReindexRestClientSslTests extends DensityTestCase {
 
     private static final String STRONG_PRIVATE_SECRET = "6!6428DQXwPpi7@$ggeg/=";
     private static HttpsServer server;
@@ -213,7 +213,7 @@ public class ReindexRestClientSslTests extends OpenSearchTestCase {
             assertThat(certs[0], Matchers.instanceOf(X509Certificate.class));
             final X509Certificate clientCert = (X509Certificate) certs[0];
             assertThat(clientCert.getSubjectDN().getName(), Matchers.is("CN=localhost,OU=UNIT,O=ORG,L=TORONTO,ST=ONTARIO,C=CA"));
-            assertThat(clientCert.getIssuerDN().getName(), Matchers.is("CN=OpenSearch Test Node"));
+            assertThat(clientCert.getIssuerDN().getName(), Matchers.is("CN=Density Test Node"));
         }
     }
 

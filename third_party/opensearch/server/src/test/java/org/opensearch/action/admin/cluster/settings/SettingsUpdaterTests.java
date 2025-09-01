@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.settings;
+package org.density.action.admin.cluster.settings;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,12 +53,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
+import static org.density.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
-public class SettingsUpdaterTests extends OpenSearchTestCase {
+public class SettingsUpdaterTests extends DensityTestCase {
 
     public void testUpdateSetting() {
         AtomicReference<Float> index = new AtomicReference<>();
@@ -246,11 +246,11 @@ public class SettingsUpdaterTests extends OpenSearchTestCase {
             .metadata(Metadata.builder().persistentSettings(settings).build())
             .build();
 
-        final Settings toApplyDebug = Settings.builder().put("logger.org.opensearch", "debug").build();
+        final Settings toApplyDebug = Settings.builder().put("logger.org.density", "debug").build();
         final ClusterState afterDebug = settingsUpdater.updateSettings(clusterState, toApplyDebug, Settings.EMPTY, logger);
         assertSettingDeprecationsAndWarnings(new Setting<?>[] { deprecatedSetting });
 
-        final Settings toApplyUnset = Settings.builder().putNull("logger.org.opensearch").build();
+        final Settings toApplyUnset = Settings.builder().putNull("logger.org.density").build();
         final ClusterState afterUnset = settingsUpdater.updateSettings(afterDebug, toApplyUnset, Settings.EMPTY, logger);
         assertNoDeprecationWarnings();
 

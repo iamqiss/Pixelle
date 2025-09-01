@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.tokens.OnBehalfOfClaims;
-import org.opensearch.identity.tokens.TokenManager;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityParseException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.http.HttpRequest;
+import org.density.identity.IdentityService;
+import org.density.identity.Subject;
+import org.density.identity.tokens.OnBehalfOfClaims;
+import org.density.identity.tokens.TokenManager;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestRequest.Method;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
@@ -41,7 +41,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 import static org.mockito.Mockito.mock;
 
-public class ExtensionRestRequestTests extends OpenSearchTestCase {
+public class ExtensionRestRequestTests extends DensityTestCase {
 
     private Method expectedMethod;
     private String expectedPath;
@@ -167,7 +167,7 @@ public class ExtensionRestRequestTests extends OpenSearchTestCase {
         assertEquals(expectedHttpVersion, request.protocolVersion());
 
         final ExtensionRestRequest requestWithNoContent = request;
-        assertThrows(OpenSearchParseException.class, () -> requestWithNoContent.contentParser(NamedXContentRegistry.EMPTY));
+        assertThrows(DensityParseException.class, () -> requestWithNoContent.contentParser(NamedXContentRegistry.EMPTY));
 
         try (BytesStreamOutput out = new BytesStreamOutput()) {
             request.writeTo(out);
@@ -185,7 +185,7 @@ public class ExtensionRestRequestTests extends OpenSearchTestCase {
                     assertEquals(expectedHttpVersion, request.protocolVersion());
 
                     final ExtensionRestRequest requestWithNoContentType = request;
-                    assertThrows(OpenSearchParseException.class, () -> requestWithNoContentType.contentParser(NamedXContentRegistry.EMPTY));
+                    assertThrows(DensityParseException.class, () -> requestWithNoContentType.contentParser(NamedXContentRegistry.EMPTY));
                 }
             }
         }

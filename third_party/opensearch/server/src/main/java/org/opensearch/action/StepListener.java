@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.NotifyOnceListener;
+import org.density.common.CheckedConsumer;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.action.ActionListener;
+import org.density.core.action.NotifyOnceListener;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -64,7 +64,7 @@ import java.util.function.Consumer;
  *  }
  * }</pre>
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 public final class StepListener<Response> extends NotifyOnceListener<Response> {
@@ -92,7 +92,7 @@ public final class StepListener<Response> extends NotifyOnceListener<Response> {
      * @param onFailure  is called when this step is completed with a failure
      */
     public void whenComplete(CheckedConsumer<Response, Exception> onResponse, Consumer<Exception> onFailure) {
-        delegate.addListener(ActionListener.wrap(onResponse, onFailure), OpenSearchExecutors.newDirectExecutorService(), null);
+        delegate.addListener(ActionListener.wrap(onResponse, onFailure), DensityExecutors.newDirectExecutorService(), null);
     }
 
     /**

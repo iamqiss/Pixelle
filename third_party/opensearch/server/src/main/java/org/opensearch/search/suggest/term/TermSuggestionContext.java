@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.term;
+package org.density.search.suggest.term;
 
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.DirectSpellcheckerSettings;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.DirectSpellcheckerSettings;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 /**
  * Context used during term suggestion
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class TermSuggestionContext extends SuggestionContext {
 

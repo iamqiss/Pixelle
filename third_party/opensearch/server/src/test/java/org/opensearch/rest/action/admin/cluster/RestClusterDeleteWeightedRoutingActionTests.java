@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.rest.RestActionTestCase;
+import org.density.DensityParseException;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestRequest;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.rest.RestActionTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -47,10 +47,10 @@ public class RestClusterDeleteWeightedRoutingActionTests extends RestActionTestC
     public void testDeleteRequest_BadRequest() throws IOException {
         String req = "{\"_ver\":2}";
         RestRequest restRequest = buildRestRequest(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest));
+        assertThrows(DensityParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest));
 
         RestRequest restRequest2 = buildRestRequestWithAwarenessAttribute(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest2));
+        assertThrows(DensityParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest2));
     }
 
     private RestRequest buildRestRequestWithAwarenessAttribute(String content) {
@@ -71,9 +71,9 @@ public class RestClusterDeleteWeightedRoutingActionTests extends RestActionTestC
     public void testCreateRequest_EmptyRequestBody() throws IOException {
         String req = "{}";
         RestRequest restRequest = buildRestRequest(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest));
+        assertThrows(DensityParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest));
 
         RestRequest restRequest2 = buildRestRequestWithAwarenessAttribute(req);
-        assertThrows(OpenSearchParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest2));
+        assertThrows(DensityParseException.class, () -> RestClusterDeleteWeightedRoutingAction.createRequest(restRequest2));
     }
 }

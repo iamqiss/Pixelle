@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.api.flightinfo.NodeFlightInfo;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoAction;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoRequest;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoResponse;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.arrow.flight.api.flightinfo.NodeFlightInfo;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoAction;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoRequest;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoResponse;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -54,8 +54,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.netty.channel.EventLoopGroup;
 import io.netty.util.NettyRuntime;
 
-import static org.opensearch.arrow.flight.bootstrap.FlightClientManager.LOCATION_TIMEOUT_MS;
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS;
+import static org.density.arrow.flight.bootstrap.FlightClientManager.LOCATION_TIMEOUT_MS;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -64,7 +64,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-public class FlightClientManagerTests extends OpenSearchTestCase {
+public class FlightClientManagerTests extends DensityTestCase {
     private static FeatureFlags.TestUtils.FlagWriteLock ffLock = null;
 
     private static BufferAllocator allocator;

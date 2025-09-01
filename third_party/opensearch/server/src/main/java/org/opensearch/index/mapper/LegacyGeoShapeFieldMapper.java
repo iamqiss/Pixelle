@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexableField;
@@ -41,29 +41,29 @@ import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.PackedQuadPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.QuadPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.SpatialPrefixTree;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.GeometryParser;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.ShapesAvailability;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder.Orientation;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.query.LegacyGeoShapeQueryProcessor;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.GeometryParser;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.ShapesAvailability;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.builders.ShapeBuilder.Orientation;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.ParseField;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.index.query.LegacyGeoShapeQueryProcessor;
+import org.density.index.query.QueryShardContext;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -77,7 +77,7 @@ import org.locationtech.spatial4j.shape.Shape;
  * FieldMapper for indexing {@link org.locationtech.spatial4j.shape.Shape}s.
  * <p>
  * Currently Shapes can only be indexed and can only be queried using
- * {@link org.opensearch.index.query.GeoShapeQueryBuilder}, consequently
+ * {@link org.density.index.query.GeoShapeQueryBuilder}, consequently
  * a lot of behavior in this Mapper is disabled.
  * <p>
  * Format supported:
@@ -95,7 +95,7 @@ import org.locationtech.spatial4j.shape.Shape;
  *
  * @deprecated use {@link GeoShapeFieldMapper}
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Deprecated
 public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<ShapeBuilder<?, ?, ?>, Shape> {
@@ -105,14 +105,14 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
     /**
      * Legacy prefix tree parameters that are now deprecated
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @Deprecated
     public static class DeprecatedParameters {
         /**
          * Deprecated parameter names for Prefix trees
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Names {
             public static final ParseField STRATEGY = new ParseField("strategy");
@@ -126,7 +126,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
         /**
          * Deprecated prefix tree types
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class PrefixTrees {
             public static final String LEGACY_QUADTREE = "legacyquadtree";
@@ -137,7 +137,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
         /**
          * Deprecated defaults for legacy prefix trees
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Defaults {
             public static final SpatialStrategy STRATEGY = SpatialStrategy.RECURSIVE;
@@ -174,7 +174,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
 
         public void setPointsOnly(boolean pointsOnly) {
             if (this.strategy == SpatialStrategy.TERM && pointsOnly == false) {
-                throw new OpenSearchParseException("points_only cannot be set to false for term strategy");
+                throw new DensityParseException("points_only cannot be set to false for term strategy");
             }
             this.pointsOnly = pointsOnly;
         }
@@ -212,7 +212,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
 
         private static void checkPrefixTreeSupport(String fieldName) {
             if (ShapesAvailability.JTS_AVAILABLE == false || ShapesAvailability.SPATIAL4J_AVAILABLE == false) {
-                throw new OpenSearchParseException("Field parameter [{}] is not supported for [{}] field type", fieldName, CONTENT_TYPE);
+                throw new DensityParseException("Field parameter [{}] is not supported for [{}] field type", fieldName, CONTENT_TYPE);
             }
             DEPRECATION_LOGGER.deprecate(
                 "geo_mapper_field_parameter_" + fieldName,
@@ -227,7 +227,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
     /**
      * The builder for the deprecated prefix tree implementation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends AbstractShapeGeometryFieldMapper.Builder<Builder, LegacyGeoShapeFieldMapper.GeoShapeFieldType> {
 
@@ -354,7 +354,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
     /**
      * A legacy parser for prefix trees
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LegacyGeoShapeParser extends Parser<ShapeBuilder<?, ?, ?>> {
         /**
@@ -381,7 +381,7 @@ public class LegacyGeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<
     /**
      * Field type for GeoShape fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class GeoShapeFieldType extends AbstractShapeGeometryFieldType<ShapeBuilder<?, ?, ?>, Shape>
         implements

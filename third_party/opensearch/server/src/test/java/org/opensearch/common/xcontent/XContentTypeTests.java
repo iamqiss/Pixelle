@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityTestCase;
 
 import java.util.Locale;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class XContentTypeTests extends OpenSearchTestCase {
+public class XContentTypeTests extends DensityTestCase {
 
     public void testFromJson() throws Exception {
         String mediaType = "application/json";
@@ -110,14 +110,14 @@ public class XContentTypeTests extends OpenSearchTestCase {
     }
 
     public void testVersionedMediaType() throws Exception {
-        assertThat(MediaType.fromMediaType("application/vnd.opensearch+json;compatible-with=7"), equalTo(MediaTypeRegistry.JSON));
-        assertThat(MediaType.fromMediaType("application/vnd.opensearch+yaml;compatible-with=7"), equalTo(XContentType.YAML));
-        assertThat(MediaType.fromMediaType("application/vnd.opensearch+cbor;compatible-with=7"), equalTo(XContentType.CBOR));
-        assertThat(MediaType.fromMediaType("application/vnd.opensearch+smile;compatible-with=7"), equalTo(XContentType.SMILE));
+        assertThat(MediaType.fromMediaType("application/vnd.density+json;compatible-with=7"), equalTo(MediaTypeRegistry.JSON));
+        assertThat(MediaType.fromMediaType("application/vnd.density+yaml;compatible-with=7"), equalTo(XContentType.YAML));
+        assertThat(MediaType.fromMediaType("application/vnd.density+cbor;compatible-with=7"), equalTo(XContentType.CBOR));
+        assertThat(MediaType.fromMediaType("application/vnd.density+smile;compatible-with=7"), equalTo(XContentType.SMILE));
 
-        assertThat(MediaType.fromMediaType("application/vnd.opensearch+json ;compatible-with=7"), equalTo(MediaTypeRegistry.JSON));
+        assertThat(MediaType.fromMediaType("application/vnd.density+json ;compatible-with=7"), equalTo(MediaTypeRegistry.JSON));
 
-        String mthv = "application/vnd.opensearch+json ;compatible-with=7;charset=utf-8";
+        String mthv = "application/vnd.density+json ;compatible-with=7;charset=utf-8";
         assertThat(MediaType.fromMediaType(mthv), equalTo(MediaTypeRegistry.JSON));
         assertThat(MediaType.fromMediaType(mthv.toUpperCase(Locale.ROOT)), equalTo(MediaTypeRegistry.JSON));
     }

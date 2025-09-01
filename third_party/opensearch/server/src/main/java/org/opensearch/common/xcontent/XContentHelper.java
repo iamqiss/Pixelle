@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContent.Params;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.common.collect.Tuple;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContent.Params;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -61,7 +61,7 @@ import java.util.Objects;
 /**
  * Helper for xcontent utilities.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @SuppressWarnings("unchecked")
 public class XContentHelper {
@@ -136,7 +136,7 @@ public class XContentHelper {
      */
     @Deprecated
     public static Tuple<XContentType, Map<String, Object>> convertToMap(BytesReference bytes, boolean ordered)
-        throws OpenSearchParseException {
+        throws DensityParseException {
         return convertToMap(bytes, ordered, null);
     }
 
@@ -159,7 +159,7 @@ public class XContentHelper {
      * Converts the given bytes into a map that is optionally ordered. The provided {@link XContentType} must be non-null.
      */
     public static Tuple<? extends MediaType, Map<String, Object>> convertToMap(BytesReference bytes, boolean ordered, MediaType mediaType)
-        throws OpenSearchParseException {
+        throws DensityParseException {
         try {
             final MediaType contentType;
             InputStream input;
@@ -185,15 +185,15 @@ public class XContentHelper {
                 return new Tuple<>(Objects.requireNonNull(contentType), convertToMap(contentType.xContent(), stream, ordered));
             }
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse content to map", e);
+            throw new DensityParseException("Failed to parse content to map", e);
         }
     }
 
     /**
-     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link OpenSearchParseException} if there is any
+     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link DensityParseException} if there is any
      * error.
      */
-    public static Map<String, Object> convertToMap(XContent xContent, String string, boolean ordered) throws OpenSearchParseException {
+    public static Map<String, Object> convertToMap(XContent xContent, String string, boolean ordered) throws DensityParseException {
         // It is safe to use EMPTY here because this never uses namedObject
         try (
             XContentParser parser = xContent.createParser(
@@ -204,15 +204,15 @@ public class XContentHelper {
         ) {
             return ordered ? parser.mapOrdered() : parser.map();
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse content to map", e);
+            throw new DensityParseException("Failed to parse content to map", e);
         }
     }
 
     /**
-     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link OpenSearchParseException} if there is any
+     * Convert a string in some {@link XContent} format to a {@link Map}. Throws an {@link DensityParseException} if there is any
      * error. Note that unlike {@link #convertToMap(BytesReference, boolean)}, this doesn't automatically uncompress the input.
      */
-    public static Map<String, Object> convertToMap(XContent xContent, InputStream input, boolean ordered) throws OpenSearchParseException {
+    public static Map<String, Object> convertToMap(XContent xContent, InputStream input, boolean ordered) throws DensityParseException {
         // It is safe to use EMPTY here because this never uses namedObject
         try (
             XContentParser parser = xContent.createParser(
@@ -223,16 +223,16 @@ public class XContentHelper {
         ) {
             return ordered ? parser.mapOrdered() : parser.map();
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse content to map", e);
+            throw new DensityParseException("Failed to parse content to map", e);
         }
     }
 
     /**
-     * Convert a byte array in some {@link XContent} format to a {@link Map}. Throws an {@link OpenSearchParseException} if there is any
+     * Convert a byte array in some {@link XContent} format to a {@link Map}. Throws an {@link DensityParseException} if there is any
      * error. Note that unlike {@link #convertToMap(BytesReference, boolean)}, this doesn't automatically uncompress the input.
      */
     public static Map<String, Object> convertToMap(XContent xContent, byte[] bytes, int offset, int length, boolean ordered)
-        throws OpenSearchParseException {
+        throws DensityParseException {
         // It is safe to use EMPTY here because this never uses namedObject
         try (
             XContentParser parser = xContent.createParser(
@@ -245,7 +245,7 @@ public class XContentHelper {
         ) {
             return ordered ? parser.mapOrdered() : parser.map();
         } catch (IOException e) {
-            throw new OpenSearchParseException("Failed to parse content to map", e);
+            throw new DensityParseException("Failed to parse content to map", e);
         }
     }
 
@@ -489,7 +489,7 @@ public class XContentHelper {
      */
     @Deprecated
     public static BytesReference toXContent(ToXContent toXContent, XContentType xContentType, boolean humanReadable) throws IOException {
-        return org.opensearch.core.xcontent.XContentHelper.toXContent(toXContent, xContentType, ToXContent.EMPTY_PARAMS, humanReadable);
+        return org.density.core.xcontent.XContentHelper.toXContent(toXContent, xContentType, ToXContent.EMPTY_PARAMS, humanReadable);
     }
 
     /**

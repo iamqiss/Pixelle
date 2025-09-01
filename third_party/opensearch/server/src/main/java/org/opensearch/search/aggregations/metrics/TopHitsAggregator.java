@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
@@ -47,24 +47,24 @@ import org.apache.lucene.search.TopFieldCollectorManager;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TopScoreDocCollectorManager;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.MaxScoreCollector;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.LongObjectPagedHashMap;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.SubSearchContext;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.DensityException;
+import org.density.action.search.MaxScoreCollector;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.LongObjectPagedHashMap;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.SubSearchContext;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,14 +73,14 @@ import java.util.Map;
 /**
  * Aggregate all docs into the top hits
  *
- * @opensearch.internal
+ * @density.internal
  */
 class TopHitsAggregator extends MetricsAggregator {
 
     /**
      * Collectors for top hits
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Collectors {
         public final TopDocsCollector<?> topDocsCollector;
@@ -197,7 +197,7 @@ class TopHitsAggregator extends MetricsAggregator {
                 try {
                     topDocs = ctx.rescorer().rescore(topDocs, context.searcher(), ctx);
                 } catch (IOException e) {
-                    throw new OpenSearchException("Rescore TopHits Failed", e);
+                    throw new DensityException("Rescore TopHits Failed", e);
                 }
             }
             if (topDocs.scoreDocs.length > 0) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.bootstrap;
+package org.density.common.bootstrap;
 
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.PathUtils;
+import org.density.core.common.Strings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.lang.Runtime.Version;
@@ -52,7 +52,7 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class JarHellTests extends OpenSearchTestCase {
+public class JarHellTests extends DensityTestCase {
 
     URL makeJar(Path dir, String name, Manifest manifest, String... files) throws IOException {
         Path jarpath = dir.resolve(name);

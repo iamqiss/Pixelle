@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.mapper;
+package org.density.join.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.StringFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.StringFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.mapper.ValueFetcher;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Collections;

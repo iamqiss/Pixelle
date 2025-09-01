@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
 import com.google.protobuf.ByteString;
 import org.apache.lucene.search.Explanation;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.InnerHitsResult;
-import org.opensearch.protobufs.NestedIdentity;
-import org.opensearch.protobufs.NullValue;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.grpc.proto.response.common.ObjectMapProtoUtils;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.InnerHitsResult;
+import org.density.protobufs.NestedIdentity;
+import org.density.protobufs.NullValue;
+import org.density.protobufs.ObjectMap;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.grpc.proto.response.common.ObjectMapProtoUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -46,8 +46,8 @@ public class SearchHitProtoUtils {
      * @return A Protocol Buffer Hit representation
      * @throws IOException if there's an error during conversion
      */
-    protected static org.opensearch.protobufs.Hit toProto(SearchHit hit) throws IOException {
-        org.opensearch.protobufs.Hit.Builder hitBuilder = org.opensearch.protobufs.Hit.newBuilder();
+    protected static org.density.protobufs.Hit toProto(SearchHit hit) throws IOException {
+        org.density.protobufs.Hit.Builder hitBuilder = org.density.protobufs.Hit.newBuilder();
         toProto(hit, hitBuilder);
         return hitBuilder.build();
     }
@@ -60,7 +60,7 @@ public class SearchHitProtoUtils {
      * @param hitBuilder The builder to populate with the SearchHit data
      * @throws IOException if there's an error during conversion
      */
-    protected static void toProto(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) throws IOException {
+    protected static void toProto(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) throws IOException {
         // Process shard information
         processShardInfo(hit, hitBuilder);
 
@@ -101,7 +101,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the shard information
      */
-    private static void processShardInfo(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processShardInfo(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         // For inner_hit hits shard is null and that is ok, because the parent search hit has all this information.
         // Even if this was included in the inner_hit hits this would be the same, so better leave it out.
         if (hit.getExplanation() != null && hit.getShard() != null) {
@@ -116,7 +116,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the basic information
      */
-    private static void processBasicInfo(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processBasicInfo(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         // Set index if available
         if (hit.getIndex() != null) {
             hitBuilder.setIndex(RemoteClusterAware.buildRemoteIndexName(hit.getClusterAlias(), hit.getIndex()));
@@ -150,8 +150,8 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the score information
      */
-    private static void processScore(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
-        org.opensearch.protobufs.Hit.Score.Builder scoreBuilder = org.opensearch.protobufs.Hit.Score.newBuilder();
+    private static void processScore(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
+        org.density.protobufs.Hit.Score.Builder scoreBuilder = org.density.protobufs.Hit.Score.newBuilder();
 
         if (Float.isNaN(hit.getScore())) {
             scoreBuilder.setNullValue(NullValue.NULL_VALUE_NULL);
@@ -168,7 +168,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the metadata fields
      */
-    private static void processMetadataFields(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processMetadataFields(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         // Only process if there are non-empty metadata fields
         if (hit.getMetaFields().values().stream().anyMatch(field -> !field.getValues().isEmpty())) {
             ObjectMap.Builder objectMapBuilder = ObjectMap.newBuilder();
@@ -192,7 +192,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the source information
      */
-    private static void processSource(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processSource(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         if (hit.getSourceRef() != null) {
             hitBuilder.setSource(ByteString.copyFrom(BytesReference.toBytes(hit.getSourceRef())));
         }
@@ -204,7 +204,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the document fields
      */
-    private static void processDocumentFields(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processDocumentFields(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         if (!hit.getDocumentFields().isEmpty() &&
         // ignore fields all together if they are all empty
             hit.getDocumentFields().values().stream().anyMatch(df -> !df.getValues().isEmpty())) {
@@ -227,7 +227,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the highlight fields
      */
-    private static void processHighlightFields(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processHighlightFields(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         if (hit.getHighlightFields() != null && !hit.getHighlightFields().isEmpty()) {
             for (HighlightField field : hit.getHighlightFields().values()) {
                 hitBuilder.putHighlight(field.getName(), HighlightFieldProtoUtils.toProto(field.getFragments()));
@@ -241,7 +241,7 @@ public class SearchHitProtoUtils {
      * @param hit The SearchHit to process
      * @param hitBuilder The builder to populate with the matched queries
      */
-    private static void processMatchedQueries(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) {
+    private static void processMatchedQueries(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) {
         if (hit.getMatchedQueries().length > 0) {
             // TODO pass params in
             // boolean includeMatchedQueriesScore = params.paramAsBoolean(RestSearchAction.INCLUDE_NAMED_QUERIES_SCORE_PARAM, false);
@@ -266,9 +266,9 @@ public class SearchHitProtoUtils {
      * @param hitBuilder The builder to populate with the explanation
      * @throws IOException if there's an error during conversion
      */
-    private static void processExplanation(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) throws IOException {
+    private static void processExplanation(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) throws IOException {
         if (hit.getExplanation() != null) {
-            org.opensearch.protobufs.Explanation.Builder explanationBuilder = org.opensearch.protobufs.Explanation.newBuilder();
+            org.density.protobufs.Explanation.Builder explanationBuilder = org.density.protobufs.Explanation.newBuilder();
             buildExplanation(hit.getExplanation(), explanationBuilder);
             hitBuilder.setExplanation(explanationBuilder.build());
         }
@@ -281,10 +281,10 @@ public class SearchHitProtoUtils {
      * @param hitBuilder The builder to populate with the inner hits
      * @throws IOException if there's an error during conversion
      */
-    private static void processInnerHits(SearchHit hit, org.opensearch.protobufs.Hit.Builder hitBuilder) throws IOException {
+    private static void processInnerHits(SearchHit hit, org.density.protobufs.Hit.Builder hitBuilder) throws IOException {
         if (hit.getInnerHits() != null) {
             for (Map.Entry<String, SearchHits> entry : hit.getInnerHits().entrySet()) {
-                org.opensearch.protobufs.HitsMetadata.Builder hitsBuilder = org.opensearch.protobufs.HitsMetadata.newBuilder();
+                org.density.protobufs.HitsMetadata.Builder hitsBuilder = org.density.protobufs.HitsMetadata.newBuilder();
                 SearchHitsProtoUtils.toProto(entry.getValue(), hitsBuilder);
 
                 hitBuilder.putInnerHits(entry.getKey(), InnerHitsResult.newBuilder().setHits(hitsBuilder.build()).build());
@@ -303,7 +303,7 @@ public class SearchHitProtoUtils {
      */
     private static void buildExplanation(
         org.apache.lucene.search.Explanation explanation,
-        org.opensearch.protobufs.Explanation.Builder protoExplanationBuilder
+        org.density.protobufs.Explanation.Builder protoExplanationBuilder
     ) throws IOException {
         protoExplanationBuilder.setValue(explanation.getValue().doubleValue());
         protoExplanationBuilder.setDescription(explanation.getDescription());
@@ -311,7 +311,7 @@ public class SearchHitProtoUtils {
         org.apache.lucene.search.Explanation[] innerExps = explanation.getDetails();
         if (innerExps != null) {
             for (Explanation exp : innerExps) {
-                org.opensearch.protobufs.Explanation.Builder detailBuilder = org.opensearch.protobufs.Explanation.newBuilder();
+                org.density.protobufs.Explanation.Builder detailBuilder = org.density.protobufs.Explanation.newBuilder();
                 buildExplanation(exp, detailBuilder);
                 protoExplanationBuilder.addDetails(detailBuilder.build());
             }
@@ -319,7 +319,7 @@ public class SearchHitProtoUtils {
     }
 
     /**
-     * Utility class for converting NestedIdentity components between OpenSearch and Protocol Buffers formats.
+     * Utility class for converting NestedIdentity components between Density and Protocol Buffers formats.
      * This class handles the transformation of nested document identity information to ensure proper
      * representation of nested search hits.
      */

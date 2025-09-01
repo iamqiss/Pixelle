@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.store.StoreFileMetadata;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.index.store.StoreFileMetadata;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Response from a {@link SegmentReplicationSource} indicating that a replication event has completed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GetSegmentFilesResponse extends TransportResponse {
 

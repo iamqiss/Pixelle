@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 import org.apache.lucene.store.RateLimiter;
 
@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 /**
  * The stream limiter that limits the transfer of bytes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StreamLimiter {
 
@@ -48,7 +48,7 @@ public class StreamLimiter {
     /**
      * Internal listener
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Listener {
         void onPause(long nanos);

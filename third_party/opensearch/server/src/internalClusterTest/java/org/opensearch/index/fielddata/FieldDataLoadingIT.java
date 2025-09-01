@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
-import org.opensearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.stats.ClusterStatsResponse;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class FieldDataLoadingIT extends OpenSearchIntegTestCase {
+public class FieldDataLoadingIT extends DensityIntegTestCase {
 
     public void testEagerGlobalOrdinalsFieldDataLoading() throws Exception {
         assertAcked(

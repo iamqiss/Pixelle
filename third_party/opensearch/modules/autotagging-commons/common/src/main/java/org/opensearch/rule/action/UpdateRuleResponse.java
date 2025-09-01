@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rule.autotagging.Rule;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rule.autotagging.Rule;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ import java.io.IOException;
  *     "workload_group": "workload_group_id",
  *     "updated_at": "2025-02-14T01:19:22.589Z"
  * }
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class UpdateRuleResponse extends ActionResponse implements ToXContent, ToXContentObject {

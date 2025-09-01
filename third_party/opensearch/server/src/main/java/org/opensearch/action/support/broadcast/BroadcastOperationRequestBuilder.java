@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.broadcast;
+package org.density.action.support.broadcast;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.ActionType;
+import org.density.action.support.IndicesOptions;
+import org.density.transport.client.DensityClient;
 
 /**
  * Request builder for broadcast operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BroadcastOperationRequestBuilder<
     Request extends BroadcastRequest<Request>,
@@ -49,7 +49,7 @@ public abstract class BroadcastOperationRequestBuilder<
         Request,
         Response> {
 
-    protected BroadcastOperationRequestBuilder(OpenSearchClient client, ActionType<Response> action, Request request) {
+    protected BroadcastOperationRequestBuilder(DensityClient client, ActionType<Response> action, Request request) {
         super(client, action, request);
     }
 

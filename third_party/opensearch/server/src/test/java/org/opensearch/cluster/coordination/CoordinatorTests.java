@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.coordination.AbstractCoordinatorTestCase.Cluster.ClusterNode;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.Coordinator.Mode;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.telemetry.TestInMemoryCounter;
-import org.opensearch.test.telemetry.TestInMemoryMetricsRegistry;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.coordination.AbstractCoordinatorTestCase.Cluster.ClusterNode;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.Coordinator.Mode;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.DiscoveryModule;
+import org.density.gateway.GatewayService;
+import org.density.monitor.StatusInfo;
+import org.density.test.MockLogAppender;
+import org.density.test.telemetry.TestInMemoryCounter;
+import org.density.test.telemetry.TestInMemoryMetricsRegistry;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -75,27 +75,27 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
-import static org.opensearch.cluster.coordination.AbstractCoordinatorTestCase.Cluster.DEFAULT_DELAY_VARIABILITY;
-import static org.opensearch.cluster.coordination.AbstractCoordinatorTestCase.Cluster.EXTREME_DELAY_VARIABILITY;
-import static org.opensearch.cluster.coordination.Coordinator.Mode.CANDIDATE;
-import static org.opensearch.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ALL;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_METADATA_WRITES;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_SETTING;
-import static org.opensearch.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_WRITES;
-import static org.opensearch.cluster.coordination.Reconfigurator.CLUSTER_AUTO_SHRINK_VOTING_CONFIGURATION;
-import static org.opensearch.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_DURING_DECOMMISSION_SETTING;
-import static org.opensearch.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_SETTING;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
+import static org.density.cluster.coordination.AbstractCoordinatorTestCase.Cluster.DEFAULT_DELAY_VARIABILITY;
+import static org.density.cluster.coordination.AbstractCoordinatorTestCase.Cluster.EXTREME_DELAY_VARIABILITY;
+import static org.density.cluster.coordination.Coordinator.Mode.CANDIDATE;
+import static org.density.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_ALL;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_METADATA_WRITES;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_SETTING;
+import static org.density.cluster.coordination.NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_WRITES;
+import static org.density.cluster.coordination.Reconfigurator.CLUSTER_AUTO_SHRINK_VOTING_CONFIGURATION;
+import static org.density.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_DURING_DECOMMISSION_SETTING;
+import static org.density.discovery.PeerFinder.DISCOVERY_FIND_PEERS_INTERVAL_SETTING;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
@@ -1482,7 +1482,7 @@ public class CoordinatorTests extends AbstractCoordinatorTestCase {
 
         @Override
         public void writeTo(StreamOutput out) throws IOException {
-            throw new OpenSearchException(EXCEPTION_MESSAGE);
+            throw new DensityException(EXCEPTION_MESSAGE);
         }
 
         @Override
@@ -1506,7 +1506,7 @@ public class CoordinatorTests extends AbstractCoordinatorTestCase {
                 "broken-task",
                 cs -> ClusterState.builder(cs).putCustom("broken", new BrokenCustom()).build(),
                 (source, e) -> {
-                    assertThat(e.getCause(), instanceOf(OpenSearchException.class));
+                    assertThat(e.getCause(), instanceOf(DensityException.class));
                     assertThat(e.getCause().getMessage(), equalTo(BrokenCustom.EXCEPTION_MESSAGE));
                     failed.set(true);
                 }

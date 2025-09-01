@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.coordination.PersistedStateStats;
+import org.density.cluster.coordination.PersistedStateStats;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Upload stats for remote state
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteUploadStats extends PersistedStateStats {
     static final String CLEANUP_ATTEMPT_FAILED_COUNT = "cleanup_attempt_failed_count";

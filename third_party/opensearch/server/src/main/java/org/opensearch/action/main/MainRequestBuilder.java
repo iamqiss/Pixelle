@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.main;
+package org.density.action.main;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
- * Transport request builder for the main opensearch action
+ * Transport request builder for the main density action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MainRequestBuilder extends ActionRequestBuilder<MainRequest, MainResponse> {
 
-    public MainRequestBuilder(OpenSearchClient client, MainAction action) {
+    public MainRequestBuilder(DensityClient client, MainAction action) {
         super(client, action, new MainRequest());
     }
 }

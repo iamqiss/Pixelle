@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.remotestore;
+package org.density.node.remotestore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.core.action.ActionListener;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -41,13 +41,13 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreSegmentRepo;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreSegmentRepo;
 
 /**
  * Service for managing pinned timestamps in a remote store.
  * This service handles pinning and unpinning of timestamps, as well as periodic updates of the pinned timestamps set.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class RemoteStorePinnedTimestampService implements Closeable {

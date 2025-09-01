@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ClusterStatistics;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchResponse;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ClusterStatistics;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,8 +35,8 @@ public class SearchResponseProtoUtils {
      * @return A Protocol Buffer SearchResponse representation
      * @throws IOException if there's an error during conversion
      */
-    public static org.opensearch.protobufs.SearchResponse toProto(SearchResponse response) throws IOException {
-        org.opensearch.protobufs.SearchResponse.Builder searchResponseProtoBuilder = org.opensearch.protobufs.SearchResponse.newBuilder();
+    public static org.density.protobufs.SearchResponse toProto(SearchResponse response) throws IOException {
+        org.density.protobufs.SearchResponse.Builder searchResponseProtoBuilder = org.density.protobufs.SearchResponse.newBuilder();
         toProto(response, searchResponseProtoBuilder);
         return searchResponseProtoBuilder.build();
     }
@@ -49,9 +49,9 @@ public class SearchResponseProtoUtils {
      * @param searchResponseProtoBuilder The builder to populate with the SearchResponse data
      * @throws IOException if there's an error during conversion
      */
-    public static void toProto(SearchResponse response, org.opensearch.protobufs.SearchResponse.Builder searchResponseProtoBuilder)
+    public static void toProto(SearchResponse response, org.density.protobufs.SearchResponse.Builder searchResponseProtoBuilder)
         throws IOException {
-        org.opensearch.protobufs.ResponseBody.Builder searchResponseBodyProtoBuilder = org.opensearch.protobufs.ResponseBody.newBuilder();
+        org.density.protobufs.ResponseBody.Builder searchResponseBodyProtoBuilder = org.density.protobufs.ResponseBody.newBuilder();
 
         // Set optional fields only if they exist
         if (response.getScrollId() != null) {
@@ -67,7 +67,7 @@ public class SearchResponseProtoUtils {
 
         // Set phase took information if available
         if (response.getPhaseTook() != null) {
-            org.opensearch.protobufs.PhaseTook.Builder phaseTookBuilder = org.opensearch.protobufs.PhaseTook.newBuilder();
+            org.density.protobufs.PhaseTook.Builder phaseTookBuilder = org.density.protobufs.PhaseTook.newBuilder();
             PhaseTookProtoUtils.toProto(response.getPhaseTook(), phaseTookBuilder);
             searchResponseBodyProtoBuilder.setPhaseTook(phaseTookBuilder.build());
         }
@@ -101,7 +101,7 @@ public class SearchResponseProtoUtils {
     }
 
     /**
-     * Utility class for converting PhaseTook components between OpenSearch and Protocol Buffers formats.
+     * Utility class for converting PhaseTook components between Density and Protocol Buffers formats.
      * This class handles the transformation of phase timing information to ensure proper reporting
      * of search phase execution times.
      */
@@ -122,7 +122,7 @@ public class SearchResponseProtoUtils {
          */
         protected static void toProto(
             SearchResponse.PhaseTook phaseTook,
-            org.opensearch.protobufs.PhaseTook.Builder phaseTookProtoBuilder
+            org.density.protobufs.PhaseTook.Builder phaseTookProtoBuilder
         ) {
             if (phaseTook == null) {
                 return;
@@ -165,7 +165,7 @@ public class SearchResponseProtoUtils {
     }
 
     /**
-     * Utility class for converting Clusters components between OpenSearch and Protocol Buffers formats.
+     * Utility class for converting Clusters components between Density and Protocol Buffers formats.
      * This class handles the transformation of cluster statistics information to ensure proper reporting
      * of cross-cluster search results.
      */
@@ -185,7 +185,7 @@ public class SearchResponseProtoUtils {
          * @param clusters The Clusters to convert
          */
         protected static void toProto(
-            org.opensearch.protobufs.ResponseBody.Builder protoResponseBuilder,
+            org.density.protobufs.ResponseBody.Builder protoResponseBuilder,
             SearchResponse.Clusters clusters
         ) {
             // Only add clusters information if there are clusters

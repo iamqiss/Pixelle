@@ -1,7 +1,7 @@
 {
   "snapshot.status":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/get-snapshot-status/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/get-snapshot-status/",
       "description":"Returns information about the status of a snapshot."
     },
     "stability":"stable",

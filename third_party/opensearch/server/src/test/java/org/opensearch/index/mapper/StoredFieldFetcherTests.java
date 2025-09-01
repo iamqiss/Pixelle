@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.DocValuesSkipIndexType;
 import org.apache.lucene.index.DocValuesType;
@@ -17,10 +17,10 @@ import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fieldvisitor.SingleFieldsVisitor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fieldvisitor.SingleFieldsVisitor;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class StoredFieldFetcherTests extends OpenSearchTestCase {
+public class StoredFieldFetcherTests extends DensityTestCase {
     private StoredFieldFetcher fetcher;
     private MappedFieldType mappedFieldType;
     private LeafReader leafReader;

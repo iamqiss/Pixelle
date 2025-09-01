@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards.routing.weighted.delete;
+package org.density.action.admin.cluster.shards.routing.weighted.delete;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Request builder to delete weights for weighted round-robin shard routing policy.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class ClusterDeleteWeightedRoutingRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -23,7 +23,7 @@ public class ClusterDeleteWeightedRoutingRequestBuilder extends ClusterManagerNo
     ClusterDeleteWeightedRoutingResponse,
     ClusterDeleteWeightedRoutingRequestBuilder> {
 
-    public ClusterDeleteWeightedRoutingRequestBuilder(OpenSearchClient client, ClusterDeleteWeightedRoutingAction action) {
+    public ClusterDeleteWeightedRoutingRequestBuilder(DensityClient client, ClusterDeleteWeightedRoutingAction action) {
         super(client, action, new ClusterDeleteWeightedRoutingRequest());
     }
 

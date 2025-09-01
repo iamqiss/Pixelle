@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.streamingingestion.resume;
+package org.density.action.admin.indices.streamingingestion.resume;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.IndicesOptions;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ResumeIngestionRequestTests extends OpenSearchTestCase {
+public class ResumeIngestionRequestTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         String[] indices = new String[] { "index1", "index2" };

@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperServiceTestCase;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.EngineConfig;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperServiceTestCase;
+import org.density.index.seqno.RetentionLeases;
+import org.density.test.IndexSettingsModule;
 import org.junit.Before;
 
 import java.io.IOException;

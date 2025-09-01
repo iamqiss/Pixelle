@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
-public class SnapshotRequestsTests extends OpenSearchTestCase {
+public class SnapshotRequestsTests extends DensityTestCase {
     public void testRestoreSnapshotRequestParsing() throws IOException {
         RestoreSnapshotRequest request = new RestoreSnapshotRequest("test-repo", "test-snap");
 

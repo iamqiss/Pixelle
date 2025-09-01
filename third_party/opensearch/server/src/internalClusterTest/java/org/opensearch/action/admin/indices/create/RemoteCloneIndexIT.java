@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -35,41 +35,41 @@ package org.opensearch.action.admin.indices.create;
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.repositories.RepositoriesService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.VersionUtils;
+import org.density.transport.client.Requests;
 import org.junit.Before;
 
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteCloneIndexIT extends RemoteStoreBaseIntegTestCase {
 
     @Override
@@ -153,7 +153,7 @@ public class RemoteCloneIndexIT extends RemoteStoreBaseIntegTestCase {
 
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/15056")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/15056")
     public void testCreateCloneIndexLowPriorityRateLimit() {
         Version version = VersionUtils.randomIndexCompatibleVersion(random());
         int numPrimaryShards = 1;

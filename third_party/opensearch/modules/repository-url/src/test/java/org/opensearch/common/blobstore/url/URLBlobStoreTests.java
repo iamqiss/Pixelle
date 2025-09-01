@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore.url;
+package org.density.common.blobstore.url;
 
 import com.sun.net.httpserver.HttpServer;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -53,7 +53,7 @@ import java.net.URL;
 import java.nio.file.NoSuchFileException;
 
 @SuppressForbidden(reason = "use http server")
-public class URLBlobStoreTests extends OpenSearchTestCase {
+public class URLBlobStoreTests extends DensityTestCase {
 
     private static HttpServer httpServer;
     private static String blobName;

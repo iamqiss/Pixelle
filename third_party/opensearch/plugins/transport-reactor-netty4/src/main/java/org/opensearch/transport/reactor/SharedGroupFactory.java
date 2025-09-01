@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.reactor;
+package org.density.transport.reactor;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.reactor.netty4.ReactorNetty4HttpServerTransport;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.reactor.netty4.ReactorNetty4Transport;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRefCounted;
+import org.density.http.HttpServerTransport;
+import org.density.http.reactor.netty4.ReactorNetty4HttpServerTransport;
+import org.density.transport.TcpTransport;
+import org.density.transport.reactor.netty4.ReactorNetty4Transport;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -29,12 +29,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.concurrent.Future;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
 
 /**
  * Creates and returns {@link io.netty.channel.EventLoopGroup} instances. It will return a shared group for
  * both {@link #getHttpGroup()} and {@link #getTransportGroup()} if
- * {@link org.opensearch.http.reactor.netty4.ReactorNetty4HttpServerTransport#SETTING_HTTP_WORKER_COUNT} is configured to be 0.
+ * {@link org.density.http.reactor.netty4.ReactorNetty4HttpServerTransport#SETTING_HTTP_WORKER_COUNT} is configured to be 0.
  * If that setting is not 0, then it will return a different group in the {@link #getHttpGroup()} call.
  */
 public final class SharedGroupFactory {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.LeafReader;
@@ -48,14 +48,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.search.TopFieldCollectorManager;
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.translog.Translog;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.Queries;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.fieldvisitor.FieldsVisitor;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.translog.Translog;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -66,7 +66,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * A {@link Translog.Snapshot} from changes in a Lucene index
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class LuceneChangesSnapshot implements Translog.Snapshot {
     static final int DEFAULT_BATCH_SIZE = 1024;
@@ -355,7 +355,7 @@ final class LuceneChangesSnapshot implements Translog.Snapshot {
     /**
      * Parallel array to hold translog operations
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ParallelArray {
         final LeafReaderContext[] leafReaderContexts;

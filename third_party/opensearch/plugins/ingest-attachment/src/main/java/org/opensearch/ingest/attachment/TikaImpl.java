@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
 import org.apache.fontbox.FontBoxFont;
 import org.apache.fontbox.ttf.TTFParser;
@@ -49,11 +49,11 @@ import org.apache.tika.mime.MediaType;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.ParserDecorator;
-import org.opensearch.SpecialPermission;
-import org.opensearch.bootstrap.FilePermissionUtils;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.io.PathUtils;
+import org.density.SpecialPermission;
+import org.density.bootstrap.FilePermissionUtils;
+import org.density.common.SuppressForbidden;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.io.PathUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingChangesObserver;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.snapshots.RestoreService.RestoreInProgressUpdater;
-import org.opensearch.snapshots.SnapshotShardSizeInfo;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingChangesObserver;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.shard.ShardId;
+import org.density.snapshots.RestoreService.RestoreInProgressUpdater;
+import org.density.snapshots.SnapshotShardSizeInfo;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,14 +55,14 @@ import java.util.Set;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.isMigratingToRemoteStore;
+import static org.density.node.remotestore.RemoteStoreNodeService.isMigratingToRemoteStore;
 
 /**
  * The {@link RoutingAllocation} keep the state of the current allocation
  * of shards and holds the {@link AllocationDeciders} which are responsible
  *  for the current routing state.
  *
- *  @opensearch.api
+ *  @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RoutingAllocation {
@@ -323,7 +323,7 @@ public class RoutingAllocation {
     /**
      * Debug mode.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum DebugMode {

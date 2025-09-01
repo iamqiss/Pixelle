@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -40,7 +40,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * A very simple single object cache that allows non-blocking refresh calls
  * triggered by expiry time.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SingleObjectCache<T> {
 

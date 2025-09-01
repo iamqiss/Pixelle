@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
 
 /**
  * A sub-command for the keystore cli which changes the password.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ChangeKeyStorePasswordCommand extends BaseKeyStoreCommand {
 
@@ -71,7 +71,7 @@ public class ChangeKeyStorePasswordCommand extends BaseKeyStoreCommand {
         try (SecureString newPassword = readPassword(terminal, true)) {
             final KeyStoreWrapper keyStore = getKeyStore();
             keyStore.save(env.configDir(), newPassword.getChars());
-            terminal.println("OpenSearch keystore password changed successfully.");
+            terminal.println("Density keystore password changed successfully.");
         } catch (SecurityException e) {
             throw new UserException(ExitCodes.DATA_ERROR, e.getMessage());
         }

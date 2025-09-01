@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -57,44 +57,44 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.Directory;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.Mapping;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.DefaultTranslogDeletionPolicy;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.ExceptionsHelper;
+import org.density.action.index.IndexRequest;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.VersionType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.Mapping;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.merge.MergeStats;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.Store;
+import org.density.index.translog.DefaultTranslogDeletionPolicy;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogManager;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -121,13 +121,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
- * Base OpenSearch Engine class
+ * Base Density Engine class
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Engine implements LifecycleAware, Closeable {
@@ -197,7 +197,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * In contrast to {@link #getLatestSegmentInfos()}, which returns a {@link SegmentInfos}
      * object directly, this method returns a {@link GatedCloseable} reference to the same object.
-     * This allows the engine to include a clean-up {@link org.opensearch.common.CheckedRunnable}
+     * This allows the engine to include a clean-up {@link org.density.common.CheckedRunnable}
      * which is run when the reference is closed. The default implementation of the clean-up
      * procedure is a no-op.
      *
@@ -338,7 +338,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
      * {@code acquireThrottle} method to block on a lock when throttling
      * is enabled
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class IndexThrottle {
         private final CounterMetric throttleTimeMillisMetric = new CounterMetric();
@@ -410,7 +410,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * A Lock implementation that always allows the lock to be acquired
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class NoOpLock implements Lock {
 
@@ -466,7 +466,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
      * Holds result meta data (e.g. translog location, updated version)
      * for an executed write {@link Operation}
      *
-     * @opensearch.api
+     * @density.api
      **/
     @PublicApi(since = "1.0.0")
     public abstract static class Result {
@@ -584,7 +584,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
         /**
          * Type of the result
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public enum Type {
@@ -597,7 +597,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Index result
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class IndexResult extends Result {
@@ -635,7 +635,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * The delete result
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class DeleteResult extends Result {
@@ -673,7 +673,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * A noop result
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class NoOpResult extends Result {
@@ -757,8 +757,8 @@ public abstract class Engine implements LifecycleAware, Closeable {
         }
         Releasable releasable = store::decRef;
         try {
-            ReferenceManager<OpenSearchDirectoryReader> referenceManager = getReferenceManager(scope);
-            OpenSearchDirectoryReader acquire = referenceManager.acquire();
+            ReferenceManager<DensityDirectoryReader> referenceManager = getReferenceManager(scope);
+            DensityDirectoryReader acquire = referenceManager.acquire();
             SearcherSupplier reader = new SearcherSupplier(wrapper) {
                 @Override
                 public Searcher acquireSearcherInternal(String source) {
@@ -828,7 +828,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
         }
     }
 
-    protected abstract ReferenceManager<OpenSearchDirectoryReader> getReferenceManager(SearcherScope scope);
+    protected abstract ReferenceManager<DensityDirectoryReader> getReferenceManager(SearcherScope scope);
 
     boolean assertSearcherIsWarmedUp(String source, SearcherScope scope) {
         return true;
@@ -837,7 +837,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Scope of the searcher
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum SearcherScope {
@@ -1388,7 +1388,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Event listener for the engine
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface EventListener {
@@ -1401,7 +1401,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Supplier for the searcher
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class SearcherSupplier implements Releasable {
@@ -1437,7 +1437,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * The engine searcher
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Searcher extends IndexSearcher implements Releasable {
@@ -1490,14 +1490,14 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Base operation class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Operation {
 
         /**
          * type of operation (index, delete), subclasses use static types
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public enum TYPE {
@@ -1537,7 +1537,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
         /**
          * Origin of the operation
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public enum Origin {
@@ -1597,7 +1597,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Index operation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Index extends Operation {
@@ -1688,7 +1688,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
         }
 
         /**
-         * Returns a positive timestamp if the ID of this document is auto-generated by opensearch.
+         * Returns a positive timestamp if the ID of this document is auto-generated by density.
          * if this property is non-negative indexing code might optimize the addition of this document
          * due to it's append only nature.
          */
@@ -1716,7 +1716,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Delete operation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Delete extends Operation {
@@ -1805,7 +1805,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * noop operation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class NoOp extends Operation {
@@ -1856,7 +1856,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * Get operation
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Get {
@@ -1933,7 +1933,7 @@ public abstract class Engine implements LifecycleAware, Closeable {
     /**
      * The Get result
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class GetResult implements Releasable {
@@ -2057,14 +2057,14 @@ public abstract class Engine implements LifecycleAware, Closeable {
      *
      * @see EngineConfig#getWarmer()
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Warmer {
         /**
          * Called once a new top-level reader is opened.
          */
-        void warm(OpenSearchDirectoryReader reader);
+        void warm(DensityDirectoryReader reader);
     }
 
     /**

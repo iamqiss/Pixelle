@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptResponse;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.ingest.IngestTestPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.StoredScriptsIT;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptResponse;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.ingest.IngestTestPlugin;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.StoredScriptsIT;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertIndexTemplateExists;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertIndexTemplateMissing;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertIndexTemplateExists;
+import static org.density.test.hamcrest.DensityAssertions.assertIndexTemplateMissing;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 

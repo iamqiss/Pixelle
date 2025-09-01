@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.net.InetAddress;
 import java.util.Collections;
@@ -31,11 +31,11 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FlightServiceTests extends OpenSearchTestCase {
+public class FlightServiceTests extends DensityTestCase {
     FeatureFlags.TestUtils.FlagWriteLock ffLock = null;
 
     private Settings settings;

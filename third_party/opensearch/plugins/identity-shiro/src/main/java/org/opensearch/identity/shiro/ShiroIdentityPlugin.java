@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.SecurityManager;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.identity.PluginSubject;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.identity.tokens.TokenManager;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.IdentityPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.identity.PluginSubject;
+import org.density.identity.Subject;
+import org.density.identity.tokens.AuthToken;
+import org.density.identity.tokens.TokenManager;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.IdentityPlugin;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.Collection;
 import java.util.Collections;

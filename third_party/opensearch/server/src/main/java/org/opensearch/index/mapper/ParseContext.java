@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +54,7 @@ import java.util.Set;
 /**
  * Holds the context at parse time
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class ParseContext implements Iterable<ParseContext.Document> {
@@ -62,7 +62,7 @@ public abstract class ParseContext implements Iterable<ParseContext.Document> {
     /**
      * Fork of {@link org.apache.lucene.document.Document} with additional functionality.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Document implements Iterable<IndexableField> {
@@ -182,7 +182,7 @@ public abstract class ParseContext implements Iterable<ParseContext.Document> {
     /**
      * Filter parse context.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FilterParseContext extends ParseContext {
 
@@ -351,7 +351,7 @@ public abstract class ParseContext implements Iterable<ParseContext.Document> {
     /**
      * An internal parse context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class InternalParseContext extends ParseContext {
 
@@ -585,7 +585,7 @@ public abstract class ParseContext implements Iterable<ParseContext.Document> {
         public void checkFieldDepthLimit() {
             if (this.currentFieldDepth > maxAllowedFieldDepth) {
                 this.currentFieldDepth = 0;
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "The depth of the field has exceeded the allowed limit of ["
                         + maxAllowedFieldDepth
                         + "]."
@@ -612,7 +612,7 @@ public abstract class ParseContext implements Iterable<ParseContext.Document> {
         public void checkFieldArrayDepthLimit() {
             if (this.currentArrayDepth > maxAllowedArrayDepth) {
                 this.currentArrayDepth = 0;
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "The depth of the nested array field has exceeded the allowed limit of ["
                         + maxAllowedArrayDepth
                         + "]."

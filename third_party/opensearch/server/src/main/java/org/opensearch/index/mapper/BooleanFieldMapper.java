@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -43,16 +43,16 @@ import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -67,7 +67,7 @@ import java.util.function.Supplier;
 /**
  * A field mapper for boolean fields.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BooleanFieldMapper extends ParametrizedFieldMapper {
 
@@ -76,7 +76,7 @@ public class BooleanFieldMapper extends ParametrizedFieldMapper {
     /**
      * Default parameters for the boolean field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final FieldType FIELD_TYPE = new FieldType();
@@ -92,7 +92,7 @@ public class BooleanFieldMapper extends ParametrizedFieldMapper {
     /**
      * Values that can be used for this field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Values {
         public static final BytesRef TRUE = new BytesRef("T");
@@ -106,7 +106,7 @@ public class BooleanFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for this field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -154,7 +154,7 @@ public class BooleanFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for boolean field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class BooleanFieldType extends TermBasedFieldType {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.Lifecycle;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ import java.util.Objects;
  * <p>
  * This simplifies the running and rescheduling of {@link Lifecycle}-based {@code Runnable}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractLifecycleRunnable extends AbstractRunnable {
     /**

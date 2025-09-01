@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -37,9 +37,9 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
 import org.apache.logging.log4j.core.filter.RegexFilter;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.common.logging.Loggers;
+import org.density.common.regex.Regex;
+import org.density.test.junit.annotations.TestLogging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ import static org.junit.Assert.fail;
  */
 public class MockLogAppender extends AbstractAppender implements AutoCloseable {
 
-    private static final String COMMON_PREFIX = System.getProperty("opensearch.logger.prefix", "org.opensearch.");
+    private static final String COMMON_PREFIX = System.getProperty("density.logger.prefix", "org.density.");
 
     private final List<LoggingExpectation> expectations;
     private final List<Logger> loggers;
@@ -317,8 +317,8 @@ public class MockLogAppender extends AbstractAppender implements AutoCloseable {
     }
 
     private static String getLoggerName(String name) {
-        if (name.startsWith("org.opensearch.")) {
-            name = name.substring("org.opensearch.".length());
+        if (name.startsWith("org.density.")) {
+            name = name.substring("org.density.".length());
         }
         return COMMON_PREFIX + name;
     }

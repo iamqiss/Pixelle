@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
-import org.opensearch.Version;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.collect.Tuple;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.nio.file.Path;
 
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
-public class NodeMetadataTests extends OpenSearchTestCase {
+public class NodeMetadataTests extends DensityTestCase {
     private Version randomVersion() {
         // VersionUtils.randomVersion() only returns known versions, which are necessarily no later than Version.CURRENT; however we want
         // also to consider our behaviour with all versions, so occasionally pick up a truly random version.

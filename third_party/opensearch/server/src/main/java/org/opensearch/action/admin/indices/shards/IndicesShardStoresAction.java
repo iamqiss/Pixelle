@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.shards;
+package org.density.action.admin.indices.shards;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * ActionType for {@link TransportIndicesShardStoresAction}
@@ -41,7 +41,7 @@ import org.opensearch.action.ActionType;
  * Shard store information reports which nodes hold shard copies, how recent they are
  * and any exceptions on opening the shard index or from previous engine failures
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndicesShardStoresAction extends ActionType<IndicesShardStoresResponse> {
 

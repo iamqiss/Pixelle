@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -44,7 +44,7 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
-import org.opensearch.common.util.BitMixer;
+import org.density.common.util.BitMixer;
 
 import java.io.IOException;
 
@@ -54,7 +54,7 @@ import java.io.IOException;
  * <b>NOTE</b>: With deterministic field values this query can be used across different readers safely.
  * If updates are accepted on the field you must ensure that the same reader is used for all `slice` queries.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DocValuesSliceQuery extends SliceQuery {
     public DocValuesSliceQuery(String field, int id, int max) {

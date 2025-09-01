@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.allocation;
+package org.density.action.admin.cluster.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationDecision;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.ShardAllocationDecision;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationDecision;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.ShardAllocationDecision;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
@@ -58,7 +58,7 @@ import static java.util.Collections.emptySet;
 /**
  * Tests for the cluster allocation explanation
  */
-public final class ClusterAllocationExplanationTests extends OpenSearchTestCase {
+public final class ClusterAllocationExplanationTests extends DensityTestCase {
 
     public void testDecisionEquality() {
         Decision.Multi d = new Decision.Multi();

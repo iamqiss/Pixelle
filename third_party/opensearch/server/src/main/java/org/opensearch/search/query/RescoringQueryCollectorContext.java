@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Abstraction that allows indication of whether results should be rescored or not based on
  * custom logic of exact {@link QueryCollectorContext} implementation.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.15.0")
 public interface RescoringQueryCollectorContext {

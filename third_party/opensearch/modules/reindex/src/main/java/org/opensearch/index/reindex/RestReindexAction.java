@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequestFilter;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.DocWriteRequest;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequestFilter;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -45,8 +45,8 @@ import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * Expose reindex over rest.

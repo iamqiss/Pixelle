@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.action.admin.indices.get.GetIndexRequest;
-import org.opensearch.action.admin.indices.get.GetIndexResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.snapshots.AbstractSnapshotIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.get.GetIndexRequest;
+import org.density.action.admin.indices.get.GetIndexResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequest;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.Index;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.indices.IndicesService;
+import org.density.snapshots.AbstractSnapshotIntegTestCase;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -51,10 +51,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_MINIMUM_INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_MINIMUM_INDEX_REFRESH_INTERVAL_SETTING;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 2)
 public class ClusterIndexRefreshIntervalIT extends AbstractSnapshotIntegTestCase {
 
     public static final String INDEX_NAME = "test-index";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -44,14 +44,14 @@ import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.search.approximate.ApproximateScoreQuery;
 
 /** Utility class to filter parent and children clauses when building nested
  * queries.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NestedHelper {
 
@@ -104,8 +104,8 @@ public final class NestedHelper {
                     .map(BooleanClause::query)
                     .anyMatch(this::mightMatchNestedDocs);
             }
-        } else if (query instanceof OpenSearchToParentBlockJoinQuery) {
-            return ((OpenSearchToParentBlockJoinQuery) query).getPath() != null;
+        } else if (query instanceof DensityToParentBlockJoinQuery) {
+            return ((DensityToParentBlockJoinQuery) query).getPath() != null;
         } else {
             return true;
         }

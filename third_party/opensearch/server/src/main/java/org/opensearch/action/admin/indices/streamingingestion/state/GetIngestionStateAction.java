@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.streamingingestion.state;
+package org.density.action.admin.indices.streamingingestion.state;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Transport action for getting ingestion state.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class GetIngestionStateAction extends ActionType<GetIngestionStateResponse> {
 

@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.index.translog.transfer.FileTransferTracker;
-import org.opensearch.index.translog.transfer.TransferSnapshot;
-import org.opensearch.index.translog.transfer.TranslogCheckpointTransferSnapshot;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.index.translog.transfer.TranslogTransferMetadata;
-import org.opensearch.index.translog.transfer.listener.TranslogTransferListener;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.logging.Loggers;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.index.translog.transfer.FileTransferTracker;
+import org.density.index.translog.transfer.TransferSnapshot;
+import org.density.index.translog.transfer.TranslogCheckpointTransferSnapshot;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.index.translog.transfer.TranslogTransferMetadata;
+import org.density.index.translog.transfer.listener.TranslogTransferListener;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,9 +52,9 @@ import java.util.function.BooleanSupplier;
 import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
 
 /**
  * A Translog implementation which syncs local FS with a remote store
@@ -62,7 +62,7 @@ import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
  * for every sync, post syncing to disk. Post that, a new generation is
  * created.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteFsTranslog extends Translog {
 
@@ -202,7 +202,7 @@ public class RemoteFsTranslog extends Translog {
         );
         BlobStoreRepository blobStoreRepository = (BlobStoreRepository) repository;
         // We use a dummy stats tracker to ensure the flow doesn't break.
-        // TODO: To be revisited as part of https://github.com/opensearch-project/OpenSearch/issues/7567
+        // TODO: To be revisited as part of https://github.com/density-project/Density/issues/7567
         RemoteTranslogTransferTracker remoteTranslogTransferTracker = new RemoteTranslogTransferTracker(shardId, 1000);
         FileTransferTracker fileTransferTracker = new FileTransferTracker(shardId, remoteTranslogTransferTracker);
         TranslogTransferManager translogTransferManager = buildTranslogTransferManager(
@@ -491,7 +491,7 @@ public class RemoteFsTranslog extends Translog {
             return current.syncNeeded()
                 || (maxRemoteTranslogGenerationUploaded + 1 < this.currentFileGeneration() && current.totalOperations() == 0)
                 // The below condition on GCP exists to handle global checkpoint updates during close index.
-                // Refer issue - https://github.com/opensearch-project/OpenSearch/issues/15989
+                // Refer issue - https://github.com/density-project/Density/issues/15989
                 || (current.getLastSyncedCheckpoint().globalCheckpoint > globalCheckpointSynced);
         }
     }
@@ -660,7 +660,7 @@ public class RemoteFsTranslog extends Translog {
         assert repository instanceof BlobStoreRepository : "repository should be instance of BlobStoreRepository";
         BlobStoreRepository blobStoreRepository = (BlobStoreRepository) repository;
         // We use a dummy stats tracker to ensure the flow doesn't break.
-        // TODO: To be revisited as part of https://github.com/opensearch-project/OpenSearch/issues/7567
+        // TODO: To be revisited as part of https://github.com/density-project/Density/issues/7567
         RemoteTranslogTransferTracker remoteTranslogTransferTracker = new RemoteTranslogTransferTracker(shardId, 1000);
         FileTransferTracker fileTransferTracker = new FileTransferTracker(shardId, remoteTranslogTransferTracker);
         TranslogTransferManager translogTransferManager = buildTranslogTransferManager(
@@ -691,7 +691,7 @@ public class RemoteFsTranslog extends Translog {
     /**
      * TranslogTransferListener implementation for RemoteFsTranslog
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class RemoteFsTranslogTransferListener implements TranslogTransferListener {
 

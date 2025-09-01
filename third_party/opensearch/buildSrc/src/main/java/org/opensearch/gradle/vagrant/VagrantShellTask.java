@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.vagrant;
+package org.density.gradle.vagrant;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
@@ -45,8 +45,8 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gradle.vagrant.VagrantMachine.convertLinuxPath;
-import static org.opensearch.gradle.vagrant.VagrantMachine.convertWindowsPath;
+import static org.density.gradle.vagrant.VagrantMachine.convertLinuxPath;
+import static org.density.gradle.vagrant.VagrantMachine.convertWindowsPath;
 
 /**
  * A shell script to run within a vagrant VM.
@@ -65,7 +65,7 @@ public abstract class VagrantShellTask extends DefaultTask {
         this.project = project;
         this.extension = project.getExtensions().findByType(VagrantExtension.class);
         if (this.extension == null) {
-            throw new IllegalStateException("opensearch.vagrant-base must be applied to create " + getClass().getName());
+            throw new IllegalStateException("density.vagrant-base must be applied to create " + getClass().getName());
         }
         this.service = project.getExtensions().getByType(VagrantMachine.class);
     }

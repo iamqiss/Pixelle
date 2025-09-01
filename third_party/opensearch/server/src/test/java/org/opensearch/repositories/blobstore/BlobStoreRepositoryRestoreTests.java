@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotFailedException;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.core.index.snapshots.IndexShardSnapshotFailedException;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.IndexId;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.ShardGenerations;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
 
 import java.io.IOException;
 import java.nio.file.Files;

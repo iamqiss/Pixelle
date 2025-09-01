@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin;
+package org.density.action.admin;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodeHotThreads;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodesHotThreadsRequestBuilder;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodesHotThreadsResponse;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.hotthreads.NodeHotThreads;
+import org.density.action.admin.cluster.node.hotthreads.NodesHotThreadsRequestBuilder;
+import org.density.action.admin.cluster.node.hotthreads.NodesHotThreadsResponse;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.Matcher;
 
 import java.util.Map;
@@ -45,10 +45,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -57,7 +57,7 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 
-public class HotThreadsIT extends OpenSearchIntegTestCase {
+public class HotThreadsIT extends DensityIntegTestCase {
 
     public void testHotThreadsDontFail() throws ExecutionException, InterruptedException {
         /*
@@ -160,7 +160,7 @@ public class HotThreadsIT extends OpenSearchIntegTestCase {
         NodesHotThreadsResponse response = builder.execute().get();
 
         final Matcher<String> containsCachedTimeThreadRunMethod = containsString(
-            "org.opensearch.threadpool.ThreadPool$CachedTimeThread.run"
+            "org.density.threadpool.ThreadPool$CachedTimeThread.run"
         );
 
         int totSizeAll = 0;

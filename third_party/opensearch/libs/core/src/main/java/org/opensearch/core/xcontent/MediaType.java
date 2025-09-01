@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -44,7 +44,7 @@ import java.util.Locale;
  * Media types are used as values on Content-Type and Accept headers
  * format is an URL parameter, specifies response media type.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.1.0")
 public interface MediaType extends Writeable {
@@ -120,8 +120,8 @@ public interface MediaType extends Writeable {
      * @return a media type string without
      */
     private static String removeVersionInMediaType(String mediaType) {
-        if (mediaType != null && (mediaType = mediaType.toLowerCase(Locale.ROOT)).contains("vnd.opensearch")) {
-            return mediaType.replaceAll("vnd.opensearch\\+", "").replaceAll("\\s*;\\s*compatible-with=\\d+", "");
+        if (mediaType != null && (mediaType = mediaType.toLowerCase(Locale.ROOT)).contains("vnd.density")) {
+            return mediaType.replaceAll("vnd.density\\+", "").replaceAll("\\s*;\\s*compatible-with=\\d+", "");
         }
         return mediaType;
     }

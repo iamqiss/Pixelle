@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.DensityException;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -48,14 +48,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Response obtained from the get aliases API.
  * The format is pretty horrible as it holds aliases, but at the same time errors can come back through the status and error fields.
  * Such errors are mostly 404 - NOT FOUND for aliases that were specified but not found. In such case the client won't throw exception
  * so it allows to retrieve the returned aliases, while at the same time checking if errors were returned.
- * There's also the case where an exception is returned, like for instance an {@link org.opensearch.index.IndexNotFoundException}.
+ * There's also the case where an exception is returned, like for instance an {@link org.density.index.IndexNotFoundException}.
  * We would usually throw such exception, but we configure the client to not throw for 404 to support the case above, hence we also not
  * throw in case an index is not found, although it is a hard error that doesn't come back with aliases.
  */
@@ -63,7 +63,7 @@ public class GetAliasesResponse implements StatusToXContentObject {
 
     private final RestStatus status;
     private final String error;
-    private final OpenSearchException exception;
+    private final DensityException exception;
 
     private final Map<String, Set<AliasMetadata>> aliases;
 
@@ -74,7 +74,7 @@ public class GetAliasesResponse implements StatusToXContentObject {
         this.exception = null;
     }
 
-    private GetAliasesResponse(RestStatus status, OpenSearchException exception) {
+    private GetAliasesResponse(RestStatus status, DensityException exception) {
         this.status = status;
         this.error = null;
         this.aliases = Collections.emptyMap();
@@ -96,7 +96,7 @@ public class GetAliasesResponse implements StatusToXContentObject {
     /**
      * Return the exception that may have been returned
      */
-    public OpenSearchException getException() {
+    public DensityException getException() {
         return exception;
     }
 
@@ -147,7 +147,7 @@ public class GetAliasesResponse implements StatusToXContentObject {
         String currentFieldName;
         Token token;
         String error = null;
-        OpenSearchException exception = null;
+        DensityException exception = null;
         RestStatus status = RestStatus.OK;
 
         while (parser.nextToken() != Token.END_OBJECT) {
@@ -165,7 +165,7 @@ public class GetAliasesResponse implements StatusToXContentObject {
                         error = parser.text();
                     } else if (token == Token.START_OBJECT) {
                         parser.nextToken();
-                        exception = OpenSearchException.innerFromXContent(parser, true);
+                        exception = DensityException.innerFromXContent(parser, true);
                     } else if (token == Token.START_ARRAY) {
                         parser.skipChildren();
                     }

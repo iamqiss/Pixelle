@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache.query;
+package org.density.index.cache.query;
 
 import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.Weight;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
 
 /**
  * NoOp Implementation for a Disabled query cache
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DisabledQueryCache extends AbstractIndexComponent implements QueryCache {
 

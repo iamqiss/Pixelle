@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 /**
- * This class models the different Docker base images that are used to build Docker distributions of OpenSearch.
+ * This class models the different Docker base images that are used to build Docker distributions of Density.
  */
 public enum DockerBase {
     ALMALINUX("almalinux:8");

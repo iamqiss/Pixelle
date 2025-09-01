@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.store.Directory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.RemoveCorruptedShardDataCommand;
-import org.opensearch.index.shard.ShardPath;
+import org.density.DensityException;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.RemoveCorruptedShardDataCommand;
+import org.density.index.shard.ShardPath;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -70,7 +70,7 @@ import java.util.TreeSet;
 /**
  * Action event when translog is truncated
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TruncateTranslogAction {
 
@@ -92,9 +92,9 @@ public class TruncateTranslogAction {
         try {
             commits = DirectoryReader.listCommits(indexDirectory);
         } catch (IndexNotFoundException infe) {
-            throw new OpenSearchException("unable to find a valid shard at [" + indexPath + "]", infe);
+            throw new DensityException("unable to find a valid shard at [" + indexPath + "]", infe);
         } catch (IOException e) {
-            throw new OpenSearchException("unable to list commits at [" + indexPath + "]", e);
+            throw new DensityException("unable to list commits at [" + indexPath + "]", e);
         }
 
         // Retrieve the generation and UUID from the existing data
@@ -102,7 +102,7 @@ public class TruncateTranslogAction {
         final String translogUUID = commitData.get(Translog.TRANSLOG_UUID_KEY);
 
         if (translogUUID == null) {
-            throw new OpenSearchException("shard must have a valid translog UUID but got: [null]");
+            throw new DensityException("shard must have a valid translog UUID but got: [null]");
         }
 
         final boolean clean = isTranslogClean(shardPath, clusterState, translogUUID);
@@ -116,7 +116,7 @@ public class TruncateTranslogAction {
         try {
             translogFiles = filesInDirectory(translogPath);
         } catch (IOException e) {
-            throw new OpenSearchException("failed to find existing translog files", e);
+            throw new DensityException("failed to find existing translog files", e);
         }
         final String details = deletingFilesDetails(translogPath, translogFiles);
 
@@ -136,7 +136,7 @@ public class TruncateTranslogAction {
             translogFiles = filesInDirectory(translogPath);
         } catch (IOException e) {
             terminal.println("encountered IOException while listing directory, aborting...");
-            throw new OpenSearchException("failed to find existing translog files", e);
+            throw new DensityException("failed to find existing translog files", e);
         }
 
         List<IndexCommit> commits;
@@ -144,14 +144,14 @@ public class TruncateTranslogAction {
             terminal.println("Reading translog UUID information from Lucene commit from shard at [" + indexPath + "]");
             commits = DirectoryReader.listCommits(indexDirectory);
         } catch (IndexNotFoundException infe) {
-            throw new OpenSearchException("unable to find a valid shard at [" + indexPath + "]", infe);
+            throw new DensityException("unable to find a valid shard at [" + indexPath + "]", infe);
         }
 
         // Retrieve the generation and UUID from the existing data
         commitData = commits.get(commits.size() - 1).getUserData();
         final String translogUUID = commitData.get(Translog.TRANSLOG_UUID_KEY);
         if (translogUUID == null) {
-            throw new OpenSearchException("shard must have a valid translog UUID");
+            throw new DensityException("shard must have a valid translog UUID");
         }
 
         final long globalCheckpoint = commitData.containsKey(SequenceNumbers.MAX_SEQ_NO)

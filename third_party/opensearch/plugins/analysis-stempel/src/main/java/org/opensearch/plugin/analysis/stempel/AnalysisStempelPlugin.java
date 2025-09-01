@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.analysis.stempel;
+package org.density.plugin.analysis.stempel;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.pl.PolishAnalyzerProvider;
-import org.opensearch.index.analysis.pl.PolishStemTokenFilterFactory;
-import org.opensearch.index.analysis.pl.PolishStopTokenFilterFactory;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.pl.PolishAnalyzerProvider;
+import org.density.index.analysis.pl.PolishStemTokenFilterFactory;
+import org.density.index.analysis.pl.PolishStopTokenFilterFactory;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;

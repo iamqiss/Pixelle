@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.Priority;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,15 +34,15 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_INDEX;
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_MAPPING;
-import static org.opensearch.cluster.service.ClusterManagerTaskThrottler.THRESHOLD_SETTINGS;
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_INDEX;
+import static org.density.cluster.service.ClusterManagerTask.PUT_MAPPING;
+import static org.density.cluster.service.ClusterManagerTaskThrottler.THRESHOLD_SETTINGS;
+import static org.density.test.ClusterServiceUtils.setState;
 
 /**
  * Contains tests for {@link ClusterManagerTaskThrottler}
  */
-public class ClusterManagerTaskThrottlerTests extends OpenSearchTestCase {
+public class ClusterManagerTaskThrottlerTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
     private ClusterService clusterService;

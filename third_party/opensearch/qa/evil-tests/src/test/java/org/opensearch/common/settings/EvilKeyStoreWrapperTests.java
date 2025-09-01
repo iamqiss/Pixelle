@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.UserException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cli.ExitCodes;
+import org.density.cli.UserException;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
@@ -51,7 +51,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS")
-public class EvilKeyStoreWrapperTests extends OpenSearchTestCase {
+public class EvilKeyStoreWrapperTests extends DensityTestCase {
 
     public void testWritePermissions() throws Exception {
         assumeFalse("requires POSIX file permissions", Constants.WINDOWS);
@@ -66,8 +66,8 @@ public class EvilKeyStoreWrapperTests extends OpenSearchTestCase {
             final UserException e = expectThrows(UserException.class, () -> wrapper.save(configDir, new char[0]));
             final String expected = String.format(
                 Locale.ROOT,
-                "unable to create temporary keystore at [%s], write permissions required for [%s] or run [opensearch-keystore upgrade]",
-                configDir.resolve("opensearch.keystore.tmp"),
+                "unable to create temporary keystore at [%s], write permissions required for [%s] or run [density-keystore upgrade]",
+                configDir.resolve("density.keystore.tmp"),
                 configDir);
             assertThat(e, hasToString(containsString(expected)));
             assertThat(e.exitCode, equalTo(ExitCodes.CONFIG));

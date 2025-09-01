@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.ReferenceManager;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.unit.TimeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -130,7 +130,7 @@ public abstract class ReleasableRetryableRefreshListener implements ReferenceMan
             );
             scheduled = true;
             getLogger().info("Scheduled retry with didRefresh={}", didRefresh);
-        } catch (OpenSearchRejectedExecutionException e) {
+        } catch (DensityRejectedExecutionException e) {
             if (e.isExecutorShutdown()) {
                 getLogger().info("Scheduling retry with didRefresh={} failed due to executor shut down", didRefresh);
             } else {

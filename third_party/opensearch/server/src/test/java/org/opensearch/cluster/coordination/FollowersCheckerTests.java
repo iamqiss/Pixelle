@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,44 +25,44 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.coordination.Coordinator.Mode;
-import org.opensearch.cluster.coordination.FollowersChecker.FollowerCheckRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.telemetry.TestInMemoryMetricsRegistry;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.coordination.Coordinator.Mode;
+import org.density.cluster.coordination.FollowersChecker.FollowerCheckRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.EqualsHashCodeTestUtils.CopyFunction;
+import org.density.test.DensityTestCase;
+import org.density.test.telemetry.TestInMemoryMetricsRegistry;
+import org.density.test.transport.CapturingTransport;
+import org.density.test.transport.MockTransport;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,14 +80,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_ACTION_NAME;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.transport.TransportService.HANDSHAKE_ACTION_NAME;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_ACTION_NAME;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_RETRY_COUNT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.transport.TransportService.HANDSHAKE_ACTION_NAME;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
@@ -96,7 +96,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-public class FollowersCheckerTests extends OpenSearchTestCase {
+public class FollowersCheckerTests extends DensityTestCase {
 
     public void testChecksExpectedNodes() {
         final DiscoveryNode localNode = new DiscoveryNode("local-node", buildNewFakeTransportAddress(), Version.CURRENT);
@@ -223,7 +223,7 @@ public class FollowersCheckerTests extends OpenSearchTestCase {
         TestInMemoryMetricsRegistry metricsRegistry = new TestInMemoryMetricsRegistry();
         testBehaviourOfFailingNode(
             settings,
-            () -> { throw new OpenSearchException("simulated exception"); },
+            () -> { throw new DensityException("simulated exception"); },
             "followers check retry count exceeded",
             (FOLLOWER_CHECK_RETRY_COUNT_SETTING.get(settings) - 1) * FOLLOWER_CHECK_INTERVAL_SETTING.get(settings).millis(),
             () -> new StatusInfo(HEALTHY, "healthy-info"),
@@ -250,7 +250,7 @@ public class FollowersCheckerTests extends OpenSearchTestCase {
                     recoveries++;
                     return Empty.INSTANCE;
                 }
-                throw new OpenSearchException("simulated exception");
+                throw new DensityException("simulated exception");
             }
         },
             "followers check retry count exceeded",
@@ -699,7 +699,7 @@ public class FollowersCheckerTests extends OpenSearchTestCase {
             final long term = randomNonNegativeLong();
             followersChecker.updateFastResponseState(term, randomFrom(Mode.LEADER, Mode.CANDIDATE));
             final String exceptionMessage = "test simulated exception " + randomNonNegativeLong();
-            coordinatorException.set(new OpenSearchException(exceptionMessage));
+            coordinatorException.set(new DensityException(exceptionMessage));
 
             final AtomicReference<TransportException> receivedException = new AtomicReference<>();
             transportService.sendRequest(

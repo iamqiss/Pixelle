@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client.nio;
+package org.density.client.nio;
 
 import org.apache.hc.core5.http.ContentTooLongException;
-import org.opensearch.client.RestClientTestCase;
+import org.density.client.RestClientTestCase;
 import org.junit.After;
 import org.junit.Before;
 

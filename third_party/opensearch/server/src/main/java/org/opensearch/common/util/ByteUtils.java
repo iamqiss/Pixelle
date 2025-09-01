@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 /**
  * Utility methods to do byte-level encoding. These methods are biased towards little-endian byte order because it is the most
  * common byte order and reading several bytes at once may be optimizable in the future with the help of sun.mist.Unsafe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ByteUtils {
 

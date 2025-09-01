@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
@@ -44,19 +44,19 @@ import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MappedFieldType.Relation;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.DensityParseException;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.lucene.BytesRefs;
+import org.density.core.common.ParsingException;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MappedFieldType.Relation;
+import org.density.index.mapper.MapperService;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.chrono.ISOChronology;
 
@@ -67,7 +67,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.sameInstance;
@@ -363,7 +363,7 @@ public class RangeQueryBuilderTests extends AbstractQueryTestCase<RangeQueryBuil
             + "        }\n"
             + "    }\n"
             + "}";
-        expectThrows(OpenSearchParseException.class, () -> parseQuery(invalidQuery).toQuery(createShardContext()));
+        expectThrows(DensityParseException.class, () -> parseQuery(invalidQuery).toQuery(createShardContext()));
     }
 
     public void testDateRangeBoundaries() throws IOException {

@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.nodestats;
+package org.density.nodestats;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.engine.DocumentMissingException;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.shard.IndexingStats.Stats.DocStatusStats;
-import org.opensearch.indices.NodeIndicesStats;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.ExceptionsHelper;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexNotFoundException;
+import org.density.index.engine.DocumentMissingException;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.shard.IndexingStats.Stats.DocStatusStats;
+import org.density.indices.NodeIndicesStats;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
@@ -50,12 +50,12 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 1, numClientNodes = 0, supportsDedicatedMasters = false)
-public class NodeStatsIT extends OpenSearchIntegTestCase {
+public class NodeStatsIT extends DensityIntegTestCase {
 
     private final DocStatusStats expectedDocStatusStats = new DocStatusStats();
     private static final String FIELD = "dummy_field";

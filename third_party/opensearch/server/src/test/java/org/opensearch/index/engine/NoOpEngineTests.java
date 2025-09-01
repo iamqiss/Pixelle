@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.test.IndexSettingsModule;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

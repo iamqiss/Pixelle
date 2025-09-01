@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.DirectoryReader;
@@ -39,18 +39,18 @@ import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.MockKeywordPlugin;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.action.ActionFuture;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.plugins.Plugin;
+import org.density.test.MockKeywordPlugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,9 +65,9 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;

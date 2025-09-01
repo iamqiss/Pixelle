@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.Term;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.InternalEngineTests;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.engine.InternalEngineTests;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.Uid;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.Matchers.is;
 
-public class IndexingOperationListenerTests extends OpenSearchTestCase {
+public class IndexingOperationListenerTests extends DensityTestCase {
 
     // this test also tests if calls are correct if one or more listeners throw exceptions
     public void testListenersAreExecuted() {

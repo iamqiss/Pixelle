@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_DOWNLOAD_BYTES_PER_SEC;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_LOW_PRIORITY_UPLOAD_BYTES_PER_SEC;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_UPLOAD_BYTES_PER_SEC;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.MAX_RESTORE_BYTES_PER_SEC;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.MAX_SNAPSHOT_BYTES_PER_SEC;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_DOWNLOAD_BYTES_PER_SEC;
+import static org.density.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_LOW_PRIORITY_UPLOAD_BYTES_PER_SEC;
+import static org.density.repositories.blobstore.BlobStoreRepository.MAX_REMOTE_UPLOAD_BYTES_PER_SEC;
+import static org.density.repositories.blobstore.BlobStoreRepository.MAX_RESTORE_BYTES_PER_SEC;
+import static org.density.repositories.blobstore.BlobStoreRepository.MAX_SNAPSHOT_BYTES_PER_SEC;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -63,7 +63,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
+public class RepositoriesServiceIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -81,7 +81,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
             .next();
 
         final Settings.Builder repoSettings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+        DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
             client().admin().cluster(),
             repositoryName,
             FsRepository.TYPE,
@@ -105,7 +105,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
         final boolean updated = randomBoolean();
         final String updatedRepositoryType = updated ? "mock" : FsRepository.TYPE;
 
-        OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+        DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
             client().admin().cluster(),
             repositoryName,
             updatedRepositoryType,
@@ -150,7 +150,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
             .put("location", path)
             .put(MAX_SNAPSHOT_BYTES_PER_SEC, "10mb")
             .put(MAX_RESTORE_BYTES_PER_SEC, "10mb");
-        OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+        DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
             client().admin().cluster(),
             repositoryName,
             FsRepository.TYPE,
@@ -185,7 +185,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
         try {
             logger.info("--> begin to reset repository");
             repoSettings = Settings.builder().put("location", randomRepoPath()).put(MAX_SNAPSHOT_BYTES_PER_SEC, "300mb");
-            OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+            DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
                 client().admin().cluster(),
                 repositoryName,
                 FsRepository.TYPE,
@@ -220,7 +220,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
             .put(MAX_REMOTE_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
             .put(MAX_REMOTE_LOW_PRIORITY_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
             .put(MAX_REMOTE_DOWNLOAD_BYTES_PER_SEC, (rateBytes + "b"));
-        OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+        DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
             client().admin().cluster(),
             repositoryName,
             FsRepository.TYPE,
@@ -249,7 +249,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
                 .put(MAX_REMOTE_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
                 .put(MAX_REMOTE_LOW_PRIORITY_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
                 .put(MAX_REMOTE_DOWNLOAD_BYTES_PER_SEC, (rateBytes + "b"));
-            OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+            DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
                 client().admin().cluster(),
                 repositoryName,
                 FsRepository.TYPE,
@@ -277,7 +277,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
                 .put("location", path)
                 .put(MAX_SNAPSHOT_BYTES_PER_SEC, (newRateBytes + "b"))
                 .put(MAX_RESTORE_BYTES_PER_SEC, (newRateBytes + "b"));
-            OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+            DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
                 client().admin().cluster(),
                 repositoryName,
                 FsRepository.TYPE,
@@ -308,7 +308,7 @@ public class RepositoriesServiceIT extends OpenSearchIntegTestCase {
                 .put(MAX_REMOTE_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
                 .put(MAX_REMOTE_LOW_PRIORITY_UPLOAD_BYTES_PER_SEC, (rateBytes + "b"))
                 .put(MAX_REMOTE_DOWNLOAD_BYTES_PER_SEC, (rateBytes + "b"));
-            OpenSearchIntegTestCase.putRepositoryWithNoSettingOverrides(
+            DensityIntegTestCase.putRepositoryWithNoSettingOverrides(
                 client().admin().cluster(),
                 repositoryName,
                 FsRepository.TYPE,

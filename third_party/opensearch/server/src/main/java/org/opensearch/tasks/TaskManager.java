@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ConcurrentMapLong;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TcpChannel;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityTimeoutException;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ConcurrentMapLong;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.action.NotifyOnceListener;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TcpChannel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,13 +81,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
 
 /**
  * Task Manager service for keeping track of currently running tasks on the nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TaskManager implements ClusterStateApplier {
 
@@ -566,10 +566,10 @@ public class TaskManager implements ClusterStateApplier {
             try {
                 Thread.sleep(WAIT_FOR_COMPLETION_POLL.millis());
             } catch (InterruptedException e) {
-                throw new OpenSearchException("Interrupted waiting for completion of [{}]", e, task);
+                throw new DensityException("Interrupted waiting for completion of [{}]", e, task);
             }
         }
-        throw new OpenSearchTimeoutException("Timed out waiting for completion of [{}]", task);
+        throw new DensityTimeoutException("Timed out waiting for completion of [{}]", task);
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TransportSearchHelperTests extends OpenSearchTestCase {
+public class TransportSearchHelperTests extends DensityTestCase {
 
     public static AtomicArray<SearchPhaseResult> generateQueryResults() {
         AtomicArray<SearchPhaseResult> array = new AtomicArray<>(3);

@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree;
+package org.density.search.startree;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SegmentReader;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.StarTreePreComputeCollector;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.StarTreeFilter;
+import org.density.common.lucene.Lucene;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.StarTreePreComputeCollector;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.StarTreeFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ import java.util.function.Consumer;
 /**
  * Helper class for building star-tree query
  *
- * @opensearch.internal
- * @opensearch.experimental
+ * @density.internal
+ * @density.experimental
  */
 public class StarTreeQueryHelper {
 

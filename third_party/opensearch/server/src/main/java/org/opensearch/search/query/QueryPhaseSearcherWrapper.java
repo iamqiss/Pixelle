@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.Query;
-import org.opensearch.search.aggregations.AggregationProcessor;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
+import org.density.search.aggregations.AggregationProcessor;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ import java.util.LinkedList;
  * Wrapper class for QueryPhaseSearcher that handles path selection for concurrent vs
  * non-concurrent search query phase and aggregation processor.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QueryPhaseSearcherWrapper implements QueryPhaseSearcher {
     private static final Logger LOGGER = LogManager.getLogger(QueryPhaseSearcherWrapper.class);

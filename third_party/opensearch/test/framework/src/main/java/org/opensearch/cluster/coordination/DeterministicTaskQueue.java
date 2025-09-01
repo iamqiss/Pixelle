@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolInfo;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolInfo;
+import org.density.threadpool.ThreadPoolStats;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -342,7 +342,7 @@ public class DeterministicTaskQueue {
 
             @Override
             public ExecutorService executor(String name) {
-                return Names.SAME.equals(name) ? OpenSearchExecutors.newDirectExecutorService() : forkingExecutor;
+                return Names.SAME.equals(name) ? DensityExecutors.newDirectExecutorService() : forkingExecutor;
             }
 
             @Override

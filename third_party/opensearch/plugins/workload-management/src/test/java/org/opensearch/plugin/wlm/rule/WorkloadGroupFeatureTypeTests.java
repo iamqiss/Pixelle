@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule;
+package org.density.plugin.wlm.rule;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.rule.RuleAttribute;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.AutoTaggingRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.service.ClusterService;
+import org.density.rule.RuleAttribute;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.AutoTaggingRegistry;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 
-public class WorkloadGroupFeatureTypeTests extends OpenSearchTestCase {
+public class WorkloadGroupFeatureTypeTests extends DensityTestCase {
     WorkloadGroupFeatureType featureType = new WorkloadGroupFeatureType(new WorkloadGroupFeatureValueValidator(mock(ClusterService.class)));
 
     public void testGetName_returnsCorrectName() {

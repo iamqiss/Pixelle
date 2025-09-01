@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder.Orientation;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper.DeprecatedParameters;
+import org.density.common.Explicit;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.builders.ShapeBuilder.Orientation;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.ParseField;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper.DeprecatedParameters;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -49,14 +49,14 @@ import java.util.Map;
 /**
  * Base class for {@link GeoShapeFieldMapper} and {@link LegacyGeoShapeFieldMapper}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractShapeGeometryFieldMapper<Parsed, Processed> extends AbstractGeometryFieldMapper<Parsed, Processed> {
 
     /**
      * Common parameters for the base shape geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Names extends AbstractGeometryFieldMapper.Names {
         public static final ParseField ORIENTATION = new ParseField("orientation");
@@ -66,7 +66,7 @@ public abstract class AbstractShapeGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Parameter defaults for the base shape geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults extends AbstractGeometryFieldMapper.Defaults {
         public static final Explicit<Orientation> ORIENTATION = new Explicit<>(Orientation.RIGHT, false);
@@ -76,7 +76,7 @@ public abstract class AbstractShapeGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base builder for the base shape geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder<T extends Builder<T, FT>, FT extends AbstractShapeGeometryFieldType> extends
         AbstractGeometryFieldMapper.Builder<T, FT> {
@@ -142,7 +142,7 @@ public abstract class AbstractShapeGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base type parser for the base shape geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class TypeParser extends AbstractGeometryFieldMapper.TypeParser<Builder> {
         protected abstract Builder newBuilder(String name, Map<String, Object> params);
@@ -203,7 +203,7 @@ public abstract class AbstractShapeGeometryFieldMapper<Parsed, Processed> extend
     /**
      * Base field type for the base shape geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class AbstractShapeGeometryFieldType<Parsed, Processed> extends AbstractGeometryFieldType<Parsed, Processed> {
         protected Orientation orientation = Defaults.ORIENTATION.value();

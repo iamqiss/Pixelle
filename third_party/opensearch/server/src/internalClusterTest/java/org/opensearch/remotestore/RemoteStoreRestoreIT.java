@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.junit.annotations.TestIssueLogging;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.index.Index;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.indices.IndicesService;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.junit.annotations.TestIssueLogging;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,12 +38,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.greaterThan;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreRestoreIT extends BaseRemoteStoreRestoreIT {
 
     /**
@@ -92,7 +92,7 @@ public class RemoteStoreRestoreIT extends BaseRemoteStoreRestoreIT {
      * Simulates all data restored using Remote Translog Store.
      * @throws IOException IO Exception.
      */
-    @TestIssueLogging(value = "_root:TRACE", issueUrl = "https://github.com/opensearch-project/OpenSearch/issues/11085")
+    @TestIssueLogging(value = "_root:TRACE", issueUrl = "https://github.com/density-project/Density/issues/11085")
     public void testRTSRestoreWithNoDataPostRefreshPrimaryReplicaDown() throws Exception {
         testRestoreFlowBothPrimaryReplicasDown(1, false, true, randomIntBetween(1, 5));
     }
@@ -507,7 +507,7 @@ public class RemoteStoreRestoreIT extends BaseRemoteStoreRestoreIT {
         verifyRestoredData(indexStats, INDEX_NAME);
 
         // revert repo metadata to pass asserts on repo metadata vs. node attrs during teardown
-        // https://github.com/opensearch-project/OpenSearch/pull/9569#discussion_r1345668700
+        // https://github.com/density-project/Density/pull/9569#discussion_r1345668700
         settings.remove("max_remote_download_bytes_per_sec");
         createRepository(REPOSITORY_NAME, ReloadableFsRepository.TYPE, settings);
         for (RepositoriesService repositoriesService : internalCluster().getDataNodeInstances(RepositoriesService.class)) {

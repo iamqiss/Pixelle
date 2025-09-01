@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.suggest.completion.CompletionSuggesterBuilderTests;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilderTests;
-import org.opensearch.search.suggest.term.TermSuggestionBuilderTests;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchModule;
+import org.density.search.suggest.completion.CompletionSuggesterBuilderTests;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilderTests;
+import org.density.search.suggest.term.TermSuggestionBuilderTests;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -54,7 +54,7 @@ import java.util.Map.Entry;
 
 import static java.util.Collections.emptyList;
 
-public class SuggestBuilderTests extends OpenSearchTestCase {
+public class SuggestBuilderTests extends DensityTestCase {
 
     private static final int NUMBER_OF_RUNS = 20;
     private static NamedWriteableRegistry namedWriteableRegistry;

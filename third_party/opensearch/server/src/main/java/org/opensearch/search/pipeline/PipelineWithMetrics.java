@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.metrics.OperationMetrics;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.ingest.ConfigurationUtils;
+import org.density.DensityParseException;
+import org.density.common.metrics.OperationMetrics;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.ingest.ConfigurationUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.ingest.ConfigurationUtils.IGNORE_FAILURE_KEY;
-import static org.opensearch.ingest.ConfigurationUtils.TAG_KEY;
-import static org.opensearch.ingest.Pipeline.DESCRIPTION_KEY;
-import static org.opensearch.ingest.Pipeline.VERSION_KEY;
+import static org.density.ingest.ConfigurationUtils.IGNORE_FAILURE_KEY;
+import static org.density.ingest.ConfigurationUtils.TAG_KEY;
+import static org.density.ingest.Pipeline.DESCRIPTION_KEY;
+import static org.density.ingest.Pipeline.VERSION_KEY;
 
 /**
  * Specialization of {@link Pipeline} that adds metrics to track executions of the pipeline and individual processors.
@@ -112,7 +112,7 @@ class PipelineWithMetrics extends Pipeline {
             pipelineContext
         );
         if (config.isEmpty() == false) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "pipeline ["
                     + id
                     + "] doesn't support one or more provided configuration parameters "
@@ -161,7 +161,7 @@ class PipelineWithMetrics extends Pipeline {
                     if (tag != null) {
                         processorName = processorName + ":" + tag;
                     }
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "processor ["
                             + processorName
                             + "] doesn't support one or more provided configuration parameters: "

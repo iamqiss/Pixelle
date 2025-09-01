@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.remote;
+package org.density.common.remote;
 
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.core.action.ActionListener;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.InputStream;

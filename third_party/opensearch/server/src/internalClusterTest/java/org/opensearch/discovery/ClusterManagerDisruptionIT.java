@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterStateStats;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.BlockClusterManagerServiceOnClusterManager;
-import org.opensearch.test.disruption.IntermittentLongGCDisruption;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.disruption.SingleNodeDisruption;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterStateStats;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.BlockClusterManagerServiceOnClusterManager;
+import org.density.test.disruption.IntermittentLongGCDisruption;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.disruption.SingleNodeDisruption;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
@@ -65,7 +65,7 @@ import static org.junit.Assume.assumeThat;
 /**
  * Tests relating to the loss of the cluster-manager.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class ClusterManagerDisruptionIT extends AbstractDisruptionTestCase {
 
     /**

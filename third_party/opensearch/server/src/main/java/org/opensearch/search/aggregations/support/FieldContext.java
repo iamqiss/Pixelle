@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.mapper.MappedFieldType;
 
 /**
  * Used by all field data based aggregators. This determine the context of the field data the aggregators are operating
  * in. It holds both the field names and the index field datas that are associated with them.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class FieldContext {

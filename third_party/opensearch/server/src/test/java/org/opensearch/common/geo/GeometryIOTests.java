@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.ShapeType;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.geo.GeometryTestUtils.randomGeometry;
-import static org.opensearch.index.query.LegacyGeoShapeQueryProcessor.geometryToShapeBuilder;
+import static org.density.geo.GeometryTestUtils.randomGeometry;
+import static org.density.index.query.LegacyGeoShapeQueryProcessor.geometryToShapeBuilder;
 
-public class GeometryIOTests extends OpenSearchTestCase {
+public class GeometryIOTests extends DensityTestCase {
 
     public void testRandomSerialization() throws Exception {
         for (int i = 0; i < randomIntBetween(1, 20); i++) {

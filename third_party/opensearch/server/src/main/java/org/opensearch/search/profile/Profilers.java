@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.profile.aggregation.AggregationProfiler;
-import org.opensearch.search.profile.aggregation.ConcurrentAggregationProfiler;
-import org.opensearch.search.profile.fetch.FetchProfiler;
-import org.opensearch.search.profile.query.ConcurrentQueryProfileTree;
-import org.opensearch.search.profile.query.ConcurrentQueryProfiler;
-import org.opensearch.search.profile.query.InternalQueryProfileTree;
-import org.opensearch.search.profile.query.QueryProfiler;
+import org.density.common.annotation.PublicApi;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.profile.aggregation.AggregationProfiler;
+import org.density.search.profile.aggregation.ConcurrentAggregationProfiler;
+import org.density.search.profile.fetch.FetchProfiler;
+import org.density.search.profile.query.ConcurrentQueryProfileTree;
+import org.density.search.profile.query.ConcurrentQueryProfiler;
+import org.density.search.profile.query.InternalQueryProfileTree;
+import org.density.search.profile.query.QueryProfiler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +53,7 @@ import java.util.function.Supplier;
 /**
  * Wrapper around all the profilers that makes management easier.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class Profilers {

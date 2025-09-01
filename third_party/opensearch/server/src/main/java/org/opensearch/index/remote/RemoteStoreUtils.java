@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.Version;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -44,15 +44,15 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.remote.RemoteMigrationIndexMetadataUpdater.indexHasRemoteStoreSettings;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_HASH_ALGORITHM_SETTING;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_TRANSLOG_METADATA;
+import static org.density.index.remote.RemoteMigrationIndexMetadataUpdater.indexHasRemoteStoreSettings;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_HASH_ALGORITHM_SETTING;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PATH_TYPE_SETTING;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_TRANSLOG_METADATA;
 
 /**
  * Utils for remote store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStoreUtils {
     private static final Logger logger = LogManager.getLogger(RemoteStoreUtils.class);
@@ -227,7 +227,7 @@ public class RemoteStoreUtils {
         // translog blobstore supports custom metadata or not.
         // Currently, the blobStoreMetadataEnabled flag is set to false because the integration tests run on the local file system, which
         // does not support custom metadata.
-        // https://github.com/opensearch-project/OpenSearch/issues/13745
+        // https://github.com/density-project/Density/issues/13745
         boolean blobStoreMetadataEnabled = false;
         boolean translogMetadata = Version.V_2_15_0.compareTo(minNodeVersion) <= 0
             && CLUSTER_REMOTE_STORE_TRANSLOG_METADATA.get(clusterSettings)

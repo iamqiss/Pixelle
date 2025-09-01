@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.replication.ReplicatedWriteRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.replication.ReplicatedWriteRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ import java.io.IOException;
  * Interface implemented by requests that modify the documents in an index like {@link IndexRequest}, {@link UpdateRequest}, and
  * {@link BulkRequest}. Rather than implement this directly most implementers should extend {@link ReplicatedWriteRequest}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface WriteRequest<R extends WriteRequest<R>> extends Writeable {
     /**
@@ -79,7 +79,7 @@ public interface WriteRequest<R extends WriteRequest<R>> extends Writeable {
     /**
      * The refresh policy of the request.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     enum RefreshPolicy implements Writeable {

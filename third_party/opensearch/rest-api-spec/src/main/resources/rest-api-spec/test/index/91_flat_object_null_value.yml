@@ -319,7 +319,7 @@ teardown:
         index: flat_object_null_value
   - is_true: flat_object_null_value.mappings
   - match: { flat_object_null_value.mappings.properties.record.type: flat_object }
-  # https://github.com/opensearch-project/OpenSearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
+  # https://github.com/density-project/Density/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
   - length: { flat_object_null_value.mappings.properties: 2 }
 
 

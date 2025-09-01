@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.LocalTimeOffset.Gap;
-import org.opensearch.common.LocalTimeOffset.Overlap;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.round.Roundable;
-import org.opensearch.common.round.RoundableFactory;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.DensityException;
+import org.density.common.LocalTimeOffset.Gap;
+import org.density.common.LocalTimeOffset.Overlap;
+import org.density.common.annotation.PublicApi;
+import org.density.common.round.Roundable;
+import org.density.common.round.RoundableFactory;
+import org.density.common.time.DateUtils;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -79,7 +79,7 @@ import java.util.concurrent.TimeUnit;
  * blog for some background reading. Its super interesting and the links are
  * a comedy gold mine. If you like time zones. Or hate them.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Rounding implements Writeable {
@@ -88,7 +88,7 @@ public abstract class Rounding implements Writeable {
     /**
      * A Date Time Unit
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum DateTimeUnit {
@@ -255,7 +255,7 @@ public abstract class Rounding implements Writeable {
                 case 8:
                     return SECOND_OF_MINUTE;
                 default:
-                    throw new OpenSearchException("Unknown date time unit id [" + id + "]");
+                    throw new DensityException("Unknown date time unit id [" + id + "]");
             }
         }
     }
@@ -277,7 +277,7 @@ public abstract class Rounding implements Writeable {
     /**
      * A strategy for rounding milliseconds since epoch.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Prepared {
@@ -369,7 +369,7 @@ public abstract class Rounding implements Writeable {
     /**
      * Builder for rounding
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -491,7 +491,7 @@ public abstract class Rounding implements Writeable {
     /**
      * Rounding time units
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class TimeUnitRounding extends Rounding {
         static final byte ID = 1;
@@ -959,7 +959,7 @@ public abstract class Rounding implements Writeable {
     /**
      * Rounding time intervals
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class TimeIntervalRounding extends Rounding {
         static final byte ID = 2;
@@ -1282,7 +1282,7 @@ public abstract class Rounding implements Writeable {
     /**
      * Rounding offsets
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class OffsetRounding extends Rounding {
         static final byte ID = 3;
@@ -1391,7 +1391,7 @@ public abstract class Rounding implements Writeable {
             case OffsetRounding.ID:
                 return new OffsetRounding(in);
             default:
-                throw new OpenSearchException("unknown rounding id [" + id + "]");
+                throw new DensityException("unknown rounding id [" + id + "]");
         }
     }
 

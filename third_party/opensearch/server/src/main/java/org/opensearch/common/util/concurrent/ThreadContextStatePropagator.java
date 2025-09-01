@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  * The propagator for {@link ThreadContext} that helps to carry-over the state from one
  * thread to another (tasks, tracing context, etc).
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public interface ThreadContextStatePropagator {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.search.uhighlight;
+package org.density.lucene.search.uhighlight;
 
 import org.apache.lucene.search.uhighlight.FieldHighlighter;
-import org.opensearch.search.fetch.subphase.highlight.UnifiedHighlighter;
+import org.density.search.fetch.subphase.highlight.UnifiedHighlighter;
 
 import java.text.BreakIterator;
 import java.text.CharacterIterator;

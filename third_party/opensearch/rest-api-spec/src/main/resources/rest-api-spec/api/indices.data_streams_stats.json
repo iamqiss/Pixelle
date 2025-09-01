@@ -1,7 +1,7 @@
 {
   "indices.data_streams_stats":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/im-plugin/data-streams/",
+      "url":"https://density.org/docs/latest/im-plugin/data-streams/",
       "description":"Provides statistics on operations happening in a data stream."
     },
     "stability":"experimental",

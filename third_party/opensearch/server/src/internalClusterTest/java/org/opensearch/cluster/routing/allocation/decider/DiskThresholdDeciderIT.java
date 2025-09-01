@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
@@ -39,45 +39,45 @@ import org.apache.lucene.tests.mockfile.FilterFileStore;
 import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
 import org.apache.lucene.tests.mockfile.FilterPath;
 import org.apache.lucene.util.Constants;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.InternalClusterInfoService;
-import org.opensearch.cluster.MockInternalClusterInfoService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.Rebalance;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.node.Node;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.remotestore.multipart.mocks.MockFsRepositoryPlugin;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.RestoreInfo;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.InternalClusterInfoService;
+import org.density.cluster.MockInternalClusterInfoService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider.Rebalance;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.io.PathUtils;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.fs.FsService;
+import org.density.node.Node;
+import org.density.plugins.Plugin;
+import org.density.remotestore.multipart.mocks.MockFsRepositoryPlugin;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.RestoreInfo;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotState;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
@@ -103,12 +103,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.INDEX_ROUTING_ALLOCATION_ENABLE_SETTING;
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
-import static org.opensearch.index.store.Store.INDEX_STORE_STATS_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.index.store.remote.filecache.FileCacheSettings.DATA_TO_FILE_CACHE_SIZE_RATIO_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.routing.allocation.decider.EnableAllocationDecider.INDEX_ROUTING_ALLOCATION_ENABLE_SETTING;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.index.store.Store.INDEX_STORE_STATS_REFRESH_INTERVAL_SETTING;
+import static org.density.index.store.remote.filecache.FileCacheSettings.DATA_TO_FILE_CACHE_SIZE_RATIO_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -117,8 +117,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-@ParameterizedStaticSettingsOpenSearchIntegTestCase.ClusterScope(scope = ParameterizedStaticSettingsOpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class DiskThresholdDeciderIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@ParameterizedStaticSettingsDensityIntegTestCase.ClusterScope(scope = ParameterizedStaticSettingsDensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class DiskThresholdDeciderIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public DiskThresholdDeciderIT(Settings nodeSettings) {
         super(nodeSettings);

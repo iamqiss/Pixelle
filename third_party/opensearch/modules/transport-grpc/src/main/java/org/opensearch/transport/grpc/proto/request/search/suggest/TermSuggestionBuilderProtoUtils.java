@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.suggest;
+package org.density.transport.grpc.proto.request.search.suggest;
 
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
+import org.density.protobufs.SearchRequest;
+import org.density.search.suggest.term.TermSuggestionBuilder;
 
 /**
- * Utility class for converting TermSuggestionBuilder components between OpenSearch and Protocol Buffers formats.
+ * Utility class for converting TermSuggestionBuilder components between Density and Protocol Buffers formats.
  * This class provides methods to transform suggestion modes and other term suggestion parameters
  * to ensure proper handling of term suggestions in search operations.
  */

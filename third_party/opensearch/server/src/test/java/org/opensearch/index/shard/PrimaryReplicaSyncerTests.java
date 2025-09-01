@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,37 +25,37 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.resync.ResyncReplicationRequest;
-import org.opensearch.action.resync.ResyncReplicationResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.ByteBufferStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
+import org.density.action.index.IndexRequest;
+import org.density.action.resync.ResyncReplicationRequest;
+import org.density.action.resync.ResyncReplicationResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.ByteBufferStreamInput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

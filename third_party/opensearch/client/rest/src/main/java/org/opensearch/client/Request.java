@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
@@ -43,7 +43,7 @@ import java.util.Objects;
 import static java.util.Collections.unmodifiableMap;
 
 /**
- * HTTP Request to OpenSearch.
+ * HTTP Request to Density.
  */
 public final class Request {
     private final String method;
@@ -151,8 +151,8 @@ public final class Request {
     }
 
     /**
-     * Set the portion of an HTTP request to OpenSearch that can be
-     * manipulated without changing OpenSearch's behavior.
+     * Set the portion of an HTTP request to Density that can be
+     * manipulated without changing Density's behavior.
      *
      * @param options the options to be set.
      * @throws NullPointerException if {@code options} is null.
@@ -163,8 +163,8 @@ public final class Request {
     }
 
     /**
-     * Set the portion of an HTTP request to OpenSearch that can be
-     * manipulated without changing OpenSearch's behavior.
+     * Set the portion of an HTTP request to Density that can be
+     * manipulated without changing Density's behavior.
      *
      * @param options the options to be set.
      * @throws NullPointerException if {@code options} is null.
@@ -175,8 +175,8 @@ public final class Request {
     }
 
     /**
-     * Get the portion of an HTTP request to OpenSearch that can be
-     * manipulated without changing OpenSearch's behavior.
+     * Get the portion of an HTTP request to Density that can be
+     * manipulated without changing Density's behavior.
      */
     public RequestOptions getOptions() {
         return options;

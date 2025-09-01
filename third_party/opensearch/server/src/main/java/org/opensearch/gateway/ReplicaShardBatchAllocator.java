@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.NodeAllocationResult;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.AsyncShardFetch.FetchResult;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadata;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadataBatch;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.NodeAllocationResult;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.collect.Tuple;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.AsyncShardFetch.FetchResult;
+import org.density.indices.store.TransportNodesListShardStoreMetadata;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadataBatch;
+import org.density.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +38,7 @@ import java.util.function.Supplier;
 /**
  * Allocates replica shards in a batch mode
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ReplicaShardBatchAllocator extends ReplicaShardAllocator {
 

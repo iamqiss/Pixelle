@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.breaker.TestCircuitBreaker;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.OriginalIndices;
+import org.density.common.breaker.TestCircuitBreaker;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -68,11 +68,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class QueryPhaseResultConsumerTests extends OpenSearchTestCase {
+public class QueryPhaseResultConsumerTests extends DensityTestCase {
 
     private SearchPhaseController searchPhaseController;
     private ThreadPool threadPool;
-    private OpenSearchThreadPoolExecutor executor;
+    private DensityThreadPoolExecutor executor;
 
     @Before
     public void setup() {
@@ -96,11 +96,11 @@ public class QueryPhaseResultConsumerTests extends OpenSearchTestCase {
             };
         });
         threadPool = new TestThreadPool(SearchPhaseControllerTests.class.getName());
-        executor = OpenSearchExecutors.newFixed(
+        executor = DensityExecutors.newFixed(
             "test",
             1,
             10,
-            OpenSearchExecutors.daemonThreadFactory("test"),
+            DensityExecutors.daemonThreadFactory("test"),
             threadPool.getThreadContext()
         );
     }

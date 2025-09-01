@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,18 +23,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.matcher;
+package org.density.common.inject.matcher;
 
 /**
  * Implements {@code and()} and {@code or()}.
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractMatcher<T> implements Matcher<T> {
 
@@ -51,7 +51,7 @@ public abstract class AbstractMatcher<T> implements Matcher<T> {
     /**
      * An AND matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class AndMatcher<T> extends AbstractMatcher<T> {
         private final Matcher<? super T> a, b;
@@ -85,7 +85,7 @@ public abstract class AbstractMatcher<T> implements Matcher<T> {
     /**
      * An OR matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class OrMatcher<T> extends AbstractMatcher<T> {
         private final Matcher<? super T> a, b;

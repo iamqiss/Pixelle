@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.rollover;
+package org.density.action.admin.indices.rollover;
 
-import org.opensearch.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasAction;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexAliasesService;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasAction;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.cluster.metadata.MetadataIndexAliasesService;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,16 +61,16 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.IndexAbstraction.Type.ALIAS;
-import static org.opensearch.cluster.metadata.IndexAbstraction.Type.DATA_STREAM;
-import static org.opensearch.cluster.metadata.MetadataCreateDataStreamService.lookupTemplateForDataStream;
-import static org.opensearch.cluster.metadata.MetadataIndexTemplateService.findV1Templates;
-import static org.opensearch.cluster.metadata.MetadataIndexTemplateService.findV2Template;
+import static org.density.cluster.metadata.IndexAbstraction.Type.ALIAS;
+import static org.density.cluster.metadata.IndexAbstraction.Type.DATA_STREAM;
+import static org.density.cluster.metadata.MetadataCreateDataStreamService.lookupTemplateForDataStream;
+import static org.density.cluster.metadata.MetadataIndexTemplateService.findV1Templates;
+import static org.density.cluster.metadata.MetadataIndexTemplateService.findV2Template;
 
 /**
  * Service responsible for handling rollover requests for write aliases and data streams
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataRolloverService {
     private static final Pattern INDEX_NAME_PATTERN = Pattern.compile("^.*-\\d+$");
@@ -97,7 +97,7 @@ public class MetadataRolloverService {
     /**
      * Result for rollover request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RolloverResult {
         public final String rolloverIndexName;

@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache;
+package org.density.index.store.remote.utils.cache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.Weigher;
-import org.opensearch.index.store.remote.utils.cache.stats.FileStatsCounter;
-import org.opensearch.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
-import org.opensearch.index.store.remote.utils.cache.stats.StatsCounter;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.Weigher;
+import org.density.index.store.remote.utils.cache.stats.FileStatsCounter;
+import org.density.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.StatsCounter;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,8 +32,8 @@ import java.util.function.Predicate;
  * As long as {@link Node#refCount} greater than 0 or is pinned then node is not eligible for eviction.
  * So this is the best effort lazy cache to maintain capacity. <br>
  * For more context why in-house cache implementation exist look at
- * <a href="https://github.com/opensearch-project/OpenSearch/issues/4964#issuecomment-1421689586">this comment</a> and
- * <a href="https://github.com/opensearch-project/OpenSearch/issues/6225">this ticket for future plans</a>
+ * <a href="https://github.com/density-project/Density/issues/4964#issuecomment-1421689586">this comment</a> and
+ * <a href="https://github.com/density-project/Density/issues/6225">this ticket for future plans</a>
  * <br>
  * This cache implementation meets these requirements:
  * <ul>
@@ -45,7 +45,7 @@ import java.util.function.Predicate;
  * </ul>
  * @see RefCountedCache
  *
- * @opensearch.internal
+ * @density.internal
  */
 class LRUCache<K, V> implements RefCountedCache<K, V> {
     private static final Logger logger = LogManager.getLogger(LRUCache.class);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.Booleans;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.core.rest.RestStatus;
+import org.density.test.rest.yaml.ObjectPath;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.hamcrest.Matchers;
 
@@ -66,9 +66,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import static com.carrotsearch.randomizedtesting.RandomizedTest.randomAsciiLettersOfLength;
-import static org.opensearch.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
-import static org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.INDEX_ROUTING_ALLOCATION_ENABLE_SETTING;
-import static org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider.SETTING_ALLOCATION_MAX_RETRY;
+import static org.density.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
+import static org.density.cluster.routing.allocation.decider.EnableAllocationDecider.INDEX_ROUTING_ALLOCATION_ENABLE_SETTING;
+import static org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider.SETTING_ALLOCATION_MAX_RETRY;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.in;

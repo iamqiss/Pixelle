@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.read.listener;
+package org.density.common.blobstore.stream.read.listener;
 
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressFileSystems;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.io.InputStreamContainer;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.UnaryOperator;
 
-import static org.opensearch.common.blobstore.stream.read.listener.ListenerTestUtils.CountingCompletionListener;
+import static org.density.common.blobstore.stream.read.listener.ListenerTestUtils.CountingCompletionListener;
 
 /*
     WindowsFS tries to simulate file handles in a best case simulation.
@@ -41,7 +41,7 @@ import static org.opensearch.common.blobstore.stream.read.listener.ListenerTestU
     is closed, which this simulation does not account for. Preventing use of WindowsFS for these tests.
  */
 @SuppressFileSystems("WindowsFS")
-public class ReadContextListenerTests extends OpenSearchTestCase {
+public class ReadContextListenerTests extends DensityTestCase {
 
     private Path path;
     private static ThreadPool threadPool;

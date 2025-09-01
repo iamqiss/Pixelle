@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.seqno.RetentionLeaseNotFoundException;
+import org.density.client.AbstractResponseTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.seqno.RetentionLeaseNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.in;
 
 public class BroadcastResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.support.broadcast.BroadcastResponse,
+    org.density.action.support.broadcast.BroadcastResponse,
     BroadcastResponse> {
 
     private String index;
@@ -58,7 +58,7 @@ public class BroadcastResponseTests extends AbstractResponseTestCase<
     private Set<Integer> shardIds;
 
     @Override
-    protected org.opensearch.action.support.broadcast.BroadcastResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.support.broadcast.BroadcastResponse createServerTestInstance(XContentType xContentType) {
         index = randomAlphaOfLength(8);
         id = randomAlphaOfLength(8);
         final int total = randomIntBetween(1, 16);
@@ -76,7 +76,7 @@ public class BroadcastResponseTests extends AbstractResponseTestCase<
             shardIds.add(failure.shardId());
         }
 
-        return new org.opensearch.action.support.broadcast.BroadcastResponse(total, successful, failed, failures);
+        return new org.density.action.support.broadcast.BroadcastResponse(total, successful, failed, failures);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class BroadcastResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.support.broadcast.BroadcastResponse serverTestInstance,
+        org.density.action.support.broadcast.BroadcastResponse serverTestInstance,
         BroadcastResponse clientInstance
     ) {
         assertThat(clientInstance.shards().total(), equalTo(serverTestInstance.getTotalShards()));

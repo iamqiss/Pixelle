@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,8 +17,8 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.index.SoftDeletesDirectoryReaderWrapper;
 import org.apache.lucene.index.StandardDirectoryReader;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,12 +28,12 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * This is an extension of {@link OpenSearchReaderManager} for use with {@link NRTReplicationEngine}.
+ * This is an extension of {@link DensityReaderManager} for use with {@link NRTReplicationEngine}.
  * The manager holds a reference to the latest {@link SegmentInfos} object that is used to refresh a reader.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class NRTReplicationReaderManager extends OpenSearchReaderManager {
+public class NRTReplicationReaderManager extends DensityReaderManager {
 
     private final static Logger logger = LogManager.getLogger(NRTReplicationReaderManager.class);
     private volatile SegmentInfos currentInfos;
@@ -43,7 +43,7 @@ public class NRTReplicationReaderManager extends OpenSearchReaderManager {
 
     /**
      * Creates and returns a new SegmentReplicationReaderManager from the given
-     * already-opened {@link OpenSearchDirectoryReader}, stealing
+     * already-opened {@link DensityDirectoryReader}, stealing
      * the incoming reference.
      *
      * @param reader         - The SegmentReplicationReaderManager to use for future reopens.
@@ -52,7 +52,7 @@ public class NRTReplicationReaderManager extends OpenSearchReaderManager {
      * @param engineConfig   - The engine configuration containing leafSorter.
      */
     NRTReplicationReaderManager(
-        OpenSearchDirectoryReader reader,
+        DensityDirectoryReader reader,
         Consumer<Collection<String>> onNewReader,
         Consumer<Collection<String>> onReaderClosed,
         EngineConfig engineConfig
@@ -65,7 +65,7 @@ public class NRTReplicationReaderManager extends OpenSearchReaderManager {
     }
 
     @Override
-    protected OpenSearchDirectoryReader refreshIfNeeded(OpenSearchDirectoryReader referenceToRefresh) throws IOException {
+    protected DensityDirectoryReader refreshIfNeeded(DensityDirectoryReader referenceToRefresh) throws IOException {
         Objects.requireNonNull(referenceToRefresh);
         // checks if an actual refresh (change in segments) happened
         if (unwrapStandardReader(referenceToRefresh).getSegmentInfos().version == currentInfos.version) {
@@ -92,12 +92,12 @@ public class NRTReplicationReaderManager extends OpenSearchReaderManager {
         logger.trace(
             () -> new ParameterizedMessage("updated to SegmentInfosVersion=" + currentInfos.getVersion() + " reader=" + innerReader)
         );
-        final OpenSearchDirectoryReader reader = OpenSearchDirectoryReader.wrap(
+        final DensityDirectoryReader reader = DensityDirectoryReader.wrap(
             softDeletesDirectoryReaderWrapper,
             referenceToRefresh.shardId()
         );
         onNewReader.accept(files);
-        OpenSearchDirectoryReader.addReaderCloseListener(reader, key -> onReaderClosed.accept(files));
+        DensityDirectoryReader.addReaderCloseListener(reader, key -> onReaderClosed.accept(files));
         return reader;
     }
 
@@ -119,7 +119,7 @@ public class NRTReplicationReaderManager extends OpenSearchReaderManager {
         return currentInfos;
     }
 
-    public static StandardDirectoryReader unwrapStandardReader(OpenSearchDirectoryReader reader) {
+    public static StandardDirectoryReader unwrapStandardReader(DensityDirectoryReader reader) {
         final DirectoryReader delegate = reader.getDelegate();
         if (delegate instanceof SoftDeletesDirectoryReaderWrapper) {
             return (StandardDirectoryReader) ((SoftDeletesDirectoryReaderWrapper) delegate).getDelegate();

@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.BulkRequestParser;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.BulkRequestBody;
-import org.opensearch.protobufs.CreateOperation;
-import org.opensearch.protobufs.DeleteOperation;
-import org.opensearch.protobufs.IndexOperation;
-import org.opensearch.protobufs.OpType;
-import org.opensearch.protobufs.UpdateOperation;
-import org.opensearch.script.Script;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
-import org.opensearch.transport.grpc.proto.request.common.ScriptProtoUtils;
-import org.opensearch.transport.grpc.proto.response.document.common.VersionTypeProtoUtils;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.BulkRequestParser;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.BulkRequestBody;
+import org.density.protobufs.CreateOperation;
+import org.density.protobufs.DeleteOperation;
+import org.density.protobufs.IndexOperation;
+import org.density.protobufs.OpType;
+import org.density.protobufs.UpdateOperation;
+import org.density.script.Script;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
+import org.density.transport.grpc.proto.request.common.ScriptProtoUtils;
+import org.density.transport.grpc.proto.response.document.common.VersionTypeProtoUtils;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
 
 /**
  * Parses bulk requests.

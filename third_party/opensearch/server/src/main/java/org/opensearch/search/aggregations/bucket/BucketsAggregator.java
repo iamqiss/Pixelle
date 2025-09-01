@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorBase;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregator;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
-import org.opensearch.search.aggregations.support.AggregationPath;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.lease.Releasable;
+import org.density.common.util.BigArrays;
+import org.density.common.util.LongArray;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorBase;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.bucket.global.GlobalAggregator;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.aggregations.support.AggregationPath;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -66,7 +66,7 @@ import java.util.function.ToLongFunction;
 /**
  * Base class to collect all docs into buckets
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BucketsAggregator extends AggregatorBase {
 
@@ -357,7 +357,7 @@ public abstract class BucketsAggregator extends AggregatorBase {
     /**
      * A bucket builder for a fixed count
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     protected interface BucketBuilderForFixedCount<B> {
@@ -388,7 +388,7 @@ public abstract class BucketsAggregator extends AggregatorBase {
     /**
      * A single bucket result builder
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     protected interface SingleBucketResultBuilder {
@@ -454,7 +454,7 @@ public abstract class BucketsAggregator extends AggregatorBase {
     /**
      * A bucket builder for a variable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     protected interface BucketBuilderForVariable<B> {
@@ -464,7 +464,7 @@ public abstract class BucketsAggregator extends AggregatorBase {
     /**
      * A result builder for a bucket variable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     protected interface ResultBuilderForVariable<B> {

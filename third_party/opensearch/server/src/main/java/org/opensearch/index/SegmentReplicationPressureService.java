@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 /**
  * Service responsible for applying backpressure for lagging behind replicas when Segment Replication is enabled.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationPressureService implements Closeable {
 
@@ -163,7 +163,7 @@ public class SegmentReplicationPressureService implements Closeable {
             if (percentStale >= maxStaleLimit) {
                 tracker.incrementRejectionCount(shard.shardId());
                 logger.warn("Rejecting write requests for shard, stale shards [{}%] shards: {}", percentStale, staleReplicas);
-                throw new OpenSearchRejectedExecutionException(
+                throw new DensityRejectedExecutionException(
                     "rejected execution on primary shard: " + shard.shardId() + " Stale Replicas: " + staleReplicas + "]",
                     false
                 );

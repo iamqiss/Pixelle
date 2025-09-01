@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,71 +26,71 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.action.support.single.instance.TransportInstanceSingleOperationAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.PlainShardIterator;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NotSerializableExceptionWrapper;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexingStats.Stats.DocStatusStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.ExceptionsHelper;
+import org.density.ResourceAlreadyExistsException;
+import org.density.action.ActionRunnable;
+import org.density.action.DocWriteRequest;
+import org.density.action.RoutingMissingException;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.AutoCreateIndex;
+import org.density.action.support.TransportActions;
+import org.density.action.support.single.instance.TransportInstanceSingleOperationAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.PlainShardIterator;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NotSerializableExceptionWrapper;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexingStats.Stats.DocStatusStats;
+import org.density.indices.IndicesService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.ExceptionsHelper.unwrapCause;
-import static org.opensearch.action.bulk.TransportSingleItemBulkWriteAction.toSingleItemBulkRequest;
-import static org.opensearch.action.bulk.TransportSingleItemBulkWriteAction.wrapBulkResponse;
+import static org.density.ExceptionsHelper.unwrapCause;
+import static org.density.action.bulk.TransportSingleItemBulkWriteAction.toSingleItemBulkRequest;
+import static org.density.action.bulk.TransportSingleItemBulkWriteAction.wrapBulkResponse;
 
 /**
  * Transport action for updating an index
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportUpdateAction extends TransportInstanceSingleOperationAction<UpdateRequest, UpdateResponse> {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(TransportUpdateAction.class);

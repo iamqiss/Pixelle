@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
-import org.opensearch.core.common.text.Text;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.text.Text;
+import org.density.search.suggest.Suggest;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.suggest.Suggest.COMPARATOR;
+import static org.density.search.suggest.Suggest.COMPARATOR;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class CompletionSuggestionTests extends OpenSearchTestCase {
+public class CompletionSuggestionTests extends DensityTestCase {
 
     public void testReduce() {
         List<Suggest.Suggestion<CompletionSuggestion.Entry>> shardSuggestions = new ArrayList<>();

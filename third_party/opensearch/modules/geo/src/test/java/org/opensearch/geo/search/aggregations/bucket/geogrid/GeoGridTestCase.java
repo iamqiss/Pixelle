@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
 import org.apache.lucene.index.IndexWriter;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.search.aggregations.metrics.ParsedGeoBounds;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
-import org.opensearch.test.InternalMultiBucketAggregationTestCase;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.search.aggregations.metrics.ParsedGeoBounds;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.test.InternalMultiBucketAggregationTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

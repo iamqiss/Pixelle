@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.ccs;
+package org.density.search.ccs;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.AbstractMultiClustersTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.shard.SearchOperationListener;
+import org.density.plugins.Plugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.test.AbstractMultiClustersTestCase;
+import org.density.transport.client.Client;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 public class CrossClusterSearchIT extends AbstractMultiClustersTestCase {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.nodesinfo;
+package org.density.nodesinfo;
 
-import org.opensearch.Build;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.PluginsAndModules;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.ingest.IngestInfo;
-import org.opensearch.ingest.ProcessorInfo;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.os.OsInfo;
-import org.opensearch.monitor.process.ProcessInfo;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.search.aggregations.support.AggregationInfo;
-import org.opensearch.search.aggregations.support.AggregationUsageService;
-import org.opensearch.search.pipeline.SearchPipelineInfo;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolInfo;
-import org.opensearch.transport.TransportInfo;
+import org.density.Build;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.PluginsAndModules;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.http.HttpInfo;
+import org.density.ingest.IngestInfo;
+import org.density.ingest.ProcessorInfo;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.os.OsInfo;
+import org.density.monitor.process.ProcessInfo;
+import org.density.plugins.PluginInfo;
+import org.density.search.aggregations.support.AggregationInfo;
+import org.density.search.aggregations.support.AggregationUsageService;
+import org.density.search.pipeline.SearchPipelineInfo;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolInfo;
+import org.density.transport.TransportInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,10 +69,10 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class NodeInfoStreamingTests extends OpenSearchTestCase {
+public class NodeInfoStreamingTests extends DensityTestCase {
 
     public void testNodeInfoStreaming() throws IOException {
         NodeInfo nodeInfo = createNodeInfo();
@@ -246,9 +246,9 @@ public class NodeInfoStreamingTests extends OpenSearchTestCase {
         SearchPipelineInfo searchPipelineInfo = null;
         if (randomBoolean()) {
             int numProcessors = randomIntBetween(0, 5);
-            List<org.opensearch.search.pipeline.ProcessorInfo> processors = new ArrayList<>(numProcessors);
+            List<org.density.search.pipeline.ProcessorInfo> processors = new ArrayList<>(numProcessors);
             for (int i = 0; i < numProcessors; i++) {
-                processors.add(new org.opensearch.search.pipeline.ProcessorInfo(randomAlphaOfLengthBetween(3, 10)));
+                processors.add(new org.density.search.pipeline.ProcessorInfo(randomAlphaOfLengthBetween(3, 10)));
             }
             searchPipelineInfo = new SearchPipelineInfo(Map.of(randomAlphaOfLengthBetween(3, 10), processors));
         }

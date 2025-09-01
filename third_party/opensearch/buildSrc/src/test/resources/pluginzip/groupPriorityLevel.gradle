@@ -1,6 +1,6 @@
 plugins {
   id 'java-gradle-plugin'
-  id 'opensearch.pluginzip'
+  id 'density.pluginzip'
 }
 
 version='2.0.0.0'

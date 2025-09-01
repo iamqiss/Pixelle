@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
  * This will provide the functionality to acquire lock, release lock or to check if a lock is acquired on a specific
  * file in remote store.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public interface RemoteStoreLockManager {

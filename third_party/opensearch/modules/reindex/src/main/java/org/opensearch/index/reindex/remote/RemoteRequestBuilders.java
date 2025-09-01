@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.client.Request;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortBuilder;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.search.SearchRequest;
+import org.density.client.Request;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortBuilder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -56,12 +56,12 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 
 /**
- * Builds requests for remote version of OpenSearch. Note that unlike most of the
- * rest of OpenSearch this file needs to be compatible with very old versions of
- * OpenSearch. Thus it often uses identifiers for versions like {@code 2000099}
+ * Builds requests for remote version of Density. Note that unlike most of the
+ * rest of Density this file needs to be compatible with very old versions of
+ * Density. Thus it often uses identifiers for versions like {@code 2000099}
  * for {@code 2.0.0-alpha1}. Do not drop support for features from this file just
  * because the version constants have been removed.
  */
@@ -164,7 +164,7 @@ final class RemoteRequestBuilders {
                 entity.copyCurrentStructure(queryParser);
                 XContentParser.Token shouldBeEof = queryParser.nextToken();
                 if (shouldBeEof != null) {
-                    throw new OpenSearchException(
+                    throw new DensityException(
                         "query was more than a single object. This first token after the object is [" + shouldBeEof + "]"
                     );
                 }
@@ -182,7 +182,7 @@ final class RemoteRequestBuilders {
             entity.endObject();
             request.setJsonEntity(entity.toString());
         } catch (IOException e) {
-            throw new OpenSearchException("unexpected error building entity", e);
+            throw new DensityException("unexpected error building entity", e);
         }
         return request;
     }
@@ -247,7 +247,7 @@ final class RemoteRequestBuilders {
             entity.startObject().field("scroll_id", scroll).endObject();
             request.setJsonEntity(entity.toString());
         } catch (IOException e) {
-            throw new OpenSearchException("failed to build scroll entity", e);
+            throw new DensityException("failed to build scroll entity", e);
         }
         return request;
     }
@@ -264,7 +264,7 @@ final class RemoteRequestBuilders {
             entity.startObject().array("scroll_id", scroll).endObject();
             request.setJsonEntity(entity.toString());
         } catch (IOException e) {
-            throw new OpenSearchException("failed to build clear scroll entity", e);
+            throw new DensityException("failed to build clear scroll entity", e);
         }
         return request;
     }

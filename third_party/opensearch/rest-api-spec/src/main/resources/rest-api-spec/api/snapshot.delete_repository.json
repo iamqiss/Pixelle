@@ -1,7 +1,7 @@
 {
   "snapshot.delete_repository":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/delete-snapshot-repository/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/delete-snapshot-repository/",
       "description":"Deletes a repository."
     },
     "stability":"stable",

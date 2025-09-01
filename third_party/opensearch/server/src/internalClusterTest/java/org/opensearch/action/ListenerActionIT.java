@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ListenerActionIT extends OpenSearchIntegTestCase {
+public class ListenerActionIT extends DensityIntegTestCase {
     public void testThreadedListeners() throws Throwable {
         final CountDownLatch latch = new CountDownLatch(1);
         final AtomicReference<Throwable> failure = new AtomicReference<>();

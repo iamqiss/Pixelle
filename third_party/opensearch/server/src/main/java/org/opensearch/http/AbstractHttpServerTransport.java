@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.NetworkExceptionHelper;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.channels.TraceableHttpChannel;
-import org.opensearch.telemetry.tracing.channels.TraceableRestChannel;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.BindTransportException;
-import org.opensearch.transport.Transport;
+import org.density.ExceptionsHelper;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.network.CloseableChannel;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.transport.NetworkExceptionHelper;
+import org.density.common.transport.PortsRange;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.rest.RestChannel;
+import org.density.rest.RestRequest;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.channels.TraceableHttpChannel;
+import org.density.telemetry.tracing.channels.TraceableRestChannel;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.BindTransportException;
+import org.density.transport.Transport;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -79,16 +79,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_BIND_HOST;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_PORT;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_PUBLISH_HOST;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_PUBLISH_PORT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_BIND_HOST;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_PORT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_PUBLISH_HOST;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_PUBLISH_PORT;
 
 /**
  * Base HttpServer class
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractHttpServerTransport extends AbstractLifecycleComponent implements HttpServerTransport {
     private static final Logger logger = LogManager.getLogger(AbstractHttpServerTransport.class);

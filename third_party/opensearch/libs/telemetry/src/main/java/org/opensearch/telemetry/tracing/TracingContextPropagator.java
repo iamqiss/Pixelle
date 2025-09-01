@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 import java.util.Collection;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 /**
  * Interface defining the tracing related context propagation
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface TracingContextPropagator {

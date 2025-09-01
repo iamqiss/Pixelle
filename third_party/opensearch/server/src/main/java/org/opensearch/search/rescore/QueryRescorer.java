@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.search.rescore.QueryRescorer.QueryRescoreContext;
+import org.density.index.query.ParsedQuery;
+import org.density.search.rescore.QueryRescorer.QueryRescoreContext;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import static java.util.stream.Collectors.toSet;
  * A concrete query rescorer used to re-rank the Top-K results of a previously
  * executed search.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class QueryRescorer implements Rescorer {
 
@@ -189,7 +189,7 @@ public final class QueryRescorer implements Rescorer {
     /**
      * Context used during query rescoring
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class QueryRescoreContext extends RescoreContext {
         private ParsedQuery parsedQuery;

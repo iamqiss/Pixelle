@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.listeners;
+package org.density.wlm.listeners;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupService;
-import org.opensearch.wlm.WorkloadGroupTask;
-import org.opensearch.wlm.WorkloadGroupsStateAccessor;
-import org.opensearch.wlm.WorkloadManagementSettings;
-import org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService;
-import org.opensearch.wlm.stats.WorkloadGroupState;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupService;
+import org.density.wlm.WorkloadGroupTask;
+import org.density.wlm.WorkloadGroupsStateAccessor;
+import org.density.wlm.WorkloadManagementSettings;
+import org.density.wlm.cancellation.WorkloadGroupTaskCancellationService;
+import org.density.wlm.stats.WorkloadGroupState;
+import org.density.wlm.stats.WorkloadGroupStats;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class WorkloadGroupRequestOperationListenerTests extends OpenSearchTestCase {
+public class WorkloadGroupRequestOperationListenerTests extends DensityTestCase {
     public static final int ITERATIONS = 20;
     ThreadPool testThreadPool;
     WorkloadGroupService workloadGroupService;
@@ -73,8 +73,8 @@ public class WorkloadGroupRequestOperationListenerTests extends OpenSearchTestCa
     public void testRejectionCase() {
         final String testWorkloadGroupId = "asdgasgkajgkw3141_3rt4t";
         testThreadPool.getThreadContext().putHeader(WorkloadGroupTask.WORKLOAD_GROUP_ID_HEADER, testWorkloadGroupId);
-        doThrow(OpenSearchRejectedExecutionException.class).when(workloadGroupService).rejectIfNeeded(testWorkloadGroupId);
-        assertThrows(OpenSearchRejectedExecutionException.class, () -> sut.onRequestStart(null));
+        doThrow(DensityRejectedExecutionException.class).when(workloadGroupService).rejectIfNeeded(testWorkloadGroupId);
+        assertThrows(DensityRejectedExecutionException.class, () -> sut.onRequestStart(null));
     }
 
     public void testNonRejectionCase() {

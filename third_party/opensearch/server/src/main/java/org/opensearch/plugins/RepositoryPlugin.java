@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.Repository;
+import org.density.cluster.service.ClusterService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.Repository;
 
 import java.util.Collections;
 import java.util.Map;
@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * An extension point for {@link Plugin} implementations to add custom snapshot repositories.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface RepositoryPlugin {
 

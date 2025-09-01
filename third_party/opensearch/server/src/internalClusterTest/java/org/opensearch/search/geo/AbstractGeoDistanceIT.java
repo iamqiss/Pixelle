@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.bucket.range.InternalGeoDistance;
-import org.opensearch.search.aggregations.bucket.range.Range;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.settings.Settings;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.utils.Geohash;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.bucket.range.InternalGeoDistance;
+import org.density.search.aggregations.bucket.range.Range;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -66,14 +66,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
 /** base class for testing geo_distance queries on geo_ field types */
-abstract class AbstractGeoDistanceIT extends OpenSearchIntegTestCase {
+abstract class AbstractGeoDistanceIT extends DensityIntegTestCase {
 
     private static final double src_lat = 32.798;
     private static final double src_lon = -117.151;

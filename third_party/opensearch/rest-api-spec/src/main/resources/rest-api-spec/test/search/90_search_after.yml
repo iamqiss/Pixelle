@@ -454,7 +454,7 @@
 # as missing value. The secondary sort field is on id which doesn't have missing value.
 # In case skipping logic is applied in Lucene, it will skipp all documents with primary sort field
 # missing value even though it should list sort by secondary field id with missing value primary field.
-# This test is addressing bugs like here https://github.com/opensearch-project/OpenSearch/issues/9537
+# This test is addressing bugs like here https://github.com/density-project/Density/issues/9537
 
   - do:
       indices.create:

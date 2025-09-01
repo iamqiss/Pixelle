@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.xcontent.json.JsonXContentParser;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.semver.SemverRange;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.xcontent.json.JsonXContentParser;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.semver.SemverRange;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,13 +66,13 @@ import java.util.stream.Collectors;
 /**
  * An in-memory representation of the plugin descriptor.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PluginInfo implements Writeable, ToXContentObject {
 
-    public static final String OPENSEARCH_PLUGIN_PROPERTIES = "plugin-descriptor.properties";
-    public static final String OPENSEARCH_PLUGIN_POLICY = "plugin-security.policy";
+    public static final String DENSITY_PLUGIN_PROPERTIES = "plugin-descriptor.properties";
+    public static final String DENSITY_PLUGIN_POLICY = "plugin-security.policy";
     private static final JsonFactory jsonFactory = new JsonFactory().configure(
         JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature(),
         true
@@ -81,7 +81,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
     private final String name;
     private final String description;
     private final String version;
-    private final List<SemverRange> opensearchVersionRanges;
+    private final List<SemverRange> densityVersionRanges;
     private final String javaVersion;
     private final String classname;
     private final String customFolderName;
@@ -96,7 +96,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
      * @param name                  the name of the plugin
      * @param description           a description of the plugin
      * @param version               an opaque version identifier for the plugin
-     * @param opensearchVersion     the version of OpenSearch the plugin was built for
+     * @param densityVersion     the version of Density the plugin was built for
      * @param javaVersion           the version of Java the plugin was built with
      * @param classname             the entry point to the plugin
      * @param customFolderName      the custom folder name for the plugin
@@ -107,7 +107,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
         String name,
         String description,
         String version,
-        Version opensearchVersion,
+        Version densityVersion,
         String javaVersion,
         String classname,
         String customFolderName,
@@ -118,7 +118,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
             name,
             description,
             version,
-            List.of(SemverRange.fromString(opensearchVersion.toString())),
+            List.of(SemverRange.fromString(densityVersion.toString())),
             javaVersion,
             classname,
             customFolderName,
@@ -131,7 +131,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
         String name,
         String description,
         String version,
-        List<SemverRange> opensearchVersionRanges,
+        List<SemverRange> densityVersionRanges,
         String javaVersion,
         String classname,
         String customFolderName,
@@ -142,12 +142,12 @@ public class PluginInfo implements Writeable, ToXContentObject {
         this.description = description;
         this.version = version;
         // Ensure only one range is specified (for now)
-        if (opensearchVersionRanges.size() != 1) {
+        if (densityVersionRanges.size() != 1) {
             throw new IllegalArgumentException(
                 "Exactly one range is allowed to be specified in dependencies for the plugin [" + name + "]"
             );
         }
-        this.opensearchVersionRanges = opensearchVersionRanges;
+        this.densityVersionRanges = densityVersionRanges;
         this.javaVersion = javaVersion;
         this.classname = classname;
         this.customFolderName = customFolderName;
@@ -165,7 +165,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
      * @param name                  the name of the plugin
      * @param description           a description of the plugin
      * @param version               an opaque version identifier for the plugin
-     * @param opensearchVersion     the version of OpenSearch the plugin was built for
+     * @param densityVersion     the version of Density the plugin was built for
      * @param javaVersion           the version of Java the plugin was built with
      * @param classname             the entry point to the plugin
      * @param extendedPlugins       other plugins this plugin extends through SPI
@@ -175,7 +175,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
         String name,
         String description,
         String version,
-        Version opensearchVersion,
+        Version densityVersion,
         String javaVersion,
         String classname,
         List<String> extendedPlugins,
@@ -185,7 +185,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
             name,
             description,
             version,
-            opensearchVersion,
+            densityVersion,
             javaVersion,
             classname,
             null /* customFolderName */,
@@ -206,9 +206,9 @@ public class PluginInfo implements Writeable, ToXContentObject {
         this.description = in.readString();
         this.version = in.readString();
         if (in.getVersion().onOrAfter(Version.V_2_13_0)) {
-            this.opensearchVersionRanges = (List<SemverRange>) in.readGenericValue();
+            this.densityVersionRanges = (List<SemverRange>) in.readGenericValue();
         } else {
-            this.opensearchVersionRanges = List.of(new SemverRange(in.readVersion(), SemverRange.RangeOperator.DEFAULT));
+            this.densityVersionRanges = List.of(new SemverRange(in.readVersion(), SemverRange.RangeOperator.DEFAULT));
         }
         this.javaVersion = in.readString();
         this.classname = in.readString();
@@ -233,13 +233,13 @@ public class PluginInfo implements Writeable, ToXContentObject {
         out.writeString(description);
         out.writeString(version);
         if (out.getVersion().onOrAfter(Version.V_2_13_0)) {
-            out.writeGenericValue(opensearchVersionRanges);
+            out.writeGenericValue(densityVersionRanges);
         } else {
             /*
             This works for currently supported range notations (=,~)
             As more notations get added, then a suitable version must be picked.
              */
-            out.writeVersion(opensearchVersionRanges.get(0).getRangeVersion());
+            out.writeVersion(densityVersionRanges.get(0).getRangeVersion());
         }
         out.writeString(javaVersion);
         out.writeString(classname);
@@ -263,7 +263,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
      * @throws IOException if an I/O exception occurred reading the plugin descriptor
      */
     public static PluginInfo readFromProperties(final Path path) throws IOException {
-        final Path descriptor = path.resolve(OPENSEARCH_PLUGIN_PROPERTIES);
+        final Path descriptor = path.resolve(DENSITY_PLUGIN_PROPERTIES);
 
         final Map<String, String> propsMap;
         {
@@ -287,22 +287,22 @@ public class PluginInfo implements Writeable, ToXContentObject {
             throw new IllegalArgumentException("property [version] is missing for plugin [" + name + "]");
         }
 
-        final String opensearchVersionString = propsMap.remove("opensearch.version");
+        final String densityVersionString = propsMap.remove("density.version");
         final String dependenciesValue = propsMap.remove("dependencies");
-        if (opensearchVersionString == null && dependenciesValue == null) {
+        if (densityVersionString == null && dependenciesValue == null) {
             throw new IllegalArgumentException(
-                "Either [opensearch.version] or [dependencies] property must be specified for the plugin [" + name + "]"
+                "Either [density.version] or [dependencies] property must be specified for the plugin [" + name + "]"
             );
         }
-        if (opensearchVersionString != null && dependenciesValue != null) {
+        if (densityVersionString != null && dependenciesValue != null) {
             throw new IllegalArgumentException(
-                "Only one of [opensearch.version] or [dependencies] property can be specified for the plugin [" + name + "]"
+                "Only one of [density.version] or [dependencies] property can be specified for the plugin [" + name + "]"
             );
         }
 
-        final List<SemverRange> opensearchVersionRanges = new ArrayList<>();
-        if (opensearchVersionString != null) {
-            opensearchVersionRanges.add(SemverRange.fromString(opensearchVersionString));
+        final List<SemverRange> densityVersionRanges = new ArrayList<>();
+        if (densityVersionString != null) {
+            densityVersionRanges.add(SemverRange.fromString(densityVersionString));
         } else {
             Map<String, String> dependenciesMap;
             try (
@@ -319,16 +319,16 @@ public class PluginInfo implements Writeable, ToXContentObject {
                     "Exactly one dependency is allowed to be specified in plugin descriptor properties: " + dependenciesMap
                 );
             }
-            if (dependenciesMap.keySet().stream().noneMatch(s -> s.equals("opensearch"))) {
-                throw new IllegalArgumentException("Only opensearch is allowed to be specified as a plugin dependency: " + dependenciesMap);
+            if (dependenciesMap.keySet().stream().noneMatch(s -> s.equals("density"))) {
+                throw new IllegalArgumentException("Only density is allowed to be specified as a plugin dependency: " + dependenciesMap);
             }
-            String[] ranges = dependenciesMap.get("opensearch").split(",");
+            String[] ranges = dependenciesMap.get("density").split(",");
             if (ranges.length != 1) {
                 throw new IllegalArgumentException(
                     "Exactly one range is allowed to be specified in dependencies for the plugin [\" + name + \"]"
                 );
             }
-            opensearchVersionRanges.add(SemverRange.fromString(ranges[0].trim()));
+            densityVersionRanges.add(SemverRange.fromString(ranges[0].trim()));
         }
 
         final String javaVersionString = propsMap.remove("java.version");
@@ -386,7 +386,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
             name,
             description,
             version,
-            opensearchVersionRanges,
+            densityVersionRanges,
             javaVersionString,
             classname,
             customFolderName,
@@ -459,26 +459,26 @@ public class PluginInfo implements Writeable, ToXContentObject {
     }
 
     /**
-     * The list of OpenSearch version ranges the plugin is compatible with.
+     * The list of Density version ranges the plugin is compatible with.
      *
-     * @return a list of OpenSearch version ranges
+     * @return a list of Density version ranges
      */
-    public List<SemverRange> getOpenSearchVersionRanges() {
-        return opensearchVersionRanges;
+    public List<SemverRange> getDensityVersionRanges() {
+        return densityVersionRanges;
     }
 
     /**
      * Pretty print the semver ranges and return the string.
      * @return semver ranges string
      */
-    public String getOpenSearchVersionRangesString() {
-        if (opensearchVersionRanges == null || opensearchVersionRanges.isEmpty()) {
+    public String getDensityVersionRangesString() {
+        if (densityVersionRanges == null || densityVersionRanges.isEmpty()) {
             throw new IllegalStateException("Opensearch version ranges list cannot be empty");
         }
-        if (opensearchVersionRanges.size() == 1) {
-            return opensearchVersionRanges.get(0).toString();
+        if (densityVersionRanges.size() == 1) {
+            return densityVersionRanges.get(0).toString();
         }
-        return opensearchVersionRanges.stream().map(Object::toString).collect(Collectors.joining(",", "[", "]"));
+        return densityVersionRanges.stream().map(Object::toString).collect(Collectors.joining(",", "[", "]"));
     }
 
     /**
@@ -514,7 +514,7 @@ public class PluginInfo implements Writeable, ToXContentObject {
         {
             builder.field("name", name);
             builder.field("version", version);
-            builder.field("opensearch_version", getOpenSearchVersionRangesString());
+            builder.field("density_version", getDensityVersionRangesString());
             builder.field("java_version", javaVersion);
             builder.field("description", description);
             builder.field("classname", classname);
@@ -568,8 +568,8 @@ public class PluginInfo implements Writeable, ToXContentObject {
             .append(version)
             .append("\n")
             .append(prefix)
-            .append("OpenSearch Version: ")
-            .append(getOpenSearchVersionRangesString())
+            .append("Density Version: ")
+            .append(getDensityVersionRangesString())
             .append("\n")
             .append(prefix)
             .append("Java Version: ")

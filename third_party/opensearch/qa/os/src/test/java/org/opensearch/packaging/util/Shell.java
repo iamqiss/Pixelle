@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.SuppressForbidden;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -105,7 +105,7 @@ public class Shell {
     }
 
     public void chown(Path path) throws Exception {
-        Platforms.onLinux(() -> run("chown -R opensearch:opensearch " + path));
+        Platforms.onLinux(() -> run("chown -R density:density " + path));
         Platforms.onWindows(
             () -> run(
                 String.format(

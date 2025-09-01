@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.TemplateScript;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.script.mustache.CustomMustacheFactory.JSON_MIME_TYPE;
-import static org.opensearch.script.mustache.CustomMustacheFactory.PLAIN_TEXT_MIME_TYPE;
-import static org.opensearch.script.mustache.CustomMustacheFactory.X_WWW_FORM_URLENCODED_MIME_TYPE;
+import static org.density.script.mustache.CustomMustacheFactory.JSON_MIME_TYPE;
+import static org.density.script.mustache.CustomMustacheFactory.PLAIN_TEXT_MIME_TYPE;
+import static org.density.script.mustache.CustomMustacheFactory.X_WWW_FORM_URLENCODED_MIME_TYPE;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class CustomMustacheFactoryTests extends OpenSearchTestCase {
+public class CustomMustacheFactoryTests extends DensityTestCase {
 
     public void testCreateEncoder() {
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> CustomMustacheFactory.createEncoder(null));

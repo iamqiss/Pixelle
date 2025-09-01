@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
 import com.google.api.services.storage.StorageScopes;
 import com.google.auth.oauth2.ServiceAccountCredentials;
-import org.opensearch.common.settings.SecureSetting;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.common.settings.SecureSetting;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.settings.SecureString;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +55,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.settings.Setting.timeSetting;
+import static org.density.common.settings.Setting.timeSetting;
 
 /**
  * Container for Google Cloud Storage clients settings.

@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.Term;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.mapper.VersionFieldMapper;
+import org.density.action.DocWriteRequest;
+import org.density.common.Nullable;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.IngestionEngine;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.Uid;
+import org.density.index.mapper.VersionFieldMapper;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -40,8 +40,8 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  *  A class to process messages from the ingestion stream. It extracts the payload from the message and creates an

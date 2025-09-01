@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Wrapper around a {@link TopDocs} instance and the maximum score.
  *
- * @opensearch.api
+ * @density.api
  */
 // TODO: Remove this class when https://github.com/elastic/elasticsearch/issues/32981 is addressed.
 @PublicApi(since = "1.0.0")

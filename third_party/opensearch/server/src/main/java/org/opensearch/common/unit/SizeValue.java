@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 
 /**
  * Conversion values.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SizeValue implements Writeable, Comparable<SizeValue> {
@@ -187,11 +187,11 @@ public class SizeValue implements Writeable, Comparable<SizeValue> {
         return Strings.format1Decimals(value, suffix);
     }
 
-    public static SizeValue parseSizeValue(String sValue) throws OpenSearchParseException {
+    public static SizeValue parseSizeValue(String sValue) throws DensityParseException {
         return parseSizeValue(sValue, null);
     }
 
-    public static SizeValue parseSizeValue(String sValue, SizeValue defaultValue) throws OpenSearchParseException {
+    public static SizeValue parseSizeValue(String sValue, SizeValue defaultValue) throws DensityParseException {
         if (sValue == null) {
             return defaultValue;
         }
@@ -211,7 +211,7 @@ public class SizeValue implements Writeable, Comparable<SizeValue> {
                 singles = Long.parseLong(sValue);
             }
         } catch (NumberFormatException e) {
-            throw new OpenSearchParseException("failed to parse [{}]", e, sValue);
+            throw new DensityParseException("failed to parse [{}]", e, sValue);
         }
         return new SizeValue(singles, SizeUnit.SINGLE);
     }

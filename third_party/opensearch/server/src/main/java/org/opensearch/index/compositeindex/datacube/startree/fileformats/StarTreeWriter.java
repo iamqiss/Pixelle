@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.fileformats;
+package org.density.index.compositeindex.datacube.startree.fileformats;
 
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.data.StarTreeDataWriter;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadataWriter;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.compositeindex.datacube.startree.fileformats.data.StarTreeDataWriter;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadataWriter;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Util class for building star tree
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class StarTreeWriter {
 

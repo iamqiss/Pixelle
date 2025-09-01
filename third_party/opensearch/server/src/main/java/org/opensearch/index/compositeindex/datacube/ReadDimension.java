@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube;
+package org.density.index.compositeindex.datacube;
 
 import org.apache.lucene.index.DocValuesType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.CompositeDataCubeFieldType;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 /**
  * Represents a dimension for reconstructing StarTreeField from file formats during searches and merges.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class ReadDimension implements Dimension {
     public static final String READ = "read";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.IndexReaderContext;
@@ -56,13 +56,13 @@ import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BitSetIterator;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.Uid;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.OperationRouting;
+import org.density.common.lucene.search.Queries;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.Uid;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -74,7 +74,7 @@ import java.util.function.Predicate;
  * It can be used to split a shard into N shards marking every document that doesn't belong into the shard
  * as deleted. See {@link org.apache.lucene.index.IndexWriter#deleteDocuments(Query...)}
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class ShardSplittingQuery extends Query {
     private final IndexMetadata indexMetadata;
@@ -300,7 +300,7 @@ final class ShardSplittingQuery extends Query {
      * This two phase iterator visits every live doc and selects all docs that don't belong into this
      * shard based on their id and routing value. This is only used in a routing partitioned index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class RoutingPartitionedDocIdSetIterator extends TwoPhaseIterator {
         private final Visitor visitor;
@@ -324,7 +324,7 @@ final class ShardSplittingQuery extends Query {
     /**
      * This TwoPhaseIterator marks all nested docs of matching parents as matches as well.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class NestedRoutingPartitionedDocIdSetIterator extends TwoPhaseIterator {
         private final Visitor visitor;

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore.mocks;
+package org.density.remotestore.mocks;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
+import org.density.DensityException;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.fs.FsBlobStore;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ public class MockFsMetadataSupportedBlobStore extends FsBlobStore {
         try {
             return new MockFsMetadataSupportedBlobContainer(this, path, buildAndCreate(path), triggerDataIntegrityFailure);
         } catch (IOException ex) {
-            throw new OpenSearchException("failed to create blob container", ex);
+            throw new DensityException("failed to create blob container", ex);
         }
     }
 

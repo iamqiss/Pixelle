@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitArray;
-import org.opensearch.common.util.IntArray;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitArray;
+import org.density.common.util.IntArray;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.search.DocValueFormat;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
-public abstract class BucketedSortTestCase<T extends BucketedSort> extends OpenSearchTestCase {
+public abstract class BucketedSortTestCase<T extends BucketedSort> extends DensityTestCase {
     /**
      * Build a {@link BucketedSort} to test. Sorts built by this method shouldn't need scores.
      * @param values values to test, always sent as doubles just to have

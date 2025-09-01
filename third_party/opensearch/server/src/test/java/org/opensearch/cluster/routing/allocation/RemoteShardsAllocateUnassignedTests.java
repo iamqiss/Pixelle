@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingPool;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.allocator.RemoteShardsBalancer;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingPool;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.allocator.RemoteShardsBalancer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus.DECIDERS_NO;
-import static org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus.DECIDERS_THROTTLED;
-import static org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus.NO_ATTEMPT;
+import static org.density.cluster.routing.UnassignedInfo.AllocationStatus.DECIDERS_NO;
+import static org.density.cluster.routing.UnassignedInfo.AllocationStatus.DECIDERS_THROTTLED;
+import static org.density.cluster.routing.UnassignedInfo.AllocationStatus.NO_ATTEMPT;
 
 public class RemoteShardsAllocateUnassignedTests extends RemoteShardsBalancerBaseTestCase {
 

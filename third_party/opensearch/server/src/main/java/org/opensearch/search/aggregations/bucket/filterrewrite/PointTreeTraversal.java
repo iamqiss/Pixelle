@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.search.CollectionTerminatedException;
 import org.apache.lucene.search.DocIdSetIterator;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector.RangeCollector;
-import org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector.SimpleRangeCollector;
-import org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector.SubAggRangeCollector;
+import org.density.common.CheckedRunnable;
+import org.density.search.aggregations.bucket.filterrewrite.rangecollector.RangeCollector;
+import org.density.search.aggregations.bucket.filterrewrite.rangecollector.SimpleRangeCollector;
+import org.density.search.aggregations.bucket.filterrewrite.rangecollector.SubAggRangeCollector;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;

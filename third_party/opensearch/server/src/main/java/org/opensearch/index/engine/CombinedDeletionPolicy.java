@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.IndexDeletionPolicy;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.store.Directory;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogDeletionPolicy;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -57,7 +57,7 @@ import java.util.function.LongSupplier;
  * In particular, this policy will delete index commits whose max sequence number is at most
  * the current global checkpoint except the index commit which has the highest max sequence number among those.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CombinedDeletionPolicy extends IndexDeletionPolicy {
     private final Logger logger;
@@ -266,7 +266,7 @@ public class CombinedDeletionPolicy extends IndexDeletionPolicy {
     /**
      * A wrapper of an index commit that prevents it from being deleted.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SnapshotIndexCommit extends IndexCommit {
         private final IndexCommit delegate;

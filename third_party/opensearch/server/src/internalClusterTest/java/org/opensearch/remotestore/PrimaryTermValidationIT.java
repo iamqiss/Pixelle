@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.coordination.LeaderChecker;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.coordination.LeaderChecker;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
 import org.junit.Before;
 
 import java.nio.file.Path;
@@ -36,11 +36,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class PrimaryTermValidationIT extends RemoteStoreBaseIntegTestCase {
 
     private static final String INDEX_NAME = "remote-store-test-idx-1";

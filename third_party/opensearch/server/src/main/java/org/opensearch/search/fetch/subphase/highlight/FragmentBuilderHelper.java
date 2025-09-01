@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Field;
@@ -39,10 +39,10 @@ import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo;
 import org.apache.lucene.search.vectorhighlight.FieldFragList.WeightedFragInfo.SubInfo;
 import org.apache.lucene.search.vectorhighlight.FragmentsBuilder;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.index.analysis.AnalyzerComponentsProvider;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.index.analysis.AnalyzerComponentsProvider;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.MappedFieldType;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,7 +50,7 @@ import java.util.List;
 /**
  * Simple helper class for {@link FastVectorHighlighter} {@link FragmentsBuilder} implementations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FragmentBuilderHelper {
 

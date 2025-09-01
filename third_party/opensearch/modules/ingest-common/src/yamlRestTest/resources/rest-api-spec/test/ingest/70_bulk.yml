@@ -149,7 +149,7 @@ teardown:
   - is_false: _source.field1
   - match: {_source.field2: value2}
 
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/12854
+# related issue: https://github.com/density-project/Density/issues/12854
 ---
 "Test bulk honors pipeline in update action with upsert":
   - skip:
@@ -172,7 +172,7 @@ teardown:
         id: test_id3
   - match: { _source: {"f1": "v2", "f2": 47, "field1": "value1"}}
 
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/12888
+# related issue: https://github.com/density-project/Density/issues/12888
 ---
 "Test bulk upsert honors default_pipeline and final_pipeline when the auto-created index matches with the index template":
   - skip:

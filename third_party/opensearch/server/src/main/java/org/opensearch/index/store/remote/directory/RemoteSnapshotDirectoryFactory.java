@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.directory;
+package org.density.index.store.remote.directory;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.IndexShardSnapshot;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.utils.TransferManager;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.blobstore.BlobContainer;
+import org.density.index.IndexSettings;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.shard.ShardPath;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.snapshots.blobstore.IndexShardSnapshot;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.utils.TransferManager;
+import org.density.plugins.IndexStorePlugin;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.SnapshotId;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,7 +37,7 @@ import java.util.function.Supplier;
  * Factory for a Directory implementation that can read directly from index
  * data stored remotely in a blob store repository.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteSnapshotDirectoryFactory implements IndexStorePlugin.DirectoryFactory {
     public static final String LOCAL_STORE_LOCATION = "RemoteLocalStore";

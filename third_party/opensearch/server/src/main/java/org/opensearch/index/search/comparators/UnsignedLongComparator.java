@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.search.comparators;
+package org.density.index.search.comparators;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.sandbox.document.BigIntegerPoint;
@@ -14,7 +14,7 @@ import org.apache.lucene.search.LeafFieldComparator;
 import org.apache.lucene.search.Pruning;
 import org.apache.lucene.search.comparators.NumericComparator;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Numbers;
+import org.density.common.Numbers;
 
 import java.io.IOException;
 import java.math.BigInteger;

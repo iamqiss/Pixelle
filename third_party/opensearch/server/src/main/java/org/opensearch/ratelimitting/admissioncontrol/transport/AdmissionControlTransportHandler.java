@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.transport;
+package org.density.ratelimitting.admissioncontrol.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.ratelimitting.admissioncontrol.AdmissionControlService;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.ratelimitting.admissioncontrol.AdmissionControlService;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
 
 /**
  * AdmissionControl Handler to intercept Transport Requests.
@@ -59,7 +59,7 @@ public class AdmissionControlTransportHandler<T extends TransportRequest> implem
             // intercept the transport requests here and apply admission control
             try {
                 this.admissionControlService.applyTransportAdmissionControl(this.action, this.admissionControlActionType);
-            } catch (final OpenSearchRejectedExecutionException openSearchRejectedExecutionException) {
+            } catch (final DensityRejectedExecutionException openSearchRejectedExecutionException) {
                 log.warn(openSearchRejectedExecutionException.getMessage());
                 channel.sendResponse(openSearchRejectedExecutionException);
                 return;

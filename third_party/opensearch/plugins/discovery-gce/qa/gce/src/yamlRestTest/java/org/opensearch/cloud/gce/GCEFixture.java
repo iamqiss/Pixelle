@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cloud.gce;
+package org.density.cloud.gce;
 
 import org.apache.http.client.methods.HttpGet;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.path.PathTrie;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.RestUtils;
-import org.opensearch.test.fixture.AbstractHttpFixture;
+import org.density.common.SuppressForbidden;
+import org.density.common.collect.MapBuilder;
+import org.density.common.path.PathTrie;
+import org.density.core.rest.RestStatus;
+import org.density.rest.RestUtils;
+import org.density.test.fixture.AbstractHttpFixture;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +55,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * {@link GCEFixture} is a fixture that emulates a GCE service.

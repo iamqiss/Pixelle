@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.tools.cli.keystore.KeyStoreCommandTestCase;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.test.DensityTestCase;
+import org.density.tools.cli.keystore.KeyStoreCommandTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -54,7 +54,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class BootstrapTests extends OpenSearchTestCase {
+public class BootstrapTests extends DensityTestCase {
     Environment env;
     List<FileSystem> fileSystems = new ArrayList<>();
 
@@ -79,11 +79,11 @@ public class BootstrapTests extends OpenSearchTestCase {
             assertTrue(seed.length() > 0);
             keyStoreWrapper.save(configPath, new char[0]);
         }
-        assertTrue(Files.exists(configPath.resolve("opensearch.keystore")));
+        assertTrue(Files.exists(configPath.resolve("density.keystore")));
         try (SecureSettings secureSettings = Bootstrap.loadSecureSettings(env)) {
             SecureString seedAfterLoad = KeyStoreWrapper.SEED_SETTING.get(Settings.builder().setSecureSettings(secureSettings).build());
             assertEquals(seedAfterLoad.toString(), seed.toString());
-            assertTrue(Files.exists(configPath.resolve("opensearch.keystore")));
+            assertTrue(Files.exists(configPath.resolve("density.keystore")));
         }
     }
 

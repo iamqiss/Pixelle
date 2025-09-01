@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query.rewriters;
+package org.density.search.query.rewriters;
 
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MustToFilterRewriterTests extends OpenSearchTestCase {
+public class MustToFilterRewriterTests extends DensityTestCase {
 
     private final MustToFilterRewriter rewriter = MustToFilterRewriter.INSTANCE;
     private QueryShardContext context;
@@ -280,7 +280,7 @@ public class MustToFilterRewriterTests extends OpenSearchTestCase {
         QueryBuilder query = QueryBuilders.boolQuery()
             .must(QueryBuilders.rangeQuery("created_date").gte("2024-01-01"))
             .must(QueryBuilders.termQuery("user_id", 12345))
-            .must(QueryBuilders.matchQuery("title", "opensearch"))
+            .must(QueryBuilders.matchQuery("title", "density"))
             .must(QueryBuilders.termsQuery("status_code", new Object[] { 200, 201, 204 }))
             .filter(QueryBuilders.existsQuery("description"))
             .should(QueryBuilders.matchQuery("tags", "important"))

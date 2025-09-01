@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
+import org.density.common.SuppressForbidden;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 /**
  * The environment of where things exists.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 @SuppressForbidden(reason = "configures paths for the system")
@@ -352,7 +352,7 @@ public class Environment {
     }
 
     public static FileStore getFileStore(final Path path) throws IOException {
-        return new OpenSearchFileStore(Files.getFileStore(path));
+        return new DensityFileStore(Files.getFileStore(path));
     }
 
     /**

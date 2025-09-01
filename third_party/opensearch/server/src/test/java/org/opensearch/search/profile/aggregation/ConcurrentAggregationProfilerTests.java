@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.aggregation;
+package org.density.search.profile.aggregation;
 
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.profile.ProfileResult;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConcurrentAggregationProfilerTests extends OpenSearchTestCase {
+public class ConcurrentAggregationProfilerTests extends DensityTestCase {
 
     public static List<ProfileResult> createConcurrentSearchProfileTree() {
         List<ProfileResult> tree = new ArrayList<>();

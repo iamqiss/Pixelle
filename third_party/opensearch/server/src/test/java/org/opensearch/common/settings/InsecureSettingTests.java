@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.logging.Loggers;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,13 +21,13 @@ import org.junit.Before;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsecureSettingTests extends OpenSearchTestCase {
+public class InsecureSettingTests extends DensityTestCase {
     private List<String> rootLogMsgs = new ArrayList<>();
     private AbstractAppender rootAppender;
 
     private void assertSettingWarning() {
         assertWarnings(
-            "[setting.name] setting was deprecated in OpenSearch and will be removed in a future release! See the breaking changes documentation for the next major version."
+            "[setting.name] setting was deprecated in Density and will be removed in a future release! See the breaking changes documentation for the next major version."
         );
 
         Assert.assertTrue(

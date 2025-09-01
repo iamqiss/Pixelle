@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.phonetic.DaitchMokotoffSoundexFilter;
 import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.plugin.analysis.AnalysisPhoneticPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.plugin.analysis.AnalysisPhoneticPlugin;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 
@@ -50,13 +50,13 @@ import java.io.StringReader;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class SimplePhoneticAnalysisTests extends OpenSearchTestCase {
+public class SimplePhoneticAnalysisTests extends DensityTestCase {
 
     private TestAnalysis analysis;
 
     @Before
     public void setup() throws IOException {
-        String yaml = "/org/opensearch/index/analysis/phonetic-1.yml";
+        String yaml = "/org/density/index/analysis/phonetic-1.yml";
         Settings settings = Settings.builder()
             .loadFromStream(yaml, getClass().getResourceAsStream(yaml), false)
             .put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT)

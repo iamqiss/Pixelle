@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,7 +26,7 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -130,7 +130,7 @@ public class MiniHDFS {
         MiniDFSCluster dfs = builder.build();
 
         // Configure contents of the filesystem
-        org.apache.hadoop.fs.Path opensearchUserPath = new org.apache.hadoop.fs.Path("/user/opensearch");
+        org.apache.hadoop.fs.Path densityUserPath = new org.apache.hadoop.fs.Path("/user/density");
 
         FileSystem fs;
         if (haEnabled) {
@@ -141,12 +141,12 @@ public class MiniHDFS {
         }
 
         try {
-            // Set the opensearch user directory up
-            fs.mkdirs(opensearchUserPath);
+            // Set the density user directory up
+            fs.mkdirs(densityUserPath);
             if (UserGroupInformation.isSecurityEnabled()) {
                 List<AclEntry> acls = new ArrayList<>();
-                acls.add(new AclEntry.Builder().setType(AclEntryType.USER).setName("opensearch").setPermission(FsAction.ALL).build());
-                fs.modifyAclEntries(opensearchUserPath, acls);
+                acls.add(new AclEntry.Builder().setType(AclEntryType.USER).setName("density").setPermission(FsAction.ALL).build());
+                fs.modifyAclEntries(densityUserPath, acls);
             }
 
             // Install a pre-existing repository into HDFS
@@ -161,7 +161,7 @@ public class MiniHDFS {
 
                 fs.copyFromLocalFile(true, true,
                     new org.apache.hadoop.fs.Path(tempDirectory.resolve(directoryName).toAbsolutePath().toUri()),
-                    opensearchUserPath.suffix("/existing/" + directoryName)
+                    densityUserPath.suffix("/existing/" + directoryName)
                 );
 
                 FileUtils.deleteDirectory(tempDirectory.toFile());

@@ -3,8 +3,8 @@
 setlocal enabledelayedexpansion
 setlocal enableextensions
 
-set OPENSEARCH_MAIN_CLASS=org.opensearch.index.shard.ShardToolCli
-call "%~dp0opensearch-cli.bat" ^
+set DENSITY_MAIN_CLASS=org.density.index.shard.ShardToolCli
+call "%~dp0density-cli.bat" ^
   %%* ^
   || goto exit
 

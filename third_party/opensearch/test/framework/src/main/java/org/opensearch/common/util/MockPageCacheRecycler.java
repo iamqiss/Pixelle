@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.recycler.Recycler.V;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
+import org.density.common.recycler.Recycler.V;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.opensearch.test.OpenSearchTestCase.waitUntil;
+import static org.density.test.DensityTestCase.waitUntil;
 
 public class MockPageCacheRecycler extends PageCacheRecycler {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.Matchers;
 
 import java.lang.reflect.Modifier;
@@ -49,11 +49,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.Version.MASK;
-import static org.opensearch.Version.V_2_3_0;
-import static org.opensearch.test.VersionUtils.allVersions;
-import static org.opensearch.test.VersionUtils.randomOpenSearchVersion;
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.Version.MASK;
+import static org.density.Version.V_2_3_0;
+import static org.density.test.VersionUtils.allVersions;
+import static org.density.test.VersionUtils.randomDensityVersion;
+import static org.density.test.VersionUtils.randomVersion;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.sameInstance;
 /**
  * Test Version class logic
  */
-public class VersionTests extends OpenSearchTestCase {
+public class VersionTests extends DensityTestCase {
 
     public void testVersionComparison() {
         Version V_2_1_1 = Version.fromString("2.1.1");
@@ -152,7 +152,7 @@ public class VersionTests extends OpenSearchTestCase {
     public void testVersionFromString() {
         final int iters = scaledRandomIntBetween(100, 1000);
         for (int i = 0; i < iters; i++) {
-            Version version = randomOpenSearchVersion(random());
+            Version version = randomDensityVersion(random());
             assertThat(Version.fromString(version.toString()), sameInstance(version));
         }
     }
@@ -200,52 +200,52 @@ public class VersionTests extends OpenSearchTestCase {
         assertThat(Version.fromString("2.3.0").minimumCompatibilityVersion(), equalTo(major2x));
     }
 
-    /** test opensearch min wire compatibility */
-    public void testOpenSearchMinCompatVersion() {
-        Version opensearchVersion = Version.CURRENT;
-        // opensearch 1.x minCompat is Legacy 6.8.0
-        // opensearch 2.x minCompat is Legacy 7.10.0
-        // opensearch 3.x minCompat is 1.{last minor version}.0
+    /** test density min wire compatibility */
+    public void testDensityMinCompatVersion() {
+        Version densityVersion = Version.CURRENT;
+        // density 1.x minCompat is Legacy 6.8.0
+        // density 2.x minCompat is Legacy 7.10.0
+        // density 3.x minCompat is 1.{last minor version}.0
         // until 3.0 is staged the following line will only return legacy versions
-        List<Version> candidates = opensearchVersion.major >= 3 ? VersionUtils.allOpenSearchVersions() : VersionUtils.allLegacyVersions();
-        int opensearchMajor = opensearchVersion.major;
-        int major = opensearchMajor - 1;
-        if (opensearchMajor == 1) {
+        List<Version> candidates = densityVersion.major >= 3 ? VersionUtils.allDensityVersions() : VersionUtils.allLegacyVersions();
+        int densityMajor = densityVersion.major;
+        int major = densityMajor - 1;
+        if (densityMajor == 1) {
             major = 6;
-        } else if (opensearchMajor == 2) {
+        } else if (densityMajor == 2) {
             major = 7;
         }
-        assertEquals(VersionUtils.lastFirstReleasedMinorFromMajor(candidates, major), opensearchVersion.minimumCompatibilityVersion());
+        assertEquals(VersionUtils.lastFirstReleasedMinorFromMajor(candidates, major), densityVersion.minimumCompatibilityVersion());
     }
 
-    /** test opensearch min index compatibility */
-    public void testOpenSearchMinIndexCompatVersion() {
+    /** test density min index compatibility */
+    public void testDensityMinIndexCompatVersion() {
         // setting to CURRENT to enforce minIndexCompat Version during version bump
         // previous compatibility versions are guaranteed to be tested during past releases
-        Version opensearchVersion = Version.CURRENT;
-        // opensearch 1.x minIndexCompat is Legacy 6.8.0
-        // opensearch 2.x minCompat is Legacy 7.10.0
-        // opensearch 3.x minCompat is 1.{last minor version}.0
+        Version densityVersion = Version.CURRENT;
+        // density 1.x minIndexCompat is Legacy 6.8.0
+        // density 2.x minCompat is Legacy 7.10.0
+        // density 3.x minCompat is 1.{last minor version}.0
         // until 3.0 is staged the following line will only return legacy versions
-        List<Version> candidates = opensearchVersion.major >= 3 ? VersionUtils.allOpenSearchVersions() : VersionUtils.allLegacyVersions();
-        Version expected = VersionUtils.getFirstVersionOfMajor(candidates, opensearchVersion.major - 1);
-        Version actual = opensearchVersion.minimumIndexCompatibilityVersion();
+        List<Version> candidates = densityVersion.major >= 3 ? VersionUtils.allDensityVersions() : VersionUtils.allLegacyVersions();
+        Version expected = VersionUtils.getFirstVersionOfMajor(candidates, densityVersion.major - 1);
+        Version actual = densityVersion.minimumIndexCompatibilityVersion();
         // since some legacy versions still support build (alpha, beta, RC) we check major minor revision only
         assertEquals(expected.major, actual.major);
         assertEquals(expected.minor, actual.minor);
         assertEquals(expected.revision, actual.revision);
     }
 
-    /** test first version of opensearch compatibility that does not support legacy versions */
-    public void testOpenSearchPreLegacyRemoval() {
-        Version opensearchVersion = Version.fromString("3.0.0");
-        int opensearchMajor = opensearchVersion.major;
-        List<Version> candidates = VersionUtils.allOpenSearchVersions();
-        Version expectedMinIndexCompat = VersionUtils.getFirstVersionOfMajor(candidates, opensearchMajor - 1);
-        Version actualMinIndexCompat = opensearchVersion.minimumIndexCompatibilityVersion();
+    /** test first version of density compatibility that does not support legacy versions */
+    public void testDensityPreLegacyRemoval() {
+        Version densityVersion = Version.fromString("3.0.0");
+        int densityMajor = densityVersion.major;
+        List<Version> candidates = VersionUtils.allDensityVersions();
+        Version expectedMinIndexCompat = VersionUtils.getFirstVersionOfMajor(candidates, densityMajor - 1);
+        Version actualMinIndexCompat = densityVersion.minimumIndexCompatibilityVersion();
 
-        Version expectedMinCompat = VersionUtils.lastFirstReleasedMinorFromMajor(VersionUtils.allOpenSearchVersions(), opensearchMajor - 1);
-        Version actualMinCompat = opensearchVersion.minimumCompatibilityVersion();
+        Version expectedMinCompat = VersionUtils.lastFirstReleasedMinorFromMajor(VersionUtils.allDensityVersions(), densityMajor - 1);
+        Version actualMinCompat = densityVersion.minimumCompatibilityVersion();
         // since some legacy versions still support build (alpha, beta, RC) we check major minor revision only
         assertEquals(expectedMinIndexCompat.major, actualMinIndexCompat.major);
         assertEquals(expectedMinIndexCompat.minor, actualMinIndexCompat.minor);
@@ -308,7 +308,7 @@ public class VersionTests extends OpenSearchTestCase {
     public void testParseVersion() {
         final int iters = scaledRandomIntBetween(100, 1000);
         for (int i = 0; i < iters; i++) {
-            Version version = randomOpenSearchVersion(random());
+            Version version = randomDensityVersion(random());
             Version parsedVersion = Version.fromString(version.toString());
             assertEquals(version, parsedVersion);
         }
@@ -424,7 +424,7 @@ public class VersionTests extends OpenSearchTestCase {
         } else {
             currentOrNextMajorVersion = currentMajorVersion;
         }
-        final Version lastMinorFromPreviousMajor = VersionUtils.allOpenSearchVersions()
+        final Version lastMinorFromPreviousMajor = VersionUtils.allDensityVersions()
             .stream()
             .filter(v -> v.major == (currentOrNextMajorVersion.major == 1 ? 7 : currentOrNextMajorVersion.major - 1))
             .max(Version::compareTo)

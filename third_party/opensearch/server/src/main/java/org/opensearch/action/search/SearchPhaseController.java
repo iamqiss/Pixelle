@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.CollectionStatistics;
@@ -45,31 +45,31 @@ import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.TotalHits.Relation;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.SortedWiderNumericSortField;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggest.Suggestion;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchService;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.SortedWiderNumericSortField;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggest.Suggestion;
+import org.density.search.suggest.completion.CompletionSuggestion;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,7 +87,7 @@ import java.util.stream.Collectors;
 /**
  * Controller for the search phase.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchPhaseController {
     private static final ScoreDoc[] EMPTY_DOCS = new ScoreDoc[0];
@@ -606,7 +606,7 @@ public final class SearchPhaseController {
      * This will support Int to Long and Float to Double.
      * Earlier widening of type was taken care in IndexNumericFieldData, but since we now want to
      * support sort optimization, we removed type widening there and taking care here during merging.
-     * More details here https://github.com/opensearch-project/OpenSearch/issues/6326
+     * More details here https://github.com/density-project/Density/issues/6326
      */
     // TODO: should we check the compatibility between types
     private static Sort createSort(TopFieldDocs[] topFieldDocs) {
@@ -671,7 +671,7 @@ public final class SearchPhaseController {
     /**
      * The reduced query phase
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class ReducedQueryPhase {
         // the sum of all hits across all reduces shards
@@ -834,7 +834,7 @@ public final class SearchPhaseController {
     /**
      * The top docs statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class TopDocsStats {
         final int trackTotalHitsUpTo;
@@ -903,7 +903,7 @@ public final class SearchPhaseController {
     /**
      * Top docs that have been sorted
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SortedTopDocs {
         static final SortedTopDocs EMPTY = new SortedTopDocs(EMPTY_DOCS, false, null, null, null);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.core.util.Context;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.models.BlobStorageException;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.AbstractThirdPartyRepositoryTestCase;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.ActionRunnable;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.plugins.Plugin;
+import org.density.repositories.AbstractThirdPartyRepositoryTestCase;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
 import org.junit.AfterClass;
 
 import java.net.HttpURLConnection;
@@ -106,7 +106,7 @@ public class AzureStorageCleanupThirdPartyTests extends AbstractThirdPartyReposi
             .put("container", System.getProperty("test.azure.container"))
             .put("base_path", System.getProperty("test.azure.base"));
 
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), repoName, "azure", settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), repoName, "azure", settings);
         if (Strings.hasText(System.getProperty("test.azure.sas_token"))) {
             ensureSasTokenPermissions();
         }

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,10 +29,10 @@ import java.util.TreeMap;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
 
-public class RemoteIndexPathTests extends OpenSearchTestCase {
+public class RemoteIndexPathTests extends DensityTestCase {
 
     /**
      * This checks that the remote path contains paths only for segment and data/metadata/lock_files combination.

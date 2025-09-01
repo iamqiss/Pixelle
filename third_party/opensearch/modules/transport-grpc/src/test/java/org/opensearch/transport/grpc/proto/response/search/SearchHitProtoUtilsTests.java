@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.Hit;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.text.Text;
+import org.density.core.index.shard.ShardId;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.Hit;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +31,7 @@ import java.util.Map;
 
 import static org.apache.lucene.search.TotalHits.Relation.EQUAL_TO;
 
-public class SearchHitProtoUtilsTests extends OpenSearchTestCase {
+public class SearchHitProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithBasicFields() throws IOException {
         // Create a SearchHit with basic fields

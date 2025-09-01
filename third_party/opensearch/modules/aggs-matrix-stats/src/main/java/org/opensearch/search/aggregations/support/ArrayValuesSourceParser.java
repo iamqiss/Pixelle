@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.AggregationBuilder.CommonFields;
-import org.opensearch.search.aggregations.Aggregator;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.search.aggregations.AggregationBuilder.CommonFields;
+import org.density.search.aggregations.Aggregator;
 
 import java.io.IOException;
 import java.util.ArrayList;

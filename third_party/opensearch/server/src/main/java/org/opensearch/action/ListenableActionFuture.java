@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.action.ActionFuture;
+import org.density.core.action.ActionListener;
 
 /**
  * An {@link ActionFuture} that listeners can be added to.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ListenableActionFuture<T> extends ActionFuture<T> {
 

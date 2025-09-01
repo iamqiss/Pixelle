@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.util.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.replication.OpenSearchIndexLevelReplicationTestCase;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.RemoteStoreRefreshListenerTests.TestFilterDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory.UploadedSegmentMetadata;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.RemoteStoreMergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationType;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.replication.DensityIndexLevelReplicationTestCase;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.RemoteStoreRefreshListenerTests.TestFilterDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory.UploadedSegmentMetadata;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.MergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.RemoteStoreMergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationType;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -49,7 +49,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-public class RemoteStoreReplicationSourceTests extends OpenSearchIndexLevelReplicationTestCase {
+public class RemoteStoreReplicationSourceTests extends DensityIndexLevelReplicationTestCase {
     private static final long REPLICATION_ID = 123L;
     private RemoteStoreReplicationSource replicationSource;
     private IndexShard primaryShard;

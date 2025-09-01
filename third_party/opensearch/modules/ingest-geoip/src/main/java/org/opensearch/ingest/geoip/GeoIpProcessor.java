@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.maxmind.db.Network;
 import com.maxmind.geoip2.exception.AddressNotFoundException;
@@ -43,15 +43,15 @@ import com.maxmind.geoip2.record.Country;
 import com.maxmind.geoip2.record.Location;
 import com.maxmind.geoip2.record.Subdivision;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
-import org.opensearch.secure_sm.AccessController;
+import org.density.DensityParseException;
+import org.density.SpecialPermission;
+import org.density.common.network.InetAddresses;
+import org.density.common.network.NetworkAddress;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
+import org.density.secure_sm.AccessController;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -65,10 +65,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
-import static org.opensearch.ingest.ConfigurationUtils.readBooleanProperty;
-import static org.opensearch.ingest.ConfigurationUtils.readOptionalList;
-import static org.opensearch.ingest.ConfigurationUtils.readStringProperty;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.readBooleanProperty;
+import static org.density.ingest.ConfigurationUtils.readOptionalList;
+import static org.density.ingest.ConfigurationUtils.readStringProperty;
 
 public final class GeoIpProcessor extends AbstractProcessor {
 
@@ -188,7 +188,7 @@ public final class GeoIpProcessor extends AbstractProcessor {
                 geoData = Collections.emptyMap();
             }
         } else {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "Unsupported database type [" + lazyLoader.getDatabaseType() + "]",
                 new IllegalStateException()
             );

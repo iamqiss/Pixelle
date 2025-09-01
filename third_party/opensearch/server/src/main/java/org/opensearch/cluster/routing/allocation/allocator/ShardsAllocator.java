@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.allocator;
+package org.density.cluster.routing.allocation.allocator;
 
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.ShardAllocationDecision;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.ShardAllocationDecision;
 
 /**
  * <p>
@@ -46,7 +46,7 @@ import org.opensearch.cluster.routing.allocation.ShardAllocationDecision;
  * need to relocate to other nodes due to node failures or due to rebalancing decisions.
  * </p>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ShardsAllocator {
 

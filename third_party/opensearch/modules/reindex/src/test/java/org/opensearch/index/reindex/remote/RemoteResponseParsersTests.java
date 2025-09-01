@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.ScrollableHitSource;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.ShardSearchFailure;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.ScrollableHitSource;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
-public class RemoteResponseParsersTests extends OpenSearchTestCase {
+public class RemoteResponseParsersTests extends DensityTestCase {
 
     /**
      * Check that we can parse shard search failures without index information.
      */
     public void testFailureWithoutIndex() throws IOException {
-        ShardSearchFailure failure = new ShardSearchFailure(new OpenSearchRejectedExecutionException("exhausted"));
+        ShardSearchFailure failure = new ShardSearchFailure(new DensityRejectedExecutionException("exhausted"));
         XContentBuilder builder = jsonBuilder();
         failure.toXContent(builder, ToXContent.EMPTY_PARAMS);
         try (XContentParser parser = createParser(builder)) {
             ScrollableHitSource.SearchFailure parsed = RemoteResponseParsers.SEARCH_FAILURE_PARSER.parse(parser, null);
             assertNotNull(parsed.getReason());
             assertThat(parsed.getReason().getMessage(), Matchers.containsString("exhausted"));
-            assertThat(parsed.getReason(), Matchers.instanceOf(OpenSearchRejectedExecutionException.class));
+            assertThat(parsed.getReason(), Matchers.instanceOf(DensityRejectedExecutionException.class));
         }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.search.function.RandomScoreFunction;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.Nullable;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.search.function.RandomScoreFunction;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -50,7 +50,7 @@ import java.util.Objects;
 /**
  * A function that computes a random score for the matched documents
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RandomScoreFunctionBuilder extends ScoreFunctionBuilder<RandomScoreFunctionBuilder> {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(RandomScoreFunctionBuilder.class);
@@ -181,7 +181,7 @@ public class RandomScoreFunctionBuilder extends ScoreFunctionBuilder<RandomScore
             } else {
                 deprecationLogger.deprecate(
                     "seed_requires_field",
-                    "OpenSearch requires that a [field] parameter is provided when a [seed] is set"
+                    "Density requires that a [field] parameter is provided when a [seed] is set"
                 );
                 fieldType = context.getMapperService().fieldType(IdFieldMapper.NAME);
             }

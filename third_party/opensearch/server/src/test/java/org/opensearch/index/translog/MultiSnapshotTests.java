@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.test.DensityTestCase;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.stream.LongStream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class MultiSnapshotTests extends OpenSearchTestCase {
+public class MultiSnapshotTests extends DensityTestCase {
 
     public void testTrackSeqNoSimpleRange() throws Exception {
         final MultiSnapshot.SeqNoSet bitSet = new MultiSnapshot.SeqNoSet();

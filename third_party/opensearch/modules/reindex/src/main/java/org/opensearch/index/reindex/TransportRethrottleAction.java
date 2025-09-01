@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.tasks.TransportTasksAction;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
+import org.density.action.FailedNodeException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.tasks.TransportTasksAction;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskInfo;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
 
 import java.util.List;
 

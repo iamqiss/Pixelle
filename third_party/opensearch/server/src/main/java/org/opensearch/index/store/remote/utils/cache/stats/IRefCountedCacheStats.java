@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache.stats;
+package org.density.index.store.remote.utils.cache.stats;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.store.remote.utils.cache.RefCountedCache;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.store.remote.utils.cache.RefCountedCache;
 
 /**
  *  Statistics about the performance of a {@link RefCountedCache}.

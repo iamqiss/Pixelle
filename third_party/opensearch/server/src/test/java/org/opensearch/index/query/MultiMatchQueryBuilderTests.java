@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
@@ -47,16 +47,16 @@ import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.query.MultiMatchQueryBuilder.Type;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.lucene.queries.ExtendedCommonTermsQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.ParsingException;
+import org.density.index.query.MultiMatchQueryBuilder.Type;
+import org.density.index.search.MatchQuery;
+import org.density.lucene.queries.ExtendedCommonTermsQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -64,8 +64,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.query.QueryBuilders.multiMatchQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBooleanSubQuery;
+import static org.density.index.query.QueryBuilders.multiMatchQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertBooleanSubQuery;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.either;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.io.IOException;
 import java.util.Map;
@@ -40,10 +40,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Implementers can be written to a {@linkplain StreamOutput} and read from a {@linkplain StreamInput}. This allows them to be "thrown
- * across the wire" using OpenSearch's internal protocol. If the implementer also implements equals and hashCode then a copy made by
+ * across the wire" using Density's internal protocol. If the implementer also implements equals and hashCode then a copy made by
  * serializing and deserializing must be equal and have the same hashCode. It isn't required that such a copy be entirely unchanged.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public interface Writeable {
@@ -52,7 +52,7 @@ public interface Writeable {
      * {@link StreamOutput} channel and {@link Reader} methods for reading data from a
      * {@link StreamInput} channel.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class WriteableRegistry {
         private static final Map<Class<?>, Writer<?>> WRITER_REGISTRY = new ConcurrentHashMap<>();
@@ -62,7 +62,7 @@ public interface Writeable {
         /**
          * registers a streamable writer
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static <W extends Writer<?>> void registerWriter(final Class<?> clazz, final W writer) {
             if (WRITER_REGISTRY.putIfAbsent(clazz, writer) != null) {
@@ -73,7 +73,7 @@ public interface Writeable {
         /**
          * registers a streamable reader
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static <R extends Reader<?>> void registerReader(final byte ordinal, final R reader) {
             if (READER_REGISTRY.putIfAbsent(ordinal, reader) != null) {
@@ -139,7 +139,7 @@ public interface Writeable {
      * }
      * </code></pre>
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "2.8.0")
@@ -168,7 +168,7 @@ public interface Writeable {
      * }
      * </code></pre>
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "2.8.0")

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.TimeoutAwareRunnable;
+import org.density.common.Randomness;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.TimeoutAwareRunnable;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 /**
  * A {@link Runnable} that iteratively executes a batch of {@link TimeoutAwareRunnable}s. If the elapsed time exceeds the timeout defined by {@link TimeValue} timeout, then all subsequent {@link TimeoutAwareRunnable}s will have their {@link TimeoutAwareRunnable#onTimeout} method invoked and will not be run.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BatchRunnableExecutor implements Runnable {
 

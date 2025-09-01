@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -17,7 +17,7 @@ buildCache {
   }
 }
 
-rootProject.name = "OpenSearch"
+rootProject.name = "Density"
 
 include 'doc-tools'
 includeBuild("doc-tools/missing-doclet")
@@ -137,14 +137,14 @@ project(':build-tools').projectDir = new File(rootProject.projectDir, 'buildSrc'
 project(':build-tools:reaper').projectDir = new File(rootProject.projectDir, 'buildSrc/reaper')
 
 project(":libs").children.each { libsProject ->
-  libsProject.name = "opensearch-${libsProject.name}"
+  libsProject.name = "density-${libsProject.name}"
 }
 
 project(":test:external-modules").children.each { testProject ->
   testProject.name = "test-${testProject.name}"
 }
 
-// look for extra plugins for opensearch
+// look for extra plugins for density
 File extraProjects = new File(rootProject.projectDir.parentFile, "${rootProject.projectDir.name}-extra")
 if (extraProjects.exists()) {
   for (File extraProjectDir : extraProjects.listFiles()) {

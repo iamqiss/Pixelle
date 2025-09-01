@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Table;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.monitor.process.ProcessInfo;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestActionListener;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Table;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.Strings;
+import org.density.monitor.process.ProcessInfo;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestActionListener;
+import org.density.rest.action.RestResponseListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _cat API action to get node attributes
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestNodeAttrsAction extends AbstractCatAction {
 

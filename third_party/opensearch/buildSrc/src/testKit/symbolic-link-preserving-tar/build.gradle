@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-import org.opensearch.gradle.tar.SymbolicLinkPreservingTar
+import org.density.gradle.tar.SymbolicLinkPreservingTar
 
 plugins {
   id 'base'
   id 'distribution'
-  id 'opensearch.symbolic-link-preserving-tar'
+  id 'density.symbolic-link-preserving-tar'
 }
 
 final String source = Objects.requireNonNull(System.getProperty('tests.symbolic_link_preserving_tar_source'))

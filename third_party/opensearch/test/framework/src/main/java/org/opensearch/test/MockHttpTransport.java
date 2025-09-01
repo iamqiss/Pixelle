@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.HttpStats;
-import org.opensearch.plugins.Plugin;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.http.HttpInfo;
+import org.density.http.HttpServerTransport;
+import org.density.http.HttpStats;
+import org.density.plugins.Plugin;
 
 /**
  * A dummy http transport used by tests when not wanting to actually bind to a real address.
@@ -46,7 +46,7 @@ import org.opensearch.plugins.Plugin;
 public class MockHttpTransport extends AbstractLifecycleComponent implements HttpServerTransport {
 
     /**
-     * Marker plugin used by {@link org.opensearch.node.MockNode} to enable {@link MockHttpTransport}.
+     * Marker plugin used by {@link org.density.node.MockNode} to enable {@link MockHttpTransport}.
      */
     public static class TestPlugin extends Plugin {}
 

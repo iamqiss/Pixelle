@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.stats;
+package org.density.index.search.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchPhaseName;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.Version;
+import org.density.action.search.SearchPhaseName;
+import org.density.action.search.SearchRequestStats;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Encapsulates stats for search time
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchStats implements Writeable, ToXContentFragment {
@@ -63,7 +63,7 @@ public class SearchStats implements Writeable, ToXContentFragment {
     /**
      * Holds statistic values for a particular phase.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class PhaseStatsLongHolder implements Writeable {
@@ -112,7 +112,7 @@ public class SearchStats implements Writeable, ToXContentFragment {
     /**
      * Holds all requests stats.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class RequestStatsLongHolder {
@@ -134,7 +134,7 @@ public class SearchStats implements Writeable, ToXContentFragment {
     /**
      * Holder of statistics values
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Stats implements Writeable, ToXContentFragment {
@@ -906,7 +906,7 @@ public class SearchStats implements Writeable, ToXContentFragment {
     /**
      * Fields for search statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String SEARCH = "search";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Set;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS")
-public class ByteSizeCachingDirectoryTests extends OpenSearchTestCase {
+public class ByteSizeCachingDirectoryTests extends DensityTestCase {
 
     private static class LengthCountingDirectory extends FilterDirectory {
 

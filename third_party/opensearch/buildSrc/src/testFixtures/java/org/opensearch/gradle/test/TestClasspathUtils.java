@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test;
+package org.density.gradle.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,13 +48,13 @@ public class TestClasspathUtils {
     public static void setupJarJdkClasspath(File projectRoot) {
         try {
             URL originLocation = TestClasspathUtils.class.getClassLoader()
-                .loadClass("org.opensearch.common.bootstrap.JdkJarHellCheck")
+                .loadClass("org.density.common.bootstrap.JdkJarHellCheck")
                 .getProtectionDomain()
                 .getCodeSource()
                 .getLocation();
             File targetFile = new File(
                 projectRoot,
-                "sample_jars/build/testrepo/org/opensearch/opensearch-core/current/opensearch-core-current.jar"
+                "sample_jars/build/testrepo/org/density/density-core/current/density-core-current.jar"
             );
             targetFile.getParentFile().mkdirs();
             Path originalPath = Paths.get(originLocation.toURI());

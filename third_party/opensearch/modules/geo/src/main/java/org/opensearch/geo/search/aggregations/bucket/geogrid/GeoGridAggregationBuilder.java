@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.bucket.BucketUtils;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregatorFactory;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.DensityException;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.bucket.BucketUtils;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregatorFactory;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.Map;
@@ -59,7 +59,7 @@ import java.util.function.Function;
 /**
  * Base Aggregation Builder for geogrid aggs
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class GeoGridAggregationBuilder extends ValuesSourceAggregationBuilder<GeoGridAggregationBuilder> {
     /* recognized field names in JSON */
@@ -75,7 +75,7 @@ public abstract class GeoGridAggregationBuilder extends ValuesSourceAggregationB
     /**
      * A precision parser
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     protected interface PrecisionParser {
@@ -224,7 +224,7 @@ public abstract class GeoGridAggregationBuilder extends ValuesSourceAggregationB
         }
 
         if (requiredSize <= 0 || shardSize <= 0) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "parameters [required_size] and [shard_size] must be > 0 in " + getType() + " aggregation [" + name + "]."
             );
         }

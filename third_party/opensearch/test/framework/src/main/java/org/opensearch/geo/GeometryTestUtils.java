@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo;
+package org.density.geo;
 
 import org.apache.lucene.tests.geo.GeoTestUtil;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.opensearch.test.OpenSearchTestCase.randomValueOtherThanMany;
+import static org.density.test.DensityTestCase.randomValueOtherThanMany;
 
 public class GeometryTestUtils {
 
@@ -66,7 +66,7 @@ public class GeometryTestUtils {
     }
 
     public static double randomAlt() {
-        return OpenSearchTestCase.randomDouble();
+        return DensityTestCase.randomDouble();
     }
 
     public static Circle randomCircle(boolean hasAlt) {
@@ -74,11 +74,11 @@ public class GeometryTestUtils {
             return new Circle(
                 randomLon(),
                 randomLat(),
-                OpenSearchTestCase.randomDouble(),
-                OpenSearchTestCase.randomDoubleBetween(0, 100, false)
+                DensityTestCase.randomDouble(),
+                DensityTestCase.randomDoubleBetween(0, 100, false)
             );
         } else {
-            return new Circle(randomLon(), randomLat(), OpenSearchTestCase.randomDoubleBetween(0, 100, false));
+            return new Circle(randomLon(), randomLat(), DensityTestCase.randomDoubleBetween(0, 100, false));
         }
     }
 
@@ -103,7 +103,7 @@ public class GeometryTestUtils {
     }
 
     public static Point randomPoint() {
-        return randomPoint(OpenSearchTestCase.randomBoolean());
+        return randomPoint(DensityTestCase.randomBoolean());
     }
 
     public static Point randomPoint(boolean hasAlt) {
@@ -161,7 +161,7 @@ public class GeometryTestUtils {
     }
 
     public static MultiPoint randomMultiPoint(boolean hasAlt) {
-        int size = OpenSearchTestCase.randomIntBetween(3, 10);
+        int size = DensityTestCase.randomIntBetween(3, 10);
         List<Point> points = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             points.add(randomPoint(hasAlt));
@@ -170,7 +170,7 @@ public class GeometryTestUtils {
     }
 
     public static MultiLine randomMultiLine(boolean hasAlt) {
-        int size = OpenSearchTestCase.randomIntBetween(3, 10);
+        int size = DensityTestCase.randomIntBetween(3, 10);
         List<Line> lines = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             lines.add(randomLine(hasAlt));
@@ -179,7 +179,7 @@ public class GeometryTestUtils {
     }
 
     public static MultiPolygon randomMultiPolygon(boolean hasAlt) {
-        int size = OpenSearchTestCase.randomIntBetween(3, 10);
+        int size = DensityTestCase.randomIntBetween(3, 10);
         List<Polygon> polygons = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             polygons.add(randomPolygon(hasAlt));
@@ -192,7 +192,7 @@ public class GeometryTestUtils {
     }
 
     private static GeometryCollection<Geometry> randomGeometryCollection(int level, boolean hasAlt) {
-        int size = OpenSearchTestCase.randomIntBetween(1, 10);
+        int size = DensityTestCase.randomIntBetween(1, 10);
         List<Geometry> shapes = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             shapes.add(randomGeometry(level, hasAlt));
@@ -206,7 +206,7 @@ public class GeometryTestUtils {
 
     protected static Geometry randomGeometry(int level, boolean hasAlt) {
         @SuppressWarnings("unchecked")
-        Function<Boolean, Geometry> geometry = OpenSearchTestCase.randomFrom(
+        Function<Boolean, Geometry> geometry = DensityTestCase.randomFrom(
             GeometryTestUtils::randomCircle,
             GeometryTestUtils::randomLine,
             GeometryTestUtils::randomPoint,

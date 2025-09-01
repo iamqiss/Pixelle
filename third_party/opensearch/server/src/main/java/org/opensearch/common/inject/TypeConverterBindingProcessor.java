@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,21 +23,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.MatcherAndConverter;
-import org.opensearch.common.inject.internal.SourceProvider;
-import org.opensearch.common.inject.internal.Strings;
-import org.opensearch.common.inject.matcher.AbstractMatcher;
-import org.opensearch.common.inject.matcher.Matcher;
-import org.opensearch.common.inject.matcher.Matchers;
-import org.opensearch.common.inject.spi.TypeConverter;
-import org.opensearch.common.inject.spi.TypeConverterBinding;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.MatcherAndConverter;
+import org.density.common.inject.internal.SourceProvider;
+import org.density.common.inject.internal.Strings;
+import org.density.common.inject.matcher.AbstractMatcher;
+import org.density.common.inject.matcher.Matcher;
+import org.density.common.inject.matcher.Matchers;
+import org.density.common.inject.spi.TypeConverter;
+import org.density.common.inject.spi.TypeConverterBinding;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -49,7 +49,7 @@ import java.lang.reflect.Type;
  * @author crazybob@google.com (Bob Lee)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class TypeConverterBindingProcessor extends AbstractProcessor {
 

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.protobufs.WaitForActiveShards;
+import org.density.action.support.ActiveShardCount;
+import org.density.protobufs.WaitForActiveShards;
 
 /**
  * Utility class for handling active shard count settings in gRPC bulk requests.
  * This class provides methods to convert between Protocol Buffer representations
- * and OpenSearch ActiveShardCount objects.
+ * and Density ActiveShardCount objects.
  */
 public class ActiveShardCountProtoUtils {
     // protected final Settings settings;
@@ -30,7 +30,7 @@ public class ActiveShardCountProtoUtils {
      * Sets the active shard count on the bulk request based on the protobuf request.
      * Similar to {@link ActiveShardCount#parseString(String)}, this method interprets
      * the wait_for_active_shards parameter from the Protocol Buffer request and applies
-     * the appropriate ActiveShardCount setting to the OpenSearch bulk request.
+     * the appropriate ActiveShardCount setting to the Density bulk request.
      *
      * @param waitForActiveShards The protobuf object containing the active shard count
      * @return The modified bulk request

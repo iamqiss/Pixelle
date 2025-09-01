@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.index.seqno.CountedBitSet;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.index.seqno.CountedBitSet;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * A snapshot composed out of multiple snapshots
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class MultiSnapshot implements Translog.Snapshot {
 
@@ -102,7 +102,7 @@ final class MultiSnapshot implements Translog.Snapshot {
     /**
      * Sequence number set
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SeqNoSet {
         static final short BIT_SET_SIZE = 1024;

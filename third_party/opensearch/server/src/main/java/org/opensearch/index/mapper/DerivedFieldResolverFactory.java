@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.SearchService;
+import org.density.DensityException;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryShardContext;
+import org.density.search.SearchService;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 
 /**
  * Used to create DerivedFieldResolver. It chooses between {@link DefaultDerivedFieldResolver} and {@link NoOpDerivedFieldResolver}
@@ -32,7 +32,7 @@ public class DerivedFieldResolverFactory {
     ) {
         boolean derivedFieldsPresent = derivedFieldsPresent(derivedFieldsObject, derivedFields);
         if (derivedFieldsPresent && !derivedFieldAllowed) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[derived field] queries cannot be executed when '"
                     + IndexSettings.ALLOW_DERIVED_FIELDS.getKey()
                     + "' or '"
@@ -41,7 +41,7 @@ public class DerivedFieldResolverFactory {
             );
         }
         if (derivedFieldsPresent && queryShardContext.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[derived field] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }

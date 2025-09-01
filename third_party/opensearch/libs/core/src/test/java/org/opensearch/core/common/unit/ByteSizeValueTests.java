@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.unit;
+package org.density.core.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.DensityParseException;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.test.AbstractWireSerializingTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
@@ -144,18 +144,18 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
     }
 
     public void testFailOnMissingUnits() {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> ByteSizeValue.parseBytesSizeValue("23", "test"));
+        Exception e = expectThrows(DensityParseException.class, () -> ByteSizeValue.parseBytesSizeValue("23", "test"));
         assertThat(e.getMessage(), containsString("failed to parse setting [test]"));
     }
 
     public void testFailOnUnknownUnits() {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> ByteSizeValue.parseBytesSizeValue("23jw", "test"));
+        Exception e = expectThrows(DensityParseException.class, () -> ByteSizeValue.parseBytesSizeValue("23jw", "test"));
         assertThat(e.getMessage(), containsString("failed to parse setting [test]"));
     }
 
     public void testFailOnEmptyParsing() {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> assertThat(ByteSizeValue.parseBytesSizeValue("", "emptyParsing").toString(), is("23kb"))
         );
         assertThat(e.getMessage(), containsString("failed to parse setting [emptyParsing]"));
@@ -163,14 +163,14 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
 
     public void testFailOnEmptyNumberParsing() {
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> assertThat(ByteSizeValue.parseBytesSizeValue("g", "emptyNumberParsing").toString(), is("23b"))
         );
         assertThat(e.getMessage(), containsString("failed to parse [g]"));
     }
 
     public void testNoDotsAllowed() {
-        Exception e = expectThrows(OpenSearchParseException.class, () -> ByteSizeValue.parseBytesSizeValue("42b.", null, "test"));
+        Exception e = expectThrows(DensityParseException.class, () -> ByteSizeValue.parseBytesSizeValue("42b.", null, "test"));
         assertThat(e.getMessage(), containsString("failed to parse setting [test]"));
     }
 
@@ -295,8 +295,8 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
     }
 
     public void testParseInvalidValue() {
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> ByteSizeValue.parseBytesSizeValue("-6mb", "test_setting")
         );
         assertEquals("failed to parse setting [test_setting] with value [-6mb] as a size in bytes", exception.getMessage());
@@ -320,8 +320,8 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
     }
 
     public void testParseInvalidNumber() throws IOException {
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> ByteSizeValue.parseBytesSizeValue("notANumber", "test")
         );
         assertEquals(
@@ -329,7 +329,7 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
             exception.getMessage()
         );
 
-        exception = expectThrows(OpenSearchParseException.class, () -> ByteSizeValue.parseBytesSizeValue("notANumberMB", "test"));
+        exception = expectThrows(DensityParseException.class, () -> ByteSizeValue.parseBytesSizeValue("notANumberMB", "test"));
         assertEquals("failed to parse [notANumberMB]", exception.getMessage());
     }
 
@@ -337,8 +337,8 @@ public class ByteSizeValueTests extends AbstractWireSerializingTestCase<ByteSize
         ByteSizeUnit unit = randomValueOtherThan(ByteSizeUnit.BYTES, () -> randomFrom(ByteSizeUnit.values()));
         String fractionalValue = "23.5" + unit.getSuffix();
         // test exception is thrown: fractional byte size values has been deprecated since Legacy 6.2
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> ByteSizeValue.parseBytesSizeValue(fractionalValue, "test")
         );
     }

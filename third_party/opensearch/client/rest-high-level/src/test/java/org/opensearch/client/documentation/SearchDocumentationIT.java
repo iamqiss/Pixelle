@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,101 +26,101 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.action.fieldcaps.FieldCapabilities;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.core.CountRequest;
-import org.opensearch.client.core.CountResponse;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.CreateIndexResponse;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.rankeval.EvalQueryQuality;
-import org.opensearch.index.rankeval.EvaluationMetric;
-import org.opensearch.index.rankeval.MetricDetail;
-import org.opensearch.index.rankeval.PrecisionAtK;
-import org.opensearch.index.rankeval.RankEvalRequest;
-import org.opensearch.index.rankeval.RankEvalResponse;
-import org.opensearch.index.rankeval.RankEvalSpec;
-import org.opensearch.index.rankeval.RatedDocument;
-import org.opensearch.index.rankeval.RatedRequest;
-import org.opensearch.index.rankeval.RatedSearchHit;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.mustache.MultiSearchTemplateRequest;
-import org.opensearch.script.mustache.MultiSearchTemplateResponse;
-import org.opensearch.script.mustache.MultiSearchTemplateResponse.Item;
-import org.opensearch.script.mustache.SearchTemplateRequest;
-import org.opensearch.script.mustache.SearchTemplateResponse;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.bucket.range.Range;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.Terms.Bucket;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.aggregation.AggregationProfileShardResult;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.profile.query.QueryProfileShardResult;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.SuggestBuilders;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestion;
+import org.density.action.LatchedActionListener;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.explain.ExplainResponse;
+import org.density.action.fieldcaps.FieldCapabilities;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.WriteRequest;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.client.core.CountRequest;
+import org.density.client.core.CountResponse;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.CreateIndexResponse;
+import org.density.common.document.DocumentField;
+import org.density.common.unit.Fuzziness;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.text.Text;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.get.GetResult;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.rankeval.EvalQueryQuality;
+import org.density.index.rankeval.EvaluationMetric;
+import org.density.index.rankeval.MetricDetail;
+import org.density.index.rankeval.PrecisionAtK;
+import org.density.index.rankeval.RankEvalRequest;
+import org.density.index.rankeval.RankEvalResponse;
+import org.density.index.rankeval.RankEvalSpec;
+import org.density.index.rankeval.RatedDocument;
+import org.density.index.rankeval.RatedRequest;
+import org.density.index.rankeval.RatedSearchHit;
+import org.density.script.ScriptType;
+import org.density.script.mustache.MultiSearchTemplateRequest;
+import org.density.script.mustache.MultiSearchTemplateResponse;
+import org.density.script.mustache.MultiSearchTemplateResponse.Item;
+import org.density.script.mustache.SearchTemplateRequest;
+import org.density.script.mustache.SearchTemplateResponse;
+import org.density.search.Scroll;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.bucket.range.Range;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.Terms.Bucket;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.aggregation.AggregationProfileShardResult;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.profile.query.QueryProfileShardResult;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.SuggestBuilders;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestion;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -132,7 +132,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -142,7 +142,7 @@ import static org.hamcrest.Matchers.greaterThan;
  * Documentation for search APIs in the high level java client.
  * Code wrapped in {@code tag} and {@code end} tags is included in the docs.
  */
-public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class SearchDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     @SuppressWarnings({ "unused", "unchecked" })
     public void testSearch() throws Exception {
@@ -319,9 +319,9 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
         RestHighLevelClient client = highLevelClient();
         {
             BulkRequest request = new BulkRequest();
-            request.add(new IndexRequest("posts").id("1").source(MediaTypeRegistry.JSON, "company", "OpenSearch", "age", 20));
-            request.add(new IndexRequest("posts").id("2").source(MediaTypeRegistry.JSON, "company", "OpenSearch", "age", 30));
-            request.add(new IndexRequest("posts").id("3").source(MediaTypeRegistry.JSON, "company", "OpenSearch", "age", 40));
+            request.add(new IndexRequest("posts").id("1").source(MediaTypeRegistry.JSON, "company", "Density", "age", 20));
+            request.add(new IndexRequest("posts").id("2").source(MediaTypeRegistry.JSON, "company", "Density", "age", 30));
+            request.add(new IndexRequest("posts").id("3").source(MediaTypeRegistry.JSON, "company", "Density", "age", 40));
             request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
             BulkResponse bulkResponse = client.bulk(request, RequestOptions.DEFAULT);
             assertSame(RestStatus.OK, bulkResponse.status());
@@ -344,7 +344,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                 // tag::search-request-aggregations-get
                 Aggregations aggregations = searchResponse.getAggregations();
                 Terms byCompanyAggregation = aggregations.get("by_company"); // <1>
-                Bucket elasticBucket = byCompanyAggregation.getBucketByKey("OpenSearch"); // <2>
+                Bucket elasticBucket = byCompanyAggregation.getBucketByKey("Density"); // <2>
                 Avg averageAge = elasticBucket.getAggregations().get("average_age"); // <3>
                 double avg = averageAge.getValue();
                 // end::search-request-aggregations-get
@@ -355,8 +355,8 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     // end::search-request-aggregations-get-wrongCast
                 } catch (ClassCastException ex) {
                     String message = ex.getMessage();
-                    assertThat(message, containsString("org.opensearch.search.aggregations.bucket.terms.ParsedStringTerms"));
-                    assertThat(message, containsString("org.opensearch.search.aggregations.bucket.range.Range"));
+                    assertThat(message, containsString("org.density.search.aggregations.bucket.terms.ParsedStringTerms"));
+                    assertThat(message, containsString("org.density.search.aggregations.bucket.range.Range"));
                 }
                 assertEquals(3, elasticBucket.getDocCount());
                 assertEquals(30, avg, 0.0);
@@ -378,7 +378,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                 for (Aggregation agg : aggregations) {
                     String type = agg.getType();
                     if (type.equals(TermsAggregationBuilder.NAME)) {
-                        Bucket elasticBucket = ((Terms) agg).getBucketByKey("OpenSearch");
+                        Bucket elasticBucket = ((Terms) agg).getBucketByKey("Density");
                         long numberOfDocs = elasticBucket.getDocCount();
                     }
                 }
@@ -440,7 +440,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     .source(
                         MediaTypeRegistry.JSON,
                         "title",
-                        "In which order are my OpenSearch queries executed?",
+                        "In which order are my Density queries executed?",
                         "user",
                         Arrays.asList("foobar", "quxx"),
                         "innerObject",
@@ -452,7 +452,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     .source(
                         MediaTypeRegistry.JSON,
                         "title",
-                        "Current status and upcoming changes in OpenSearch",
+                        "Current status and upcoming changes in Density",
                         "user",
                         Arrays.asList("foobar", "grault"),
                         "innerObject",
@@ -464,7 +464,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     .source(
                         MediaTypeRegistry.JSON,
                         "title",
-                        "The Future of Federated Search in OpenSearch",
+                        "The Future of Federated Search in Density",
                         "user",
                         Arrays.asList("foobar", "quuz"),
                         "innerObject",
@@ -490,7 +490,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
             searchSourceBuilder.highlighter(highlightBuilder);
             // end::search-request-highlighting
             searchSourceBuilder.query(
-                QueryBuilders.boolQuery().should(matchQuery("title", "OpenSearch")).should(matchQuery("user", "foobar"))
+                QueryBuilders.boolQuery().should(matchQuery("title", "Density")).should(matchQuery("user", "foobar"))
             );
             searchRequest.source(searchSourceBuilder);
             SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
@@ -510,7 +510,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     HighlightField highlight = highlightFields.get("title");
                     Text[] fragments = highlight.fragments();
                     assertEquals(1, fragments.length);
-                    assertThat(fragments[0].string(), containsString("<em>OpenSearch</em>"));
+                    assertThat(fragments[0].string(), containsString("<em>Density</em>"));
                     highlight = highlightFields.get("user");
                     fragments = highlight.fragments();
                     assertEquals(1, fragments.length);
@@ -525,7 +525,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
     public void testSearchRequestProfiling() throws IOException {
         RestHighLevelClient client = highLevelClient();
         {
-            IndexRequest request = new IndexRequest("posts").id("1").source(MediaTypeRegistry.JSON, "tags", "opensearch", "comments", 123);
+            IndexRequest request = new IndexRequest("posts").id("1").source(MediaTypeRegistry.JSON, "tags", "density", "comments", 123);
             request.setRefreshPolicy(WriteRequest.RefreshPolicy.WAIT_UNTIL);
             IndexResponse indexResponse = client.index(request, RequestOptions.DEFAULT);
             assertSame(RestStatus.CREATED, indexResponse.status());
@@ -536,7 +536,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.profile(true);
             // end::search-request-profiling
-            searchSourceBuilder.query(QueryBuilders.termQuery("tags", "opensearch"));
+            searchSourceBuilder.query(QueryBuilders.termQuery("tags", "density"));
             searchSourceBuilder.aggregation(AggregationBuilders.histogram("by_comments").field("comments").interval(100));
             searchRequest.source(searchSourceBuilder);
 
@@ -598,14 +598,14 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
             BulkRequest request = new BulkRequest();
             request.add(
                 new IndexRequest("posts").id("1")
-                    .source(MediaTypeRegistry.JSON, "title", "In which order are my OpenSearch queries executed?")
+                    .source(MediaTypeRegistry.JSON, "title", "In which order are my Density queries executed?")
             );
             request.add(
                 new IndexRequest("posts").id("2")
-                    .source(MediaTypeRegistry.JSON, "title", "Current status and upcoming changes in OpenSearch")
+                    .source(MediaTypeRegistry.JSON, "title", "Current status and upcoming changes in Density")
             );
             request.add(
-                new IndexRequest("posts").id("3").source(MediaTypeRegistry.JSON, "title", "The Future of Federated Search in OpenSearch")
+                new IndexRequest("posts").id("3").source(MediaTypeRegistry.JSON, "title", "The Future of Federated Search in Density")
             );
             request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
             BulkResponse bulkResponse = client.bulk(request, RequestOptions.DEFAULT);
@@ -617,7 +617,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
             // tag::search-scroll-init
             SearchRequest searchRequest = new SearchRequest("posts");
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-            searchSourceBuilder.query(matchQuery("title", "OpenSearch"));
+            searchSourceBuilder.query(matchQuery("title", "Density"));
             searchSourceBuilder.size(size); // <1>
             searchRequest.source(searchSourceBuilder);
             searchRequest.scroll(TimeValue.timeValueMinutes(1L)); // <2>
@@ -749,7 +749,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
             SearchRequest searchRequest = new SearchRequest("posts");
             searchRequest.scroll(scroll);
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-            searchSourceBuilder.query(matchQuery("title", "OpenSearch"));
+            searchSourceBuilder.query(matchQuery("title", "Density"));
             searchRequest.source(searchSourceBuilder);
 
             SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT); // <1>
@@ -791,7 +791,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
 
         Map<String, Object> scriptParams = new HashMap<>();
         scriptParams.put("field", "title");
-        scriptParams.put("value", "opensearch");
+        scriptParams.put("value", "density");
         scriptParams.put("size", 5);
         request.setScriptParams(scriptParams); // <3>
         // end::search-template-request-inline
@@ -815,7 +815,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
 
         assertNotNull(source);
         assertEquals(
-            ("{  \"size\" : \"5\",  \"query\": { \"match\" : { \"title\" : \"opensearch\" } }}").replaceAll("\\s+", ""),
+            ("{  \"size\" : \"5\",  \"query\": { \"match\" : { \"title\" : \"density\" } }}").replaceAll("\\s+", ""),
             source.utf8ToString()
         );
     }
@@ -836,7 +836,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
 
         Map<String, Object> params = new HashMap<>();
         params.put("field", "title");
-        params.put("value", "opensearch");
+        params.put("value", "density");
         params.put("size", 5);
         request.setScriptParams(params);
         // end::search-template-request-stored
@@ -885,7 +885,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
         RestHighLevelClient client = highLevelClient();
 
         // tag::multi-search-template-request-inline
-        String [] searchTerms = {"opensearch", "opensearch-dashboards"};
+        String [] searchTerms = {"density", "density-dashboards"};
 
         MultiSearchTemplateRequest multiRequest = new MultiSearchTemplateRequest(); // <1>
         for (String searchTerm : searchTerms) {
@@ -943,7 +943,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
         // tag::multi-search-template-request-stored
         MultiSearchTemplateRequest multiRequest = new MultiSearchTemplateRequest();
 
-        String [] searchTerms = {"opensearch", "dashboards"};
+        String [] searchTerms = {"density", "dashboards"};
         for (String searchTerm : searchTerms) {
 
             SearchTemplateRequest request = new SearchTemplateRequest();
@@ -1326,7 +1326,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     "id",
                     1,
                     "title",
-                    "In which order are my OpenSearch queries executed?",
+                    "In which order are my Density queries executed?",
                     "user",
                     Arrays.asList("foobar", "quxx"),
                     "innerObject",
@@ -1340,7 +1340,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     "id",
                     2,
                     "title",
-                    "Current status and upcoming changes in OpenSearch",
+                    "Current status and upcoming changes in Density",
                     "user",
                     Arrays.asList("foobar", "grault"),
                     "innerObject",
@@ -1354,7 +1354,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                     "id",
                     3,
                     "title",
-                    "The Future of Federated Search in OpenSearch",
+                    "The Future of Federated Search in Density",
                     "user",
                     Arrays.asList("foobar", "quuz"),
                     "innerObject",
@@ -1488,7 +1488,7 @@ public class SearchDocumentationIT extends OpenSearchRestHighLevelClientTestCase
                 .source(
                     MediaTypeRegistry.JSON,
                     "title",
-                    "XYZ Joins Forces with OpenSearch",
+                    "XYZ Joins Forces with Density",
                     "user",
                     Arrays.asList("foobar", "matt"),
                     "innerObject",

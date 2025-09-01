@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.meta;
+package org.density.index.compositeindex.datacube.startree.fileformats.meta;
 
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
 import org.apache.lucene.index.DocValuesSkipIndexType;
@@ -24,17 +24,17 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.InfoStream;
 import org.apache.lucene.util.Version;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
+import org.density.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -47,12 +47,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
-import static org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
-import static org.opensearch.index.mapper.CompositeMappedFieldType.CompositeFieldType.STAR_TREE;
+import static org.density.index.compositeindex.CompositeIndexConstants.COMPOSITE_FIELD_MARKER;
+import static org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter.VERSION_CURRENT;
+import static org.density.index.mapper.CompositeMappedFieldType.CompositeFieldType.STAR_TREE;
 import static org.junit.Assert.assertEquals;
 
-public class StarTreeMetadataTests extends OpenSearchTestCase {
+public class StarTreeMetadataTests extends DensityTestCase {
 
     private IndexOutput metaOut;
     private IndexInput metaIn;

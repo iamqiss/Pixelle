@@ -20,12 +20,12 @@ org.apache.hc.core5.http.ContentType#create(java.lang.String,java.lang.String)
 org.apache.hc.core5.http.ContentType#create(java.lang.String,java.nio.charset.Charset)
 
 @defaultMessage ES's logging infrastructure uses log4j2 which we don't want to force on high level rest client users
-org.opensearch.common.logging.DeprecationLogger
-org.opensearch.common.logging.LogConfigurator
-org.opensearch.core.common.logging.LoggerMessageFormat
-org.opensearch.common.logging.Loggers
-org.opensearch.common.logging.NodeNamePatternConverter
-org.opensearch.common.logging.PrefixLogger
+org.density.common.logging.DeprecationLogger
+org.density.common.logging.LogConfigurator
+org.density.core.common.logging.LoggerMessageFormat
+org.density.common.logging.Loggers
+org.density.common.logging.NodeNamePatternConverter
+org.density.common.logging.PrefixLogger
 
 @defaultMessage We can't rely on log4j2 being on the classpath so don't log deprecations!
-org.opensearch.common.xcontent.LoggingDeprecationHandler
+org.density.common.xcontent.LoggingDeprecationHandler

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * List of extension configurations from extension.yml
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ExtensionsSettings {
 
@@ -32,7 +32,7 @@ public class ExtensionsSettings {
     /**
      * Extension configuration used for extension discovery
      *
-     * @opensearch.internal
+     * @density.internal
     */
     public static class Extension {
 
@@ -41,7 +41,7 @@ public class ExtensionsSettings {
         private String hostAddress;
         private String port;
         private String version;
-        private String opensearchVersion;
+        private String densityVersion;
         private String minimumCompatibleVersion;
         private List<ExtensionDependency> dependencies = Collections.emptyList();
         private ExtensionScopedSettings additionalSettings;
@@ -52,7 +52,7 @@ public class ExtensionsSettings {
             String hostAddress,
             String port,
             String version,
-            String opensearchVersion,
+            String densityVersion,
             String minimumCompatibleVersion,
             List<ExtensionDependency> dependencies,
             ExtensionScopedSettings additionalSettings
@@ -62,7 +62,7 @@ public class ExtensionsSettings {
             this.hostAddress = hostAddress;
             this.port = port;
             this.version = version;
-            this.opensearchVersion = opensearchVersion;
+            this.densityVersion = densityVersion;
             this.minimumCompatibleVersion = minimumCompatibleVersion;
             this.dependencies = dependencies;
             this.additionalSettings = additionalSettings;
@@ -74,7 +74,7 @@ public class ExtensionsSettings {
             hostAddress = "";
             port = "";
             version = "";
-            opensearchVersion = "";
+            densityVersion = "";
             minimumCompatibleVersion = "";
         }
 
@@ -119,11 +119,11 @@ public class ExtensionsSettings {
         }
 
         public String getOpensearchVersion() {
-            return opensearchVersion;
+            return densityVersion;
         }
 
-        public void setOpensearchVersion(String opensearchVersion) {
-            this.opensearchVersion = opensearchVersion;
+        public void setOpensearchVersion(String densityVersion) {
+            this.densityVersion = densityVersion;
         }
 
         public List<ExtensionDependency> getDependencies() {
@@ -154,8 +154,8 @@ public class ExtensionsSettings {
                 + port
                 + ", version="
                 + version
-                + ", opensearchVersion="
-                + opensearchVersion
+                + ", densityVersion="
+                + densityVersion
                 + ", minimumCompatibleVersion="
                 + minimumCompatibleVersion
                 + "]";

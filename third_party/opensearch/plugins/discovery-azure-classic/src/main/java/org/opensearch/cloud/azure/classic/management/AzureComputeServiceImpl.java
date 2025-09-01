@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cloud.azure.classic.management;
+package org.density.cloud.azure.classic.management;
 
 import com.microsoft.windowsazure.Configuration;
 import com.microsoft.windowsazure.core.Builder;
@@ -42,13 +42,13 @@ import com.microsoft.windowsazure.management.compute.models.HostedServiceGetDeta
 import com.microsoft.windowsazure.management.configuration.ManagementConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.SpecialPermission;
-import org.opensearch.cloud.azure.classic.AzureServiceRemoteException;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
+import org.density.DensityException;
+import org.density.SpecialPermission;
+import org.density.cloud.azure.classic.AzureServiceRemoteException;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.security.AccessController;
@@ -100,7 +100,7 @@ public class AzureComputeServiceImpl extends AbstractLifecycleComponent implemen
             logger.debug("creating new Azure client for [{}], [{}]", subscriptionId, serviceName);
             client = ComputeManagementService.create(managementConfig);
         } catch (IOException e) {
-            throw new OpenSearchException("Unable to configure Azure compute service", e);
+            throw new DensityException("Unable to configure Azure compute service", e);
         }
     }
 
@@ -127,13 +127,13 @@ public class AzureComputeServiceImpl extends AbstractLifecycleComponent implemen
     }
 
     @Override
-    protected void doStart() throws OpenSearchException {}
+    protected void doStart() throws DensityException {}
 
     @Override
-    protected void doStop() throws OpenSearchException {}
+    protected void doStop() throws DensityException {}
 
     @Override
-    protected void doClose() throws OpenSearchException {
+    protected void doClose() throws DensityException {
         if (client != null) {
             try {
                 client.close();

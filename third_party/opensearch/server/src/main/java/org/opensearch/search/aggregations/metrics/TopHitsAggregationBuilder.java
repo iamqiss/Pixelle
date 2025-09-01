@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.FieldScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.AbstractAggregationBuilder;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregationInitializationException;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder.ScriptField;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryShardContext;
+import org.density.script.FieldScript;
+import org.density.script.Script;
+import org.density.search.aggregations.AbstractAggregationBuilder;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregationInitializationException;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.builder.SearchSourceBuilder.ScriptField;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ import java.util.Set;
 /**
  * Aggregation Builder for top_hits agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHitsAggregationBuilder> {
     public static final String NAME = "top_hits";
@@ -547,7 +547,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned
+     * Should each {@link org.density.search.SearchHit} be returned
      * with an explanation of the hit (ranking).
      */
     public TopHitsAggregationBuilder explain(boolean explain) {
@@ -564,7 +564,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned
+     * Should each {@link org.density.search.SearchHit} be returned
      * with a version associated with it.
      */
     public TopHitsAggregationBuilder version(boolean version) {
@@ -581,7 +581,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with the
+     * Should each {@link org.density.search.SearchHit} be returned with the
      * sequence number and primary term of the last modification of the document.
      */
     public TopHitsAggregationBuilder seqNoAndPrimaryTerm(Boolean seqNoAndPrimaryTerm) {
@@ -590,7 +590,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
     }
 
     /**
-     * Indicates whether {@link org.opensearch.search.SearchHit}s should be returned with the
+     * Indicates whether {@link org.density.search.SearchHit}s should be returned with the
      * sequence number and primary term of the last modification of the document.
      */
     public Boolean seqNoAndPrimaryTerm() {
@@ -651,7 +651,7 @@ public class TopHitsAggregationBuilder extends AbstractAggregationBuilder<TopHit
                 FieldScript.Factory factory = queryShardContext.compile(field.script(), FieldScript.CONTEXT);
                 FieldScript.LeafFactory searchScript = factory.newFactory(field.script().getParams(), queryShardContext.lookup());
                 scriptFields.add(
-                    new org.opensearch.search.fetch.subphase.ScriptFieldsContext.ScriptField(
+                    new org.density.search.fetch.subphase.ScriptFieldsContext.ScriptField(
                         field.fieldName(),
                         searchScript,
                         field.ignoreFailure()

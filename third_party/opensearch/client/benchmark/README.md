@@ -1,8 +1,8 @@
 ### Steps to execute the benchmark
 
 1. Build `client-benchmark-noop-api-plugin` with `./gradlew :client:client-benchmark-noop-api-plugin:assemble`
-2. Install it on the target host with `bin/opensearch-plugin install file:///full/path/to/client-benchmark-noop-api-plugin.zip`.
-3. Start OpenSearch on the target host (ideally *not* on the machine
+2. Install it on the target host with `bin/density-plugin install file:///full/path/to/client-benchmark-noop-api-plugin.zip`.
+3. Start Density on the target host (ideally *not* on the machine
 that runs the benchmarks)
 4. Run the benchmark with
 ```
@@ -36,7 +36,7 @@ The parameters are all in the `'`s and are in order:
 
 * Client type: Use "rest"
 * Benchmark type: Use either "bulk" or "search"
-* Benchmark target host IP (the host where OpenSearch is running)
+* Benchmark target host IP (the host where Density is running)
 * full path to the file that should be bulk indexed
 * name of the index
 * number of documents in the file
@@ -55,7 +55,7 @@ The parameters are in order:
 
 * Client type: Use "rest"
 * Benchmark type: Use either "bulk" or "search"
-* Benchmark target host IP (the host where OpenSearch is running)
+* Benchmark target host IP (the host where Density is running)
 * name of the index
 * a search request body (remember to escape double quotes).
 * A comma-separated list of target throughput rates

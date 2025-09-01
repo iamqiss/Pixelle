@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptService;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptService;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 
-public class PredicateTokenScriptFilterTests extends OpenSearchTokenStreamTestCase {
+public class PredicateTokenScriptFilterTests extends DensityTokenStreamTestCase {
 
     public void testSimpleFilter() throws IOException {
         Settings settings = Settings.builder().put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString()).build();

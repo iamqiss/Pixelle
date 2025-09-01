@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.AnalyzerCaster;
-import org.opensearch.painless.Location;
-import org.opensearch.painless.ScriptClassInfo;
-import org.opensearch.painless.lookup.PainlessCast;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.painless.lookup.def;
-import org.opensearch.painless.node.AExpression;
-import org.opensearch.painless.node.AStatement;
-import org.opensearch.painless.node.SBlock;
-import org.opensearch.painless.node.SExpression;
-import org.opensearch.painless.node.SFunction;
-import org.opensearch.painless.node.SReturn;
-import org.opensearch.painless.symbol.Decorations;
-import org.opensearch.painless.symbol.Decorations.AllEscape;
-import org.opensearch.painless.symbol.Decorations.ExpressionPainlessCast;
-import org.opensearch.painless.symbol.Decorations.Internal;
-import org.opensearch.painless.symbol.Decorations.LastSource;
-import org.opensearch.painless.symbol.Decorations.LoopEscape;
-import org.opensearch.painless.symbol.Decorations.MethodEscape;
-import org.opensearch.painless.symbol.Decorations.Read;
-import org.opensearch.painless.symbol.Decorations.TargetType;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
-import org.opensearch.painless.symbol.ScriptScope;
-import org.opensearch.painless.symbol.SemanticScope;
-import org.opensearch.painless.symbol.SemanticScope.FunctionScope;
+import org.density.painless.AnalyzerCaster;
+import org.density.painless.Location;
+import org.density.painless.ScriptClassInfo;
+import org.density.painless.lookup.PainlessCast;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.painless.lookup.def;
+import org.density.painless.node.AExpression;
+import org.density.painless.node.AStatement;
+import org.density.painless.node.SBlock;
+import org.density.painless.node.SExpression;
+import org.density.painless.node.SFunction;
+import org.density.painless.node.SReturn;
+import org.density.painless.symbol.Decorations;
+import org.density.painless.symbol.Decorations.AllEscape;
+import org.density.painless.symbol.Decorations.ExpressionPainlessCast;
+import org.density.painless.symbol.Decorations.Internal;
+import org.density.painless.symbol.Decorations.LastSource;
+import org.density.painless.symbol.Decorations.LoopEscape;
+import org.density.painless.symbol.Decorations.MethodEscape;
+import org.density.painless.symbol.Decorations.Read;
+import org.density.painless.symbol.Decorations.TargetType;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.symbol.ScriptScope;
+import org.density.painless.symbol.SemanticScope;
+import org.density.painless.symbol.SemanticScope.FunctionScope;
 
 import java.util.List;
 
-import static org.opensearch.painless.symbol.SemanticScope.newFunctionScope;
+import static org.density.painless.symbol.SemanticScope.newFunctionScope;
 
 public class PainlessSemanticAnalysisPhase extends DefaultSemanticAnalysisPhase {
 

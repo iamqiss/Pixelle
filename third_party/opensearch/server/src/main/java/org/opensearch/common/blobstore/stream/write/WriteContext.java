@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.write;
+package org.density.common.blobstore.stream.write;
 
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.StreamContext;
+import org.density.common.CheckedConsumer;
+import org.density.common.Nullable;
+import org.density.common.StreamContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * WriteContext is used to encapsulate all data needed by <code>BlobContainer#writeStreams</code>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WriteContext {
 
@@ -147,7 +147,7 @@ public class WriteContext {
     /**
      * Builder for {@link WriteContext}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private String fileName;

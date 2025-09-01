@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
@@ -33,9 +33,9 @@ public class SearchResponseSectionsProtoUtils {
      * @param response The SearchResponse to convert
      * @throws IOException if there's an error during conversion
      */
-    protected static void toProto(org.opensearch.protobufs.ResponseBody.Builder builder, SearchResponse response) throws IOException {
+    protected static void toProto(org.density.protobufs.ResponseBody.Builder builder, SearchResponse response) throws IOException {
         // Convert hits using pass by reference
-        org.opensearch.protobufs.HitsMetadata.Builder hitsBuilder = org.opensearch.protobufs.HitsMetadata.newBuilder();
+        org.density.protobufs.HitsMetadata.Builder hitsBuilder = org.density.protobufs.HitsMetadata.newBuilder();
         SearchHitsProtoUtils.toProto(response.getHits(), hitsBuilder);
         builder.setHits(hitsBuilder.build());
 

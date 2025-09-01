@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.breaker;
+package org.density.core.common.breaker;
 
 /**
  * A {@link CircuitBreaker} that doesn't increment or adjust, and all operations are
  * basically noops.
  * It never trips, limit is always -1, always returns 0 for all metrics.
- * @opensearch.internal
+ * @density.internal
  */
 public class NoopCircuitBreaker implements CircuitBreaker {
 

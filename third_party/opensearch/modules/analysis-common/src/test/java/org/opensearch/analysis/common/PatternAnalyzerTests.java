@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * Verifies the behavior of PatternAnalyzer.
  */
-public class PatternAnalyzerTests extends OpenSearchTokenStreamTestCase {
+public class PatternAnalyzerTests extends DensityTokenStreamTestCase {
 
     /**
      * Test PatternAnalyzer when it is configured with a non-word pattern.

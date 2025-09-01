@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -9,7 +9,7 @@
 /**
  * Top Level core circuit breaker implementation
  *
- * @opensearch.internal
- * @opensearch.experimental
+ * @density.internal
+ * @density.experimental
  */
-package org.opensearch.core.indices.breaker;
+package org.density.core.indices.breaker;

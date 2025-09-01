@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.AbstractWireSerializingTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.test.AbstractWireSerializingTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -142,7 +142,7 @@ public class SnapshotInfoTests extends AbstractWireSerializingTestCase<SnapshotI
                     instance.snapshotId(),
                     instance.indices(),
                     instance.dataStreams(),
-                    randomValueOtherThan(instance.startTime(), OpenSearchTestCase::randomNonNegativeLong),
+                    randomValueOtherThan(instance.startTime(), DensityTestCase::randomNonNegativeLong),
                     instance.reason(),
                     instance.endTime(),
                     instance.totalShards(),
@@ -174,7 +174,7 @@ public class SnapshotInfoTests extends AbstractWireSerializingTestCase<SnapshotI
                     instance.dataStreams(),
                     instance.startTime(),
                     instance.reason(),
-                    randomValueOtherThan(instance.endTime(), OpenSearchTestCase::randomNonNegativeLong),
+                    randomValueOtherThan(instance.endTime(), DensityTestCase::randomNonNegativeLong),
                     instance.totalShards(),
                     instance.shardFailures(),
                     instance.includeGlobalState(),

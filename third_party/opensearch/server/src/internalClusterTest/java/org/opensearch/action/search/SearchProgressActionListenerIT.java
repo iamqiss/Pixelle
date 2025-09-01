@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.core.tasks.TaskId;
+import org.density.index.query.QueryBuilders;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,11 +58,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
-public class SearchProgressActionListenerIT extends OpenSearchSingleNodeTestCase {
+public class SearchProgressActionListenerIT extends DensitySingleNodeTestCase {
     private List<SearchShard> shards;
 
     public void setUp() throws Exception {

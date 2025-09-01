@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,7 +53,7 @@ class CreateKeyStoreCommand extends KeyStoreAwareCommand {
     private final OptionSpec<Void> passwordOption;
 
     CreateKeyStoreCommand() {
-        super("Creates a new opensearch keystore");
+        super("Creates a new density keystore");
         this.passwordOption = parser.acceptsAll(Arrays.asList("p", "password"), "Prompt for password to encrypt the keystore");
     }
 
@@ -62,16 +62,16 @@ class CreateKeyStoreCommand extends KeyStoreAwareCommand {
         try (SecureString password = options.has(passwordOption) ? readPassword(terminal, true) : new SecureString(new char[0])) {
             Path keystoreFile = KeyStoreWrapper.keystorePath(env.configDir());
             if (Files.exists(keystoreFile)) {
-                if (terminal.promptYesNo("An opensearch keystore already exists. Overwrite?", false) == false) {
+                if (terminal.promptYesNo("An density keystore already exists. Overwrite?", false) == false) {
                     terminal.println("Exiting without creating keystore.");
                     return;
                 }
             }
             KeyStoreWrapper keystore = KeyStoreWrapper.create();
             keystore.save(env.configDir(), password.getChars());
-            terminal.println("Created opensearch keystore in " + KeyStoreWrapper.keystorePath(env.configDir()));
+            terminal.println("Created density keystore in " + KeyStoreWrapper.keystorePath(env.configDir()));
         } catch (SecurityException e) {
-            throw new UserException(ExitCodes.IO_ERROR, "Error creating the opensearch keystore.");
+            throw new UserException(ExitCodes.IO_ERROR, "Error creating the density keystore.");
         }
     }
 }

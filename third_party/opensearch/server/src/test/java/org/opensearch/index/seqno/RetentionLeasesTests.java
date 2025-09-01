@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 
-public class RetentionLeasesTests extends OpenSearchTestCase {
+public class RetentionLeasesTests extends DensityTestCase {
 
     public void testPrimaryTermOutOfRange() {
         final long primaryTerm = randomLongBetween(Long.MIN_VALUE, 0);

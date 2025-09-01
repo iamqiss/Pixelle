@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.tests.util.English;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.DisMaxQueryBuilder;
-import org.opensearch.index.query.FuzzyQueryBuilder;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RangeQueryBuilder;
+import org.density.common.unit.Fuzziness;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.DisMaxQueryBuilder;
+import org.density.index.query.FuzzyQueryBuilder;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RangeQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

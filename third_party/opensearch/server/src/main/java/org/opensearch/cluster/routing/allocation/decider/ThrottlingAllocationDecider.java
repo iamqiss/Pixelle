@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
 
 import java.util.function.BiFunction;
 
-import static org.opensearch.cluster.routing.allocation.decider.Decision.THROTTLE;
-import static org.opensearch.cluster.routing.allocation.decider.Decision.YES;
+import static org.density.cluster.routing.allocation.decider.Decision.THROTTLE;
+import static org.density.cluster.routing.allocation.decider.Decision.YES;
 
 /**
  * {@link ThrottlingAllocationDecider} controls the recovery process per node in
@@ -68,7 +68,7 @@ import static org.opensearch.cluster.routing.allocation.decider.Decision.YES;
  * the allocation process to prevent overloading nodes due to too many concurrent recovery
  * processes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ThrottlingAllocationDecider extends AllocationDecider {
 

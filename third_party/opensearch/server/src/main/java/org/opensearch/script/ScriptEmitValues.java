@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.collect.Tuple;
+import org.density.common.collect.Tuple;
 
 /**
  * Values that can be emitted in a derived field script context.

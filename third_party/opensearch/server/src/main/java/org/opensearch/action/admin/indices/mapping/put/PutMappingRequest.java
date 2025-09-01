@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.put;
+package org.density.action.admin.indices.mapping.put;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.transport.client.IndicesAdminClient;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityGenerationException;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
+import org.density.transport.client.IndicesAdminClient;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +65,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Puts mapping definition into one or more indices. Best created with
@@ -78,7 +78,7 @@ import static org.opensearch.action.ValidateActions.addValidationError;
  * @see IndicesAdminClient#putMapping(PutMappingRequest)
  * @see AcknowledgedResponse
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PutMappingRequest extends AcknowledgedRequest<PutMappingRequest> implements IndicesRequest.Replaceable, ToXContentObject {
@@ -306,7 +306,7 @@ public class PutMappingRequest extends AcknowledgedRequest<PutMappingRequest> im
             builder.map(mappingSource);
             return source(BytesReference.bytes(builder), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + mappingSource + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + mappingSource + "]", e);
         }
     }
 

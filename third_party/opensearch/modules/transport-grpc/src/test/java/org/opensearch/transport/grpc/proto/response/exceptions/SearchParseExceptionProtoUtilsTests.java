@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions;
+package org.density.transport.grpc.proto.response.exceptions;
 
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.search.SearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.ObjectMap;
+import org.density.search.SearchParseException;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class SearchParseExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class SearchParseExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testMetadataToProto() throws IOException {
         // Create a mock SearchParseException with specific line and column information

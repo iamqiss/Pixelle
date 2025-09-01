@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.NumericDocValuesField;
 import org.apache.lucene.search.FieldExistsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import java.util.List;
 /**
  * Mapper for the doc_count field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DocCountFieldMapper extends MetadataFieldMapper {
 
@@ -85,7 +85,7 @@ public class DocCountFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for DocCount Field Mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DocCountFieldType extends MappedFieldType {
 

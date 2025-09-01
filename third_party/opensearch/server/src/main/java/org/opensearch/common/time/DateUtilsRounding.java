@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -22,11 +22,11 @@
  *  limitations under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
 /**
  * This class has been copied from different locations within the joda time package, as
@@ -43,7 +43,7 @@ package org.opensearch.common.time;
  * - org.joda.time.chrono.BasicGJChronology.getMonthOfYear(long utcMillis, int year)
  * - org.joda.time.chrono.BasicGJChronology.getTotalMillisByYearMonth(int year, int month)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class DateUtilsRounding {
 

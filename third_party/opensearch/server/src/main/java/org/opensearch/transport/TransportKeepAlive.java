@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.AsyncBiFunction;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractLifecycleRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.AsyncBiFunction;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractLifecycleRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -58,7 +58,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * server and server channels respond. Pings are only sent at the scheduled time if the channel did not send
  * and receive a message since the last ping.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public final class TransportKeepAlive implements Closeable {

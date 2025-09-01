@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class WriteableTests extends OpenSearchTestCase {
+public class WriteableTests extends DensityTestCase {
 
     public void testRegisterClassAlias() {
         Writeable.WriteableRegistry.registerClassAlias(StringBuilder.class, AtomicInteger.class);

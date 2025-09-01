@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Some tests depend on the {@link org.opensearch.index.mapper.GeoShapeFieldMapper}.
+ * Some tests depend on the {@link org.density.index.mapper.GeoShapeFieldMapper}.
  * This mapper is registered in the spatial-extras module, but used in many integration
  * tests in server code. The goal is to migrate all of the spatial/geo pieces to the spatial-extras
  * module such that no tests in server depend on this test plugin

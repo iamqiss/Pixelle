@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.stats;
+package org.density.wlm.stats;
 
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.wlm.ResourceType;
+import org.density.common.metrics.CounterMetric;
+import org.density.wlm.ResourceType;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class WorkloadGroupState {
     public final CounterMetric totalCompletions = new CounterMetric();
 
     /**
-     * rejections at the workload group level, this is a cumulative counter since the OpenSearch start time
+     * rejections at the workload group level, this is a cumulative counter since the Density start time
      */
     public final CounterMetric totalRejections = new CounterMetric();
 

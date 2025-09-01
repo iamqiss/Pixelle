@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.remote;
+package org.density.common.remote;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
+import org.density.core.action.ActionListener;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.model.RemoteReadResult;
 
 import java.util.HashMap;
 import java.util.Map;

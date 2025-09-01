@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -51,7 +51,7 @@ import java.util.function.Function;
 /**
  * Core network service.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NetworkService {
 
@@ -114,7 +114,7 @@ public final class NetworkService {
      * A custom name resolver can support custom lookup keys (my_net_key:ipv4) and also change
      * the default inet address used in case no settings is provided.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface CustomNameResolver {
         /**

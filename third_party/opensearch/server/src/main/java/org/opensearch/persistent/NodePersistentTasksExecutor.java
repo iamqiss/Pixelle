@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.Nullable;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.threadpool.ThreadPool;
 
 /**
  * This component is responsible for execution of persistent tasks.
  * <p>
  * It abstracts away the execution of tasks and greatly simplifies testing of PersistentTasksNodeService
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodePersistentTasksExecutor {
 

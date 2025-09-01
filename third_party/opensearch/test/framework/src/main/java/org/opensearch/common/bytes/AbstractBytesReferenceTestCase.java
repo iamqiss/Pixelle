@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.bytes;
+package org.density.common.bytes;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.io.stream.ReleasableBytesStreamOutput;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.bytes.AbstractBytesReference;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.io.stream.ReleasableBytesStreamOutput;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.bytes.AbstractBytesReference;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.util.ByteArray;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.test.DensityTestCase;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -59,7 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractBytesReferenceTestCase extends OpenSearchTestCase {
+public abstract class AbstractBytesReferenceTestCase extends DensityTestCase {
 
     protected static final int PAGE_SIZE = PageCacheRecycler.BYTE_PAGE_SIZE;
     protected final BigArrays bigarrays = new BigArrays(null, new NoneCircuitBreakerService(), CircuitBreaker.REQUEST);
@@ -733,7 +733,7 @@ public abstract class AbstractBytesReferenceTestCase extends OpenSearchTestCase 
                 assertEquals(bytesReference.indexOf(value, from), pos);
             }
         });
-        final byte missing = randomValueOtherThanMany(map::containsKey, OpenSearchTestCase::randomByte);
+        final byte missing = randomValueOtherThanMany(map::containsKey, DensityTestCase::randomByte);
         assertEquals(-1, bytesReference.indexOf(missing, randomIntBetween(0, Math.max(0, size - 1))));
     }
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.index.Fields;
@@ -38,26 +38,26 @@ import org.apache.lucene.index.memory.MemoryIndex;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.termvectors.MultiTermVectorsItemResponse;
-import org.opensearch.action.termvectors.MultiTermVectorsRequest;
-import org.opensearch.action.termvectors.MultiTermVectorsResponse;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.search.MoreLikeThisQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.query.MoreLikeThisQueryBuilder.Item;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.DensityException;
+import org.density.action.termvectors.MultiTermVectorsItemResponse;
+import org.density.action.termvectors.MultiTermVectorsRequest;
+import org.density.action.termvectors.MultiTermVectorsResponse;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.search.MoreLikeThisQuery;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.query.MoreLikeThisQueryBuilder.Item;
+import org.density.test.AbstractQueryTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.query.QueryBuilders.moreLikeThisQuery;
+import static org.density.index.query.QueryBuilders.moreLikeThisQuery;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -142,7 +142,7 @@ public class MoreLikeThisQueryBuilderTests extends AbstractQueryTestCase<MoreLik
             }
             doc.endObject();
         } catch (IOException e) {
-            throw new OpenSearchException("Unable to generate random artificial doc!");
+            throw new DensityException("Unable to generate random artificial doc!");
         }
         return doc;
     }
@@ -253,7 +253,7 @@ public class MoreLikeThisQueryBuilderTests extends AbstractQueryTestCase<MoreLik
             }
             return new MultiTermVectorsResponse(responses);
         } catch (IOException ex) {
-            throw new OpenSearchException("boom", ex);
+            throw new DensityException("boom", ex);
         }
     }
 

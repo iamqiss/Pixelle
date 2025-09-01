@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,63 +26,63 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.allocation;
+package org.density.cluster.allocation;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteResponse;
-import org.opensearch.action.admin.cluster.reroute.TransportClusterRerouteAction;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.RerouteExplanation;
-import org.opensearch.cluster.routing.allocation.RoutingExplanations;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.Allocation;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.reroute.ClusterRerouteResponse;
+import org.density.action.admin.cluster.reroute.TransportClusterRerouteAction;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.RerouteExplanation;
+import org.density.cluster.routing.allocation.RoutingExplanations;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider.Allocation;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.env.NodeEnvironment;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
-import static org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_ALLOCATION_ENABLE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_METADATA;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
+import static org.density.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_ALLOCATION_ENABLE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -90,7 +90,7 @@ import static org.hamcrest.Matchers.hasSize;
 // testDelayWithALargeAmountOfShards does a lot of cluster state updates, and WindowsFS slows it down too much (#52000)
 @LuceneTestCase.SuppressFileSystems(value = "WindowsFS")
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class ClusterRerouteIT extends OpenSearchIntegTestCase {
+public class ClusterRerouteIT extends DensityIntegTestCase {
     private final Logger logger = LogManager.getLogger(ClusterRerouteIT.class);
 
     public void testRerouteWithCommands_disableAllocationSettings() throws Exception {

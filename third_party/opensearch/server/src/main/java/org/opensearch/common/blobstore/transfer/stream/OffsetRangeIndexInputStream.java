@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer.stream;
+package org.density.common.blobstore.transfer.stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.concurrent.RefCountedReleasable;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.util.concurrent.RunOnce;
+import org.density.common.concurrent.RefCountedReleasable;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.util.concurrent.RunOnce;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * OffsetRangeIndexInputStream extends InputStream to read from a specified offset using IndexInput
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class OffsetRangeIndexInputStream extends OffsetRangeInputStream {
     private static final Logger logger = LogManager.getLogger(OffsetRangeIndexInputStream.class);

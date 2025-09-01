@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.common.logging.DeprecationLogger;
+import org.density.common.logging.DeprecationLogger;
 import org.joda.time.DateTimeZone;
 
 import java.time.Clock;
@@ -46,15 +46,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.common.time.DateUtilsRounding.getMonthOfYear;
-import static org.opensearch.common.time.DateUtilsRounding.getTotalMillisByYearMonth;
-import static org.opensearch.common.time.DateUtilsRounding.getYear;
-import static org.opensearch.common.time.DateUtilsRounding.utcMillisAtStartOfYear;
+import static org.density.common.time.DateUtilsRounding.getMonthOfYear;
+import static org.density.common.time.DateUtilsRounding.getTotalMillisByYearMonth;
+import static org.density.common.time.DateUtilsRounding.getYear;
+import static org.density.common.time.DateUtilsRounding.utcMillisAtStartOfYear;
 
 /**
  * Date utilities.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DateUtils {
     public static DateTimeZone zoneIdToDateTimeZone(ZoneId zoneId) {

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.settings;
+package org.density.common.cache.settings;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.settings.Setting;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.CacheType;
+import org.density.common.settings.Setting;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class CacheSettings {
     public static final String INVALID_SEGMENT_COUNT_EXCEPTION_MESSAGE = "Cache: %s segment count should be power of two up-to 256";
 
     /**
-     * Used to store cache store name for desired cache types within OpenSearch.
+     * Used to store cache store name for desired cache types within Density.
      * Setting pattern: {cache_type}.store.name
      * Example: indices.request.cache.store.name
      */

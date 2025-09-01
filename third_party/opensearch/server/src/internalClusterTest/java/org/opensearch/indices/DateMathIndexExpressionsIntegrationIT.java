@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityIntegTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class DateMathIndexExpressionsIntegrationIT extends OpenSearchIntegTestCase {
+public class DateMathIndexExpressionsIntegrationIT extends DensityIntegTestCase {
 
     public void testIndexNameDateMathExpressions() {
         DateTime now = new DateTime(DateTimeZone.UTC);

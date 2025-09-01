@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.benchmark.routing.allocation;
+package org.density.benchmark.routing.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.EmptyClusterInfoService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.EmptyClusterInfoService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.common.transport.TransportAddress;
+import org.density.gateway.GatewayAllocator;
+import org.density.snapshots.EmptySnapshotsInfoService;
 
 import java.util.Collection;
 import java.util.Collections;

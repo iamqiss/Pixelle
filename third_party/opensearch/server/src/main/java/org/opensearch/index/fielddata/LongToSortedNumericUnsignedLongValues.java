@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.SortedNumericDocValues;
 
@@ -14,9 +14,9 @@ import java.io.IOException;
 
 /**
  * Wraps long-based {@link SortedNumericDocValues} as unsigned long ones
- * (primarily used by {@link org.opensearch.search.MultiValueMode}
+ * (primarily used by {@link org.density.search.MultiValueMode}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class LongToSortedNumericUnsignedLongValues extends SortedNumericUnsignedLongValues {
     private final SortedNumericDocValues values;

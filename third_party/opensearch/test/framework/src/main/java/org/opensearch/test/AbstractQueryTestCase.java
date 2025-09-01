@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
@@ -38,38 +38,38 @@ import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentGenerator;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.query.support.QueryParsers;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentGenerator;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.index.query.support.QueryParsers;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -85,7 +85,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
@@ -197,7 +197,7 @@ public abstract class AbstractQueryTestCase<QB extends AbstractQueryBuilder<QB>>
                 if (expectedException) {
                     fail("some parsing exception expected for query: " + testQuery);
                 }
-            } catch (ParsingException | OpenSearchParseException | XContentParseException e) {
+            } catch (ParsingException | DensityParseException | XContentParseException e) {
                 // different kinds of exception wordings depending on location
                 // of mutation, so no simple asserts possible here
                 if (expectedException == false) {
@@ -411,7 +411,7 @@ public abstract class AbstractQueryTestCase<QB extends AbstractQueryBuilder<QB>>
     }
 
     protected QueryBuilder parseQuery(AbstractQueryBuilder<?> builder) throws IOException {
-        BytesReference bytes = org.opensearch.core.xcontent.XContentHelper.toXContent(builder, MediaTypeRegistry.JSON, false);
+        BytesReference bytes = org.density.core.xcontent.XContentHelper.toXContent(builder, MediaTypeRegistry.JSON, false);
         return parseQuery(createParser(JsonXContent.jsonXContent, bytes));
     }
 
@@ -639,7 +639,7 @@ public abstract class AbstractQueryTestCase<QB extends AbstractQueryBuilder<QB>>
             MediaType mediaType = MediaTypeRegistry.JSON;
             String toString = Strings.toString(MediaTypeRegistry.JSON, testQuery);
             assertParsedQuery(createParser(mediaType.xContent(), toString), testQuery);
-            BytesReference bytes = org.opensearch.core.xcontent.XContentHelper.toXContent(testQuery, mediaType, false);
+            BytesReference bytes = org.density.core.xcontent.XContentHelper.toXContent(testQuery, mediaType, false);
             assertParsedQuery(createParser(mediaType.xContent(), bytes), testQuery);
         }
     }

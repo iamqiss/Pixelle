@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.engine.VersionConflictEngineException;
+import org.density.DensityException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.index.IndexNotFoundException;
+import org.density.index.engine.VersionConflictEngineException;
 
 import java.io.IOException;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
@@ -128,7 +128,7 @@ public class MultiTermVectorsIT extends AbstractTermVectorsTestCase {
         checkTermTexts(response.getResponses()[1].getResponse().getFields().terms("field"), new String[] { "value1" });
         assertThat(response.getResponses()[2].getFailure(), notNullValue());
         assertThat(response.getResponses()[2].getFailure().getId(), equalTo("1"));
-        assertThat(response.getResponses()[2].getFailure().getCause(), instanceOf(OpenSearchException.class));
+        assertThat(response.getResponses()[2].getFailure().getCause(), instanceOf(DensityException.class));
         assertThat(response.getResponses()[2].getFailure().getCause().getCause(), instanceOf(VersionConflictEngineException.class));
 
         // Version from Lucene index
@@ -150,7 +150,7 @@ public class MultiTermVectorsIT extends AbstractTermVectorsTestCase {
         checkTermTexts(response.getResponses()[1].getResponse().getFields().terms("field"), new String[] { "value1" });
         assertThat(response.getResponses()[2].getFailure(), notNullValue());
         assertThat(response.getResponses()[2].getFailure().getId(), equalTo("1"));
-        assertThat(response.getResponses()[2].getFailure().getCause(), instanceOf(OpenSearchException.class));
+        assertThat(response.getResponses()[2].getFailure().getCause(), instanceOf(DensityException.class));
         assertThat(response.getResponses()[2].getFailure().getCause().getCause(), instanceOf(VersionConflictEngineException.class));
 
         for (int i = 0; i < 3; i++) {
@@ -173,7 +173,7 @@ public class MultiTermVectorsIT extends AbstractTermVectorsTestCase {
         assertThat(response.getResponses()[1].getFailure(), notNullValue());
         assertThat(response.getResponses()[1].getFailure().getId(), equalTo("2"));
         assertThat(response.getResponses()[1].getIndex(), equalTo("test"));
-        assertThat(response.getResponses()[1].getFailure().getCause(), instanceOf(OpenSearchException.class));
+        assertThat(response.getResponses()[1].getFailure().getCause(), instanceOf(DensityException.class));
         assertThat(response.getResponses()[1].getFailure().getCause().getCause(), instanceOf(VersionConflictEngineException.class));
         assertThat(response.getResponses()[2].getId(), equalTo("2"));
         assertThat(response.getResponses()[2].getIndex(), equalTo("test"));
@@ -198,7 +198,7 @@ public class MultiTermVectorsIT extends AbstractTermVectorsTestCase {
         assertThat(response.getResponses()[1].getFailure(), notNullValue());
         assertThat(response.getResponses()[1].getFailure().getId(), equalTo("2"));
         assertThat(response.getResponses()[1].getIndex(), equalTo("test"));
-        assertThat(response.getResponses()[1].getFailure().getCause(), instanceOf(OpenSearchException.class));
+        assertThat(response.getResponses()[1].getFailure().getCause(), instanceOf(DensityException.class));
         assertThat(response.getResponses()[1].getFailure().getCause().getCause(), instanceOf(VersionConflictEngineException.class));
         assertThat(response.getResponses()[2].getId(), equalTo("2"));
         assertThat(response.getResponses()[2].getIndex(), equalTo("test"));

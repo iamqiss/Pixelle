@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.open;
+package org.density.action.admin.indices.open;
 
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for for open index request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class OpenIndexRequestBuilder extends AcknowledgedRequestBuilder<OpenIndexRequest, OpenIndexResponse, OpenIndexRequestBuilder> {
 
-    public OpenIndexRequestBuilder(OpenSearchClient client, OpenIndexAction action) {
+    public OpenIndexRequestBuilder(DensityClient client, OpenIndexAction action) {
         super(client, action, new OpenIndexRequest());
     }
 
-    public OpenIndexRequestBuilder(OpenSearchClient client, OpenIndexAction action, String... indices) {
+    public OpenIndexRequestBuilder(DensityClient client, OpenIndexAction action, String... indices) {
         super(client, action, new OpenIndexRequest(indices));
     }
 

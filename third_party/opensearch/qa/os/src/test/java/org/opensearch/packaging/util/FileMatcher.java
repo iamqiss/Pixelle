@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -44,9 +44,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import static java.nio.file.attribute.PosixFilePermissions.fromString;
-import static org.opensearch.packaging.util.FileUtils.getBasicFileAttributes;
-import static org.opensearch.packaging.util.FileUtils.getFileOwner;
-import static org.opensearch.packaging.util.FileUtils.getPosixFileAttributes;
+import static org.density.packaging.util.FileUtils.getBasicFileAttributes;
+import static org.density.packaging.util.FileUtils.getFileOwner;
+import static org.density.packaging.util.FileUtils.getPosixFileAttributes;
 
 /**
  * Asserts that a file at a path matches its status as Directory/File, and its owner. If on a posix system, also matches the permission

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MatchOnlyTextFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
+import org.density.common.regex.Regex;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MatchOnlyTextFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -55,7 +55,7 @@ import java.util.function.Function;
 /**
  * Highlight Phase of the search request.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HighlightPhase implements FetchSubPhase {
 

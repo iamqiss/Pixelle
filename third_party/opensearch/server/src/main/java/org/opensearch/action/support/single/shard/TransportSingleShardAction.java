@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.single.shard;
+package org.density.action.support.single.shard;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.FailAwareWeightedRouting;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.logging.LoggerMessageFormat;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.TransportAction;
+import org.density.action.support.TransportActions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.FailAwareWeightedRouting;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.logging.LoggerMessageFormat;
+import org.density.core.index.shard.ShardId;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 
-import static org.opensearch.action.support.TransportActions.isShardNotAvailableException;
+import static org.density.action.support.TransportActions.isShardNotAvailableException;
 
 /**
  * A base class for operations that need to perform a read operation on a single shard copy. If the operation fails,
  * the read operation can be performed on other shard copies. Concrete implementations can provide their own list
  * of candidate shards to try the read operation on.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportSingleShardAction<Request extends SingleShardRequest<Request>, Response extends ActionResponse> extends
     TransportAction<Request, Response> {
@@ -157,7 +157,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
     /**
      * Asynchronous single action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class AsyncSingleAction {
 
@@ -311,7 +311,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
     /**
      * Internal transport handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class TransportHandler implements TransportRequestHandler<Request> {
 
@@ -325,7 +325,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
     /**
      * Shard level transport handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class ShardTransportHandler implements TransportRequestHandler<Request> {
 
@@ -341,7 +341,7 @@ public abstract class TransportSingleShardAction<Request extends SingleShardRequ
     /**
      * Internal request class that gets built on each node. Holds the original request plus additional info.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected class InternalRequest {
         final Request request;

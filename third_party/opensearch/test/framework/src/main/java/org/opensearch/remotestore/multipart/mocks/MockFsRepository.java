@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore.multipart.mocks;
+package org.density.remotestore.multipart.mocks;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.fs.FsRepository;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.settings.Setting;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.fs.FsRepository;
 
 public class MockFsRepository extends FsRepository {
 

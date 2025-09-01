@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.azure.classic;
+package org.density.discovery.azure.classic;
 
-import org.opensearch.cloud.azure.classic.AbstractAzureComputeServiceTestCase;
-import org.opensearch.cloud.azure.classic.management.AzureComputeService.Discovery;
-import org.opensearch.cloud.azure.classic.management.AzureComputeService.Management;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.cloud.azure.classic.AbstractAzureComputeServiceTestCase;
+import org.density.cloud.azure.classic.management.AzureComputeService.Discovery;
+import org.density.cloud.azure.classic.management.AzureComputeService.Management;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
 import static org.hamcrest.Matchers.containsString;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, numClientNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, numClientNodes = 0)
 public class AzureSimpleTests extends AbstractAzureComputeServiceTestCase {
 
     public void testOneNodeShouldRunUsingPrivateIp() {

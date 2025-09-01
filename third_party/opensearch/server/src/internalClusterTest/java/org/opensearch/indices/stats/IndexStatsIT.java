@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,65 +26,65 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.stats;
+package org.density.indices.stats;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressCodecs;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags.Flag;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MergeSchedulerConfig;
-import org.opensearch.index.TieredMergePolicyProvider;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.remote.RemoteSegmentStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.translog.RemoteTranslogStats;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.CommonStatsFlags.Flag;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsRequestBuilder;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchType;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.MergeSchedulerConfig;
+import org.density.index.TieredMergePolicyProvider;
+import org.density.index.VersionType;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.query.QueryBuilders;
+import org.density.index.remote.RemoteSegmentStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.translog.RemoteTranslogStats;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.IndicesRequestCache;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.search.sort.SortOrder;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,13 +105,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -122,7 +122,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 @ClusterScope(scope = Scope.SUITE, numDataNodes = 2, numClientNodes = 0)
 @SuppressCodecs("*") // requires custom completion format
-public class IndexStatsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class IndexStatsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public IndexStatsIT(Settings settings) {
         super(settings);
     }
@@ -658,7 +658,7 @@ public class IndexStatsIT extends ParameterizedStaticSettingsOpenSearchIntegTest
         }
 
         // Optimize & flush and wait; else we sometimes get a "Delete Index failed - not acked"
-        // when OpenSearchIntegTestCase.after tries to remove indices created by the test:
+        // when DensityIntegTestCase.after tries to remove indices created by the test:
         logger.info("test: now optimize");
         client().admin().indices().prepareForceMerge("test").get();
         flush();

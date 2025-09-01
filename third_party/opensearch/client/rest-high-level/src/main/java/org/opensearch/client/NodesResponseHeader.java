@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.action.RestActions;
+import org.density.DensityException;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.common.Nullable;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.action.RestActions;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -66,7 +66,7 @@ public final class NodesResponseHeader {
             int total = (Integer) a[i++];
             int successful = (Integer) a[i++];
             int failed = (Integer) a[i++];
-            List<OpenSearchException> failures = (List<OpenSearchException>) a[i++];
+            List<DensityException> failures = (List<DensityException>) a[i++];
             return new NodesResponseHeader(total, successful, failed, failures);
         }
     );
@@ -77,7 +77,7 @@ public final class NodesResponseHeader {
         PARSER.declareInt(ConstructingObjectParser.constructorArg(), FAILED);
         PARSER.declareObjectArray(
             ConstructingObjectParser.optionalConstructorArg(),
-            (p, c) -> OpenSearchException.fromXContent(p),
+            (p, c) -> DensityException.fromXContent(p),
             FAILURES
         );
     }
@@ -85,9 +85,9 @@ public final class NodesResponseHeader {
     private final int total;
     private final int successful;
     private final int failed;
-    private final List<OpenSearchException> failures;
+    private final List<DensityException> failures;
 
-    public NodesResponseHeader(int total, int successful, int failed, @Nullable List<OpenSearchException> failures) {
+    public NodesResponseHeader(int total, int successful, int failed, @Nullable List<DensityException> failures) {
         this.total = total;
         this.successful = successful;
         this.failed = failed;
@@ -118,7 +118,7 @@ public final class NodesResponseHeader {
      *
      * @return Never {@code null}. Can be empty.
      */
-    public List<OpenSearchException> getFailures() {
+    public List<DensityException> getFailures() {
         return failures;
     }
 

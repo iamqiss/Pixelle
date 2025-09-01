@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.hash;
+package org.density.common.hash;
 
 import java.nio.charset.StandardCharsets;
 
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
  * 32 bit Java port of http://www.isthe.com/chongo/src/fnv/hash_32a.c
  * 64 bit Java port of http://www.isthe.com/chongo/src/fnv/hash_64a.c
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FNV1a {
     private static final long FNV_OFFSET_BASIS_32 = 0x811c9dc5L;

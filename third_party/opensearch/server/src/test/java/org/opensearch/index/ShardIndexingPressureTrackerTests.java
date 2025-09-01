@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.ShardIndexingPressureTracker.CommonOperationTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.OperationTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.PerformanceTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.RejectionTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.StatsTracker;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.shard.ShardId;
+import org.density.index.ShardIndexingPressureTracker.CommonOperationTracker;
+import org.density.index.ShardIndexingPressureTracker.OperationTracker;
+import org.density.index.ShardIndexingPressureTracker.PerformanceTracker;
+import org.density.index.ShardIndexingPressureTracker.RejectionTracker;
+import org.density.index.ShardIndexingPressureTracker.StatsTracker;
+import org.density.test.DensityTestCase;
 
-public class ShardIndexingPressureTrackerTests extends OpenSearchTestCase {
+public class ShardIndexingPressureTrackerTests extends DensityTestCase {
 
     public void testShardIndexingPressureTracker() {
         ShardId shardId = new ShardId("index", "uuid", 0);

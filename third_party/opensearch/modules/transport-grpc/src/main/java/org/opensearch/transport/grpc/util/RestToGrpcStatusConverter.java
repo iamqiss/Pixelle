@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.util;
+package org.density.transport.grpc.util;
 
-import org.opensearch.core.rest.RestStatus;
+import org.density.core.rest.RestStatus;
 
 import io.grpc.Status;
 
 /**
- * Converts OpenSearch REST status codes to appropriate GRPC status codes.
+ * Converts Density REST status codes to appropriate GRPC status codes.
  */
 public class RestToGrpcStatusConverter {
 
@@ -23,12 +23,12 @@ public class RestToGrpcStatusConverter {
 
     /**
      * Get the GRPC status code as an integer (e.g. 0 for OK, 3 for INVALID_ARGUMENT, 13 for INTERNAL)
-     * for an OpenSearch {@code RestStatus.java}.
+     * for an Density {@code RestStatus.java}.
      *
      * This is a wrapper method around {@link #convertRestToGrpcStatus(RestStatus)} which extracts the numeric status code value.
      * It is used in protobuf responses, for example {@code BulkItemResponseProtoUtils}, for setting response status fields.
      *
-     * @param restStatus The OpenSearch REST status
+     * @param restStatus The Density REST status
      * @return GRPC status code as integer
      */
     public static int getGrpcStatusCode(RestStatus restStatus) {
@@ -36,7 +36,7 @@ public class RestToGrpcStatusConverter {
     }
 
     /**
-     * Converts an OpenSearch {@code RestStatus.java} to an appropriate GRPC status ({@code Status.java}).
+     * Converts an Density {@code RestStatus.java} to an appropriate GRPC status ({@code Status.java}).
      *
      * Mapping Philosophy:
      * - 1xx Informational: Mapped to {@code Status.OK} (treat as success)
@@ -46,7 +46,7 @@ public class RestToGrpcStatusConverter {
      * - 5xx Server Errors: Mapped to appropriate server error statuses
      * - Unknown Codes: Mapped to {@code Status.UNKNOWN}
      *
-     * @param restStatus The OpenSearch REST status to convert
+     * @param restStatus The Density REST status to convert
      * @return Corresponding GRPC Status
      */
     protected static Status convertRestToGrpcStatus(RestStatus restStatus) {

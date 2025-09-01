@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.settings;
+package org.density.indices.settings;
 
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 
-public class InternalSettingsIT extends OpenSearchIntegTestCase {
+public class InternalSettingsIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

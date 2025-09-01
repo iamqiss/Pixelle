@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.reroute;
+package org.density.action.admin.cluster.reroute;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.allocation.RerouteExplanation;
-import org.opensearch.cluster.routing.allocation.RoutingExplanations;
-import org.opensearch.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.allocation.RerouteExplanation;
+import org.density.cluster.routing.allocation.RoutingExplanations;
+import org.density.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClusterRerouteResponseTests extends OpenSearchTestCase {
+public class ClusterRerouteResponseTests extends DensityTestCase {
 
     public void testToXContent() throws IOException {
         DiscoveryNode node0 = new DiscoveryNode("node0", new TransportAddress(TransportAddress.META_ADDRESS, 9000), Version.CURRENT);

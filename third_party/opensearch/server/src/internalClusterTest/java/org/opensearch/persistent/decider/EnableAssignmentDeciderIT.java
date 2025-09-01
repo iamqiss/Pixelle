@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent.decider;
+package org.density.persistent.decider;
 
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.persistent.PersistentTasksCustomMetadata;
-import org.opensearch.persistent.PersistentTasksService;
-import org.opensearch.persistent.TestPersistentTasksPlugin;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestParams;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.persistent.PersistentTasksCustomMetadata;
+import org.density.persistent.PersistentTasksService;
+import org.density.persistent.TestPersistentTasksPlugin;
+import org.density.persistent.TestPersistentTasksPlugin.TestParams;
+import org.density.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.persistent.decider.EnableAssignmentDecider.Allocation;
-import static org.opensearch.persistent.decider.EnableAssignmentDecider.CLUSTER_TASKS_ALLOCATION_ENABLE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.persistent.decider.EnableAssignmentDecider.Allocation;
+import static org.density.persistent.decider.EnableAssignmentDecider.CLUSTER_TASKS_ALLOCATION_ENABLE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 1)
-public class EnableAssignmentDeciderIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 1)
+public class EnableAssignmentDeciderIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

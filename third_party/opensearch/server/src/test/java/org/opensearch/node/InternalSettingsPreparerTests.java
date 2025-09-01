@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.SecureSetting;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterName;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.SecureSetting;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -54,7 +54,7 @@ import java.util.function.Supplier;
 
 import static java.util.Collections.emptyMap;
 
-public class InternalSettingsPreparerTests extends OpenSearchTestCase {
+public class InternalSettingsPreparerTests extends DensityTestCase {
     private static final Supplier<String> DEFAULT_NODE_NAME_SHOULDNT_BE_CALLED = () -> { throw new AssertionError("shouldn't be called"); };
 
     Path homeDir;
@@ -91,7 +91,7 @@ public class InternalSettingsPreparerTests extends OpenSearchTestCase {
 
     public void testDefaultClusterName() {
         Settings settings = InternalSettingsPreparer.prepareSettings(Settings.EMPTY);
-        assertEquals("opensearch", settings.get("cluster.name"));
+        assertEquals("density", settings.get("cluster.name"));
         settings = InternalSettingsPreparer.prepareSettings(Settings.builder().put("cluster.name", "foobar").build());
         assertEquals("foobar", settings.get("cluster.name"));
     }
@@ -102,7 +102,7 @@ public class InternalSettingsPreparerTests extends OpenSearchTestCase {
             Path home = createTempDir();
             Path config = home.resolve("config");
             Files.createDirectory(config);
-            Files.copy(garbage, config.resolve("opensearch.yml"));
+            Files.copy(garbage, config.resolve("density.yml"));
             InternalSettingsPreparer.prepareEnvironment(
                 Settings.builder().put(baseEnvSettings).build(),
                 emptyMap(),
@@ -110,7 +110,7 @@ public class InternalSettingsPreparerTests extends OpenSearchTestCase {
                 () -> "default_node_name"
             );
         } catch (SettingsException e) {
-            assertEquals("Failed to load settings from [opensearch.yml]", e.getMessage());
+            assertEquals("Failed to load settings from [density.yml]", e.getMessage());
         }
     }
 

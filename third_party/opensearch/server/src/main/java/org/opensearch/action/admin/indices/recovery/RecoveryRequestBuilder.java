@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.recovery;
+package org.density.action.admin.indices.recovery;
 
-import org.opensearch.action.support.broadcast.BroadcastOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.broadcast.BroadcastOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Recovery information request builder.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RecoveryRequestBuilder extends BroadcastOperationRequestBuilder<RecoveryRequest, RecoveryResponse, RecoveryRequestBuilder> {
@@ -47,7 +47,7 @@ public class RecoveryRequestBuilder extends BroadcastOperationRequestBuilder<Rec
     /**
      * Constructs a new recovery information request builder.
      */
-    public RecoveryRequestBuilder(OpenSearchClient client, RecoveryAction action) {
+    public RecoveryRequestBuilder(DensityClient client, RecoveryAction action) {
         super(client, action, new RecoveryRequest());
     }
 

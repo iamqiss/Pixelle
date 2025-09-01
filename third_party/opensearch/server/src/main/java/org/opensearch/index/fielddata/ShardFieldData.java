@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.FieldMemoryStats;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.FieldMemoryStats;
+import org.density.common.annotation.PublicApi;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.regex.Regex;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.index.shard.ShardId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * On heap field data for shards
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ShardFieldData implements IndexFieldDataCache.Listener {

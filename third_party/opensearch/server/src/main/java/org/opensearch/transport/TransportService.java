@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchServerException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.stream.Streamables;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.handler.TraceableTransportResponseHandler;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.DensityServerException;
+import org.density.Version;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.io.stream.Streamables;
+import org.density.common.lease.Releasable;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.logging.Loggers;
+import org.density.common.regex.Regex;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.service.ReportingService;
+import org.density.core.transport.TransportResponse;
+import org.density.node.NodeClosedException;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.handler.TraceableTransportResponseHandler;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -95,9 +95,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * The main OpenSearch transport service
+ * The main Density transport service
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportService extends AbstractLifecycleComponent
     implements
@@ -178,8 +178,8 @@ public class TransportService extends AbstractLifecycleComponent
           over the {@link StreamOutput} and {@link StreamInput} wire
          */
         Streamables.registerStreamables();
-        /* Registers OpenSearch server specific exceptions (exceptions outside of core library) */
-        OpenSearchServerException.registerExceptions();
+        /* Registers Density server specific exceptions (exceptions outside of core library) */
+        DensityServerException.registerExceptions();
     }
 
     /** does nothing. easy way to ensure class is loaded so the above static block is called to register the streamables */
@@ -531,7 +531,7 @@ public class TransportService extends AbstractLifecycleComponent
         connectToNodeAsExtension(node, (ConnectionProfile) null, extensionUniqueId);
     }
 
-    // We are skipping node validation for extensibility as extensionNode and opensearchNode(LocalNode) will have different ephemeral id's
+    // We are skipping node validation for extensibility as extensionNode and densityNode(LocalNode) will have different ephemeral id's
     public void connectToExtensionNode(final DiscoveryNode node) {
         PlainActionFuture.get(fut -> connectToExtensionNode(node, (ConnectionProfile) null, ActionListener.map(fut, x -> null)));
     }
@@ -805,7 +805,7 @@ public class TransportService extends AbstractLifecycleComponent
     /**
      * Internal Handshake request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class HandshakeRequest extends TransportRequest {
 
@@ -822,7 +822,7 @@ public class TransportService extends AbstractLifecycleComponent
     /**
      * Internal handshake response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class HandshakeResponse extends TransportResponse {
         private final DiscoveryNode discoveryNode;
@@ -1455,7 +1455,7 @@ public class TransportService extends AbstractLifecycleComponent
                     return "onConnectionClosed(" + connection.getNode() + ")";
                 }
             });
-        } catch (OpenSearchRejectedExecutionException ex) {
+        } catch (DensityRejectedExecutionException ex) {
             logger.debug("Rejected execution on onConnectionClosed", ex);
         }
     }
@@ -1525,7 +1525,7 @@ public class TransportService extends AbstractLifecycleComponent
     /**
      * Holder for timeout information
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class TimeoutInfoHolder {
 
@@ -1627,7 +1627,7 @@ public class TransportService extends AbstractLifecycleComponent
     /**
      * A channel for a direct response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class DirectResponseChannel implements TransportChannel {
         final DiscoveryNode localNode;

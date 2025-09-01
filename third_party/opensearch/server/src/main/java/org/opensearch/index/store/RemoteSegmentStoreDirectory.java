@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,27 +24,27 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.VersionedCodecStreamWrapper;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.store.lockmanager.FileLockInfo;
-import org.opensearch.index.store.lockmanager.RemoteStoreCommitLevelLockManager;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.index.store.lockmanager.RemoteStoreMetadataLockManager;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadataHandlerFactory;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.io.VersionedCodecStreamWrapper;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.store.lockmanager.FileLockInfo;
+import org.density.index.store.lockmanager.RemoteStoreCommitLevelLockManager;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.index.store.lockmanager.RemoteStoreMetadataLockManager;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadataHandlerFactory;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -74,7 +74,7 @@ import java.util.stream.Collectors;
  * remote segment store also keeps track of refresh checkpoints as metadata in a separate path which is handled by
  * another instance of {@code RemoteDirectory}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.3.0")
 public final class RemoteSegmentStoreDirectory extends FilterDirectory implements RemoteStoreCommitLevelLockManager {
@@ -313,7 +313,7 @@ public final class RemoteSegmentStoreDirectory extends FilterDirectory implement
     /**
      * Metadata of a segment that is uploaded to remote segment store.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "2.3.0")
     public static class UploadedSegmentMetadata {

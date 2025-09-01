@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.services;
+package org.density.transport.grpc.services;
 
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
+import org.density.protobufs.SearchRequest;
+import org.density.protobufs.SearchRequestBody;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.query.QueryBuilderProtoTestUtils;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
-public class SearchServiceImplTests extends OpenSearchTestCase {
+public class SearchServiceImplTests extends DensityTestCase {
 
     private SearchServiceImpl service;
     private AbstractQueryBuilderProtoUtils queryUtils;
@@ -35,7 +35,7 @@ public class SearchServiceImplTests extends OpenSearchTestCase {
     private NodeClient client;
 
     @Mock
-    private StreamObserver<org.opensearch.protobufs.SearchResponse> responseObserver;
+    private StreamObserver<org.density.protobufs.SearchResponse> responseObserver;
 
     @Before
     public void setup() throws IOException {
@@ -74,7 +74,7 @@ public class SearchServiceImplTests extends OpenSearchTestCase {
         service.search(request, responseObserver);
 
         // Verify that client.search was called with any SearchRequest and any ActionListener
-        verify(client).search(any(org.opensearch.action.search.SearchRequest.class), any());
+        verify(client).search(any(org.density.action.search.SearchRequest.class), any());
     }
 
     public void testSearchWithException() throws IOException {

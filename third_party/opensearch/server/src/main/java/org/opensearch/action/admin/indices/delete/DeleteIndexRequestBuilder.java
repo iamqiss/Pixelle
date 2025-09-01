@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.delete;
+package org.density.action.admin.indices.delete;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequestBuilder;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedRequestBuilder;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for deleting an index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DeleteIndexRequestBuilder extends AcknowledgedRequestBuilder<
@@ -49,7 +49,7 @@ public class DeleteIndexRequestBuilder extends AcknowledgedRequestBuilder<
     AcknowledgedResponse,
     DeleteIndexRequestBuilder> {
 
-    public DeleteIndexRequestBuilder(OpenSearchClient client, DeleteIndexAction action, String... indices) {
+    public DeleteIndexRequestBuilder(DensityClient client, DeleteIndexAction action, String... indices) {
         super(client, action, new DeleteIndexRequest(indices));
     }
 

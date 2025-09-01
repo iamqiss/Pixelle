@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.checkpoint;
+package org.density.indices.replication.checkpoint;
 
 import org.apache.lucene.codecs.Codec;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.ReplicationMode;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.ReplicationMode;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.index.remote.RemoteStoreTestsHelper.createIndexSettings;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
+import static org.density.index.remote.RemoteStoreTestsHelper.createIndexSettings;
+import static org.density.test.ClusterServiceUtils.createClusterService;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
@@ -46,7 +46,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PublishCheckpointActionTests extends OpenSearchTestCase {
+public class PublishCheckpointActionTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private CapturingTransport transport;

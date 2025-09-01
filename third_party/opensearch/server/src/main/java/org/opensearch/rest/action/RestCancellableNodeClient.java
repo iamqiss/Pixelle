@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.FilterClient;
-import org.opensearch.transport.client.OriginSettingClient;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.tasks.TaskId;
+import org.density.http.HttpChannel;
+import org.density.tasks.Task;
+import org.density.transport.client.Client;
+import org.density.transport.client.FilterClient;
+import org.density.transport.client.OriginSettingClient;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,13 +53,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
+import static org.density.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
 
 /**
  * A {@linkplain Client} that cancels tasks executed locally when the provided {@link HttpChannel}
  * is closed before completion.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestCancellableNodeClient extends FilterClient {
     private static final Map<HttpChannel, CloseListener> httpChannels = new ConcurrentHashMap<>();

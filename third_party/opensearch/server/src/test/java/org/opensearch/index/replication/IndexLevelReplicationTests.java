@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,50 +25,50 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.replication;
+package org.density.index.replication;
 
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkShardRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.iterable.Iterables;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.engine.InternalEngineTests;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTests;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.SnapshotMatchers;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.recovery.RecoveryTarget;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkShardRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.iterable.Iterables;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.engine.InternalEngine;
+import org.density.index.engine.InternalEngineTests;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTests;
+import org.density.index.store.Store;
+import org.density.index.translog.SnapshotMatchers;
+import org.density.index.translog.Translog;
+import org.density.indices.recovery.RecoveryTarget;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -83,7 +83,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
+import static org.density.index.translog.SnapshotMatchers.containsOperationsInAnyOrder;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
@@ -94,7 +94,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
-public class IndexLevelReplicationTests extends OpenSearchIndexLevelReplicationTestCase {
+public class IndexLevelReplicationTests extends DensityIndexLevelReplicationTestCase {
 
     public void testSimpleReplication() throws Exception {
         try (ReplicationGroup shards = createGroup(randomInt(2))) {

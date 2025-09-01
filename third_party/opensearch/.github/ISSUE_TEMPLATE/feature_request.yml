@@ -19,7 +19,7 @@ body:
   - type: dropdown
     attributes:
       label: Related component
-      description: Choose a specific OpenSearch component your feature request belongs to.  If you are unsure of which component to select or if the component is not present, select "Other".
+      description: Choose a specific Density component your feature request belongs to.  If you are unsure of which component to select or if the component is not present, select "Other".
       multiple: false
       options:
         - # Empty first option to force selection

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.index.Terms;
@@ -44,17 +44,17 @@ import org.apache.lucene.util.automaton.ByteRunAutomaton;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.util.BitMixer;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.search.DocValueFormat;
+import org.density.DensityParseException;
+import org.density.common.util.BitMixer;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.search.DocValueFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ import java.util.TreeSet;
  * Defines the include/exclude regular expression filtering for string terms aggregation. In this filtering logic,
  * exclusion has precedence, where the {@code include} is evaluated first and then the {@code exclude}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IncludeExclude implements Writeable, ToXContentFragment {
     public static final ParseField INCLUDE_FIELD = new ParseField("include");
@@ -86,8 +86,8 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * The default length limit for a reg-ex string. The value is derived from {@link IndexSettings#MAX_REGEX_LENGTH_SETTING}.
      * For context, see:
-     * https://github.com/opensearch-project/OpenSearch/issues/1992
-     * https://github.com/opensearch-project/OpenSearch/issues/2858
+     * https://github.com/density-project/Density/issues/1992
+     * https://github.com/density-project/Density/issues/2858
      */
     private static final int DEFAULT_MAX_REGEX_LENGTH = 1000;
     /**
@@ -138,7 +138,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
                 } else if (PARTITION_FIELD.match(currentFieldName, parser.getDeprecationHandler())) {
                     partition = parser.intValue();
                 } else {
-                    throw new OpenSearchParseException("Unknown parameter in Include/Exclude clause: " + currentFieldName);
+                    throw new DensityParseException("Unknown parameter in Include/Exclude clause: " + currentFieldName);
                 }
             }
             if (partition == null) {
@@ -171,7 +171,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * Base filter class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Filter {}
 
@@ -180,7 +180,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
      * process are converted into a LongFilter when used on numeric fields
      * in the index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class LongFilter extends Filter {
         public abstract boolean accept(long value);
@@ -189,7 +189,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * Long filter that is partitioned
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class PartitionedLongFilter extends LongFilter {
         @Override
@@ -203,7 +203,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * Long filter backed by valid values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SetBackedLongFilter extends LongFilter {
         private Set<Long> valids;
@@ -235,7 +235,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * Only used for the 'map' execution mode (ie. scripts)
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class StringFilter extends Filter {
         public abstract boolean accept(BytesRef value);
@@ -251,7 +251,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * String filter backed by an automaton
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AutomatonBackedStringFilter extends StringFilter {
 
@@ -273,7 +273,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * String filter backed by a term list
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class TermListBackedStringFilter extends StringFilter {
 
@@ -298,7 +298,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * An ordinals filter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class OrdinalsFilter extends Filter {
         public abstract LongBitSet acceptedGlobalOrdinals(SortedSetDocValues globalOrdinals) throws IOException;
@@ -330,7 +330,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * An ordinals filter backed by an automaton
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AutomatonBackedOrdinalsFilter extends OrdinalsFilter {
 
@@ -362,7 +362,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * An ordinals filter backed by a terms list
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class TermListBackedOrdinalsFilter extends OrdinalsFilter {
 
@@ -648,7 +648,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     /**
      * Terms adapter around doc values.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class DocValuesTerms extends Terms {
 
@@ -708,11 +708,11 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
     private static Set<BytesRef> parseArrayToSet(XContentParser parser) throws IOException {
         final Set<BytesRef> set = new HashSet<>();
         if (parser.currentToken() != XContentParser.Token.START_ARRAY) {
-            throw new OpenSearchParseException("Missing start of array in include/exclude clause");
+            throw new DensityParseException("Missing start of array in include/exclude clause");
         }
         while (parser.nextToken() != XContentParser.Token.END_ARRAY) {
             if (!parser.currentToken().isValue()) {
-                throw new OpenSearchParseException("Array elements in include/exclude clauses should be string values");
+                throw new DensityParseException("Array elements in include/exclude clauses should be string values");
             }
             set.add(new BytesRef(parser.text()));
         }
@@ -770,7 +770,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
 
     /**
      * Wrapper method that imposes a default regex limit.
-     * See https://github.com/opensearch-project/OpenSearch/issues/2858
+     * See https://github.com/density-project/Density/issues/2858
      */
     public StringFilter convertToStringFilter(DocValueFormat format) {
         return convertToStringFilter(format, DEFAULT_MAX_REGEX_LENGTH);
@@ -801,7 +801,7 @@ public class IncludeExclude implements Writeable, ToXContentFragment {
 
     /**
      * Wrapper method that imposes a default regex limit.
-     * See https://github.com/opensearch-project/OpenSearch/issues/2858
+     * See https://github.com/density-project/Density/issues/2858
      */
     public OrdinalsFilter convertToOrdinalsFilter(DocValueFormat format) {
         return convertToOrdinalsFilter(format, DEFAULT_MAX_REGEX_LENGTH);

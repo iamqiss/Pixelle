@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.logging.log4j.core.util.Throwables;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.ClusterStatePublisher;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterApplier.ClusterApplyListener;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.ClusterStatePublisher;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterApplier.ClusterApplyListener;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.node.Node;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
@@ -114,7 +114,7 @@ public class ClusterServiceUtils {
                 Throwables.rethrow(exception.get());
             }
         } catch (InterruptedException e) {
-            throw new OpenSearchException("unexpected exception", e);
+            throw new DensityException("unexpected exception", e);
         }
     }
 
@@ -140,14 +140,14 @@ public class ClusterServiceUtils {
         try {
             latch.await();
         } catch (InterruptedException e) {
-            throw new OpenSearchException("unexpected interruption", e);
+            throw new DensityException("unexpected interruption", e);
         }
     }
 
     public static ClusterService createClusterService(ThreadPool threadPool) {
         DiscoveryNode discoveryNode = new DiscoveryNode(
             "node",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             Collections.emptyMap(),
             DiscoveryNodeRole.BUILT_IN_ROLES,
             Version.CURRENT

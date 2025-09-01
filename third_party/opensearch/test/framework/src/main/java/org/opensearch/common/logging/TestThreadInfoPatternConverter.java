@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
 import org.apache.logging.log4j.core.pattern.PatternConverter;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 /**
  * Converts {@code %test_thread_info} in log4j patterns into information
  * based on the loggin thread's name. If that thread is part of an
- * {@link OpenSearchIntegTestCase} then this information is the node name.
+ * {@link DensityIntegTestCase} then this information is the node name.
  */
 @Plugin(category = PatternConverter.CATEGORY, name = "TestInfoPatternConverter")
 @ConverterKeys({ "test_thread_info" })
@@ -73,13 +73,13 @@ public class TestThreadInfoPatternConverter extends LogEventPatternConverter {
         }
     }
 
-    private static final Pattern OPENSEARCH_THREAD_NAME_PATTERN = Pattern.compile("opensearch\\[(.+)\\]\\[.+\\].+");
+    private static final Pattern DENSITY_THREAD_NAME_PATTERN = Pattern.compile("density\\[(.+)\\]\\[.+\\].+");
     private static final Pattern TEST_THREAD_NAME_PATTERN = Pattern.compile("TEST-.+\\.(.+)-seed#\\[.+\\]");
     private static final Pattern TEST_SUITE_INIT_THREAD_NAME_PATTERN = Pattern.compile("SUITE-.+-worker");
     private static final Pattern NOT_YET_NAMED_NODE_THREAD_NAME_PATTERN = Pattern.compile("test_SUITE-CHILD_VM.+cluster\\[T#(.+)\\]");
 
     static String threadInfo(String threadName) {
-        Matcher m = OPENSEARCH_THREAD_NAME_PATTERN.matcher(threadName);
+        Matcher m = DENSITY_THREAD_NAME_PATTERN.matcher(threadName);
         if (m.matches()) {
             // Thread looks like a node thread so use the node name
             return m.group(1);

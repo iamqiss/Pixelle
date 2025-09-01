@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitMixer;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitMixer;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.test.DensityTestCase;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.opensearch.search.aggregations.metrics.AbstractHyperLogLog.MAX_PRECISION;
-import static org.opensearch.search.aggregations.metrics.AbstractHyperLogLog.MIN_PRECISION;
+import static org.density.search.aggregations.metrics.AbstractHyperLogLog.MAX_PRECISION;
+import static org.density.search.aggregations.metrics.AbstractHyperLogLog.MIN_PRECISION;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class HyperLogLogPlusPlusTests extends OpenSearchTestCase {
+public class HyperLogLogPlusPlusTests extends DensityTestCase {
     public void testEncodeDecode() {
         final int iters = scaledRandomIntBetween(100000, 500000);
         // random hashes

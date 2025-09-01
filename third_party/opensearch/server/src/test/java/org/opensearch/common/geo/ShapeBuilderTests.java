@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.geometry.LinearRing;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.test.DensityTestCase;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
@@ -53,23 +53,23 @@ import org.locationtech.spatial4j.shape.Point;
 import org.locationtech.spatial4j.shape.Rectangle;
 import org.locationtech.spatial4j.shape.impl.PointImpl;
 
-import static org.opensearch.test.hamcrest.OpenSearchGeoAssertions.assertMultiLineString;
-import static org.opensearch.test.hamcrest.OpenSearchGeoAssertions.assertMultiPolygon;
-import static org.opensearch.test.hamcrest.OpenSearchGeoAssertions.assertPolygon;
+import static org.density.test.hamcrest.DensityGeoAssertions.assertMultiLineString;
+import static org.density.test.hamcrest.DensityGeoAssertions.assertMultiPolygon;
+import static org.density.test.hamcrest.DensityGeoAssertions.assertPolygon;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
 /**
  * Tests for {@link ShapeBuilder}
  */
-public class ShapeBuilderTests extends OpenSearchTestCase {
+public class ShapeBuilderTests extends DensityTestCase {
 
     public void testNewPoint() {
         PointBuilder pb = new PointBuilder().coordinate(-100, 45);
         Point point = pb.buildS4J();
         assertEquals(-100D, point.getX(), 0.0d);
         assertEquals(45D, point.getY(), 0.0d);
-        org.opensearch.geometry.Point geoPoint = pb.buildGeometry();
+        org.density.geometry.Point geoPoint = pb.buildGeometry();
         assertEquals(-100D, geoPoint.getX(), 0.0d);
         assertEquals(45D, geoPoint.getY(), 0.0d);
     }
@@ -82,7 +82,7 @@ public class ShapeBuilderTests extends OpenSearchTestCase {
         assertEquals(45D, rectangle.getMaxX(), 0.0d);
         assertEquals(30D, rectangle.getMaxY(), 0.0d);
 
-        org.opensearch.geometry.Rectangle luceneRectangle = eb.buildGeometry();
+        org.density.geometry.Rectangle luceneRectangle = eb.buildGeometry();
         assertEquals(-45D, luceneRectangle.getMinX(), 0.0d);
         assertEquals(-30D, luceneRectangle.getMinY(), 0.0d);
         assertEquals(45D, luceneRectangle.getMaxX(), 0.0d);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
@@ -43,23 +43,23 @@ import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.fielddata.plain.BytesBinaryIndexFieldData;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedFunction;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.fielddata.plain.BytesBinaryIndexFieldData;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.SearchModule;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -69,7 +69,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class QueryBuilderStoreTests extends OpenSearchTestCase {
+public class QueryBuilderStoreTests extends DensityTestCase {
 
     @Override
     protected NamedWriteableRegistry writableRegistry() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.compress.CompressorRegistry;
+import org.density.Version;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.compress.CompressorRegistry;
 
 import java.io.IOException;
 
 /**
  * Logs transport activity
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TransportLogger {
 
@@ -79,7 +79,7 @@ public final class TransportLogger {
         if (logger.isTraceEnabled()) {
             try {
                 if (message.get(0) != 'E') {
-                    // This is not an OpenSearch transport message.
+                    // This is not an Density transport message.
                     return;
                 }
                 BytesReference withoutHeader = message.slice(HEADER_SIZE, message.length() - HEADER_SIZE);

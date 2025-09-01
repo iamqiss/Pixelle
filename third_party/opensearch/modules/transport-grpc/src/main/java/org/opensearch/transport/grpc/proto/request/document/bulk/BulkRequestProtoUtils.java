@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
-import org.opensearch.action.bulk.BulkShardRequest;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.document.RestBulkAction;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.Requests;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
-import org.opensearch.transport.grpc.proto.request.common.RefreshProtoUtils;
+import org.density.action.bulk.BulkShardRequest;
+import org.density.protobufs.BulkRequest;
+import org.density.rest.RestRequest;
+import org.density.rest.action.document.RestBulkAction;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.Requests;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
+import org.density.transport.grpc.proto.request.common.RefreshProtoUtils;
 
 /**
  * Handler for bulk requests in gRPC.
@@ -39,8 +39,8 @@ public class BulkRequestProtoUtils {
      * @param request the request to execute
      * @return a future of the bulk action that was executed
      */
-    public static org.opensearch.action.bulk.BulkRequest prepareRequest(BulkRequest request) {
-        org.opensearch.action.bulk.BulkRequest bulkRequest = Requests.bulkRequest();
+    public static org.density.action.bulk.BulkRequest prepareRequest(BulkRequest request) {
+        org.density.action.bulk.BulkRequest bulkRequest = Requests.bulkRequest();
 
         String defaultIndex = request.hasIndex() ? request.getIndex() : null;
         String defaultRouting = request.hasRouting() ? request.getRouting() : null;

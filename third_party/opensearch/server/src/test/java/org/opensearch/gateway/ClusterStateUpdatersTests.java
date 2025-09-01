@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,39 +25,39 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.SettingUpgrader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.SettingUpgrader;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.repositories.IndexId;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,21 +69,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.metadata.Metadata.CLUSTER_READ_ONLY_BLOCK;
-import static org.opensearch.gateway.ClusterStateUpdaters.addStateNotRecoveredBlock;
-import static org.opensearch.gateway.ClusterStateUpdaters.hideStateIfNotRecovered;
-import static org.opensearch.gateway.ClusterStateUpdaters.mixCurrentStateAndRecoveredState;
-import static org.opensearch.gateway.ClusterStateUpdaters.recoverClusterBlocks;
-import static org.opensearch.gateway.ClusterStateUpdaters.removeStateNotRecoveredBlock;
-import static org.opensearch.gateway.ClusterStateUpdaters.setLocalNode;
-import static org.opensearch.gateway.ClusterStateUpdaters.updateRoutingTable;
-import static org.opensearch.gateway.ClusterStateUpdaters.upgradeAndArchiveUnknownOrInvalidSettings;
-import static org.opensearch.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
+import static org.density.cluster.metadata.Metadata.CLUSTER_READ_ONLY_BLOCK;
+import static org.density.gateway.ClusterStateUpdaters.addStateNotRecoveredBlock;
+import static org.density.gateway.ClusterStateUpdaters.hideStateIfNotRecovered;
+import static org.density.gateway.ClusterStateUpdaters.mixCurrentStateAndRecoveredState;
+import static org.density.gateway.ClusterStateUpdaters.recoverClusterBlocks;
+import static org.density.gateway.ClusterStateUpdaters.removeStateNotRecoveredBlock;
+import static org.density.gateway.ClusterStateUpdaters.setLocalNode;
+import static org.density.gateway.ClusterStateUpdaters.updateRoutingTable;
+import static org.density.gateway.ClusterStateUpdaters.upgradeAndArchiveUnknownOrInvalidSettings;
+import static org.density.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-public class ClusterStateUpdatersTests extends OpenSearchTestCase {
+public class ClusterStateUpdatersTests extends DensityTestCase {
 
     public void testUpgradePersistentSettings() {
         runUpgradeSettings(Metadata.Builder::persistentSettings, Metadata::persistentSettings);

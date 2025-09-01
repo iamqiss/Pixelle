@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.LeafReader;
@@ -37,13 +37,13 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.search.suggest.document.CompletionTerms;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.FieldMemoryStats;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.FieldMemoryStats;
+import org.density.common.Nullable;
+import org.density.common.regex.Regex;
+import org.density.core.action.ActionListener;
+import org.density.core.common.util.CollectionUtils;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +52,7 @@ import java.util.function.Supplier;
 /**
  * Cache to store engine completion stats
  *
- * @opensearch.internal
+ * @density.internal
  */
 class CompletionStatsCache implements ReferenceManager.RefreshListener {
 

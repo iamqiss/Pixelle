@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.rest.RestRequest;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.rest.RestRequest;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -49,14 +49,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeBooleanValue;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeStringArrayValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeBooleanValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeStringArrayValue;
 
 /**
  * Controls how to deal with unavailable concrete indices (closed or missing), how wildcard expressions are expanded
  * to actual indices (all, closed or open indices) and how to deal with wildcard expressions that resolve to no indices.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesOptions implements ToXContentFragment {
@@ -64,7 +64,7 @@ public class IndicesOptions implements ToXContentFragment {
     /**
      * The wildcard states.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum WildcardStates {
@@ -130,7 +130,7 @@ public class IndicesOptions implements ToXContentFragment {
     /**
      * The options.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Option {
         IGNORE_UNAVAILABLE,
@@ -491,7 +491,7 @@ public class IndicesOptions implements ToXContentFragment {
         Token token = parser.currentToken() == Token.START_OBJECT ? parser.currentToken() : parser.nextToken();
         String currentFieldName = null;
         if (token != Token.START_OBJECT) {
-            throw new OpenSearchParseException("expected START_OBJECT as the token but was " + token);
+            throw new DensityParseException("expected START_OBJECT as the token but was " + token);
         }
         while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
             if (token == XContentParser.Token.FIELD_NAME) {
@@ -504,16 +504,16 @@ public class IndicesOptions implements ToXContentFragment {
                             if (token.isValue()) {
                                 WildcardStates.updateSetForValue(wildcardStates, parser.text());
                             } else {
-                                throw new OpenSearchParseException(
+                                throw new DensityParseException(
                                     "expected values within array for " + EXPAND_WILDCARDS_FIELD.getPreferredName()
                                 );
                             }
                         }
                     } else {
-                        throw new OpenSearchParseException("already parsed expand_wildcards");
+                        throw new DensityParseException("already parsed expand_wildcards");
                     }
                 } else {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         EXPAND_WILDCARDS_FIELD.getPreferredName() + " is the only field that is an array in IndicesOptions"
                     );
                 }
@@ -523,7 +523,7 @@ public class IndicesOptions implements ToXContentFragment {
                         wildcardStates = EnumSet.noneOf(WildcardStates.class);
                         WildcardStates.updateSetForValue(wildcardStates, parser.text());
                     } else {
-                        throw new OpenSearchParseException("already parsed expand_wildcards");
+                        throw new DensityParseException("already parsed expand_wildcards");
                     }
                 } else if (IGNORE_UNAVAILABLE_FIELD.match(currentFieldName, parser.getDeprecationHandler())) {
                     ignoreUnavailable = parser.booleanValue();
@@ -532,23 +532,23 @@ public class IndicesOptions implements ToXContentFragment {
                 } else if (IGNORE_THROTTLED_FIELD.match(currentFieldName, parser.getDeprecationHandler())) {
                     ignoreThrottled = parser.booleanValue();
                 } else {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "could not read indices options. unexpected index option [" + currentFieldName + "]"
                     );
                 }
             } else {
-                throw new OpenSearchParseException("could not read indices options. unexpected object field [" + currentFieldName + "]");
+                throw new DensityParseException("could not read indices options. unexpected object field [" + currentFieldName + "]");
             }
         }
 
         if (wildcardStates == null) {
-            throw new OpenSearchParseException("indices options xcontent did not contain " + EXPAND_WILDCARDS_FIELD.getPreferredName());
+            throw new DensityParseException("indices options xcontent did not contain " + EXPAND_WILDCARDS_FIELD.getPreferredName());
         }
         if (ignoreUnavailable == null) {
-            throw new OpenSearchParseException("indices options xcontent did not contain " + IGNORE_UNAVAILABLE_FIELD.getPreferredName());
+            throw new DensityParseException("indices options xcontent did not contain " + IGNORE_UNAVAILABLE_FIELD.getPreferredName());
         }
         if (allowNoIndices == null) {
-            throw new OpenSearchParseException("indices options xcontent did not contain " + ALLOW_NO_INDICES_FIELD.getPreferredName());
+            throw new DensityParseException("indices options xcontent did not contain " + ALLOW_NO_INDICES_FIELD.getPreferredName());
         }
 
         return IndicesOptions.fromOptions(

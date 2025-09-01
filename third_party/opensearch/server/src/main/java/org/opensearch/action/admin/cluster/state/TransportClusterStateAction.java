@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.state;
+package org.density.action.admin.cluster.state;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeReadAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeReadAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.node.NodeClosedException;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Map;
@@ -63,16 +63,16 @@ import java.util.function.Predicate;
 /**
  * Transport action for obtaining cluster state
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportClusterStateAction extends TransportClusterManagerNodeReadAction<ClusterStateRequest, ClusterStateResponse> {
 
     private final Logger logger = LogManager.getLogger(getClass());
 
     static {
-        final String property = System.getProperty("opensearch.cluster_state.size");
+        final String property = System.getProperty("density.cluster_state.size");
         if (property != null) {
-            throw new IllegalArgumentException("opensearch.cluster_state.size is no longer respected but was [" + property + "]");
+            throw new IllegalArgumentException("density.cluster_state.size is no longer respected but was [" + property + "]");
         }
     }
 

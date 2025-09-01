@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.transport.BytesTransportRequest;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TcpHeader;
-import org.opensearch.transport.TransportStatus;
+import org.density.Version;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.transport.BytesTransportRequest;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TcpHeader;
+import org.density.transport.TransportStatus;
 
 import java.io.IOException;
 import java.util.Set;
@@ -51,7 +51,7 @@ import java.util.Set;
 /**
  * Outbound data as a message
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public abstract class NativeOutboundMessage extends NetworkMessage {
@@ -123,7 +123,7 @@ public abstract class NativeOutboundMessage extends NetworkMessage {
     /**
      * Internal outbound message request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Request extends NativeOutboundMessage {
 
@@ -169,7 +169,7 @@ public abstract class NativeOutboundMessage extends NetworkMessage {
     /**
      * Internal message response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Response extends NativeOutboundMessage {
 

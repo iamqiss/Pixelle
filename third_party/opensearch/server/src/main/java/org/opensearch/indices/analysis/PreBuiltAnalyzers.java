@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
@@ -40,26 +40,26 @@ import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.opensearch.Version;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.Version;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
 
 import java.util.Locale;
 
 /**
  * Pre built analyzers
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum PreBuiltAnalyzers {
 
-    STANDARD(CachingStrategy.OPENSEARCH) {
+    STANDARD(CachingStrategy.DENSITY) {
         @Override
         protected Analyzer create(Version version) {
             return new StandardAnalyzer(CharArraySet.EMPTY_SET);
         }
     },
 
-    DEFAULT(CachingStrategy.OPENSEARCH) {
+    DEFAULT(CachingStrategy.DENSITY) {
         @Override
         protected Analyzer create(Version version) {
             // by calling get analyzer we are ensuring reuse of the same STANDARD analyzer for DEFAULT!

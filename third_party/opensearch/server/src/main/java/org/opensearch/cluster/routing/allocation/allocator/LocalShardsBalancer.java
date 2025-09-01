@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation.allocator;
+package org.density.cluster.routing.allocation.allocator;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.IntroSorter;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingPool;
-import org.opensearch.cluster.routing.ShardMovementStrategy;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationDecision;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.NodeAllocationResult;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.DiskThresholdDecider;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.gateway.PriorityComparator;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingPool;
+import org.density.cluster.routing.ShardMovementStrategy;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationDecision;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.NodeAllocationResult;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.DiskThresholdDecider;
+import org.density.common.collect.Tuple;
+import org.density.common.util.FeatureFlags;
+import org.density.gateway.PriorityComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,14 +46,14 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.action.admin.indices.tiering.TieringUtils.isPartialShard;
-import static org.opensearch.cluster.routing.ShardRoutingState.RELOCATING;
+import static org.density.action.admin.indices.tiering.TieringUtils.isPartialShard;
+import static org.density.cluster.routing.ShardRoutingState.RELOCATING;
 
 /**
  * A {@link LocalShardsBalancer} used by the {@link BalancedShardsAllocator} to perform allocation operations
  * for local shards within the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LocalShardsBalancer extends ShardsBalancer {
     private final Logger logger;

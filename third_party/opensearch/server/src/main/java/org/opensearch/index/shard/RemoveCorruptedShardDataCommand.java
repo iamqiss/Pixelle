@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -44,35 +44,35 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.NativeFSLockFactory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.OpenSearchNodeCommand;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommands;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeMetadata;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TruncateTranslogAction;
+import org.density.DensityException;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.DensityNodeCommand;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommands;
+import org.density.common.CheckedConsumer;
+import org.density.common.SuppressForbidden;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.io.PathUtils;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeMetadata;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.TruncateTranslogAction;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -89,9 +89,9 @@ import java.util.stream.StreamSupport;
 /**
  * Command for removing a corruped shard
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
+public class RemoveCorruptedShardDataCommand extends DensityNodeCommand {
 
     private static final Logger logger = LogManager.getLogger(RemoveCorruptedShardDataCommand.class);
 
@@ -152,7 +152,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
             final Path shardParentParent = shardParent.getParent();
             final Path indexPath = path.resolve(ShardPath.INDEX_FOLDER_NAME);
             if (Files.exists(indexPath) == false || Files.isDirectory(indexPath) == false) {
-                throw new OpenSearchException("index directory [" + indexPath + "], must exist and be a directory");
+                throw new DensityException("index directory [" + indexPath + "], must exist and be a directory");
             }
 
             final String shardIdFileName = path.getFileName().toString();
@@ -170,7 +170,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
                     .findFirst()
                     .orElse(null);
             } else {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "Unable to resolve shard id. Wrong folder structure at [ "
                         + path.toString()
                         + " ], expected .../nodes/[NODE-ID]/indices/[INDEX-UUID]/[SHARD-ID]"
@@ -184,13 +184,13 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         }
 
         if (indexMetadata == null) {
-            throw new OpenSearchException("Unable to find index in cluster state");
+            throw new DensityException("Unable to find index in cluster state");
         }
 
         final IndexSettings indexSettings = new IndexSettings(indexMetadata, settings);
         if (indexSettings.isRemoteTranslogStoreEnabled()) {
             // ToDo : Need to revisit corrupt shard recovery strategy for remote store enabled indices
-            throw new OpenSearchException("tool doesn't work for remote translog enabled indices");
+            throw new DensityException("tool doesn't work for remote translog enabled indices");
         }
 
         final Index index = indexMetadata.getIndex();
@@ -215,7 +215,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
                 }
             }
         }
-        throw new OpenSearchException(
+        throw new DensityException(
             "Unable to resolve shard path for index [" + indexMetadata.getIndex().getName() + "] and shard id [" + shardId + "]"
         );
     }
@@ -265,7 +265,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         terminal.println(msg);
         String text = terminal.readText("Confirm [y/N] ");
         if (text.equalsIgnoreCase("y") == false) {
-            throw new OpenSearchException("aborted by user");
+            throw new DensityException("aborted by user");
         }
     }
 
@@ -293,7 +293,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
             final Path translogPath = shardPath.resolveTranslog();
             final Path nodePath = getNodePath(shardPath);
             if (Files.exists(translogPath) == false || Files.isDirectory(translogPath) == false) {
-                throw new OpenSearchException("translog directory [" + translogPath + "], must exist and be a directory");
+                throw new DensityException("translog directory [" + translogPath + "], must exist and be a directory");
             }
 
             final PrintWriter writer = terminal.getWriter();
@@ -362,7 +362,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
                     final CleanStatus translogStatus = translogCleanStatus.v1();
 
                     if (indexStatus == CleanStatus.CLEAN && translogStatus == CleanStatus.CLEAN) {
-                        throw new OpenSearchException(
+                        throw new DensityException(
                             "Shard does not seem to be corrupted at "
                                 + shardPath.getDataPath()
                                 + " (pass --"
@@ -380,7 +380,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
 
                         printRerouteCommand(shardPath, terminal, false);
 
-                        throw new OpenSearchException("Index is unrecoverable");
+                        throw new DensityException("Index is unrecoverable");
                     }
 
                     terminal.println("-----------------------------------------------------------------------");
@@ -403,9 +403,9 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
                         truncateTranslogAction.execute(terminal, shardPath, indexDir);
                     }
                 } catch (LockObtainFailedException lofe) {
-                    final String msg = "Failed to lock shard's directory at [" + indexPath + "], is OpenSearch still running?";
+                    final String msg = "Failed to lock shard's directory at [" + indexPath + "], is Density still running?";
                     terminal.println(msg);
-                    throw new OpenSearchException(msg);
+                    throw new DensityException(msg);
                 }
 
                 final CleanStatus indexStatus = indexCleanStatus.v1();
@@ -426,7 +426,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         try {
             directory = FSDirectory.open(indexPath, NativeFSLockFactory.INSTANCE);
         } catch (Throwable t) {
-            throw new OpenSearchException("ERROR: could not open directory \"" + indexPath + "\"; exiting");
+            throw new DensityException("ERROR: could not open directory \"" + indexPath + "\"; exiting");
         }
         return directory;
     }
@@ -474,7 +474,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         );
 
         if (shardStateMetadata == null) {
-            throw new OpenSearchException("No shard state meta data at " + shardStatePath);
+            throw new DensityException("No shard state meta data at " + shardStatePath);
         }
 
         final AllocationId newAllocationId = AllocationId.newInitializing();
@@ -501,7 +501,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         final NodeMetadata nodeMetadata = PersistedClusterStateService.nodeMetadata(nodePath);
 
         if (nodeMetadata == null) {
-            throw new OpenSearchException("No node meta data at " + nodePath);
+            throw new DensityException("No node meta data at " + nodePath);
         }
 
         final String nodeId = nodeMetadata.nodeId();
@@ -524,7 +524,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
         final Path nodePath = shardPath.getDataPath().getParent().getParent().getParent();
         if (Files.exists(nodePath) == false
             || Files.exists(nodePath.resolve(PersistedClusterStateService.METADATA_DIRECTORY_NAME)) == false) {
-            throw new OpenSearchException("Unable to resolve node path for " + shardPath);
+            throw new DensityException("Unable to resolve node path for " + shardPath);
         }
         return nodePath;
     }
@@ -532,7 +532,7 @@ public class RemoveCorruptedShardDataCommand extends OpenSearchNodeCommand {
     /**
      * Status of the shard cleaning operation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum CleanStatus {
         CLEAN("clean"),

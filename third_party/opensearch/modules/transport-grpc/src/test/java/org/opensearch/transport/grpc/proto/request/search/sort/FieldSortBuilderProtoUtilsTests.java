@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.sort;
+package org.density.transport.grpc.proto.request.search.sort;
 
-import org.opensearch.protobufs.FieldWithOrderMap;
-import org.opensearch.protobufs.ScoreSort;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.FieldWithOrderMap;
+import org.density.protobufs.ScoreSort;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FieldSortBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class FieldSortBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithEmptyMap() {
         // Create an empty FieldWithOrderMap
@@ -37,7 +37,7 @@ public class FieldSortBuilderProtoUtilsTests extends OpenSearchTestCase {
     public void testFromProtoWithSingleField() {
         // Create a FieldWithOrderMap with a single field
         FieldWithOrderMap.Builder builder = FieldWithOrderMap.newBuilder();
-        builder.putFieldWithOrderMap("field1", ScoreSort.newBuilder().setOrder(org.opensearch.protobufs.SortOrder.SORT_ORDER_ASC).build());
+        builder.putFieldWithOrderMap("field1", ScoreSort.newBuilder().setOrder(org.density.protobufs.SortOrder.SORT_ORDER_ASC).build());
         FieldWithOrderMap fieldWithOrderMap = builder.build();
 
         // Create a list to populate
@@ -57,8 +57,8 @@ public class FieldSortBuilderProtoUtilsTests extends OpenSearchTestCase {
     public void testFromProtoWithMultipleFields() {
         // Create a FieldWithOrderMap with multiple fields
         FieldWithOrderMap.Builder builder = FieldWithOrderMap.newBuilder();
-        builder.putFieldWithOrderMap("field1", ScoreSort.newBuilder().setOrder(org.opensearch.protobufs.SortOrder.SORT_ORDER_ASC).build());
-        builder.putFieldWithOrderMap("field2", ScoreSort.newBuilder().setOrder(org.opensearch.protobufs.SortOrder.SORT_ORDER_DESC).build());
+        builder.putFieldWithOrderMap("field1", ScoreSort.newBuilder().setOrder(org.density.protobufs.SortOrder.SORT_ORDER_ASC).build());
+        builder.putFieldWithOrderMap("field2", ScoreSort.newBuilder().setOrder(org.density.protobufs.SortOrder.SORT_ORDER_DESC).build());
         FieldWithOrderMap fieldWithOrderMap = builder.build();
 
         // Create a list to populate
@@ -94,7 +94,7 @@ public class FieldSortBuilderProtoUtilsTests extends OpenSearchTestCase {
     public void testFromProtoWithScoreField() {
         // Create a FieldWithOrderMap with the special "score" field
         FieldWithOrderMap.Builder builder = FieldWithOrderMap.newBuilder();
-        builder.putFieldWithOrderMap("score", ScoreSort.newBuilder().setOrder(org.opensearch.protobufs.SortOrder.SORT_ORDER_DESC).build());
+        builder.putFieldWithOrderMap("score", ScoreSort.newBuilder().setOrder(org.density.protobufs.SortOrder.SORT_ORDER_DESC).build());
         FieldWithOrderMap fieldWithOrderMap = builder.build();
 
         // Create a list to populate

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class IngestRequestConvertersTests extends OpenSearchTestCase {
+public class IngestRequestConvertersTests extends DensityTestCase {
 
     public void testPutPipeline() throws IOException {
         String pipelineId = "some_pipeline_id";
@@ -104,8 +104,8 @@ public class IngestRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testSimulatePipeline() throws IOException {
-        String pipelineId = OpenSearchTestCase.randomBoolean() ? "some_pipeline_id" : null;
-        boolean verbose = OpenSearchTestCase.randomBoolean();
+        String pipelineId = DensityTestCase.randomBoolean() ? "some_pipeline_id" : null;
+        boolean verbose = DensityTestCase.randomBoolean();
         String json = "{"
             + "  \"pipeline\": {"
             + "    \"description\": \"_description\","

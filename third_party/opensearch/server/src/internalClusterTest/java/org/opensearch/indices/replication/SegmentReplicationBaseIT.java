@@ -1,48 +1,48 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.SegmentInfos;
-import org.opensearch.action.admin.indices.segments.IndexShardSegments;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.ShardSegments;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.Segment;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.segments.IndexShardSegments;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.ShardSegments;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.core.index.Index;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.engine.Engine;
+import org.density.index.engine.Segment;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -56,9 +56,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-public class SegmentReplicationBaseIT extends OpenSearchIntegTestCase {
+public class SegmentReplicationBaseIT extends DensityIntegTestCase {
 
     protected static final String INDEX_NAME = "test-idx-1";
     protected static final int SHARD_COUNT = 1;

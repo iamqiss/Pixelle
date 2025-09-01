@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.query.QuerySearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.transport.Transport;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.query.QuerySearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.transport.Transport;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.function.Function;
  * operation.
  * @see CountedCollector#onFailure(int, SearchShardTarget, Exception)
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class DfsQueryPhase extends SearchPhase {
     private final ArraySearchPhaseResults<SearchPhaseResult> queryResult;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionType;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.ClusterName;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.action.ActionFuture;
+import org.density.common.inject.Inject;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +60,7 @@ import java.util.List;
 /**
  * Lists gateway meta state
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesListGatewayMetaState extends TransportNodesAction<
     TransportNodesListGatewayMetaState.Request,
@@ -124,7 +124,7 @@ public class TransportNodesListGatewayMetaState extends TransportNodesAction<
     /**
      * The request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends BaseNodesRequest<Request> {
 
@@ -140,7 +140,7 @@ public class TransportNodesListGatewayMetaState extends TransportNodesAction<
     /**
      * The nodes gateway metastate.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodesGatewayMetaState extends BaseNodesResponse<NodeGatewayMetaState> {
 
@@ -166,7 +166,7 @@ public class TransportNodesListGatewayMetaState extends TransportNodesAction<
     /**
      * The node request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeRequest extends TransportRequest {
         NodeRequest() {}
@@ -179,7 +179,7 @@ public class TransportNodesListGatewayMetaState extends TransportNodesAction<
     /**
      * The node gateway metastate.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeGatewayMetaState extends BaseNodeResponse {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.action.support.ContextPreservingActionListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.support.ContextPreservingActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.net.InetAddress;
@@ -72,14 +72,14 @@ import java.util.stream.Stream;
 /**
  * Strategy to connect to remote nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class RemoteConnectionStrategy implements TransportConnectionListener, Closeable {
 
     /**
      * Strategy to connect to remote nodes
      *
-    * @opensearch.api
+    * @density.api
     */
     @PublicApi(since = "1.0.0")
     public enum ConnectionStrategy {
@@ -302,7 +302,7 @@ public abstract class RemoteConnectionStrategy implements TransportConnectionLis
             } else {
                 if (listeners.size() >= maxPendingConnectionListeners) {
                     assert listeners.size() == maxPendingConnectionListeners;
-                    listener.onFailure(new OpenSearchRejectedExecutionException("connect listener queue is full"));
+                    listener.onFailure(new DensityRejectedExecutionException("connect listener queue is full"));
                     return;
                 } else {
                     listeners.add(listener);
@@ -433,7 +433,7 @@ public abstract class RemoteConnectionStrategy implements TransportConnectionLis
     /**
      * Internal strategy validation object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class StrategyValidator<T> implements Setting.Validator<T> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,62 +26,62 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.WorkloadGroupMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.ShardAllocationDecision;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.DiskThresholdDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.FilterAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.NodeVersionAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RebalanceOnlyWhenActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RemoteStoreMigrationAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ResizeAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RestoreInProgressAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SearchReplicaAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SnapshotInProgressAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.TargetPoolAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.WarmDiskThresholdDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.ModuleTestCase;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.plugins.ClusterPlugin;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.gateway.TestGatewayAllocator;
-import org.opensearch.test.gateway.TestShardBatchGatewayAllocator;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.WorkloadGroupMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.ShardAllocationDecision;
+import org.density.cluster.routing.allocation.allocator.ShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
+import org.density.cluster.routing.allocation.decider.DiskThresholdDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.FilterAllocationDecider;
+import org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
+import org.density.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
+import org.density.cluster.routing.allocation.decider.NodeVersionAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RebalanceOnlyWhenActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RemoteStoreMigrationAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ResizeAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RestoreInProgressAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SearchReplicaAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SnapshotInProgressAllocationDecider;
+import org.density.cluster.routing.allocation.decider.TargetPoolAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.cluster.routing.allocation.decider.WarmDiskThresholdDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.ModuleTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.GatewayAllocator;
+import org.density.plugins.ClusterPlugin;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.gateway.TestGatewayAllocator;
+import org.density.test.gateway.TestShardBatchGatewayAllocator;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -189,7 +189,7 @@ public class ClusterModuleTests extends ModuleTestCase {
             )
         );
         assertEquals(
-            "Cannot specify expression resolver [org.opensearch.cluster.ClusterModuleTests$FakeExpressionResolver] twice",
+            "Cannot specify expression resolver [org.density.cluster.ClusterModuleTests$FakeExpressionResolver] twice",
             ex.getMessage()
         );
     }

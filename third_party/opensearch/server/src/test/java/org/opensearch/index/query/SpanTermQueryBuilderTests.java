@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
@@ -38,9 +38,9 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.spans.SpanTermQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.lucene.BytesRefs;
+import org.density.core.common.ParsingException;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 

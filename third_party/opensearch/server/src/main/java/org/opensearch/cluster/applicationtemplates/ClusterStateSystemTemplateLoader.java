@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.applicationtemplates;
+package org.density.cluster.applicationtemplates;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.action.admin.indices.template.put.PutComponentTemplateAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OriginSettingClient;
+import org.density.DensityCorruptionException;
+import org.density.action.admin.indices.template.put.PutComponentTemplateAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.transport.client.Client;
+import org.density.transport.client.OriginSettingClient;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -58,7 +58,7 @@ public class ClusterStateSystemTemplateLoader implements SystemTemplateLoader {
             && !SystemTemplateMetadata.COMPONENT_TEMPLATE_TYPE.equals(
                 Objects.toString(existingTemplate.metadata().get(TEMPLATE_TYPE_KEY))
             )) {
-            throw new OpenSearchCorruptionException(
+            throw new DensityCorruptionException(
                 "Attempting to create " + template.templateMetadata().name() + " which has already been created through some other source."
             );
         }
@@ -85,7 +85,7 @@ public class ClusterStateSystemTemplateLoader implements SystemTemplateLoader {
         }
 
         if (!Objects.equals(newTemplate.version(), template.templateMetadata().version())) {
-            throw new OpenSearchCorruptionException(
+            throw new DensityCorruptionException(
                 "Template version mismatch for "
                     + template.templateMetadata().name()
                     + ". Version in metadata: "

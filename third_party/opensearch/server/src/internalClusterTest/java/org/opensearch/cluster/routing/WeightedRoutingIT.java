@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.ResourceNotFoundException;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.plugins.Plugin;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.transport.MockTransportService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -38,12 +38,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 3)
-public class WeightedRoutingIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 3)
+public class WeightedRoutingIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -878,7 +878,7 @@ public class WeightedRoutingIT extends OpenSearchIntegTestCase {
     }
 
     /**
-     * https://github.com/opensearch-project/OpenSearch/issues/18817
+     * https://github.com/density-project/Density/issues/18817
      * For regression in custom string query preference with awareness attributes enabled.
      * We expect preference will consistently route to the same shard replica. However, when awareness attributes
      * are configured this does not hold.

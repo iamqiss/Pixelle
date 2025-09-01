@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.metrics.OperationStats;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.function.Consumer;
 import java.util.function.LongSupplier;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.ingest.IngestDocumentPreparer.SHOULD_FAIL_KEY;
+import static org.density.ingest.IngestDocumentPreparer.SHOULD_FAIL_KEY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -65,7 +65,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CompoundProcessorTests extends OpenSearchTestCase {
+public class CompoundProcessorTests extends DensityTestCase {
     private IngestDocument ingestDocument;
 
     @Before
@@ -109,7 +109,7 @@ public class CompoundProcessorTests extends OpenSearchTestCase {
         assertThat(compoundProcessor.getOnFailureProcessors().isEmpty(), is(true));
         Exception[] holder = new Exception[1];
         compoundProcessor.execute(ingestDocument, (result, e) -> holder[0] = e);
-        assertThat(((OpenSearchException) holder[0]).getRootCause().getMessage(), equalTo("error"));
+        assertThat(((DensityException) holder[0]).getRootCause().getMessage(), equalTo("error"));
         assertThat(processor.getInvokedCounter(), equalTo(1));
         assertStats(compoundProcessor, 1, 1, 0);
 

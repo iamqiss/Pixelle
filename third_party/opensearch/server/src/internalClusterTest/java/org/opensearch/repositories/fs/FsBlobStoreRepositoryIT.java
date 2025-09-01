@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.fs;
+package org.density.repositories.fs;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase;
+import org.density.DensityException;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -48,11 +48,11 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class FsBlobStoreRepositoryIT extends OpenSearchBlobStoreRepositoryIntegTestCase {
+public class FsBlobStoreRepositoryIT extends DensityBlobStoreRepositoryIntegTestCase {
 
     @Override
     protected String repositoryType() {
@@ -106,8 +106,8 @@ public class FsBlobStoreRepositoryIT extends OpenSearchBlobStoreRepositoryIntegT
         assertFalse(Files.exists(deletedPath));
         createRepository(repoName, "fs", Settings.builder().put("location", repoPath).put("readonly", true));
 
-        final OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        final DensityException exception = expectThrows(
+            DensityException.class,
             () -> client().admin().cluster().prepareRestoreSnapshot(repoName, snapshotName).setWaitForCompletion(randomBoolean()).get()
         );
         assertThat(exception.getRootCause(), instanceOf(NoSuchFileException.class));

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client.transport;
+package org.density.transport.client.transport;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * An exception indicating no node is available to perform the operation.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class NoNodeAvailableException extends OpenSearchException {
+public class NoNodeAvailableException extends DensityException {
 
     public NoNodeAvailableException(String message) {
         super(message);

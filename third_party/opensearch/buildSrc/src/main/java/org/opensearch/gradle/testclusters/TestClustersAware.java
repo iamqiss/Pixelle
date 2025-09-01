@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -42,14 +42,14 @@ import java.util.concurrent.Callable;
 public interface TestClustersAware extends Task {
 
     @Nested
-    Collection<OpenSearchCluster> getClusters();
+    Collection<DensityCluster> getClusters();
 
     @Deprecated(forRemoval = true)
-    default void useCluster(OpenSearchCluster cluster) {
+    default void useCluster(DensityCluster cluster) {
         useCluster(getProject(), cluster);
     }
 
-    default void useCluster(Project project, OpenSearchCluster cluster) {
+    default void useCluster(Project project, DensityCluster cluster) {
         if (cluster.getPath().equals(project.getPath()) == false) {
             throw new TestClustersException("Task " + getPath() + " can't use test cluster from" + " another project " + cluster);
         }

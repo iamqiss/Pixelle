@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.threadpool.ThreadPool;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -41,14 +41,14 @@ import java.util.Arrays;
 /**
  * Pool of disk io buffers
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiskIoBufferPool {
 
     public static final int BUFFER_SIZE = StrictMath.toIntExact(
         ByteSizeValue.parseBytesSizeValue(
-            System.getProperty("opensearch.disk_io.direct.buffer.size", "64KB"),
-            "opensearch.disk_io.direct.buffer.size"
+            System.getProperty("density.disk_io.direct.buffer.size", "64KB"),
+            "density.disk_io.direct.buffer.size"
         ).getBytes()
     );
     public static final int HEAP_BUFFER_SIZE = 8 * 1024;

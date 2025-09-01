@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.concurrent.RefCountedReleasable;
-import org.opensearch.telemetry.OTelTelemetryPlugin;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.concurrent.RefCountedReleasable;
+import org.density.telemetry.OTelTelemetryPlugin;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.test.DensityTestCase;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributesBuilder;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class OTelTracingTelemetryTests extends OpenSearchTestCase {
+public class OTelTracingTelemetryTests extends DensityTestCase {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void testCreateSpanWithoutParent() {
         OpenTelemetry mockOpenTelemetry = mock(OpenTelemetry.class);

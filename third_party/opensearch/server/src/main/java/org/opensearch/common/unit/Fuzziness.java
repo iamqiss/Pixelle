@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -50,7 +50,7 @@ import java.util.Objects;
  * parsing and conversion from similarities to edit distances
  * etc.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class Fuzziness implements ToXContentFragment, Writeable {
@@ -160,10 +160,10 @@ public final class Fuzziness implements ToXContentFragment, Writeable {
                 int highLimit = Integer.parseInt(fuzzinessLimit[1]);
                 return new Fuzziness("AUTO", lowerLimit, highLimit);
             } catch (NumberFormatException e) {
-                throw new OpenSearchParseException("failed to parse [{}] as a \"auto:int,int\"", e, string);
+                throw new DensityParseException("failed to parse [{}] as a \"auto:int,int\"", e, string);
             }
         } else {
-            throw new OpenSearchParseException("failed to find low and high distance values");
+            throw new DensityParseException("failed to find low and high distance values");
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.search.lookup.FieldsLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ResourceNotFoundException;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.env.Environment;
+import org.density.search.lookup.FieldsLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -59,20 +59,20 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.opensearch.script.ScriptService.SCRIPT_CACHE_EXPIRE_SETTING;
-import static org.opensearch.script.ScriptService.SCRIPT_CACHE_SIZE_SETTING;
-import static org.opensearch.script.ScriptService.SCRIPT_GENERAL_CACHE_EXPIRE_SETTING;
-import static org.opensearch.script.ScriptService.SCRIPT_GENERAL_CACHE_SIZE_SETTING;
-import static org.opensearch.script.ScriptService.SCRIPT_GENERAL_MAX_COMPILATIONS_RATE_SETTING;
-import static org.opensearch.script.ScriptService.SCRIPT_MAX_COMPILATIONS_RATE_SETTING;
-import static org.opensearch.search.lookup.SearchLookup.UNKNOWN_SHARD_ID;
+import static org.density.script.ScriptService.SCRIPT_CACHE_EXPIRE_SETTING;
+import static org.density.script.ScriptService.SCRIPT_CACHE_SIZE_SETTING;
+import static org.density.script.ScriptService.SCRIPT_GENERAL_CACHE_EXPIRE_SETTING;
+import static org.density.script.ScriptService.SCRIPT_GENERAL_CACHE_SIZE_SETTING;
+import static org.density.script.ScriptService.SCRIPT_GENERAL_MAX_COMPILATIONS_RATE_SETTING;
+import static org.density.script.ScriptService.SCRIPT_MAX_COMPILATIONS_RATE_SETTING;
+import static org.density.search.lookup.SearchLookup.UNKNOWN_SHARD_ID;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
-public class ScriptServiceTests extends OpenSearchTestCase {
+public class ScriptServiceTests extends DensityTestCase {
 
     private ScriptEngine scriptEngine;
     private Map<String, ScriptEngine> engines;

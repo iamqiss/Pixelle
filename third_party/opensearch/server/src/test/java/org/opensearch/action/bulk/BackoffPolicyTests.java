@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 
-public class BackoffPolicyTests extends OpenSearchTestCase {
+public class BackoffPolicyTests extends DensityTestCase {
     public void testWrapBackoffPolicy() {
         TimeValue timeValue = timeValueMillis(between(0, Integer.MAX_VALUE));
         int maxNumberOfRetries = between(1, 1000);

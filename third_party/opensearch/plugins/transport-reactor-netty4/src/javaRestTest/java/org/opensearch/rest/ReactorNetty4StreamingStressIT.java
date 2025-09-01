@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
 import org.apache.hc.core5.http.ConnectionClosedException;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.StreamingRequest;
-import org.opensearch.client.StreamingResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.StreamingRequest;
+import org.density.client.StreamingResponse;
+import org.density.common.settings.Settings;
+import org.density.test.rest.DensityRestTestCase;
 import org.junit.After;
 import org.junit.Assume;
 
@@ -34,7 +34,7 @@ import reactor.test.scheduler.VirtualTimeScheduler;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class ReactorNetty4StreamingStressIT extends OpenSearchRestTestCase {
+public class ReactorNetty4StreamingStressIT extends DensityRestTestCase {
     @After
     @Override
     public void tearDown() throws Exception {

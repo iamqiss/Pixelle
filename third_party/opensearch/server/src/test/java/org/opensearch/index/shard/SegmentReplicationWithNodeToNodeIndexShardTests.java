@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.SegmentInfos;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.engine.DocIdSeqNoAndSource;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.engine.NRTReplicationEngine;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.replication.TestReplicationSource;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.CheckpointInfoResponse;
-import org.opensearch.indices.replication.GetSegmentFilesResponse;
-import org.opensearch.indices.replication.SegmentReplicationSource;
-import org.opensearch.indices.replication.SegmentReplicationSourceFactory;
-import org.opensearch.indices.replication.SegmentReplicationTarget;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.engine.DocIdSeqNoAndSource;
+import org.density.index.engine.InternalEngine;
+import org.density.index.engine.NRTReplicationEngine;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.mapper.MapperService;
+import org.density.index.replication.TestReplicationSource;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.CheckpointInfoResponse;
+import org.density.indices.replication.GetSegmentFilesResponse;
+import org.density.indices.replication.SegmentReplicationSource;
+import org.density.indices.replication.SegmentReplicationSourceFactory;
+import org.density.indices.replication.SegmentReplicationTarget;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.Assert;
 
 import java.io.IOException;

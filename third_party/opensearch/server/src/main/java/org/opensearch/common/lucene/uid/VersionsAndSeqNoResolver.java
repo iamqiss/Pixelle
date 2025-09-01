@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.uid;
+package org.density.common.lucene.uid;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.util.CloseableThreadLocal;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.concurrent.ConcurrentCollections;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,7 +48,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Utility class to resolve the Lucene doc ID, version, seqNo and primaryTerms for a given uid.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class VersionsAndSeqNoResolver {
 
@@ -111,7 +111,7 @@ public final class VersionsAndSeqNoResolver {
     /**
      * Wraps an {@link LeafReaderContext}, a doc ID <b>relative to the context doc base</b> and a version.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class DocIdAndVersion {
@@ -135,7 +135,7 @@ public final class VersionsAndSeqNoResolver {
     /**
      * Wraps an {@link LeafReaderContext}, a doc ID <b>relative to the context doc base</b> and a seqNo.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class DocIdAndSeqNo {
         public final int docId;

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fielddata.AbstractFieldDataTestCase;
-import org.opensearch.index.fielddata.IndexFieldData;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fielddata.AbstractFieldDataTestCase;
+import org.density.index.fielddata.IndexFieldData;
 
 import java.util.List;
 

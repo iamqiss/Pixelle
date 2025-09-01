@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.ssl;
+package org.density.transport.grpc.ssl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.common.transport.TransportAddress;
+import org.density.core.common.transport.TransportAddress;
 
 import javax.net.ssl.SSLException;
 
@@ -35,8 +35,8 @@ import io.grpc.reflection.v1alpha.ServerReflectionResponse;
 import io.grpc.reflection.v1alpha.ServiceResponse;
 import io.grpc.stub.StreamObserver;
 
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.CLIENT_KEYSTORE;
-import static org.opensearch.transport.grpc.ssl.SecureSettingsHelpers.getTestKeyManagerFactory;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.CLIENT_KEYSTORE;
+import static org.density.transport.grpc.ssl.SecureSettingsHelpers.getTestKeyManagerFactory;
 import static io.grpc.internal.GrpcUtil.NOOP_PROXY_DETECTOR;
 
 public class NettyGrpcClient implements AutoCloseable {

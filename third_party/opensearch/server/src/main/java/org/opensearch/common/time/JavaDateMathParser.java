@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.Strings;
+import org.density.DensityParseException;
+import org.density.core.common.Strings;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -56,7 +56,7 @@ import java.util.function.LongSupplier;
  * is appended to a datetime with the following syntax:
  * <code>||[+-/](\d+)?[yMwdhHms]</code>.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JavaDateMathParser implements DateMathParser {
 
@@ -80,7 +80,7 @@ public class JavaDateMathParser implements DateMathParser {
                 // TODO only millisecond granularity here!
                 time = Instant.ofEpochMilli(now.getAsLong());
             } catch (Exception e) {
-                throw new OpenSearchParseException("could not read the current timestamp", e);
+                throw new DensityParseException("could not read the current timestamp", e);
             }
             mathString = text.substring("now".length());
         } else {
@@ -96,7 +96,7 @@ public class JavaDateMathParser implements DateMathParser {
     }
 
     private Instant parseMath(final String mathString, final Instant time, final boolean roundUpProperty, ZoneId timeZone)
-        throws OpenSearchParseException {
+        throws DensityParseException {
         if (timeZone == null) {
             timeZone = ZoneOffset.UTC;
         }
@@ -115,12 +115,12 @@ public class JavaDateMathParser implements DateMathParser {
                 } else if (c == '-') {
                     sign = -1;
                 } else {
-                    throw new OpenSearchParseException("operator not supported for date math [{}]", mathString);
+                    throw new DensityParseException("operator not supported for date math [{}]", mathString);
                 }
             }
 
             if (i >= mathString.length()) {
-                throw new OpenSearchParseException("truncated date math [{}]", mathString);
+                throw new DensityParseException("truncated date math [{}]", mathString);
             }
 
             final int num;
@@ -132,13 +132,13 @@ public class JavaDateMathParser implements DateMathParser {
                     i++;
                 }
                 if (i >= mathString.length()) {
-                    throw new OpenSearchParseException("truncated date math [{}]", mathString);
+                    throw new DensityParseException("truncated date math [{}]", mathString);
                 }
                 num = Integer.parseInt(mathString.substring(numFrom, i));
             }
             if (round) {
                 if (num != 1) {
-                    throw new OpenSearchParseException("rounding `/` can only be used on single unit types [{}]", mathString);
+                    throw new DensityParseException("rounding `/` can only be used on single unit types [{}]", mathString);
                 }
             }
             char unit = mathString.charAt(i++);
@@ -215,7 +215,7 @@ public class JavaDateMathParser implements DateMathParser {
                     }
                     break;
                 default:
-                    throw new OpenSearchParseException("unit [{}] not supported for date math [{}]", unit, mathString);
+                    throw new DensityParseException("unit [{}] not supported for date math [{}]", unit, mathString);
             }
             if (round && roundUpProperty) {
                 // subtract 1 millisecond to get the largest inclusive value
@@ -227,7 +227,7 @@ public class JavaDateMathParser implements DateMathParser {
 
     private Instant parseDateTime(String value, ZoneId timeZone, boolean roundUpIfNoTime) {
         if (Strings.isNullOrEmpty(value)) {
-            throw new OpenSearchParseException("cannot parse empty date");
+            throw new DensityParseException("cannot parse empty date");
         }
 
         DateFormatter formatter = roundUpIfNoTime ? this.roundupParser : this.formatter;
@@ -244,7 +244,7 @@ public class JavaDateMathParser implements DateMathParser {
                 return DateFormatters.from(accessor).withZoneSameLocal(timeZone).toInstant();
             }
         } catch (IllegalArgumentException | DateTimeParseException e) {
-            throw new OpenSearchParseException("failed to parse date field [{}] with format [{}]: [{}]", e, value, format, e.getMessage());
+            throw new DensityParseException("failed to parse date field [{}] with format [{}]: [{}]", e, value, format, e.getMessage());
         }
     }
 }

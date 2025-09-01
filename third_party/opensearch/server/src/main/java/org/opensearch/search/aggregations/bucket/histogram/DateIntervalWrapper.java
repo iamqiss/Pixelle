@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.common.Rounding.DateTimeUnit;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.common.Rounding;
+import org.density.common.Rounding.DateTimeUnit;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -64,7 +64,7 @@ import java.util.Objects;
  * will be removed, and the mutual-exclusion checks can be done in the setters directly removing the need
  * for the enum and the complicated "state machine" logic
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DateIntervalWrapper implements ToXContentFragment, Writeable {
     private static final DeprecationLogger DEPRECATION_LOGGER = DeprecationLogger.getLogger(DateHistogramAggregationBuilder.class);
@@ -77,7 +77,7 @@ public class DateIntervalWrapper implements ToXContentFragment, Writeable {
     /**
      * The type of interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum IntervalTypeEnum implements Writeable {
         NONE,

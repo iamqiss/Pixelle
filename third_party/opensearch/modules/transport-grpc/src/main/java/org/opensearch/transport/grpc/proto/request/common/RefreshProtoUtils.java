@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.action.support.WriteRequest;
+import org.density.action.support.WriteRequest;
 
 /**
- * Utility class for converting Refresh Protocol Buffers to OpenSearch WriteRequest.RefreshPolicy values.
+ * Utility class for converting Refresh Protocol Buffers to Density WriteRequest.RefreshPolicy values.
  * This class handles the conversion of Protocol Buffer refresh policy representations to their
- * corresponding OpenSearch refresh policy string values.
+ * corresponding Density refresh policy string values.
  */
 public class RefreshProtoUtils {
 
@@ -22,14 +22,14 @@ public class RefreshProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer Refresh enum to its corresponding OpenSearch refresh policy string value.
+     * Converts a Protocol Buffer Refresh enum to its corresponding Density refresh policy string value.
      * This method maps the gRPC protocol buffer refresh policy values to the internal
-     * OpenSearch WriteRequest.RefreshPolicy string values.
+     * Density WriteRequest.RefreshPolicy string values.
      *
      * @param refresh The Protocol Buffer Refresh enum to convert
-     * @return The corresponding OpenSearch refresh policy string value
+     * @return The corresponding Density refresh policy string value
      */
-    public static String getRefreshPolicy(org.opensearch.protobufs.Refresh refresh) {
+    public static String getRefreshPolicy(org.density.protobufs.Refresh refresh) {
         switch (refresh) {
             case REFRESH_TRUE:
                 return WriteRequest.RefreshPolicy.IMMEDIATE.getValue();

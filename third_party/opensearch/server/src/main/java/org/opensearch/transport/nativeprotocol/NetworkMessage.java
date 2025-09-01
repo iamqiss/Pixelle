@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.transport.TransportStatus;
+import org.density.Version;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.Writeable;
+import org.density.transport.TransportStatus;
 
 /**
  * Represents a transport message sent over the network. Subclasses implement serialization and
  * deserialization.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class NetworkMessage {
 

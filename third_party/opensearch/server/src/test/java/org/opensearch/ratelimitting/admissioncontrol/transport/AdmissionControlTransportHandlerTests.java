@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.transport;
+package org.density.ratelimitting.admissioncontrol.transport;
 
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.ratelimitting.admissioncontrol.AdmissionControlService;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.ratelimitting.admissioncontrol.AdmissionControlService;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
-public class AdmissionControlTransportHandlerTests extends OpenSearchTestCase {
+public class AdmissionControlTransportHandlerTests extends DensityTestCase {
     AdmissionControlTransportHandler<TransportRequest> admissionControlTransportHandler;
 
     public void testHandlerInvoked() throws Exception {
@@ -39,7 +39,7 @@ public class AdmissionControlTransportHandlerTests extends OpenSearchTestCase {
     public void testHandlerInvokedRejectedException() throws Exception {
         String action = "TEST";
         AdmissionControlService admissionControlService = mock(AdmissionControlService.class);
-        doThrow(new OpenSearchRejectedExecutionException()).when(admissionControlService).applyTransportAdmissionControl(action, null);
+        doThrow(new DensityRejectedExecutionException()).when(admissionControlService).applyTransportAdmissionControl(action, null);
         InterceptingRequestHandler<TransportRequest> handler = new InterceptingRequestHandler<>(action);
         admissionControlTransportHandler = new AdmissionControlTransportHandler<TransportRequest>(
             action,

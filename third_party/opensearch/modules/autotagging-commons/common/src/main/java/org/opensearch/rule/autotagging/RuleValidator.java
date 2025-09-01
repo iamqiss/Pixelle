@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.common.ValidationException;
+import org.density.common.ValidationException;
 import org.joda.time.Instant;
 
 import java.util.ArrayList;
@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.cluster.metadata.WorkloadGroup.isValid;
+import static org.density.cluster.metadata.WorkloadGroup.isValid;
 
 /**
  * This is the validator for rule. It ensures that the rule has a valid description, feature value,
  * update time, attribute map, and the rule adheres to the feature type's constraints.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class RuleValidator {
     private final String id;

@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.telemetry.OTelAttributesConverter;
-import org.opensearch.telemetry.metrics.tags.Tags;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.telemetry.OTelAttributesConverter;
+import org.density.telemetry.metrics.tags.Tags;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
 import io.opentelemetry.api.common.AttributeType;
 import io.opentelemetry.api.internal.InternalAttributeKeyImpl;
 
-public class OTelAttributesConverterTests extends OpenSearchTestCase {
+public class OTelAttributesConverterTests extends DensityTestCase {
 
     public void testConverterNullAttributes() {
         io.opentelemetry.api.common.Attributes otelAttributes = OTelAttributesConverter.convert((Attributes) null);

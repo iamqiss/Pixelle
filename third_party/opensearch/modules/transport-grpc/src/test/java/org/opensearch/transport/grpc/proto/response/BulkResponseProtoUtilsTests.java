@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response;
+package org.density.transport.grpc.proto.response;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.grpc.proto.response.document.bulk.BulkResponseProtoUtils;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
+import org.density.transport.grpc.proto.response.document.bulk.BulkResponseProtoUtils;
 
 import java.io.IOException;
 
 import io.grpc.Status;
 
-public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
+public class BulkResponseProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithSuccessfulResponse() throws IOException {
         // Create a successful BulkResponse
@@ -37,7 +37,7 @@ public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
         BulkResponse bulkResponse = new BulkResponse(responses, 100);
 
         // Convert to Protocol Buffer
-        org.opensearch.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
+        org.density.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
 
         // Verify the conversion
         assertEquals("Should have the correct took time", 100, protoResponse.getBulkResponseBody().getTook());
@@ -45,8 +45,8 @@ public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
         assertEquals("Should have 1 item", 1, protoResponse.getBulkResponseBody().getItemsCount());
 
         // Verify the item response
-        org.opensearch.protobufs.Item item = protoResponse.getBulkResponseBody().getItems(0);
-        org.opensearch.protobufs.ResponseItem responseItem = item.getIndex();
+        org.density.protobufs.Item item = protoResponse.getBulkResponseBody().getItems(0);
+        org.density.protobufs.ResponseItem responseItem = item.getIndex();
         assertEquals("Should have the correct index", "test-index", responseItem.getIndex());
         assertEquals("Should have the correct id", "test-id", responseItem.getId().getString());
         assertEquals("Should have the correct status", Status.OK.getCode().value(), responseItem.getStatus());
@@ -65,7 +65,7 @@ public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
         BulkResponse bulkResponse = new BulkResponse(responses, 100);
 
         // Convert to Protocol Buffer
-        org.opensearch.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
+        org.density.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
 
         // Verify the conversion
         assertEquals("Should have the correct took time", 100, protoResponse.getBulkResponseBody().getTook());
@@ -73,8 +73,8 @@ public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
         assertEquals("Should have 1 item", 1, protoResponse.getBulkResponseBody().getItemsCount());
 
         // Verify the item response
-        org.opensearch.protobufs.Item item = protoResponse.getBulkResponseBody().getItems(0);
-        org.opensearch.protobufs.ResponseItem responseItem = item.getIndex();
+        org.density.protobufs.Item item = protoResponse.getBulkResponseBody().getItems(0);
+        org.density.protobufs.ResponseItem responseItem = item.getIndex();
         assertEquals("Should have the correct index", "test-index", responseItem.getIndex());
         assertEquals("Should have the correct id", "test-id", responseItem.getId().getString());
         assertTrue("Should have error", responseItem.getError().getReason().length() > 0);
@@ -94,7 +94,7 @@ public class BulkResponseProtoUtilsTests extends OpenSearchTestCase {
         BulkResponse bulkResponse = new BulkResponse(responses, 100, 50);
 
         // Convert to Protocol Buffer
-        org.opensearch.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
+        org.density.protobufs.BulkResponse protoResponse = BulkResponseProtoUtils.toProto(bulkResponse);
 
         // Verify the conversion
         assertEquals("Should have the correct took time", 100, protoResponse.getBulkResponseBody().getTook());

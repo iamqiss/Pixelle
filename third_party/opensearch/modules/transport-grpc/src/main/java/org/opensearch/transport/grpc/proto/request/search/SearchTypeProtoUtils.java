@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.action.search.SearchType;
-import org.opensearch.protobufs.SearchRequest;
+import org.density.action.search.SearchType;
+import org.density.protobufs.SearchRequest;
 
 /**
- * Utility class for converting SearchType enums between OpenSearch and Protocol Buffers formats.
+ * Utility class for converting SearchType enums between Density and Protocol Buffers formats.
  * This class provides methods to transform search type values to ensure proper execution
  * of search operations with the correct search strategy.
  */

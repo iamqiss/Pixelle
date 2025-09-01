@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.nativeprotocol.NativeOutboundHandler;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.Streams;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.nativeprotocol.NativeOutboundHandler;
 import org.junit.After;
 import org.junit.Before;
 
@@ -67,7 +67,7 @@ import java.util.function.Supplier;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class NativeOutboundHandlerTests extends OpenSearchTestCase {
+public class NativeOutboundHandlerTests extends DensityTestCase {
 
     private final String feature1 = "feature1";
     private final String feature2 = "feature2";
@@ -252,7 +252,7 @@ public class NativeOutboundHandlerTests extends OpenSearchTestCase {
         String action = "handshake";
         long requestId = randomLongBetween(0, 300);
         threadContext.putHeader("header", "header_value");
-        OpenSearchException error = new OpenSearchException("boom");
+        DensityException error = new DensityException("boom");
 
         AtomicLong requestIdRef = new AtomicLong();
         AtomicReference<String> actionRef = new AtomicReference<>();
@@ -290,7 +290,7 @@ public class NativeOutboundHandlerTests extends OpenSearchTestCase {
         assertTrue(header.isError());
 
         RemoteTransportException remoteException = tuple.v2().streamInput().readException();
-        assertThat(remoteException.getCause(), instanceOf(OpenSearchException.class));
+        assertThat(remoteException.getCause(), instanceOf(DensityException.class));
         assertEquals(remoteException.getCause().getMessage(), "boom");
         assertEquals(action, remoteException.action());
         assertEquals(channel.getLocalAddress(), remoteException.address().address());

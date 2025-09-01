@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 /**
  * Settings for a node role
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeRoleSettings {
 

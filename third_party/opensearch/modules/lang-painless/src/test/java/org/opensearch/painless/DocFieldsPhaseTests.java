@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.Compiler.Loader;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupBuilder;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.symbol.ScriptScope;
-import org.opensearch.script.ScriptContext;
+import org.density.painless.Compiler.Loader;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupBuilder;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.symbol.ScriptScope;
+import org.density.script.ScriptContext;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;

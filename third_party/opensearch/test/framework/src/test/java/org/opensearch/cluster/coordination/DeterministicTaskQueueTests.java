@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +44,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
-import static org.opensearch.threadpool.ThreadPool.Names.GENERIC;
+import static org.density.node.Node.NODE_NAME_SETTING;
+import static org.density.threadpool.ThreadPool.Names.GENERIC;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
@@ -56,7 +56,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.oneOf;
 import static org.hamcrest.core.Is.is;
 
-public class DeterministicTaskQueueTests extends OpenSearchTestCase {
+public class DeterministicTaskQueueTests extends DensityTestCase {
 
     public void testRunRandomTask() {
         final DeterministicTaskQueue taskQueue = newTaskQueue();

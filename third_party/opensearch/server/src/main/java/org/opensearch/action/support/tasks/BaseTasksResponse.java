@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.tasks;
+package org.density.action.support.tasks;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.TaskOperationFailure;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,21 +50,21 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.ExceptionsHelper.rethrowAndSuppress;
+import static org.density.ExceptionsHelper.rethrowAndSuppress;
 
 /**
  * Base class for responses of task-related operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BaseTasksResponse extends ActionResponse {
     protected static final String TASK_FAILURES = "task_failures";
     protected static final String NODE_FAILURES = "node_failures";
 
     private List<TaskOperationFailure> taskFailures;
-    private List<OpenSearchException> nodeFailures;
+    private List<DensityException> nodeFailures;
 
-    public BaseTasksResponse(List<TaskOperationFailure> taskFailures, List<? extends OpenSearchException> nodeFailures) {
+    public BaseTasksResponse(List<TaskOperationFailure> taskFailures, List<? extends DensityException> nodeFailures) {
         this.taskFailures = taskFailures == null ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(taskFailures));
         this.nodeFailures = nodeFailures == null ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(nodeFailures));
     }
@@ -92,7 +92,7 @@ public class BaseTasksResponse extends ActionResponse {
             exp.writeTo(out);
         }
         out.writeVInt(nodeFailures.size());
-        for (OpenSearchException exp : nodeFailures) {
+        for (DensityException exp : nodeFailures) {
             exp.writeTo(out);
         }
     }
@@ -107,7 +107,7 @@ public class BaseTasksResponse extends ActionResponse {
     /**
      * The list of node failures exception.
      */
-    public List<OpenSearchException> getNodeFailures() {
+    public List<DensityException> getNodeFailures() {
         return nodeFailures;
     }
 
@@ -120,7 +120,7 @@ public class BaseTasksResponse extends ActionResponse {
                 getNodeFailures().stream(),
                 getTaskFailures().stream()
                     .map(
-                        f -> new OpenSearchException(
+                        f -> new DensityException(
                             "{} of [{}] failed",
                             f.getCause(),
                             operationName,
@@ -144,7 +144,7 @@ public class BaseTasksResponse extends ActionResponse {
 
         if (getNodeFailures() != null && getNodeFailures().size() > 0) {
             builder.startArray(NODE_FAILURES);
-            for (OpenSearchException ex : getNodeFailures()) {
+            for (DensityException ex : getNodeFailures()) {
                 builder.startObject();
                 ex.toXContent(builder, params);
                 builder.endObject();

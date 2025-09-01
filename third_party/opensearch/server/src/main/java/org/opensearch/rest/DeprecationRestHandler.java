@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.Strings;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ import java.util.Objects;
  * {@code DeprecationRestHandler} provides a proxy for any existing {@link RestHandler} so that usage of the handler can be
  * logged using the {@link DeprecationLogger}.
  *
- * @opensearch.api
+ * @density.api
  */
 public class DeprecationRestHandler implements RestHandler {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress.ShardSnapshotStatus;
-import org.opensearch.cluster.SnapshotsInProgress.ShardState;
-import org.opensearch.cluster.SnapshotsInProgress.State;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotFailedException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus.Stage;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestDeduplicator;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.SnapshotsInProgress.ShardSnapshotStatus;
+import org.density.cluster.SnapshotsInProgress.ShardState;
+import org.density.cluster.SnapshotsInProgress.State;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.index.snapshots.IndexShardSnapshotFailedException;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.snapshots.IndexShardSnapshotStatus.Stage;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.indices.IndicesService;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestDeduplicator;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -87,9 +87,9 @@ import static java.util.Collections.emptyMap;
 /**
  * This service runs on data nodes and controls currently running shard snapshots on these nodes. It is responsible for
  * starting and stopping shard level snapshots.
- * See package level documentation of {@link org.opensearch.snapshots} for details.
+ * See package level documentation of {@link org.density.snapshots} for details.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SnapshotShardsService extends AbstractLifecycleComponent implements ClusterStateListener, IndexEventListener {
     private static final Logger logger = LogManager.getLogger(SnapshotShardsService.class);

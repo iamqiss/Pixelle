@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.common;
+package org.density.core.common;
 
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.set.Sets;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 /** tests for Strings utility class */
-public class StringsTests extends OpenSearchTestCase {
+public class StringsTests extends DensityTestCase {
     public void testIsAllOrWildCardString() {
         assertThat(Strings.isAllOrWildcard("_all"), is(true));
         assertThat(Strings.isAllOrWildcard("*"), is(true));
@@ -53,8 +53,8 @@ public class StringsTests extends OpenSearchTestCase {
          * circle around it with a slash through it. As in "no 'o's allowed
          * here.
          */
-        assertEquals("o", org.opensearch.core.common.Strings.cleanTruncate("o\uD83D\uDEAB", 1));
-        assertEquals("", org.opensearch.core.common.Strings.cleanTruncate("foo", 0));
+        assertEquals("o", org.density.core.common.Strings.cleanTruncate("o\uD83D\uDEAB", 1));
+        assertEquals("", org.density.core.common.Strings.cleanTruncate("foo", 0));
     }
 
     public void testSplitStringToSet() {

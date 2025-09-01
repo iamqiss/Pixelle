@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Transport action for returning the term vector (doc frequency, positions, offsets) for a
  * document.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermVectorsAction extends ActionType<TermVectorsResponse> {
 

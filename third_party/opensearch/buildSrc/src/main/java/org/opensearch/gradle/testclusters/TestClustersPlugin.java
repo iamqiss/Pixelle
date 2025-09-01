@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
-import org.opensearch.gradle.DistributionDownloadPlugin;
-import org.opensearch.gradle.JdkDownloadPlugin;
-import org.opensearch.gradle.ReaperPlugin;
-import org.opensearch.gradle.ReaperService;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin;
-import org.opensearch.gradle.internal.InternalDistributionDownloadPlugin;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.DistributionDownloadPlugin;
+import org.density.gradle.JdkDownloadPlugin;
+import org.density.gradle.ReaperPlugin;
+import org.density.gradle.ReaperService;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.info.GlobalBuildInfoPlugin;
+import org.density.gradle.internal.InternalDistributionDownloadPlugin;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -57,7 +57,7 @@ import javax.inject.Inject;
 
 import java.io.File;
 
-import static org.opensearch.gradle.util.GradleUtils.noop;
+import static org.density.gradle.util.GradleUtils.noop;
 
 public class TestClustersPlugin implements Plugin<Project> {
 
@@ -92,7 +92,7 @@ public class TestClustersPlugin implements Plugin<Project> {
         ReaperService reaper = project.getRootProject().getExtensions().getByType(ReaperService.class);
 
         // enable the DSL to describe clusters
-        NamedDomainObjectContainer<OpenSearchCluster> container = createTestClustersContainerExtension(project, reaper);
+        NamedDomainObjectContainer<DensityCluster> container = createTestClustersContainerExtension(project, reaper);
 
         // provide a task to be able to list defined clusters.
         createListClustersTask(project, container);
@@ -113,11 +113,11 @@ public class TestClustersPlugin implements Plugin<Project> {
         project.getRootProject().getPluginManager().apply(TestClustersHookPlugin.class);
     }
 
-    private NamedDomainObjectContainer<OpenSearchCluster> createTestClustersContainerExtension(Project project, ReaperService reaper) {
+    private NamedDomainObjectContainer<DensityCluster> createTestClustersContainerExtension(Project project, ReaperService reaper) {
         // Create an extensions that allows describing clusters
-        NamedDomainObjectContainer<OpenSearchCluster> container = project.container(
-            OpenSearchCluster.class,
-            name -> new OpenSearchCluster(
+        NamedDomainObjectContainer<DensityCluster> container = project.container(
+            DensityCluster.class,
+            name -> new DensityCluster(
                 name,
                 project,
                 reaper,
@@ -130,11 +130,11 @@ public class TestClustersPlugin implements Plugin<Project> {
         return container;
     }
 
-    private void createListClustersTask(Project project, NamedDomainObjectContainer<OpenSearchCluster> container) {
+    private void createListClustersTask(Project project, NamedDomainObjectContainer<DensityCluster> container) {
         // Task is never up to date so we can pass an lambda for the task action
         project.getTasks().register(LIST_TASK_NAME, task -> {
-            task.setGroup("OpenSearch cluster formation");
-            task.setDescription("Lists all OpenSearch clusters configured for this project");
+            task.setGroup("Density cluster formation");
+            task.setDescription("Lists all Density clusters configured for this project");
             task.doLast(
                 (Task t) -> container.forEach(cluster -> logger.lifecycle("   * {}: {}", cluster.getName(), cluster.getNumberOfNodes()))
             );

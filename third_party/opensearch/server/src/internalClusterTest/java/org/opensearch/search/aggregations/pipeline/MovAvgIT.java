@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.collect.EvictingQueue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram.Bucket;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.common.collect.EvictingQueue;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.histogram.Histogram.Bucket;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.client.Client;
 import org.hamcrest.Matchers;
 
 import java.util.ArrayList;
@@ -60,26 +60,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
-import static org.opensearch.search.aggregations.AggregationBuilders.avg;
-import static org.opensearch.search.aggregations.AggregationBuilders.histogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.min;
-import static org.opensearch.search.aggregations.AggregationBuilders.range;
-import static org.opensearch.search.aggregations.PipelineAggregatorBuilders.derivative;
-import static org.opensearch.search.aggregations.PipelineAggregatorBuilders.movingAvg;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+import static org.density.search.aggregations.AggregationBuilders.avg;
+import static org.density.search.aggregations.AggregationBuilders.histogram;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.min;
+import static org.density.search.aggregations.AggregationBuilders.range;
+import static org.density.search.aggregations.PipelineAggregatorBuilders.derivative;
+import static org.density.search.aggregations.PipelineAggregatorBuilders.movingAvg;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class MovAvgIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class MovAvgIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     private static final String INTERVAL_FIELD = "l_value";
     private static final String VALUE_FIELD = "v_value";
     private static final String VALUE_FIELD2 = "v_value2";

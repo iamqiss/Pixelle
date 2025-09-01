@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.transport.Transport;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.transport.Transport;
 import org.junit.Assert;
 
 import java.util.ArrayList;

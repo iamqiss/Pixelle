@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.DocIdSetIterator;
@@ -43,7 +43,7 @@ import java.io.IOException;
  * aggregations, which only use {@link #advanceExact(int)} and
  * {@link #getValueCount()} and {@link #nextOrd()} and {@link #lookupOrd(long)}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractSortedSetDocValues extends SortedSetDocValues {
 

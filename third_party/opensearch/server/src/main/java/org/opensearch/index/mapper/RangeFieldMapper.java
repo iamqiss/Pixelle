@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.InvertableType;
 import org.apache.lucene.document.StoredValue;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.util.LocaleUtils;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.BinaryIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Explicit;
+import org.density.common.collect.Tuple;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.lucene.Lucene;
+import org.density.common.network.InetAddresses;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.common.util.LocaleUtils;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.BinaryIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -74,15 +74,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.query.RangeQueryBuilder.GTE_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.GT_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.LTE_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.LT_FIELD;
+import static org.density.index.query.RangeQueryBuilder.GTE_FIELD;
+import static org.density.index.query.RangeQueryBuilder.GT_FIELD;
+import static org.density.index.query.RangeQueryBuilder.LTE_FIELD;
+import static org.density.index.query.RangeQueryBuilder.LT_FIELD;
 
 /**
  * A {@link FieldMapper} for indexing numeric and date ranges, and creating queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RangeFieldMapper extends ParametrizedFieldMapper {
     public static final boolean DEFAULT_INCLUDE_UPPER = true;
@@ -91,7 +91,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
     /**
      * Default parameters for range fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final Explicit<Boolean> COERCE = new Explicit<>(true, false);
@@ -108,7 +108,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for range fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -248,7 +248,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for range fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class RangeFieldType extends MappedFieldType {
         protected final RangeType rangeType;
@@ -584,7 +584,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
     /**
      * Class defining a range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Range {
         RangeType type;
@@ -647,7 +647,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
     /**
      * Doc values field for binary ranges
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class BinaryRangesDocValuesField extends CustomDocValuesField {
 
@@ -670,7 +670,7 @@ public class RangeFieldMapper extends ParametrizedFieldMapper {
             try {
                 return rangeType.encodeRanges(ranges);
             } catch (IOException e) {
-                throw new OpenSearchException("failed to encode ranges", e);
+                throw new DensityException("failed to encode ranges", e);
             }
         }
 

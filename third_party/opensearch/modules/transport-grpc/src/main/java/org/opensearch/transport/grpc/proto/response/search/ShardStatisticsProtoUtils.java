@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ShardStatistics;
-import org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception.ShardOperationFailedExceptionProtoUtils;
+import org.density.ExceptionsHelper;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ShardStatistics;
+import org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception.ShardOperationFailedExceptionProtoUtils;
 
 import java.io.IOException;
 

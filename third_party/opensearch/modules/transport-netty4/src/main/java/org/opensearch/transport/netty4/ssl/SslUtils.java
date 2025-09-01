@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
-package org.opensearch.transport.netty4.ssl;
+package org.density.transport.netty4.ssl;
 
-import org.opensearch.OpenSearchSecurityException;
+import org.density.DensitySecurityException;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import io.netty.buffer.ByteBuf;
 
 /**
- * @see <a href="https://github.com/opensearch-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/opensearch/security/ssl/util/TLSUtil.java">TLSUtil</a>
+ * @see <a href="https://github.com/density-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/density/security/ssl/util/TLSUtil.java">TLSUtil</a>
  */
 public class SslUtils {
     private static final String[] DEFAULT_SSL_PROTOCOLS = { "TLSv1.3", "TLSv1.2", "TLSv1.1" };
@@ -46,7 +46,7 @@ public class SslUtils {
             engine.setUseClientMode(false);
             return engine;
         } catch (final NoSuchAlgorithmException ex) {
-            throw new OpenSearchSecurityException("Unable to initialize default server SSL engine", ex);
+            throw new DensitySecurityException("Unable to initialize default server SSL engine", ex);
         }
     }
 
@@ -57,7 +57,7 @@ public class SslUtils {
             engine.setUseClientMode(true);
             return engine;
         } catch (final NoSuchAlgorithmException ex) {
-            throw new OpenSearchSecurityException("Unable to initialize default client SSL engine", ex);
+            throw new DensitySecurityException("Unable to initialize default client SSL engine", ex);
         }
     }
 

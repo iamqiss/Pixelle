@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.env.Environment;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.node.MockNode;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.nio.MockNioTransportPlugin;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.env.Environment;
+import org.density.http.HttpInfo;
+import org.density.node.MockNode;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginInfo;
+import org.density.transport.client.Client;
+import org.density.transport.nio.MockNioTransportPlugin;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -66,10 +66,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.admin.cluster.node.info.NodesInfoRequest.Metric.HTTP;
-import static org.opensearch.action.admin.cluster.node.info.NodesInfoRequest.Metric.SETTINGS;
-import static org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest.Metric.BREAKER;
-import static org.opensearch.test.OpenSearchTestCase.getTestTransportType;
+import static org.density.action.admin.cluster.node.info.NodesInfoRequest.Metric.HTTP;
+import static org.density.action.admin.cluster.node.info.NodesInfoRequest.Metric.SETTINGS;
+import static org.density.action.admin.cluster.node.stats.NodesStatsRequest.Metric.BREAKER;
+import static org.density.test.DensityTestCase.getTestTransportType;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -185,7 +185,7 @@ public final class ExternalTestCluster extends TestCluster {
             } catch (IOException e1) {
                 e.addSuppressed(e1);
             }
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 

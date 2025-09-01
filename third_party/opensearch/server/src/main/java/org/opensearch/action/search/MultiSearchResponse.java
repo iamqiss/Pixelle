@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * A multi search response.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MultiSearchResponse extends ActionResponse implements Iterable<MultiSearchResponse.Item>, ToXContentObject {
@@ -80,7 +80,7 @@ public class MultiSearchResponse extends ActionResponse implements Iterable<Mult
     /**
      * A search response item, holding the actual search response, or an error message if it failed.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Item implements Writeable {
@@ -194,7 +194,7 @@ public class MultiSearchResponse extends ActionResponse implements Iterable<Mult
         for (Item item : items) {
             builder.startObject();
             if (item.isFailure()) {
-                OpenSearchException.generateFailureXContent(builder, params, item.getFailure(), true);
+                DensityException.generateFailureXContent(builder, params, item.getFailure(), true);
                 builder.field(Fields.STATUS, ExceptionsHelper.status(item.getFailure()).getStatus());
             } else {
                 item.getResponse().innerToXContent(builder, params);
@@ -214,7 +214,7 @@ public class MultiSearchResponse extends ActionResponse implements Iterable<Mult
     private static MultiSearchResponse.Item itemFromXContent(XContentParser parser) throws IOException {
         // This parsing logic is a bit tricky here, because the multi search response itself is tricky:
         // 1) The json objects inside the responses array are either a search response or a serialized exception
-        // 2) Each response json object gets a status field injected that OpenSearchException.failureFromXContent(...) does not parse,
+        // 2) Each response json object gets a status field injected that DensityException.failureFromXContent(...) does not parse,
         // but SearchResponse.innerFromXContent(...) parses and then ignores. The status field is not needed to parse
         // the response item. However in both cases this method does need to parse the 'status' field otherwise the parsing of
         // the response item in the next json array element will fail due to parsing errors.
@@ -229,7 +229,7 @@ public class MultiSearchResponse extends ActionResponse implements Iterable<Mult
                 case FIELD_NAME:
                     fieldName = parser.currentName();
                     if ("error".equals(fieldName)) {
-                        item = new Item(null, OpenSearchException.failureFromXContent(parser));
+                        item = new Item(null, DensityException.failureFromXContent(parser));
                     } else if ("status".equals(fieldName) == false) {
                         item = new Item(SearchResponse.innerFromXContent(parser), null);
                         break outer;
@@ -249,7 +249,7 @@ public class MultiSearchResponse extends ActionResponse implements Iterable<Mult
     /**
      * Fields for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String RESPONSES = "responses";

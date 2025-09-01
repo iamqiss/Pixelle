@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.stats.IndexingPressurePerShardStats;
-import org.opensearch.index.stats.IndexingPressureStats;
-import org.opensearch.index.stats.ShardIndexingPressureStats;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.stats.IndexingPressurePerShardStats;
+import org.density.index.stats.IndexingPressureStats;
+import org.density.index.stats.ShardIndexingPressureStats;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTestCase {
+public class ShardIndexingPressureConcurrentExecutionTests extends DensityTestCase {
 
     private final Settings settings = Settings.builder()
         .put(IndexingPressure.MAX_INDEXING_BYTES.getKey(), "10KB")
@@ -240,7 +240,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
                     } else {
                         releasables[counter] = shardIndexingPressure.markPrimaryOperationStarted(shardId1, 200, false);
                     }
-                } catch (OpenSearchRejectedExecutionException e) {
+                } catch (DensityRejectedExecutionException e) {
                     rejectionCount.addAndGet(1);
                 }
             });
@@ -310,7 +310,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
             threads[i] = new Thread(() -> {
                 try {
                     releasables[counter] = shardIndexingPressure.markReplicaOperationStarted(shardId1, 300, false);
-                } catch (OpenSearchRejectedExecutionException e) {
+                } catch (DensityRejectedExecutionException e) {
                     rejectionCount.addAndGet(1);
                 }
             });
@@ -515,7 +515,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
         // Generate a load which breaches both primary parameter
         if (randomBoolean) {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId1, 11 * 1024, false)
             );
 
@@ -539,7 +539,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
             );
         } else {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markPrimaryOperationStarted(shardId1, 11 * 1024, false)
             );
 
@@ -607,7 +607,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
 
         // Generate a load which breaches both primary parameter
         expectThrows(
-            OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException.class,
             () -> shardIndexingPressure.markReplicaOperationStarted(shardId1, 11 * 1024, false)
         );
 
@@ -667,12 +667,12 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
         // Generate a load which breaches both primary parameter
         if (randomBoolean) {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId1, 200 * 1024, false)
             );
         } else {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markPrimaryOperationStarted(shardId1, 200 * 1024, false)
             );
         }
@@ -755,7 +755,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
 
         // Generate a load which breaches both primary parameter
         expectThrows(
-            OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException.class,
             () -> shardIndexingPressure.markReplicaOperationStarted(shardId1, 300 * 1024, false)
         );
 
@@ -821,12 +821,12 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
         // Generate a load which breaches both primary parameter
         if (randomBoolean) {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markCoordinatingOperationStarted(shardId1, 240 * 1024, false)
             );
         } else {
             expectThrows(
-                OpenSearchRejectedExecutionException.class,
+                DensityRejectedExecutionException.class,
                 () -> shardIndexingPressure.markPrimaryOperationStarted(shardId1, 240 * 1024, false)
             );
         }
@@ -910,7 +910,7 @@ public class ShardIndexingPressureConcurrentExecutionTests extends OpenSearchTes
 
         // Generate a load which breaches both primary parameter
         expectThrows(
-            OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException.class,
             () -> shardIndexingPressure.markReplicaOperationStarted(shardId1, 340 * 1024, false)
         );
 

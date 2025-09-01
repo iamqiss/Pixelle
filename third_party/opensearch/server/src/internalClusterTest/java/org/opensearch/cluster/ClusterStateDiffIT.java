@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexGraveyardTests;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfoTests;
-import org.opensearch.snapshots.SnapshotsInProgressSerializationTests;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexGraveyardTests;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.GatewayService;
+import org.density.index.query.QueryBuilders;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfoTests;
+import org.density.snapshots.SnapshotsInProgressSerializationTests;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collections;
 import java.util.List;
@@ -79,17 +79,17 @@ import java.util.Set;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.metadata.AliasMetadata.newAliasMetadataBuilder;
-import static org.opensearch.cluster.routing.RandomShardRoutingMutator.randomChange;
-import static org.opensearch.cluster.routing.RandomShardRoutingMutator.randomReason;
-import static org.opensearch.test.VersionUtils.randomVersion;
-import static org.opensearch.test.XContentTestUtils.convertToMap;
-import static org.opensearch.test.XContentTestUtils.differenceBetweenMapsIgnoringArrayOrder;
+import static org.density.cluster.metadata.AliasMetadata.newAliasMetadataBuilder;
+import static org.density.cluster.routing.RandomShardRoutingMutator.randomChange;
+import static org.density.cluster.routing.RandomShardRoutingMutator.randomReason;
+import static org.density.test.VersionUtils.randomVersion;
+import static org.density.test.XContentTestUtils.convertToMap;
+import static org.density.test.XContentTestUtils.differenceBetweenMapsIgnoringArrayOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 0, numClientNodes = 0)
-public class ClusterStateDiffIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 0, numClientNodes = 0)
+public class ClusterStateDiffIT extends DensityIntegTestCase {
     public void testClusterStateDiffSerialization() throws Exception {
         NamedWriteableRegistry namedWriteableRegistry = new NamedWriteableRegistry(ClusterModule.getNamedWriteables());
         DiscoveryNode clusterManagerNode = randomNode("cluster-manager");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.support.PlainActionFuture;
+import org.density.core.tasks.TaskId;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -44,7 +44,7 @@ import java.util.Collections;
 
 public abstract class AbstractAsyncBulkByScrollActionTestCase<
     Request extends AbstractBulkByScrollRequest<Request>,
-    Response extends BulkByScrollResponse> extends OpenSearchTestCase {
+    Response extends BulkByScrollResponse> extends DensityTestCase {
     protected ThreadPool threadPool;
     protected BulkByScrollTask task;
 

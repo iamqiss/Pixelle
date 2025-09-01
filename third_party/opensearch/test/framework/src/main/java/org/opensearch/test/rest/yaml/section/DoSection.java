@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.section;
+package org.density.test.rest.yaml.section;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.client.HasAttributeNodeSelector;
-import org.opensearch.client.Node;
-import org.opensearch.client.NodeSelector;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.HeaderWarning;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.hamcrest.RegexMatcher;
-import org.opensearch.test.rest.yaml.ClientYamlTestExecutionContext;
-import org.opensearch.test.rest.yaml.ClientYamlTestResponse;
-import org.opensearch.test.rest.yaml.ClientYamlTestResponseException;
+import org.density.Version;
+import org.density.client.HasAttributeNodeSelector;
+import org.density.client.Node;
+import org.density.client.NodeSelector;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.HeaderWarning;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.hamcrest.RegexMatcher;
+import org.density.test.rest.yaml.ClientYamlTestExecutionContext;
+import org.density.test.rest.yaml.ClientYamlTestResponse;
+import org.density.test.rest.yaml.ClientYamlTestResponseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toSet;
-import static org.opensearch.common.collect.Tuple.tuple;
-import static org.opensearch.test.hamcrest.RegexMatcher.matches;
+import static org.density.common.collect.Tuple.tuple;
+import static org.density.test.hamcrest.RegexMatcher.matches;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;

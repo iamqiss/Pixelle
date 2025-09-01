@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.TestProcessor;
-import org.opensearch.script.ScriptService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.Processor;
+import org.density.ingest.TestProcessor;
+import org.density.script.ScriptService;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.Collections;
@@ -47,7 +47,7 @@ import java.util.function.Consumer;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 
-public class ForEachProcessorFactoryTests extends OpenSearchTestCase {
+public class ForEachProcessorFactoryTests extends DensityTestCase {
 
     private final ScriptService scriptService = mock(ScriptService.class);
     private final Consumer<Runnable> genericExecutor = Runnable::run;
@@ -98,7 +98,7 @@ public class ForEachProcessorFactoryTests extends OpenSearchTestCase {
         processorTypes.put("_first", Collections.emptyMap());
         processorTypes.put("_second", Collections.emptyMap());
         config.put("processor", processorTypes);
-        Exception exception = expectThrows(OpenSearchParseException.class, () -> forEachFactory.create(registry, null, null, config));
+        Exception exception = expectThrows(DensityParseException.class, () -> forEachFactory.create(registry, null, null, config));
         assertThat(exception.getMessage(), equalTo("[processor] Must specify exactly one processor type"));
     }
 
@@ -108,7 +108,7 @@ public class ForEachProcessorFactoryTests extends OpenSearchTestCase {
         config.put("field", "_field");
         config.put("processor", Collections.singletonMap("_name", Collections.emptyMap()));
         Exception expectedException = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> forEachFactory.create(Collections.emptyMap(), null, null, config)
         );
         assertThat(expectedException.getMessage(), equalTo("No processor type exists with name [_name]"));

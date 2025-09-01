@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 
-public class AttachmentProcessorFactoryTests extends OpenSearchTestCase {
+public class AttachmentProcessorFactoryTests extends DensityTestCase {
 
     private AttachmentProcessor.Factory factory = new AttachmentProcessor.Factory();
 
@@ -115,7 +115,7 @@ public class AttachmentProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("exception expected");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), containsString("[properties] illegal field option [invalid]"));
             // ensure allowed fields are mentioned
             for (AttachmentProcessor.Property property : AttachmentProcessor.Property.values()) {
@@ -129,7 +129,7 @@ public class AttachmentProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("exception expected");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[properties] property isn't a list, but of type [java.lang.String]"));
         }
     }

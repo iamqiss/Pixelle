@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata.State;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver.ExpressionResolver;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.InvalidIndexNameException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.DocWriteRequest;
+import org.density.action.IndicesRequest;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata.State;
+import org.density.cluster.metadata.IndexNameExpressionResolver.ExpressionResolver;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.indices.IndexClosedException;
+import org.density.indices.InvalidIndexNameException;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -66,11 +66,11 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createBackingIndex;
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_HIDDEN_SETTING;
-import static org.opensearch.cluster.metadata.IndexNameExpressionResolver.SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.cluster.DataStreamTestHelper.createBackingIndex;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_HIDDEN_SETTING;
+import static org.density.cluster.metadata.IndexNameExpressionResolver.SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY;
+import static org.density.common.util.set.Sets.newHashSet;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -83,7 +83,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class IndexNameExpressionResolverTests extends OpenSearchTestCase {
+public class IndexNameExpressionResolverTests extends DensityTestCase {
     private IndexNameExpressionResolver indexNameExpressionResolver;
     private ThreadContext threadContext;
 
@@ -2437,7 +2437,7 @@ public class IndexNameExpressionResolverTests extends OpenSearchTestCase {
         IndexMetadata index1 = createBackingIndex(dataStream1, 1).build();
         IndexMetadata index2 = createBackingIndex(dataStream1, 2).build();
         IndexMetadata justAnIndex = IndexMetadata.builder("logs-foobarbaz-0")
-            .settings(OpenSearchTestCase.settings(Version.CURRENT))
+            .settings(DensityTestCase.settings(Version.CURRENT))
             .numberOfShards(1)
             .numberOfReplicas(1)
             .putAlias(new AliasMetadata.Builder("logs-foobarbaz"))
@@ -2470,7 +2470,7 @@ public class IndexNameExpressionResolverTests extends OpenSearchTestCase {
         IndexMetadata index1 = createBackingIndex(dataStream1, 1).build();
         IndexMetadata index2 = createBackingIndex(dataStream1, 2).build();
         IndexMetadata justAnIndex = IndexMetadata.builder("logs-foobarbaz-0")
-            .settings(OpenSearchTestCase.settings(Version.CURRENT))
+            .settings(DensityTestCase.settings(Version.CURRENT))
             .numberOfShards(1)
             .numberOfReplicas(1)
             .putAlias(new AliasMetadata.Builder("logs-foobarbaz"))

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.MapperService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import java.util.List;
 /**
  * Transport response for a multi get.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MultiGetResponse extends ActionResponse implements Iterable<MultiGetItemResponse>, ToXContentObject {
@@ -73,7 +73,7 @@ public class MultiGetResponse extends ActionResponse implements Iterable<MultiGe
     /**
      * Represents a failure.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Failure implements Writeable, ToXContentObject {
@@ -133,7 +133,7 @@ public class MultiGetResponse extends ActionResponse implements Iterable<MultiGe
             builder.startObject();
             builder.field(INDEX.getPreferredName(), index);
             builder.field(ID.getPreferredName(), id);
-            OpenSearchException.generateFailureXContent(builder, params, exception, true);
+            DensityException.generateFailureXContent(builder, params, exception, true);
             builder.endObject();
             return builder;
         }
@@ -211,7 +211,7 @@ public class MultiGetResponse extends ActionResponse implements Iterable<MultiGe
         String currentFieldName = null;
         String index = null;
         String id = null;
-        OpenSearchException exception = null;
+        DensityException exception = null;
         GetResult getResult = null;
         for (Token token = parser.nextToken(); token != Token.END_OBJECT; token = parser.nextToken()) {
             switch (token) {
@@ -233,7 +233,7 @@ public class MultiGetResponse extends ActionResponse implements Iterable<MultiGe
                     break;
                 case START_OBJECT:
                     if (ERROR.match(currentFieldName, parser.getDeprecationHandler())) {
-                        exception = OpenSearchException.fromXContent(parser);
+                        exception = DensityException.fromXContent(parser);
                     }
                     break;
                 default:

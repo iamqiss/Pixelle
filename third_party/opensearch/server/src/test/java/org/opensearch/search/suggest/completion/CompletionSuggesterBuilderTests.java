@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.CompletionFieldMapper.CompletionFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.suggest.AbstractSuggestionBuilderTestCase;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.search.suggest.completion.context.CategoryQueryContext;
-import org.opensearch.search.suggest.completion.context.ContextBuilder;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextMapping.InternalQueryContext;
-import org.opensearch.search.suggest.completion.context.ContextMappings;
-import org.opensearch.search.suggest.completion.context.GeoQueryContext;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.CompletionFieldMapper.CompletionFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.suggest.AbstractSuggestionBuilderTestCase;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.search.suggest.completion.context.CategoryQueryContext;
+import org.density.search.suggest.completion.context.ContextBuilder;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.ContextMapping.InternalQueryContext;
+import org.density.search.suggest.completion.context.ContextMappings;
+import org.density.search.suggest.completion.context.GeoQueryContext;
 
 import java.io.IOException;
 import java.util.ArrayList;

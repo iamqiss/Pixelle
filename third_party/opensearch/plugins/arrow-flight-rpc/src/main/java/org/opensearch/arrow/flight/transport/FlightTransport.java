@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.FlightProducer;
@@ -19,37 +19,37 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.arrow.flight.stats.FlightStatsCollector;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.BindTransportException;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.InboundHandler;
-import org.opensearch.transport.OutboundHandler;
-import org.opensearch.transport.StatsTracker;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TcpServerChannel;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportHandshaker;
-import org.opensearch.transport.TransportKeepAlive;
+import org.density.Version;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.arrow.flight.stats.FlightStatsCollector;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.BindTransportException;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.InboundHandler;
+import org.density.transport.OutboundHandler;
+import org.density.transport.StatsTracker;
+import org.density.transport.TcpChannel;
+import org.density.transport.TcpServerChannel;
+import org.density.transport.TcpTransport;
+import org.density.transport.Transport;
+import org.density.transport.TransportHandshaker;
+import org.density.transport.TransportKeepAlive;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -70,10 +70,10 @@ import java.util.stream.Collectors;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 
-import static org.opensearch.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_BIND_HOST;
-import static org.opensearch.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PORTS;
-import static org.opensearch.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PUBLISH_HOST;
-import static org.opensearch.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PUBLISH_PORT;
+import static org.density.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_BIND_HOST;
+import static org.density.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PORTS;
+import static org.density.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PUBLISH_HOST;
+import static org.density.arrow.flight.bootstrap.ServerComponents.SETTING_FLIGHT_PUBLISH_PORT;
 
 @SuppressWarnings("removal")
 class FlightTransport extends TcpTransport {

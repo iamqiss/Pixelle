@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.CorruptIndexException;
@@ -17,21 +17,21 @@ import org.apache.lucene.store.ByteBuffersIndexInput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.lucene.store.IndexOutputOutputStream;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.io.stream.Writeable.Writer;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.gateway.CorruptStateException;
+import org.density.Version;
+import org.density.common.CheckedFunction;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.lucene.store.IndexOutputOutputStream;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.io.stream.Writeable.Writer;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.CompressorRegistry;
+import org.density.gateway.CorruptStateException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -40,7 +40,7 @@ import java.util.Arrays;
 /**
  * Checksum File format used to serialize/deserialize {@link Writeable} objects
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ChecksumWritableBlobStoreFormat<T extends Writeable> {
 

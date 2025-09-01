@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.sort;
+package org.density.transport.grpc.proto.request.search.sort;
 
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 
-public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
+public class SortOrderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoScoreSortAsc() {
         // Test ASC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_ASC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_ASC);
         assertEquals("Sort order should be ASC", SortOrder.ASC, sortOrder);
     }
 
     public void testFromProtoScoreSortDesc() {
         // Test DESC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_DESC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_DESC);
         assertEquals("Sort order should be DESC", SortOrder.DESC, sortOrder);
     }
 
@@ -28,7 +28,7 @@ public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
         // Test UNSPECIFIED order (should throw exception)
         IllegalArgumentException exception = expectThrows(
             IllegalArgumentException.class,
-            () -> SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
+            () -> SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
         );
         assertTrue(
             "Exception message should mention 'Must provide oneof sort combinations'",
@@ -38,13 +38,13 @@ public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
 
     public void testFromProtoGeoDistanceSortAsc() {
         // Test ASC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_ASC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_ASC);
         assertEquals("Sort order should be ASC", SortOrder.ASC, sortOrder);
     }
 
     public void testFromProtoGeoDistanceSortDesc() {
         // Test DESC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_DESC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_DESC);
         assertEquals("Sort order should be DESC", SortOrder.DESC, sortOrder);
     }
 
@@ -52,7 +52,7 @@ public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
         // Test UNSPECIFIED order (should throw exception)
         IllegalArgumentException exception = expectThrows(
             IllegalArgumentException.class,
-            () -> SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
+            () -> SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
         );
         assertTrue(
             "Exception message should mention 'Must provide oneof sort combinations'",
@@ -62,13 +62,13 @@ public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
 
     public void testFromProtoScriptSortAsc() {
         // Test ASC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_ASC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_ASC);
         assertEquals("Sort order should be ASC", SortOrder.ASC, sortOrder);
     }
 
     public void testFromProtoScriptSortDesc() {
         // Test DESC order
-        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_DESC);
+        SortOrder sortOrder = SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_DESC);
         assertEquals("Sort order should be DESC", SortOrder.DESC, sortOrder);
     }
 
@@ -76,7 +76,7 @@ public class SortOrderProtoUtilsTests extends OpenSearchTestCase {
         // Test UNSPECIFIED order (should throw exception)
         IllegalArgumentException exception = expectThrows(
             IllegalArgumentException.class,
-            () -> SortOrderProtoUtils.fromProto(org.opensearch.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
+            () -> SortOrderProtoUtils.fromProto(org.density.protobufs.SortOrder.SORT_ORDER_UNSPECIFIED)
         );
         assertTrue(
             "Exception message should mention 'Must provide oneof sort combinations'",

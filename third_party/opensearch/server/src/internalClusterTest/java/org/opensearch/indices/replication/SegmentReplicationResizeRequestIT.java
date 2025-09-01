@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.Preference;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.Preference;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
 /**
  * This test class verifies Resize Reequests (Shrink, Split, Clone) with segment replication as replication strategy.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 2)
 public class SegmentReplicationResizeRequestIT extends SegmentReplicationBaseIT {
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/17552")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/17552")
     public void testCreateShrinkIndexThrowsExceptionWhenReplicasBehind() throws Exception {
 
         // create index with -1 as refresh interval as we are blocking segrep and we want to control refreshes.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.fieldcomparator;
+package org.density.index.fielddata.fieldcomparator;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -44,22 +44,22 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.comparators.TermOrdValComparator;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.AbstractSortedDocValues;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 
 /**
  * Comparator source for string/binary values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BytesRefFieldComparatorSource extends IndexFieldData.XFieldComparatorSource {
 
@@ -176,7 +176,7 @@ public class BytesRefFieldComparatorSource extends IndexFieldData.XFieldComparat
      * A view of a SortedDocValues where missing values
      * are replaced with the specified term
      *
-     * @opensearch.internal
+     * @density.internal
      */
     // TODO: move this out if we need it for other reasons
     static class ReplaceMissing extends AbstractSortedDocValues {

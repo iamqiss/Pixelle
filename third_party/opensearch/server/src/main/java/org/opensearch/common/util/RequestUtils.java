@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.UUIDs;
+import org.density.common.UUIDs;
 
 /**
  * Common utility methods for request handling.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RequestUtils {
 

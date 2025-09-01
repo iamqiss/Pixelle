@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_BACK_OFF_TIME_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_DURATION_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.ELECTION_MAX_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.ElectionSchedulerFactory.toPositiveLongAtMost;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_BACK_OFF_TIME_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_DURATION_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_INITIAL_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.ELECTION_MAX_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.ElectionSchedulerFactory.toPositiveLongAtMost;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ElectionSchedulerFactoryTests extends OpenSearchTestCase {
+public class ElectionSchedulerFactoryTests extends DensityTestCase {
 
     private TimeValue randomGracePeriod() {
         return TimeValue.timeValueMillis(randomLongBetween(0, 10000));

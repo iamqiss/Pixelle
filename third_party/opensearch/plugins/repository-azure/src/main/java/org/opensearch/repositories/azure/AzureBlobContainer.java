@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.storage.blob.models.BlobStorageException;
 import com.azure.storage.blob.specialized.BlobInputStream;
 import com.azure.storage.common.implementation.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.AbstractBlobContainer;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.ActionRunnable;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.Nullable;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.AbstractBlobContainer;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FileInputStream;
 import java.io.IOException;

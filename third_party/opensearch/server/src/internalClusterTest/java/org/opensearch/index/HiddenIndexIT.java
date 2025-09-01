@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequestBuilder;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.InvalidIndexTemplateException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesRequestBuilder;
+import org.density.action.admin.indices.alias.get.GetAliasesResponse;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.InvalidIndexTemplateException;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class HiddenIndexIT extends OpenSearchIntegTestCase {
+public class HiddenIndexIT extends DensityIntegTestCase {
 
     public void testHiddenIndexSearch() {
         assertAcked(

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.common.path.PathTrie;
-import org.opensearch.core.common.Strings;
+import org.density.common.Booleans;
+import org.density.common.path.PathTrie;
+import org.density.core.common.Strings;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 /**
  * REST utility class
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestUtils {
 
@@ -53,7 +53,7 @@ public class RestUtils {
      * Sets whether we decode a '+' in an url as a space or not.
      */
     private static final boolean DECODE_PLUS_AS_SPACE = Booleans.parseBoolean(
-        System.getProperty("opensearch.rest.url_plus_as_space", "false")
+        System.getProperty("density.rest.url_plus_as_space", "false")
     );
 
     public static final PathTrie.Decoder REST_DECODER = new PathTrie.Decoder() {

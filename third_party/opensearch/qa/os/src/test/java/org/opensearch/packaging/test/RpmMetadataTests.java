@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
-import org.opensearch.packaging.util.Distribution;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.Shell;
+import org.density.packaging.util.Distribution;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.Shell;
 import org.junit.Before;
 
 import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
-import static org.opensearch.packaging.util.FileUtils.getDistributionFile;
+import static org.density.packaging.util.FileUtils.getDistributionFile;
 import static org.junit.Assume.assumeTrue;
 
 public class RpmMetadataTests extends PackagingTestCase {

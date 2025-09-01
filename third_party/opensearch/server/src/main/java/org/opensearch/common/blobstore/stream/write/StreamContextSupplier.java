@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.stream.write;
+package org.density.common.blobstore.stream.write;
 
-import org.opensearch.common.StreamContext;
+import org.density.common.StreamContext;
 
 /**
  * Will return the <code>StreamContext</code> to the caller given the part size
  *
- * @opensearch.internal
+ * @density.internal
  */
 @FunctionalInterface
 public interface StreamContextSupplier {

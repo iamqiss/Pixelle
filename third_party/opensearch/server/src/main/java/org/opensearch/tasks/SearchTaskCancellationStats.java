@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 

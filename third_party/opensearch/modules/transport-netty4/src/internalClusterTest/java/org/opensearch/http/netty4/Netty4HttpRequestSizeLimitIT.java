@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.OpenSearchNetty4IntegTestCase;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.DensityNetty4IntegTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.http.HttpServerTransport;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,7 +62,7 @@ import static org.hamcrest.Matchers.hasSize;
  * a single node "cluster".
  */
 @ClusterScope(scope = Scope.TEST, supportsDedicatedMasters = false, numClientNodes = 0, numDataNodes = 1)
-public class Netty4HttpRequestSizeLimitIT extends OpenSearchNetty4IntegTestCase {
+public class Netty4HttpRequestSizeLimitIT extends DensityNetty4IntegTestCase {
 
     private static final ByteSizeValue LIMIT = new ByteSizeValue(2, ByteSizeUnit.KB);
 

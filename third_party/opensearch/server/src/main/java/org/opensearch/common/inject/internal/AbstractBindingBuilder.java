@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,17 +23,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Scope;
-import org.opensearch.common.inject.spi.Element;
-import org.opensearch.common.inject.spi.InstanceBinding;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Key;
+import org.density.common.inject.Scope;
+import org.density.common.inject.spi.Element;
+import org.density.common.inject.spi.InstanceBinding;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.Objects;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractBindingBuilder<T> {
 

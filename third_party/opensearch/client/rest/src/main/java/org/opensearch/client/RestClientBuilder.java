@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.async.HttpAsyncClient;
 import org.apache.hc.client5.http.auth.CredentialsProvider;
@@ -175,7 +175,7 @@ public final class RestClientBuilder {
      * For example, if this is set to "/my/path", then any client request will become <code>"/my/path/" + endpoint</code>.
      * <p>
      * In essence, every request's {@code endpoint} is prefixed by this {@code pathPrefix}. The path prefix is useful for when
-     * OpenSearch is behind a proxy that provides a base path or a proxy that requires all paths to start with '/';
+     * Density is behind a proxy that provides a base path or a proxy that requires all paths to start with '/';
      * it is not intended for other purposes and it should not be supplied in other scenarios.
      *
      * @param pathPrefix the path prefix for every request.

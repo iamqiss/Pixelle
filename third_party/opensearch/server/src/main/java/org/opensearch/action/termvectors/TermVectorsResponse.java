@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.PostingsEnum;
@@ -40,18 +40,18 @@ import org.apache.lucene.search.BoostAttribute;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -63,7 +63,7 @@ import java.util.Set;
  * Response returning the term vector (doc frequency, positions, offsets) for a
  * document.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TermVectorsResponse extends ActionResponse implements ToXContentObject {
@@ -71,7 +71,7 @@ public class TermVectorsResponse extends ActionResponse implements ToXContentObj
     /**
      * Fields used for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FieldStrings {
         // term statistics strings

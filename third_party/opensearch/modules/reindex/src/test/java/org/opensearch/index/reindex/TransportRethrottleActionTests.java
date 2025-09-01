@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.FailedNodeException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.Client;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 
@@ -52,7 +52,7 @@ import org.mockito.ArgumentCaptor;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.theInstance;
@@ -61,7 +61,7 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class TransportRethrottleActionTests extends OpenSearchTestCase {
+public class TransportRethrottleActionTests extends DensityTestCase {
     private int slices;
     private BulkByScrollTask task;
 

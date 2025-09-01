@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.sampler;
+package org.density.search.aggregations.bucket.sampler;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
@@ -40,13 +40,13 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.misc.search.DiversifiedTopDocsCollector;
 import org.apache.lucene.misc.search.DiversifiedTopDocsCollector.ScoreDocKey;
 import org.apache.lucene.search.TopDocsCollector;
-import org.opensearch.index.fielddata.AbstractNumericDocValues;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.bucket.DeferringBucketCollector;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.index.fielddata.AbstractNumericDocValues;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.bucket.DeferringBucketCollector;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -55,7 +55,7 @@ import java.util.function.Consumer;
 /**
  * Aggregate all docs that match the diversified ordinal sample
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiversifiedOrdinalsSamplerAggregator extends SamplerAggregator {
 
@@ -108,7 +108,7 @@ public class DiversifiedOrdinalsSamplerAggregator extends SamplerAggregator {
         }
 
         // This class extends the DiversifiedTopDocsCollector and provides
-        // a lookup from opensearch's ValuesSource
+        // a lookup from density's ValuesSource
         class ValuesDiversifiedTopDocsCollector extends DiversifiedTopDocsCollector {
 
             ValuesDiversifiedTopDocsCollector(int numHits, int maxHitsPerKey) {

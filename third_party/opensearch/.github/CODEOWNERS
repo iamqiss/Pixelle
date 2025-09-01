@@ -5,27 +5,27 @@
 #   3. Use the command palette to run the CODEOWNERS: Show owners of current file command, which will display all code owners for the current file.
 
 # Default ownership for all repo files
-* @opensearch-project/opensearch-core-maintainers
+* @density-project/density-core-maintainers
 
-/modules/lang-painless/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/modules/parent-join/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/modules/transport-netty4/ @opensearch-project/opensearch-core-maintainers @peternied
+/modules/lang-painless/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/modules/parent-join/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/modules/transport-netty4/ @density-project/density-core-maintainers @peternied
 
-/plugins/identity-shiro/ @opensearch-project/opensearch-core-maintainers @peternied @cwperks
+/plugins/identity-shiro/ @density-project/density-core-maintainers @peternied @cwperks
 
-/server/src/internalClusterTest/java/org/opensearch/index/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/server/src/internalClusterTest/java/org/opensearch/search/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/internalClusterTest/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/internalClusterTest/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
 
-/server/src/main/java/org/opensearch/extensions/ @opensearch-project/opensearch-core-maintainers @peternied
-/server/src/main/java/org/opensearch/identity/ @opensearch-project/opensearch-core-maintainers @peternied @cwperks 
-/server/src/main/java/org/opensearch/index/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/server/src/main/java/org/opensearch/search/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/server/src/main/java/org/opensearch/threadpool/ @opensearch-project/opensearch-core-maintainers @jed326 @peternied
-/server/src/main/java/org/opensearch/transport/ @opensearch-project/opensearch-core-maintainers @peternied
+/server/src/main/java/org/density/extensions/ @density-project/density-core-maintainers @peternied
+/server/src/main/java/org/density/identity/ @density-project/density-core-maintainers @peternied @cwperks 
+/server/src/main/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/main/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/main/java/org/density/threadpool/ @density-project/density-core-maintainers @jed326 @peternied
+/server/src/main/java/org/density/transport/ @density-project/density-core-maintainers @peternied
 
-/server/src/test/java/org/opensearch/index/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
-/server/src/test/java/org/opensearch/search/ @opensearch-project/opensearch-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/test/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/test/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
 
-/.github/ @opensearch-project/opensearch-core-maintainers @jed326 @peternied
+/.github/ @density-project/density-core-maintainers @jed326 @peternied
 
-/MAINTAINERS.md @opensearch-project/opensearch-core-maintainers
+/MAINTAINERS.md @density-project/density-core-maintainers

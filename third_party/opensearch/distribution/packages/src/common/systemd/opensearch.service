@@ -1,45 +1,45 @@
-# Copyright OpenSearch Contributors
+# Copyright Density Contributors
 # SPDX-License-Identifier: Apache-2.0
 #
-# The OpenSearch Contributors require contributions made to
+# The Density Contributors require contributions made to
 # this file be licensed under the Apache-2.0 license or a
 # compatible open source license.
 
 # Description:
-# Default opensearch.service file
+# Default density.service file
 
 [Unit]
-Description=OpenSearch
-Documentation=https://opensearch.org/
+Description=Density
+Documentation=https://density.org/
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=notify
-RuntimeDirectory=opensearch
+RuntimeDirectory=density
 PrivateTmp=true
-EnvironmentFile=-/etc/default/opensearch
-EnvironmentFile=-/etc/sysconfig/opensearch
+EnvironmentFile=-/etc/default/density
+EnvironmentFile=-/etc/sysconfig/density
 
-WorkingDirectory=/usr/share/opensearch
+WorkingDirectory=/usr/share/density
 
-User=opensearch
-Group=opensearch
+User=density
+Group=density
 
 ExecStartPre=/bin/mkdir -p /dev/shm/performanceanalyzer
-ExecStartPre=/bin/chown opensearch:opensearch /dev/shm/performanceanalyzer
+ExecStartPre=/bin/chown density:density /dev/shm/performanceanalyzer
 
-ExecStart=/usr/share/opensearch/bin/systemd-entrypoint -p ${PID_DIR}/opensearch.pid --quiet
+ExecStart=/usr/share/density/bin/systemd-entrypoint -p ${PID_DIR}/density.pid --quiet
 
 # StandardOutput is configured to redirect to journalctl since
 # some error messages may be logged in standard output before
-# opensearch logging system is initialized. OpenSearch
-# stores its logs in /var/log/opensearch and does not use
+# density logging system is initialized. Density
+# stores its logs in /var/log/density and does not use
 # journalctl by default. If you also want to enable journalctl
 # logging, you can simply remove the "quiet" option from ExecStart.
 StandardOutput=journal
 StandardError=inherit
-SyslogIdentifier=opensearch
+SyslogIdentifier=density
 
 # Specifies the maximum file descriptor number that can be opened by this process
 LimitNOFILE=65535
@@ -99,7 +99,7 @@ LockPersonality=yes
 # System call filterings which restricts which system calls a process can make
 # @ means predefined sets
 # ~ means not allowed
-# These syscalls are related to mmap which is needed for OpenSearch Services
+# These syscalls are related to mmap which is needed for Density Services
 SystemCallFilter=seccomp mincore
 SystemCallFilter=madvise mlock mlock2 munlock get_mempolicy sched_getaffinity sched_setaffinity fcntl
 SystemCallFilter=@system-service
@@ -133,10 +133,10 @@ RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 
 # Filesystem Access
 
-ReadWritePaths=/var/log/opensearch
-ReadWritePaths=/var/lib/opensearch
+ReadWritePaths=/var/log/density
+ReadWritePaths=/var/lib/density
 ReadWritePaths=/dev/shm/
-ReadWritePaths=-/etc/opensearch
+ReadWritePaths=-/etc/density
 ReadWritePaths=-/mnt/snapshots
 
 ## Allow read access to system files

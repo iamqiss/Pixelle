@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.Refresh;
-import org.opensearch.protobufs.WaitForActiveShards;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.WriteRequest;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.Refresh;
+import org.density.protobufs.WaitForActiveShards;
+import org.density.test.DensityTestCase;
 
 import java.text.ParseException;
 
-public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
+public class BulkRequestProtoUtilsTests extends DensityTestCase {
 
     public void testPrepareRequestWithBasicSettings() {
         // Create a protobuf BulkRequest with basic settings
@@ -29,7 +29,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
             .build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -42,7 +42,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -55,7 +55,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setTimeout("5s").build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -70,7 +70,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setWaitForActiveShards(waitForActiveShards).build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -82,7 +82,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setRequireAlias(true).build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -95,7 +95,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setPipeline("test-pipeline").build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -108,7 +108,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setRefresh(Refresh.REFRESH_WAIT_FOR).build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);
@@ -120,7 +120,7 @@ public class BulkRequestProtoUtilsTests extends OpenSearchTestCase {
         BulkRequest request = BulkRequest.newBuilder().setRefresh(Refresh.REFRESH_FALSE).build();
 
         // Call prepareRequest
-        org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+        org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
 
         // Verify the result
         assertNotNull("BulkRequest should not be null", bulkRequest);

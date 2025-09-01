@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
@@ -14,17 +14,17 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-public class FileCachedIndexInputTests extends OpenSearchTestCase {
+public class FileCachedIndexInputTests extends DensityTestCase {
 
     protected FileCache fileCache;
     protected Path filePath;

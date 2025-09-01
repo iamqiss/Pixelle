@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.ingest.Processor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.TestEnvironment;
+import org.density.ingest.Processor;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-public class IngestCommonModulePluginTests extends OpenSearchTestCase {
+public class IngestCommonModulePluginTests extends DensityTestCase {
 
     public void testAllowlist() throws IOException {
         runAllowlistTest(List.of());

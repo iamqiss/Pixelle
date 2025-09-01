@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.AbstractObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.AbstractObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,7 +97,7 @@ import java.util.function.BiConsumer;
  * </ul>
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class Script implements ToXContentObject, Writeable {
@@ -457,40 +457,40 @@ public final class Script implements ToXContentObject, Writeable {
                     if (parameterValue instanceof String || parameterValue == null) {
                         lang = (String) parameterValue;
                     } else {
-                        throw new OpenSearchParseException("Value must be of type String: [" + parameterName + "]");
+                        throw new DensityParseException("Value must be of type String: [" + parameterName + "]");
                     }
                 } else if (Script.PARAMS_PARSE_FIELD.match(parameterName, LoggingDeprecationHandler.INSTANCE)) {
                     if (parameterValue instanceof Map || parameterValue == null) {
                         params = (Map<String, Object>) parameterValue;
                     } else {
-                        throw new OpenSearchParseException("Value must be of type Map: [" + parameterName + "]");
+                        throw new DensityParseException("Value must be of type Map: [" + parameterName + "]");
                     }
                 } else if (Script.OPTIONS_PARSE_FIELD.match(parameterName, LoggingDeprecationHandler.INSTANCE)) {
                     if (parameterValue instanceof Map || parameterValue == null) {
                         options = (Map<String, String>) parameterValue;
                     } else {
-                        throw new OpenSearchParseException("Value must be of type Map: [" + parameterName + "]");
+                        throw new DensityParseException("Value must be of type Map: [" + parameterName + "]");
                     }
                 } else if (ScriptType.INLINE.getParseField().match(parameterName, LoggingDeprecationHandler.INSTANCE)) {
                     if (parameterValue instanceof String || parameterValue == null) {
                         script = (String) parameterValue;
                         type = ScriptType.INLINE;
                     } else {
-                        throw new OpenSearchParseException("Value must be of type String: [" + parameterName + "]");
+                        throw new DensityParseException("Value must be of type String: [" + parameterName + "]");
                     }
                 } else if (ScriptType.STORED.getParseField().match(parameterName, LoggingDeprecationHandler.INSTANCE)) {
                     if (parameterValue instanceof String || parameterValue == null) {
                         script = (String) parameterValue;
                         type = ScriptType.STORED;
                     } else {
-                        throw new OpenSearchParseException("Value must be of type String: [" + parameterName + "]");
+                        throw new DensityParseException("Value must be of type String: [" + parameterName + "]");
                     }
                 } else {
                     deprecationLogger.deprecate("script_unsupported_fields", "script section does not support [" + parameterName + "]");
                 }
             }
             if (script == null) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "Expected one of [{}] or [{}] fields, but found none",
                     ScriptType.INLINE.getParseField().getPreferredName(),
                     ScriptType.STORED.getParseField().getPreferredName()

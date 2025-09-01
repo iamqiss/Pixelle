@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.lucene.util.StringHelper;
 
 /**
- * Hash function based on the Murmur3 algorithm, which is the default for OpenSearch.
+ * Hash function based on the Murmur3 algorithm, which is the default for Density.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Murmur3HashFunction {
 

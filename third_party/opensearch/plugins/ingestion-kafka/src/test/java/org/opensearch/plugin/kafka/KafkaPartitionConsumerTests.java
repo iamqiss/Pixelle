@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.kafka;
+package org.density.plugin.kafka;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -14,8 +14,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.IngestionShardConsumer;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.nio.charset.StandardCharsets;
@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class KafkaPartitionConsumerTests extends OpenSearchTestCase {
+public class KafkaPartitionConsumerTests extends DensityTestCase {
 
     private KafkaSourceConfig config;
     private KafkaConsumer<byte[], byte[]> mockConsumer;

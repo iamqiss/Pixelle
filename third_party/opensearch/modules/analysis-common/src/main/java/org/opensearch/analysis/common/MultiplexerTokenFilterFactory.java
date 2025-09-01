@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.miscellaneous.ConditionalTokenFilter;
 import org.apache.lucene.analysis.miscellaneous.RemoveDuplicatesTokenFilter;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AbstractTokenFilterFactory;
-import org.opensearch.index.analysis.AnalysisMode;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AbstractTokenFilterFactory;
+import org.density.index.analysis.AnalysisMode;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;

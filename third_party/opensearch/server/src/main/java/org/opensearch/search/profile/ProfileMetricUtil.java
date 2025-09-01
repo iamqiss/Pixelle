@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
-import org.opensearch.search.profile.aggregation.AggregationTimingType;
-import org.opensearch.search.profile.fetch.FetchTimingType;
-import org.opensearch.search.profile.query.QueryTimingType;
+import org.density.search.profile.aggregation.AggregationTimingType;
+import org.density.search.profile.fetch.FetchTimingType;
+import org.density.search.profile.query.QueryTimingType;
 
 import java.util.ArrayList;
 import java.util.Collection;

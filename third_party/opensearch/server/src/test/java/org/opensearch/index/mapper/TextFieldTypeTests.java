@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.AutomatonQuery;
@@ -48,12 +48,12 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.mapper.TextFieldMapper.TextFieldType;
+import org.density.DensityException;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.unit.Fuzziness;
+import org.density.index.mapper.TextFieldMapper.TextFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,8 +114,8 @@ public class TextFieldTypeTests extends FieldTypeTestCase {
             ft.rangeQuery("foo", "bar", true, false, null, null, null, MOCK_QSC)
         );
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.rangeQuery("foo", "bar", true, false, null, null, null, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals(
@@ -138,8 +138,8 @@ public class TextFieldTypeTests extends FieldTypeTestCase {
         );
         assertEquals("Cannot search on field [field] since it is not indexed.", e.getMessage());
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.regexpQuery("foo.*", randomInt(10), 0, randomInt(10) + 1, null, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals("[regexp] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", ee.getMessage());
@@ -167,8 +167,8 @@ public class TextFieldTypeTests extends FieldTypeTestCase {
         );
         assertEquals("Cannot search on field [field] since it is not indexed.", e.getMessage());
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.fuzzyQuery(
                 "foo",
                 Fuzziness.AUTO,
@@ -196,8 +196,8 @@ public class TextFieldTypeTests extends FieldTypeTestCase {
         q = ft.prefixQuery("Internationalisatio", CONSTANT_SCORE_REWRITE, true, MOCK_QSC);
         assertEquals(AutomatonQueries.caseInsensitivePrefixQuery(new Term("field", "Internationalisatio")), q);
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> ft.prefixQuery("internationalisatio", null, false, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals(

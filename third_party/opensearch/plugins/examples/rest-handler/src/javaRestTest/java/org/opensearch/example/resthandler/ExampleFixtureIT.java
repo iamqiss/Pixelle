@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.resthandler;
+package org.density.example.resthandler;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -48,7 +48,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasItems;
 
-public class ExampleFixtureIT extends OpenSearchTestCase {
+public class ExampleFixtureIT extends DensityTestCase {
 
     public void testExample() throws Exception {
         final String externalAddress = System.getProperty("external.address");
@@ -62,7 +62,7 @@ public class ExampleFixtureIT extends OpenSearchTestCase {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))
         ) {
             writer.write("GET / HTTP/1.1\r\n");
-            writer.write("Host: opensearch.org\r\n\r\n");
+            writer.write("Host: density.org\r\n\r\n");
             writer.flush();
 
             final List<String> lines = new ArrayList<>();

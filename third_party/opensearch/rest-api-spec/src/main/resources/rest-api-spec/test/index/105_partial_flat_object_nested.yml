@@ -98,7 +98,7 @@ teardown:
   - is_true: test_partial_flat_object_nested.mappings
   - match: { test_partial_flat_object_nested.mappings.properties.issue.properties.number.type: integer }
   - match: { test_partial_flat_object_nested.mappings.properties.issue.properties.labels.type: flat_object }
-  # https://github.com/opensearch-project/OpenSearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
+  # https://github.com/density-project/Density/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#length
   - length: { test_partial_flat_object_nested.mappings.properties.issue.properties: 2 }
   - length: { test_partial_flat_object_nested.mappings.properties.issue.properties.labels: 1 }
 

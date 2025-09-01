@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.state;
+package org.density.indices.state;
 
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Glob;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.core.common.Strings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Glob;
+import org.density.common.action.ActionFuture;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.core.common.Strings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,16 +56,16 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.metadata.MetadataIndexStateService.INDEX_CLOSED_BLOCK_ID;
-import static org.opensearch.indices.state.CloseIndexIT.assertIndexIsClosed;
-import static org.opensearch.indices.state.CloseIndexIT.assertIndexIsOpened;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.MetadataIndexStateService.INDEX_CLOSED_BLOCK_ID;
+import static org.density.indices.state.CloseIndexIT.assertIndexIsClosed;
+import static org.density.indices.state.CloseIndexIT.assertIndexIsOpened;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class ReopenWhileClosingIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class ReopenWhileClosingIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

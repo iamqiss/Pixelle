@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.search.SearchContextId;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.protobufs.SearchRequestBody;
-import org.opensearch.protobufs.TrackHits;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
-import org.opensearch.transport.grpc.proto.request.search.suggest.TermSuggestionBuilderProtoUtils;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.search.SearchContextId;
+import org.density.action.support.IndicesOptions;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.protobufs.SearchRequest;
+import org.density.protobufs.SearchRequestBody;
+import org.density.protobufs.TrackHits;
+import org.density.rest.RestRequest;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.Scroll;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.grpc.proto.request.common.FetchSourceContextProtoUtils;
+import org.density.transport.grpc.proto.request.search.query.AbstractQueryBuilderProtoUtils;
+import org.density.transport.grpc.proto.request.search.suggest.TermSuggestionBuilderProtoUtils;
 
 import java.io.IOException;
 import java.util.function.IntConsumer;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.search.suggest.SuggestBuilders.termSuggestion;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.search.suggest.SuggestBuilders.termSuggestion;
 
 /**
  * Utility class for converting SearchRequest Protocol Buffers to objects
@@ -62,12 +62,12 @@ public class SearchRequestProtoUtils {
      * @throws IOException if an I/O exception occurred parsing the request and preparing for
      *                     execution
      */
-    public static org.opensearch.action.search.SearchRequest prepareRequest(
-        org.opensearch.protobufs.SearchRequest request,
+    public static org.density.action.search.SearchRequest prepareRequest(
+        org.density.protobufs.SearchRequest request,
         Client client,
         AbstractQueryBuilderProtoUtils queryUtils
     ) throws IOException {
-        org.opensearch.action.search.SearchRequest searchRequest = new org.opensearch.action.search.SearchRequest();
+        org.density.action.search.SearchRequest searchRequest = new org.density.action.search.SearchRequest();
 
         /*
          * We have to pull out the call to `source().size(size)` because
@@ -88,8 +88,8 @@ public class SearchRequestProtoUtils {
     }
 
     /**
-     * Parses a protobuf {@link org.opensearch.protobufs.SearchRequest} to a {@link org.opensearch.action.search.SearchRequest}.
-     * This method is similar to the logic in {@link RestSearchAction#parseSearchRequest(org.opensearch.action.search.SearchRequest, RestRequest, XContentParser, NamedWriteableRegistry, IntConsumer)}
+     * Parses a protobuf {@link org.density.protobufs.SearchRequest} to a {@link org.density.action.search.SearchRequest}.
+     * This method is similar to the logic in {@link RestSearchAction#parseSearchRequest(org.density.action.search.SearchRequest, RestRequest, XContentParser, NamedWriteableRegistry, IntConsumer)}
      * Specifically, this method handles the URL parameters, and internally calls {@link SearchSourceBuilderProtoUtils#parseProto(SearchSourceBuilder, SearchRequestBody, AbstractQueryBuilderProtoUtils)}
      *
      * @param searchRequest the SearchRequest to populate
@@ -100,8 +100,8 @@ public class SearchRequestProtoUtils {
      * @throws IOException if an I/O exception occurred during parsing
      */
     protected static void parseSearchRequest(
-        org.opensearch.action.search.SearchRequest searchRequest,
-        org.opensearch.protobufs.SearchRequest request,
+        org.density.action.search.SearchRequest searchRequest,
+        org.density.protobufs.SearchRequest request,
         NamedWriteableRegistry namedWriteableRegistry,
         IntConsumer setSize,
         AbstractQueryBuilderProtoUtils queryUtils
@@ -199,7 +199,7 @@ public class SearchRequestProtoUtils {
      */
     protected static void parseSearchSource(
         final SearchSourceBuilder searchSourceBuilder,
-        org.opensearch.protobufs.SearchRequest request,
+        org.density.protobufs.SearchRequest request,
         IntConsumer setSize
     ) {
         QueryBuilder queryBuilder = ProtoActionsProtoUtils.urlParamsToQueryBuilder(request);
@@ -315,15 +315,15 @@ public class SearchRequestProtoUtils {
 
     /**
      * Prepares a point in time search request.
-     * Similar to {@link RestSearchAction#preparePointInTime(org.opensearch.action.search.SearchRequest, RestRequest, NamedWriteableRegistry)}
+     * Similar to {@link RestSearchAction#preparePointInTime(org.density.action.search.SearchRequest, RestRequest, NamedWriteableRegistry)}
      *
      * @param request the SearchRequest to prepare
      * @param protoRequest the Protocol Buffer SearchRequest
      * @param namedWriteableRegistry the registry for named writeables
      */
     private static void preparePointInTime(
-        org.opensearch.action.search.SearchRequest request,
-        org.opensearch.protobufs.SearchRequest protoRequest,
+        org.density.action.search.SearchRequest request,
+        org.density.protobufs.SearchRequest protoRequest,
         NamedWriteableRegistry namedWriteableRegistry
     ) {
         assert request.pointInTimeBuilder() != null;
@@ -331,7 +331,7 @@ public class SearchRequestProtoUtils {
         if (request.indices().length > 0) {
             validationException = addValidationError("[indices] cannot be used with point in time", validationException);
         }
-        if (request.indicesOptions() != org.opensearch.action.search.SearchRequest.DEFAULT_INDICES_OPTIONS) {
+        if (request.indicesOptions() != org.density.action.search.SearchRequest.DEFAULT_INDICES_OPTIONS) {
             validationException = addValidationError("[indicesOptions] cannot be used with point in time", validationException);
         }
         if (request.routing() != null) {
@@ -364,12 +364,12 @@ public class SearchRequestProtoUtils {
 
     /**
      * Checks and configures total hits tracking in the search request.
-     * Keep implementation consistent with {@link RestSearchAction#checkRestTotalHits(RestRequest, org.opensearch.action.search.SearchRequest)}
+     * Keep implementation consistent with {@link RestSearchAction#checkRestTotalHits(RestRequest, org.density.action.search.SearchRequest)}
      *
      * @param protoRequest the Protocol Buffer SearchRequest
      * @param searchRequest the SearchRequest to configure
      */
-    protected static void checkProtoTotalHits(SearchRequest protoRequest, org.opensearch.action.search.SearchRequest searchRequest) {
+    protected static void checkProtoTotalHits(SearchRequest protoRequest, org.density.action.search.SearchRequest searchRequest) {
 
         boolean totalHitsAsInt = protoRequest.hasRestTotalHitsAsInt() ? protoRequest.getRestTotalHitsAsInt() : false;
         if (totalHitsAsInt == false) {

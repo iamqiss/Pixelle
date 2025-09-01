@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import com.google.errorprone.annotations.ThreadSafe;
 import org.apache.arrow.flight.CallStatus;
@@ -16,12 +16,12 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.arrow.flight.stats.FlightCallTracker;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
+import org.density.arrow.flight.stats.FlightCallTracker;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.transport.TcpChannel;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.arrow.flight.transport.FlightErrorMapper.mapFromCallStatus;
+import static org.density.arrow.flight.transport.FlightErrorMapper.mapFromCallStatus;
 
 /**
  * TcpChannel implementation for Arrow Flight. It is created per call in ArrowFlightProducer.

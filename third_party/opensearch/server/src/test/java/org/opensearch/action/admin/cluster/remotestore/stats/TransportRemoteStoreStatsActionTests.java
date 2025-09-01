@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.stats;
+package org.density.action.admin.cluster.remotestore.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.PlainShardsIterator;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.PlainShardsIterator;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.transport.MockTransport;
+import org.density.transport.TransportService;
 
 import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_SEGMENT_STORE_REPOSITORY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_SEGMENT_STORE_REPOSITORY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.lookup;
+package org.density.painless.lookup;
 
-import org.opensearch.core.common.util.CollectionUtils;
+import org.density.core.common.util.CollectionUtils;
 
 import java.lang.invoke.MethodHandle;
 import java.util.Map;
@@ -40,11 +40,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.opensearch.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessMethodKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typeToBoxedType;
+import static org.density.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessMethodKey;
+import static org.density.painless.lookup.PainlessLookupUtility.typeToBoxedType;
 
 public final class PainlessLookup {
 

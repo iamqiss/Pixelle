@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
- * Enum for different Search Phases in OpenSearch
+ * Enum for different Search Phases in Density
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.9.0")
 public enum SearchPhaseName {

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.TermQuery;
-import org.opensearch.transport.grpc.proto.request.common.ObjectMapProtoUtils;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.TermQuery;
+import org.density.transport.grpc.proto.request.common.ObjectMapProtoUtils;
 
 /**
- * Utility class for converting TermQuery Protocol Buffers to OpenSearch objects.
+ * Utility class for converting TermQuery Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of term queries
- * into their corresponding OpenSearch TermQueryBuilder implementations for search operations.
+ * into their corresponding Density TermQueryBuilder implementations for search operations.
  */
 public class TermQueryBuilderProtoUtils {
 
@@ -26,7 +26,7 @@ public class TermQueryBuilderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer TermQuery to an OpenSearch TermQueryBuilder.
+     * Converts a Protocol Buffer TermQuery to an Density TermQueryBuilder.
      * Similar to {@link TermQueryBuilder#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates a properly configured
      * TermQueryBuilder with the appropriate field name, value, boost, query name,

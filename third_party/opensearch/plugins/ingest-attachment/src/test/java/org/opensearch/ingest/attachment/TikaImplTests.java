@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class TikaImplTests extends OpenSearchTestCase {
+public class TikaImplTests extends DensityTestCase {
 
     public void testTikaLoads() throws Exception {
-        Class.forName("org.opensearch.ingest.attachment.TikaImpl");
+        Class.forName("org.density.ingest.attachment.TikaImpl");
     }
 
 }

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.task.commons.task.TaskType;
-import org.opensearch.task.commons.worker.TaskWorker;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.task.commons.task.TaskType;
+import org.density.task.commons.worker.TaskWorker;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 /**
  * Plugin for providing TaskWorkers for Offline Nodes

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.store.disk;
+package org.density.cache.store.disk;
 
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.cache.CacheType;
+import org.density.common.settings.Settings;
+import org.density.env.NodeEnvironment;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -32,7 +32,7 @@ import org.ehcache.event.EventType;
 import org.ehcache.expiry.ExpiryPolicy;
 import org.ehcache.impl.config.store.disk.OffHeapDiskStoreConfiguration;
 
-public class EhcacheDiskCacheManagerTests extends OpenSearchSingleNodeTestCase {
+public class EhcacheDiskCacheManagerTests extends DensitySingleNodeTestCase {
 
     private static final String THREAD_POOL_ALIAS = "poolAlias";
 

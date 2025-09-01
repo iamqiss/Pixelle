@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -28,35 +28,35 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.OrdinalDimension;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregatorTestCase;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.histogram.InternalDateHistogram;
-import org.opensearch.search.aggregations.bucket.range.InternalRange;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.InternalTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.common.Rounding;
+import org.density.common.lucene.Lucene;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.OrdinalDimension;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregatorTestCase;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.histogram.InternalDateHistogram;
+import org.density.search.aggregations.bucket.range.InternalRange;
+import org.density.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.InternalTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,14 +66,14 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.count;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateHistogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.min;
-import static org.opensearch.search.aggregations.AggregationBuilders.range;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.search.aggregations.AggregationBuilders.count;
+import static org.density.search.aggregations.AggregationBuilders.dateHistogram;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.min;
+import static org.density.search.aggregations.AggregationBuilders.range;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 
 public class StarTreeNestedAggregatorTests extends DateHistogramAggregatorTestCase {
     private static final String TIMESTAMP_FIELD = "@timestamp";

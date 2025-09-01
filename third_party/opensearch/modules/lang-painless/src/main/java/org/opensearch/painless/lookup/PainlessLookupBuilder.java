@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.lookup;
+package org.density.painless.lookup;
 
-import org.opensearch.bootstrap.BootstrapInfo;
-import org.opensearch.painless.Def;
-import org.opensearch.painless.MethodWriter;
-import org.opensearch.painless.WriterConstants;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistClass;
-import org.opensearch.painless.spi.AllowlistClassBinding;
-import org.opensearch.painless.spi.AllowlistConstructor;
-import org.opensearch.painless.spi.AllowlistField;
-import org.opensearch.painless.spi.AllowlistInstanceBinding;
-import org.opensearch.painless.spi.AllowlistMethod;
-import org.opensearch.painless.spi.annotation.InjectConstantAnnotation;
-import org.opensearch.painless.spi.annotation.NoImportAnnotation;
+import org.density.bootstrap.BootstrapInfo;
+import org.density.painless.Def;
+import org.density.painless.MethodWriter;
+import org.density.painless.WriterConstants;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistClass;
+import org.density.painless.spi.AllowlistClassBinding;
+import org.density.painless.spi.AllowlistConstructor;
+import org.density.painless.spi.AllowlistField;
+import org.density.painless.spi.AllowlistInstanceBinding;
+import org.density.painless.spi.AllowlistMethod;
+import org.density.painless.spi.annotation.InjectConstantAnnotation;
+import org.density.painless.spi.annotation.NoImportAnnotation;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.GeneratorAdapter;
@@ -71,22 +71,22 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_BYTE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_CHARACTER_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_DOUBLE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_FLOAT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_INTEGER_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_LONG_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_SHORT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_UTIL_TYPE;
-import static org.opensearch.painless.WriterConstants.OBJECT_TYPE;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.buildPainlessMethodKey;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typeToJavaType;
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typesToCanonicalTypeNames;
+import static org.density.painless.WriterConstants.DEF_TO_B_BYTE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_CHARACTER_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_DOUBLE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_FLOAT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_INTEGER_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_LONG_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_SHORT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_UTIL_TYPE;
+import static org.density.painless.WriterConstants.OBJECT_TYPE;
+import static org.density.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
+import static org.density.painless.lookup.PainlessLookupUtility.buildPainlessMethodKey;
+import static org.density.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
+import static org.density.painless.lookup.PainlessLookupUtility.typeToJavaType;
+import static org.density.painless.lookup.PainlessLookupUtility.typesToCanonicalTypeNames;
 
 public final class PainlessLookupBuilder {
 
@@ -2098,7 +2098,7 @@ public final class PainlessLookupBuilder {
 
             int bridgeClassFrames = ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS;
             int bridgeClassAccess = Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER | Opcodes.ACC_FINAL;
-            String bridgeClassName = "org/opensearch/painless/Bridge$"
+            String bridgeClassName = "org/density/painless/Bridge$"
                 + javaMethod.getDeclaringClass().getSimpleName()
                 + "$"
                 + javaMethod.getName();

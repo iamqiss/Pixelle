@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.metrics;
+package org.density.telemetry.metrics;
 
-import org.opensearch.common.concurrent.RefCountedReleasable;
-import org.opensearch.telemetry.OTelAttributesConverter;
-import org.opensearch.telemetry.OTelTelemetryPlugin;
-import org.opensearch.telemetry.metrics.tags.Tags;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.concurrent.RefCountedReleasable;
+import org.density.telemetry.OTelAttributesConverter;
+import org.density.telemetry.OTelTelemetryPlugin;
+import org.density.telemetry.metrics.tags.Tags;
+import org.density.test.DensityTestCase;
 
 import java.io.Closeable;
 import java.util.function.Consumer;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class OTelMetricsTelemetryTests extends OpenSearchTestCase {
+public class OTelMetricsTelemetryTests extends DensityTestCase {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void testCounter() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geo.GeometryTestUtils;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ExceptionsHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.geo.GeometryTestUtils;
+import org.density.geometry.Rectangle;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class GeoTileGridParserTests extends OpenSearchTestCase {
+public class GeoTileGridParserTests extends DensityTestCase {
     public void testParseValidFromInts() throws Exception {
         int precision = randomIntBetween(0, GeoTileUtils.MAX_ZOOM);
         XContentParser stParser = createParser(

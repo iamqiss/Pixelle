@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache;
+package org.density.index.store.remote.utils.cache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.Weigher;
-import org.opensearch.index.store.remote.utils.cache.stats.AggregateRefCountedCacheStats;
-import org.opensearch.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
-import org.opensearch.index.store.remote.utils.cache.stats.RefCountedCacheStats;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.Weigher;
+import org.density.index.store.remote.utils.cache.stats.AggregateRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.RefCountedCacheStats;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -26,7 +26,7 @@ import java.util.function.Predicate;
  * @param <K> type of the key
  * @param <V> type of th value
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentedCache<K, V> implements RefCountedCache<K, V> {
     private static final Logger logger = LogManager.getLogger(SegmentedCache.class);

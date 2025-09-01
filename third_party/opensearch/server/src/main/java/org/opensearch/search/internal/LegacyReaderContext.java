@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.RescoreDocIds;
-import org.opensearch.search.dfs.AggregatedDfs;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.search.RescoreDocIds;
+import org.density.search.dfs.AggregatedDfs;
 
 import java.util.Objects;
 
 /**
  * Reader context that does not hold a reference to a point in time Searcher
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LegacyReaderContext extends ReaderContext {
     private final ShardSearchRequest shardSearchRequest;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.put;
+package org.density.action.admin.indices.mapping.put;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.datastream.DeleteDataStreamRequestTests;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.RandomCreateIndexGenerator;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.datastream.DeleteDataStreamRequestTests;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.RandomCreateIndexGenerator;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.collect.Tuple.tuple;
-import static org.opensearch.core.xcontent.ToXContent.EMPTY_PARAMS;
+import static org.density.common.collect.Tuple.tuple;
+import static org.density.core.xcontent.ToXContent.EMPTY_PARAMS;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 
-public class PutMappingRequestTests extends OpenSearchTestCase {
+public class PutMappingRequestTests extends DensityTestCase {
 
     public void testValidation() {
         PutMappingRequest r = new PutMappingRequest("myindex");

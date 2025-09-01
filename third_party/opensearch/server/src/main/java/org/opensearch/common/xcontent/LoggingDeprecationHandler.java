@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.XContentLocation;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.ParseField;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.XContentLocation;
 
 import java.util.function.Supplier;
 
@@ -48,7 +48,7 @@ import java.util.function.Supplier;
  * sources because it will report deprecated fields back to the user as
  * though the user sent them.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LoggingDeprecationHandler implements DeprecationHandler {
     public static final LoggingDeprecationHandler INSTANCE = new LoggingDeprecationHandler();

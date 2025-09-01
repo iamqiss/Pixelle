@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree.filter.provider;
+package org.density.search.startree.filter.provider;
 
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.RangeMatchDimFilter;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.RangeMatchDimFilter;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ class StarDateFieldMapper implements DimensionFilterMapper {
         // Convert format string to DateMathParser if provided
         DateMathParser forcedDateParser = rangeQuery.format() != null
             ? DateFormatter.forPattern(rangeQuery.format()).toDateMathParser()
-            : org.opensearch.index.mapper.DateFieldMapper.getDefaultDateTimeFormatter().toDateMathParser();
+            : org.density.index.mapper.DateFieldMapper.getDefaultDateTimeFormatter().toDateMathParser();
 
         ZoneId timeZone = rangeQuery.timeZone() != null ? ZoneId.of(rangeQuery.timeZone()) : null;
 
@@ -105,7 +105,7 @@ class StarDateFieldMapper implements DimensionFilterMapper {
         DateTimeUnitRounding matchingInterval = null;
 
         for (DateTimeUnitRounding interval : intervals) {
-            // OpenSearch rounds up to the last millisecond in the rounding interval.
+            // Density rounds up to the last millisecond in the rounding interval.
             // So for example, closed-interval [l=2022-05-31T23:00:00.000, u=2022-05-31T23:59:59.999]
             // (equivalent to half-open interval [l=2022-05-31T23:00:00.000, u+1=2022-06-01T00:00:00.000))
             // can be resolved by star-tree 'hour' interval.

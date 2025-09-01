@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterModule;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.network.NetworkModule;
+import org.density.common.remote.BlobPathParameters;
+import org.density.common.settings.Settings;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.indices.IndicesModule;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -30,10 +30,10 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
+import static org.density.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
 
-public class RemoteTransientSettingsMetadataTests extends OpenSearchTestCase {
+public class RemoteTransientSettingsMetadataTests extends DensityTestCase {
     private static final String TEST_BLOB_NAME = "/test-path/test-blob-name";
     private static final String TEST_BLOB_PATH = "test-path";
     private static final String TEST_BLOB_FILE_NAME = "test-blob-name";
@@ -116,14 +116,14 @@ public class RemoteTransientSettingsMetadataTests extends OpenSearchTestCase {
     }
 
     public void testBlobPathTokens() {
-        String uploadedFile = "user/local/opensearch/settings";
+        String uploadedFile = "user/local/density/settings";
         RemoteTransientSettingsMetadata remoteObjectForDownload = new RemoteTransientSettingsMetadata(
             uploadedFile,
             clusterUUID,
             compressor,
             namedXContentRegistry
         );
-        assertArrayEquals(remoteObjectForDownload.getBlobPathTokens(), new String[] { "user", "local", "opensearch", "settings" });
+        assertArrayEquals(remoteObjectForDownload.getBlobPathTokens(), new String[] { "user", "local", "density", "settings" });
     }
 
     public void testBlobPathParameters() {

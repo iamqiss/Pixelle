@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.fetch.subphase.highlight.FastVectorHighlighter;
+import org.density.common.annotation.PublicApi;
+import org.density.search.fetch.subphase.highlight.FastVectorHighlighter;
 
 import java.util.List;
 import java.util.function.Function;
@@ -43,7 +43,7 @@ import java.util.function.Function;
 /**
  * Base token filter factory used in analysis chain
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface TokenFilterFactory {

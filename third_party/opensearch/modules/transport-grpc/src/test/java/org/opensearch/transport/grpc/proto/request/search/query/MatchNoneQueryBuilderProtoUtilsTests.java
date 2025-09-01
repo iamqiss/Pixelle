@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.protobufs.MatchNoneQuery;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.protobufs.MatchNoneQuery;
+import org.density.test.DensityTestCase;
 
-public class MatchNoneQueryBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class MatchNoneQueryBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithDefaultValues() {
         // Create a protobuf MatchNoneQuery with default values

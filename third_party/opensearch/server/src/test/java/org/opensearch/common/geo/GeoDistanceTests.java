@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.lessThan;
 /**
  * Basic Tests for {@link GeoDistance}
  */
-public class GeoDistanceTests extends OpenSearchTestCase {
+public class GeoDistanceTests extends DensityTestCase {
 
     public void testGeoDistanceSerialization() throws IOException {
         // make sure that ordinals don't change, because we rely on then in serialization

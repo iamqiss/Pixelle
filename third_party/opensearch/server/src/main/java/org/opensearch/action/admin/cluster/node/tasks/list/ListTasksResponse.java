@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks.list;
+package org.density.action.admin.cluster.node.tasks.list;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.support.tasks.BaseTasksResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.tasks.TaskInfo;
+import org.density.DensityException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.support.tasks.BaseTasksResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.TriFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.tasks.TaskInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,12 +60,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Returns the list of tasks currently running on the nodes
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ListTasksResponse extends BaseTasksResponse implements ToXContentObject {
@@ -80,7 +80,7 @@ public class ListTasksResponse extends BaseTasksResponse implements ToXContentOb
     public ListTasksResponse(
         List<TaskInfo> tasks,
         List<TaskOperationFailure> taskFailures,
-        List<? extends OpenSearchException> nodeFailures
+        List<? extends DensityException> nodeFailures
     ) {
         super(taskFailures, nodeFailures);
         this.tasks = tasks == null ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(tasks));
@@ -99,7 +99,7 @@ public class ListTasksResponse extends BaseTasksResponse implements ToXContentOb
 
     protected static <T> ConstructingObjectParser<T, Void> setupParser(
         String name,
-        TriFunction<List<TaskInfo>, List<TaskOperationFailure>, List<OpenSearchException>, T> ctor
+        TriFunction<List<TaskInfo>, List<TaskOperationFailure>, List<DensityException>, T> ctor
     ) {
         ConstructingObjectParser<T, Void> parser = new ConstructingObjectParser<>(name, true, constructingObjects -> {
             int i = 0;
@@ -108,12 +108,12 @@ public class ListTasksResponse extends BaseTasksResponse implements ToXContentOb
             @SuppressWarnings("unchecked")
             List<TaskOperationFailure> tasksFailures = (List<TaskOperationFailure>) constructingObjects[i++];
             @SuppressWarnings("unchecked")
-            List<OpenSearchException> nodeFailures = (List<OpenSearchException>) constructingObjects[i];
+            List<DensityException> nodeFailures = (List<DensityException>) constructingObjects[i];
             return ctor.apply(tasks, tasksFailures, nodeFailures);
         });
         parser.declareObjectArray(optionalConstructorArg(), TaskInfo.PARSER, new ParseField(TASKS));
         parser.declareObjectArray(optionalConstructorArg(), (p, c) -> TaskOperationFailure.fromXContent(p), new ParseField(TASK_FAILURES));
-        parser.declareObjectArray(optionalConstructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField(NODE_FAILURES));
+        parser.declareObjectArray(optionalConstructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField(NODE_FAILURES));
         return parser;
     }
 

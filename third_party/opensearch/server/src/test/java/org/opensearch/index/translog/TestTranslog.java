@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -59,8 +59,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.opensearch.index.translog.Translog.CHECKPOINT_FILE_NAME;
-import static org.opensearch.index.translog.Translog.TRANSLOG_FILE_SUFFIX;
+import static org.density.index.translog.Translog.CHECKPOINT_FILE_NAME;
+import static org.density.index.translog.Translog.TRANSLOG_FILE_SUFFIX;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -306,7 +306,7 @@ public class TestTranslog {
         private volatile boolean onceFailedFailAlways = false;
 
         public boolean fail() {
-            final int rnd = OpenSearchTestCase.randomIntBetween(1, 100);
+            final int rnd = DensityTestCase.randomIntBetween(1, 100);
             boolean fail = rnd <= failRate;
             if (fail && onceFailedFailAlways) {
                 failAlways();
@@ -323,7 +323,7 @@ public class TestTranslog {
         }
 
         public void failRandomly() {
-            failRate = OpenSearchTestCase.randomIntBetween(1, 100);
+            failRate = DensityTestCase.randomIntBetween(1, 100);
         }
 
         public void failRate(int rate) {

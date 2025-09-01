@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.cells;
+package org.density.geo.search.aggregations.bucket.geogrid.cells;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.index.fielddata.GeoShapeValue;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.aggregations.support.ValuesSource;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.index.fielddata.GeoShapeValue;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.aggregations.support.ValuesSource;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
  * {@link GeoShapeCellIdSource.GeoShapeLongEncoder} to encode the geo_shape to {@link Long} values which can be iterated
  * to do the bucket aggregation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeCellIdSource extends ValuesSource.Numeric {
 
@@ -98,7 +98,7 @@ public class GeoShapeCellIdSource extends ValuesSource.Numeric {
     /**
      * Encoder to encode the GeoShapes to the specific long values for the aggregation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface GeoShapeLongEncoder {

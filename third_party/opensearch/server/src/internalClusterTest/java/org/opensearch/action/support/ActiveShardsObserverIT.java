@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /**
  * Tests that the index creation operation waits for the appropriate
  * number of active shards to be started before returning.
  */
-public class ActiveShardsObserverIT extends OpenSearchIntegTestCase {
+public class ActiveShardsObserverIT extends DensityIntegTestCase {
 
     public void testCreateIndexNoActiveShardsTimesOut() throws Exception {
         Settings.Builder settingsBuilder = Settings.builder()

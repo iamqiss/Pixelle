@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSelector;
 import org.apache.lucene.search.SortedNumericSortField;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.FloatValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.HalfFloatValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.IntValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.LongValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.UnsignedLongValuesComparatorSource;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.time.DateUtils;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.FloatValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.HalfFloatValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.IntValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.LongValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.UnsignedLongValuesComparatorSource;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.function.LongUnaryOperator;
@@ -59,13 +59,13 @@ import java.util.function.LongUnaryOperator;
 /**
  * Base class for numeric field data.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IndexNumericFieldData implements IndexFieldData<LeafNumericFieldData> {
     /**
      * The type of number.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum NumericType {
         BOOLEAN(false, SortField.Type.INT, CoreValuesSourceType.BOOLEAN),
@@ -154,9 +154,9 @@ public abstract class IndexNumericFieldData implements IndexFieldData<LeafNumeri
 
     @Override
     public final SortField wideSortField(Object missingValue, MultiValueMode sortMode, Nested nested, boolean reverse) {
-        // This is to support backward compatibility, the minimum number of bytes prior to OpenSearch 2.7 were 16 bytes,
+        // This is to support backward compatibility, the minimum number of bytes prior to Density 2.7 were 16 bytes,
         // i.e all sort fields were upcasted to Long/Double with 16 bytes.
-        // Now from OpenSearch 2.7, the minimum number of bytes for sort field is 8 bytes, so if it comes as SortField INT,
+        // Now from Density 2.7, the minimum number of bytes for sort field is 8 bytes, so if it comes as SortField INT,
         // we need to up cast it to LONG to support backward compatibility info stored in segment info
         if (getNumericType().sortFieldType == SortField.Type.INT) {
             XFieldComparatorSource source = comparatorSource(NumericType.LONG, missingValue, sortMode, nested);

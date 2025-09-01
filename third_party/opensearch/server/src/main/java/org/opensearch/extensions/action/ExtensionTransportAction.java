@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.action;
+package org.density.extensions.action;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportAction;
+import org.density.core.action.ActionListener;
+import org.density.extensions.ExtensionsManager;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
 
 /**
  * A proxy transport action used to proxy a transport request from an extension to execute on another extension
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ExtensionTransportAction extends TransportAction<ExtensionActionRequest, RemoteExtensionActionResponse> {
 

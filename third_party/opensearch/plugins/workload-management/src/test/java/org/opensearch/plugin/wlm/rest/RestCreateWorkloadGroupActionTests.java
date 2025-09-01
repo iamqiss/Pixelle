@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rest;
+package org.density.plugin.wlm.rest;
 
-import org.opensearch.plugin.wlm.WlmClusterSettingValuesProvider;
-import org.opensearch.plugin.wlm.WorkloadManagementTestUtils;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.plugin.wlm.WlmClusterSettingValuesProvider;
+import org.density.plugin.wlm.WorkloadManagementTestUtils;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.node.NodeClient;
 
 import static org.mockito.Mockito.mock;
 
-public class RestCreateWorkloadGroupActionTests extends OpenSearchTestCase {
+public class RestCreateWorkloadGroupActionTests extends DensityTestCase {
 
     public void testPrepareRequestThrowsWhenWlmModeDisabled() {
         try {

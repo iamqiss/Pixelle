@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket;
+package org.density.geo.search.aggregations.bucket;
 
 import org.apache.lucene.geo.GeoEncodingUtils;
-import org.opensearch.Version;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geo.GeoModulePluginIntegTestCase;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.geo.tests.common.RandomGeoGeometryGenerator;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geo.GeoModulePluginIntegTestCase;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.geo.tests.common.RandomGeoGeometryGenerator;
+import org.density.geometry.Geometry;
+import org.density.geometry.Rectangle;
+import org.density.test.VersionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,8 +31,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /**
  * This is the base class for all the Bucket Aggregation related integration tests. Use this class to add common

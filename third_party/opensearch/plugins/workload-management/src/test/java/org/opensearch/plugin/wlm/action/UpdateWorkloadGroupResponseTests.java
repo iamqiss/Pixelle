@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugin.wlm.WorkloadManagementTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugin.wlm.WorkloadManagementTestUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
 import static org.mockito.Mockito.mock;
 
-public class UpdateWorkloadGroupResponseTests extends OpenSearchTestCase {
+public class UpdateWorkloadGroupResponseTests extends DensityTestCase {
 
     /**
      * Test case to verify the serialization and deserialization of UpdateWorkloadGroupResponse.

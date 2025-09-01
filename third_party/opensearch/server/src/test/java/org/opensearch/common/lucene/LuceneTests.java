@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene;
+package org.density.common.lucene;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -73,18 +73,18 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.FloatValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.IntValuesComparatorSource;
-import org.opensearch.index.fielddata.fieldcomparator.LongValuesComparatorSource;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.common.collect.Tuple;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
+import org.density.index.fielddata.fieldcomparator.DoubleValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.FloatValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.IntValuesComparatorSource;
+import org.density.index.fielddata.fieldcomparator.LongValuesComparatorSource;
+import org.density.search.MultiValueMode;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -96,7 +96,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class LuceneTests extends OpenSearchTestCase {
+public class LuceneTests extends DensityTestCase {
     private static final NamedWriteableRegistry EMPTY_REGISTRY = new NamedWriteableRegistry(Collections.emptyList());
 
     public static final String OLDER_VERSION_INDEX_ZIP_RELATIVE_PATH = "/indices/bwc/os-1.3.0/testIndex-os-1.3.0.zip";

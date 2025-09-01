@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.semver.expr;
+package org.density.semver.expr;
 
-import org.opensearch.Version;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.test.DensityTestCase;
 
-public class EqualTests extends OpenSearchTestCase {
+public class EqualTests extends DensityTestCase {
 
     public void testEquality() {
         Equal equalExpr = new Equal();

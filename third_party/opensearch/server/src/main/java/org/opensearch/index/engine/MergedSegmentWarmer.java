@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -14,11 +14,11 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.SegmentCommitInfo;
 import org.apache.lucene.index.SegmentReader;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.logging.Loggers;
+import org.density.index.shard.IndexShard;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ import java.io.IOException;
  * Implementation of a {@link IndexWriter.IndexReaderWarmer} for merged segment replication in
  * local on-disk and remote store enabled domains.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MergedSegmentWarmer implements IndexWriter.IndexReaderWarmer {
     private final TransportService transportService;

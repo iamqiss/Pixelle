@@ -7,7 +7,7 @@ body:
     attributes:
       label: Please describe the end goal of this project
       description: A clear and concise description of this project/endeavor.  This should be understandable to someone with no context.
-      placeholder: Ex. Views is a way to project indices in OpenSearch, these views act as a focal point for describing the underlying data and how the data is accessed. It allows for restricting the scope and filtering the response consistently.
+      placeholder: Ex. Views is a way to project indices in Density, these views act as a focal point for describing the underlying data and how the data is accessed. It allows for restricting the scope and filtering the response consistently.
     validations:
       required: true
   - type: textarea
@@ -20,13 +20,13 @@ body:
     attributes:
       label: Issues
       description: Please create a list of issues that should be tracked by this meta issue, including a short description.  The purpose is to provide everyone on the project with an "at a glance" update of the state us the work being tracked.  If you use the format "- [ ]" it will put your list into a checklist.
-      placeholder: Ex. - [ ] https://github.com/opensearch-project/security/issues/3888 Add views to the cluster metadata schema
+      placeholder: Ex. - [ ] https://github.com/density-project/security/issues/3888 Add views to the cluster metadata schema
     validations:
       required: true
   - type: dropdown
     attributes:
       label: Related component
-      description: Choose a specific OpenSearch component your project belongs to.  If you are unsure of which component to select or if the component is not present, select "Other".
+      description: Choose a specific Density component your project belongs to.  If you are unsure of which component to select or if the component is not present, select "Other".
       multiple: false
       options:
         - # Empty first option to force selection

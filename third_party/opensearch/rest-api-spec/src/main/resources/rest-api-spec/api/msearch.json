@@ -1,7 +1,7 @@
 {
   "msearch":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/multi-search/",
+      "url":"https://density.org/docs/latest/api-reference/multi-search/",
       "description":"Allows to execute several search operations in one request."
     },
     "stability":"stable",

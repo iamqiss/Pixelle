@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.bootstrap;
+package org.density.common.bootstrap;
 
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.SuppressForbidden;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -47,7 +47,7 @@ import java.util.Set;
 /**
  * CLI tool for checking jar hell
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JdkJarHellCheck {
 

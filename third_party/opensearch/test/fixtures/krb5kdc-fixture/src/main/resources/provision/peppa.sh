@@ -2,7 +2,7 @@
 
 set -e -o pipefail
 
-addprinc.sh opensearch
+addprinc.sh density
 addprinc.sh HTTP/localhost
 addprinc.sh peppa
 addprinc.sh george          dino

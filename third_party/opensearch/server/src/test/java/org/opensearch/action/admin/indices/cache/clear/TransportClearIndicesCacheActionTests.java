@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.cache.clear;
+package org.density.action.admin.indices.cache.clear;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.broadcast.node.TransportBroadcastByNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheFactory;
-import org.opensearch.index.store.remote.filecache.FileCacheTests;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.node.Node;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.broadcast.node.TransportBroadcastByNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.TestEnvironment;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheFactory;
+import org.density.index.store.remote.filecache.FileCacheTests;
+import org.density.indices.IndicesService;
+import org.density.node.Node;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -40,7 +40,7 @@ import java.util.EnumSet;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportClearIndicesCacheActionTests extends OpenSearchTestCase {
+public class TransportClearIndicesCacheActionTests extends DensityTestCase {
 
     private final Node testNode = mock(Node.class);
     private final TransportClearIndicesCacheAction action = new TransportClearIndicesCacheAction(

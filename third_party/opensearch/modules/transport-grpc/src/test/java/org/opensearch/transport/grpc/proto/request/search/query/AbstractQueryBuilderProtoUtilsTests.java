@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.MatchAllQuery;
-import org.opensearch.protobufs.MatchNoneQuery;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.protobufs.StringArray;
-import org.opensearch.protobufs.TermQuery;
-import org.opensearch.protobufs.TermsLookupFieldStringArrayMap;
-import org.opensearch.protobufs.TermsQueryField;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.MatchAllQuery;
+import org.density.protobufs.MatchNoneQuery;
+import org.density.protobufs.QueryContainer;
+import org.density.protobufs.StringArray;
+import org.density.protobufs.TermQuery;
+import org.density.protobufs.TermsLookupFieldStringArrayMap;
+import org.density.protobufs.TermsQueryField;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractQueryBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class AbstractQueryBuilderProtoUtilsTests extends DensityTestCase {
 
     private AbstractQueryBuilderProtoUtils queryUtils;
 

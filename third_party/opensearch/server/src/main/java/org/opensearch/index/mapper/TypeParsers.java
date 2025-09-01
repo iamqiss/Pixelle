@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexOptions;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.index.similarity.SimilarityProvider;
+import org.density.DensityParseException;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.index.similarity.SimilarityProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,14 +47,14 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
-import static org.opensearch.common.xcontent.support.XContentMapValues.isArray;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeFloatValue;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeStringValue;
+import static org.density.common.xcontent.support.XContentMapValues.isArray;
+import static org.density.common.xcontent.support.XContentMapValues.nodeFloatValue;
+import static org.density.common.xcontent.support.XContentMapValues.nodeStringValue;
 
 /**
  * Foundation type parsers
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TypeParsers {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(TypeParsers.class);
@@ -280,7 +280,7 @@ public class TypeParsers {
         } else if (INDEX_OPTIONS_DOCS.equalsIgnoreCase(value)) {
             return IndexOptions.DOCS;
         } else {
-            throw new OpenSearchParseException("failed to parse index option [{}]", value);
+            throw new DensityParseException("failed to parse index option [{}]", value);
         }
     }
 

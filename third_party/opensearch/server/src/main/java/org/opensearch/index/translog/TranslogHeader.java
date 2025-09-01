@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.CorruptIndexException;
@@ -39,12 +39,12 @@ import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.store.InputStreamDataInput;
 import org.apache.lucene.store.OutputStreamDataOutput;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.io.Channels;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamInput;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.common.io.Channels;
+import org.density.core.common.io.stream.BufferedChecksumStreamInput;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -52,12 +52,12 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
 
 /**
  * Each translog file is started with a translog header then followed by translog operations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TranslogHeader {
     public static final String TRANSLOG_CODEC = "translog";

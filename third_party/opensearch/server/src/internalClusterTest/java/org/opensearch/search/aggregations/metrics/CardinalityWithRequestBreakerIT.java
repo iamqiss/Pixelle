@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.BucketOrder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.cardinality;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.cardinality;
+import static org.density.search.aggregations.AggregationBuilders.terms;
 
-public class CardinalityWithRequestBreakerIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class CardinalityWithRequestBreakerIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public CardinalityWithRequestBreakerIT(Settings staticSettings) {
         super(staticSettings);
@@ -103,7 +103,7 @@ public class CardinalityWithRequestBreakerIT extends ParameterizedStaticSettings
                         .subAggregation(cardinality("cardinality").precisionThreshold(randomLongBetween(1, 40000)).field("field1.keyword"))
                 )
                 .get();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             if (ExceptionsHelper.unwrap(e, CircuitBreakingException.class) == null) {
                 throw e;
             }

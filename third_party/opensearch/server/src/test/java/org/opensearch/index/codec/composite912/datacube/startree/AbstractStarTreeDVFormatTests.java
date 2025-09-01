@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite912.datacube.startree;
+package org.density.index.codec.composite912.datacube.startree;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -16,23 +16,23 @@ import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
 import org.apache.lucene.tests.index.BaseDocValuesFormatTestCase;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MapperTestUtils;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.IndicesModule;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedConsumer;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.MapperTestUtils;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.indices.IndicesModule;
 import org.junit.After;
 
 import java.io.IOException;

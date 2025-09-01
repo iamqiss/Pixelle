@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.versioning;
+package org.density.versioning;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.cluster.coordination.LinearizabilityChecker;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.discovery.AbstractDisruptionTestCase;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.cluster.coordination.LinearizabilityChecker;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.discovery.AbstractDisruptionTestCase;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -77,7 +77,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -133,7 +133,7 @@ import static org.hamcrest.Matchers.greaterThan;
  *     stale or dirty, i.e., come from a stale primary or belong to a write that ends up being discarded.</li>
  * </ul>
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, minNumDataNodes = 4, maxNumDataNodes = 6)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, minNumDataNodes = 4, maxNumDataNodes = 6)
 public class ConcurrentSeqNoVersioningIT extends AbstractDisruptionTestCase {
 
     private static final Pattern EXTRACT_VERSION = Pattern.compile("current document has seqNo \\[(\\d+)\\] and primary term \\[(\\d+)\\]");

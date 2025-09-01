@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * A multi terms result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedMultiTerms extends ParsedTerms {
     @Override
@@ -44,7 +44,7 @@ public class ParsedMultiTerms extends ParsedTerms {
     /**
      * Parsed bucket for multi terms
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ParsedBucket extends ParsedTerms.ParsedBucket {
 

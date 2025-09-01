@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff;
+package org.density.client.sniff;
 
-import org.opensearch.client.Node;
-import org.opensearch.client.RestClient;
+import org.density.client.Node;
+import org.density.client.RestClient;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * {@link org.opensearch.client.RestClient.FailureListener} implementation that allows to perform
+ * {@link org.density.client.RestClient.FailureListener} implementation that allows to perform
  * sniffing on failure. Gets notified whenever a failure happens and uses a {@link Sniffer} instance
  * to manually reload hosts and sets them back to the {@link RestClient}. The {@link Sniffer} instance
  * needs to be lazily set through {@link #setSniffer(Sniffer)}.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.artifacts.Configuration;
@@ -39,7 +39,7 @@ import org.gradle.internal.deprecation.DeprecatableConfiguration;
 
 import java.util.Collection;
 
-import static org.opensearch.gradle.DistributionDownloadPlugin.DISTRO_EXTRACTED_CONFIG_PREFIX;
+import static org.density.gradle.DistributionDownloadPlugin.DISTRO_EXTRACTED_CONFIG_PREFIX;
 
 public class ResolveAllDependencies extends DefaultTask {
 

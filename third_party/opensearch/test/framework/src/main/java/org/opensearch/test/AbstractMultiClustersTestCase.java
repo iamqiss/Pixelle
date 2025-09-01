@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.action.admin.cluster.remote.RemoteInfoAction;
-import org.opensearch.action.admin.cluster.remote.RemoteInfoRequest;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.RemoteConnectionInfo;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.nio.MockNioTransportPlugin;
+import org.density.action.admin.cluster.remote.RemoteInfoAction;
+import org.density.action.admin.cluster.remote.RemoteInfoRequest;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.plugins.Plugin;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.RemoteConnectionInfo;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.nio.MockNioTransportPlugin;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -62,13 +62,13 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
-import static org.opensearch.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
+import static org.density.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
+import static org.density.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 
-public abstract class AbstractMultiClustersTestCase extends OpenSearchTestCase {
+public abstract class AbstractMultiClustersTestCase extends DensityTestCase {
     public static final String LOCAL_CLUSTER = RemoteClusterAware.LOCAL_CLUSTER_GROUP_KEY;
 
     private static volatile ClusterGroup clusterGroup;

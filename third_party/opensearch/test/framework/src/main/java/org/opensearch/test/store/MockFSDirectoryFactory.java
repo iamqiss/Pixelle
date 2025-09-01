@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.store;
+package org.density.test.store;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -45,21 +45,21 @@ import org.apache.lucene.tests.store.BaseDirectoryWrapper;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.tests.util.TestRuleMarkFailure;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.plugins.IndexStorePlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.io.Closeable;
@@ -101,7 +101,7 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
     @Override
     public Directory newDirectory(IndexSettings idxSettings, ShardPath path) throws IOException {
         Settings indexSettings = idxSettings.getSettings();
-        Random random = new Random(idxSettings.getValue(OpenSearchIntegTestCase.INDEX_TEST_SEED_SETTING));
+        Random random = new Random(idxSettings.getValue(DensityIntegTestCase.INDEX_TEST_SEED_SETTING));
         return wrap(randomDirectoryService(random, idxSettings, path), random, indexSettings, path.getShardId());
     }
 
@@ -128,7 +128,7 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
                                 + os.bytes().utf8ToString()
                                 + "]"
                         );
-                        OpenSearchTestCase.checkIndexFailures.add(failure);
+                        DensityTestCase.checkIndexFailures.add(failure);
                         throw failure;
                     } else {
                         if (logger.isDebugEnabled()) {
@@ -137,7 +137,7 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
                     }
                 } catch (LockObtainFailedException e) {
                     IllegalStateException failure = new IllegalStateException("IndexWriter is still open on shard " + shardId, e);
-                    OpenSearchTestCase.checkIndexFailures.add(failure);
+                    DensityTestCase.checkIndexFailures.add(failure);
                     throw failure;
                 }
             } catch (Exception e) {
@@ -156,7 +156,7 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
         random.nextInt(shardId.getId() + 1); // some randomness per shard
         MockDirectoryWrapper.Throttling throttle = MockDirectoryWrapper.Throttling.NEVER;
         boolean crashIndex = CRASH_INDEX_SETTING.get(indexSettings);
-        final OpenSearchMockDirectoryWrapper w = new OpenSearchMockDirectoryWrapper(random, dir, crashIndex);
+        final DensityMockDirectoryWrapper w = new DensityMockDirectoryWrapper(random, dir, crashIndex);
         w.setRandomIOExceptionRate(randomIOExceptionRate);
         w.setRandomIOExceptionRateOnOpen(randomIOExceptionRateOnOpen);
         w.setThrottling(throttle);
@@ -185,11 +185,11 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
         return new FsDirectoryFactory().newDirectory(newIndexSettings, path);
     }
 
-    public static final class OpenSearchMockDirectoryWrapper extends MockDirectoryWrapper {
+    public static final class DensityMockDirectoryWrapper extends MockDirectoryWrapper {
 
         private final boolean crash;
 
-        public OpenSearchMockDirectoryWrapper(Random random, Directory delegate, boolean crash) {
+        public DensityMockDirectoryWrapper(Random random, Directory delegate, boolean crash) {
             super(random, delegate);
             this.crash = crash;
         }
@@ -227,7 +227,7 @@ public class MockFSDirectoryFactory implements IndexStorePlugin.DirectoryFactory
 
         CloseableDirectory(BaseDirectoryWrapper dir) {
             this.dir = dir;
-            this.failureMarker = OpenSearchTestCase.getSuiteFailureMarker();
+            this.failureMarker = DensityTestCase.getSuiteFailureMarker();
         }
 
         @Override

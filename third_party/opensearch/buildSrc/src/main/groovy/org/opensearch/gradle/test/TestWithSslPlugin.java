@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test;
+package org.density.gradle.test;
 
-import org.opensearch.gradle.ExportOpenSearchBuildResourcesTask;
-import org.opensearch.gradle.precommit.ForbiddenPatternsTask;
-import org.opensearch.gradle.testclusters.OpenSearchCluster;
-import org.opensearch.gradle.testclusters.TestClustersAware;
-import org.opensearch.gradle.testclusters.TestClustersPlugin;
-import org.opensearch.gradle.util.Util;
+import org.density.gradle.ExportDensityBuildResourcesTask;
+import org.density.gradle.precommit.ForbiddenPatternsTask;
+import org.density.gradle.testclusters.DensityCluster;
+import org.density.gradle.testclusters.TestClustersAware;
+import org.density.gradle.testclusters.TestClustersPlugin;
+import org.density.gradle.util.Util;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -51,8 +51,8 @@ public class TestWithSslPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         File keyStoreDir = new File(project.getBuildDir(), "keystore");
-        TaskProvider<ExportOpenSearchBuildResourcesTask> exportKeyStore = project.getTasks()
-            .register("copyTestCertificates", ExportOpenSearchBuildResourcesTask.class, (t) -> {
+        TaskProvider<ExportDensityBuildResourcesTask> exportKeyStore = project.getTasks()
+            .register("copyTestCertificates", ExportDensityBuildResourcesTask.class, (t) -> {
                 t.copy("test/ssl/test-client.crt");
                 t.copy("test/ssl/test-client.jks");
                 t.copy("test/ssl/test-node.crt");
@@ -78,7 +78,7 @@ public class TestWithSslPlugin implements Plugin<Project> {
             File nodeKeystore = new File(keystoreDir, "test-node.jks");
             File clientKeyStore = new File(keystoreDir, "test-client.jks");
             @SuppressWarnings("unchecked")
-            NamedDomainObjectContainer<OpenSearchCluster> clusters = (NamedDomainObjectContainer<OpenSearchCluster>) project.getExtensions()
+            NamedDomainObjectContainer<DensityCluster> clusters = (NamedDomainObjectContainer<DensityCluster>) project.getExtensions()
                 .getByName(TestClustersPlugin.EXTENSION_NAME);
             clusters.all(c -> {
                 // copy keystores & certs into config/

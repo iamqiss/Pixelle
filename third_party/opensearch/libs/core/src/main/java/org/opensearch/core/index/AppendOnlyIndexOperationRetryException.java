@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.index;
+package org.density.core.index;
 
-import org.opensearch.OpenSearchException;
+import org.density.DensityException;
 
 /**
  * This exception indicates that retry has been made during indexing for AppendOnly index. If the response of any
  * indexing request contains this Exception in the response, we do not need to add a translog entry for this request.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class AppendOnlyIndexOperationRetryException extends OpenSearchException {
+public class AppendOnlyIndexOperationRetryException extends DensityException {
     public AppendOnlyIndexOperationRetryException(String message) {
         super(message);
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.cluster;
+package org.density.client.cluster;
 
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.transport.ProxyConnectionStrategy;
-import org.opensearch.transport.RemoteConnectionInfo;
-import org.opensearch.transport.SniffConnectionStrategy;
+import org.density.client.AbstractResponseTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
+import org.density.transport.ProxyConnectionStrategy;
+import org.density.transport.RemoteConnectionInfo;
+import org.density.transport.SniffConnectionStrategy;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,17 +50,17 @@ import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RemoteInfoResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.admin.cluster.remote.RemoteInfoResponse,
+    org.density.action.admin.cluster.remote.RemoteInfoResponse,
     RemoteInfoResponse> {
 
     @Override
-    protected org.opensearch.action.admin.cluster.remote.RemoteInfoResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.admin.cluster.remote.RemoteInfoResponse createServerTestInstance(XContentType xContentType) {
         int numRemoteInfos = randomIntBetween(0, 8);
         List<RemoteConnectionInfo> remoteInfos = new ArrayList<>();
         for (int i = 0; i < numRemoteInfos; i++) {
             remoteInfos.add(createRandomRemoteConnectionInfo());
         }
-        return new org.opensearch.action.admin.cluster.remote.RemoteInfoResponse(remoteInfos);
+        return new org.density.action.admin.cluster.remote.RemoteInfoResponse(remoteInfos);
     }
 
     @Override
@@ -70,14 +70,14 @@ public class RemoteInfoResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.admin.cluster.remote.RemoteInfoResponse serverTestInstance,
+        org.density.action.admin.cluster.remote.RemoteInfoResponse serverTestInstance,
         RemoteInfoResponse clientInstance
     ) {
         assertThat(clientInstance.getInfos().size(), equalTo(serverTestInstance.getInfos().size()));
         Map<String, RemoteConnectionInfo> serverInfos = serverTestInstance.getInfos()
             .stream()
             .collect(toMap(RemoteConnectionInfo::getClusterAlias, identity()));
-        for (org.opensearch.client.cluster.RemoteConnectionInfo clientRemoteInfo : clientInstance.getInfos()) {
+        for (org.density.client.cluster.RemoteConnectionInfo clientRemoteInfo : clientInstance.getInfos()) {
             RemoteConnectionInfo serverRemoteInfo = serverInfos.get(clientRemoteInfo.getClusterAlias());
             assertThat(clientRemoteInfo.getClusterAlias(), equalTo(serverRemoteInfo.getClusterAlias()));
             assertThat(

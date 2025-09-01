@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.replication;
+package org.density.index.replication;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeaseSyncAction;
-import org.opensearch.index.seqno.RetentionLeaseUtils;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestUtils;
-import org.opensearch.test.VersionUtils;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Randomness;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeaseSyncAction;
+import org.density.index.seqno.RetentionLeaseUtils;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestUtils;
+import org.density.test.VersionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-public class RetentionLeasesReplicationTests extends OpenSearchIndexLevelReplicationTestCase {
+public class RetentionLeasesReplicationTests extends DensityIndexLevelReplicationTestCase {
 
     public void testSimpleSyncRetentionLeases() throws Exception {
         Settings settings = Settings.builder().put(IndexSettings.INDEX_SOFT_DELETES_SETTING.getKey(), true).build();

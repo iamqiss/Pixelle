@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.forcemerge;
+package org.density.action.admin.indices.forcemerge;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ForceMergeIT extends OpenSearchIntegTestCase {
+public class ForceMergeIT extends DensityIntegTestCase {
 
     public void testForceMergeUUIDConsistent() throws IOException {
         internalCluster().ensureAtLeastNumDataNodes(2);

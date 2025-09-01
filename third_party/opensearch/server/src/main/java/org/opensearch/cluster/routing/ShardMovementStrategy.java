@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Locale;
 
@@ -19,7 +19,7 @@ import java.util.Locale;
  * ShardMovementStrategy values or rather their string representation to be used with
  * {@link BalancedShardsAllocator#SHARD_MOVEMENT_STRATEGY_SETTING} via cluster settings.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.9.0")
 public enum ShardMovementStrategy {

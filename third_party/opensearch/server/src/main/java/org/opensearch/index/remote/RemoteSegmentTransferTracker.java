@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.Streak;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.DirectoryFileTransferTracker;
+import org.density.common.CheckedFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.Loggers;
+import org.density.common.util.Streak;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.DirectoryFileTransferTracker;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -32,12 +32,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.shard.RemoteStoreRefreshListener.EXCLUDE_FILES;
+import static org.density.index.shard.RemoteStoreRefreshListener.EXCLUDE_FILES;
 
 /**
- * Keeps track of remote refresh which happens in {@link org.opensearch.index.shard.RemoteStoreRefreshListener}. This consist of multiple critical metrics.
+ * Keeps track of remote refresh which happens in {@link org.density.index.shard.RemoteStoreRefreshListener}. This consist of multiple critical metrics.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.10.0")
 public class RemoteSegmentTransferTracker extends RemoteTransferTracker {
@@ -122,7 +122,7 @@ public class RemoteSegmentTransferTracker extends RemoteTransferTracker {
     private final Streak failures = new Streak();
 
     /**
-     * {@link org.opensearch.index.store.Store.StoreDirectory} level file transfer tracker, used to show download stats
+     * {@link org.density.index.store.Store.StoreDirectory} level file transfer tracker, used to show download stats
      */
     private final DirectoryFileTransferTracker directoryFileTransferTracker;
 
@@ -399,7 +399,7 @@ public class RemoteSegmentTransferTracker extends RemoteTransferTracker {
     /**
      * Represents the tracker's state as seen in the stats API.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "2.10.0")
     public static class Stats implements Writeable {

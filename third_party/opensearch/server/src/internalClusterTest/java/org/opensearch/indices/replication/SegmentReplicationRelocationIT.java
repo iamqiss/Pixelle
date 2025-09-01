@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteResponse;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.DensityCorruptionException;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.reroute.ClusterRerouteResponse;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +37,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
 /**
  * This test class verifies primary shard relocation with segment replication as replication strategy.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SegmentReplicationRelocationIT extends SegmentReplicationBaseIT {
     private final TimeValue ACCEPTABLE_RELOCATION_TIME = new TimeValue(5, TimeUnit.MINUTES);
 
@@ -56,7 +56,7 @@ public class SegmentReplicationRelocationIT extends SegmentReplicationBaseIT {
      * This test verifies happy path when primary shard is relocated newly added node (target) in the cluster. Before
      * relocation and after relocation documents are indexed and documents are verified
      */
-    @TestLogging(reason = "Getting trace logs from replication,shard and allocation package", value = "org.opensearch.indices.replication:TRACE, org.opensearch.index.shard:TRACE, org.opensearch.cluster.routing.allocation:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication,shard and allocation package", value = "org.density.indices.replication:TRACE, org.density.index.shard:TRACE, org.density.cluster.routing.allocation:TRACE")
     public void testPrimaryRelocation() throws Exception {
         final String oldPrimary = internalCluster().startNode();
         createIndex(1);
@@ -172,7 +172,7 @@ public class SegmentReplicationRelocationIT extends SegmentReplicationBaseIT {
             internalCluster().getInstance(TransportService.class, newPrimary),
             (connection, requestId, action, request, options) -> {
                 if (action.equals(SegmentReplicationTargetService.Actions.FILE_CHUNK)) {
-                    throw new OpenSearchCorruptionException("expected");
+                    throw new DensityCorruptionException("expected");
                 }
                 connection.sendRequest(requestId, action, request, options);
             }
@@ -219,7 +219,7 @@ public class SegmentReplicationRelocationIT extends SegmentReplicationBaseIT {
      * This test verifies primary recovery behavior with continuous ingestion
      *
      */
-    @TestLogging(reason = "Enable trace logs from replication and recovery package", value = "org.opensearch.indices.recovery:TRACE,org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Enable trace logs from replication and recovery package", value = "org.density.indices.recovery:TRACE,org.density.indices.replication:TRACE")
     public void testRelocateWhileContinuouslyIndexingAndWaitingForRefresh() throws Exception {
         final String primary = internalCluster().startNode();
         createIndex(1);
@@ -476,7 +476,7 @@ public class SegmentReplicationRelocationIT extends SegmentReplicationBaseIT {
             (connection, requestId, action, request, options) -> {
                 if (action.equals(SegmentReplicationTargetService.Actions.FILE_CHUNK)) {
                     waitForRecovery.countDown();
-                    throw new OpenSearchCorruptionException("expected");
+                    throw new DensityCorruptionException("expected");
                 }
                 connection.sendRequest(requestId, action, request, options);
             }

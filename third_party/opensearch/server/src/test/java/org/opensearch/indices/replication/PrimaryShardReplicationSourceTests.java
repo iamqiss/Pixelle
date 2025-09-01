@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.util.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.MergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.transport.CapturingTransport;
+import org.density.transport.TransportService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -228,7 +228,7 @@ public class PrimaryShardReplicationSourceTests extends IndexShardTestCase {
             buildNewFakeTransportAddress(),
             Collections.emptyMap(),
             Collections.singleton(DiscoveryNodeRole.CLUSTER_MANAGER_ROLE),
-            org.opensearch.Version.CURRENT
+            org.density.Version.CURRENT
         );
     }
 }

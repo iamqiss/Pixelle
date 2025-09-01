@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.document.common;
+package org.density.transport.grpc.proto.response.document.common;
 
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.protobufs.ShardInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.protobufs.ShardInfo;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShardInfoProtoUtilsTests extends OpenSearchTestCase {
+public class ShardInfoProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithNoFailures() throws IOException {
         // Create a ShardInfo with no failures

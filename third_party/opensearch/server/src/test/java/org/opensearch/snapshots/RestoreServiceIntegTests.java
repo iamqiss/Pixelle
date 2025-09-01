@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.StepListener;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.StepListener;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.open.OpenIndexResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.CheckedConsumer;
+import org.density.common.settings.Settings;
+import org.density.repositories.fs.FsRepository;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 
 import java.util.Arrays;
@@ -46,7 +46,7 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class RestoreServiceIntegTests extends OpenSearchSingleNodeTestCase {
+public class RestoreServiceIntegTests extends DensitySingleNodeTestCase {
     private final String indexName = "index_1";
     private final String renamedIndexName = "index_2";
     private final String aliasName = "alias_1";
@@ -160,7 +160,7 @@ public class RestoreServiceIntegTests extends OpenSearchSingleNodeTestCase {
 
         final StepListener<AcknowledgedResponse> putRepositoryResponseStepListener = new StepListener<>();
         Settings.Builder settings = Settings.builder().put("location", randomAlphaOfLength(10));
-        OpenSearchIntegTestCase.putRepository(
+        DensityIntegTestCase.putRepository(
             client().admin().cluster(),
             repoName,
             FsRepository.TYPE,

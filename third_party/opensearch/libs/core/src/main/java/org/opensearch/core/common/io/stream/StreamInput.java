@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
@@ -41,22 +41,22 @@ import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BitUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRef;
-import org.opensearch.Build;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.CharArrays;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.semver.SemverRange;
+import org.density.Build;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.CharArrays;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.settings.SecureString;
+import org.density.core.common.text.Text;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.semver.SemverRange;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
@@ -96,7 +96,7 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntFunction;
 
-import static org.opensearch.OpenSearchException.readStackTrace;
+import static org.density.DensityException.readStackTrace;
 
 /**
  * A stream from this node to another node. Technically, it can also be streamed to a byte array but that is mostly for testing.
@@ -109,7 +109,7 @@ import static org.opensearch.OpenSearchException.readStackTrace;
  * lists, either by storing {@code List}s internally or just converting to and from a {@code List} when calling. This comment is repeated
  * on {@link StreamInput}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class StreamInput extends InputStream {
@@ -1032,7 +1032,7 @@ public abstract class StreamInput extends InputStream {
             switch (key) {
                 case 0:
                     final int ord = readVInt();
-                    return (T) OpenSearchException.readException(this, ord);
+                    return (T) DensityException.readException(this, ord);
                 case 1:
                     String msg1 = readOptionalString();
                     String resource1 = readOptionalString();
@@ -1118,7 +1118,7 @@ public abstract class StreamInput extends InputStream {
                     return (T) readStackTrace(new IOException(readOptionalString(), readException()), this);
                 case 18:
                     final boolean isExecutorShutdown = readBoolean();
-                    return (T) readStackTrace(new OpenSearchRejectedExecutionException(readOptionalString(), isExecutorShutdown), this);
+                    return (T) readStackTrace(new DensityRejectedExecutionException(readOptionalString(), isExecutorShutdown), this);
                 default:
                     throw new IOException("no such exception for id: " + key);
             }
@@ -1126,7 +1126,7 @@ public abstract class StreamInput extends InputStream {
         return null;
     }
 
-    /** Reads the OpenSearch Version from the input stream */
+    /** Reads the Density Version from the input stream */
     public Version readVersion() throws IOException {
         return Version.fromId(readVInt());
     }
@@ -1137,7 +1137,7 @@ public abstract class StreamInput extends InputStream {
 
     /** Reads the {@link Version} from the input stream */
     public Build readBuild() throws IOException {
-        // the following is new for opensearch: we write the distribution to support any "forks"
+        // the following is new for density: we write the distribution to support any "forks"
         final String distribution = readString();
         // be lenient when reading on the wire, the enumeration values from other versions might be different than what we know
         final Build.Type type = Build.Type.fromDisplayName(readString(), false);

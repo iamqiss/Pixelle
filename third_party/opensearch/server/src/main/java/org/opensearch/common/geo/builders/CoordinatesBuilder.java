@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.OpenSearchException;
+import org.density.DensityException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ import org.locationtech.jts.geom.Coordinate;
  * Enables chaining of individual coordinates either as long/lat pairs
  * or as {@link Coordinate} elements, arrays or collections.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CoordinatesBuilder {
 
@@ -62,7 +62,7 @@ public class CoordinatesBuilder {
         int actualDims;
         if (points.isEmpty() == false
             && (expectedDims = Double.isNaN(points.get(0).z) ? 2 : 3) != (actualDims = Double.isNaN(coordinate.z) ? 2 : 3)) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "unable to add coordinate to CoordinateBuilder: " + "coordinate dimensions do not match. Expected [{}] but found [{}]",
                 expectedDims,
                 actualDims

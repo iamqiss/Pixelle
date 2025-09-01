@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -46,7 +46,7 @@ import java.util.Objects;
 /**
  * Calculate a doubly exponential weighted moving average
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HoltLinearModel extends MovAvgModel {
     public static final String NAME = "holt";
@@ -198,7 +198,7 @@ public class HoltLinearModel extends MovAvgModel {
     /**
      * Builder for the holt linear model
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class HoltLinearModelBuilder implements MovAvgModelBuilder {
         private double alpha = DEFAULT_ALPHA;

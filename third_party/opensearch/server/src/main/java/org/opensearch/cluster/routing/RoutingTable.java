@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.Diffable;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.RecoverySource.RemoteStoreRecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.SnapshotRecoverySource;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.iterable.Iterables;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VerifiableWriteable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.shard.ShardNotFoundException;
+import org.density.cluster.Diff;
+import org.density.cluster.Diffable;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.RecoverySource.RemoteStoreRecoverySource;
+import org.density.cluster.routing.RecoverySource.SnapshotRecoverySource;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.iterable.Iterables;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VerifiableWriteable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexNotFoundException;
+import org.density.index.shard.ShardNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static org.opensearch.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
+import static org.density.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
 
 /**
  * Represents a global cluster-wide routing table for all indices including the
@@ -69,7 +69,7 @@ import static org.opensearch.cluster.metadata.MetadataIndexStateService.isIndexV
  *
  * @see IndexRoutingTable
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RoutingTable implements Iterable<IndexRoutingTable>, Diffable<RoutingTable>, VerifiableWriteable {
@@ -467,7 +467,7 @@ public class RoutingTable implements Iterable<IndexRoutingTable>, Diffable<Routi
     /**
      * Builder for the routing table. Note that build can only be called one time.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

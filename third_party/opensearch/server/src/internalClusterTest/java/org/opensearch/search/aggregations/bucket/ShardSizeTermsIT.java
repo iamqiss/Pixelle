@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.terms.Terms;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.aggregations.AggregationBuilders.terms;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ShardSizeTermsIT extends ShardSizeTestCase {
@@ -102,7 +102,7 @@ public class ShardSizeTermsIT extends ShardSizeTestCase {
         Long expectedDocCount;
         for (Terms.Bucket bucket : buckets) {
             expectedDocCount = expected.get(bucket.getKeyAsString());
-            // Doc count can vary when using concurrent segment search. See https://github.com/opensearch-project/OpenSearch/issues/11680
+            // Doc count can vary when using concurrent segment search. See https://github.com/density-project/Density/issues/11680
             assertTrue((bucket.getDocCount() == expectedDocCount) || bucket.getDocCount() + bucket.getDocCountError() >= expectedDocCount);
         }
     }
@@ -241,7 +241,7 @@ public class ShardSizeTermsIT extends ShardSizeTestCase {
         Long expectedDocCount;
         for (Terms.Bucket bucket : buckets) {
             expectedDocCount = expected.get(bucket.getKeyAsNumber().intValue());
-            // Doc count can vary when using concurrent segment search. See https://github.com/opensearch-project/OpenSearch/issues/11680
+            // Doc count can vary when using concurrent segment search. See https://github.com/density-project/Density/issues/11680
             assertTrue((bucket.getDocCount() == expectedDocCount) || bucket.getDocCount() + bucket.getDocCountError() >= expectedDocCount);
         }
     }
@@ -379,7 +379,7 @@ public class ShardSizeTermsIT extends ShardSizeTestCase {
         Long expectedDocCount;
         for (Terms.Bucket bucket : buckets) {
             expectedDocCount = expected.get(bucket.getKeyAsNumber().intValue());
-            // Doc count can vary when using concurrent segment search. See https://github.com/opensearch-project/OpenSearch/issues/11680
+            // Doc count can vary when using concurrent segment search. See https://github.com/density-project/Density/issues/11680
             assertTrue((bucket.getDocCount() == expectedDocCount) || bucket.getDocCount() + bucket.getDocCountError() >= expectedDocCount);
         }
     }

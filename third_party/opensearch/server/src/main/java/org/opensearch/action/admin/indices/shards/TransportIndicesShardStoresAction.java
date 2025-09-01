@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,45 +25,45 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.shards;
+package org.density.action.admin.indices.shards;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeReadAction;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterShardHealth;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.AsyncShardFetch;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShards;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeReadAction;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterShardHealth;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.AsyncShardFetch;
+import org.density.gateway.TransportNodesListGatewayStartedShards;
+import org.density.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Transport action that reads the cluster state for shards with the requested criteria (see {@link ClusterHealthStatus}) of specific
  * indices and fetches store information from all the nodes using {@link TransportNodesListGatewayStartedShards}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportIndicesShardStoresAction extends TransportClusterManagerNodeReadAction<
     IndicesShardStoresRequest,
@@ -170,7 +170,7 @@ public class TransportIndicesShardStoresAction extends TransportClusterManagerNo
     /**
      * Information for async shard stores
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class AsyncShardStoresInfoFetches {
         private final DiscoveryNodes nodes;
@@ -218,7 +218,7 @@ public class TransportIndicesShardStoresAction extends TransportClusterManagerNo
         /**
          * Internal async fetch
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private class InternalAsyncFetch extends AsyncShardFetch<NodeGatewayStartedShards> {
 
@@ -336,7 +336,7 @@ public class TransportIndicesShardStoresAction extends TransportClusterManagerNo
             /**
              * Response for shard stores action
              *
-             * @opensearch.internal
+             * @density.internal
              */
             public class Response {
                 private final ShardId shardId;

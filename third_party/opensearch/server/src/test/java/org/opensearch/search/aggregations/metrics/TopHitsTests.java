@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.AggregationInitializationException;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilderTests;
-import org.opensearch.search.sort.ScriptSortBuilder.ScriptSortType;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.AggregationInitializationException;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BaseAggregationTestCase;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilderTests;
+import org.density.search.sort.ScriptSortBuilder.ScriptSortType;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.AbstractQueryTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;

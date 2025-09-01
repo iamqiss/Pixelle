@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
@@ -40,12 +40,12 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.Defaults;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldType;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeFieldType;
-import org.opensearch.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldType;
+import org.density.DensityException;
+import org.density.common.lucene.Lucene;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.Defaults;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.PrefixFieldType;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.SearchAsYouTypeFieldType;
+import org.density.index.mapper.SearchAsYouTypeFieldMapper.ShingleFieldType;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -143,8 +143,8 @@ public class SearchAsYouTypeFieldTypeTests extends FieldTypeTestCase {
             equalTo(new PrefixQuery(new Term(NAME, longTerm), CONSTANT_SCORE_REWRITE))
         );
 
-        OpenSearchException ee = expectThrows(
-            OpenSearchException.class,
+        DensityException ee = expectThrows(
+            DensityException.class,
             () -> fieldType.prefixQuery(longTerm, CONSTANT_SCORE_REWRITE, MOCK_QSC_DISALLOW_EXPENSIVE)
         );
         assertEquals(

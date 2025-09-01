@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.monitor.fs;
+package org.density.monitor.fs;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreStats;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheSettings;
+import org.density.indices.IndicesService;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class WarmFsServiceTests extends OpenSearchTestCase {
+public class WarmFsServiceTests extends DensityTestCase {
 
     private Settings settings;
     private FileCacheSettings fileCacheSettings;

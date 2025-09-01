@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.api.flightinfo;
+package org.density.arrow.flight.api.flightinfo;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Action to retrieve flight info from nodes

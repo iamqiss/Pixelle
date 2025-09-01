@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.state;
+package org.density.indices.state;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.node.Node;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.node.Node;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
 
 public class RemoteCloseIndexIT extends CloseIndexIT {
 

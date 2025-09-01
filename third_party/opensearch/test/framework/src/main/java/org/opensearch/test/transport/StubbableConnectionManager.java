@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.transport;
+package org.density.test.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionManager;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportConnectionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.TransportAddress;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionManager;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.Transport;
+import org.density.transport.TransportConnectionListener;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

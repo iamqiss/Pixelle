@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,62 +26,62 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.util.UnicodeUtil;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.TransportBulkAction;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.metrics.OperationMetrics;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.IngestPlugin;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.ExceptionsHelper;
+import org.density.DensityParseException;
+import org.density.ResourceNotFoundException;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.TransportBulkAction;
+import org.density.action.index.IndexRequest;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.metrics.OperationMetrics;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.ActionListener;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.gateway.GatewayService;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.mapper.MapperService;
+import org.density.indices.IndicesService;
+import org.density.plugins.IngestPlugin;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,17 +104,17 @@ import java.util.stream.Collectors;
 
 import reactor.util.annotation.NonNull;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_PIPELINE;
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_PIPELINE;
-import static org.opensearch.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_MAPPINGS;
-import static org.opensearch.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_SETTINGS;
-import static org.opensearch.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_TEMPLATE_MAPPINGS;
-import static org.opensearch.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_TEMPLATE_SETTINGS;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_PIPELINE;
+import static org.density.cluster.service.ClusterManagerTask.PUT_PIPELINE;
+import static org.density.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_MAPPINGS;
+import static org.density.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_SETTINGS;
+import static org.density.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_TEMPLATE_MAPPINGS;
+import static org.density.plugins.IngestPlugin.SystemIngestPipelineConfigKeys.INDEX_TEMPLATE_SETTINGS;
 
 /**
  * Holder class for several ingest related services.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IngestService implements ClusterStateApplier, ReportingService<IngestInfo> {
 
@@ -1475,7 +1475,7 @@ public class IngestService implements ClusterStateApplier, ReportingService<Inge
 
         try {
             innerUpdatePipelines(newIngestMetadata);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             logger.warn("failed to update ingest pipelines", e);
         }
     }
@@ -1502,7 +1502,7 @@ public class IngestService implements ClusterStateApplier, ReportingService<Inge
 
         // Lazy initialize these variables in order to favour the most like scenario that there are no pipeline changes:
         Map<String, PipelineHolder> newPipelines = null;
-        List<OpenSearchParseException> exceptions = null;
+        List<DensityParseException> exceptions = null;
         // Iterate over pipeline configurations in ingest metadata and constructs a new pipeline if there is no pipeline
         // or the pipeline configuration has been modified
         for (PipelineConfiguration newConfiguration : newIngestMetadata.getPipelines().values()) {
@@ -1550,7 +1550,7 @@ public class IngestService implements ClusterStateApplier, ReportingService<Inge
                         }
                     }
                 }
-            } catch (OpenSearchParseException e) {
+            } catch (DensityParseException e) {
                 Pipeline pipeline = substitutePipeline(newConfiguration.getId(), e);
                 newPipelines.put(newConfiguration.getId(), new PipelineHolder(newConfiguration, pipeline));
                 if (exceptions == null) {
@@ -1558,7 +1558,7 @@ public class IngestService implements ClusterStateApplier, ReportingService<Inge
                 }
                 exceptions.add(e);
             } catch (Exception e) {
-                OpenSearchParseException parseException = new OpenSearchParseException(
+                DensityParseException parseException = new DensityParseException(
                     "Error updating pipeline with id [" + newConfiguration.getId() + "]",
                     e
                 );
@@ -1628,7 +1628,7 @@ public class IngestService implements ClusterStateApplier, ReportingService<Inge
         return processors;
     }
 
-    private static Pipeline substitutePipeline(String id, OpenSearchParseException e) {
+    private static Pipeline substitutePipeline(String id, DensityParseException e) {
         String tag = e.getHeaderKeys().contains("processor_tag") ? e.getHeader("processor_tag").get(0) : null;
         String type = e.getHeaderKeys().contains("processor_type") ? e.getHeader("processor_type").get(0) : "unknown";
         String errorMessage = "pipeline with id [" + id + "] could not be loaded, caused by [" + e.getDetailedMessage() + "]";

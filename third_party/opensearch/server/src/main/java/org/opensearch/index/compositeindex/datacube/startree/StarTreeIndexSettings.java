@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree;
+package org.density.index.compositeindex.datacube.startree;
 
-import org.opensearch.common.Rounding;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.index.compositeindex.datacube.DataCubeDateTimeUnit;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.common.Rounding;
+import org.density.common.settings.Setting;
+import org.density.index.compositeindex.datacube.DataCubeDateTimeUnit;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.function.Function;
  * Index settings for star tree fields. The settings are final as right now
  * there is no support for update of star tree mapping.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class StarTreeIndexSettings {
 
@@ -87,7 +87,7 @@ public class StarTreeIndexSettings {
      * <p>
      * We can remove this later or change it to an enum based constant setting.
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     public static final Setting<Integer> STAR_TREE_DEFAULT_MAX_LEAF_DOCS = Setting.intSetting(
         "index.composite_index.star_tree.default.max_leaf_docs",

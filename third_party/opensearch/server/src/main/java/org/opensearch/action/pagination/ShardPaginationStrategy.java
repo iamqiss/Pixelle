@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
+import org.density.DensityParseException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +24,14 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.pagination.IndexPaginationStrategy.ASC_COMPARATOR;
-import static org.opensearch.action.pagination.IndexPaginationStrategy.DESC_COMPARATOR;
+import static org.density.action.pagination.IndexPaginationStrategy.ASC_COMPARATOR;
+import static org.density.action.pagination.IndexPaginationStrategy.DESC_COMPARATOR;
 
 /**
  * This strategy can be used by the Rest APIs wanting to paginate the responses based on Shards.
  * The strategy considers create timestamps of indices and shardID as the keys to iterate over pages.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardPaginationStrategy implements PaginationStrategy<ShardRouting> {
 
@@ -257,16 +257,16 @@ public class ShardPaginationStrategy implements PaginationStrategy<ShardRouting>
             String decryptedToken = PaginationStrategy.decryptStringToken(requestedTokenStr);
             final String[] decryptedTokenElements = decryptedToken.split(SPLIT_REGEX);
             if (decryptedTokenElements.length != 3) {
-                throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
             }
             try {
                 int shardId = Integer.parseInt(decryptedTokenElements[SHARD_ID_POS_IN_TOKEN]);
                 long creationTimeOfLastRespondedIndex = Long.parseLong(decryptedTokenElements[CREATE_TIME_POS_IN_TOKEN]);
                 if (shardId < 0 || creationTimeOfLastRespondedIndex <= 0) {
-                    throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                    throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
                 }
             } catch (NumberFormatException exception) {
-                throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+                throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
             }
         }
     }

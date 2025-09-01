@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -49,15 +49,15 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.Directory;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.lucene.search.function.ScriptScoreQuery;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.lucene.search.Queries;
+import org.density.common.lucene.search.function.ScriptScoreQuery;
+import org.density.script.ScoreScript;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -73,7 +73,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ScriptScoreQueryTests extends OpenSearchTestCase {
+public class ScriptScoreQueryTests extends DensityTestCase {
 
     private Directory dir;
     private IndexWriter w;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,68 +26,68 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteResponse;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsGroup;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ElectionSchedulerFactory;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationDecision;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.store.ShardAttributes;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataHelper;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.InternalTestCluster.RestartCallback;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.store.MockFSIndexStore;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.reroute.ClusterRerouteResponse;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsGroup;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ElectionSchedulerFactory;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationDecision;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.MergePolicyProvider;
+import org.density.index.engine.Engine;
+import org.density.index.query.QueryBuilders;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardPath;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.store.ShardAttributes;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch;
+import org.density.indices.store.TransportNodesListShardStoreMetadataHelper;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.InternalTestCluster.RestartCallback;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.store.MockFSIndexStore;
+import org.density.transport.client.Requests;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -108,22 +108,22 @@ import java.util.stream.IntStream;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.cluster.health.ClusterHealthStatus.GREEN;
-import static org.opensearch.cluster.health.ClusterHealthStatus.RED;
-import static org.opensearch.cluster.health.ClusterHealthStatus.YELLOW;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.gateway.GatewayRecoveryTestUtils.corruptShard;
-import static org.opensearch.gateway.GatewayRecoveryTestUtils.getDiscoveryNodes;
-import static org.opensearch.gateway.GatewayRecoveryTestUtils.prepareRequestMap;
-import static org.opensearch.gateway.GatewayService.RECOVER_AFTER_DATA_NODES_SETTING;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.cluster.health.ClusterHealthStatus.GREEN;
+import static org.density.cluster.health.ClusterHealthStatus.RED;
+import static org.density.cluster.health.ClusterHealthStatus.YELLOW;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.gateway.GatewayRecoveryTestUtils.corruptShard;
+import static org.density.gateway.GatewayRecoveryTestUtils.getDiscoveryNodes;
+import static org.density.gateway.GatewayRecoveryTestUtils.prepareRequestMap;
+import static org.density.gateway.GatewayService.RECOVER_AFTER_DATA_NODES_SETTING;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
@@ -132,7 +132,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 @ClusterScope(numDataNodes = 0, scope = Scope.TEST)
-public class RecoveryFromGatewayIT extends OpenSearchIntegTestCase {
+public class RecoveryFromGatewayIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

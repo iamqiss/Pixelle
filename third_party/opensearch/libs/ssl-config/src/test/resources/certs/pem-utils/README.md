@@ -67,11 +67,11 @@ in `PKCS#1`
 
 ```bash
     keytool -genkeypair -keyalg DSA -alias testnode_dsa -keystore testnode.jks -storepass testnode \
-            -keypass testnode -validity 10000 -keysize 2048 -dname "CN=OpenSearch Test Node" \
+            -keypass testnode -validity 10000 -keysize 2048 -dname "CN=Density Test Node" \
             -ext SAN=dns:localhost,dns:localhost.localdomain,dns:localhost4,dns:localhost4.localdomain4,dns:localhost6,dns:localhost6.localdomain6,ip:127.0.0.1,ip:0:0:0:0:0:0:0:1
 
     keytool -genkeypair -keyalg EC -alias testnode_ec -keystore testnode.jks -storepass testnode \
-            -keypass testnode -validity 10000 -groupname secp256r1 -dname "CN=OpenSearch Test Node" \
+            -keypass testnode -validity 10000 -groupname secp256r1 -dname "CN=Density Test Node" \
             -ext SAN=dns:localhost,dns:localhost.localdomain,dns:localhost4,dns:localhost4.localdomain4,dns:localhost6,dns:localhost6.localdomain6,ip:127.0.0.1,ip:0:0:0:0:0:0:0:1
 ```
 

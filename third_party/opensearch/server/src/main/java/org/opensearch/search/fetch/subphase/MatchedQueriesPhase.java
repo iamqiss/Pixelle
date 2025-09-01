@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,10 +25,10 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Query;
@@ -37,11 +37,11 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
-import org.opensearch.search.rescore.RescoreContext;
+import org.density.common.lucene.Lucene;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
+import org.density.search.rescore.RescoreContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * Fetches queries that match the document during search phase
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class MatchedQueriesPhase implements FetchSubPhase {
 

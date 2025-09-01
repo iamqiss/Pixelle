@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.RescoreDocIds;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.transport.TransportRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.concurrent.AbstractRefCounted;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.search.RescoreDocIds;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.transport.TransportRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,12 +53,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Holds a reference to a point in time {@link Engine.Searcher} that will be used to construct {@link SearchContext}.
- * This class also implements {@link org.opensearch.common.util.concurrent.RefCounted} since in some situations like
- * in {@link org.opensearch.search.SearchService} a SearchContext can be closed concurrently due to independent events
+ * This class also implements {@link org.density.common.util.concurrent.RefCounted} since in some situations like
+ * in {@link org.density.search.SearchService} a SearchContext can be closed concurrently due to independent events
  * ie. when an index gets removed. To prevent accessing closed IndexReader / IndexSearcher instances the SearchContext
  * can be guarded by a reference count and fail if it's been closed by an external event.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ReaderContext implements Releasable {

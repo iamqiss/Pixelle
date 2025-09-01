@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.script.ScriptService;
+import org.density.script.TemplateScript;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ConfigurationUtilsTests extends OpenSearchTestCase {
+public class ConfigurationUtilsTests extends DensityTestCase {
 
     private final ScriptService scriptService = mock(ScriptService.class);
 
@@ -88,7 +88,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadStringPropertyInvalidType() {
         try {
             ConfigurationUtils.readStringProperty(null, null, config, "arr");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a string, but of type [java.util.Arrays$ArrayList]"));
         }
     }
@@ -106,7 +106,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadBooleanPropertyInvalidType() {
         try {
             ConfigurationUtils.readBooleanProperty(null, null, config, "arr", true);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a boolean, but of type [java.util.Arrays$ArrayList]"));
         }
     }
@@ -121,7 +121,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadStringOrIntPropertyInvalidType() {
         try {
             ConfigurationUtils.readStringOrIntProperty(null, null, config, "arr", null);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a string or int, but of type [java.util.Arrays$ArrayList]"));
         }
     }
@@ -149,15 +149,15 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
             unknownTaggedConfig.put("description", "my_description");
         }
         config.add(Collections.singletonMap("unknown_processor", unknownTaggedConfig));
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> ConfigurationUtils.readProcessorConfigs(config, scriptService, registry)
         );
         assertThat(e.getMessage(), equalTo("No processor type exists with name [unknown_processor]"));
-        assertThat(e.getMetadata("opensearch.processor_tag"), equalTo(Collections.singletonList("my_unknown")));
-        assertThat(e.getMetadata("opensearch.processor_type"), equalTo(Collections.singletonList("unknown_processor")));
-        assertThat(e.getMetadata("opensearch.property_name"), is(nullValue()));
-        assertThat(e.getMetadata("opensearch.processor_description"), is(nullValue()));
+        assertThat(e.getMetadata("density.processor_tag"), equalTo(Collections.singletonList("my_unknown")));
+        assertThat(e.getMetadata("density.processor_type"), equalTo(Collections.singletonList("unknown_processor")));
+        assertThat(e.getMetadata("density.property_name"), is(nullValue()));
+        assertThat(e.getMetadata("density.processor_description"), is(nullValue()));
 
         List<Map<String, Object>> config2 = new ArrayList<>();
         unknownTaggedConfig = new HashMap<>();
@@ -166,26 +166,26 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
         Map<String, Object> secondUnknownTaggedConfig = new HashMap<>();
         secondUnknownTaggedConfig.put("tag", "my_second_unknown");
         config2.add(Collections.singletonMap("second_unknown_processor", secondUnknownTaggedConfig));
-        e = expectThrows(OpenSearchParseException.class, () -> ConfigurationUtils.readProcessorConfigs(config2, scriptService, registry));
+        e = expectThrows(DensityParseException.class, () -> ConfigurationUtils.readProcessorConfigs(config2, scriptService, registry));
         assertThat(e.getMessage(), equalTo("No processor type exists with name [unknown_processor]"));
-        assertThat(e.getMetadata("opensearch.processor_tag"), equalTo(Collections.singletonList("my_unknown")));
-        assertThat(e.getMetadata("opensearch.processor_type"), equalTo(Collections.singletonList("unknown_processor")));
-        assertThat(e.getMetadata("opensearch.property_name"), is(nullValue()));
+        assertThat(e.getMetadata("density.processor_tag"), equalTo(Collections.singletonList("my_unknown")));
+        assertThat(e.getMetadata("density.processor_type"), equalTo(Collections.singletonList("unknown_processor")));
+        assertThat(e.getMetadata("density.property_name"), is(nullValue()));
 
         assertThat(e.getSuppressed().length, equalTo(1));
-        assertThat(e.getSuppressed()[0], instanceOf(OpenSearchParseException.class));
-        OpenSearchParseException e2 = (OpenSearchParseException) e.getSuppressed()[0];
+        assertThat(e.getSuppressed()[0], instanceOf(DensityParseException.class));
+        DensityParseException e2 = (DensityParseException) e.getSuppressed()[0];
         assertThat(e2.getMessage(), equalTo("No processor type exists with name [second_unknown_processor]"));
-        assertThat(e2.getMetadata("opensearch.processor_tag"), equalTo(Collections.singletonList("my_second_unknown")));
-        assertThat(e2.getMetadata("opensearch.processor_type"), equalTo(Collections.singletonList("second_unknown_processor")));
-        assertThat(e2.getMetadata("opensearch.property_name"), is(nullValue()));
+        assertThat(e2.getMetadata("density.processor_tag"), equalTo(Collections.singletonList("my_second_unknown")));
+        assertThat(e2.getMetadata("density.processor_type"), equalTo(Collections.singletonList("second_unknown_processor")));
+        assertThat(e2.getMetadata("density.property_name"), is(nullValue()));
 
         // test null config
         List<Map<String, Object>> config3 = new ArrayList<>();
         config3.add(Collections.singletonMap("null_processor", null));
 
-        OpenSearchParseException ex = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException ex = expectThrows(
+            DensityParseException.class,
             () -> ConfigurationUtils.readProcessorConfigs(config3, scriptService, registry)
         );
         assertEquals(ex.getMessage(), "the config of processor [null_processor] cannot be null");
@@ -240,14 +240,14 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
 
         Object invalidConfig = 12L;
 
-        OpenSearchParseException ex = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException ex = expectThrows(
+            DensityParseException.class,
             () -> ConfigurationUtils.readProcessor(registry, scriptService, "unknown_processor", invalidConfig)
         );
         assertThat(ex.getMessage(), equalTo("property isn't a map, but of type [" + invalidConfig.getClass().getName() + "]"));
 
         ex = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> ConfigurationUtils.readProcessor(registry, scriptService, "null_processor", null)
         );
         assertEquals(ex.getMessage(), "expect the config of processor [null_processor] to be map, but is null");

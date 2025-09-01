@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.env.NodeEnvironment;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Setting;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.env.NodeEnvironment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ import static java.util.Collections.unmodifiableMap;
  * their state written on disk, but don't exists in the metadata of the cluster), and importing
  * them into the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DanglingIndicesState implements ClusterStateListener {
 
@@ -74,7 +74,7 @@ public class DanglingIndicesState implements ClusterStateListener {
      * state upon discovery. This setting is deprecated - use the <code>_dangling</code> API instead.
      * If disabled, dangling indices will not be automatically detected.
      *
-     * @see org.opensearch.action.admin.indices.dangling
+     * @see org.density.action.admin.indices.dangling
      */
     public static final Setting<Boolean> AUTO_IMPORT_DANGLING_INDICES_SETTING = Setting.boolSetting(
         "gateway.auto_import_dangling_indices",

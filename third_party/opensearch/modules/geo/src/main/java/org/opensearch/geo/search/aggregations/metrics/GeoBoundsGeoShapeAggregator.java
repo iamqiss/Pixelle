@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.GeoShapeValue;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.GeoShapeValue;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Aggregate all docs into a geographic bounds for field geo_shape.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class GeoBoundsGeoShapeAggregator extends AbstractGeoBoundsAggregator<ValuesSource.GeoShape> {
     private static final Logger LOGGER = LogManager.getLogger(GeoBoundsGeoShapeAggregator.class);

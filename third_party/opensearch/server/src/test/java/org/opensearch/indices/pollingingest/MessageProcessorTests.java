@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.FakeIngestionSource;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
+import org.density.index.engine.Engine;
+import org.density.index.engine.FakeIngestionSource;
+import org.density.index.engine.IngestionEngine;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MessageProcessorTests extends OpenSearchTestCase {
+public class MessageProcessorTests extends DensityTestCase {
     private IngestionEngine ingestionEngine;
     private DocumentMapper documentMapper;
     private DocumentMapperForType documentMapperForType;

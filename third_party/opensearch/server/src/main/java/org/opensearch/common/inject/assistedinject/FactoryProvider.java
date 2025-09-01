@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,21 +23,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.assistedinject;
+package org.density.common.inject.assistedinject;
 
-import org.opensearch.common.inject.ConfigurationException;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.HasDependencies;
-import org.opensearch.common.inject.spi.Message;
+import org.density.common.inject.ConfigurationException;
+import org.density.common.inject.Inject;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Provider;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.HasDependencies;
+import org.density.common.inject.spi.Message;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -78,7 +78,7 @@ import static java.util.Collections.unmodifiableSet;
  * }</pre>
  * Any parameter that permits a null value should also be annotated {@code @Nullable}.
  * <h3>Configuring factories</h3>
- * In your {@link org.opensearch.common.inject.Module module}, bind the factory interface to the returned
+ * In your {@link org.density.common.inject.Module module}, bind the factory interface to the returned
  * factory:
  * <pre>bind(PaymentFactory.class).toProvider(
  *     FactoryProvider.newFactory(PaymentFactory.class, RealPayment.class));</pre>
@@ -135,7 +135,7 @@ import static java.util.Collections.unmodifiableSet;
  * @author jessewilson@google.com (Jesse Wilson)
  * @author dtm@google.com (Daniel Martin)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FactoryProvider<F> implements Provider<F>, HasDependencies {
 

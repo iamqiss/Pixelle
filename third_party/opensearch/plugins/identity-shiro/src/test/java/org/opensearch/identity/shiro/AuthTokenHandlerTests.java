@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.noop.NoopSubject;
-import org.opensearch.identity.noop.NoopTokenManager;
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.identity.tokens.BasicAuthToken;
-import org.opensearch.identity.tokens.BearerAuthToken;
-import org.opensearch.identity.tokens.OnBehalfOfClaims;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.identity.Subject;
+import org.density.identity.noop.NoopSubject;
+import org.density.identity.noop.NoopTokenManager;
+import org.density.identity.tokens.AuthToken;
+import org.density.identity.tokens.BasicAuthToken;
+import org.density.identity.tokens.BearerAuthToken;
+import org.density.identity.tokens.OnBehalfOfClaims;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Optional;
@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AuthTokenHandlerTests extends OpenSearchTestCase {
+public class AuthTokenHandlerTests extends DensityTestCase {
 
     private ShiroTokenManager shiroAuthTokenHandler;
 

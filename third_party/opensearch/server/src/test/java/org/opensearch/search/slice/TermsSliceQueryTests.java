@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -48,8 +48,8 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.search.QueryUtils;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.StringHelper;
-import org.opensearch.common.UUIDs;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.UUIDs;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TermsSliceQueryTests extends OpenSearchTestCase {
+public class TermsSliceQueryTests extends DensityTestCase {
     public void testBasics() {
         TermsSliceQuery query1 = new TermsSliceQuery("field1", 1, 10);
         TermsSliceQuery query2 = new TermsSliceQuery("field1", 1, 10);

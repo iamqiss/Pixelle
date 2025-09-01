@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,78 +25,78 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.search.aggregations.bucket.adjacency.AdjacencyMatrix;
-import org.opensearch.search.aggregations.bucket.adjacency.AdjacencyMatrixAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.filter.Filters;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregator.KeyedFilter;
-import org.opensearch.search.aggregations.bucket.global.Global;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.missing.Missing;
-import org.opensearch.search.aggregations.bucket.missing.MissingAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.nested.Nested;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.nested.ReverseNested;
-import org.opensearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.IpRangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.Range;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.sampler.Sampler;
-import org.opensearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Cardinality;
-import org.opensearch.search.aggregations.metrics.CardinalityAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ExtendedStats;
-import org.opensearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.GeoCentroid;
-import org.opensearch.search.aggregations.metrics.GeoCentroidAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MedianAbsoluteDeviation;
-import org.opensearch.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Min;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.PercentileRanks;
-import org.opensearch.search.aggregations.metrics.PercentileRanksAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Percentiles;
-import org.opensearch.search.aggregations.metrics.PercentilesAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ScriptedMetric;
-import org.opensearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.aggregations.metrics.StatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.Sum;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.TopHits;
-import org.opensearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ValueCount;
-import org.opensearch.search.aggregations.metrics.ValueCountAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.index.query.QueryBuilder;
+import org.density.search.aggregations.bucket.adjacency.AdjacencyMatrix;
+import org.density.search.aggregations.bucket.adjacency.AdjacencyMatrixAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.density.search.aggregations.bucket.filter.Filters;
+import org.density.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.density.search.aggregations.bucket.filter.FiltersAggregator.KeyedFilter;
+import org.density.search.aggregations.bucket.global.Global;
+import org.density.search.aggregations.bucket.global.GlobalAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.missing.Missing;
+import org.density.search.aggregations.bucket.missing.MissingAggregationBuilder;
+import org.density.search.aggregations.bucket.nested.Nested;
+import org.density.search.aggregations.bucket.nested.NestedAggregationBuilder;
+import org.density.search.aggregations.bucket.nested.ReverseNested;
+import org.density.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
+import org.density.search.aggregations.bucket.range.DateRangeAggregationBuilder;
+import org.density.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
+import org.density.search.aggregations.bucket.range.IpRangeAggregationBuilder;
+import org.density.search.aggregations.bucket.range.Range;
+import org.density.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.density.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
+import org.density.search.aggregations.bucket.sampler.Sampler;
+import org.density.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.SignificantTerms;
+import org.density.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.aggregations.metrics.AvgAggregationBuilder;
+import org.density.search.aggregations.metrics.Cardinality;
+import org.density.search.aggregations.metrics.CardinalityAggregationBuilder;
+import org.density.search.aggregations.metrics.ExtendedStats;
+import org.density.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
+import org.density.search.aggregations.metrics.GeoCentroid;
+import org.density.search.aggregations.metrics.GeoCentroidAggregationBuilder;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.MedianAbsoluteDeviation;
+import org.density.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
+import org.density.search.aggregations.metrics.Min;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.search.aggregations.metrics.PercentileRanks;
+import org.density.search.aggregations.metrics.PercentileRanksAggregationBuilder;
+import org.density.search.aggregations.metrics.Percentiles;
+import org.density.search.aggregations.metrics.PercentilesAggregationBuilder;
+import org.density.search.aggregations.metrics.ScriptedMetric;
+import org.density.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.aggregations.metrics.StatsAggregationBuilder;
+import org.density.search.aggregations.metrics.Sum;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.metrics.TopHits;
+import org.density.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.density.search.aggregations.metrics.ValueCount;
+import org.density.search.aggregations.metrics.ValueCountAggregationBuilder;
+import org.density.search.aggregations.metrics.WeightedAvgAggregationBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -104,7 +104,7 @@ import java.util.Map;
 /**
  * Utility class to create aggregations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AggregationBuilders {
 

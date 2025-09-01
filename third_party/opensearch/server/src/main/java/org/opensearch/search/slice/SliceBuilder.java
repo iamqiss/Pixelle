@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.internal.ShardSearchRequest;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.set.Sets;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.search.internal.ShardSearchRequest;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -67,16 +67,16 @@ import java.util.Set;
 
 /**
  *  A slice builder allowing to split a scroll in multiple partitions.
- *  If the provided field is the "_uid" it uses a {@link org.opensearch.search.slice.TermsSliceQuery}
+ *  If the provided field is the "_uid" it uses a {@link org.density.search.slice.TermsSliceQuery}
  *  to do the slicing. The slicing is done at the shard level first and then each shard is split into multiple slices.
  *  For instance if the number of shards is equal to 2 and the user requested 4 slices
  *  then the slices 0 and 2 are assigned to the first shard and the slices 1 and 3 are assigned to the second shard.
  *  This way the total number of bitsets that we need to build on each shard is bounded by the number of slices
  *  (instead of {@code numShards*numSlices}).
  *  Otherwise the provided field must be a numeric and doc_values must be enabled. In that case a
- *  {@link org.opensearch.search.slice.DocValuesSliceQuery} is used to filter the results.
+ *  {@link org.density.search.slice.DocValuesSliceQuery} is used to filter the results.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SliceBuilder implements Writeable, ToXContentObject {

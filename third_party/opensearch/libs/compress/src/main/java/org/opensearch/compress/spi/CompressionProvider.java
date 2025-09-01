@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.compress.spi;
+package org.density.compress.spi;
 
-import org.opensearch.compress.ZstdCompressor;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.spi.CompressorProvider;
+import org.density.compress.ZstdCompressor;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.spi.CompressorProvider;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * Additional "optional" compressor implementations provided by the opensearch compress library
+ * Additional "optional" compressor implementations provided by the density compress library
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompressionProvider implements CompressorProvider {
 

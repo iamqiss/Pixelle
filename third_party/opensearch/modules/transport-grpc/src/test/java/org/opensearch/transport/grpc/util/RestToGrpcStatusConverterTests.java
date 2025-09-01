@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.util;
+package org.density.transport.grpc.util;
 
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.rest.RestStatus;
+import org.density.test.DensityTestCase;
 
 import io.grpc.Status;
 
@@ -17,7 +17,7 @@ import io.grpc.Status;
  * Tests for RestToGrpcStatusConverter.
  * Validates that REST status codes are properly mapped to GRPC status codes.
  */
-public class RestToGrpcStatusConverterTests extends OpenSearchTestCase {
+public class RestToGrpcStatusConverterTests extends DensityTestCase {
 
     public void testSuccessStatusConversion() {
         assertEquals(Status.OK, RestToGrpcStatusConverter.convertRestToGrpcStatus(RestStatus.OK));
@@ -92,8 +92,8 @@ public class RestToGrpcStatusConverterTests extends OpenSearchTestCase {
         assertEquals(Status.UNIMPLEMENTED, RestToGrpcStatusConverter.convertRestToGrpcStatus(RestStatus.HTTP_VERSION_NOT_SUPPORTED));
     }
 
-    public void testCommonOpenSearchErrorMappings() {
-        // Test mappings for common OpenSearch error scenarios
+    public void testCommonDensityErrorMappings() {
+        // Test mappings for common Density error scenarios
         assertEquals(Status.INVALID_ARGUMENT, RestToGrpcStatusConverter.convertRestToGrpcStatus(RestStatus.BAD_REQUEST));
         assertEquals(Status.NOT_FOUND, RestToGrpcStatusConverter.convertRestToGrpcStatus(RestStatus.NOT_FOUND));
         assertEquals(Status.ABORTED, RestToGrpcStatusConverter.convertRestToGrpcStatus(RestStatus.CONFLICT));

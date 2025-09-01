@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.SortField;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper.BuilderContext;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.ObjectMapper.Nested;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.TriFunction;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper.BuilderContext;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.ObjectMapper.Nested;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.index.query.TermQueryBuilder;
+import org.density.script.MockScriptEngine;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchModule;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -85,9 +85,9 @@ import java.util.function.Supplier;
 import org.mockito.Mockito;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 
-public abstract class AbstractSortTestCase<T extends SortBuilder<T>> extends OpenSearchTestCase {
+public abstract class AbstractSortTestCase<T extends SortBuilder<T>> extends DensityTestCase {
 
     private static final int NUMBER_OF_TESTBUILDERS = 20;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteRequest.OpType;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteRequest.OpType;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.update.UpdateRequest;
+import org.density.common.action.ActionFuture;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpClient;
 import org.junit.After;
 import org.junit.Before;
 
@@ -57,7 +57,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class RetryTests extends OpenSearchTestCase {
+public class RetryTests extends DensityTestCase {
     // no need to wait fof a long time in tests
     private static final TimeValue DELAY = TimeValue.timeValueMillis(1L);
     private static final int CALLS_TO_FAIL = 5;
@@ -265,7 +265,7 @@ public class RetryTests extends OpenSearchTestCase {
             return new BulkItemResponse(
                 1,
                 OpType.INDEX,
-                new BulkItemResponse.Failure("test", "1", new OpenSearchRejectedExecutionException("pool full"))
+                new BulkItemResponse.Failure("test", "1", new DensityRejectedExecutionException("pool full"))
             );
         }
 
@@ -276,7 +276,7 @@ public class RetryTests extends OpenSearchTestCase {
                 new BulkItemResponse.Failure(
                     "test",
                     "1",
-                    new OpenSearchRejectedExecutionException("throttling"),
+                    new DensityRejectedExecutionException("throttling"),
                     BulkItemResponse.Failure.FailureSource.PIPELINE
                 )
             );

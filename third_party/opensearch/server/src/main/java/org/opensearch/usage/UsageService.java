@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -45,14 +45,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.usage;
+package org.density.usage;
 
-import org.opensearch.action.admin.cluster.node.usage.NodeUsage;
-import org.opensearch.rest.BaseRestHandler;
+import org.density.action.admin.cluster.node.usage.NodeUsage;
+import org.density.rest.BaseRestHandler;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,9 +60,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A service to monitor usage of OpenSearch features.
+ * A service to monitor usage of Density features.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UsageService {
 

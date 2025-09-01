@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex;
+package org.density.index.compositeindex;
 
-import org.opensearch.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.CompositeMappedFieldType;
 
 /**
  * This class represents the metadata of a Composite Index, which includes information about
  * the composite field name, type, and the specific metadata for the type of composite field
  * (e.g., Star Tree metadata).
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class CompositeIndexMetadata {
 

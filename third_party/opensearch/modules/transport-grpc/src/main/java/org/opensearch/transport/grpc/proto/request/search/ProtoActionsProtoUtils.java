@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestActions;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.protobufs.SearchRequest;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestActions;
 
 /**
- * Utility class for converting REST-like actions between OpenSearch and Protocol Buffers formats.
+ * Utility class for converting REST-like actions between Density and Protocol Buffers formats.
  * This class provides methods to transform URL parameters from Protocol Buffer requests into
- * query builders and other OpenSearch constructs.
+ * query builders and other Density constructs.
  */
 public class ProtoActionsProtoUtils {
 

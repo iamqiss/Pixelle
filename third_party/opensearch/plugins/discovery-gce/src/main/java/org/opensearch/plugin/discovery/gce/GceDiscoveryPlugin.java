@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.discovery.gce;
+package org.density.plugin.discovery.gce;
 
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.util.ClassInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cloud.gce.GceInstancesService;
-import org.opensearch.cloud.gce.GceInstancesServiceImpl;
-import org.opensearch.cloud.gce.GceMetadataService;
-import org.opensearch.cloud.gce.network.GceNameResolver;
-import org.opensearch.cloud.gce.util.Access;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.discovery.gce.GceSeedHostsProvider;
-import org.opensearch.plugins.DiscoveryPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.transport.TransportService;
+import org.density.cloud.gce.GceInstancesService;
+import org.density.cloud.gce.GceInstancesServiceImpl;
+import org.density.cloud.gce.GceMetadataService;
+import org.density.cloud.gce.network.GceNameResolver;
+import org.density.cloud.gce.util.Access;
+import org.density.common.Booleans;
+import org.density.common.SetOnce;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.discovery.SeedHostsProvider;
+import org.density.discovery.gce.GceSeedHostsProvider;
+import org.density.plugins.DiscoveryPlugin;
+import org.density.plugins.Plugin;
+import org.density.transport.TransportService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class GceDiscoveryPlugin extends Plugin implements DiscoveryPlugin, Close
 
     /** Determines whether settings those reroutes GCE call should be allowed (for testing purposes only). */
     private static final boolean ALLOW_REROUTE_GCE_SETTINGS = Booleans.parseBoolean(
-        System.getProperty("opensearch.allow_reroute_gce_settings", "false")
+        System.getProperty("density.allow_reroute_gce_settings", "false")
     );
 
     public static final String GCE = "gce";

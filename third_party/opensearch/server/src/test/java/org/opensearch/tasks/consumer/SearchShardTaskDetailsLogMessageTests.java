@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks.consumer;
+package org.density.tasks.consumer;
 
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.search.SearchShardTask;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.tasks.Task;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class SearchShardTaskDetailsLogMessageTests extends OpenSearchSingleNodeTestCase {
+public class SearchShardTaskDetailsLogMessageTests extends DensitySingleNodeTestCase {
     public void testTaskDetailsLogHasJsonFields() {
         SearchShardTask task = new SearchShardTask(
             0,

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bwcompat;
+package org.density.bwcompat;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.CorruptStateException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.ExceptionsHelper;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.CorruptStateException;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,8 +51,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 
 @LuceneTestCase.SuppressCodecs("*")
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 0, maxNumDataNodes = 0)
-public class RecoveryWithUnsupportedIndicesIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, minNumDataNodes = 0, maxNumDataNodes = 0)
+public class RecoveryWithUnsupportedIndicesIT extends DensityIntegTestCase {
 
     /**
      * Return settings that could be used to start a node that has the given zipped home directory.

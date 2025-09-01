@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.nio.ServerChannelContext;
-import org.opensearch.nio.SocketChannelContext;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.CheckedRunnable;
+import org.density.common.settings.Settings;
+import org.density.nio.ServerChannelContext;
+import org.density.nio.SocketChannelContext;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ import java.util.function.LongSupplier;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
-public class TestEventHandlerTests extends OpenSearchTestCase {
+public class TestEventHandlerTests extends DensityTestCase {
 
     public void testLogOnElapsedTime() throws Exception {
         try (MockLogAppender appender = MockLogAppender.createForLoggers(LogManager.getLogger(MockNioTransport.class))) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.IntervalFilterScript;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.search.aggregations.pipeline.MovingFunctionScript;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.index.query.IntervalFilterScript;
+import org.density.plugins.ScriptPlugin;
+import org.density.search.aggregations.pipeline.MovingFunctionScript;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ import java.util.stream.Stream;
 /**
  * Manages building {@link ScriptService}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptModule {
 

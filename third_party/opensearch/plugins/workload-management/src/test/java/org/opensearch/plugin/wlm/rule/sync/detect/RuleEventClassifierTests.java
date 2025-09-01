@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule.sync.detect;
+package org.density.plugin.wlm.rule.sync.detect;
 
-import org.opensearch.plugin.wlm.AutoTaggingActionFilterTests;
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.plugin.wlm.AutoTaggingActionFilterTests;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.rule.autotagging.Rule;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import java.util.Set;
 
 import static org.mockito.Mockito.mock;
 
-public class RuleEventClassifierTests extends OpenSearchTestCase {
+public class RuleEventClassifierTests extends DensityTestCase {
     public static final int TOTAL_RULE_COUNT = 10;
     RuleEventClassifier sut;
 

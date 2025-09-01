@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
+import static org.density.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteSegmentStoreDirectoryFactoryTests extends OpenSearchTestCase {
+public class RemoteSegmentStoreDirectoryFactoryTests extends DensityTestCase {
 
     private Supplier<RepositoriesService> repositoriesServiceSupplier;
     private RepositoriesService repositoriesService;

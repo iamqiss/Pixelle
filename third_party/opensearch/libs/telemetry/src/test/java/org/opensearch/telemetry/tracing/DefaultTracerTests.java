@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.telemetry.tracing.MockSpan;
-import org.opensearch.test.telemetry.tracing.MockTracingTelemetry;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.node.Node;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.test.DensityTestCase;
+import org.density.test.telemetry.tracing.MockSpan;
+import org.density.test.telemetry.tracing.MockTracingTelemetry;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class DefaultTracerTests extends OpenSearchTestCase {
+public class DefaultTracerTests extends DensityTestCase {
 
     private TracingTelemetry mockTracingTelemetry;
     private TracerContextStorage<String, Span> mockTracerContextStorage;

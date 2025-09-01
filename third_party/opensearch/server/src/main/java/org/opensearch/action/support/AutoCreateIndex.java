@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.SystemIndices;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.common.Booleans;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.SystemIndices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ import java.util.List;
  * Encapsulates the logic of whether a new index should be automatically created when
  * a write operation is about to happen in a non existing index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class AutoCreateIndex {
 
@@ -140,7 +140,7 @@ public final class AutoCreateIndex {
     /**
      * An auto create object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AutoCreate {
         private final boolean autoCreateIndex;

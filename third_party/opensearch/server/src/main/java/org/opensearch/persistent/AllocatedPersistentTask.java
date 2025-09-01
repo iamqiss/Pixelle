@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.TaskManager;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.TaskManager;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -49,7 +49,7 @@ import java.util.function.Predicate;
 /**
  * Represents a executor node operation that corresponds to a persistent task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AllocatedPersistentTask extends CancellableTask {
 
@@ -209,7 +209,7 @@ public class AllocatedPersistentTask extends CancellableTask {
     /**
      * The state of the task.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum State {
         STARTED,  // the task is currently running

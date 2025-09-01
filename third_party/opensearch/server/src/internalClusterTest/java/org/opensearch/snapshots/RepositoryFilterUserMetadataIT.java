@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.RepositoryPlugin;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.index.mapper.MapperService;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.store.Store;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.plugins.Plugin;
+import org.density.plugins.RepositoryPlugin;
+import org.density.repositories.IndexId;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.ShardGenerations;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -61,7 +61,7 @@ import java.util.function.Function;
 
 import static org.hamcrest.Matchers.is;
 
-public class RepositoryFilterUserMetadataIT extends OpenSearchIntegTestCase {
+public class RepositoryFilterUserMetadataIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -89,7 +89,7 @@ public class RepositoryFilterUserMetadataIT extends OpenSearchIntegTestCase {
     }
 
     // Mock plugin that stores the name of the cluster-manager node that started a snapshot in each snapshot's metadata
-    public static final class MetadataFilteringPlugin extends org.opensearch.plugins.Plugin implements RepositoryPlugin {
+    public static final class MetadataFilteringPlugin extends org.density.plugins.Plugin implements RepositoryPlugin {
 
         private static final String MOCK_FILTERED_META = "mock_filtered_meta";
 

@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShardTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShardTestUtils;
+import org.density.test.DensityTestCase;
 
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-public class ReplicationModeAwareProxyTests extends OpenSearchTestCase {
+public class ReplicationModeAwareProxyTests extends DensityTestCase {
 
     /*
     Replication action running on the same primary copy from which it originates.

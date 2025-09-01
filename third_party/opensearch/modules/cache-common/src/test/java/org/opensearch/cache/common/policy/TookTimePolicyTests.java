@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.policy;
+package org.density.cache.common.policy;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.policy.CachedQueryResult;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.policy.CachedQueryResult;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesReference;
+import org.density.search.DocValueFormat;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -29,9 +29,9 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_POLICY_CONCRETE_SETTINGS_MAP;
+import static org.density.cache.common.tier.TieredSpilloverCacheSettings.TOOK_TIME_POLICY_CONCRETE_SETTINGS_MAP;
 
-public class TookTimePolicyTests extends OpenSearchTestCase {
+public class TookTimePolicyTests extends DensityTestCase {
     private final Function<BytesReference, CachedQueryResult.PolicyValues> transformationFunction = (data) -> {
         try {
             return CachedQueryResult.getPolicyValues(data);

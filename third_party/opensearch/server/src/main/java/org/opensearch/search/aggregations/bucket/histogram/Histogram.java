@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.core.ParseField;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
 /**
  * A {@code histogram} aggregation. Defines multiple buckets, each representing an interval in a histogram.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Histogram extends MultiBucketsAggregation {
 

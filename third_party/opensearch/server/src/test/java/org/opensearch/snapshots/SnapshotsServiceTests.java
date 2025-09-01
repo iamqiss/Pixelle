@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.IndexMetaDataGenerations;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.ClusterState;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.IndexId;
+import org.density.repositories.IndexMetaDataGenerations;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.ShardGenerations;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,8 +79,8 @@ import java.util.stream.StreamSupport;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
-import static org.opensearch.snapshots.SnapshotsService.getRepoSnapshotUUIDTuple;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.snapshots.SnapshotsService.getRepoSnapshotUUIDTuple;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -90,7 +90,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SnapshotsServiceTests extends OpenSearchTestCase {
+public class SnapshotsServiceTests extends DensityTestCase {
 
     public void testNoopShardStateUpdates() throws Exception {
         final String repoName = "test-repo";
@@ -843,7 +843,7 @@ public class SnapshotsServiceTests extends OpenSearchTestCase {
      */
     private SnapshotsService createSnapshotsService(ClusterService mockClusterService) {
         ThreadPool mockThreadPool = mock(ThreadPool.class);
-        when(mockThreadPool.executor(ThreadPool.Names.SNAPSHOT)).thenReturn(OpenSearchExecutors.newDirectExecutorService());
+        when(mockThreadPool.executor(ThreadPool.Names.SNAPSHOT)).thenReturn(DensityExecutors.newDirectExecutorService());
 
         RepositoriesService mockRepoService = mock(RepositoriesService.class);
         TransportService mockTransportService = mock(TransportService.class);

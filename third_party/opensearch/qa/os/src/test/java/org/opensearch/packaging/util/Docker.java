@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.fluent.Request;
-import org.opensearch.common.CheckedRunnable;
+import org.density.common.CheckedRunnable;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,13 +53,13 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.nio.file.attribute.PosixFilePermissions.fromString;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
-import static org.opensearch.packaging.util.FileMatcher.p644;
-import static org.opensearch.packaging.util.FileMatcher.p660;
-import static org.opensearch.packaging.util.FileMatcher.p755;
-import static org.opensearch.packaging.util.FileMatcher.p770;
-import static org.opensearch.packaging.util.FileMatcher.p775;
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.util.FileMatcher.p644;
+import static org.density.packaging.util.FileMatcher.p660;
+import static org.density.packaging.util.FileMatcher.p755;
+import static org.density.packaging.util.FileMatcher.p770;
+import static org.density.packaging.util.FileMatcher.p775;
+import static org.density.packaging.util.ServerUtils.makeRequest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -68,7 +68,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Utilities for running packaging tests against the OpenSearch Docker images.
+ * Utilities for running packaging tests against the Density Docker images.
  */
 public class Docker {
     private static final Log logger = LogFactory.getLog(Docker.class);
@@ -104,7 +104,7 @@ public class Docker {
     }
 
     /**
-     * Runs an OpenSearch Docker container.
+     * Runs an Density Docker container.
      * @param distribution details about the docker image being tested.
      */
     public static Installation runContainer(Distribution distribution) {
@@ -112,7 +112,7 @@ public class Docker {
     }
 
     /**
-     * Runs an OpenSearch Docker container, with options for overriding the config directory
+     * Runs an Density Docker container, with options for overriding the config directory
      * through a bind mount, and passing additional environment variables.
      *
      * @param distribution details about the docker image being tested.
@@ -124,7 +124,7 @@ public class Docker {
     }
 
     /**
-     * Runs an OpenSearch Docker container, with options for overriding the config directory
+     * Runs an Density Docker container, with options for overriding the config directory
      * through a bind mount, and passing additional environment variables.
      * @param distribution details about the docker image being tested.
      * @param volumes a map that declares any volume mappings to apply, or null
@@ -141,13 +141,13 @@ public class Docker {
     ) {
         executeDockerRun(distribution, volumes, envVars, uid, gid);
 
-        waitForOpenSearchToStart();
+        waitForDensityToStart();
 
         return Installation.ofContainer(dockerShell, distribution);
     }
 
     /**
-     * Similar to {@link #runContainer(Distribution, Map, Map)} in that it runs an OpenSearch Docker
+     * Similar to {@link #runContainer(Distribution, Map, Map)} in that it runs an Density Docker
      * container, expect that the container expecting it to exit e.g. due to configuration problem.
      *
      * @param distribution details about the docker image being tested.
@@ -162,7 +162,7 @@ public class Docker {
     ) {
         executeDockerRun(distribution, volumes, envVars, null, null);
 
-        waitForOpenSearchToExit();
+        waitForDensityToExit();
 
         return getContainerLogs();
     }
@@ -200,7 +200,7 @@ public class Docker {
                 assertThat(localPath, fileExists());
 
                 if (Platforms.WINDOWS == false && System.getProperty("user.name").equals("root") && uid == null) {
-                    // The tests are running as root, but the process in the Docker container runs as `opensearch` (UID 1000),
+                    // The tests are running as root, but the process in the Docker container runs as `density` (UID 1000),
                     // so we need to ensure that the container process is able to read the bind-mounted files.
                     //
                     // NOTE that we don't do this if a UID is specified - in that case, we assume that the caller knows
@@ -233,11 +233,11 @@ public class Docker {
     }
 
     /**
-     * Waits for the OpenSearch process to start executing in the container.
+     * Waits for the Density process to start executing in the container.
      * This is called every time a container is started.
      */
-    public static void waitForOpenSearchToStart() {
-        boolean isOpenSearchRunning = false;
+    public static void waitForDensityToStart() {
+        boolean isDensityRunning = false;
         int attempt = 0;
 
         String psOutput = null;
@@ -249,8 +249,8 @@ public class Docker {
 
                 psOutput = dockerShell.run("ps -ww ax").stdout;
 
-                if (psOutput.contains("org.opensearch.bootstrap.OpenSearch")) {
-                    isOpenSearchRunning = true;
+                if (psOutput.contains("org.density.bootstrap.Density")) {
+                    isDensityRunning = true;
                     break;
                 }
             } catch (Exception e) {
@@ -258,10 +258,10 @@ public class Docker {
             }
         } while (attempt++ < STARTUP_ATTEMPTS_MAX);
 
-        if (isOpenSearchRunning == false) {
+        if (isDensityRunning == false) {
             final Shell.Result dockerLogs = getContainerLogs();
             fail(
-                "OpenSearch container did not start successfully.\n\nps output:\n"
+                "Density container did not start successfully.\n\nps output:\n"
                     + psOutput
                     + "\n\nStdout:\n"
                     + dockerLogs.stdout
@@ -272,10 +272,10 @@ public class Docker {
     }
 
     /**
-     * Waits for the OpenSearch container to exit.
+     * Waits for the Density container to exit.
      */
-    private static void waitForOpenSearchToExit() {
-        boolean isOpenSearchRunning = true;
+    private static void waitForDensityToExit() {
+        boolean isDensityRunning = true;
         int attempt = 0;
 
         do {
@@ -284,7 +284,7 @@ public class Docker {
                 Thread.sleep(1000);
 
                 if (sh.run("docker ps --quiet --no-trunc").stdout.contains(containerId) == false) {
-                    isOpenSearchRunning = false;
+                    isDensityRunning = false;
                     break;
                 }
             } catch (Exception e) {
@@ -292,9 +292,9 @@ public class Docker {
             }
         } while (attempt++ < 5);
 
-        if (isOpenSearchRunning) {
+        if (isDensityRunning) {
             final Shell.Result dockerLogs = getContainerLogs();
-            fail("OpenSearch container did exit.\n\nStdout:\n" + dockerLogs.stdout + "\n\nStderr:\n" + dockerLogs.stderr);
+            fail("Density container did exit.\n\nStdout:\n" + dockerLogs.stdout + "\n\nStderr:\n" + dockerLogs.stderr);
         }
     }
 
@@ -346,7 +346,7 @@ public class Docker {
         protected String[] getScriptCommand(String script) {
             assert containerId != null;
 
-            return super.getScriptCommand("docker exec --user opensearch:root --tty " + containerId + " " + script);
+            return super.getScriptCommand("docker exec --user density:root --tty " + containerId + " " + script);
         }
     }
 
@@ -472,7 +472,7 @@ public class Docker {
         Set<PosixFilePermission> actualPermissions = fromString(permissions.substring(1, 10));
 
         assertEquals("Permissions of " + path + " are wrong", actualPermissions, expectedPermissions);
-        assertThat("File owner of " + path + " is wrong", username, equalTo("opensearch"));
+        assertThat("File owner of " + path + " is wrong", username, equalTo("density"));
         assertThat("File group of " + path + " is wrong", group, equalTo("root"));
     }
 
@@ -501,32 +501,32 @@ public class Docker {
     }
 
     private static void verifyInstallation(Installation es) {
-        dockerShell.run("id opensearch");
-        dockerShell.run("getent group opensearch");
+        dockerShell.run("id density");
+        dockerShell.run("getent group density");
 
-        final Shell.Result passwdResult = dockerShell.run("getent passwd opensearch");
+        final Shell.Result passwdResult = dockerShell.run("getent passwd density");
         final String homeDir = passwdResult.stdout.trim().split(":")[5];
-        assertThat(homeDir, equalTo("/usr/share/opensearch"));
+        assertThat(homeDir, equalTo("/usr/share/density"));
 
         Stream.of(es.home, es.data, es.logs, es.config).forEach(dir -> assertPermissionsAndOwnership(dir, p775));
 
         Stream.of(es.plugins, es.modules).forEach(dir -> assertPermissionsAndOwnership(dir, p755));
 
-        Stream.of("opensearch.keystore", "opensearch.yml", "jvm.options", "log4j2.properties")
+        Stream.of("density.keystore", "density.yml", "jvm.options", "log4j2.properties")
             .forEach(configFile -> assertPermissionsAndOwnership(es.config(configFile), p660));
 
-        assertThat(dockerShell.run(es.bin("opensearch-keystore") + " list").stdout, containsString("keystore.seed"));
+        assertThat(dockerShell.run(es.bin("density-keystore") + " list").stdout, containsString("keystore.seed"));
 
         Stream.of(es.bin, es.lib).forEach(dir -> assertPermissionsAndOwnership(dir, p755));
 
         Stream.of(
-            "opensearch",
-            "opensearch-cli",
-            "opensearch-env",
-            "opensearch-keystore",
-            "opensearch-shard",
-            "opensearch-plugin",
-            "opensearch-node"
+            "density",
+            "density-cli",
+            "density-env",
+            "density-keystore",
+            "density-shard",
+            "density-plugin",
+            "density-node"
         ).forEach(executable -> assertPermissionsAndOwnership(es.bin(executable), p755));
 
         Stream.of("LICENSE.txt", "NOTICE.txt", "README.md").forEach(doc -> assertPermissionsAndOwnership(es.home.resolve(doc), p644));
@@ -540,13 +540,13 @@ public class Docker {
         });
     }
 
-    public static void waitForOpenSearch(Installation installation) throws Exception {
-        withLogging(() -> ServerUtils.waitForOpenSearch(installation));
+    public static void waitForDensity(Installation installation) throws Exception {
+        withLogging(() -> ServerUtils.waitForDensity(installation));
     }
 
-    public static void waitForOpenSearch(String status, String index, Installation installation, String username, String password)
+    public static void waitForDensity(String status, String index, Installation installation, String username, String password)
         throws Exception {
-        withLogging(() -> ServerUtils.waitForOpenSearch(status, index, installation, username, password));
+        withLogging(() -> ServerUtils.waitForDensity(status, index, installation, username, password));
     }
 
     /**
@@ -559,7 +559,7 @@ public class Docker {
             r.run();
         } catch (Exception e) {
             final Shell.Result logs = getContainerLogs();
-            logger.warn("OpenSearch container failed to start.\n\nStdout:\n" + logs.stdout + "\n\nStderr:\n" + logs.stderr);
+            logger.warn("Density container failed to start.\n\nStdout:\n" + logs.stdout + "\n\nStderr:\n" + logs.stderr);
             throw e;
         }
     }
@@ -600,6 +600,6 @@ public class Docker {
     }
 
     public static String getImageName() {
-        return "opensearch:test";
+        return "density:test";
     }
 }

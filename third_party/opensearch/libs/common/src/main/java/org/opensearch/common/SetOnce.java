@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -24,10 +24,10 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
-package org.opensearch.common;
+package org.density.common;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,9 +37,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * is called more than once, {@link AlreadySetException} is thrown and the operation will fail.
  * <p>
  * This is borrowed from lucene's experimental API. It is not reused to eliminate the dependency
- * on lucene core for such a simple (standalone) utility class that may change beyond OpenSearch needs.
+ * on lucene core for such a simple (standalone) utility class that may change beyond Density needs.
  *
- * @opensearch.api
+ * @density.api
  */
 public final class SetOnce<T> implements Cloneable {
 

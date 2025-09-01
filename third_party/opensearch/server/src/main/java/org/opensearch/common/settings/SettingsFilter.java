@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent.Params;
-import org.opensearch.rest.RestRequest;
+import org.density.common.regex.Regex;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent.Params;
+import org.density.rest.RestRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,7 +48,7 @@ import java.util.Set;
  * A class that allows to filter settings objects by simple regular expression patterns or full settings keys.
  * It's used for response filtering on the rest layer to for instance filter out sensitive information like access keys.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SettingsFilter {
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.indices.IndexTemplateMissingException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentHelper;
+import org.density.gateway.GatewayService;
+import org.density.indices.IndexTemplateMissingException;
+import org.density.plugins.Plugin;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -73,7 +73,7 @@ import static java.util.Collections.singletonMap;
 /**
  * Upgrades Templates on behalf of installed {@link Plugin}s when a node joins the cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TemplateUpgradeService implements ClusterStateListener {
 

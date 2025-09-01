@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.tests.analysis.CannedTokenStream;
 import org.apache.lucene.tests.analysis.Token;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexSettings;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 
-public class FlattenGraphTokenFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class FlattenGraphTokenFilterFactoryTests extends DensityTokenStreamTestCase {
 
     public void testBasic() throws IOException {
 

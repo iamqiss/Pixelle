@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.store.builders;
+package org.density.common.cache.store.builders;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.RemovalListener;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
 
 import java.util.function.ToLongBiFunction;
 
@@ -22,7 +22,7 @@ import java.util.function.ToLongBiFunction;
  * @param <K> Type of key.
  * @param <V> Type of value.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public abstract class ICacheBuilder<K, V> {

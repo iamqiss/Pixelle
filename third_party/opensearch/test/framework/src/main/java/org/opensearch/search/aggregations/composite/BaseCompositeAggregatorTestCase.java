@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.composite;
+package org.density.search.aggregations.composite;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.DoublePoint;
@@ -34,27 +34,27 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.composite.InternalComposite;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.core.common.text.Text;
+import org.density.core.index.Index;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.search.aggregations.bucket.composite.InternalComposite;
+import org.density.test.IndexSettingsModule;
 import org.junit.After;
 import org.junit.Before;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.cluster.RemoteConnectionInfo;
-import org.opensearch.client.cluster.RemoteInfoRequest;
-import org.opensearch.client.cluster.RemoteInfoResponse;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.DeleteComponentTemplateRequest;
-import org.opensearch.client.indices.GetComponentTemplatesRequest;
-import org.opensearch.client.indices.GetComponentTemplatesResponse;
-import org.opensearch.client.indices.PutComponentTemplateRequest;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.cluster.health.ClusterShardHealth;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.Priority;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.RequestOptions;
+import org.density.client.RestHighLevelClient;
+import org.density.client.cluster.RemoteConnectionInfo;
+import org.density.client.cluster.RemoteInfoRequest;
+import org.density.client.cluster.RemoteInfoResponse;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.DeleteComponentTemplateRequest;
+import org.density.client.indices.GetComponentTemplatesRequest;
+import org.density.client.indices.GetComponentTemplatesResponse;
+import org.density.client.indices.PutComponentTemplateRequest;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.cluster.health.ClusterShardHealth;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.cluster.metadata.Template;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.Priority;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.indices.recovery.RecoverySettings;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -85,7 +85,7 @@ import static org.hamcrest.Matchers.notNullValue;
  * Documentation for Cluster APIs in the high level java client.
  * Code wrapped in {@code tag} and {@code end} tags is included in the docs.
  */
-public class ClusterClientDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class ClusterClientDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     public void testClusterPutSettings() throws IOException {
         RestHighLevelClient client = highLevelClient();

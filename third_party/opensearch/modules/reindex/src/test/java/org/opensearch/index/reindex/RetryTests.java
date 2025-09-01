@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.bulk.Retry;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Netty4ModulePlugin;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.bulk.Retry;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.http.HttpInfo;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Netty4ModulePlugin;
+import org.density.transport.client.Client;
 import org.junit.After;
 
 import java.util.ArrayList;
@@ -60,16 +60,16 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.index.reindex.ReindexTestCase.matcher;
+import static org.density.index.reindex.ReindexTestCase.matcher;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 
 /**
  * Integration test for bulk retry behavior. Useful because retrying relies on the way that the
- * rest of OpenSearch throws exceptions and unit tests won't verify that.
+ * rest of Density throws exceptions and unit tests won't verify that.
  */
-public class RetryTests extends OpenSearchIntegTestCase {
+public class RetryTests extends DensityIntegTestCase {
 
     private static final int DOC_COUNT = 20;
 
@@ -235,7 +235,7 @@ public class RetryTests extends OpenSearchIntegTestCase {
 
     /**
      * Blocks the named executor by getting its only thread running a task blocked on a CyclicBarrier and fills the queue with a noop task.
-     * So requests to use this queue should get {@link OpenSearchRejectedExecutionException}s.
+     * So requests to use this queue should get {@link DensityRejectedExecutionException}s.
      */
     private CyclicBarrier blockExecutor(String name, String node) throws Exception {
         ThreadPool threadPool = internalCluster().getInstance(ThreadPool.class, node);

@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,11 +26,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.doc
+package org.density.gradle.doc
 
-import org.opensearch.gradle.OS
-import org.opensearch.gradle.Version
-import org.opensearch.gradle.VersionProperties
+import org.density.gradle.OS
+import org.density.gradle.Version
+import org.density.gradle.VersionProperties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -41,9 +41,9 @@ class DocsTestPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        project.pluginManager.apply('opensearch.testclusters')
-        project.pluginManager.apply('opensearch.standalone-rest-test')
-        project.pluginManager.apply('opensearch.rest-test')
+        project.pluginManager.apply('density.testclusters')
+        project.pluginManager.apply('density.standalone-rest-test')
+        project.pluginManager.apply('density.rest-test')
 
         String distribution = System.getProperty('tests.distribution', 'archive')
         // The distribution can be configured with -Dtests.distribution on the command line
@@ -57,8 +57,8 @@ class DocsTestPlugin implements Plugin<Project> {
                  * the values may differ. In particular {version} needs to resolve
                  * to the version being built for testing but needs to resolve to
                  * the last released version for docs. */
-            '\\{version\\}': Version.fromString(VersionProperties.getOpenSearch()).toString(),
-            '\\{version_qualified\\}': VersionProperties.getOpenSearch(),
+            '\\{version\\}': Version.fromString(VersionProperties.getDensity()).toString(),
+            '\\{version_qualified\\}': VersionProperties.getDensity(),
             '\\{lucene_version\\}' : VersionProperties.lucene.replaceAll('-snapshot-\\w+$', ''),
             '\\{build_type\\}' : OS.conditionalString().onWindows({"zip"}).onUnix({"tar"}).supply(),
         ]

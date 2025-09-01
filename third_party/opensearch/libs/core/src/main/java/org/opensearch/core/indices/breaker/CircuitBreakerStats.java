@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.indices.breaker;
+package org.density.core.indices.breaker;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Class encapsulating stats about the {@link org.opensearch.core.common.breaker.CircuitBreaker}
+ * Class encapsulating stats about the {@link org.density.core.common.breaker.CircuitBreaker}
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CircuitBreakerStats implements Writeable, ToXContentObject {
@@ -70,7 +70,7 @@ public class CircuitBreakerStats implements Writeable, ToXContentObject {
      * @param estimated The estimated size in byte of the breaker
      * @param overhead The overhead of the breaker
      * @param trippedCount The number of times the breaker has been tripped
-     * @see org.opensearch.core.common.breaker.CircuitBreaker
+     * @see org.density.core.common.breaker.CircuitBreaker
      */
     public CircuitBreakerStats(String name, long limit, long estimated, double overhead, long trippedCount) {
         this.name = name;
@@ -85,7 +85,7 @@ public class CircuitBreakerStats implements Writeable, ToXContentObject {
      *
      * @param in The StreamInput
      * @throws IOException if an error occurs while reading from the StreamInput
-     * @see org.opensearch.core.common.breaker.CircuitBreaker
+     * @see org.density.core.common.breaker.CircuitBreaker
      * @see #writeTo(StreamOutput)
      */
     public CircuitBreakerStats(StreamInput in) throws IOException {
@@ -191,7 +191,7 @@ public class CircuitBreakerStats implements Writeable, ToXContentObject {
     /**
      * Fields used for statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String LIMIT = "limit_size_in_bytes";

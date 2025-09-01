@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.collect;
+package org.density.common.collect;
 
 import org.apache.lucene.util.mutable.MutableValueInt;
 
@@ -63,7 +63,7 @@ import java.util.stream.Stream;
  *
  * @see <a href="http://en.wikipedia.org/wiki/Hash_array_mapped_trie">the wikipedia page</a>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
 
@@ -90,7 +90,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
     /**
      * Abstraction of a node, implemented by both inner and leaf nodes.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class Node<K, V> {
 
@@ -129,7 +129,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
     /**
      * A leaf of the tree where all hashes are equal. Values are added and retrieved in linear time.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Leaf<K, V> extends Node<K, V> {
 
@@ -254,7 +254,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
      * As a consequence, the number of slots in an inner node is equal to the
      * number of one bits in the bitmap.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class InnerNode<K, V> extends Node<K, V> {
 
@@ -451,7 +451,7 @@ public final class CopyOnWriteHashMap<K, V> extends AbstractMap<K, V> {
     /**
      * Iterates over an entry
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.InetAddressPoint;
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService.MergeReason;
+import org.density.common.CheckedConsumer;
+import org.density.common.network.InetAddresses;
+import org.density.common.util.FeatureFlags;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService.MergeReason;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.opensearch.index.query.RangeQueryBuilder.GTE_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.GT_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.LTE_FIELD;
-import static org.opensearch.index.query.RangeQueryBuilder.LT_FIELD;
+import static org.density.index.query.RangeQueryBuilder.GTE_FIELD;
+import static org.density.index.query.RangeQueryBuilder.GT_FIELD;
+import static org.density.index.query.RangeQueryBuilder.LTE_FIELD;
+import static org.density.index.query.RangeQueryBuilder.LT_FIELD;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;

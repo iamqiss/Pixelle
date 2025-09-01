@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.cancellation;
+package org.density.wlm.cancellation;
 
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskCancellation;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WlmMode;
-import org.opensearch.wlm.WorkloadGroupLevelResourceUsageView;
-import org.opensearch.wlm.WorkloadGroupTask;
-import org.opensearch.wlm.WorkloadGroupsStateAccessor;
-import org.opensearch.wlm.WorkloadManagementSettings;
-import org.opensearch.wlm.stats.WorkloadGroupState;
-import org.opensearch.wlm.tracker.ResourceUsageCalculatorTrackerServiceTests.TestClock;
-import org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
+import org.density.action.search.SearchAction;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskCancellation;
+import org.density.test.DensityTestCase;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WlmMode;
+import org.density.wlm.WorkloadGroupLevelResourceUsageView;
+import org.density.wlm.WorkloadGroupTask;
+import org.density.wlm.WorkloadGroupsStateAccessor;
+import org.density.wlm.WorkloadManagementSettings;
+import org.density.wlm.stats.WorkloadGroupState;
+import org.density.wlm.tracker.ResourceUsageCalculatorTrackerServiceTests.TestClock;
+import org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class WorkloadGroupTaskCancellationServiceTests extends OpenSearchTestCase {
+public class WorkloadGroupTaskCancellationServiceTests extends DensityTestCase {
     private static final String workloadGroupId1 = "workloadGroup1";
     private static final String workloadGroupId2 = "workloadGroup2";
 

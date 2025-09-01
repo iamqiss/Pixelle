@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.os;
+package org.density.monitor.os;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.SingleObjectCache;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.service.ReportingService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.SingleObjectCache;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.service.ReportingService;
 
 import java.io.IOException;
 
 /**
  * Service for the Operating System
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class OsService implements ReportingService<OsInfo> {
 
@@ -67,7 +67,7 @@ public class OsService implements ReportingService<OsInfo> {
     public OsService(Settings settings) throws IOException {
         this.probe = OsProbe.getInstance();
         TimeValue refreshInterval = REFRESH_INTERVAL_SETTING.get(settings);
-        this.info = probe.osInfo(refreshInterval.millis(), OpenSearchExecutors.allocatedProcessors(settings));
+        this.info = probe.osInfo(refreshInterval.millis(), DensityExecutors.allocatedProcessors(settings));
         this.osStatsCache = new OsStatsCache(refreshInterval, probe.osStats());
         logger.debug("using refresh_interval [{}]", refreshInterval);
     }

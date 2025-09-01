@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,18 +27,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import org.opensearch.gradle.MavenFilteringHack
+import org.density.gradle.MavenFilteringHack
 
-apply plugin: 'opensearch.standalone-rest-test'
-apply plugin: 'opensearch.rest-test'
+apply plugin: 'density.standalone-rest-test'
+apply plugin: 'density.rest-test'
 
 // The integ-test-distribution is published to maven
-apply plugin: 'opensearch.publish'
+apply plugin: 'density.publish'
 apply plugin: 'com.netflix.nebula.maven-publish'
 
 base {
-  group = "org.opensearch.distribution.integ-test-zip"
-  archivesName = "opensearch"
+  group = "org.density.distribution.integ-test-zip"
+  archivesName = "density"
 }
 
 integTest {
@@ -50,7 +50,7 @@ processTestResources {
   MavenFilteringHack.filter(it, project(':distribution').restTestExpansions)
 }
 
-// make the pom file name use opensearch instead of the project name
+// make the pom file name use density instead of the project name
 ext.buildDist = parent.tasks.named("buildIntegTestZip")
 
 publishing {

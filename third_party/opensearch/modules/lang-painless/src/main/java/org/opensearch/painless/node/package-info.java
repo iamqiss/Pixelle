@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -38,52 +38,52 @@
  * *Sub* (sub) - These are partial nodes with a parent (S/E/P)* node used to split up logic into smaller pieces.
  * <p>
  * The following is a brief description of each node:
- * {@link org.opensearch.painless.node.AExpression} - The superclass for all E* (expression) and P* (postfix) nodes.
- * {@link org.opensearch.painless.node.ANode} - The superclass for all nodes.
- * {@link org.opensearch.painless.node.AStatement} - The superclass for all S* (statement) nodes.
- * {@link org.opensearch.painless.node.EAssignment} - Represents an assignment with the lhs and rhs as child nodes.
- * {@link org.opensearch.painless.node.EBinary} - Represents a binary math expression.
- * {@link org.opensearch.painless.node.EBooleanComp} - Represents a boolean expression.
- * {@link org.opensearch.painless.node.EBooleanConstant} - Represents a boolean constant.
- * {@link org.opensearch.painless.node.ECallLocal} - Represents a user-defined call.
- * {@link org.opensearch.painless.node.EComp} - Represents a comparison expression.
- * {@link org.opensearch.painless.node.EConditional} - Represents a conditional expression.
- * {@link org.opensearch.painless.node.EDecimal} - Represents a decimal constant.
- * {@link org.opensearch.painless.node.EExplicit} - Represents an explicit cast.
- * {@link org.opensearch.painless.node.EFunctionRef} - Represents a function reference (non-capturing).
- * {@link org.opensearch.painless.node.EInstanceof} - Represents an instanceof check.
- * {@link org.opensearch.painless.node.ELambda} - Represents a lambda function.
- * {@link org.opensearch.painless.node.EListInit} - Represents a list initialization shortcut.
- * {@link org.opensearch.painless.node.EMapInit} - Represents a map initialization shortcut.
- * {@link org.opensearch.painless.node.ENewArray} - Represents an array instantiation.
- * {@link org.opensearch.painless.node.ENewObj} - Represents and object instantiation.
- * {@link org.opensearch.painless.node.ENull} - Represents a null constant.
- * {@link org.opensearch.painless.node.ENumeric} - Represents a non-decimal numeric constant.
- * {@link org.opensearch.painless.node.ERegex} - Represents a regular expression constant.
- * {@link org.opensearch.painless.node.EString} - Represents a string constant.
- * {@link org.opensearch.painless.node.EUnary} - Represents a unary math expression.
- * {@link org.opensearch.painless.node.ESymbol} - Represents a variable load/store.
- * {@link org.opensearch.painless.node.EBrace} - Represents an array load/store and defers to a child subnode.
- * {@link org.opensearch.painless.node.ECall} - Represents a method call and defers to a child subnode.
- * {@link org.opensearch.painless.node.EDot} - Represents a field load/store and defers to a child subnode.
- * {@link org.opensearch.painless.node.SBlock} - Represents a set of statements as a branch of control-flow.
- * {@link org.opensearch.painless.node.SBreak} - Represents a break statement.
- * {@link org.opensearch.painless.node.SCatch} - Represents a catch block as part of a try-catch block.
- * {@link org.opensearch.painless.node.SContinue} - Represents a continue statement.
- * {@link org.opensearch.painless.node.SDeclaration} - Represents a single variable declaration.
- * {@link org.opensearch.painless.node.SDeclBlock} - Represents a series of declarations.
- * {@link org.opensearch.painless.node.SDo} - Represents a do-while loop.
- * {@link org.opensearch.painless.node.SEach} - Represents a for-each loop and defers to subnodes depending on type.
- * {@link org.opensearch.painless.node.SExpression} - Represents the top-level node for an expression as a statement.
- * {@link org.opensearch.painless.node.SFor} - Represents a for loop.
- * {@link org.opensearch.painless.node.SFunction} - Represents a user-defined function.
- * {@link org.opensearch.painless.node.SIf} - Represents an if block.
- * {@link org.opensearch.painless.node.SIfElse} - Represents an if/else block.
- * {@link org.opensearch.painless.node.SReturn} - Represents a return statement.
- * {@link org.opensearch.painless.node.SClass} - The root of all Painless trees.  Contains a series of statements.
- * {@link org.opensearch.painless.node.SThrow} - Represents a throw statement.
- * {@link org.opensearch.painless.node.STry} - Represents the try block as part of a try-catch block.
- * {@link org.opensearch.painless.node.SWhile} - Represents a while loop.
+ * {@link org.density.painless.node.AExpression} - The superclass for all E* (expression) and P* (postfix) nodes.
+ * {@link org.density.painless.node.ANode} - The superclass for all nodes.
+ * {@link org.density.painless.node.AStatement} - The superclass for all S* (statement) nodes.
+ * {@link org.density.painless.node.EAssignment} - Represents an assignment with the lhs and rhs as child nodes.
+ * {@link org.density.painless.node.EBinary} - Represents a binary math expression.
+ * {@link org.density.painless.node.EBooleanComp} - Represents a boolean expression.
+ * {@link org.density.painless.node.EBooleanConstant} - Represents a boolean constant.
+ * {@link org.density.painless.node.ECallLocal} - Represents a user-defined call.
+ * {@link org.density.painless.node.EComp} - Represents a comparison expression.
+ * {@link org.density.painless.node.EConditional} - Represents a conditional expression.
+ * {@link org.density.painless.node.EDecimal} - Represents a decimal constant.
+ * {@link org.density.painless.node.EExplicit} - Represents an explicit cast.
+ * {@link org.density.painless.node.EFunctionRef} - Represents a function reference (non-capturing).
+ * {@link org.density.painless.node.EInstanceof} - Represents an instanceof check.
+ * {@link org.density.painless.node.ELambda} - Represents a lambda function.
+ * {@link org.density.painless.node.EListInit} - Represents a list initialization shortcut.
+ * {@link org.density.painless.node.EMapInit} - Represents a map initialization shortcut.
+ * {@link org.density.painless.node.ENewArray} - Represents an array instantiation.
+ * {@link org.density.painless.node.ENewObj} - Represents and object instantiation.
+ * {@link org.density.painless.node.ENull} - Represents a null constant.
+ * {@link org.density.painless.node.ENumeric} - Represents a non-decimal numeric constant.
+ * {@link org.density.painless.node.ERegex} - Represents a regular expression constant.
+ * {@link org.density.painless.node.EString} - Represents a string constant.
+ * {@link org.density.painless.node.EUnary} - Represents a unary math expression.
+ * {@link org.density.painless.node.ESymbol} - Represents a variable load/store.
+ * {@link org.density.painless.node.EBrace} - Represents an array load/store and defers to a child subnode.
+ * {@link org.density.painless.node.ECall} - Represents a method call and defers to a child subnode.
+ * {@link org.density.painless.node.EDot} - Represents a field load/store and defers to a child subnode.
+ * {@link org.density.painless.node.SBlock} - Represents a set of statements as a branch of control-flow.
+ * {@link org.density.painless.node.SBreak} - Represents a break statement.
+ * {@link org.density.painless.node.SCatch} - Represents a catch block as part of a try-catch block.
+ * {@link org.density.painless.node.SContinue} - Represents a continue statement.
+ * {@link org.density.painless.node.SDeclaration} - Represents a single variable declaration.
+ * {@link org.density.painless.node.SDeclBlock} - Represents a series of declarations.
+ * {@link org.density.painless.node.SDo} - Represents a do-while loop.
+ * {@link org.density.painless.node.SEach} - Represents a for-each loop and defers to subnodes depending on type.
+ * {@link org.density.painless.node.SExpression} - Represents the top-level node for an expression as a statement.
+ * {@link org.density.painless.node.SFor} - Represents a for loop.
+ * {@link org.density.painless.node.SFunction} - Represents a user-defined function.
+ * {@link org.density.painless.node.SIf} - Represents an if block.
+ * {@link org.density.painless.node.SIfElse} - Represents an if/else block.
+ * {@link org.density.painless.node.SReturn} - Represents a return statement.
+ * {@link org.density.painless.node.SClass} - The root of all Painless trees.  Contains a series of statements.
+ * {@link org.density.painless.node.SThrow} - Represents a throw statement.
+ * {@link org.density.painless.node.STry} - Represents the try block as part of a try-catch block.
+ * {@link org.density.painless.node.SWhile} - Represents a while loop.
  * <p>
  * Note that internal nodes are generated during the analysis phase by modifying the tree on-the-fly
  * for clarity of development and convenience during the writing phase.
@@ -146,8 +146,8 @@
  * the sub node.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.node;
+package org.density.painless.node;

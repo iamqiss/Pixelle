@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Request level search stats to track coordinator level node search latencies
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.11.0")
 public final class SearchRequestStats extends SearchRequestOperationsListener {
@@ -111,7 +111,7 @@ public final class SearchRequestStats extends SearchRequestOperationsListener {
     /**
      * Holder of statistics values
      *
-     * @opensearch.internal
+     * @density.internal
      */
 
     public static final class StatsHolder {

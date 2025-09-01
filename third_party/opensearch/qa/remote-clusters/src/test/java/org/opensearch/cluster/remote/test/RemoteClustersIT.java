@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.remote.test;
+package org.density.cluster.remote.test;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.cluster.RemoteConnectionInfo;
-import org.opensearch.client.cluster.RemoteInfoRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.WriteRequest;
+import org.density.client.RequestOptions;
+import org.density.client.cluster.RemoteConnectionInfo;
+import org.density.client.cluster.RemoteInfoRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
 import org.junit.After;
 import org.junit.Before;
 
@@ -84,7 +84,7 @@ public class RemoteClustersIT extends AbstractMultiClusterRemoteTestCase {
     }
 
     public void testProxyModeConnectionWorks() throws IOException {
-        String cluster2RemoteClusterSeed = "opensearch-2:9300";
+        String cluster2RemoteClusterSeed = "density-2:9300";
         logger.info("Configuring remote cluster [{}]", cluster2RemoteClusterSeed);
         ClusterUpdateSettingsRequest request = new ClusterUpdateSettingsRequest().persistentSettings(Settings.builder()
             .put("cluster.remote.cluster2.mode", "proxy")
@@ -101,7 +101,7 @@ public class RemoteClustersIT extends AbstractMultiClusterRemoteTestCase {
     }
 
     public void testSniffModeConnectionFails() throws IOException {
-        String cluster2RemoteClusterSeed = "opensearch-2:9300";
+        String cluster2RemoteClusterSeed = "density-2:9300";
         logger.info("Configuring remote cluster [{}]", cluster2RemoteClusterSeed);
         ClusterUpdateSettingsRequest request = new ClusterUpdateSettingsRequest().persistentSettings(Settings.builder()
             .put("cluster.remote.cluster2alt.mode", "sniff")

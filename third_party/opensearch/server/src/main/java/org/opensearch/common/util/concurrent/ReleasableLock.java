@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.Assertions;
-import org.opensearch.index.engine.EngineException;
+import org.density.common.lease.Releasable;
+import org.density.common.unit.TimeValue;
+import org.density.core.Assertions;
+import org.density.index.engine.EngineException;
 
 import java.util.concurrent.locks.Lock;
 
 /**
  * Releasable lock used inside of Engine implementations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReleasableLock implements Releasable {
     private final Lock lock;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.DataStream.getDefaultBackingIndexName;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
+import static org.density.cluster.metadata.DataStream.getDefaultBackingIndexName;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_INDEX_UUID;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
 
 public final class DataStreamTestHelper {
 
-    private static final Settings.Builder SETTINGS = OpenSearchTestCase.settings(Version.CURRENT).put("index.hidden", true);
+    private static final Settings.Builder SETTINGS = DensityTestCase.settings(Version.CURRENT).put("index.hidden", true);
     private static final int NUMBER_OF_SHARDS = 1;
     private static final int NUMBER_OF_REPLICAS = 1;
 
@@ -105,7 +105,7 @@ public final class DataStreamTestHelper {
     }
 
     public static List<Index> randomIndexInstances() {
-        int numIndices = OpenSearchTestCase.randomIntBetween(0, 128);
+        int numIndices = DensityTestCase.randomIntBetween(0, 128);
         List<Index> indices = new ArrayList<>(numIndices);
         for (int i = 0; i < numIndices; i++) {
             indices.add(new Index(randomAlphaOfLength(10).toLowerCase(Locale.ROOT), UUIDs.randomBase64UUID(LuceneTestCase.random())));
@@ -115,7 +115,7 @@ public final class DataStreamTestHelper {
 
     public static DataStream randomInstance() {
         List<Index> indices = randomIndexInstances();
-        long generation = indices.size() + OpenSearchTestCase.randomLongBetween(1, 128);
+        long generation = indices.size() + DensityTestCase.randomLongBetween(1, 128);
         String dataStreamName = randomAlphaOfLength(10).toLowerCase(Locale.ROOT);
         indices.add(new Index(getDefaultBackingIndexName(dataStreamName, generation), UUIDs.randomBase64UUID(LuceneTestCase.random())));
         return new DataStream(dataStreamName, createTimestampField("@timestamp"), indices, generation);

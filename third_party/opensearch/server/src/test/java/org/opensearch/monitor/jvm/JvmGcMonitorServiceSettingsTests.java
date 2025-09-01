@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.util.AbstractMap;
 import java.util.HashSet;
@@ -50,7 +50,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-public class JvmGcMonitorServiceSettingsTests extends OpenSearchTestCase {
+public class JvmGcMonitorServiceSettingsTests extends DensityTestCase {
 
     public void testEmptySettingsAreOkay() throws InterruptedException {
         AtomicBoolean scheduled = new AtomicBoolean();

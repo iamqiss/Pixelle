@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,88 +26,88 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.stats;
+package org.density.action.admin.cluster.node.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.IndexShardStats;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.cluster.coordination.PendingClusterStateStats;
-import org.opensearch.cluster.coordination.PersistedStateStats;
-import org.opensearch.cluster.coordination.PublishClusterStateStats;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.WeightedRoutingStats;
-import org.opensearch.cluster.service.ClusterManagerThrottlingStats;
-import org.opensearch.cluster.service.ClusterStateStats;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.service.NodeCacheStats;
-import org.opensearch.common.cache.stats.CacheStats;
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolder;
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolderTests;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.AllCircuitBreakerStats;
-import org.opensearch.core.indices.breaker.CircuitBreakerStats;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.gateway.remote.RemotePersistenceStats;
-import org.opensearch.http.HttpStats;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.SegmentReplicationRejectionStats;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.remote.RemoteSegmentStats;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.shard.IndexingStats;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.translog.RemoteTranslogStats;
-import org.opensearch.indices.NodeIndicesStats;
-import org.opensearch.ingest.IngestStats;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.os.OsStats;
-import org.opensearch.monitor.process.ProcessStats;
-import org.opensearch.node.AdaptiveSelectionStats;
-import org.opensearch.node.IoUsageStats;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.node.NodesResourceUsageStats;
-import org.opensearch.node.ResponseCollectorService;
-import org.opensearch.node.remotestore.RemoteStoreNodeStats;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.AdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
-import org.opensearch.script.ScriptCacheStats;
-import org.opensearch.script.ScriptStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.ThreadPoolStats;
-import org.opensearch.transport.TransportStats;
+import org.density.Version;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.IndexShardStats;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.search.SearchRequestStats;
+import org.density.cluster.coordination.PendingClusterStateStats;
+import org.density.cluster.coordination.PersistedStateStats;
+import org.density.cluster.coordination.PublishClusterStateStats;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.WeightedRoutingStats;
+import org.density.cluster.service.ClusterManagerThrottlingStats;
+import org.density.cluster.service.ClusterStateStats;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.service.NodeCacheStats;
+import org.density.common.cache.stats.CacheStats;
+import org.density.common.cache.stats.DefaultCacheStatsHolder;
+import org.density.common.cache.stats.DefaultCacheStatsHolderTests;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.metrics.OperationStats;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.AllCircuitBreakerStats;
+import org.density.core.indices.breaker.CircuitBreakerStats;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.DiscoveryStats;
+import org.density.gateway.remote.RemotePersistenceStats;
+import org.density.http.HttpStats;
+import org.density.index.ReplicationStats;
+import org.density.index.SegmentReplicationRejectionStats;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.remote.RemoteSegmentStats;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.shard.DocsStats;
+import org.density.index.shard.IndexingStats;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.StoreStats;
+import org.density.index.translog.RemoteTranslogStats;
+import org.density.indices.NodeIndicesStats;
+import org.density.ingest.IngestStats;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.os.OsStats;
+import org.density.monitor.process.ProcessStats;
+import org.density.node.AdaptiveSelectionStats;
+import org.density.node.IoUsageStats;
+import org.density.node.NodeResourceUsageStats;
+import org.density.node.NodesResourceUsageStats;
+import org.density.node.ResponseCollectorService;
+import org.density.node.remotestore.RemoteStoreNodeStats;
+import org.density.ratelimitting.admissioncontrol.controllers.AdmissionController;
+import org.density.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
+import org.density.script.ScriptCacheStats;
+import org.density.script.ScriptStats;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.ThreadPoolStats;
+import org.density.transport.TransportStats;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -129,7 +129,7 @@ import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
-public class NodeStatsTests extends OpenSearchTestCase {
+public class NodeStatsTests extends DensityTestCase {
     public void testSerialization() throws IOException {
         NodeStats nodeStats = createNodeStats(true);
         try (BytesStreamOutput out = new BytesStreamOutput()) {

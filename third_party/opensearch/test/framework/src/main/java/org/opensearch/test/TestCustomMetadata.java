@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.AbstractNamedDiffable;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.cluster.AbstractNamedDiffable;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -95,18 +95,18 @@ public abstract class TestCustomMetadata extends AbstractNamedDiffable<Metadata.
                 String currentFieldName = parser.currentName();
                 if ("data".equals(currentFieldName)) {
                     if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                        throw new OpenSearchParseException("failed to parse snapshottable metadata, invalid data type");
+                        throw new DensityParseException("failed to parse snapshottable metadata, invalid data type");
                     }
                     data = parser.text();
                 } else {
-                    throw new OpenSearchParseException("failed to parse snapshottable metadata, unknown field [{}]", currentFieldName);
+                    throw new DensityParseException("failed to parse snapshottable metadata, unknown field [{}]", currentFieldName);
                 }
             } else {
-                throw new OpenSearchParseException("failed to parse snapshottable metadata");
+                throw new DensityParseException("failed to parse snapshottable metadata");
             }
         }
         if (data == null) {
-            throw new OpenSearchParseException("failed to parse snapshottable metadata, data not found");
+            throw new DensityParseException("failed to parse snapshottable metadata, data not found");
         }
         return (T) supplier.apply(data);
     }

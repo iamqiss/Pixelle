@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 #
-# opensearch <summary>
+# density <summary>
 #
 # chkconfig:   2345 80 20
-# description: Starts and stops a single opensearch instance on this system
+# description: Starts and stops a single density instance on this system
 #
 
 ### BEGIN INIT INFO
-# Provides: OpenSearch
+# Provides: Density
 # Required-Start: $network $named
 # Required-Stop: $network $named
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
-# Short-Description: This service manages the opensearch daemon
-# Description: OpenSearch is a very scalable, schema-free and high-performance search solution supporting multi-tenancy and near realtime search.
+# Short-Description: This service manages the density daemon
+# Description: Density is a very scalable, schema-free and high-performance search solution supporting multi-tenancy and near realtime search.
 ### END INIT INFO
 
 set -e -o pipefail
@@ -33,34 +33,34 @@ if [ -f /etc/rc.d/init.d/functions ]; then
     . /etc/rc.d/init.d/functions
 fi
 
-# Sets the default values for opensearch variables used in this script
-OPENSEARCH_HOME="/usr/share/opensearch"
+# Sets the default values for density variables used in this script
+DENSITY_HOME="/usr/share/density"
 MAX_OPEN_FILES=65535
 MAX_MAP_COUNT=262144
-OPENSEARCH_PATH_CONF="${path.conf}"
+DENSITY_PATH_CONF="${path.conf}"
 
-PID_DIR="/var/run/opensearch"
+PID_DIR="/var/run/density"
 
 # Source the default env file
-OPENSEARCH_ENV_FILE="${path.env}"
-if [ -f "$OPENSEARCH_ENV_FILE" ]; then
-    . "$OPENSEARCH_ENV_FILE"
+DENSITY_ENV_FILE="${path.env}"
+if [ -f "$DENSITY_ENV_FILE" ]; then
+    . "$DENSITY_ENV_FILE"
 fi
 
-exec="$OPENSEARCH_HOME/bin/opensearch"
-prog="opensearch"
+exec="$DENSITY_HOME/bin/density"
+prog="density"
 pidfile="$PID_DIR/${prog}.pid"
 
-export OPENSEARCH_JAVA_OPTS
+export DENSITY_JAVA_OPTS
 export JAVA_HOME
-export OPENSEARCH_PATH_CONF
-export OPENSEARCH_STARTUP_SLEEP_TIME
-export OPENSEARCH_JAVA_HOME
+export DENSITY_PATH_CONF
+export DENSITY_STARTUP_SLEEP_TIME
+export DENSITY_JAVA_HOME
 
 lockfile=/var/lock/subsys/$prog
 
 if [ ! -x "$exec" ]; then
-    echo "The opensearch startup script does not exists or it is not executable, tried: $exec"
+    echo "The density startup script does not exists or it is not executable, tried: $exec"
     exit 1
 fi
 
@@ -79,16 +79,16 @@ start() {
 
     # Ensure that the PID_DIR exists (it is cleaned at OS startup time)
     if [ -n "$PID_DIR" ] && [ ! -e "$PID_DIR" ]; then
-        mkdir -p "$PID_DIR" && chown opensearch:opensearch "$PID_DIR"
+        mkdir -p "$PID_DIR" && chown density:density "$PID_DIR"
     fi
     if [ -n "$pidfile" ] && [ ! -e "$pidfile" ]; then
-        touch "$pidfile" && chown opensearch:opensearch "$pidfile"
+        touch "$pidfile" && chown density:density "$pidfile"
     fi
 
-    cd $OPENSEARCH_HOME
+    cd $DENSITY_HOME
     echo -n $"Starting $prog: "
     # if not running, start it up here, usually something like "daemon $exec"
-    daemon --user opensearch --pidfile $pidfile $exec -p $pidfile -d
+    daemon --user density --pidfile $pidfile $exec -p $pidfile -d
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile

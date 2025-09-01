@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,16 +40,16 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Accessor for shared dependency versions used by opensearch, namely the opensearch and lucene versions.
+ * Accessor for shared dependency versions used by density, namely the density and lucene versions.
  */
 public class VersionProperties {
 
-    public static String getOpenSearch() {
-        return opensearch;
+    public static String getDensity() {
+        return density;
     }
 
-    public static Version getOpenSearchVersion() {
-        return Version.fromString(opensearch);
+    public static Version getDensityVersion() {
+        return Version.fromString(density);
     }
 
     public static String getLucene() {
@@ -88,7 +88,7 @@ public class VersionProperties {
         return versions;
     }
 
-    private static final String opensearch;
+    private static final String density;
     private static final String lucene;
     private static final String bundledJdkDarwin;
     private static final String bundledJdkFreeBSD;
@@ -104,7 +104,7 @@ public class VersionProperties {
 
     static {
         Properties props = getVersionProperties();
-        opensearch = props.getProperty("opensearch");
+        density = props.getProperty("density");
         lucene = props.getProperty("lucene");
         bundledJdkVendor = props.getProperty("bundled_jdk_vendor");
         final String bundledJdk = props.getProperty("bundled_jdk");
@@ -138,8 +138,8 @@ public class VersionProperties {
         return props;
     }
 
-    public static boolean isOpenSearchSnapshot() {
-        return opensearch.endsWith("-SNAPSHOT");
+    public static boolean isDensitySnapshot() {
+        return density.endsWith("-SNAPSHOT");
     }
 
     private static String getBundledJdkLinux(String arch) {

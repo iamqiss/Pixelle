@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ import java.util.List;
 /**
  * Main exception thrown when there is an error in the search phase
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class SearchPhaseExecutionException extends OpenSearchException {
+public class SearchPhaseExecutionException extends DensityException {
     private final String phaseName;
     private final ShardSearchFailure[] shardFailures;
 
@@ -97,7 +97,7 @@ public class SearchPhaseExecutionException extends OpenSearchException {
     @Override
     public RestStatus status() {
         if (shardFailures.length == 0) {
-            // if no successful shards, the failure can be due to OpenSearchRejectedExecutionException during fetch phase
+            // if no successful shards, the failure can be due to DensityRejectedExecutionException during fetch phase
             // on coordinator node. so get the status from cause instead of returning SERVICE_UNAVAILABLE blindly
             return getCause() == null ? RestStatus.SERVICE_UNAVAILABLE : ExceptionsHelper.status(getCause());
         }
@@ -121,7 +121,7 @@ public class SearchPhaseExecutionException extends OpenSearchException {
         Throwable cause = super.getCause();
         if (cause == null) {
             // fall back to guessed root cause
-            for (OpenSearchException rootCause : guessRootCauses()) {
+            for (DensityException rootCause : guessRootCauses()) {
                 return rootCause;
             }
         }
@@ -161,12 +161,12 @@ public class SearchPhaseExecutionException extends OpenSearchException {
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         Throwable ex = ExceptionsHelper.unwrapCause(this);
         if (ex != this) {
-            OpenSearchException.generateThrowableXContent(builder, params, this);
+            DensityException.generateThrowableXContent(builder, params, this);
         } else {
             // We don't have a cause when all shards failed, but we do have shards failures so we can "guess" a cause
             // (see {@link #getCause()}). Here, we use super.getCause() because we don't want the guessed exception to
             // be rendered twice (one in the "cause" field, one in "failed_shards")
-            OpenSearchException.innerToXContent(
+            DensityException.innerToXContent(
                 builder,
                 params,
                 this,
@@ -181,14 +181,14 @@ public class SearchPhaseExecutionException extends OpenSearchException {
     }
 
     @Override
-    public OpenSearchException[] guessRootCauses() {
+    public DensityException[] guessRootCauses() {
         ShardOperationFailedException[] failures = ExceptionsHelper.groupBy(shardFailures);
-        List<OpenSearchException> rootCauses = new ArrayList<>(failures.length);
+        List<DensityException> rootCauses = new ArrayList<>(failures.length);
         for (ShardOperationFailedException failure : failures) {
-            OpenSearchException[] guessRootCauses = OpenSearchException.guessRootCauses(failure.getCause());
+            DensityException[] guessRootCauses = DensityException.guessRootCauses(failure.getCause());
             rootCauses.addAll(Arrays.asList(guessRootCauses));
         }
-        return rootCauses.toArray(new OpenSearchException[0]);
+        return rootCauses.toArray(new DensityException[0]);
     }
 
     @Override

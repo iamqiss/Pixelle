@@ -45,7 +45,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -53,7 +53,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/distribution/archives/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/distribution/archives/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -61,7 +61,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/distribution/archives/darwin-tar/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/distribution/archives/darwin-tar/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -69,7 +69,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/distribution/archives/oss-darwin-tar/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/distribution/archives/oss-darwin-tar/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -77,7 +77,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/distribution/bwc/bugfix/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/distribution/bwc/bugfix/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -85,7 +85,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/integTest/resources/org/opensearch/gradle/internal/fake_git/remote/distribution/bwc/minor/
+  - directory: /buildSrc/src/integTest/resources/org/density/gradle/internal/fake_git/remote/distribution/bwc/minor/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -93,7 +93,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/testKit/opensearch-build-resources/
+  - directory: /buildSrc/src/testKit/density-build-resources/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -101,7 +101,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /buildSrc/src/testKit/opensearch.build/
+  - directory: /buildSrc/src/testKit/density.build/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:
@@ -645,7 +645,7 @@ updates:
     labels:
       - "dependabot"
       - "dependencies"
-  - directory: /modules/opensearch-dashboards/
+  - directory: /modules/density-dashboards/
     open-pull-requests-limit: 1
     package-ecosystem: gradle
     schedule:

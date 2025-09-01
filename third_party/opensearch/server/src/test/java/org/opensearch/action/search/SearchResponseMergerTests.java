@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.TransportSearchAction.SearchTimeProvider;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.range.InternalDateRange;
-import org.opensearch.search.aggregations.bucket.range.Range;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.SearchProfileShardResultsTests;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.RemoteClusterService;
+import org.density.DensityException;
+import org.density.action.OriginalIndices;
+import org.density.action.search.TransportSearchAction.SearchTimeProvider;
+import org.density.common.collect.Tuple;
+import org.density.core.common.text.Text;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.range.InternalDateRange;
+import org.density.search.aggregations.bucket.range.Range;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.SearchProfileShardResultsTests;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.completion.CompletionSuggestion;
+import org.density.test.DensityTestCase;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.RemoteClusterService;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -79,13 +79,13 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
-import static org.opensearch.test.InternalAggregationTestCase.emptyReduceContextBuilder;
+import static org.density.test.InternalAggregationTestCase.emptyReduceContextBuilder;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class SearchResponseMergerTests extends OpenSearchTestCase {
+public class SearchResponseMergerTests extends DensityTestCase {
 
     private int numResponses;
     private ExecutorService executorService;
@@ -229,7 +229,7 @@ public class SearchResponseMergerTests extends OpenSearchTestCase {
             for (int j = 0; j < numFailures; j++) {
                 String index = "index-" + i;
                 ShardId shardId = new ShardId(index, index + "-uuid", j);
-                OpenSearchException openSearchException = new OpenSearchException(new IllegalArgumentException());
+                DensityException openSearchException = new DensityException(new IllegalArgumentException());
                 openSearchException.setShard(shardId);
                 ShardSearchFailure failure = new ShardSearchFailure(openSearchException);
                 shardSearchFailures[j] = failure;
@@ -285,7 +285,7 @@ public class SearchResponseMergerTests extends OpenSearchTestCase {
             int numFailures = randomIntBetween(1, 50);
             ShardSearchFailure[] shardSearchFailures = new ShardSearchFailure[numFailures];
             for (int j = 0; j < numFailures; j++) {
-                ShardSearchFailure shardSearchFailure = new ShardSearchFailure(new OpenSearchException(new IllegalArgumentException()));
+                ShardSearchFailure shardSearchFailure = new ShardSearchFailure(new DensityException(new IllegalArgumentException()));
                 shardSearchFailures[j] = shardSearchFailure;
                 expectedFailures.add(shardSearchFailure);
             }

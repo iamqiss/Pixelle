@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.decommission.awareness.get;
+package org.density.action.admin.cluster.decommission.awareness.get;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.decommission.DecommissionStatus;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.cluster.decommission.DecommissionStatus;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Response for decommission status
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class GetDecommissionStateResponse extends ActionResponse implements ToXContentObject {
@@ -91,11 +91,11 @@ public class GetDecommissionStateResponse extends ActionResponse implements ToXC
             if (token == XContentParser.Token.FIELD_NAME) {
                 attributeValue = parser.currentName();
                 if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                    throw new OpenSearchParseException("failed to parse status of decommissioning, expected string but found unknown type");
+                    throw new DensityParseException("failed to parse status of decommissioning, expected string but found unknown type");
                 }
                 status = DecommissionStatus.fromString(parser.text().toLowerCase(Locale.ROOT));
             } else {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "failed to parse decommission state, expected [{}] but found [{}]",
                     XContentParser.Token.FIELD_NAME,
                     token

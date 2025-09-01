@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.tiering;
+package org.density.action.admin.indices.tiering;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.MockInternalClusterInfoService;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.MockInternalClusterInfoService;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexNotFoundException;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.monitor.fs.FsInfo;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 import org.junit.Before;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY_ALLOW_DELETE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
 @LuceneTestCase.AwaitsFix(bugUrl = "")
-public class TransportHotToWarmTieringActionTests extends OpenSearchIntegTestCase {
+public class TransportHotToWarmTieringActionTests extends DensityIntegTestCase {
     protected static final String TEST_IDX_1 = "test-idx-1";
     protected static final String TEST_IDX_2 = "idx-2";
     protected static final String TARGET_TIER = "warm";

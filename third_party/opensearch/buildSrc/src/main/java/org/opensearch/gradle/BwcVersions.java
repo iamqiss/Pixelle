@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +51,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 /**
- * A container for opensearch supported version information used in BWC testing.
+ * A container for density supported version information used in BWC testing.
  * <p>
  * Parse the Java source file containing the versions declarations and use the known rules to figure out which are all
  * the version the current one is wire and index compatible with.
@@ -118,7 +118,7 @@ public class BwcVersions {
     }
 
     public BwcVersions(List<String> versionLines) {
-        this(versionLines, Version.fromString(VersionProperties.getOpenSearch()));
+        this(versionLines, Version.fromString(VersionProperties.getDensity()));
     }
 
     protected BwcVersions(List<String> versionLines, Version currentVersionProperty) {

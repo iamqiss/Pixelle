@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.snapshots.AbstractSnapshotIntegTestCase;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.ActionRunnable;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.repositories.RepositoriesService;
+import org.density.snapshots.AbstractSnapshotIntegTestCase;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class BlobStoreRepositoryCleanupIT extends AbstractSnapshotIntegTestCase {
 
     public void testClusterManagerFailoverDuringCleanup() throws Exception {

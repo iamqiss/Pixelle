@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.TransportAddress;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.network.InetAddresses;
+import org.density.common.network.NetworkAddress;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.TransportAddress;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 /**
  * Filters Discovery nodes
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DiscoveryNodeFilters {
@@ -57,7 +57,7 @@ public class DiscoveryNodeFilters {
     /**
      * Operation type.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum OpType {

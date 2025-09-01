@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.AbstractThirdPartyRepositoryTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.repositories.AbstractThirdPartyRepositoryTestCase;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 
@@ -67,7 +67,7 @@ public class HdfsRepositoryTests extends AbstractThirdPartyRepositoryTestCase {
             .put("path", "foo")
             .put("chunk_size", randomIntBetween(100, 1000) + "k")
             .put("compress", randomBoolean());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), repoName, "hdfs", settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), repoName, "hdfs", settings);
     }
 
     // HDFS repository doesn't have precise cleanup stats so we only check whether or not any blobs were removed

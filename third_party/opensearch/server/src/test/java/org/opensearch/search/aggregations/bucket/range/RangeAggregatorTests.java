@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntPoint;
@@ -53,22 +53,22 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
+import org.density.common.CheckedConsumer;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
 
 import java.io.IOException;
 import java.time.ZoneOffset;
@@ -83,7 +83,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RangeAggregatorTests extends AggregatorTestCase {

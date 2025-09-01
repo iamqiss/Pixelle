@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.util.Constants;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.semver.SemverRange;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.collect.Tuple;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexModule;
+import org.density.semver.SemverRange;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -79,7 +79,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
 @LuceneTestCase.SuppressFileSystems(value = "ExtrasFS")
-public class PluginsServiceTests extends OpenSearchTestCase {
+public class PluginsServiceTests extends DensityTestCase {
     public static class AdditionalSettingsPlugin1 extends Plugin {
         @Override
         public Settings additionalSettings() {
@@ -177,7 +177,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "fake",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -189,7 +189,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
         final IllegalStateException e = expectThrows(IllegalStateException.class, () -> newPluginsService(settings));
         final String expected = String.format(
             Locale.ROOT,
-            "found file [%s] from a failed attempt to remove the plugin [fake]; execute [opensearch-plugin remove fake]",
+            "found file [%s] from a failed attempt to remove the plugin [fake]; execute [density-plugin remove fake]",
             removing
         );
         assertThat(e, hasToString(containsString(expected)));
@@ -371,7 +371,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "[.test] warning",
-                    "org.opensearch.plugins.PluginsService",
+                    "org.density.plugins.PluginsService",
                     Level.WARN,
                     "Missing plugin [dne], dependency of [foo]"
                 )
@@ -690,7 +690,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "myplugin",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -711,7 +711,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "nonextensible",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -725,7 +725,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
         assertEquals("Plugin [myplugin] cannot extend non-extensible plugin [nonextensible]", e.getMessage());
     }
 
-    public void testIncompatibleOpenSearchVersion() throws Exception {
+    public void testIncompatibleDensityVersion() throws Exception {
         PluginInfo info = new PluginInfo(
             "my_plugin",
             "desc",
@@ -737,10 +737,10 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             false
         );
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> PluginsService.verifyCompatibility(info));
-        assertThat(e.getMessage(), containsString("was built for OpenSearch version 6.0.0"));
+        assertThat(e.getMessage(), containsString("was built for Density version 6.0.0"));
     }
 
-    public void testCompatibleOpenSearchVersionRange() {
+    public void testCompatibleDensityVersionRange() {
         List<SemverRange> pluginCompatibilityRange = List.of(new SemverRange(Version.CURRENT, SemverRange.RangeOperator.TILDE));
         PluginInfo info = new PluginInfo(
             "my_plugin",
@@ -756,7 +756,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
         PluginsService.verifyCompatibility(info);
     }
 
-    public void testIncompatibleOpenSearchVersionRange() {
+    public void testIncompatibleDensityVersionRange() {
         // Version.CURRENT is behind by one with respect to patch version in the range
         List<SemverRange> pluginCompatibilityRange = List.of(
             new SemverRange(
@@ -776,7 +776,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             false
         );
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> PluginsService.verifyCompatibility(info));
-        assertThat(e.getMessage(), containsString("was built for OpenSearch version "));
+        assertThat(e.getMessage(), containsString("was built for Density version "));
     }
 
     public void testIncompatibleJavaVersion() throws Exception {
@@ -801,7 +801,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "[.test] warning",
-                    "org.opensearch.plugins.PluginsService",
+                    "org.density.plugins.PluginsService",
                     Level.WARN,
                     "Non-plugin file located in the plugins folder with the following name: [.DS_Store]"
                 )
@@ -819,7 +819,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
                 "fake",
                 "version",
                 "1.0.0",
-                "opensearch.version",
+                "density.version",
                 Version.CURRENT.toString(),
                 "java.version",
                 System.getProperty("java.specification.version"),
@@ -839,7 +839,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
     public void testExistingMandatoryClasspathPlugin() {
         final Settings settings = Settings.builder()
             .put("path.home", createTempDir())
-            .put("plugin.mandatory", "org.opensearch.plugins.PluginsServiceTests$FakePlugin")
+            .put("plugin.mandatory", "org.density.plugins.PluginsServiceTests$FakePlugin")
             .build();
         newPluginsService(settings, FakePlugin.class);
     }
@@ -870,7 +870,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "fake",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -898,7 +898,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "fake",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -935,7 +935,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "fake",
             "version",
             "1.0.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -1138,7 +1138,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "plugin1",
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             "1.8",
@@ -1157,7 +1157,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "plugin2",
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             "1.8",
@@ -1176,7 +1176,7 @@ public class PluginsServiceTests extends OpenSearchTestCase {
             "plugin3",
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             "1.8",

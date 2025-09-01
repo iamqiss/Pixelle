@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.store.config;
+package org.density.common.cache.store.config;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.policy.CachedQueryResult;
-import org.opensearch.common.cache.serializer.Serializer;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.policy.CachedQueryResult;
+import org.density.common.cache.serializer.Serializer;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
 
 import java.util.List;
 import java.util.function.Function;
@@ -24,7 +24,7 @@ import java.util.function.ToLongBiFunction;
 /**
  * Common configurations related to store aware caches.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class CacheConfig<K, V> {

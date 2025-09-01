@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.document;
+package org.density.rest.action.document;
 
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestActions;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -49,14 +49,14 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * This class parses the json request and translates it into a
  * TermVectorsRequest.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestTermVectorsAction extends BaseRestHandler {
     public static final String TYPES_DEPRECATION_MESSAGE = "[types removal] " + "Specifying types in term vector requests is deprecated.";

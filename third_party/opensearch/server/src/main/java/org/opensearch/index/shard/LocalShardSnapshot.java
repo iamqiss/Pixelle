@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.store.Directory;
@@ -39,11 +39,11 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.NoLockFactory;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.store.Store;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.core.index.Index;
+import org.density.index.engine.Engine;
+import org.density.index.store.Store;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -54,7 +54,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * A shard snapshot stored locally
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class LocalShardSnapshot implements Closeable {
     private final IndexShard shard;

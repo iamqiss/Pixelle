@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.bytes;
+package org.density.common.bytes;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.common.io.stream.BytesStream;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.util.ByteArray;
+import org.density.common.Nullable;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.common.io.stream.BytesStream;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.util.ByteArray;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -53,7 +53,7 @@ import java.util.Objects;
  * {@link org.apache.lucene.util.BytesRef}) which you'd prefer to re-use if possible, avoiding excessive allocations, but which may not
  * always be large enough.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RecyclingBytesStreamOutput extends BytesStream {
 

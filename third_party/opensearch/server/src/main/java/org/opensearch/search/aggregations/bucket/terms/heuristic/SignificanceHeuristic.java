@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms.heuristic;
+package org.density.search.aggregations.bucket.terms.heuristic;
 
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTerms;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.terms.SignificantTerms;
 
 /**
  * Heuristic for that {@link SignificantTerms} uses to pick out significant terms.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SignificanceHeuristic implements NamedWriteable, ToXContentFragment {
     /**

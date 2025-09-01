@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.recycler.Recycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.util.BigArray;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.recycler.Recycler;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.util.BigArray;
+import org.density.core.common.util.ByteArray;
+import org.density.core.indices.breaker.CircuitBreakerService;
 
 import java.util.Arrays;
 
 /**
  * Utility class to work with arrays.
  *
- * @opensearch.api
+ * @density.api
  * */
 @PublicApi(since = "1.0.0")
 public class BigArrays {
@@ -95,7 +95,7 @@ public class BigArrays {
     /**
      * Base array wrapper class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class AbstractArrayWrapper extends AbstractArray implements BigArray {
 
@@ -125,7 +125,7 @@ public class BigArrays {
     /**
      * Wraps a byte array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ByteArrayWrapper extends AbstractArrayWrapper implements ByteArray {
 
@@ -191,7 +191,7 @@ public class BigArrays {
     /**
      * Wraps an int array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class IntArrayWrapper extends AbstractArrayWrapper implements IntArray {
 
@@ -239,7 +239,7 @@ public class BigArrays {
     /**
      * Wraps a long array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LongArrayWrapper extends AbstractArrayWrapper implements LongArray {
 
@@ -286,7 +286,7 @@ public class BigArrays {
     /**
      * Wraps a double array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class DoubleArrayWrapper extends AbstractArrayWrapper implements DoubleArray {
 
@@ -334,7 +334,7 @@ public class BigArrays {
     /**
      * Wraps a float array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FloatArrayWrapper extends AbstractArrayWrapper implements FloatArray {
 
@@ -382,7 +382,7 @@ public class BigArrays {
     /**
      * Wraps an object array
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ObjectArrayWrapper<T> extends AbstractArrayWrapper implements ObjectArray<T> {
 
@@ -762,7 +762,7 @@ public class BigArrays {
     /**
      * A double value binary searcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class DoubleBinarySearcher extends BinarySearcher {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,37 +23,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.MembersInjector;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.inject.PrivateBinder;
-import org.opensearch.common.inject.PrivateModule;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.Scope;
-import org.opensearch.common.inject.Stage;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.binder.AnnotatedBindingBuilder;
-import org.opensearch.common.inject.binder.AnnotatedConstantBindingBuilder;
-import org.opensearch.common.inject.binder.AnnotatedElementBuilder;
-import org.opensearch.common.inject.internal.AbstractBindingBuilder;
-import org.opensearch.common.inject.internal.BindingBuilder;
-import org.opensearch.common.inject.internal.ConstantBindingBuilderImpl;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ExposureBuilder;
-import org.opensearch.common.inject.internal.PrivateElementsImpl;
-import org.opensearch.common.inject.internal.ProviderMethodsModule;
-import org.opensearch.common.inject.internal.SourceProvider;
-import org.opensearch.common.inject.matcher.Matcher;
+import org.density.common.inject.AbstractModule;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Key;
+import org.density.common.inject.MembersInjector;
+import org.density.common.inject.Module;
+import org.density.common.inject.PrivateBinder;
+import org.density.common.inject.PrivateModule;
+import org.density.common.inject.Provider;
+import org.density.common.inject.Scope;
+import org.density.common.inject.Stage;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.binder.AnnotatedBindingBuilder;
+import org.density.common.inject.binder.AnnotatedConstantBindingBuilder;
+import org.density.common.inject.binder.AnnotatedElementBuilder;
+import org.density.common.inject.internal.AbstractBindingBuilder;
+import org.density.common.inject.internal.BindingBuilder;
+import org.density.common.inject.internal.ConstantBindingBuilderImpl;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ExposureBuilder;
+import org.density.common.inject.internal.PrivateElementsImpl;
+import org.density.common.inject.internal.ProviderMethodsModule;
+import org.density.common.inject.internal.SourceProvider;
+import org.density.common.inject.matcher.Matcher;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ import java.util.Set;
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Elements {
 
@@ -117,7 +117,7 @@ public final class Elements {
     /**
      * A recording binder
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class RecordingBinder implements Binder, PrivateBinder {
         private final Stage stage;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -16,7 +16,7 @@ import org.apache.lucene.util.Counter;
  * This class provides a convenient way to add sorted numeric doc values to a field
  * and retrieve the corresponding {@link SortedNumericDocValues} instance.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class SortedNumericDocValuesWriterWrapper implements DocValuesWriterWrapper<SortedNumericDocValues> {
 

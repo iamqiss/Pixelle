@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.analysis.phone;
+package org.density.analysis.phone;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.test.DensityTokenStreamTestCase;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -23,8 +23,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.hasItemInArray;
 
-public class PhoneNumberAnalyzerTests extends OpenSearchTokenStreamTestCase {
-    private static final String RESOURCE = "/org/opensearch/analysis/phone/phone_analysis.json";
+public class PhoneNumberAnalyzerTests extends DensityTokenStreamTestCase {
+    private static final String RESOURCE = "/org/density/analysis/phone/phone_analysis.json";
 
     private static Analyzer phoneAnalyzer;
     private static Analyzer phoneSearchAnalyzer;

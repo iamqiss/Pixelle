@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskListener;
-import org.opensearch.tasks.TaskManager;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.Task;
+import org.density.tasks.TaskListener;
+import org.density.tasks.TaskManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Base class for a transport action
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class TransportAction<Request extends ActionRequest, Response extends ActionResponse> {
@@ -195,7 +195,7 @@ public abstract class TransportAction<Request extends ActionRequest, Response ex
     /**
      * A request filter chain
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class RequestFilterChain<Request extends ActionRequest, Response extends ActionResponse>
         implements
@@ -232,7 +232,7 @@ public abstract class TransportAction<Request extends ActionRequest, Response ex
     /**
      * Wrapper for an action listener that stores the result at the end of the execution
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TaskResultStoringActionListener<Response extends ActionResponse> implements ActionListener<Response> {
         private final ActionListener<Response> delegate;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -47,11 +47,11 @@ import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
 import org.apache.lucene.search.highlight.TextFragment;
 import org.apache.lucene.util.BytesRefHash;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
+import org.density.core.common.text.Text;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,12 +59,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.search.fetch.subphase.highlight.UnifiedHighlighter.convertFieldValue;
+import static org.density.search.fetch.subphase.highlight.UnifiedHighlighter.convertFieldValue;
 
 /**
  * Standard Lucene Highlighter implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PlainHighlighter implements Highlighter {
     private static final String CACHE_KEY = "highlight-plain";

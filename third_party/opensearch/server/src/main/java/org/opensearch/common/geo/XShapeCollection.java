@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ import org.locationtech.spatial4j.shape.ShapeCollection;
 /**
  * Extends spatial4j ShapeCollection for points_only shape indexing support
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class XShapeCollection<S extends Shape> extends ShapeCollection<S> {
 

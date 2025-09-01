@@ -50,7 +50,7 @@ setup:
 "With matched_fields":
   - skip:
       version: " - 3.0.99"
-      reason: "matched_fields support for unified added in OpenSearch 3.1.0"
+      reason: "matched_fields support for unified added in Density 3.1.0"
   - do:
       search:
         rest_total_hits_as_int: true

@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.store.disk;
+package org.density.cache.store.disk;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cache.EhcacheDiskCacheSettings;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.LoadAwareCacheLoader;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.serializer.ICacheKeySerializer;
-import org.opensearch.common.cache.serializer.Serializer;
-import org.opensearch.common.cache.stats.CacheStatsHolder;
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolder;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.stats.NoopCacheStatsHolder;
-import org.opensearch.common.cache.store.builders.ICacheBuilder;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.DensityException;
+import org.density.cache.EhcacheDiskCacheSettings;
+import org.density.common.SuppressForbidden;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.LoadAwareCacheLoader;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.serializer.ICacheKeySerializer;
+import org.density.common.cache.serializer.Serializer;
+import org.density.common.cache.stats.CacheStatsHolder;
+import org.density.common.cache.stats.DefaultCacheStatsHolder;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.stats.NoopCacheStatsHolder;
+import org.density.common.cache.store.builders.ICacheBuilder;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,22 +76,22 @@ import org.ehcache.spi.loaderwriter.CacheLoadingException;
 import org.ehcache.spi.loaderwriter.CacheWritingException;
 import org.ehcache.spi.serialization.SerializerException;
 
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_CACHE_ALIAS_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_CACHE_EXPIRE_AFTER_ACCESS_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_SEGMENT_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_WRITE_CONCURRENCY_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_WRITE_MAXIMUM_THREADS_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_WRITE_MIN_THREADS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_CACHE_ALIAS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_CACHE_EXPIRE_AFTER_ACCESS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_SEGMENT_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_WRITE_CONCURRENCY_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_WRITE_MAXIMUM_THREADS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_WRITE_MIN_THREADS_KEY;
 
 /**
  * This variant of disk cache uses Ehcache underneath.
  *  @param <K> Type of key.
  *  @param <V> Type of value.
  *
- *  @opensearch.experimental
+ *  @density.experimental
  *
  */
 @ExperimentalApi
@@ -163,7 +163,7 @@ public class EhcacheDiskCache<K, V> implements ICache<K, V> {
                     logger.info("Found older disk cache data lying around during initialization under path: {}", this.storagePath);
                     IOUtils.rm(ehcacheDirectory);
                 } catch (IOException e) {
-                    throw new OpenSearchException(String.format(CACHE_DATA_CLEANUP_DURING_INITIALIZATION_EXCEPTION, this.storagePath), e);
+                    throw new DensityException(String.format(CACHE_DATA_CLEANUP_DURING_INITIALIZATION_EXCEPTION, this.storagePath), e);
                 }
             }
         }
@@ -299,7 +299,7 @@ public class EhcacheDiskCache<K, V> implements ICache<K, V> {
         try {
             value = deserializeValue(cache.get(key));
         } catch (CacheLoadingException ex) {
-            throw new OpenSearchException("Exception occurred while trying to fetch item from ehcache disk cache");
+            throw new DensityException("Exception occurred while trying to fetch item from ehcache disk cache");
         }
         if (value != null) {
             cacheStatsHolder.incrementHits(key.dimensions);
@@ -319,7 +319,7 @@ public class EhcacheDiskCache<K, V> implements ICache<K, V> {
         try {
             cache.put(key, serializeValue(value));
         } catch (CacheWritingException ex) {
-            throw new OpenSearchException("Exception occurred while put item to ehcache disk cache");
+            throw new DensityException("Exception occurred while put item to ehcache disk cache");
         }
     }
 
@@ -334,7 +334,7 @@ public class EhcacheDiskCache<K, V> implements ICache<K, V> {
     public V computeIfAbsent(ICacheKey<K> key, LoadAwareCacheLoader<ICacheKey<K>, V> loader) throws Exception {
         // Ehcache doesn't provide any computeIfAbsent function. Exposes putIfAbsent but that works differently and is
         // not performant in case there are multiple concurrent request for same key. Below is our own custom
-        // implementation of computeIfAbsent on top of ehcache. Inspired by OpenSearch Cache implementation.
+        // implementation of computeIfAbsent on top of ehcache. Inspired by Density Cache implementation.
         V value = deserializeValue(cache.get(key));
         if (value == null) {
             value = compute(key, loader);

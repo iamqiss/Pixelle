@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin;
+package org.density.action.admin;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.node.reload.NodesReloadSecureSettingsResponse;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.plugins.ReloadablePlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.DensityException;
+import org.density.action.admin.cluster.node.reload.NodesReloadSecureSettingsResponse;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.plugins.ReloadablePlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.RemoteTransportException;
 
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -64,8 +64,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class ReloadSecureSettingsIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class ReloadSecureSettingsIT extends DensityIntegTestCase {
 
     public void testMissingKeystoreFile() throws Exception {
         final PluginsService pluginsService = internalCluster().getInstance(PluginsService.class);
@@ -205,7 +205,7 @@ public class ReloadSecureSettingsIT extends OpenSearchIntegTestCase {
                             assertThat(e.getCause(), instanceOf(Exception.class));
                             e = (Exception) e.getCause();
                         }
-                        assertThat(e, instanceOf(OpenSearchException.class));
+                        assertThat(e, instanceOf(DensityException.class));
                         assertThat(
                             e.getMessage(),
                             containsString(

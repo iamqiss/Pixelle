@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.InputStreamWithMetadata;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.InputStreamWithMetadata;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.core.action.ActionListener;
+import org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Interface for the translog transfer service responsible for interacting with a remote store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface TransferService {
 

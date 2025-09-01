@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchShardTask;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskCancellationTests extends OpenSearchTestCase {
+public class TaskCancellationTests extends DensityTestCase {
 
     public void testTaskCancellation() {
         SearchShardTask mockTask = new SearchShardTask(123L, "", "", "", null, Collections.emptyMap());

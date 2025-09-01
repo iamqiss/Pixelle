@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.listener;
+package org.density.index.translog.listener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.translog.TranslogException;
+import org.density.ExceptionsHelper;
+import org.density.core.index.shard.ShardId;
+import org.density.index.translog.TranslogException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * The listener that multiplexes other {@link TranslogEventListener}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CompositeTranslogEventListener implements TranslogEventListener {
 

@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards;
+package org.density.action.admin.cluster.shards;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.datastream.DataStreamTestCase;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.datastream.DataStreamTestCase;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.pagination.PageParams;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.search.SearchService.NO_TIMEOUT;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.routing.UnassignedInfo.INDEX_DELAYED_NODE_LEFT_TIMEOUT_SETTING;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.search.SearchService.NO_TIMEOUT;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
+@DensityIntegTestCase.ClusterScope(numDataNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
 public class TransportCatShardsActionIT extends DataStreamTestCase {
 
     public void testCatShardsWithSuccessResponse() throws InterruptedException {

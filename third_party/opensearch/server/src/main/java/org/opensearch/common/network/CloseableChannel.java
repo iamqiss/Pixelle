@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.action.ActionFuture;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -47,7 +47,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Channel that can be closed
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface CloseableChannel extends Closeable {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.cli.LoggingAwareMultiCommand;
+import org.density.cli.Terminal;
+import org.density.common.cli.LoggingAwareMultiCommand;
 
 /**
- * A CLI tool for managing secrets in the OpenSearch keystore.
+ * A CLI tool for managing secrets in the Density keystore.
  */
 public class KeyStoreCli extends LoggingAwareMultiCommand {
 
     private KeyStoreCli() {
-        super("A tool for managing settings stored in the opensearch keystore");
+        super("A tool for managing settings stored in the density keystore");
         subcommands.put("create", new CreateKeyStoreCommand());
         subcommands.put("list", new ListKeyStoreCommand());
         subcommands.put("add", new AddStringKeyStoreCommand());
@@ -53,7 +53,7 @@ public class KeyStoreCli extends LoggingAwareMultiCommand {
     }
 
     /**
-     * Main entry point for the OpenSearch Keystore CLI tool.
+     * Main entry point for the Density Keystore CLI tool.
      *
      * @param args  CLI commands for managing secrets.
      * @throws Exception if an exception was encountered executing the command.

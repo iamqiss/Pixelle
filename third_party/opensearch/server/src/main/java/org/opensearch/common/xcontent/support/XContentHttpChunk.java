@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.xcontent.support;
+package org.density.common.xcontent.support;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.http.HttpChunk;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.http.HttpChunk;
 
 /**
  * Wraps the instance of the {@link XContentBuilder} into {@link HttpChunk}

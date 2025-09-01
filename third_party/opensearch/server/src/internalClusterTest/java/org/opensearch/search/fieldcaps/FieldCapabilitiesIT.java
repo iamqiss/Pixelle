@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fieldcaps;
+package org.density.search.fieldcaps;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.fieldcaps.FieldCapabilities;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.fieldcaps.FieldCapabilities;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -55,10 +55,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class FieldCapabilitiesIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class FieldCapabilitiesIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public FieldCapabilitiesIT(Settings staticSettings) {
         super(staticSettings);

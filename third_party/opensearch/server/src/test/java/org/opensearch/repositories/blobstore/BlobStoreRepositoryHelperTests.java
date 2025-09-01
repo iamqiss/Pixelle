@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.RepositoryPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.store.RemoteBufferedOutputDirectory;
+import org.density.indices.IndicesService;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.plugins.RepositoryPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,13 +43,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class BlobStoreRepositoryHelperTests extends OpenSearchSingleNodeTestCase {
+public class BlobStoreRepositoryHelperTests extends DensitySingleNodeTestCase {
 
     static final String REPO_TYPE = "fsLike";
 
@@ -104,13 +104,13 @@ public class BlobStoreRepositoryHelperTests extends OpenSearchSingleNodeTestCase
     protected void createRepository(Client client, String repoName) {
         Settings.Builder settings = Settings.builder()
             .put(node().settings())
-            .put("location", OpenSearchIntegTestCase.randomRepoPath(node().settings()));
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repoName, REPO_TYPE, settings);
+            .put("location", DensityIntegTestCase.randomRepoPath(node().settings()));
+        DensityIntegTestCase.putRepository(client.admin().cluster(), repoName, REPO_TYPE, settings);
     }
 
     protected void createRepository(Client client, String repoName, Settings repoSettings) {
         Settings.Builder settingsBuilder = Settings.builder().put(repoSettings);
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repoName, REPO_TYPE, settingsBuilder);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), repoName, REPO_TYPE, settingsBuilder);
     }
 
     protected void updateRepository(Client client, String repoName, Settings repoSettings) {

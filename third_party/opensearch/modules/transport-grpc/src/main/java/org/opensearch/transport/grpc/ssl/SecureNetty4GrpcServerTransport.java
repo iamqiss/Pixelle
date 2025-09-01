@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.ssl;
+package org.density.transport.grpc.ssl;
 
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.plugins.SecureAuxTransportSettingsProvider;
-import org.opensearch.transport.grpc.Netty4GrpcServerTransport;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.plugins.SecureAuxTransportSettingsProvider;
+import org.density.transport.grpc.Netty4GrpcServerTransport;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;

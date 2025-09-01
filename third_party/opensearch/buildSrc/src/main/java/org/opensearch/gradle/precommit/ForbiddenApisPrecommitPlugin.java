@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
 import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis;
 import de.thetaphi.forbiddenapis.gradle.ForbiddenApisPlugin;
 
 import groovy.lang.Closure;
 
-import org.opensearch.gradle.ExportOpenSearchBuildResourcesTask;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.ExportDensityBuildResourcesTask;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
@@ -59,16 +59,16 @@ public class ForbiddenApisPrecommitPlugin extends PrecommitPlugin {
     public TaskProvider<? extends Task> createTask(Project project) {
         project.getPluginManager().apply(ForbiddenApisPlugin.class);
 
-        TaskProvider<ExportOpenSearchBuildResourcesTask> resourcesTask = project.getTasks()
-            .register("forbiddenApisResources", ExportOpenSearchBuildResourcesTask.class);
+        TaskProvider<ExportDensityBuildResourcesTask> resourcesTask = project.getTasks()
+            .register("forbiddenApisResources", ExportDensityBuildResourcesTask.class);
         Path resourcesDir = project.getBuildDir().toPath().resolve("forbidden-apis-config");
         resourcesTask.configure(t -> {
             t.setOutputDir(resourcesDir.toFile());
             t.copy("forbidden/jdk-signatures.txt");
-            t.copy("forbidden/opensearch-all-signatures.txt");
-            t.copy("forbidden/opensearch-test-signatures.txt");
+            t.copy("forbidden/density-all-signatures.txt");
+            t.copy("forbidden/density-test-signatures.txt");
             t.copy("forbidden/http-signatures.txt");
-            t.copy("forbidden/opensearch-server-signatures.txt");
+            t.copy("forbidden/density-server-signatures.txt");
         });
         project.getTasks().withType(CheckForbiddenApis.class).configureEach(t -> {
             t.dependsOn(resourcesTask);
@@ -93,7 +93,7 @@ public class ForbiddenApisPrecommitPlugin extends PrecommitPlugin {
             t.setSignaturesFiles(
                 project.files(
                     resourcesDir.resolve("forbidden/jdk-signatures.txt"),
-                    resourcesDir.resolve("forbidden/opensearch-all-signatures.txt")
+                    resourcesDir.resolve("forbidden/density-all-signatures.txt")
                 )
             );
             t.setSuppressAnnotations(new HashSet<>(Arrays.asList("**.SuppressForbidden")));
@@ -102,14 +102,14 @@ public class ForbiddenApisPrecommitPlugin extends PrecommitPlugin {
                     t.getSignaturesFiles()
                         .plus(
                             project.files(
-                                resourcesDir.resolve("forbidden/opensearch-test-signatures.txt"),
+                                resourcesDir.resolve("forbidden/density-test-signatures.txt"),
                                 resourcesDir.resolve("forbidden/http-signatures.txt")
                             )
                         )
                 );
             } else {
                 t.setSignaturesFiles(
-                    t.getSignaturesFiles().plus(project.files(resourcesDir.resolve("forbidden/opensearch-server-signatures.txt")))
+                    t.getSignaturesFiles().plus(project.files(resourcesDir.resolve("forbidden/density-server-signatures.txt")))
                 );
             }
             ExtraPropertiesExtension ext = t.getExtensions().getExtraProperties();

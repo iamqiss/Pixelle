@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,18 +23,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.InternalContext;
-import org.opensearch.common.inject.internal.InternalFactory;
-import org.opensearch.common.inject.internal.SourceProvider;
-import org.opensearch.common.inject.spi.Dependency;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.InternalContext;
+import org.density.common.inject.internal.InternalFactory;
+import org.density.common.inject.internal.SourceProvider;
+import org.density.common.inject.spi.Dependency;
 
 import java.util.Objects;
 
@@ -43,7 +43,7 @@ import java.util.Objects;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class InternalFactoryToProviderAdapter<T> implements InternalFactory<T> {
 

@@ -1,41 +1,41 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.netty4.ssl;
+package org.density.transport.netty4.ssl;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.net.NetUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.plugins.TransportExceptionHandler;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.transport.AbstractSimpleTransportTestCase;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.Netty4NioSocketChannel;
-import org.opensearch.transport.NettyAllocator;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.TestProfiles;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.netty4.Netty4TcpChannel;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.net.NetUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.plugins.TransportExceptionHandler;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.transport.AbstractSimpleTransportTestCase;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.Netty4NioSocketChannel;
+import org.density.transport.NettyAllocator;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.TcpChannel;
+import org.density.transport.TcpTransport;
+import org.density.transport.TestProfiles;
+import org.density.transport.Transport;
+import org.density.transport.netty4.Netty4TcpChannel;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLEngine;

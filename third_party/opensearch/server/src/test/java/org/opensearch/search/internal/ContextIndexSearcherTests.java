@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.codecs.StoredFieldsReader;
@@ -70,27 +70,27 @@ import org.apache.lucene.util.BitSetIterator;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.FixedBitSet;
 import org.apache.lucene.util.SparseFixedBitSet;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.support.StreamSearchChannelListener;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.index.SequentialStoredFieldsLeafReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.lucene.util.CombinedBitSet;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.metrics.InternalSum;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ExceptionsHelper;
+import org.density.action.support.StreamSearchChannelListener;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.index.SequentialStoredFieldsLeafReader;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.lucene.util.CombinedBitSet;
+import org.density.search.SearchService;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.metrics.InternalSum;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -100,11 +100,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-import static org.opensearch.search.internal.ContextIndexSearcher.intersectScorerAndBitSet;
-import static org.opensearch.search.internal.ExitableDirectoryReader.ExitableLeafReader;
-import static org.opensearch.search.internal.ExitableDirectoryReader.ExitablePointValues;
-import static org.opensearch.search.internal.ExitableDirectoryReader.ExitableTerms;
-import static org.opensearch.search.internal.IndexReaderUtils.getLeaves;
+import static org.density.search.internal.ContextIndexSearcher.intersectScorerAndBitSet;
+import static org.density.search.internal.ExitableDirectoryReader.ExitableLeafReader;
+import static org.density.search.internal.ExitableDirectoryReader.ExitablePointValues;
+import static org.density.search.internal.ExitableDirectoryReader.ExitableTerms;
+import static org.density.search.internal.IndexReaderUtils.getLeaves;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
@@ -113,7 +113,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ContextIndexSearcherTests extends OpenSearchTestCase {
+public class ContextIndexSearcherTests extends DensityTestCase {
     public void testIntersectScorerAndRoleBits() throws Exception {
         final Directory directory = newDirectory();
         IndexWriter iw = new IndexWriter(directory, new IndexWriterConfig(new StandardAnalyzer()).setMergePolicy(NoMergePolicy.INSTANCE));
@@ -256,7 +256,7 @@ public class ContextIndexSearcherTests extends OpenSearchTestCase {
 
             }
         };
-        DirectoryReader reader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(w), new ShardId(settings.getIndex(), 0));
+        DirectoryReader reader = DensityDirectoryReader.wrap(DirectoryReader.open(w), new ShardId(settings.getIndex(), 0));
         BitsetFilterCache cache = new BitsetFilterCache(settings, listener);
         Query roleQuery = new TermQuery(new Term("allowed", "yes"));
         BitSet bitSet = cache.getBitSetProducer(roleQuery).getBitSet(reader.leaves().get(0));
@@ -451,7 +451,7 @@ public class ContextIndexSearcherTests extends OpenSearchTestCase {
                     try {
                         return new DocumentSubsetReader(reader, bitsetFilterCache, roleQuery);
                     } catch (Exception e) {
-                        throw ExceptionsHelper.convertToOpenSearchException(e);
+                        throw ExceptionsHelper.convertToDensityException(e);
                     }
                 }
             });

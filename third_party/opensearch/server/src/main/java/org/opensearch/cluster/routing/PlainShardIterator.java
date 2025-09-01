@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.core.index.shard.ShardId;
+import org.density.core.index.shard.ShardId;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ import java.util.List;
  * The {@link PlainShardIterator} is a {@link ShardsIterator} which iterates all
  * shards or a given {@link ShardId shard id}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PlainShardIterator extends PlainShardsIterator implements ShardIterator {
 

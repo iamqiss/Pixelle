@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.PipelineAggregationBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.PipelineAggregationBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,14 +49,14 @@ import static java.util.Collections.emptyMap;
 /**
  * Base aggregator for pipline aggs
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class PipelineAggregator {
     /**
      * Parse the {@link PipelineAggregationBuilder} from a {@link XContentParser}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface Parser {
@@ -82,7 +82,7 @@ public abstract class PipelineAggregator {
      * Tree of {@link PipelineAggregator}s to modify a tree of aggregations
      * after their final reduction.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class PipelineTree {

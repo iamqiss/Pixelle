@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
 public class RunTask extends DefaultTestClustersTask {
 
     private static final Logger logger = Logging.getLogger(RunTask.class);
-    public static final String CUSTOM_SETTINGS_PREFIX = "tests.opensearch.";
+    public static final String CUSTOM_SETTINGS_PREFIX = "tests.density.";
     private static final int DEFAULT_HTTP_PORT = 9200;
     private static final int DEFAULT_TRANSPORT_PORT = 9300;
     private static final int DEFAULT_DEBUG_PORT = 5005;
@@ -74,7 +74,7 @@ public class RunTask extends DefaultTestClustersTask {
 
     private String keystorePassword = "";
 
-    @Option(option = "debug-jvm", description = "Run OpenSearch as a debug client, where it will try to connect to a debugging server at startup.")
+    @Option(option = "debug-jvm", description = "Run Density as a debug client, where it will try to connect to a debugging server at startup.")
     public void setDebug(boolean enabled) {
         if (debugServer != null && debugServer == true) {
             throw new IllegalStateException("Either --debug-jvm or --debug-server-jvm option should be specified (but not both)");
@@ -82,7 +82,7 @@ public class RunTask extends DefaultTestClustersTask {
         this.debug = enabled;
     }
 
-    @Option(option = "debug-server-jvm", description = "Run OpenSearch as a debug server that will accept connections from a debugging client.")
+    @Option(option = "debug-server-jvm", description = "Run Density as a debug server that will accept connections from a debugging client.")
     public void setDebugServer(boolean enabled) {
         if (debug != null && debug == true) {
             throw new IllegalStateException("Either --debug-jvm or --debug-server-jvm option should be specified (but not both)");
@@ -115,7 +115,7 @@ public class RunTask extends DefaultTestClustersTask {
         this.preserveData = preserveData;
     }
 
-    @Option(option = "keystore-password", description = "Set the opensearch keystore password")
+    @Option(option = "keystore-password", description = "Set the density keystore password")
     public void setKeystorePassword(String password) {
         keystorePassword = password;
     }
@@ -151,23 +151,23 @@ public class RunTask extends DefaultTestClustersTask {
                 )
             );
         boolean singleNode = getClusters().stream().flatMap(c -> c.getNodes().stream()).count() == 1;
-        final Function<OpenSearchNode, Path> getDataPath;
+        final Function<DensityNode, Path> getDataPath;
         if (singleNode) {
             getDataPath = n -> dataDir;
         } else {
             getDataPath = n -> dataDir.resolve(n.getName());
         }
 
-        for (OpenSearchCluster cluster : getClusters()) {
+        for (DensityCluster cluster : getClusters()) {
             // Configure the first node with the default ports first
-            OpenSearchNode firstNode = cluster.getFirstNode();
+            DensityNode firstNode = cluster.getFirstNode();
             firstNode.setHttpPort(String.valueOf(httpPort));
             httpPort++;
             firstNode.setTransportPort(String.valueOf(transportPort));
             transportPort++;
             firstNode.setting("discovery.seed_hosts", LOCALHOST_ADDRESS_PREFIX + DEFAULT_TRANSPORT_PORT);
             cluster.setPreserveDataDir(preserveData);
-            for (OpenSearchNode node : cluster.getNodes()) {
+            for (DensityNode node : cluster.getNodes()) {
                 if (node != firstNode) {
                     node.setHttpPort(String.valueOf(httpPort));
                     httpPort++;
@@ -181,14 +181,14 @@ public class RunTask extends DefaultTestClustersTask {
                 }
                 if (debug) {
                     logger.lifecycle(
-                        "Running opensearch in debug mode (client), {} expecting running debug server on port {}",
+                        "Running density in debug mode (client), {} expecting running debug server on port {}",
                         node,
                         debugPort
                     );
                     node.jvmArgs("-agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=" + debugPort);
                     debugPort += 1;
                 } else if (debugServer) {
-                    logger.lifecycle("Running opensearch in debug mode (server), {} running server with debug port {}", node, debugPort);
+                    logger.lifecycle("Running density in debug mode (server), {} running server with debug port {}", node, debugPort);
                     node.jvmArgs("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=" + debugPort);
                     debugPort += 1;
                 }
@@ -204,8 +204,8 @@ public class RunTask extends DefaultTestClustersTask {
         List<BufferedReader> toRead = new ArrayList<>();
         List<BooleanSupplier> aliveChecks = new ArrayList<>();
         try {
-            for (OpenSearchCluster cluster : getClusters()) {
-                for (OpenSearchNode node : cluster.getNodes()) {
+            for (DensityCluster cluster : getClusters()) {
+                for (DensityNode node : cluster.getNodes()) {
                     BufferedReader reader = Files.newBufferedReader(node.getOpensearchStdoutFile());
                     toRead.add(reader);
                     aliveChecks.add(node::isProcessAlive);
@@ -222,7 +222,7 @@ public class RunTask extends DefaultTestClustersTask {
                 }
 
                 if (aliveChecks.stream().allMatch(BooleanSupplier::getAsBoolean) == false) {
-                    throw new GradleException("OpenSearch cluster died");
+                    throw new GradleException("Density cluster died");
                 }
 
                 if (readData == false) {

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.tracker;
+package org.density.wlm.tracker;
 
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupLevelResourceUsageView;
-import org.opensearch.wlm.WorkloadGroupTask;
-import org.opensearch.wlm.WorkloadManagementSettings;
+import org.density.action.search.SearchShardTask;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.tasks.Task;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupLevelResourceUsageView;
+import org.density.wlm.WorkloadGroupTask;
+import org.density.wlm.WorkloadManagementSettings;
 import org.junit.After;
 import org.junit.Before;
 
@@ -29,16 +29,16 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.wlm.WorkloadGroupTask.WORKLOAD_GROUP_ID_HEADER;
-import static org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
-import static org.opensearch.wlm.tracker.CpuUsageCalculator.PROCESSOR_COUNT;
-import static org.opensearch.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
+import static org.density.wlm.WorkloadGroupTask.WORKLOAD_GROUP_ID_HEADER;
+import static org.density.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
+import static org.density.wlm.tracker.CpuUsageCalculator.PROCESSOR_COUNT;
+import static org.density.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ResourceUsageCalculatorTrackerServiceTests extends OpenSearchTestCase {
+public class ResourceUsageCalculatorTrackerServiceTests extends DensityTestCase {
     TestThreadPool threadPool;
     TaskResourceTrackingService mockTaskResourceTrackingService;
     WorkloadGroupResourceUsageTrackerService workloadGroupResourceUsageTrackerService;

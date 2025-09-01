@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,33 +25,33 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Priority;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.lifecycle.LifecycleListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Priority;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.LifecycleListener;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.MapperService;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
+import org.density.index.store.Store;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.indices.recovery.RecoveryState;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -62,7 +62,7 @@ import java.util.function.Function;
 /**
  * Repository that is filtered
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilterRepository implements Repository {
 

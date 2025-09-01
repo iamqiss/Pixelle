@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle
+package org.density.gradle
 
 import groovy.json.JsonSlurper
 import org.ajoberstar.grgit.Grgit
@@ -21,7 +21,7 @@ import java.nio.file.Paths
 
 class CheckCompatibilityTask extends DefaultTask {
 
-    static final String REPO_URL = 'https://raw.githubusercontent.com/opensearch-project/opensearch-plugins/main/plugins/.meta'
+    static final String REPO_URL = 'https://raw.githubusercontent.com/density-project/density-plugins/main/plugins/.meta'
 
     @Input
     List repositoryUrls = project.hasProperty('repositoryUrls') ? project.property('repositoryUrls').split(',') : getRepoUrls()

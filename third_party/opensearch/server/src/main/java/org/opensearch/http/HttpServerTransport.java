@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.service.ReportingService;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
 
 import java.util.Map;
 import java.util.Optional;
@@ -47,7 +47,7 @@ import java.util.Optional;
 /**
  * HTTP Transport server
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface HttpServerTransport extends LifecycleComponent, ReportingService<HttpInfo> {

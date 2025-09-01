@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
+import org.density.DensityException;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -54,7 +54,7 @@ import java.util.function.ToLongFunction;
 /**
  * Monitors hot threads
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HotThreads {
 
@@ -126,10 +126,10 @@ public class HotThreads {
             if (className.equals("sun.nio.ch.SelectorImpl") && methodName.equals("select")) {
                 return true;
             }
-            if (className.equals("org.opensearch.threadpool.ThreadPool$CachedTimeThread") && methodName.equals("run")) {
+            if (className.equals("org.density.threadpool.ThreadPool$CachedTimeThread") && methodName.equals("run")) {
                 return true;
             }
-            if (className.equals("org.opensearch.indices.ttl.IndicesTTLService$Notifier") && methodName.equals("await")) {
+            if (className.equals("org.density.indices.ttl.IndicesTTLService$Notifier") && methodName.equals("await")) {
                 return true;
             }
             if (className.equals("java.util.concurrent.LinkedTransferQueue") && methodName.equals("poll")) {
@@ -143,7 +143,7 @@ public class HotThreads {
     private String innerDetect() throws Exception {
         ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
         if (threadBean.isThreadCpuTimeSupported() == false) {
-            throw new OpenSearchException("thread CPU time is not supported on this JDK");
+            throw new DensityException("thread CPU time is not supported on this JDK");
         }
 
         StringBuilder sb = new StringBuilder();

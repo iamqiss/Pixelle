@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.DelayableWriteable;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.RescoreDocIds;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.profile.NetworkTime;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.suggest.Suggest;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.DelayableWriteable;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.search.DocValueFormat;
+import org.density.search.RescoreDocIds;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.profile.NetworkTime;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.suggest.Suggest;
 
 import java.io.IOException;
 
-import static org.opensearch.common.lucene.Lucene.readTopDocs;
-import static org.opensearch.common.lucene.Lucene.writeTopDocs;
+import static org.density.common.lucene.Lucene.readTopDocs;
+import static org.density.common.lucene.Lucene.writeTopDocs;
 
 /**
  * The result of the query search
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class QuerySearchResult extends SearchPhaseResult {

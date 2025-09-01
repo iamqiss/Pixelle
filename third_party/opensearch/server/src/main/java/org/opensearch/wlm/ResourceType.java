@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.wlm.tracker.CpuUsageCalculator;
-import org.opensearch.wlm.tracker.MemoryUsageCalculator;
-import org.opensearch.wlm.tracker.ResourceUsageCalculator;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.wlm.tracker.CpuUsageCalculator;
+import org.density.wlm.tracker.MemoryUsageCalculator;
+import org.density.wlm.tracker.ResourceUsageCalculator;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.function.Function;
 /**
  * Enum to hold the resource type
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.17.0")
 public enum ResourceType {

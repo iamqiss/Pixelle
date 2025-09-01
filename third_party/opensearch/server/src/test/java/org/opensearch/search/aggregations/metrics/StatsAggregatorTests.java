@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.NumericDocValuesField;
@@ -42,23 +42,23 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.lookup.LeafDocLookup;
+import org.density.common.CheckedConsumer;
+import org.density.common.settings.Settings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.lookup.LeafDocLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
-import static org.opensearch.search.aggregations.AggregationBuilders.stats;
+import static org.density.search.aggregations.AggregationBuilders.stats;
 
 public class StatsAggregatorTests extends AggregatorTestCase {
 

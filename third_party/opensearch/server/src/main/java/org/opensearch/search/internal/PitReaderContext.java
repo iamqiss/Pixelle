@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.Segment;
-import org.opensearch.index.shard.IndexShard;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.engine.Segment;
+import org.density.index.shard.IndexShard;
 
 import java.util.Collections;
 import java.util.List;

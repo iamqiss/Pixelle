@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.composite;
+package org.density.geo.search.aggregations.bucket.composite;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.LatLonPoint;
 import org.apache.lucene.document.SortedNumericDocValuesField;
 import org.apache.lucene.search.FieldExistsQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationBuilder;
-import org.opensearch.search.aggregations.composite.BaseCompositeAggregatorTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationBuilder;
+import org.density.search.aggregations.composite.BaseCompositeAggregatorTestCase;
 import org.junit.Before;
 
 import java.util.ArrayList;

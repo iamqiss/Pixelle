@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.nested;
+package org.density.search.aggregations.bucket.nested;
 
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalSingleBucketAggregationTestCase;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.search.aggregations.bucket.ParsedSingleBucketAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalSingleBucketAggregationTestCase;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.search.aggregations.bucket.ParsedSingleBucketAggregation;
 
 import java.io.IOException;
 import java.util.List;

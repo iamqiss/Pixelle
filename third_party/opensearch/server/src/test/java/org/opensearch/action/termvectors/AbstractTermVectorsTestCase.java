@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -62,10 +62,10 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,12 +76,12 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public abstract class AbstractTermVectorsTestCase extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public abstract class AbstractTermVectorsTestCase extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public AbstractTermVectorsTestCase(Settings staticSettings) {
         super(staticSettings);
@@ -319,7 +319,7 @@ public abstract class AbstractTermVectorsTestCase extends ParameterizedStaticSet
                 true,
                 true,
                 true
-            ).expectedException(org.opensearch.index.IndexNotFoundException.class)
+            ).expectedException(org.density.index.IndexNotFoundException.class)
         );
 
         refresh();

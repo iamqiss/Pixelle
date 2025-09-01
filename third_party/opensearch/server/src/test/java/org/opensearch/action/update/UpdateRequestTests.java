@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.RandomObjects;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.common.document.DocumentField;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.index.get.GetResult;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
+import org.density.test.RandomObjects;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -72,11 +72,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
-import static org.opensearch.script.MockScriptEngine.mockInlineScript;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.script.MockScriptEngine.mockInlineScript;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -85,7 +85,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UpdateRequestTests extends OpenSearchTestCase {
+public class UpdateRequestTests extends DensityTestCase {
 
     private UpdateHelper updateHelper;
 
@@ -436,7 +436,7 @@ public class UpdateRequestTests extends OpenSearchTestCase {
             new ShardId("test", "", 0),
             updateRequest,
             getResult,
-            OpenSearchTestCase::randomNonNegativeLong
+            DensityTestCase::randomNonNegativeLong
         );
         final Writeable action = result.action();
         assertThat(action, instanceOf(ReplicationRequest.class));
@@ -619,7 +619,7 @@ public class UpdateRequestTests extends OpenSearchTestCase {
             shardId,
             request,
             getResult,
-            OpenSearchTestCase::randomNonNegativeLong
+            DensityTestCase::randomNonNegativeLong
         );
 
         assertThat(result.action(), instanceOf(IndexRequest.class));
@@ -629,7 +629,7 @@ public class UpdateRequestTests extends OpenSearchTestCase {
         // Now where the script changes the op to "delete"
         request = new UpdateRequest("test", "1").script(mockInlineScript("ctx.op = delete"));
 
-        result = updateHelper.prepareUpdateScriptRequest(shardId, request, getResult, OpenSearchTestCase::randomNonNegativeLong);
+        result = updateHelper.prepareUpdateScriptRequest(shardId, request, getResult, DensityTestCase::randomNonNegativeLong);
 
         assertThat(result.action(), instanceOf(DeleteRequest.class));
         assertThat(result.getResponseResult(), equalTo(DocWriteResponse.Result.DELETED));
@@ -642,7 +642,7 @@ public class UpdateRequestTests extends OpenSearchTestCase {
             request = new UpdateRequest("test", "1").script(mockInlineScript("ctx.op = bad"));
         }
 
-        result = updateHelper.prepareUpdateScriptRequest(shardId, request, getResult, OpenSearchTestCase::randomNonNegativeLong);
+        result = updateHelper.prepareUpdateScriptRequest(shardId, request, getResult, DensityTestCase::randomNonNegativeLong);
 
         assertThat(result.action(), instanceOf(UpdateResponse.class));
         assertThat(result.getResponseResult(), equalTo(DocWriteResponse.Result.NOOP));

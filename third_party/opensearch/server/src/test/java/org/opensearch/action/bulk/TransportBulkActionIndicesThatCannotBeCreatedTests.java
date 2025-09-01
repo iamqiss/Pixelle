@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.VersionType;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.action.ActionListener;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexingPressureService;
+import org.density.index.VersionType;
+import org.density.indices.SystemIndices;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Requests;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,12 +73,12 @@ import java.util.function.Function;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
-import static org.opensearch.ingest.IngestServiceTests.createIngestServiceWithProcessors;
+import static org.density.ingest.IngestServiceTests.createIngestServiceWithProcessors;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportBulkActionIndicesThatCannotBeCreatedTests extends OpenSearchTestCase {
+public class TransportBulkActionIndicesThatCannotBeCreatedTests extends DensityTestCase {
     public void testNonExceptional() {
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.add(new IndexRequest(randomAlphaOfLength(5)));
@@ -151,7 +151,7 @@ public class TransportBulkActionIndicesThatCannotBeCreatedTests extends OpenSear
         when(clusterService.localNode()).thenReturn(localNode);
         when(localNode.isIngestNode()).thenReturn(randomBoolean());
         final ThreadPool threadPool = mock(ThreadPool.class);
-        final ExecutorService direct = OpenSearchExecutors.newDirectExecutorService();
+        final ExecutorService direct = DensityExecutors.newDirectExecutorService();
         when(threadPool.executor(anyString())).thenReturn(direct);
         TransportBulkAction action = new TransportBulkAction(
             threadPool,

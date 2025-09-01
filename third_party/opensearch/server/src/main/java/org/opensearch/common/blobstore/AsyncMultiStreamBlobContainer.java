@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  * An extension of {@link BlobContainer} that adds {@link AsyncMultiStreamBlobContainer#asyncBlobUpload} to allow
  * multipart uploads and performs integrity checks on transferred files
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface AsyncMultiStreamBlobContainer extends BlobContainer {
 

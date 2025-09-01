@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.index.NoMergePolicy;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class MergePolicySettingsTests extends OpenSearchTestCase {
+public class MergePolicySettingsTests extends DensityTestCase {
     protected final ShardId shardId = new ShardId("index", "_na_", 1);
 
     public void testCompoundFileSettings() throws IOException {
@@ -100,16 +100,16 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
 
     public void testDefaultMergePolicy() throws IOException {
         IndexSettings indexSettings = indexSettings(EMPTY_SETTINGS);
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
-        assertTrue(indexSettings.getMergePolicy(true) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(true) instanceof DensityTieredMergePolicy);
     }
 
     public void testMergePolicyPrecedence() throws IOException {
         // 1. INDEX_MERGE_POLICY is not set
         // assert defaults
         IndexSettings indexSettings = indexSettings(EMPTY_SETTINGS);
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
-        assertTrue(indexSettings.getMergePolicy(true) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(true) instanceof DensityTieredMergePolicy);
 
         // 1.1 node setting TIME_SERIES_INDEX_MERGE_POLICY is set as log_byte_size
         // assert index policy is tiered whereas time series index policy is log_byte_size
@@ -117,7 +117,7 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             .put(IndexSettings.TIME_SERIES_INDEX_MERGE_POLICY.getKey(), IndexSettings.IndexMergePolicy.LOG_BYTE_SIZE.getValue())
             .build();
         indexSettings = new IndexSettings(newIndexMeta("test", Settings.EMPTY), nodeSettings);
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
         assertTrue(indexSettings.getMergePolicy(true) instanceof LogByteSizeMergePolicy);
 
         // 1.2 node setting TIME_SERIES_INDEX_MERGE_POLICY is set as tiered
@@ -126,16 +126,16 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             .put(IndexSettings.TIME_SERIES_INDEX_MERGE_POLICY.getKey(), IndexSettings.IndexMergePolicy.TIERED.getValue())
             .build();
         indexSettings = new IndexSettings(newIndexMeta("test", Settings.EMPTY), nodeSettings);
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
-        assertTrue(indexSettings.getMergePolicy(true) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(true) instanceof DensityTieredMergePolicy);
 
         // 2. INDEX_MERGE_POLICY set as tiered
         // assert both index and time-series-index merge policy is set as tiered
         indexSettings = indexSettings(
             Settings.builder().put(IndexSettings.INDEX_MERGE_POLICY.getKey(), IndexSettings.IndexMergePolicy.TIERED.getValue()).build()
         );
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
-        assertTrue(indexSettings.getMergePolicy(true) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(true) instanceof DensityTieredMergePolicy);
 
         // 2.1 node setting TIME_SERIES_INDEX_MERGE_POLICY is set as log_byte_size
         // assert both index and time-series-index merge policy is set as tiered
@@ -149,8 +149,8 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             ),
             nodeSettings
         );
-        assertTrue(indexSettings.getMergePolicy(false) instanceof OpenSearchTieredMergePolicy);
-        assertTrue(indexSettings.getMergePolicy(true) instanceof OpenSearchTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(false) instanceof DensityTieredMergePolicy);
+        assertTrue(indexSettings.getMergePolicy(true) instanceof DensityTieredMergePolicy);
 
         // 3. INDEX_MERGE_POLICY set as log_byte_size
         // assert both index and time-series-index merge policy is set as log_byte_size
@@ -257,7 +257,7 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
     public void testTieredMergePolicySettingsUpdate() throws IOException {
         IndexSettings indexSettings = indexSettings(Settings.EMPTY);
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
             TieredMergePolicyProvider.DEFAULT_EXPUNGE_DELETES_ALLOWED,
             0.0d
         );
@@ -274,13 +274,13 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             )
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
             TieredMergePolicyProvider.DEFAULT_EXPUNGE_DELETES_ALLOWED + 1.0d,
             0.0d
         );
 
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
             TieredMergePolicyProvider.DEFAULT_FLOOR_SEGMENT.getMbFrac(),
             0
         );
@@ -296,13 +296,13 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             )
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
             new ByteSizeValue(TieredMergePolicyProvider.DEFAULT_FLOOR_SEGMENT.getMb() + 1, ByteSizeUnit.MB).getMbFrac(),
             0.001
         );
 
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
             TieredMergePolicyProvider.DEFAULT_MAX_MERGE_AT_ONCE
         );
         indexSettings.updateIndexMetadata(
@@ -317,12 +317,12 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             )
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
             TieredMergePolicyProvider.DEFAULT_MAX_MERGE_AT_ONCE - 1
         );
 
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
             TieredMergePolicyProvider.DEFAULT_MAX_MERGED_SEGMENT.getMbFrac(),
             0.0001
         );
@@ -338,13 +338,13 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             )
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
             new ByteSizeValue(TieredMergePolicyProvider.DEFAULT_MAX_MERGED_SEGMENT.getBytes() + 1).getMbFrac(),
             0.0001
         );
 
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
             TieredMergePolicyProvider.DEFAULT_SEGMENTS_PER_TIER,
             0
         );
@@ -360,13 +360,13 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
             )
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
             TieredMergePolicyProvider.DEFAULT_SEGMENTS_PER_TIER + 1,
             0
         );
 
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(),
             TieredMergePolicyProvider.DEFAULT_DELETES_PCT_ALLOWED,
             0
         );
@@ -376,7 +376,7 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
                 Settings.builder().put(TieredMergePolicyProvider.INDEX_MERGE_POLICY_DELETES_PCT_ALLOWED_SETTING.getKey(), 22).build()
             )
         );
-        assertEquals(((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(), 22, 0);
+        assertEquals(((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(), 22, 0);
 
         IllegalArgumentException exc = expectThrows(
             IllegalArgumentException.class,
@@ -391,31 +391,31 @@ public class MergePolicySettingsTests extends OpenSearchTestCase {
         assertThat(cause.getMessage(), containsString("must be <= 50.0"));
         indexSettings.updateIndexMetadata(newIndexMeta("index", EMPTY_SETTINGS)); // see if defaults are restored
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getForceMergeDeletesPctAllowed(),
             TieredMergePolicyProvider.DEFAULT_EXPUNGE_DELETES_ALLOWED,
             0.0d
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getFloorSegmentMB(),
             new ByteSizeValue(TieredMergePolicyProvider.DEFAULT_FLOOR_SEGMENT.getMb(), ByteSizeUnit.MB).getMbFrac(),
             0.00
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergeAtOnce(),
             TieredMergePolicyProvider.DEFAULT_MAX_MERGE_AT_ONCE
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getMaxMergedSegmentMB(),
             new ByteSizeValue(TieredMergePolicyProvider.DEFAULT_MAX_MERGED_SEGMENT.getBytes() + 1).getMbFrac(),
             0.0001
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getSegmentsPerTier(),
             TieredMergePolicyProvider.DEFAULT_SEGMENTS_PER_TIER,
             0
         );
         assertEquals(
-            ((OpenSearchTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(),
+            ((DensityTieredMergePolicy) indexSettings.getMergePolicy(false)).getDeletesPctAllowed(),
             TieredMergePolicyProvider.DEFAULT_DELETES_PCT_ALLOWED,
             0
         );

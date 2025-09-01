@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.tasks.TaskId;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
+import static org.density.common.unit.TimeValue.parseTimeValue;
 import static org.apache.lucene.tests.util.TestUtil.randomSimpleString;
 
 /**
  * Round trip tests for all {@link Writeable} things declared in this plugin.
  */
-public class RoundTripTests extends OpenSearchTestCase {
+public class RoundTripTests extends DensityTestCase {
     public void testReindexRequest() throws IOException {
         ReindexRequest reindex = new ReindexRequest();
         randomRequest(reindex);

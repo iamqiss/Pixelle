@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.util.BigArrays;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 
-import static org.opensearch.search.aggregations.bucket.missing.MissingOrder.LAST;
+import static org.density.search.aggregations.bucket.missing.MissingOrder.LAST;
 
 /**
  * A source that can record and compare values of similar type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SingleDimensionValuesSource<T extends Comparable<T>> implements Releasable {
     protected final BigArrays bigArrays;

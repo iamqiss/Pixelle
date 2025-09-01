@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationCollection;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityCorruptionException;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.time.DateUtils;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.ReplicationStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationCollection;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -47,7 +47,7 @@ import reactor.util.annotation.NonNull;
  * It uses a {@link ReplicationCollection} to track ongoing replication events and
  * manages the state of each replication event.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicator {
 
@@ -346,7 +346,7 @@ public class SegmentReplicator {
             @Override
             public void onFailure(Exception e) {
                 logger.debug("Replication failed {}", target.description());
-                if (isStoreCorrupt(target) || e instanceof CorruptIndexException || e instanceof OpenSearchCorruptionException) {
+                if (isStoreCorrupt(target) || e instanceof CorruptIndexException || e instanceof DensityCorruptionException) {
                     onGoingReplications.fail(replicationId, new ReplicationFailedException("Store corruption during replication", e), true);
                     return;
                 }

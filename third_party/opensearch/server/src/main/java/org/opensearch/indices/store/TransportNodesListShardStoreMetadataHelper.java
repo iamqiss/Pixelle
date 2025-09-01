@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.store;
+package org.density.indices.store;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.IndicesService;
+import org.density.DensityException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.IndicesService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  * {@link TransportNodesListShardStoreMetadata} will be deprecated and all the code will be moved to
  * {@link TransportNodesListShardStoreMetadataBatch}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesListShardStoreMetadataHelper {
 
@@ -96,7 +96,7 @@ public class TransportNodesListShardStoreMetadataHelper {
                         customDataPath = new IndexSettings(metadata, settings).customDataPath();
                     } else {
                         logger.trace("{} node doesn't have meta data for the requests index", shardId);
-                        throw new OpenSearchException(INDEX_NOT_FOUND + shardId.getIndex());
+                        throw new DensityException(INDEX_NOT_FOUND + shardId.getIndex());
                     }
                 }
             }
@@ -130,7 +130,7 @@ public class TransportNodesListShardStoreMetadataHelper {
     /**
      * Metadata for store files
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class StoreFilesMetadata implements Iterable<StoreFileMetadata>, Writeable {
         private final ShardId shardId;

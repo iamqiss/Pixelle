@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 /**
  * Wrapped Span will be exposed to the code outside of tracing package for sharing the {@link Span} without having access to
  * its properties.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public final class SpanContext {

@@ -19,7 +19,7 @@ setup:
   - do:
       indices.refresh: {}
 
-# Related issue: https://github.com/opensearch-project/OpenSearch/issues/9857
+# Related issue: https://github.com/density-project/Density/issues/9857
 ---
 "Test noop_update_total metric can be updated by both update API and bulk API":
   - skip:

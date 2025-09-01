@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-publish-snapshots:
-    if: github.repository == 'opensearch-project/OpenSearch'
+    if: github.repository == 'density-project/Density'
     runs-on: ubuntu-latest
 
     permissions:
@@ -32,8 +32,8 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SONATYPE_USERNAME: op://opensearch-infra-secrets/maven-central-portal-credentials/username
-          SONATYPE_PASSWORD: op://opensearch-infra-secrets/maven-central-portal-credentials/password
+          SONATYPE_USERNAME: op://density-infra-secrets/maven-central-portal-credentials/username
+          SONATYPE_PASSWORD: op://density-infra-secrets/maven-central-portal-credentials/password
 
       - name: Publish snapshots to maven
         run: |

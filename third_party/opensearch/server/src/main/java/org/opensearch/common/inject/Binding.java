@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,16 +23,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.spi.BindingScopingVisitor;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.Element;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.spi.BindingScopingVisitor;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.Element;
 
 /**
  * A mapping from a key (type and optional annotation) to the strategy for getting instances of the
@@ -70,7 +70,7 @@ import org.opensearch.common.inject.spi.Element;
  * @author crazybob@google.com (Bob Lee)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface Binding<T> extends Element {
@@ -85,7 +85,7 @@ public interface Binding<T> extends Element {
      * binding.
      *
      * @throws UnsupportedOperationException when invoked on a {@link Binding}
-     *                                       created via {@link org.opensearch.common.inject.spi.Elements#getElements}. This
+     *                                       created via {@link org.density.common.inject.spi.Elements#getElements}. This
      *                                       method is only supported on {@link Binding}s returned from an injector.
      */
     Provider<T> getProvider();

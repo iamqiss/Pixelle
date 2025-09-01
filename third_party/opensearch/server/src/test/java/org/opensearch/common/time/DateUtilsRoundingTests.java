@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class DateUtilsRoundingTests extends OpenSearchTestCase {
+public class DateUtilsRoundingTests extends DensityTestCase {
 
     public void testDateUtilsRounding() {
         for (int year = -1000; year < 3000; year++) {

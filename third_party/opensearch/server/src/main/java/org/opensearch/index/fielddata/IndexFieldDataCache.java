@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.shard.ShardId;
 
 /**
  * A simple field data cache abstraction on the *index* level.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndexFieldDataCache {
@@ -64,7 +64,7 @@ public interface IndexFieldDataCache {
     /**
      * The listener interface
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface Listener {
@@ -83,7 +83,7 @@ public interface IndexFieldDataCache {
     /**
      * No index field data cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class None implements IndexFieldDataCache {
 

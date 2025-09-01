@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache;
+package org.density.cache;
 
-import org.opensearch.cache.store.disk.EhcacheDiskCache;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cache.store.disk.EhcacheDiskCache;
+import org.density.common.cache.CacheType;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.common.settings.Setting.Property.NodeScope;
+import static org.density.common.settings.Setting.Property.NodeScope;
 
 /**
  * Settings related to ehcache disk cache.

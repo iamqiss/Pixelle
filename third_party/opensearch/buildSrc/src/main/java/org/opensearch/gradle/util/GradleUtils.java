@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.util;
+package org.density.gradle.util;
 
-import org.opensearch.gradle.OpenSearchJavaPlugin;
+import org.density.gradle.DensityJavaPlugin;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -141,7 +141,7 @@ public abstract class GradleUtils {
      * @return A task provider for the newly created test task
      */
     public static TaskProvider<?> addTestSourceSet(Project project, String sourceSetName) {
-        project.getPluginManager().apply(OpenSearchJavaPlugin.class);
+        project.getPluginManager().apply(DensityJavaPlugin.class);
 
         // create our test source set and task
         SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);

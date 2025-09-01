@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageInfo;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceStats;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.core.tasks.resourcetracker.TaskThreadUsage;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.ExceptionsHelper;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionResponse;
+import org.density.core.action.NotifyOnceListener;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageInfo;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.core.tasks.resourcetracker.TaskResourceStats;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.core.tasks.resourcetracker.TaskThreadUsage;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Current task information
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Task {
@@ -491,7 +491,7 @@ public class Task {
     /**
      * Individual tasks can override this if they want to support task resource tracking. We just need to make sure that
      * the ThreadPool on which the task runs on have runnable wrapper similar to
-     * {@link org.opensearch.common.util.concurrent.OpenSearchExecutors#newResizable}
+     * {@link org.density.common.util.concurrent.DensityExecutors#newResizable}
      *
      * @return true if resource tracking is supported by the task
      */
@@ -511,7 +511,7 @@ public class Task {
      * because some statuses (reindex) have become defacto standardized because
      * they are used by systems like Kibana.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Status extends ToXContentObject, NamedWriteable {}

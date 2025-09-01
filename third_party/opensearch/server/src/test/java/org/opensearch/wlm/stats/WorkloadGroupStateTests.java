@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.stats;
+package org.density.wlm.stats;
 
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.ResourceType;
+import org.density.test.DensityTestCase;
+import org.density.wlm.ResourceType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkloadGroupStateTests extends OpenSearchTestCase {
+public class WorkloadGroupStateTests extends DensityTestCase {
     WorkloadGroupState workloadGroupState;
 
     public void testRandomWorkloadGroupsStateUpdates() {

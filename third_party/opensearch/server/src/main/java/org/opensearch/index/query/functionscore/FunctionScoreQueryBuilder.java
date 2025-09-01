@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.InnerHitContextBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilderVisitor;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.InnerHitContextBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilderVisitor;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ import java.util.Objects;
  * A query that uses a filters with a script associated with them to compute the
  * score.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FunctionScoreQueryBuilder extends AbstractQueryBuilder<FunctionScoreQueryBuilder> {
     public static final String NAME = "function_score";
@@ -374,7 +374,7 @@ public class FunctionScoreQueryBuilder extends AbstractQueryBuilder<FunctionScor
      * Function to be associated with an optional filter, meaning it will be executed only for the documents
      * that match the given filter.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FilterFunctionBuilder implements ToXContentObject, Writeable {
         private final QueryBuilder filter;

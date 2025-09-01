@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpHead;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.client.cluster.RemoteInfoRequest;
-import org.opensearch.client.indices.ComponentTemplatesExistRequest;
-import org.opensearch.client.indices.DeleteComponentTemplateRequest;
-import org.opensearch.client.indices.GetComponentTemplatesRequest;
-import org.opensearch.client.indices.PutComponentTemplateRequest;
-import org.opensearch.core.common.Strings;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.client.cluster.RemoteInfoRequest;
+import org.density.client.indices.ComponentTemplatesExistRequest;
+import org.density.client.indices.DeleteComponentTemplateRequest;
+import org.density.client.indices.GetComponentTemplatesRequest;
+import org.density.client.indices.PutComponentTemplateRequest;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 

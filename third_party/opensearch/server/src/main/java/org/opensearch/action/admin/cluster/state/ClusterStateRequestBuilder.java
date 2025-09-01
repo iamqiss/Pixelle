@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.state;
+package org.density.action.admin.cluster.state;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for obtaining cluster state
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationRequestBuilder<
@@ -49,7 +49,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     ClusterStateResponse,
     ClusterStateRequestBuilder> {
 
-    public ClusterStateRequestBuilder(OpenSearchClient client, ClusterStateAction action) {
+    public ClusterStateRequestBuilder(DensityClient client, ClusterStateAction action) {
         super(client, action, new ClusterStateRequest());
     }
 
@@ -75,7 +75,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     }
 
     /**
-     * Should the cluster state result include the {@link org.opensearch.cluster.metadata.Metadata}. Defaults
+     * Should the cluster state result include the {@link org.density.cluster.metadata.Metadata}. Defaults
      * to {@code true}.
      */
     public ClusterStateRequestBuilder setMetadata(boolean filter) {
@@ -84,7 +84,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     }
 
     /**
-     * Should the cluster state result include the {@link org.opensearch.cluster.node.DiscoveryNodes}. Defaults
+     * Should the cluster state result include the {@link org.density.cluster.node.DiscoveryNodes}. Defaults
      * to {@code true}.
      */
     public ClusterStateRequestBuilder setNodes(boolean filter) {
@@ -93,7 +93,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     }
 
     /**
-     * Should the cluster state result include the {@link org.opensearch.cluster.ClusterState.Custom}. Defaults
+     * Should the cluster state result include the {@link org.density.cluster.ClusterState.Custom}. Defaults
      * to {@code true}.
      */
     public ClusterStateRequestBuilder setCustoms(boolean filter) {
@@ -102,7 +102,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     }
 
     /**
-     * Should the cluster state result include the {@link org.opensearch.cluster.routing.RoutingTable}. Defaults
+     * Should the cluster state result include the {@link org.density.cluster.routing.RoutingTable}. Defaults
      * to {@code true}.
      */
     public ClusterStateRequestBuilder setRoutingTable(boolean filter) {
@@ -111,7 +111,7 @@ public class ClusterStateRequestBuilder extends ClusterManagerNodeReadOperationR
     }
 
     /**
-     * When {@link #setMetadata(boolean)} is set, which indices to return the {@link org.opensearch.cluster.metadata.IndexMetadata}
+     * When {@link #setMetadata(boolean)} is set, which indices to return the {@link org.density.cluster.metadata.IndexMetadata}
      * for. Defaults to all indices.
      */
     public ClusterStateRequestBuilder setIndices(String... indices) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -19,7 +19,7 @@ import java.io.IOException;
  * It is responsible for providing access to various types of document values (numeric, binary, sorted, sorted numeric,
  * and sorted set) for fields in the Star Tree index.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class Lucene90DocValuesProducerWrapper implements Closeable {
 

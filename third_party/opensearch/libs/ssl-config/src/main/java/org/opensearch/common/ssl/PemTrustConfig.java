@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.ssl;
+package org.density.common.ssl;
 
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509ExtendedTrustManager;
@@ -51,7 +51,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * A {@link org.opensearch.common.ssl.SslTrustConfig} that reads a list of PEM encoded trusted certificates (CAs) from the file
+ * A {@link org.density.common.ssl.SslTrustConfig} that reads a list of PEM encoded trusted certificates (CAs) from the file
  * system.
  * Strictly speaking, this class does not require PEM certificates, and will load any file that can be read by
  * {@link java.security.cert.CertificateFactory#generateCertificate(InputStream)}.

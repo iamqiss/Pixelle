@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasable;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeases;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,11 +49,11 @@ import java.util.OptionalLong;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class SoftDeletesPolicyTests extends OpenSearchTestCase {
+public class SoftDeletesPolicyTests extends DensityTestCase {
 
     /**
      * Makes sure we won't advance the retained seq# if the retention lock is held

@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.backwards;
+package org.density.backwards;
 
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.opensearch.Version;
-import org.opensearch.client.Node;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.Version;
+import org.density.client.Node;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-public class ExceptionIT extends OpenSearchRestTestCase {
+public class ExceptionIT extends DensityRestTestCase {
     public void testOpensearchException() throws Exception {
         logClusterNodes();
 

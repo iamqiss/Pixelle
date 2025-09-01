@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff;
+package org.density.client.sniff;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.client.Node;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientTestCase;
+import org.density.client.Node;
+import org.density.client.RestClient;
+import org.density.client.RestClientTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

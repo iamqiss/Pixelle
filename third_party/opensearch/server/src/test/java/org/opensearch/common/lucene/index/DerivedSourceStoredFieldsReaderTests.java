@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.codecs.StoredFieldsReader;
 import org.apache.lucene.document.Document;
@@ -19,9 +19,9 @@ import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.analysis.MockAnalyzer;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DerivedSourceStoredFieldsReaderTests extends OpenSearchTestCase {
+public class DerivedSourceStoredFieldsReaderTests extends DensityTestCase {
 
     private Directory dir;
     private IndexWriter writer;

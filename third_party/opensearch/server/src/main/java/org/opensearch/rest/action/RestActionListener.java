@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action;
+package org.density.rest.action;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
+import org.density.core.action.ActionListener;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ import java.io.IOException;
  * An action listener that requires {@link #processResponse(Object)} to be implemented
  * and will automatically handle failures.
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class RestActionListener<Response> implements ActionListener<Response> {
 

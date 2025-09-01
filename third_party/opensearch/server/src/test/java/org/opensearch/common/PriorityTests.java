@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PriorityTests extends OpenSearchTestCase {
+public class PriorityTests extends DensityTestCase {
 
     public void testValueOf() {
         for (Priority p : Priority.values()) {
@@ -47,7 +47,7 @@ public class PriorityTests extends OpenSearchTestCase {
         }
 
         IllegalArgumentException exception = expectThrows(IllegalArgumentException.class, () -> { Priority.valueOf("foobar"); });
-        assertEquals("No enum constant org.opensearch.common.Priority.foobar", exception.getMessage());
+        assertEquals("No enum constant org.density.common.Priority.foobar", exception.getMessage());
     }
 
     public void testToString() {

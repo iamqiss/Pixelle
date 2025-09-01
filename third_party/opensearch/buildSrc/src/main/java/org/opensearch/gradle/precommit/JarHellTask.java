@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.LoggedExec;
+import org.density.gradle.LoggedExec;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
@@ -63,7 +63,7 @@ public class JarHellTask extends PrecommitTask {
     public void runJarHellCheck() {
         LoggedExec.javaexec(project, spec -> {
             spec.environment("CLASSPATH", getClasspath().getAsPath());
-            spec.getMainClass().set("org.opensearch.common.bootstrap.JarHell");
+            spec.getMainClass().set("org.density.common.bootstrap.JarHell");
         });
     }
 

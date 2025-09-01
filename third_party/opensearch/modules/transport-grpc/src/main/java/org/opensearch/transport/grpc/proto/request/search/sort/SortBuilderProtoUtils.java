@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.sort;
+package org.density.transport.grpc.proto.request.search.sort;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.FieldWithOrderMap;
-import org.opensearch.protobufs.SortCombinations;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.FieldWithOrderMap;
+import org.density.protobufs.SortCombinations;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility class for converting SortBuilder Protocol Buffers to OpenSearch objects.
+ * Utility class for converting SortBuilder Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of sort
- * specifications into their corresponding OpenSearch SortBuilder implementations for
+ * specifications into their corresponding Density SortBuilder implementations for
  * search result sorting.
  */
 public class SortBuilderProtoUtils {
@@ -30,7 +30,7 @@ public class SortBuilderProtoUtils {
     }
 
     /**
-     * Converts a list of Protocol Buffer SortCombinations to a list of OpenSearch SortBuilder objects.
+     * Converts a list of Protocol Buffer SortCombinations to a list of Density SortBuilder objects.
      * Similar to {@link SortBuilder#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates properly configured
      * SortBuilder instances with the appropriate settings.

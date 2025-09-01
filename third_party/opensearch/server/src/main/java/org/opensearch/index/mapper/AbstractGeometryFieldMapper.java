@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoJsonGeometryFormat;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoJsonGeometryFormat;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.ParseField;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -63,14 +63,14 @@ import java.util.function.Function;
 /**
  * Base field mapper class for all spatial field types
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends FieldMapper {
 
     /**
      * String parameter names for the base geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Names {
         public static final ParseField IGNORE_MALFORMED = new ParseField("ignore_malformed");
@@ -80,7 +80,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Default parameters for the base geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final Explicit<Boolean> IGNORE_MALFORMED = new Explicit<>(false, false);
@@ -97,7 +97,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Interface representing an preprocessor in geometry indexing pipeline
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Indexer<Parsed, Processed> {
         Processed prepareForIndexing(Parsed geometry);
@@ -110,7 +110,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Interface representing parser in geometry indexing pipeline.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Parser<Parsed> {
         /**
@@ -123,7 +123,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
          * Given a parsed value and a format string, formats the value into a plain Java object.
          * <p>
          * Supported formats include 'geojson' and 'wkt'. The different formats are defined
-         * as subclasses of {@link org.opensearch.common.geo.GeometryFormat}.
+         * as subclasses of {@link org.density.common.geo.GeometryFormat}.
          */
         public abstract Object format(Parsed value, String format);
 
@@ -160,7 +160,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Builder for the base geometry field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder<T extends Builder<T, FT>, FT extends AbstractGeometryFieldType> extends FieldMapper.Builder<T> {
         protected Boolean ignoreMalformed;
@@ -222,7 +222,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Base type parser for geometry field mappers
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class TypeParser<T extends Builder> implements Mapper.TypeParser {
         protected abstract T newBuilder(String name, Map<String, Object> params);
@@ -275,7 +275,7 @@ public abstract class AbstractGeometryFieldMapper<Parsed, Processed> extends Fie
     /**
      * Base field type for all geometry fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class AbstractGeometryFieldType<Parsed, Processed> extends MappedFieldType {
 

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.common;
+package org.density.indices.replication.common;
 
 /**
- * Enumerates the types of replication strategies supported by OpenSearch.
- * For more information, see https://github.com/opensearch-project/OpenSearch/issues/1694
+ * Enumerates the types of replication strategies supported by Density.
+ * For more information, see https://github.com/density-project/Density/issues/1694
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum ReplicationType {
 

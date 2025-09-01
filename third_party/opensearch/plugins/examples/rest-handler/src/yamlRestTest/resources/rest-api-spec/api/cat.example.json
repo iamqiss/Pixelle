@@ -1,7 +1,7 @@
 {
   "cat.example": {
     "documentation": {
-      "url": "https://opensearch.org/docs/opensearch/install/plugins/",
+      "url": "https://density.org/docs/density/install/plugins/",
       "description": "Example"
     },
     "stability" : "stable",

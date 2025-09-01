@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.BooleanClause;
@@ -49,11 +49,11 @@ import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.ScoreScript.ExplanationHolder;
-import org.opensearch.script.Script;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.script.ScoreScript;
+import org.density.script.ScoreScript.ExplanationHolder;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -61,7 +61,7 @@ import java.util.Objects;
 /**
  * A query that uses a script to compute documents' scores.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptScoreQuery extends Query {
     private final Query subQuery;
@@ -294,7 +294,7 @@ public class ScriptScoreQuery extends Query {
     /**
      * A script scorer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ScriptScorer extends Scorer {
         private final ScoreScript scoreScript;
@@ -363,7 +363,7 @@ public class ScriptScoreQuery extends Query {
     /**
      * A script scorable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ScriptScorable extends Scorable {
         private final ScoreScript scoreScript;
@@ -414,7 +414,7 @@ public class ScriptScoreQuery extends Query {
      * Use the {@link BulkScorer} of the sub-query,
      * as it may be significantly faster (e.g. BooleanScorer) than iterating over the scorer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ScriptScoreBulkScorer extends BulkScorer {
         private final BulkScorer subQueryBulkScorer;

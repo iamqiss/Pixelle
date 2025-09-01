@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,47 +25,47 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.action.index;
+package org.density.cluster.action.index;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.mapping.put.AutoPutMappingAction;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.index.MappingUpdatedAction.AdjustableSemaphore;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.Mapping;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.RootObjectMapper;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.AdminClient;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.IndicesAdminClient;
+import org.density.Version;
+import org.density.action.admin.indices.mapping.put.AutoPutMappingAction;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.index.MappingUpdatedAction.AdjustableSemaphore;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.Mapping;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.RootObjectMapper;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.AdminClient;
+import org.density.transport.client.Client;
+import org.density.transport.client.IndicesAdminClient;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MappingUpdatedActionTests extends OpenSearchTestCase {
+public class MappingUpdatedActionTests extends DensityTestCase {
 
     public void testAdjustableSemaphore() {
         AdjustableSemaphore sem = new AdjustableSemaphore(1, randomBoolean());

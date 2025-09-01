@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.RootObjectMapper;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogRecoveryRunner;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.mapper.MapperRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.RootObjectMapper;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogRecoveryRunner;
+import org.density.indices.IndicesModule;
+import org.density.indices.mapper.MapperRegistry;
 
 import java.io.IOException;
 import java.util.HashMap;

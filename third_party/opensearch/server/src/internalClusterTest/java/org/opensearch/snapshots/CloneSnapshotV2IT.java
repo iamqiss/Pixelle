@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.Node;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.ActionRunnable;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.Node;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 import org.junit.After;
 
 import java.nio.file.Path;
@@ -68,13 +68,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class CloneSnapshotV2IT extends AbstractSnapshotIntegTestCase {
 
     public CloneSnapshotV2IT(Settings nodeSettings) {

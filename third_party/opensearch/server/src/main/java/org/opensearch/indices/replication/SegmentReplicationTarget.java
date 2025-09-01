@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.action.StepListener;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
+import org.density.DensityCorruptionException;
+import org.density.action.StepListener;
+import org.density.common.UUIDs;
+import org.density.common.lucene.Lucene;
+import org.density.common.util.CancellableThreads;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -31,7 +31,7 @@ import java.util.function.BiConsumer;
 /**
  * Represents the target of a replication event.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationTarget extends AbstractSegmentReplicationTarget {
     public final static String REPLICATION_PREFIX = "replication.";
@@ -106,7 +106,7 @@ public class SegmentReplicationTarget extends AbstractSegmentReplicationTarget {
                 logger.debug("Failed to clean lucene index", e);
                 ex.addSuppressed(e);
             }
-            throw new OpenSearchCorruptionException(ex);
+            throw new DensityCorruptionException(ex);
         } catch (AlreadyClosedException ex) {
             // In this case the shard is closed at some point while updating the reader.
             // This can happen when the engine is closed in a separate thread.

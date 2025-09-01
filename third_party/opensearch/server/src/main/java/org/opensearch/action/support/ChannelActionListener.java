@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
+import org.density.core.action.ActionListener;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
 
 /**
  * Listener for transport channel actions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ChannelActionListener<Response extends TransportResponse, Request extends TransportRequest>
     implements

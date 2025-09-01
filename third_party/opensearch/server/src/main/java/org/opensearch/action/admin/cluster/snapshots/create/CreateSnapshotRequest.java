@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.create;
+package org.density.action.admin.cluster.snapshots.create;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.DensityGenerationException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -56,12 +56,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
-import static org.opensearch.common.settings.Settings.readSettingsFromStream;
-import static org.opensearch.common.settings.Settings.writeSettingsToStream;
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeBooleanValue;
-import static org.opensearch.core.common.Strings.EMPTY_ARRAY;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.common.settings.Settings.readSettingsFromStream;
+import static org.density.common.settings.Settings.writeSettingsToStream;
+import static org.density.common.xcontent.support.XContentMapValues.nodeBooleanValue;
+import static org.density.core.common.Strings.EMPTY_ARRAY;
 
 /**
  * Create snapshot request
@@ -77,7 +77,7 @@ import static org.opensearch.core.common.Strings.EMPTY_ARRAY;
  * <li>must not contain invalid file name characters {@link Strings#INVALID_FILENAME_CHARS} </li>
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CreateSnapshotRequest extends ClusterManagerNodeRequest<CreateSnapshotRequest>
@@ -188,7 +188,7 @@ public class CreateSnapshotRequest extends ClusterManagerNodeRequest<CreateSnaps
             return size;
         } catch (IOException e) {
             // This should not be possible as we are just rendering the xcontent in memory
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 
@@ -393,7 +393,7 @@ public class CreateSnapshotRequest extends ClusterManagerNodeRequest<CreateSnaps
             builder.map(source);
             settings(builder.toString(), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
         return this;
     }

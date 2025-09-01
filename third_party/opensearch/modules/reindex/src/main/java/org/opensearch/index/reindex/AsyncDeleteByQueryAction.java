@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.action.delete.DeleteRequest;
+import org.density.core.action.ActionListener;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.ParentTaskAssigningClient;
 
 /**
  * Implementation of delete-by-query using scrolling and bulk.

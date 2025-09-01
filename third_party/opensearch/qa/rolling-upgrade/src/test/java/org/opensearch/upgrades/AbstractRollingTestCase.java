@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.test.rest.DensityRestTestCase;
 
-public abstract class AbstractRollingTestCase extends OpenSearchRestTestCase {
+public abstract class AbstractRollingTestCase extends DensityRestTestCase {
     protected enum ClusterType {
         OLD,
         MIXED,
@@ -80,7 +80,7 @@ public abstract class AbstractRollingTestCase extends OpenSearchRestTestCase {
             // increase the timeout here to 90 seconds to handle long waits for a green
             // cluster health. the waits for green need to be longer than a minute to
             // account for delayed shards
-            .put(OpenSearchRestTestCase.CLIENT_SOCKET_TIMEOUT, "90s")
+            .put(DensityRestTestCase.CLIENT_SOCKET_TIMEOUT, "90s")
             .build();
     }
 }

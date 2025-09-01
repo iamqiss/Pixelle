@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.Refresh;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.grpc.proto.request.common.RefreshProtoUtils;
+import org.density.action.support.WriteRequest;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.Refresh;
+import org.density.test.DensityTestCase;
+import org.density.transport.grpc.proto.request.common.RefreshProtoUtils;
 
-public class RefreshProtoUtilsTests extends OpenSearchTestCase {
+public class RefreshProtoUtilsTests extends DensityTestCase {
 
     public void testGetRefreshPolicyWithRefreshTrue() {
         // Call getRefreshPolicy

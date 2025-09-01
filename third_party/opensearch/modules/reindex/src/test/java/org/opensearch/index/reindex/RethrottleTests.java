@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.TaskGroup;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.query.QueryBuilders;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.TaskGroup;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.action.ActionFuture;
+import org.density.core.tasks.TaskId;
+import org.density.index.query.QueryBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -216,7 +216,7 @@ public class RethrottleTests extends ReindexTestCase {
                 rethrottleResponse.rethrowFailures("Rethrottle");
                 assertThat(rethrottleResponse.getTasks(), hasSize(1));
                 response.set(rethrottleResponse);
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 Throwable unwrapped = ExceptionsHelper.unwrap(e, IllegalArgumentException.class);
                 if (unwrapped == null) {
                     throw e;

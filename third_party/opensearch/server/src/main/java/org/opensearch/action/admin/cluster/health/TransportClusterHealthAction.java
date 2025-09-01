@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.health;
+package org.density.action.admin.cluster.health;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeReadAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.LocalClusterUpdateTask;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.NodeWeighedAwayException;
-import org.opensearch.cluster.routing.WeightedRoutingUtils;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeReadAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.LocalClusterUpdateTask;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.NodeWeighedAwayException;
+import org.density.cluster.routing.WeightedRoutingUtils;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.discovery.Discovery;
+import org.density.index.IndexNotFoundException;
+import org.density.node.NodeClosedException;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -76,7 +76,7 @@ import java.util.function.Predicate;
 /**
  * Transport action for obtaining Cluster Health
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportClusterHealthAction extends TransportClusterManagerNodeReadAction<ClusterHealthRequest, ClusterHealthResponse> {
 

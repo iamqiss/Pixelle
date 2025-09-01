@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.search.uhighlight;
+package org.density.lucene.search.uhighlight;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.uhighlight.FieldHighlighter;
@@ -48,7 +48,7 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.PriorityQueue;
 
-import static org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
+import static org.density.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
 
 /**
  * Custom {@link FieldHighlighter} that creates a single passage bounded to {@code noMatchSize} when

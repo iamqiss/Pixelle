@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.ProtocolOutboundHandler;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TcpTransportChannel;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
-import org.opensearch.transport.stream.StreamTransportResponse;
-import org.opensearch.transport.stream.StreamingTransportChannel;
+import org.density.Version;
+import org.density.common.lease.Releasable;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.ProtocolOutboundHandler;
+import org.density.transport.TcpChannel;
+import org.density.transport.TcpTransportChannel;
+import org.density.transport.Transport;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
+import org.density.transport.stream.StreamTransportResponse;
+import org.density.transport.stream.StreamingTransportChannel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * A mock transport channel that supports streaming responses for testing purposes.
  * This channel extends TcpTransportChannel to provide sendResponseBatch functionality
  *
- * @opensearch.internal
+ * @density.internal
  */
 class MockStreamingTransportChannel extends TcpTransportChannel implements StreamingTransportChannel {
     private static final Logger logger = LogManager.getLogger(MockStreamingTransportChannel.class);

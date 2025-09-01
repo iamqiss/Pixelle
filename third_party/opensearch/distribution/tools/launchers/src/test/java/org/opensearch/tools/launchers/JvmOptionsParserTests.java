@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.launchers;
+package org.density.tools.launchers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,10 +62,10 @@ public class JvmOptionsParserTests extends LaunchersTestCase {
 
     public void testSubstitution() {
         final List<String> jvmOptions = JvmOptionsParser.substitutePlaceholders(
-            Collections.singletonList("-Djava.io.tmpdir=${OPENSEARCH_TMPDIR}"),
-            Collections.singletonMap("OPENSEARCH_TMPDIR", "/tmp/opensearch")
+            Collections.singletonList("-Djava.io.tmpdir=${DENSITY_TMPDIR}"),
+            Collections.singletonMap("DENSITY_TMPDIR", "/tmp/density")
         );
-        assertThat(jvmOptions, contains("-Djava.io.tmpdir=/tmp/opensearch"));
+        assertThat(jvmOptions, contains("-Djava.io.tmpdir=/tmp/density"));
     }
 
     public void testUnversionedOptions() throws IOException {

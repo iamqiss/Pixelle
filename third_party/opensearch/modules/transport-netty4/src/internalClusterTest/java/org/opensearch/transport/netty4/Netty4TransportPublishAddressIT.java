@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
-import org.opensearch.OpenSearchNetty4IntegTestCase;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.network.NetworkUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.Netty4ModulePlugin;
-import org.opensearch.transport.TransportInfo;
+import org.density.DensityNetty4IntegTestCase;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.common.network.NetworkModule;
+import org.density.common.network.NetworkUtils;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.Netty4ModulePlugin;
+import org.density.transport.TransportInfo;
 
 import java.net.Inet4Address;
 
@@ -51,11 +51,11 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
 
 /**
- * Checks that OpenSearch produces a sane publish_address when it binds to
+ * Checks that Density produces a sane publish_address when it binds to
  * different ports on ipv4 and ipv6.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class Netty4TransportPublishAddressIT extends OpenSearchNetty4IntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class Netty4TransportPublishAddressIT extends DensityNetty4IntegTestCase {
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {
         return Settings.builder()

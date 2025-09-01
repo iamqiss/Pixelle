@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.command;
+package org.density.cluster.routing.allocation.command;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.RerouteExplanation;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexNotFoundException;
+import org.density.DensityParseException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.RerouteExplanation;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexNotFoundException;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -58,7 +58,7 @@ import java.util.Objects;
 /**
  * A command that cancels relocation, or recovery of a given shard on a node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CancelAllocationCommand implements AllocationCommand {
 
@@ -242,20 +242,20 @@ public class CancelAllocationCommand implements AllocationCommand {
                 } else if ("allow_primary".equals(currentFieldName) || "allowPrimary".equals(currentFieldName)) {
                     allowPrimary = parser.booleanValue();
                 } else {
-                    throw new OpenSearchParseException("[{}] command does not support field [{}]", NAME, currentFieldName);
+                    throw new DensityParseException("[{}] command does not support field [{}]", NAME, currentFieldName);
                 }
             } else {
-                throw new OpenSearchParseException("[{}] command does not support complex json tokens [{}]", NAME, token);
+                throw new DensityParseException("[{}] command does not support complex json tokens [{}]", NAME, token);
             }
         }
         if (index == null) {
-            throw new OpenSearchParseException("[{}] command missing the index parameter", NAME);
+            throw new DensityParseException("[{}] command missing the index parameter", NAME);
         }
         if (shardId == -1) {
-            throw new OpenSearchParseException("[{}] command missing the shard parameter", NAME);
+            throw new DensityParseException("[{}] command missing the shard parameter", NAME);
         }
         if (nodeId == null) {
-            throw new OpenSearchParseException("[{}] command missing the node parameter", NAME);
+            throw new DensityParseException("[{}] command missing the node parameter", NAME);
         }
         return new CancelAllocationCommand(index, shardId, nodeId, allowPrimary);
     }

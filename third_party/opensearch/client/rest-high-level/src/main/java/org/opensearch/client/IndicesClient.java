@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,69 +26,69 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.indices.AnalyzeRequest;
-import org.opensearch.client.indices.AnalyzeResponse;
-import org.opensearch.client.indices.CloseIndexRequest;
-import org.opensearch.client.indices.CloseIndexResponse;
-import org.opensearch.client.indices.ComposableIndexTemplateExistRequest;
-import org.opensearch.client.indices.CreateDataStreamRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.CreateIndexResponse;
-import org.opensearch.client.indices.DataStreamsStatsRequest;
-import org.opensearch.client.indices.DataStreamsStatsResponse;
-import org.opensearch.client.indices.DeleteAliasRequest;
-import org.opensearch.client.indices.DeleteComposableIndexTemplateRequest;
-import org.opensearch.client.indices.DeleteDataStreamRequest;
-import org.opensearch.client.indices.GetComposableIndexTemplateRequest;
-import org.opensearch.client.indices.GetComposableIndexTemplatesResponse;
-import org.opensearch.client.indices.GetDataStreamRequest;
-import org.opensearch.client.indices.GetDataStreamResponse;
-import org.opensearch.client.indices.GetFieldMappingsRequest;
-import org.opensearch.client.indices.GetFieldMappingsResponse;
-import org.opensearch.client.indices.GetIndexRequest;
-import org.opensearch.client.indices.GetIndexResponse;
-import org.opensearch.client.indices.GetIndexTemplatesRequest;
-import org.opensearch.client.indices.GetIndexTemplatesResponse;
-import org.opensearch.client.indices.GetMappingsRequest;
-import org.opensearch.client.indices.GetMappingsResponse;
-import org.opensearch.client.indices.IndexTemplatesExistRequest;
-import org.opensearch.client.indices.PutComposableIndexTemplateRequest;
-import org.opensearch.client.indices.PutIndexTemplateRequest;
-import org.opensearch.client.indices.PutMappingRequest;
-import org.opensearch.client.indices.ResizeRequest;
-import org.opensearch.client.indices.ResizeResponse;
-import org.opensearch.client.indices.SimulateIndexTemplateRequest;
-import org.opensearch.client.indices.SimulateIndexTemplateResponse;
-import org.opensearch.client.indices.rollover.RolloverRequest;
-import org.opensearch.client.indices.rollover.RolloverResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.open.OpenIndexResponse;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.indices.AnalyzeRequest;
+import org.density.client.indices.AnalyzeResponse;
+import org.density.client.indices.CloseIndexRequest;
+import org.density.client.indices.CloseIndexResponse;
+import org.density.client.indices.ComposableIndexTemplateExistRequest;
+import org.density.client.indices.CreateDataStreamRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.CreateIndexResponse;
+import org.density.client.indices.DataStreamsStatsRequest;
+import org.density.client.indices.DataStreamsStatsResponse;
+import org.density.client.indices.DeleteAliasRequest;
+import org.density.client.indices.DeleteComposableIndexTemplateRequest;
+import org.density.client.indices.DeleteDataStreamRequest;
+import org.density.client.indices.GetComposableIndexTemplateRequest;
+import org.density.client.indices.GetComposableIndexTemplatesResponse;
+import org.density.client.indices.GetDataStreamRequest;
+import org.density.client.indices.GetDataStreamResponse;
+import org.density.client.indices.GetFieldMappingsRequest;
+import org.density.client.indices.GetFieldMappingsResponse;
+import org.density.client.indices.GetIndexRequest;
+import org.density.client.indices.GetIndexResponse;
+import org.density.client.indices.GetIndexTemplatesRequest;
+import org.density.client.indices.GetIndexTemplatesResponse;
+import org.density.client.indices.GetMappingsRequest;
+import org.density.client.indices.GetMappingsResponse;
+import org.density.client.indices.IndexTemplatesExistRequest;
+import org.density.client.indices.PutComposableIndexTemplateRequest;
+import org.density.client.indices.PutIndexTemplateRequest;
+import org.density.client.indices.PutMappingRequest;
+import org.density.client.indices.ResizeRequest;
+import org.density.client.indices.ResizeResponse;
+import org.density.client.indices.SimulateIndexTemplateRequest;
+import org.density.client.indices.SimulateIndexTemplateResponse;
+import org.density.client.indices.rollover.RolloverRequest;
+import org.density.client.indices.rollover.RolloverResponse;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -973,15 +973,15 @@ public final class IndicesClient {
      * @deprecated use {@link #shrink(ResizeRequest, RequestOptions)}
      */
     @Deprecated
-    public org.opensearch.action.admin.indices.shrink.ResizeResponse shrink(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+    public org.density.action.admin.indices.shrink.ResizeResponse shrink(
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options
     ) throws IOException {
         return restHighLevelClient.performRequestAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::shrink,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             emptySet()
         );
     }
@@ -1016,15 +1016,15 @@ public final class IndicesClient {
      */
     @Deprecated
     public Cancellable shrinkAsync(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options,
-        ActionListener<org.opensearch.action.admin.indices.shrink.ResizeResponse> listener
+        ActionListener<org.density.action.admin.indices.shrink.ResizeResponse> listener
     ) {
         return restHighLevelClient.performRequestAsyncAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::shrink,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             listener,
             emptySet()
         );
@@ -1058,15 +1058,15 @@ public final class IndicesClient {
      * @deprecated use {@link #split(ResizeRequest, RequestOptions)}
      */
     @Deprecated
-    public org.opensearch.action.admin.indices.shrink.ResizeResponse split(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+    public org.density.action.admin.indices.shrink.ResizeResponse split(
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options
     ) throws IOException {
         return restHighLevelClient.performRequestAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::split,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             emptySet()
         );
     }
@@ -1101,15 +1101,15 @@ public final class IndicesClient {
      */
     @Deprecated
     public Cancellable splitAsync(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options,
-        ActionListener<org.opensearch.action.admin.indices.shrink.ResizeResponse> listener
+        ActionListener<org.density.action.admin.indices.shrink.ResizeResponse> listener
     ) {
         return restHighLevelClient.performRequestAsyncAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::split,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             listener,
             emptySet()
         );
@@ -1143,15 +1143,15 @@ public final class IndicesClient {
      * @deprecated use {@link #clone(ResizeRequest, RequestOptions)}
      */
     @Deprecated
-    public org.opensearch.action.admin.indices.shrink.ResizeResponse clone(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+    public org.density.action.admin.indices.shrink.ResizeResponse clone(
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options
     ) throws IOException {
         return restHighLevelClient.performRequestAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::clone,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             emptySet()
         );
     }
@@ -1186,15 +1186,15 @@ public final class IndicesClient {
      */
     @Deprecated
     public Cancellable cloneAsync(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest,
+        org.density.action.admin.indices.shrink.ResizeRequest resizeRequest,
         RequestOptions options,
-        ActionListener<org.opensearch.action.admin.indices.shrink.ResizeResponse> listener
+        ActionListener<org.density.action.admin.indices.shrink.ResizeResponse> listener
     ) {
         return restHighLevelClient.performRequestAsyncAndParseEntity(
             resizeRequest,
             IndicesRequestConverters::clone,
             options,
-            org.opensearch.action.admin.indices.shrink.ResizeResponse::fromXContent,
+            org.density.action.admin.indices.shrink.ResizeResponse::fromXContent,
             listener,
             emptySet()
         );
@@ -1780,13 +1780,13 @@ public final class IndicesClient {
      * @param request the request
      * @param options the request options (e.g. headers), use {@link RequestOptions#DEFAULT} if nothing needs to be customized
      */
-    public org.opensearch.client.core.AcknowledgedResponse deleteAlias(DeleteAliasRequest request, RequestOptions options)
+    public org.density.client.core.AcknowledgedResponse deleteAlias(DeleteAliasRequest request, RequestOptions options)
         throws IOException {
         return restHighLevelClient.performRequestAndParseEntity(
             request,
             IndicesRequestConverters::deleteAlias,
             options,
-            org.opensearch.client.core.AcknowledgedResponse::fromXContent,
+            org.density.client.core.AcknowledgedResponse::fromXContent,
             emptySet()
         );
     }
@@ -1801,13 +1801,13 @@ public final class IndicesClient {
     public Cancellable deleteAliasAsync(
         DeleteAliasRequest request,
         RequestOptions options,
-        ActionListener<org.opensearch.client.core.AcknowledgedResponse> listener
+        ActionListener<org.density.client.core.AcknowledgedResponse> listener
     ) {
         return restHighLevelClient.performRequestAsyncAndParseEntity(
             request,
             IndicesRequestConverters::deleteAlias,
             options,
-            org.opensearch.client.core.AcknowledgedResponse::fromXContent,
+            org.density.client.core.AcknowledgedResponse::fromXContent,
             listener,
             emptySet()
         );

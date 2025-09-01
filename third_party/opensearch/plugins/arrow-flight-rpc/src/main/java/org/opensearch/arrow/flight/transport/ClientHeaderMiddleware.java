@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.CallHeaders;
 import org.apache.arrow.flight.CallInfo;
 import org.apache.arrow.flight.CallStatus;
 import org.apache.arrow.flight.FlightClientMiddleware;
-import org.opensearch.Version;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.transport.Header;
-import org.opensearch.transport.InboundDecoder;
-import org.opensearch.transport.TransportStatus;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
+import org.density.Version;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.transport.Header;
+import org.density.transport.InboundDecoder;
+import org.density.transport.TransportStatus;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -30,7 +30,7 @@ import java.util.Objects;
  * from Arrow Flight server responses, extracts transport headers, and stores them in the HeaderContext
  * for later retrieval.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ClientHeaderMiddleware implements FlightClientMiddleware {
     static final String RAW_HEADER_KEY = "raw-header";
@@ -43,7 +43,7 @@ class ClientHeaderMiddleware implements FlightClientMiddleware {
      * Creates a new ClientHeaderMiddleware instance.
      *
      * @param context The header context for storing extracted headers
-     * @param version The OpenSearch version for compatibility checking
+     * @param version The Density version for compatibility checking
      */
     ClientHeaderMiddleware(HeaderContext context, Version version) {
         this.context = Objects.requireNonNull(context, "HeaderContext must not be null");
@@ -112,7 +112,7 @@ class ClientHeaderMiddleware implements FlightClientMiddleware {
          * Creates a new Factory instance.
          *
          * @param context The header context for storing extracted headers
-         * @param version The OpenSearch version for compatibility checking
+         * @param version The Density version for compatibility checking
          */
         Factory(HeaderContext context, Version version) {
             this.context = Objects.requireNonNull(context, "HeaderContext must not be null");

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -22,25 +22,25 @@ import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.io.VersionedCodecStreamWrapper;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadataHandlerFactory;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.io.VersionedCodecStreamWrapper;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadataHandlerFactory;
+import org.density.test.MockLogAppender;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
@@ -59,10 +59,10 @@ import java.util.stream.Collectors;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
-import static org.opensearch.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.SEPARATOR;
-import static org.opensearch.test.RemoteStoreTestUtils.createMetadataFileBytes;
-import static org.opensearch.test.RemoteStoreTestUtils.getDummyMetadata;
+import static org.density.index.store.RemoteSegmentStoreDirectory.METADATA_FILES_TO_FETCH;
+import static org.density.index.store.RemoteSegmentStoreDirectory.MetadataFilenameUtils.SEPARATOR;
+import static org.density.test.RemoteStoreTestUtils.createMetadataFileBytes;
+import static org.density.test.RemoteStoreTestUtils.getDummyMetadata;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.any;
@@ -943,7 +943,7 @@ public class RemoteSegmentStoreDirectoryTests extends BaseRemoteSegmentStoreDire
             appender.addExpectation(
                 new MockLogAppender.PatternSeenWithLoggerPrefixExpectation(
                     "Metadata files to delete message",
-                    "org.opensearch.index.store.RemoteSegmentStoreDirectory",
+                    "org.density.index.store.RemoteSegmentStoreDirectory",
                     Level.DEBUG,
                     "metadataFilesEligibleToDelete=\\[" + metadataFilename3 + "\\] metadataFilesToBeDeleted=\\[" + metadataFilename3 + "\\]"
                 )

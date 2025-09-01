@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,60 +26,60 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.AnalyzerCaster;
-import org.opensearch.painless.Operation;
-import org.opensearch.painless.ir.BinaryImplNode;
-import org.opensearch.painless.ir.BinaryMathNode;
-import org.opensearch.painless.ir.BooleanNode;
-import org.opensearch.painless.ir.CastNode;
-import org.opensearch.painless.ir.ComparisonNode;
-import org.opensearch.painless.ir.ConditionalNode;
-import org.opensearch.painless.ir.ConstantNode;
-import org.opensearch.painless.ir.DeclarationNode;
-import org.opensearch.painless.ir.DoWhileLoopNode;
-import org.opensearch.painless.ir.DupNode;
-import org.opensearch.painless.ir.ElvisNode;
-import org.opensearch.painless.ir.ExpressionNode;
-import org.opensearch.painless.ir.FlipArrayIndexNode;
-import org.opensearch.painless.ir.FlipCollectionIndexNode;
-import org.opensearch.painless.ir.FlipDefIndexNode;
-import org.opensearch.painless.ir.ForEachSubArrayNode;
-import org.opensearch.painless.ir.ForEachSubIterableNode;
-import org.opensearch.painless.ir.ForLoopNode;
-import org.opensearch.painless.ir.IfElseNode;
-import org.opensearch.painless.ir.IfNode;
-import org.opensearch.painless.ir.InstanceofNode;
-import org.opensearch.painless.ir.InvokeCallDefNode;
-import org.opensearch.painless.ir.InvokeCallMemberNode;
-import org.opensearch.painless.ir.InvokeCallNode;
-import org.opensearch.painless.ir.ListInitializationNode;
-import org.opensearch.painless.ir.MapInitializationNode;
-import org.opensearch.painless.ir.NewArrayNode;
-import org.opensearch.painless.ir.NewObjectNode;
-import org.opensearch.painless.ir.NullNode;
-import org.opensearch.painless.ir.NullSafeSubNode;
-import org.opensearch.painless.ir.ReturnNode;
-import org.opensearch.painless.ir.StatementExpressionNode;
-import org.opensearch.painless.ir.StoreBraceDefNode;
-import org.opensearch.painless.ir.StoreBraceNode;
-import org.opensearch.painless.ir.StoreDotDefNode;
-import org.opensearch.painless.ir.StoreDotNode;
-import org.opensearch.painless.ir.StoreDotShortcutNode;
-import org.opensearch.painless.ir.StoreFieldMemberNode;
-import org.opensearch.painless.ir.StoreListShortcutNode;
-import org.opensearch.painless.ir.StoreMapShortcutNode;
-import org.opensearch.painless.ir.StoreVariableNode;
-import org.opensearch.painless.ir.StringConcatenationNode;
-import org.opensearch.painless.ir.ThrowNode;
-import org.opensearch.painless.ir.UnaryMathNode;
-import org.opensearch.painless.ir.WhileLoopNode;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
+import org.density.painless.AnalyzerCaster;
+import org.density.painless.Operation;
+import org.density.painless.ir.BinaryImplNode;
+import org.density.painless.ir.BinaryMathNode;
+import org.density.painless.ir.BooleanNode;
+import org.density.painless.ir.CastNode;
+import org.density.painless.ir.ComparisonNode;
+import org.density.painless.ir.ConditionalNode;
+import org.density.painless.ir.ConstantNode;
+import org.density.painless.ir.DeclarationNode;
+import org.density.painless.ir.DoWhileLoopNode;
+import org.density.painless.ir.DupNode;
+import org.density.painless.ir.ElvisNode;
+import org.density.painless.ir.ExpressionNode;
+import org.density.painless.ir.FlipArrayIndexNode;
+import org.density.painless.ir.FlipCollectionIndexNode;
+import org.density.painless.ir.FlipDefIndexNode;
+import org.density.painless.ir.ForEachSubArrayNode;
+import org.density.painless.ir.ForEachSubIterableNode;
+import org.density.painless.ir.ForLoopNode;
+import org.density.painless.ir.IfElseNode;
+import org.density.painless.ir.IfNode;
+import org.density.painless.ir.InstanceofNode;
+import org.density.painless.ir.InvokeCallDefNode;
+import org.density.painless.ir.InvokeCallMemberNode;
+import org.density.painless.ir.InvokeCallNode;
+import org.density.painless.ir.ListInitializationNode;
+import org.density.painless.ir.MapInitializationNode;
+import org.density.painless.ir.NewArrayNode;
+import org.density.painless.ir.NewObjectNode;
+import org.density.painless.ir.NullNode;
+import org.density.painless.ir.NullSafeSubNode;
+import org.density.painless.ir.ReturnNode;
+import org.density.painless.ir.StatementExpressionNode;
+import org.density.painless.ir.StoreBraceDefNode;
+import org.density.painless.ir.StoreBraceNode;
+import org.density.painless.ir.StoreDotDefNode;
+import org.density.painless.ir.StoreDotNode;
+import org.density.painless.ir.StoreDotShortcutNode;
+import org.density.painless.ir.StoreFieldMemberNode;
+import org.density.painless.ir.StoreListShortcutNode;
+import org.density.painless.ir.StoreMapShortcutNode;
+import org.density.painless.ir.StoreVariableNode;
+import org.density.painless.ir.StringConcatenationNode;
+import org.density.painless.ir.ThrowNode;
+import org.density.painless.ir.UnaryMathNode;
+import org.density.painless.ir.WhileLoopNode;
+import org.density.painless.lookup.PainlessLookupUtility;
 
 import java.util.function.Consumer;
 

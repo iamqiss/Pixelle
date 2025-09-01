@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
-import org.opensearch.cli.Command;
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.cli.LoggingAwareMultiCommand;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.cli.Command;
+import org.density.cli.Terminal;
+import org.density.common.cli.LoggingAwareMultiCommand;
+import org.density.common.util.io.IOUtils;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
 /**
- * A CLI tool for adding, removing and listing plugins for OpenSearch.
+ * A CLI tool for adding, removing and listing plugins for Density.
  */
 public class PluginCli extends LoggingAwareMultiCommand {
 
     private final Collection<Command> commands;
 
     private PluginCli() {
-        super("A tool for managing installed opensearch plugins");
+        super("A tool for managing installed density plugins");
         subcommands.put("list", new ListPluginsCommand());
         subcommands.put("install", new InstallPluginCommand());
         subcommands.put("remove", new RemovePluginCommand());
@@ -57,7 +57,7 @@ public class PluginCli extends LoggingAwareMultiCommand {
     }
 
     /**
-     * Main entry point for the OpenSearch Plugin CLI tool.
+     * Main entry point for the Density Plugin CLI tool.
      *
      * @param args  CLI commands for managing plugins.
      * @throws Exception if an exception was encountered executing the command.

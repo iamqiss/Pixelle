@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.cache.CacheType;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.common.cache.settings.CacheSettings.INVALID_SEGMENT_COUNT_EXCEPTION_MESSAGE;
-import static org.opensearch.common.cache.settings.CacheSettings.VALID_SEGMENT_COUNT_VALUES;
-import static org.opensearch.common.settings.Setting.Property.NodeScope;
+import static org.density.common.cache.settings.CacheSettings.INVALID_SEGMENT_COUNT_EXCEPTION_MESSAGE;
+import static org.density.common.cache.settings.CacheSettings.VALID_SEGMENT_COUNT_VALUES;
+import static org.density.common.settings.Setting.Property.NodeScope;
 
 /**
  * Settings related to TieredSpilloverCache.
@@ -96,8 +96,8 @@ public class TieredSpilloverCacheSettings {
     /**
      * Setting which defines the onHeap cache size to be used within tiered cache.
      * This setting overrides size settings from the heap tier implementation.
-     * For example, if OpenSearchOnHeapCache is the heap tier in the request cache, and
-     * indices.requests.cache.opensearch_onheap.size is set, that value will be ignored in favor of this setting.
+     * For example, if DensityOnHeapCache is the heap tier in the request cache, and
+     * indices.requests.cache.density_onheap.size is set, that value will be ignored in favor of this setting.
      *
      * Pattern: {cache_type}.tiered_spillover.onheap.store.size
      * Example: indices.request.cache.tiered_spillover.onheap.store.size

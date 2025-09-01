@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
 import org.apache.commons.io.FileUtils;
-import org.opensearch.gradle.LoggedExec;
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin;
+import org.density.gradle.LoggedExec;
+import org.density.gradle.info.GlobalBuildInfoPlugin;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -76,7 +76,7 @@ public class InternalBwcGitPlugin implements Plugin<Project> {
     public void apply(Project project) {
         this.project = project;
         this.gitExtension = project.getExtensions().create("bwcGitConfig", BwcGitExtension.class);
-        Provider<String> remote = providerFactory.systemProperty("bwc.remote").orElse("opensearch-project");
+        Provider<String> remote = providerFactory.systemProperty("bwc.remote").orElse("density-project");
 
         TaskContainer tasks = project.getTasks();
         TaskProvider<LoggedExec> createCloneTaskProvider = tasks.register("createClone", LoggedExec.class, createClone -> {
@@ -105,7 +105,7 @@ public class InternalBwcGitPlugin implements Plugin<Project> {
             String remoteRepo = remote.get();
             // for testing only we can override the base remote url
             String remoteRepoUrl = providerFactory.systemProperty("testRemoteRepo")
-                .getOrElse("https://github.com/" + remoteRepo + "/OpenSearch.git");
+                .getOrElse("https://github.com/" + remoteRepo + "/Density.git");
             addRemote.setCommandLine(asList("git", "remote", "add", remoteRepo, remoteRepoUrl));
         });
 

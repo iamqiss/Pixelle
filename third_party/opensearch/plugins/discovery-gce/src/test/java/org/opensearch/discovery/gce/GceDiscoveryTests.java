@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
-import org.opensearch.Version;
-import org.opensearch.cloud.gce.GceInstancesServiceImpl;
-import org.opensearch.cloud.gce.GceMetadataService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.cloud.gce.GceInstancesServiceImpl;
+import org.density.cloud.gce.GceMetadataService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.not;
  * This test class uses a GCE HTTP Mock system which allows to simulate JSON Responses.
  *
  * To implement a new test you'll need to create an `instances.json` file which contains expected response
- * for a given project-id and zone under the src/test/resources/org/opensearch/discovery/gce with dir name:
+ * for a given project-id and zone under the src/test/resources/org/density/discovery/gce with dir name:
  *
  * compute/v1/projects/[project-id]/zones/[zone]
  *
@@ -73,11 +73,11 @@ import static org.hamcrest.Matchers.not;
  *  .put(GceComputeService.ZONE, "europe-west1-b")
  *  .build();
  *
- *  You need to create a file under `src/test/resources/org/opensearch/discovery/gce/` named:
+ *  You need to create a file under `src/test/resources/org/density/discovery/gce/` named:
  *  compute/v1/projects/mynewawesometest/zones/europe-west1-b/instances.json
  *
  */
-public class GceDiscoveryTests extends OpenSearchTestCase {
+public class GceDiscoveryTests extends DensityTestCase {
 
     protected static ThreadPool threadPool;
     protected MockTransportService transportService;
@@ -145,7 +145,7 @@ public class GceDiscoveryTests extends OpenSearchTestCase {
         Settings nodeSettings = Settings.builder()
             .put(GceInstancesServiceImpl.PROJECT_SETTING.getKey(), projectName)
             .put(GceInstancesServiceImpl.ZONE_SETTING.getKey(), "europe-west1-b")
-            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "opensearch")
+            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "density")
             .build();
         mock = new GceInstancesServiceMock(nodeSettings);
         List<TransportAddress> dynamicHosts = buildDynamicNodes(mock, nodeSettings);
@@ -156,7 +156,7 @@ public class GceDiscoveryTests extends OpenSearchTestCase {
         Settings nodeSettings = Settings.builder()
             .put(GceInstancesServiceImpl.PROJECT_SETTING.getKey(), projectName)
             .put(GceInstancesServiceImpl.ZONE_SETTING.getKey(), "europe-west1-b")
-            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "opensearch", "dev")
+            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "density", "dev")
             .build();
         mock = new GceInstancesServiceMock(nodeSettings);
         List<TransportAddress> dynamicHosts = buildDynamicNodes(mock, nodeSettings);
@@ -177,7 +177,7 @@ public class GceDiscoveryTests extends OpenSearchTestCase {
         Settings nodeSettings = Settings.builder()
             .put(GceInstancesServiceImpl.PROJECT_SETTING.getKey(), projectName)
             .put(GceInstancesServiceImpl.ZONE_SETTING.getKey(), "europe-west1-b")
-            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "opensearch")
+            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "density")
             .build();
         mock = new GceInstancesServiceMock(nodeSettings);
         List<TransportAddress> dynamicHosts = buildDynamicNodes(mock, nodeSettings);
@@ -188,7 +188,7 @@ public class GceDiscoveryTests extends OpenSearchTestCase {
         Settings nodeSettings = Settings.builder()
             .put(GceInstancesServiceImpl.PROJECT_SETTING.getKey(), projectName)
             .put(GceInstancesServiceImpl.ZONE_SETTING.getKey(), "europe-west1-b")
-            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "opensearch", "dev")
+            .putList(GceSeedHostsProvider.TAGS_SETTING.getKey(), "density", "dev")
             .build();
         mock = new GceInstancesServiceMock(nodeSettings);
         List<TransportAddress> dynamicHosts = buildDynamicNodes(mock, nodeSettings);

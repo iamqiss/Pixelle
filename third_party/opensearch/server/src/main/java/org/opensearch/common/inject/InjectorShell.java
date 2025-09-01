@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,27 +23,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.InternalContext;
-import org.opensearch.common.inject.internal.InternalFactory;
-import org.opensearch.common.inject.internal.PrivateElementsImpl;
-import org.opensearch.common.inject.internal.ProviderInstanceBindingImpl;
-import org.opensearch.common.inject.internal.Scoping;
-import org.opensearch.common.inject.internal.SourceProvider;
-import org.opensearch.common.inject.internal.Stopwatch;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.Element;
-import org.opensearch.common.inject.spi.Elements;
-import org.opensearch.common.inject.spi.InjectionPoint;
-import org.opensearch.common.inject.spi.PrivateElements;
-import org.opensearch.common.inject.spi.TypeListenerBinding;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.InternalContext;
+import org.density.common.inject.internal.InternalFactory;
+import org.density.common.inject.internal.PrivateElementsImpl;
+import org.density.common.inject.internal.ProviderInstanceBindingImpl;
+import org.density.common.inject.internal.Scoping;
+import org.density.common.inject.internal.SourceProvider;
+import org.density.common.inject.internal.Stopwatch;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.Element;
+import org.density.common.inject.spi.Elements;
+import org.density.common.inject.spi.InjectionPoint;
+import org.density.common.inject.spi.PrivateElements;
+import org.density.common.inject.spi.TypeListenerBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.common.inject.Scopes.SINGLETON;
+import static org.density.common.inject.Scopes.SINGLETON;
 
 /**
  * A partially-initialized injector. See {@link InjectorBuilder}, which uses this to build a tree
@@ -59,7 +59,7 @@ import static org.opensearch.common.inject.Scopes.SINGLETON;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class InjectorShell {
 
@@ -82,7 +82,7 @@ class InjectorShell {
     /**
      * Builder for an injector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Builder {
         private final List<Element> elements = new ArrayList<>();
@@ -225,7 +225,7 @@ class InjectorShell {
     /**
      * The factory for the injector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class InjectorFactory implements InternalFactory<Injector>, Provider<Injector> {
         private final Injector injector;
@@ -274,7 +274,7 @@ class InjectorShell {
     /**
      * Factory for a logger
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LoggerFactory implements InternalFactory<Logger>, Provider<Logger> {
         @Override
@@ -299,7 +299,7 @@ class InjectorShell {
     /**
      * The root module
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class RootModule implements Module {
         final Stage stage;

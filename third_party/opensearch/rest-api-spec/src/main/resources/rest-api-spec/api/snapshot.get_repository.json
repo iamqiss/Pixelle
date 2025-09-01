@@ -1,7 +1,7 @@
 {
   "snapshot.get_repository":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/get-snapshot-repository/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/get-snapshot-repository/",
       "description":"Returns information about a repository."
     },
     "stability":"stable",

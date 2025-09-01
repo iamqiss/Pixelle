@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest.OpType;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.DocWriteRequest.OpType;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.update.UpdateResponse;
+import org.density.common.CheckedConsumer;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.IOException;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.core.xcontent.XContentParserUtils.throwUnknownField;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.throwUnknownField;
 
 /**
  * Represents a single item response for an action executed as part of the bulk API. Holds the index/type/id
  * of the relevant action, and if it has failed or not (with the failure message in case it failed).
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class BulkItemResponse implements Writeable, StatusToXContentObject {
@@ -96,7 +96,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
             builder.field(_ID, failure.getId());
             builder.field(STATUS, failure.getStatus().getStatus());
             builder.startObject(ERROR);
-            OpenSearchException.generateThrowableXContent(builder, params, failure.getCause());
+            DensityException.generateThrowableXContent(builder, params, failure.getCause());
             builder.endObject();
         }
         builder.endObject();
@@ -145,7 +145,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
         }
 
         RestStatus status = null;
-        OpenSearchException exception = null;
+        DensityException exception = null;
         while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
             if (token == XContentParser.Token.FIELD_NAME) {
                 currentFieldName = parser.currentName();
@@ -153,7 +153,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
 
             if (ERROR.equals(currentFieldName)) {
                 if (token == XContentParser.Token.START_OBJECT) {
-                    exception = OpenSearchException.fromXContent(parser);
+                    exception = DensityException.fromXContent(parser);
                 }
             } else if (STATUS.equals(currentFieldName)) {
                 if (token == XContentParser.Token.VALUE_NUMBER) {
@@ -181,7 +181,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
     /**
      * Represents a failure.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Failure implements Writeable, ToXContentFragment {
@@ -239,7 +239,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
         static {
             PARSER.declareString(constructorArg(), new ParseField(INDEX_FIELD));
             PARSER.declareString(optionalConstructorArg(), new ParseField(ID_FIELD));
-            PARSER.declareObject(constructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField(CAUSE_FIELD));
+            PARSER.declareObject(constructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField(CAUSE_FIELD));
             PARSER.declareInt(constructorArg(), new ParseField(STATUS_FIELD));
         }
 
@@ -438,7 +438,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
                 builder.field(ID_FIELD, id);
             }
             builder.startObject(CAUSE_FIELD);
-            OpenSearchException.generateThrowableXContent(builder, params, cause);
+            DensityException.generateThrowableXContent(builder, params, cause);
             builder.endObject();
             builder.field(STATUS_FIELD, status.getStatus());
             return builder;

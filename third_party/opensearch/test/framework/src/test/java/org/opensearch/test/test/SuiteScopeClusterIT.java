@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.test;
+package org.density.test.test;
 
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.TestCluster;
+import org.density.common.SuppressForbidden;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.TestCluster;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -46,8 +46,8 @@ import static org.hamcrest.Matchers.equalTo;
  * This test ensures that the cluster initializion for suite scope is not influencing
  * the tests random sequence due to initializtion using the same random instance.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class SuiteScopeClusterIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE)
+public class SuiteScopeClusterIT extends DensityIntegTestCase {
     private static int ITER = 0;
     private static long[] SEQUENCE = new long[100];
     private static Long CLUSTER_SEED = null;

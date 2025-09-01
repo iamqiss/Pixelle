@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -42,9 +42,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.index.analysis.AnalysisRegistry.DEFAULT_ANALYZER_NAME;
-import static org.opensearch.index.analysis.AnalysisRegistry.DEFAULT_SEARCH_ANALYZER_NAME;
-import static org.opensearch.index.analysis.AnalysisRegistry.DEFAULT_SEARCH_QUOTED_ANALYZER_NAME;
+import static org.density.index.analysis.AnalysisRegistry.DEFAULT_ANALYZER_NAME;
+import static org.density.index.analysis.AnalysisRegistry.DEFAULT_SEARCH_ANALYZER_NAME;
+import static org.density.index.analysis.AnalysisRegistry.DEFAULT_SEARCH_QUOTED_ANALYZER_NAME;
 
 /**
  * IndexAnalyzers contains a name to analyzer mapping for a specific index.
@@ -53,7 +53,7 @@ import static org.opensearch.index.analysis.AnalysisRegistry.DEFAULT_SEARCH_QUOT
  *
  * @see AnalysisRegistry
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexAnalyzers implements Closeable {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml;
+package org.density.test.rest.yaml;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -39,13 +39,13 @@ import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.client.NodeSelector;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.Version;
+import org.density.client.NodeSelector;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -56,7 +56,7 @@ import java.util.Map;
 
 /**
  * Execution context passed across the REST tests.
- * Holds the REST client used to communicate with opensearch.
+ * Holds the REST client used to communicate with density.
  * Caches the last obtained test response and allows to stash part of it within variables
  * that can be used as input values in following requests.
  */
@@ -79,7 +79,7 @@ public class ClientYamlTestExecutionContext {
     }
 
     /**
-     * Calls an opensearch api with the parameters and request body provided as arguments.
+     * Calls an density api with the parameters and request body provided as arguments.
      * Saves the obtained response in the execution context.
      */
     public ClientYamlTestResponse callApi(
@@ -92,7 +92,7 @@ public class ClientYamlTestExecutionContext {
     }
 
     /**
-     * Calls an opensearch api with the parameters and request body provided as arguments.
+     * Calls an density api with the parameters and request body provided as arguments.
      * Saves the obtained response in the execution context.
      */
     public ClientYamlTestResponse callApi(

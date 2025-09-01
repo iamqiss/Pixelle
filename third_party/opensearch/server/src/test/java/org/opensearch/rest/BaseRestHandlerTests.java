@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.Table;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.RestHandler.ReplacedRoute;
-import org.opensearch.rest.RestHandler.Route;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.rest.action.cat.AbstractCatAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.Table;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.rest.RestStatus;
+import org.density.rest.RestHandler.ReplacedRoute;
+import org.density.rest.RestHandler.Route;
+import org.density.rest.RestRequest.Method;
+import org.density.rest.action.cat.AbstractCatAction;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -65,7 +65,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-public class BaseRestHandlerTests extends OpenSearchTestCase {
+public class BaseRestHandlerTests extends DensityTestCase {
     private NodeClient mockClient;
     private ThreadPool threadPool;
 

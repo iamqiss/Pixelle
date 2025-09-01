@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin;
+package org.density.action.admin;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoAction;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsAction;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryAction;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.transport.ReceiveTimeoutTransportException;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoAction;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsAction;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.indices.recovery.RecoveryAction;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.transport.ReceiveTimeoutTransportException;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class ClientTimeoutIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class ClientTimeoutIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

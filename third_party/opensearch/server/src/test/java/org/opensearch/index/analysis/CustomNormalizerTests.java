@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.tests.analysis.MockLowerCaseFilter;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -51,7 +51,7 @@ import java.util.function.Function;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 
-public class CustomNormalizerTests extends OpenSearchTokenStreamTestCase {
+public class CustomNormalizerTests extends DensityTokenStreamTestCase {
     private static final AnalysisPlugin MOCK_ANALYSIS_PLUGIN = new MockAnalysisPlugin();
 
     public void testBasics() throws IOException {
@@ -59,7 +59,7 @@ public class CustomNormalizerTests extends OpenSearchTokenStreamTestCase {
             .putList("index.analysis.normalizer.my_normalizer.filter", "lowercase")
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, MOCK_ANALYSIS_PLUGIN);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, MOCK_ANALYSIS_PLUGIN);
         assertNull(analysis.indexAnalyzers.get("my_normalizer"));
         NamedAnalyzer normalizer = analysis.indexAnalyzers.getNormalizer("my_normalizer");
         assertNotNull(normalizer);
@@ -105,7 +105,7 @@ public class CustomNormalizerTests extends OpenSearchTokenStreamTestCase {
             .putList("index.analysis.normalizer.my_normalizer.char_filter", "my_mapping")
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, MOCK_ANALYSIS_PLUGIN);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(settings, MOCK_ANALYSIS_PLUGIN);
         assertNull(analysis.indexAnalyzers.get("my_normalizer"));
         NamedAnalyzer normalizer = analysis.indexAnalyzers.getNormalizer("my_normalizer");
         assertNotNull(normalizer);

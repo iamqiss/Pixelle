@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -43,26 +43,26 @@ import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.compositeindex.datacube.DimensionType;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Explicit;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.compositeindex.datacube.DimensionType;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.math.BigDecimal;

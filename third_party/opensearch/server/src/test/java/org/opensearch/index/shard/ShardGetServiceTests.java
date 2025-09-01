@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.VersionType;
+import org.density.index.engine.Engine;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 public class ShardGetServiceTests extends IndexShardTestCase {
 

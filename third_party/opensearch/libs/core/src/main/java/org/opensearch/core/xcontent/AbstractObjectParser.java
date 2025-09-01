@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ObjectParser.NamedObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
+import org.density.common.CheckedFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ObjectParser.NamedObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ import java.util.function.Function;
 /**
  * Superclass for {@link ObjectParser} and {@link ConstructingObjectParser}. Defines most of the "declare" methods so they can be shared.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class AbstractObjectParser<Value, Context> {
@@ -161,7 +161,7 @@ public abstract class AbstractObjectParser<Value, Context> {
      * </code>
      * </pre>
      *
-     * This is because json doesn't enforce ordering. OpenSearch reads it in
+     * This is because json doesn't enforce ordering. Density reads it in
      * the order sent but tools that generate json are free to put object
      * members in an unordered Map, jumbling them. Thus, if you care about order
      * you can send the object in the second way.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpHead;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.client.indices.AnalyzeRequest;
-import org.opensearch.client.indices.CloseIndexRequest;
-import org.opensearch.client.indices.ComposableIndexTemplateExistRequest;
-import org.opensearch.client.indices.CreateDataStreamRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.DataStreamsStatsRequest;
-import org.opensearch.client.indices.DeleteAliasRequest;
-import org.opensearch.client.indices.DeleteComposableIndexTemplateRequest;
-import org.opensearch.client.indices.DeleteDataStreamRequest;
-import org.opensearch.client.indices.GetComposableIndexTemplateRequest;
-import org.opensearch.client.indices.GetDataStreamRequest;
-import org.opensearch.client.indices.GetFieldMappingsRequest;
-import org.opensearch.client.indices.GetIndexRequest;
-import org.opensearch.client.indices.GetIndexTemplatesRequest;
-import org.opensearch.client.indices.GetMappingsRequest;
-import org.opensearch.client.indices.IndexTemplatesExistRequest;
-import org.opensearch.client.indices.PutComposableIndexTemplateRequest;
-import org.opensearch.client.indices.PutIndexTemplateRequest;
-import org.opensearch.client.indices.PutMappingRequest;
-import org.opensearch.client.indices.ResizeRequest;
-import org.opensearch.client.indices.SimulateIndexTemplateRequest;
-import org.opensearch.client.indices.rollover.RolloverRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.common.Strings;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.client.indices.AnalyzeRequest;
+import org.density.client.indices.CloseIndexRequest;
+import org.density.client.indices.ComposableIndexTemplateExistRequest;
+import org.density.client.indices.CreateDataStreamRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.DataStreamsStatsRequest;
+import org.density.client.indices.DeleteAliasRequest;
+import org.density.client.indices.DeleteComposableIndexTemplateRequest;
+import org.density.client.indices.DeleteDataStreamRequest;
+import org.density.client.indices.GetComposableIndexTemplateRequest;
+import org.density.client.indices.GetDataStreamRequest;
+import org.density.client.indices.GetFieldMappingsRequest;
+import org.density.client.indices.GetIndexRequest;
+import org.density.client.indices.GetIndexTemplatesRequest;
+import org.density.client.indices.GetMappingsRequest;
+import org.density.client.indices.IndexTemplatesExistRequest;
+import org.density.client.indices.PutComposableIndexTemplateRequest;
+import org.density.client.indices.PutIndexTemplateRequest;
+import org.density.client.indices.PutMappingRequest;
+import org.density.client.indices.ResizeRequest;
+import org.density.client.indices.SimulateIndexTemplateRequest;
+import org.density.client.indices.rollover.RolloverRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -293,7 +293,7 @@ final class IndicesRequestConverters {
     }
 
     @Deprecated
-    static Request split(org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
+    static Request split(org.density.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
         if (resizeRequest.getResizeType() != ResizeType.SPLIT) {
             throw new IllegalArgumentException("Wrong resize type [" + resizeRequest.getResizeType() + "] for indices split request");
         }
@@ -305,7 +305,7 @@ final class IndicesRequestConverters {
     }
 
     @Deprecated
-    static Request shrink(org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
+    static Request shrink(org.density.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
         if (resizeRequest.getResizeType() != ResizeType.SHRINK) {
             throw new IllegalArgumentException("Wrong resize type [" + resizeRequest.getResizeType() + "] for indices shrink request");
         }
@@ -317,7 +317,7 @@ final class IndicesRequestConverters {
     }
 
     @Deprecated
-    static Request clone(org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
+    static Request clone(org.density.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
         if (resizeRequest.getResizeType() != ResizeType.CLONE) {
             throw new IllegalArgumentException("Wrong resize type [" + resizeRequest.getResizeType() + "] for indices clone request");
         }
@@ -341,7 +341,7 @@ final class IndicesRequestConverters {
     }
 
     @Deprecated
-    private static Request resize(org.opensearch.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
+    private static Request resize(org.density.action.admin.indices.shrink.ResizeRequest resizeRequest) throws IOException {
         String endpoint = new RequestConverters.EndpointBuilder().addPathPart(resizeRequest.getSourceIndex())
             .addPathPartAsIs("_" + resizeRequest.getResizeType().name().toLowerCase(Locale.ROOT))
             .addPathPart(resizeRequest.getTargetIndexRequest().index())

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.InvalidIndexNameException;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexSettings;
+import org.density.indices.InvalidIndexNameException;
+import org.density.repositories.RepositoriesService;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -64,17 +64,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.index.IndexSettings.INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.index.IndexSettings.INDEX_SOFT_DELETES_SETTING;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertIndexTemplateExists;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertIndexTemplateMissing;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.index.IndexSettings.INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.index.IndexSettings.INDEX_SOFT_DELETES_SETTING;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertIndexTemplateExists;
+import static org.density.test.hamcrest.DensityAssertions.assertIndexTemplateMissing;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;

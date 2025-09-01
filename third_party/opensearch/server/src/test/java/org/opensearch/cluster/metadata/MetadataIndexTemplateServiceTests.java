@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService.PutRequest;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndexTemplateMissingException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.InvalidIndexTemplateException;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
+import org.density.cluster.applicationtemplates.SystemTemplateMetadata;
+import org.density.cluster.metadata.MetadataIndexTemplateService.PutRequest;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.service.ClusterService;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.engine.EngineConfig;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndexTemplateMissingException;
+import org.density.indices.IndicesService;
+import org.density.indices.InvalidIndexTemplateException;
+import org.density.indices.SystemIndices;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.repositories.RepositoriesService;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,15 +90,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.applicationtemplates.ClusterStateSystemTemplateLoader.TEMPLATE_LOADER_IDENTIFIER;
-import static org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata.fromComponentTemplateInfo;
-import static org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
-import static org.opensearch.common.settings.Settings.builder;
-import static org.opensearch.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
-import static org.opensearch.common.util.concurrent.ThreadContext.ACTION_ORIGIN_TRANSIENT_NAME;
-import static org.opensearch.env.Environment.PATH_HOME_SETTING;
-import static org.opensearch.index.mapper.DataStreamFieldMapper.Defaults.TIMESTAMP_FIELD;
-import static org.opensearch.indices.ShardLimitValidatorTests.createTestShardLimitService;
+import static org.density.cluster.applicationtemplates.ClusterStateSystemTemplateLoader.TEMPLATE_LOADER_IDENTIFIER;
+import static org.density.cluster.applicationtemplates.SystemTemplateMetadata.fromComponentTemplateInfo;
+import static org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
+import static org.density.common.settings.Settings.builder;
+import static org.density.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
+import static org.density.common.util.concurrent.ThreadContext.ACTION_ORIGIN_TRANSIENT_NAME;
+import static org.density.env.Environment.PATH_HOME_SETTING;
+import static org.density.index.mapper.DataStreamFieldMapper.Defaults.TIMESTAMP_FIELD;
+import static org.density.indices.ShardLimitValidatorTests.createTestShardLimitService;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -112,7 +112,7 @@ import static org.hamcrest.Matchers.matchesRegex;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MetadataIndexTemplateServiceTests extends OpenSearchSingleNodeTestCase {
+public class MetadataIndexTemplateServiceTests extends DensitySingleNodeTestCase {
 
     public void testIndexTemplateInvalidNumberOfShards() {
         PutRequest request = new PutRequest("test", "test_shards");
@@ -2476,7 +2476,7 @@ public class MetadataIndexTemplateServiceTests extends OpenSearchSingleNodeTestC
         Settings settings = Settings.builder().put(incomingNodeScopedSettings).put(PATH_HOME_SETTING.getKey(), "dummy").build();
         ClusterSettings clusterSettings = new ClusterSettings(settings, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
         Metadata metadata = Metadata.builder().build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         when(clusterService.state()).thenReturn(clusterState);

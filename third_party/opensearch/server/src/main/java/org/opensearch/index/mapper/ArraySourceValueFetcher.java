@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.Nullable;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SourceLookup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ import java.util.Set;
  * array values in parsing. Field types should use this class if their corresponding
  * mapper returns true for {@link FieldMapper#parsesArrayValue()}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ArraySourceValueFetcher implements ValueFetcher {
     private final Set<String> sourcePaths;

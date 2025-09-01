@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.index.reindex.ScrollableHitSource.Hit;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.ClusterState;
+import org.density.index.reindex.ScrollableHitSource.Hit;
 
 public class UpdateByQueryMetadataTests extends AbstractAsyncBulkByScrollActionMetadataTestCase<
     UpdateByQueryRequest,

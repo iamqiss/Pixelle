@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.common.settings.Settings;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.index.query.QueryBuilders;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.io.IOException;
 import java.util.function.Supplier;
 
-import static org.opensearch.test.NodeRoles.clusterManagerNode;
-import static org.opensearch.test.NodeRoles.dataOnlyNode;
-import static org.opensearch.test.NodeRoles.nonDataNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.NodeRoles.clusterManagerNode;
+import static org.density.test.NodeRoles.dataOnlyNode;
+import static org.density.test.NodeRoles.nonDataNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class SpecificClusterManagerNodesIT extends OpenSearchIntegTestCase {
+public class SpecificClusterManagerNodesIT extends DensityIntegTestCase {
 
     public void testSimpleOnlyClusterManagerNodeElection() throws IOException {
         internalCluster().setBootstrapClusterManagerNodeIndex(0);

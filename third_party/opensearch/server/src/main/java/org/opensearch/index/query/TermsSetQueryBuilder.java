@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
@@ -41,18 +41,18 @@ import org.apache.lucene.search.LongValues;
 import org.apache.lucene.search.LongValuesSource;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.script.Script;
-import org.opensearch.script.TermsSetQueryScript;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.search.Queries;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.script.Script;
+import org.density.script.TermsSetQueryScript;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ import java.util.Objects;
 /**
  * Query builder for terms_set queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TermsSetQueryBuilder extends AbstractQueryBuilder<TermsSetQueryBuilder> {
 
@@ -300,7 +300,7 @@ public final class TermsSetQueryBuilder extends AbstractQueryBuilder<TermsSetQue
     /**
      * Values Source for scripted long values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class ScriptLongValueSource extends LongValuesSource {
 
@@ -374,7 +374,7 @@ public final class TermsSetQueryBuilder extends AbstractQueryBuilder<TermsSetQue
      * Forked from LongValuesSource.FieldValuesSource and changed getValues() method to always use sorted numeric
      * doc values, because that is what is being used in NumberFieldMapper.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FieldValuesSource extends LongValuesSource {
 

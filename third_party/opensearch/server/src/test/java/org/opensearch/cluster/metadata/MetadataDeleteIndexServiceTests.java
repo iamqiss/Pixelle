@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DataStreamTestHelper;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInProgressException;
-import org.opensearch.snapshots.SnapshotInfoTests;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DataStreamTestHelper;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexNotFoundException;
+import org.density.repositories.IndexId;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInProgressException;
+import org.density.snapshots.SnapshotInfoTests;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.core.IsNull;
 import org.junit.Before;
 
@@ -72,7 +72,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MetadataDeleteIndexServiceTests extends OpenSearchTestCase {
+public class MetadataDeleteIndexServiceTests extends DensityTestCase {
     private AllocationService allocationService;
     private MetadataDeleteIndexService service;
 

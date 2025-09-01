@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.process;
+package org.density.monitor.process;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
 /**
  * Holds stats for the process
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ProcessStats implements Writeable, ToXContentFragment {
 
@@ -140,7 +140,7 @@ public class ProcessStats implements Writeable, ToXContentFragment {
     /**
      * Process memory information.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Mem implements Writeable {
 
@@ -167,7 +167,7 @@ public class ProcessStats implements Writeable, ToXContentFragment {
     /**
      * Process CPU information.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Cpu implements Writeable {
 

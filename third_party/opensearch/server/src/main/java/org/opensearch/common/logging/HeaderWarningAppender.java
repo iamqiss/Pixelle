@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Core;
@@ -46,7 +46,7 @@ import org.apache.logging.log4j.message.Message;
 /**
  * Appends warnings to the header
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Plugin(name = "HeaderWarningAppender", category = Core.CATEGORY_NAME, elementType = Appender.ELEMENT_TYPE)
 public class HeaderWarningAppender extends AbstractAppender {
@@ -58,11 +58,11 @@ public class HeaderWarningAppender extends AbstractAppender {
     public void append(LogEvent event) {
         final Message message = event.getMessage();
 
-        if (message instanceof OpenSearchLogMessage) {
-            final OpenSearchLogMessage opensearchLogMessage = (OpenSearchLogMessage) message;
+        if (message instanceof DensityLogMessage) {
+            final DensityLogMessage densityLogMessage = (DensityLogMessage) message;
 
-            String messagePattern = opensearchLogMessage.getMessagePattern();
-            Object[] arguments = opensearchLogMessage.getArguments();
+            String messagePattern = densityLogMessage.getMessagePattern();
+            Object[] arguments = densityLogMessage.getArguments();
 
             HeaderWarning.addWarning(messagePattern, arguments);
         } else {

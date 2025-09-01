@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.Aggregation.CommonFields;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.test.InternalAggregationTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.Aggregation.CommonFields;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.test.InternalAggregationTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;

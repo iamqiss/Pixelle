@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.test.RestIntegTestTask
-import org.opensearch.gradle.test.TestTask
-import org.opensearch.gradle.test.rest.JavaRestTestPlugin
-import org.opensearch.gradle.test.InternalClusterTestPlugin
+import org.density.gradle.info.BuildParams
+import org.density.gradle.test.RestIntegTestTask
+import org.density.gradle.test.TestTask
+import org.density.gradle.test.rest.JavaRestTestPlugin
+import org.density.gradle.test.InternalClusterTestPlugin
 
-apply plugin: 'opensearch.yaml-rest-test'
-apply plugin: 'opensearch.java-rest-test'
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.yaml-rest-test'
+apply plugin: 'density.java-rest-test'
+apply plugin: 'density.internal-cluster-test'
 apply from: "$rootDir/gradle/fips.gradle"
 
 // The transport-reactor-netty4 plugin is published to maven
-apply plugin: 'opensearch.publish'
+apply plugin: 'density.publish'
 
-opensearchplugin {
+densityplugin {
   description = 'Reactor Netty 4 based transport implementation'
-  classname = 'org.opensearch.transport.reactor.ReactorNetty4Plugin'
+  classname = 'org.density.transport.reactor.ReactorNetty4Plugin'
   hasClientJar = true
 }
 
@@ -62,15 +62,15 @@ test {
    * We have to disable setting the number of available processors as tests in the same JVM randomize processors and will step on each
    * other if we allow them to set the number of available processors as it's set-once in Netty.
    */
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 internalClusterTest {
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 javaRestTest {
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 testClusters.javaRestTest {

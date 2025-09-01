@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.test.DensitySingleNodeTestCase;
 
-public class CommonTermsQueryParserTests extends OpenSearchSingleNodeTestCase {
+public class CommonTermsQueryParserTests extends DensitySingleNodeTestCase {
     public void testWhenParsedQueryIsNullNoNullPointerExceptionIsThrown() {
         final String index = "test-index";
         client().admin().indices().prepareCreate(index).setMapping("name", "type=text,analyzer=stop").execute().actionGet();

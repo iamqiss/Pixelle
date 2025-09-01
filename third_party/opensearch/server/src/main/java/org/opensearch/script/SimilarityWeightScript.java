@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.index.similarity.ScriptedSimilarity;
+import org.density.index.similarity.ScriptedSimilarity;
 
 /**
  * A script that is used to compute scoring factors that are the same for all documents.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SimilarityWeightScript {
 
@@ -51,7 +51,7 @@ public abstract class SimilarityWeightScript {
     /**
      * Factory for a similarity weight script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         SimilarityWeightScript newInstance();

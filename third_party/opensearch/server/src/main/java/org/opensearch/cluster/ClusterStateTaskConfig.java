@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
 
 /**
  * Cluster state update task configuration for timeout and priority
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ClusterStateTaskConfig {
@@ -90,7 +90,7 @@ public interface ClusterStateTaskConfig {
     /**
      * Basic task config.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class Basic implements ClusterStateTaskConfig {
         final TimeValue timeout;

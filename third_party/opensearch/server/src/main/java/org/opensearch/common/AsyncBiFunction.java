@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.core.action.ActionListener;
+import org.density.core.action.ActionListener;
 
 /**
  * A {@link java.util.function.BiFunction}-like interface designed to be used with asynchronous executions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface AsyncBiFunction<T, U, C> {
 

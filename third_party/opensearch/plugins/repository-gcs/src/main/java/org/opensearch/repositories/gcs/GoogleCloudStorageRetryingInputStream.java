@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
 import com.google.api.client.http.HttpResponse;
 import com.google.api.services.storage.Storage.Objects.Get;
@@ -42,9 +42,9 @@ import com.google.cloud.storage.spi.v1.HttpStorageRpc;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.SpecialPermission;
+import org.density.common.SuppressForbidden;
+import org.density.common.util.io.IOUtils;
 
 import java.io.FilterInputStream;
 import java.io.IOException;

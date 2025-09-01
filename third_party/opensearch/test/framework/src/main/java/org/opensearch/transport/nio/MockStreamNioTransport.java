@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
-import org.opensearch.Version;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.InboundHandler;
-import org.opensearch.transport.OutboundHandler;
-import org.opensearch.transport.ProtocolMessageHandler;
-import org.opensearch.transport.StatsTracker;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportHandshaker;
-import org.opensearch.transport.TransportKeepAlive;
-import org.opensearch.transport.TransportProtocol;
+import org.density.Version;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.InboundHandler;
+import org.density.transport.OutboundHandler;
+import org.density.transport.ProtocolMessageHandler;
+import org.density.transport.StatsTracker;
+import org.density.transport.Transport;
+import org.density.transport.TransportHandshaker;
+import org.density.transport.TransportKeepAlive;
+import org.density.transport.TransportProtocol;
 
 import java.util.Map;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  * This transport extends MockNioTransport and overrides the inbound handler creation to provide
  * MockNativeMessageHandler which creates mock streaming transport channels when needed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MockStreamNioTransport extends MockNioTransport {
 

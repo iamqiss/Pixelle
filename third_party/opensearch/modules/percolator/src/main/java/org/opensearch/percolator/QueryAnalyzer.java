@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.spans.SpanOrQuery;
@@ -51,11 +51,11 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
 import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.automaton.ByteRunAutomaton;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.index.query.DateRangeIncludingNowQuery;
-import org.opensearch.lucene.queries.BlendedTermQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
+import org.density.Version;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.index.query.DateRangeIncludingNowQuery;
+import org.density.lucene.queries.BlendedTermQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

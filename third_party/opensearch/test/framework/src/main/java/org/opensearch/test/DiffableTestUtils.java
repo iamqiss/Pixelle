@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.Diffable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
+import org.density.cluster.Diff;
+import org.density.cluster.Diffable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.io.stream.Writeable.Reader;
 
 import java.io.IOException;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static org.opensearch.test.AbstractWireSerializingTestCase.NUMBER_OF_TEST_RUNS;
+import static org.density.test.AbstractWireSerializingTestCase.NUMBER_OF_TEST_RUNS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 

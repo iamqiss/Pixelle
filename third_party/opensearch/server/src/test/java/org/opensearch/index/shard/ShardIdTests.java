@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
-public class ShardIdTests extends OpenSearchTestCase {
+public class ShardIdTests extends DensityTestCase {
 
     public void testShardIdFromString() {
         String indexName = randomAlphaOfLengthBetween(3, 50);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsAction;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsGroup;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateAction;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsAction;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsGroup;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.admin.cluster.state.ClusterStateAction;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.ShardSearchFailure;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 
@@ -85,7 +85,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class CrossClusterSearchUnavailableClusterIT extends OpenSearchRestTestCase {
+public class CrossClusterSearchUnavailableClusterIT extends DensityRestTestCase {
 
     private static RestHighLevelClient restHighLevelClient;
 
@@ -353,21 +353,21 @@ public class CrossClusterSearchUnavailableClusterIT extends OpenSearchRestTestCa
 
     private static void assertSearchConnectFailure() {
         {
-            OpenSearchException exception = expectThrows(OpenSearchException.class,
+            DensityException exception = expectThrows(DensityException.class,
                     () -> restHighLevelClient.search(new SearchRequest("index", "remote1:index"), RequestOptions.DEFAULT));
-            OpenSearchException rootCause = (OpenSearchException)exception.getRootCause();
+            DensityException rootCause = (DensityException)exception.getRootCause();
             assertThat(rootCause.getMessage(), containsString("connect_exception"));
         }
         {
-            OpenSearchException exception = expectThrows(OpenSearchException.class,
+            DensityException exception = expectThrows(DensityException.class,
                     () -> restHighLevelClient.search(new SearchRequest("remote1:index"), RequestOptions.DEFAULT));
-            OpenSearchException rootCause = (OpenSearchException)exception.getRootCause();
+            DensityException rootCause = (DensityException)exception.getRootCause();
             assertThat(rootCause.getMessage(), containsString("connect_exception"));
         }
         {
-            OpenSearchException exception = expectThrows(OpenSearchException.class,
+            DensityException exception = expectThrows(DensityException.class,
                     () -> restHighLevelClient.search(new SearchRequest("remote1:index").scroll("1m"), RequestOptions.DEFAULT));
-            OpenSearchException rootCause = (OpenSearchException)exception.getRootCause();
+            DensityException rootCause = (DensityException)exception.getRootCause();
             assertThat(rootCause.getMessage(), containsString("connect_exception"));
         }
     }

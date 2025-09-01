@@ -1,7 +1,7 @@
 {
   "count":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/count/",
+      "url":"https://density.org/docs/latest/api-reference/count/",
       "description":"Returns number of documents matching a query."
     },
     "stability":"stable",

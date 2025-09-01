@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.example.stream;
+package org.density.example.stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportAction;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.StreamTransportService;
+import org.density.transport.TransportChannel;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
 
 import java.io.IOException;
 

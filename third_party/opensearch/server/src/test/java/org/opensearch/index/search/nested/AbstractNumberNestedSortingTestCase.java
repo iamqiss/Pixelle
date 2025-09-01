@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.nested;
+package org.density.index.search.nested;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -49,14 +49,14 @@ import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.join.QueryBitSetProducer;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.fielddata.AbstractFieldDataTestCase;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.search.MultiValueMode;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.core.index.shard.ShardId;
+import org.density.index.fielddata.AbstractFieldDataTestCase;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.search.MultiValueMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -230,7 +230,7 @@ public abstract class AbstractNumberNestedSortingTestCase extends AbstractFieldD
 
         MultiValueMode sortMode = MultiValueMode.SUM;
         DirectoryReader directoryReader = DirectoryReader.open(writer);
-        directoryReader = OpenSearchDirectoryReader.wrap(directoryReader, new ShardId(indexService.index(), 0));
+        directoryReader = DensityDirectoryReader.wrap(directoryReader, new ShardId(indexService.index(), 0));
         IndexSearcher searcher = new IndexSearcher(directoryReader);
         Query parentFilter = new TermQuery(new Term("__type", "parent"));
         Query childFilter = Queries.not(parentFilter);

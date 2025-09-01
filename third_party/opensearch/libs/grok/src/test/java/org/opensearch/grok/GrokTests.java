@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.grok;
+package org.density.grok;
 
-import org.opensearch.grok.GrokCaptureConfig.NativeExtracterMap;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.grok.GrokCaptureConfig.NativeExtracterMap;
+import org.density.test.DensityTestCase;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -51,18 +51,18 @@ import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
-import static org.opensearch.grok.GrokCaptureType.BOOLEAN;
-import static org.opensearch.grok.GrokCaptureType.DOUBLE;
-import static org.opensearch.grok.GrokCaptureType.FLOAT;
-import static org.opensearch.grok.GrokCaptureType.INTEGER;
-import static org.opensearch.grok.GrokCaptureType.LONG;
-import static org.opensearch.grok.GrokCaptureType.STRING;
+import static org.density.grok.GrokCaptureType.BOOLEAN;
+import static org.density.grok.GrokCaptureType.DOUBLE;
+import static org.density.grok.GrokCaptureType.FLOAT;
+import static org.density.grok.GrokCaptureType.INTEGER;
+import static org.density.grok.GrokCaptureType.LONG;
+import static org.density.grok.GrokCaptureType.STRING;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class GrokTests extends OpenSearchTestCase {
+public class GrokTests extends DensityTestCase {
     public void testMatchWithoutCaptures() {
         Grok grok = new Grok(Grok.BUILTIN_PATTERNS, "value", logger::warn);
         assertThat(grok.captures("value"), equalTo(Map.of()));

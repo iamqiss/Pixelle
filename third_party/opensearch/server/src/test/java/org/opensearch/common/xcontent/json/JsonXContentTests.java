@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.json;
+package org.density.common.xcontent.json;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
-import org.opensearch.common.xcontent.BaseXContentTestCase;
-import org.opensearch.common.xcontent.XContentType;
+import org.density.common.xcontent.BaseXContentTestCase;
+import org.density.common.xcontent.XContentType;
 
 import java.io.ByteArrayOutputStream;
 

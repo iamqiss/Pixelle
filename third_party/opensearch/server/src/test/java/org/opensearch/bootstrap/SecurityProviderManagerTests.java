@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 
@@ -19,7 +19,7 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.Arrays;
 
-public class SecurityProviderManagerTests extends OpenSearchTestCase {
+public class SecurityProviderManagerTests extends DensityTestCase {
 
     private static final String BC_FIPS = "BCFIPS";
     private static final String SUN_JCE = "SunJCE";

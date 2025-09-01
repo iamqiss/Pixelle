@@ -1,7 +1,7 @@
 {
   "snapshot.create_repository":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/create-repository/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/create-repository/",
       "description":"Creates a repository."
     },
     "stability":"stable",

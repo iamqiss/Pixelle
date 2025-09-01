@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.Aggregator.BucketComparator;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregator;
-import org.opensearch.search.aggregations.metrics.NumericMetricsAggregator;
-import org.opensearch.search.profile.aggregation.ProfilingAggregator;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.Aggregator.BucketComparator;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.SingleBucketAggregator;
+import org.density.search.aggregations.metrics.NumericMetricsAggregator;
+import org.density.search.profile.aggregation.ProfilingAggregator;
+import org.density.search.sort.SortOrder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,7 +76,7 @@ import java.util.List;
  * </ul>
  *
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AggregationPath {
 
@@ -132,7 +132,7 @@ public class AggregationPath {
     /**
      * Element in an agg path
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class PathElement {

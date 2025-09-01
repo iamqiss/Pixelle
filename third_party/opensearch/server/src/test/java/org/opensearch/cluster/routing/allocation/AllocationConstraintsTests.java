@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.LocalShardsBalancer;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsBalancer;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.LocalShardsBalancer;
+import org.density.cluster.routing.allocation.allocator.ShardsBalancer;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
 
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.CONSTRAINT_WEIGHT;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_SHARD_PER_NODE_BREACH_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.CONSTRAINT_WEIGHT;
+import static org.density.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.INDEX_SHARD_PER_NODE_BREACH_CONSTRAINT_ID;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AllocationConstraintsTests extends OpenSearchAllocationTestCase {
+public class AllocationConstraintsTests extends DensityAllocationTestCase {
 
     long constraintWeight = 20L;
 

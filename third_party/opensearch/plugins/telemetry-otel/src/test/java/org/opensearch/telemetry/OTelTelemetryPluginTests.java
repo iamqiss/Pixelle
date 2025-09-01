@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry;
+package org.density.telemetry;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.telemetry.metrics.MetricsTelemetry;
-import org.opensearch.telemetry.metrics.OTelMetricsTelemetry;
-import org.opensearch.telemetry.tracing.OTelTracingTelemetry;
-import org.opensearch.telemetry.tracing.TracingTelemetry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.telemetry.metrics.MetricsTelemetry;
+import org.density.telemetry.metrics.OTelMetricsTelemetry;
+import org.density.telemetry.tracing.OTelTracingTelemetry;
+import org.density.telemetry.tracing.TracingTelemetry;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -27,18 +27,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.telemetry.OTelTelemetryPlugin.OTEL_TRACER_NAME;
-import static org.opensearch.telemetry.OTelTelemetrySettings.OTEL_METRICS_EXPORTER_CLASS_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.OTEL_TRACER_SPAN_EXPORTER_CLASS_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.OTEL_TRACER_SPAN_SAMPLER_CLASS_SETTINGS;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_BATCH_SIZE_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_DELAY_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_MAX_QUEUE_SIZE_SETTING;
-import static org.opensearch.telemetry.OTelTelemetrySettings.TRACER_SAMPLER_ACTION_PROBABILITY;
-import static org.opensearch.telemetry.TelemetrySettings.TRACER_ENABLED_SETTING;
-import static org.opensearch.telemetry.TelemetrySettings.TRACER_SAMPLER_PROBABILITY;
+import static org.density.telemetry.OTelTelemetryPlugin.OTEL_TRACER_NAME;
+import static org.density.telemetry.OTelTelemetrySettings.OTEL_METRICS_EXPORTER_CLASS_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.OTEL_TRACER_SPAN_EXPORTER_CLASS_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.OTEL_TRACER_SPAN_SAMPLER_CLASS_SETTINGS;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_BATCH_SIZE_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_DELAY_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_EXPORTER_MAX_QUEUE_SIZE_SETTING;
+import static org.density.telemetry.OTelTelemetrySettings.TRACER_SAMPLER_ACTION_PROBABILITY;
+import static org.density.telemetry.TelemetrySettings.TRACER_ENABLED_SETTING;
+import static org.density.telemetry.TelemetrySettings.TRACER_SAMPLER_PROBABILITY;
 
-public class OTelTelemetryPluginTests extends OpenSearchTestCase {
+public class OTelTelemetryPluginTests extends DensityTestCase {
 
     private OTelTelemetryPlugin oTelTelemetryPlugin;
     private Optional<Telemetry> telemetry;

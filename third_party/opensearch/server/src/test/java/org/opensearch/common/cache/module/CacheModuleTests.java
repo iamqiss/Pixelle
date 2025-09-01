@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.module;
+package org.density.common.cache.module;
 
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.CachePlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.cache.ICache;
+import org.density.common.settings.Settings;
+import org.density.plugins.CachePlugin;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CacheModuleTests extends OpenSearchTestCase {
+public class CacheModuleTests extends DensityTestCase {
 
     public void testWithMultiplePlugins() {
         CachePlugin mockPlugin1 = mock(CachePlugin.class);

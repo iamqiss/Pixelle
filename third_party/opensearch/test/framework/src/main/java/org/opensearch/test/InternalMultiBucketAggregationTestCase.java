@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.search.aggregations.ParsedMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.search.aggregations.ParsedMultiBucketAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.io.IOException;
 import java.util.ArrayList;

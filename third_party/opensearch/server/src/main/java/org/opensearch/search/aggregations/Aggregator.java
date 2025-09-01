@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.support.AggregationPath;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortOrder;
+import org.density.DensityParseException;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.support.AggregationPath;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -57,7 +57,7 @@ import java.util.function.BiConsumer;
  * Be <strong>careful</strong> when adding methods to this class. If possible
  * make sure they have sensible default implementations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "1.0.0")
 public abstract class Aggregator extends BucketCollector implements Releasable {
@@ -69,7 +69,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
      *
      * @see AggregationBuilder
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -173,7 +173,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
     /**
      * Compare two buckets by their ordinal.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -238,7 +238,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
     /**
      * Aggregation mode for sub aggregations.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum SubAggCollectionMode implements Writeable {
 
@@ -274,7 +274,7 @@ public abstract class Aggregator extends BucketCollector implements Releasable {
                     return mode;
                 }
             }
-            throw new OpenSearchParseException("no [{}] found for value [{}]", KEY.getPreferredName(), value);
+            throw new DensityParseException("no [{}] found for value [{}]", KEY.getPreferredName(), value);
         }
 
         public static SubAggCollectionMode readFromStream(StreamInput in) throws IOException {

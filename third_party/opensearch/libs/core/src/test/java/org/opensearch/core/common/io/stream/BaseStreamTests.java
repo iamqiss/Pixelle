@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.CheckedConsumer;
+import org.density.common.CheckedFunction;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.settings.SecureString;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
@@ -74,7 +74,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.hamcrest.Matchers.nullValue;
 
-public abstract class BaseStreamTests extends OpenSearchTestCase {
+public abstract class BaseStreamTests extends DensityTestCase {
 
     protected abstract StreamInput getStreamInput(BytesReference bytesReference) throws IOException;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.VersionUtils;
+import org.density.Build;
+import org.density.Version;
+import org.density.client.AbstractResponseTestCase;
+import org.density.cluster.ClusterName;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class MainResponseTests extends AbstractResponseTestCase<org.opensearch.action.main.MainResponse, MainResponse> {
-    private static String DISTRIBUTION = "opensearch";
+public class MainResponseTests extends AbstractResponseTestCase<org.density.action.main.MainResponse, MainResponse> {
+    private static String DISTRIBUTION = "density";
 
     @Override
-    protected org.opensearch.action.main.MainResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.main.MainResponse createServerTestInstance(XContentType xContentType) {
         String clusterUuid = randomAlphaOfLength(10);
         ClusterName clusterName = new ClusterName(randomAlphaOfLength(10));
         String nodeName = randomAlphaOfLength(10);
         final String date = new Date(randomNonNegativeLong()).toString();
         Version version = VersionUtils.randomVersionBetween(random(), Version.V_2_0_0, Version.CURRENT);
         Build build = new Build(Build.Type.UNKNOWN, randomAlphaOfLength(8), date, randomBoolean(), version.toString(), DISTRIBUTION);
-        return new org.opensearch.action.main.MainResponse(nodeName, version, clusterName, clusterUuid, build);
+        return new org.density.action.main.MainResponse(nodeName, version, clusterName, clusterUuid, build);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MainResponseTests extends AbstractResponseTestCase<org.opensearch.a
     }
 
     @Override
-    protected void assertInstances(org.opensearch.action.main.MainResponse serverTestInstance, MainResponse clientInstance) {
+    protected void assertInstances(org.density.action.main.MainResponse serverTestInstance, MainResponse clientInstance) {
         assertThat(serverTestInstance.getClusterName().value(), equalTo(clientInstance.getClusterName()));
         assertThat(serverTestInstance.getClusterUuid(), equalTo(clientInstance.getClusterUuid()));
         assertThat(serverTestInstance.getNodeName(), equalTo(clientInstance.getNodeName()));

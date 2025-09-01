@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.LongField;
 import org.apache.lucene.document.LongPoint;
@@ -42,32 +42,32 @@ import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.IndexSortSortedNumericDocValuesRangeQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.LocaleUtils;
-import org.opensearch.index.compositeindex.datacube.DimensionType;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.query.DateRangeIncludingNowQuery;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.Explicit;
+import org.density.common.Nullable;
+import org.density.common.TriFunction;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.DateUtils;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.LocaleUtils;
+import org.density.index.compositeindex.datacube.DimensionType;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.query.DateRangeIncludingNowQuery;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -85,13 +85,13 @@ import java.util.function.Function;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.time.DateUtils.toLong;
+import static org.density.common.time.DateUtils.toLong;
 import static org.apache.lucene.document.LongPoint.pack;
 
 /**
  * A {@link FieldMapper} for dates.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DateFieldMapper extends ParametrizedFieldMapper {
 
@@ -118,7 +118,7 @@ public final class DateFieldMapper extends ParametrizedFieldMapper {
     /**
      * Resolution of the date time
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Resolution {
         MILLISECONDS(CONTENT_TYPE, NumericType.DATE) {
@@ -262,7 +262,7 @@ public final class DateFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for the date field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -395,7 +395,7 @@ public final class DateFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for date field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DateFieldType extends MappedFieldType implements NumericPointEncoder {
         protected final DateFormatter dateTimeFormatter;
@@ -822,7 +822,7 @@ public final class DateFieldMapper extends ParametrizedFieldMapper {
         } else {
             try {
                 timestamp = fieldType().parse(dateAsString);
-            } catch (IllegalArgumentException | OpenSearchParseException | DateTimeException | ArithmeticException e) {
+            } catch (IllegalArgumentException | DensityParseException | DateTimeException | ArithmeticException e) {
                 if (ignoreMalformed().value()) {
                     context.addIgnoredField(mappedFieldType.name());
                     return;

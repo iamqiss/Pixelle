@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
+import org.density.DensityException;
+import org.density.common.collect.Tuple;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -136,7 +136,7 @@ public class RankEvalResponse extends ActionResponse implements ToXContentObject
         builder.startObject("failures");
         for (String key : failures.keySet()) {
             builder.startObject(key);
-            OpenSearchException.generateFailureXContent(builder, params, failures.get(key), true);
+            DensityException.generateFailureXContent(builder, params, failures.get(key), true);
             builder.endObject();
         }
         builder.endObject();
@@ -166,7 +166,7 @@ public class RankEvalResponse extends ActionResponse implements ToXContentObject
         PARSER.declareNamedObjects(ConstructingObjectParser.optionalConstructorArg(), (p, c, n) -> {
             XContentParserUtils.ensureExpectedToken(XContentParser.Token.START_OBJECT, p.nextToken(), p);
             XContentParserUtils.ensureExpectedToken(XContentParser.Token.FIELD_NAME, p.nextToken(), p);
-            Tuple<String, OpenSearchException> tuple = new Tuple<>(n, OpenSearchException.failureFromXContent(p));
+            Tuple<String, DensityException> tuple = new Tuple<>(n, DensityException.failureFromXContent(p));
             XContentParserUtils.ensureExpectedToken(XContentParser.Token.END_OBJECT, p.nextToken(), p);
             return tuple;
         }, FAILURES_FIELD);

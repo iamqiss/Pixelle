@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.ingest.Processor;
+import org.density.ingest.Processor;
 
 import java.util.Collections;
 import java.util.Map;
@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * An extension point for {@link Plugin} implementations to add custom ingest processors
  *
- * @opensearch.api
+ * @density.api
  */
 public interface IngestPlugin {
 
@@ -48,7 +48,7 @@ public interface IngestPlugin {
      * Returns additional ingest processor types added by this plugin.
      * <p>
      * The key of the returned {@link Map} is the unique name for the processor which is specified
-     * in pipeline configurations, and the value is a {@link org.opensearch.ingest.Processor.Factory}
+     * in pipeline configurations, and the value is a {@link org.density.ingest.Processor.Factory}
      * to create the processor from a given pipeline configuration.
      */
     default Map<String, Processor.Factory> getProcessors(Processor.Parameters parameters) {
@@ -58,7 +58,7 @@ public interface IngestPlugin {
     /**
      * Returns additional system ingest processor types added by this plugin.
      * <p>
-     * The key of the returned {@link Map} is the unique name for the processor, and the value is a {@link org.opensearch.ingest.Processor.Factory}
+     * The key of the returned {@link Map} is the unique name for the processor, and the value is a {@link org.density.ingest.Processor.Factory}
      * to create the processor systematically.
      *
      */
@@ -111,12 +111,12 @@ public interface IngestPlugin {
         public static final String INDEX_TEMPLATE_MAPPINGS = "index_template_mappings";
 
         /**
-         * Use this key to access the settings{@link org.opensearch.common.settings.Settings} of the index from the config.
+         * Use this key to access the settings{@link org.density.common.settings.Settings} of the index from the config.
          */
         public static final String INDEX_SETTINGS = "index_settings";
 
         /**
-         * Use this key to access the settings{@link org.opensearch.common.settings.Settings} of the matched templates
+         * Use this key to access the settings{@link org.density.common.settings.Settings} of the matched templates
          * of the index from the config. If there are multiple matched templates the later one can override the setting of the previous one if merge
          * rules are allowed. So this will be a list of settings.
          */

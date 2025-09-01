@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle.agent;
+package org.density.gradle.agent;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -19,8 +19,8 @@ import java.io.File;
 import java.util.Objects;
 
 /**
- * Gradle plugin to automatically configure the OpenSearch Java agent
- * for test tasks in OpenSearch plugin projects.
+ * Gradle plugin to automatically configure the Density Java agent
+ * for test tasks in Density plugin projects.
  */
 public class JavaAgent implements Plugin<Project> {
 
@@ -35,9 +35,9 @@ public class JavaAgent implements Plugin<Project> {
         }
 
         project.afterEvaluate(p -> {
-            String opensearchVersion = getOpensearchVersion(p);
-            p.getDependencies().add("agent", "org.opensearch:opensearch-agent-bootstrap:" + opensearchVersion);
-            p.getDependencies().add("agent", "org.opensearch:opensearch-agent:" + opensearchVersion);
+            String densityVersion = getOpensearchVersion(p);
+            p.getDependencies().add("agent", "org.density:density-agent-bootstrap:" + densityVersion);
+            p.getDependencies().add("agent", "org.density:density-agent:" + densityVersion);
         });
 
         Configuration finalAgentConfiguration = agentConfiguration;
@@ -49,10 +49,10 @@ public class JavaAgent implements Plugin<Project> {
         project.getTasks().withType(Test.class).configureEach(testTask -> {
             testTask.dependsOn(prepareJavaAgent);
 
-            final String opensearchVersion = getOpensearchVersion(project);
+            final String densityVersion = getOpensearchVersion(project);
 
             testTask.doFirst(task -> {
-                File agentJar = new File(project.getBuildDir(), "agent/opensearch-agent-" + opensearchVersion + ".jar");
+                File agentJar = new File(project.getBuildDir(), "agent/density-agent-" + densityVersion + ".jar");
 
                 testTask.jvmArgs("-javaagent:" + agentJar.getAbsolutePath());
             });
@@ -60,12 +60,12 @@ public class JavaAgent implements Plugin<Project> {
     }
 
     /**
-     * Gets the OpenSearch version from project properties, with a fallback default.
+     * Gets the Density version from project properties, with a fallback default.
      *
      * @param project The Gradle project
-     * @return The OpenSearch version to use
+     * @return The Density version to use
      */
     private String getOpensearchVersion(Project project) {
-        return Objects.requireNonNull(project.property("opensearch_version")).toString();
+        return Objects.requireNonNull(project.property("density_version")).toString();
     }
 }

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.StoredField;
@@ -20,11 +20,11 @@ import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.StoredFieldVisitor;
 import org.apache.lucene.index.StoredFields;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.CheckedBiFunction;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedBiFunction;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DerivedSourceDirectoryReaderTests extends OpenSearchTestCase {
+public class DerivedSourceDirectoryReaderTests extends DensityTestCase {
 
     private Directory dir;
     private IndexWriter writer;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.client.TimedRequest;
-import org.opensearch.client.ValidationException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.client.TimedRequest;
+import org.density.client.ValidationException;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.test.DensityTestCase;
 
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class CloseIndexRequestTests extends OpenSearchTestCase {
+public class CloseIndexRequestTests extends DensityTestCase {
 
     public void testIndices() {
         String[] indices = generateRandomStringArray(5, 5, false, true);

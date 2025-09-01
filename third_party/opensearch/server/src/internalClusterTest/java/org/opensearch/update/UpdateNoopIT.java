@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.update;
+package org.density.update;
 
-import org.opensearch.action.update.UpdateRequestBuilder;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.update.UpdateRequestBuilder;
+import org.density.action.update.UpdateResponse;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ import static org.hamcrest.Matchers.notNullValue;
 /**
  * Tests for noop updates.
  */
-public class UpdateNoopIT extends OpenSearchIntegTestCase {
+public class UpdateNoopIT extends DensityIntegTestCase {
     public void testSingleField() throws Exception {
         updateAndCheckSource(0, 1, fields("bar", "baz"));
         updateAndCheckSource(0, 1, fields("bar", "baz"));

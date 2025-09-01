@@ -1,49 +1,49 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.WriteResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.ShardIndexingPressureSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.index.stats.IndexingPressurePerShardStats;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.WriteResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexService;
+import org.density.index.IndexingPressureService;
+import org.density.index.ShardIndexingPressureSettings;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.ReplicationGroup;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.index.stats.IndexingPressurePerShardStats;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportService;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -60,9 +60,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.setState;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
@@ -73,7 +73,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportWriteActionForIndexingPressureTests extends OpenSearchTestCase {
+public class TransportWriteActionForIndexingPressureTests extends DensityTestCase {
     private static ThreadPool threadPool;
 
     private ClusterService clusterService;

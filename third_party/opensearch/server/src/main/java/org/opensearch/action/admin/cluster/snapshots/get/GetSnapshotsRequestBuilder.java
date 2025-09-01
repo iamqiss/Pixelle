@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.get;
+package org.density.action.admin.cluster.snapshots.get;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.ArrayUtils;
+import org.density.transport.client.DensityClient;
 
 /**
  * Get snapshots request builder
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetSnapshotsRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -51,14 +51,14 @@ public class GetSnapshotsRequestBuilder extends ClusterManagerNodeOperationReque
     /**
      * Constructs the new get snapshot request
      */
-    public GetSnapshotsRequestBuilder(OpenSearchClient client, GetSnapshotsAction action) {
+    public GetSnapshotsRequestBuilder(DensityClient client, GetSnapshotsAction action) {
         super(client, action, new GetSnapshotsRequest());
     }
 
     /**
      * Constructs the new get snapshot request with specified repository
      */
-    public GetSnapshotsRequestBuilder(OpenSearchClient client, GetSnapshotsAction action, String repository) {
+    public GetSnapshotsRequestBuilder(DensityClient client, GetSnapshotsAction action, String repository) {
         super(client, action, new GetSnapshotsRequest(repository));
     }
 

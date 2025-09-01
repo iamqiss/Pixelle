@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.Assertions;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler;
 import org.junit.After;
 
 import java.io.IOException;
@@ -66,8 +66,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
@@ -79,7 +79,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class GlobalCheckpointListenersTests extends OpenSearchTestCase {
+public class GlobalCheckpointListenersTests extends DensityTestCase {
 
     @FunctionalInterface
     interface TestGlobalCheckpointListener extends GlobalCheckpointListeners.GlobalCheckpointListener {
@@ -93,7 +93,7 @@ public class GlobalCheckpointListenersTests extends OpenSearchTestCase {
     private final ShardId shardId = new ShardId(new Index("index", "uuid"), 0);
     private final ScheduledThreadPoolExecutor scheduler = new Scheduler.SafeScheduledThreadPoolExecutor(
         1,
-        OpenSearchExecutors.daemonThreadFactory(Settings.EMPTY, "scheduler")
+        DensityExecutors.daemonThreadFactory(Settings.EMPTY, "scheduler")
     );
 
     @After

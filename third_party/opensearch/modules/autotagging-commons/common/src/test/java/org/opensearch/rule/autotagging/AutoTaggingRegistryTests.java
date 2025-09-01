@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.rule.utils.RuleTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ResourceNotFoundException;
+import org.density.rule.utils.RuleTestUtils;
+import org.density.test.DensityTestCase;
 import org.junit.BeforeClass;
 
-import static org.opensearch.rule.autotagging.AutoTaggingRegistry.MAX_FEATURE_TYPE_NAME_LENGTH;
-import static org.opensearch.rule.autotagging.RuleTests.INVALID_FEATURE;
-import static org.opensearch.rule.utils.RuleTestUtils.FEATURE_TYPE_NAME;
+import static org.density.rule.autotagging.AutoTaggingRegistry.MAX_FEATURE_TYPE_NAME_LENGTH;
+import static org.density.rule.autotagging.RuleTests.INVALID_FEATURE;
+import static org.density.rule.utils.RuleTestUtils.FEATURE_TYPE_NAME;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AutoTaggingRegistryTests extends OpenSearchTestCase {
+public class AutoTaggingRegistryTests extends DensityTestCase {
 
     @BeforeClass
     public static void setUpOnce() {

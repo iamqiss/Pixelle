@@ -1,7 +1,7 @@
 {
   "ingest.get_pipeline":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/ingest-pipelines/get-ingest/",
+      "url":"https://density.org/docs/latest/ingest-pipelines/get-ingest/",
       "description":"Returns a pipeline."
     },
     "stability":"stable",

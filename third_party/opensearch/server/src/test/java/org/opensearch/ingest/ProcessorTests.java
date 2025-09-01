@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.ingest.IngestDocumentPreparer.SHOULD_FAIL_KEY;
+import static org.density.ingest.IngestDocumentPreparer.SHOULD_FAIL_KEY;
 
-public class ProcessorTests extends OpenSearchTestCase {
+public class ProcessorTests extends DensityTestCase {
     private Processor processor;
     private static final String FIELD_KEY = "result";
     private static final String FIELD_VALUE_PROCESSED = "processed";

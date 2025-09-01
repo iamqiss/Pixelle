@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
-import org.opensearch.gradle.BwcVersions;
-import org.opensearch.gradle.LoggedExec;
-import org.opensearch.gradle.Version;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin;
+import org.density.gradle.BwcVersions;
+import org.density.gradle.LoggedExec;
+import org.density.gradle.Version;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.info.GlobalBuildInfoPlugin;
 import org.gradle.api.Action;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Plugin;
@@ -123,7 +123,7 @@ public class InternalDistributionBwcSetupPlugin implements Plugin<Project> {
             String expandedDistConfiguration = "expanded-" + projectName;
             bwcProject.getConfigurations().create(expandedDistConfiguration);
             bwcProject.getArtifacts().add(expandedDistConfiguration, distributionProject.getExpandedDistDirectory(), artifact -> {
-                artifact.setName("opensearch");
+                artifact.setName("density");
                 artifact.builtBy(buildBwcTask);
                 artifact.setType("directory");
             });
@@ -132,7 +132,7 @@ public class InternalDistributionBwcSetupPlugin implements Plugin<Project> {
 
     private void registerDistributionArchiveArtifact(Project bwcProject, DistributionProject distributionProject, String buildBwcTask) {
         String artifactFileName = distributionProject.getDistFile().getName();
-        String artifactName = "opensearch";
+        String artifactName = "density";
 
         String suffix = artifactFileName.endsWith("tar.gz") ? "tar.gz" : artifactFileName.substring(artifactFileName.length() - 3);
         int archIndex = artifactFileName.indexOf("x64");
@@ -262,14 +262,14 @@ public class InternalDistributionBwcSetupPlugin implements Plugin<Project> {
             this.projectPath = baseDir + "/" + name;
             if (version.onOrAfter("1.1.0")) {
                 // Deb uses underscores (I don't know why...):
-                // https://github.com/opensearch-project/OpenSearch/blob/f6d9a86f0e2e8241fd58b7e8b6cdeaf931b5108f/distribution/packages/build.gradle#L139
+                // https://github.com/density-project/Density/blob/f6d9a86f0e2e8241fd58b7e8b6cdeaf931b5108f/distribution/packages/build.gradle#L139
                 final String separator = name.equals("deb") ? "_" : "-";
                 this.distFile = new File(
                     checkoutDir,
                     baseDir
                         + "/"
                         + name
-                        + "/build/distributions/opensearch-min"
+                        + "/build/distributions/density-min"
                         + separator
                         + version
                         + "-SNAPSHOT"
@@ -280,7 +280,7 @@ public class InternalDistributionBwcSetupPlugin implements Plugin<Project> {
             } else {
                 this.distFile = new File(
                     checkoutDir,
-                    baseDir + "/" + name + "/build/distributions/opensearch-" + version + "-SNAPSHOT" + classifier + "." + extension
+                    baseDir + "/" + name + "/build/distributions/density-" + version + "-SNAPSHOT" + classifier + "." + extension
                 );
             }
             // we only ported this down to the 7.x branch.

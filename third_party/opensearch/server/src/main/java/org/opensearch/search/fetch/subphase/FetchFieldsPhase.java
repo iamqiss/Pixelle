@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.document.DocumentField;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.search.SearchHit;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -51,7 +51,7 @@ import java.util.Set;
  * A fetch sub-phase for high-level field retrieval. Given a list of fields, it
  * retrieves the field values from _source and returns them as document fields.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FetchFieldsPhase implements FetchSubPhase {
 

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree.filter.provider;
+package org.density.search.startree.filter.provider;
 
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.DimensionFilterMergerUtils;
-import org.opensearch.search.startree.filter.StarTreeFilter;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.DimensionFilterMergerUtils;
+import org.density.search.startree.filter.StarTreeFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation.allocator;
+package org.density.cluster.routing.allocation.allocator;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingPool;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.DiskThresholdDecider;
-import org.opensearch.common.Randomness;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingPool;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.DiskThresholdDecider;
+import org.density.common.Randomness;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -33,13 +33,13 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import static org.opensearch.action.admin.indices.tiering.TieringUtils.isWarmIndex;
+import static org.density.action.admin.indices.tiering.TieringUtils.isWarmIndex;
 
 /**
  * A {@link RemoteShardsBalancer} used by the {@link BalancedShardsAllocator} to perform allocation operations
  * for remote shards within the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteShardsBalancer extends ShardsBalancer {
     private final Logger logger;
@@ -664,7 +664,7 @@ public final class RemoteShardsBalancer extends ShardsBalancer {
      * {@link UnassignedIndexShards} maintains a queue of unassigned remote shards for allocation operations within
      * the cluster.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class UnassignedIndexShards {
         private final Queue<ShardRouting> primaries = new ArrayDeque<>();

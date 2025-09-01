@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.client.AbstractRequestTestCase;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.client.AbstractRequestTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ResizeRequestTests extends AbstractRequestTestCase<ResizeRequest, org.opensearch.action.admin.indices.shrink.ResizeRequest> {
+public class ResizeRequestTests extends AbstractRequestTestCase<ResizeRequest, org.density.action.admin.indices.shrink.ResizeRequest> {
 
     @Override
     protected ResizeRequest createClientTestInstance() {
@@ -49,8 +49,8 @@ public class ResizeRequestTests extends AbstractRequestTestCase<ResizeRequest, o
     }
 
     @Override
-    protected org.opensearch.action.admin.indices.shrink.ResizeRequest doParseToServerInstance(XContentParser parser) throws IOException {
-        org.opensearch.action.admin.indices.shrink.ResizeRequest req = new org.opensearch.action.admin.indices.shrink.ResizeRequest(
+    protected org.density.action.admin.indices.shrink.ResizeRequest doParseToServerInstance(XContentParser parser) throws IOException {
+        org.density.action.admin.indices.shrink.ResizeRequest req = new org.density.action.admin.indices.shrink.ResizeRequest(
             "target",
             "source"
         );
@@ -60,7 +60,7 @@ public class ResizeRequestTests extends AbstractRequestTestCase<ResizeRequest, o
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.admin.indices.shrink.ResizeRequest serverInstance,
+        org.density.action.admin.indices.shrink.ResizeRequest serverInstance,
         ResizeRequest clientTestInstance
     ) {
         assertEquals(serverInstance.getSourceIndex(), clientTestInstance.getSourceIndex());

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -45,7 +45,7 @@ import java.util.Objects;
 /**
  * Internal request that is used to send changes in snapshot status to master
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateIndexShardSnapshotStatusRequest extends ClusterManagerNodeRequest<UpdateIndexShardSnapshotStatusRequest> {
     private final Snapshot snapshot;

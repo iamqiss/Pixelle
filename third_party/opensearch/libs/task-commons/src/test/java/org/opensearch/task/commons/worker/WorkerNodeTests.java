@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.task.commons.worker;
+package org.density.task.commons.worker;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 /**
  * Tests for {@link WorkerNode}
  */
-public class WorkerNodeTests extends OpenSearchTestCase {
+public class WorkerNodeTests extends DensityTestCase {
 
     public void testCreateWorkerNode() {
         WorkerNode worker = WorkerNode.createWorkerNode("1", "Worker1", "192.168.1.1");

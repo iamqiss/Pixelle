@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.core.xcontent.ToXContent;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V1;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V1;
 
 /**
  * Utility class for Remote Cluster State

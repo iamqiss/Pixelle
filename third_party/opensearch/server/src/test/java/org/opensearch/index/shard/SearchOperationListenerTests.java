@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestSearchContext;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequest.Empty;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensityTestCase;
+import org.density.test.TestSearchContext;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequest.Empty;
 
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
-public class SearchOperationListenerTests extends OpenSearchTestCase {
+public class SearchOperationListenerTests extends DensityTestCase {
 
     // this test also tests if calls are correct if one or more listeners throw exceptions
     public void testListenersAreExecuted() {

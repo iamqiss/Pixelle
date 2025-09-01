@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.util.UploadListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.CompositeDirectory;
-import org.opensearch.index.store.RemoteDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.util.UploadListener;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.CompositeDirectory;
+import org.density.index.store.RemoteDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.when;
  * Tests various scenarios of segment upload functionality including success cases,
  * error handling, and different directory configurations.
  */
-public class RemoteStoreUploaderServiceTests extends OpenSearchTestCase {
+public class RemoteStoreUploaderServiceTests extends DensityTestCase {
 
     /** Mock IndexShard instance used across tests */
     private IndexShard mockIndexShard;

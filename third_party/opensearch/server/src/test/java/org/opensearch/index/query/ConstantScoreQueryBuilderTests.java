@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.core.common.ParsingException;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +106,7 @@ public class ConstantScoreQueryBuilderTests extends AbstractQueryTestCase<Consta
             + "  \"constant_score\" : {\n"
             + "    \"filter\" : {\n"
             + "      \"terms\" : {\n"
-            + "        \"user\" : [ \"foobar\", \"opensearch\" ],\n"
+            + "        \"user\" : [ \"foobar\", \"density\" ],\n"
             + "        \"boost\" : 42.0\n"
             + "      }\n"
             + "    },\n"

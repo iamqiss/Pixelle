@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /**
- * This package contains utility classes for converting search sort components between OpenSearch
+ * This package contains utility classes for converting search sort components between Density
  * and Protocol Buffers formats. These utilities handle the transformation of sort builders,
  * sort parameters, and sort configurations to ensure proper communication between gRPC clients
- * and the OpenSearch server.
+ * and the Density server.
  */
-package org.opensearch.transport.grpc.proto.request.search.sort;
+package org.density.transport.grpc.proto.request.search.sort;

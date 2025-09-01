@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.FlightDescriptor;
@@ -21,17 +21,17 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.arrow.vector.dictionary.DictionaryProvider;
 import org.apache.arrow.vector.ipc.message.IpcOption;
-import org.opensearch.arrow.flight.bootstrap.FlightClientManager;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.arrow.flight.bootstrap.FlightClientManager;
+import org.density.arrow.spi.StreamProducer;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
@@ -39,7 +39,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class BaseFlightProducerTests extends OpenSearchTestCase {
+public class BaseFlightProducerTests extends DensityTestCase {
 
     private BaseFlightProducer baseFlightProducer;
     private FlightStreamManager streamManager;

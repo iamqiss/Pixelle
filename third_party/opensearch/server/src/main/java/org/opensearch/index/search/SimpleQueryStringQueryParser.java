@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -47,13 +47,13 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SynonymQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.SimpleQueryStringBuilder;
+import org.density.common.lucene.search.Queries;
+import org.density.common.unit.Fuzziness;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.SimpleQueryStringBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,13 +61,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.common.lucene.search.Queries.newUnmappedFieldQuery;
+import static org.density.common.lucene.search.Queries.newUnmappedFieldQuery;
 
 /**
  * Wrapper class for Lucene's SimpleQueryStringQueryParser that allows us to redefine
  * different types of queries.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SimpleQueryStringQueryParser extends SimpleQueryParser {
 
@@ -312,7 +312,7 @@ public class SimpleQueryStringQueryParser extends SimpleQueryParser {
      * Class encapsulating the settings for the SimpleQueryString query, with
      * their default values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Settings {
         /** Specifies whether lenient query parsing should be used. */

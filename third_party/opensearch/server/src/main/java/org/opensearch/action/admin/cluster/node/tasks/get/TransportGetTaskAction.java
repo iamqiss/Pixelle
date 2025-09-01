@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks.get;
+package org.density.action.admin.cluster.node.tasks.get;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.tasks.TaskResult;
-import org.opensearch.tasks.TaskResultsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OriginSettingClient;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.ResourceNotFoundException;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexNotFoundException;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.tasks.TaskResult;
+import org.density.tasks.TaskResultsService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.OriginSettingClient;
 
 import java.io.IOException;
 
-import static org.opensearch.action.admin.cluster.node.tasks.list.TransportListTasksAction.waitForCompletionTimeout;
+import static org.density.action.admin.cluster.node.tasks.list.TransportListTasksAction.waitForCompletionTimeout;
 
 /**
  * ActionType to get a single task. If the task isn't running then it'll try to request the status from request index.
@@ -76,7 +76,7 @@ import static org.opensearch.action.admin.cluster.node.tasks.list.TransportListT
  * <li>If it doesn't then look up the task from the results index
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportGetTaskAction extends HandledTransportAction<GetTaskRequest, GetTaskResponse> {
     private final ThreadPool threadPool;
@@ -239,7 +239,7 @@ public class TransportGetTaskAction extends HandledTransportAction<GetTaskReques
             return;
         }
         if (response.isSourceEmpty()) {
-            listener.onFailure(new OpenSearchException("Stored task status for [{}] didn't contain any source!", response.getId()));
+            listener.onFailure(new DensityException("Stored task status for [{}] didn't contain any source!", response.getId()));
             return;
         }
         try (

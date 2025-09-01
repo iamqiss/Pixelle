@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.node;
+package org.density.index.compositeindex.datacube.startree.node;
 
 /**
  * Represents the different types of nodes in a Star Tree data structure.
@@ -33,7 +33,7 @@ package org.opensearch.index.compositeindex.datacube.startree.node;
  *
  * By default, we want to consider nodes as default node.
  *
- * @opensearch.experimental
+ * @density.experimental
  * @see StarTreeNode
  */
 public enum StarTreeNodeType {

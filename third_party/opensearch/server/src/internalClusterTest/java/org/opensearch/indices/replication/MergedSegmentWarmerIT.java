@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.Directory;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.segments.IndexShardSegments;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.ShardSegments;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.TieredMergePolicyProvider;
-import org.opensearch.index.engine.Segment;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.segments.IndexShardSegments;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.ShardSegments;
+import org.density.action.support.WriteRequest;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.set.Sets;
+import org.density.index.IndexSettings;
+import org.density.index.TieredMergePolicyProvider;
+import org.density.index.engine.Segment;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportService;
 
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -36,12 +36,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /**
  * This class runs Segment Replication Integ test suite with merged segment warmer enabled.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class MergedSegmentWarmerIT extends SegmentReplicationIT {
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {

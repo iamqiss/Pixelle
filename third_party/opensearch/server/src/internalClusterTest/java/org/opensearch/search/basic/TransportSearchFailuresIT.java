@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.basic;
+package org.density.search.basic;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.transport.client.Requests.clusterHealthRequest;
-import static org.opensearch.transport.client.Requests.refreshRequest;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.transport.client.Requests.clusterHealthRequest;
+import static org.density.transport.client.Requests.refreshRequest;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class TransportSearchFailuresIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class TransportSearchFailuresIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public TransportSearchFailuresIT(Settings staticSettings) {
         super(staticSettings);
@@ -104,7 +104,7 @@ public class TransportSearchFailuresIT extends ParameterizedStaticSettingsOpenSe
                 assertThat(searchResponse.getSuccessfulShards(), equalTo(0));
                 assertThat(searchResponse.getFailedShards(), equalTo(test.numPrimaries));
                 fail("search should fail");
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 assertThat(e.unwrapCause(), instanceOf(SearchPhaseExecutionException.class));
                 // all is well
             }
@@ -145,7 +145,7 @@ public class TransportSearchFailuresIT extends ParameterizedStaticSettingsOpenSe
                 assertThat(searchResponse.getSuccessfulShards(), equalTo(0));
                 assertThat(searchResponse.getFailedShards(), equalTo(test.numPrimaries));
                 fail("search should fail");
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 assertThat(e.unwrapCause(), instanceOf(SearchPhaseExecutionException.class));
                 // all is well
             }

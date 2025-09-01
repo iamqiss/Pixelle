@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,15 +27,15 @@
  * under the License.
  */
 
-package org.opensearch.gradle
+package org.density.gradle
 
 
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
-import org.opensearch.gradle.transform.SymbolicLinkPreservingUntarTransform
+import org.density.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.transform.SymbolicLinkPreservingUntarTransform
 import org.gradle.testkit.runner.TaskOutcome
 import spock.lang.Unroll
 
-import static org.opensearch.gradle.fixtures.DistributionDownloadFixture.withMockedDistributionDownload
+import static org.density.gradle.fixtures.DistributionDownloadFixture.withMockedDistributionDownload
 
 class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
 
@@ -55,16 +55,16 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
 
         where:
         version                              | platform                                   | distType
-        VersionProperties.getOpenSearch()    | OpenSearchDistribution.Platform.LINUX      | "current"
-        "8.1.0-SNAPSHOT"                     | OpenSearchDistribution.Platform.LINUX   | "bwc"
-        "7.0.0"                              | OpenSearchDistribution.Platform.WINDOWS | "released"
+        VersionProperties.getDensity()    | DensityDistribution.Platform.LINUX      | "current"
+        "8.1.0-SNAPSHOT"                     | DensityDistribution.Platform.LINUX   | "bwc"
+        "7.0.0"                              | DensityDistribution.Platform.WINDOWS | "released"
     }
 
 
     def "transformed versions are kept across builds"() {
         given:
-        def version = VersionProperties.getOpenSearch()
-        def platform = OpenSearchDistribution.Platform.LINUX
+        def version = VersionProperties.getDensity()
+        def platform = DensityDistribution.Platform.LINUX
 
         buildFile << applyPluginAndSetupDistro(version, platform)
         buildFile << """
@@ -87,8 +87,8 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
 
     def "transforms are reused across projects"() {
         given:
-        def version = VersionProperties.getOpenSearch()
-        def platform = OpenSearchDistribution.Platform.LINUX
+        def version = VersionProperties.getDensity()
+        def platform = DensityDistribution.Platform.LINUX
 
         3.times {
             settingsFile << """
@@ -96,14 +96,14 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
             """
         }
         buildFile.text = """
-            import org.opensearch.gradle.Architecture
+            import org.density.gradle.Architecture
 
             plugins {
-                id 'opensearch.distribution-download'
+                id 'density.distribution-download'
             }
 
             subprojects {
-                apply plugin: 'opensearch.distribution-download'
+                apply plugin: 'density.distribution-download'
 
                 ${setupTestDistro(version, platform)}
                 ${setupDistroTask()}
@@ -119,7 +119,7 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
 
         then:
         result.tasks.size() == 3
-        result.output.count("Unpacking opensearch-${version}-linux-x64.tar.gz " +
+        result.output.count("Unpacking density-${version}-linux-x64.tar.gz " +
                 "using SymbolicLinkPreservingUntarTransform.") == 1
     }
 
@@ -127,16 +127,16 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
         File distroExtracted = new File(testProjectDir.root, relativePath)
         assert distroExtracted.exists()
         assert distroExtracted.isDirectory()
-        assert new File(distroExtracted, "opensearch-1.2.3/bin/opensearch").exists()
+        assert new File(distroExtracted, "density-1.2.3/bin/density").exists()
         true
     }
 
-    private static String applyPluginAndSetupDistro(String version, OpenSearchDistribution.Platform platform) {
+    private static String applyPluginAndSetupDistro(String version, DensityDistribution.Platform platform) {
         """
-            import org.opensearch.gradle.Architecture
+            import org.density.gradle.Architecture
 
             plugins {
-                id 'opensearch.distribution-download'
+                id 'density.distribution-download'
             }
 
             ${setupTestDistro(version, platform)}
@@ -145,9 +145,9 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
         """
     }
 
-    private static String setupTestDistro(String version, OpenSearchDistribution.Platform platform) {
+    private static String setupTestDistro(String version, DensityDistribution.Platform platform) {
         return """
-            opensearch_distributions {
+            density_distributions {
                 test_distro {
                     version = "$version"
                     type = "archive"
@@ -161,7 +161,7 @@ class DistributionDownloadPluginFuncTest extends AbstractGradleFuncTest {
     private static String setupDistroTask() {
         return """
             tasks.register("setupDistro", Sync) {
-                from(opensearch_distributions.test_distro.extracted)
+                from(density_distributions.test_distro.extracted)
                 into("build/distro")
             }
             """

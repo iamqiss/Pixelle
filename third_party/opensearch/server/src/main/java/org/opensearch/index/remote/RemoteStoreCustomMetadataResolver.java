@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.Version;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.settings.Settings;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.util.function.Supplier;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreTranslogRepo;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreTranslogRepo;
 
 /**
  * Determines the {@link RemoteStorePathStrategy} at the time of index metadata creation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class RemoteStoreCustomMetadataResolver {

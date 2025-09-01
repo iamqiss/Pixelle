@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.OriginalIndices;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class EvalQueryQualityTests extends OpenSearchTestCase {
+public class EvalQueryQualityTests extends DensityTestCase {
 
     private static NamedWriteableRegistry namedWritableRegistry = new NamedWriteableRegistry(
         new RankEvalModulePlugin().getNamedWriteables()
@@ -140,7 +140,7 @@ public class EvalQueryQualityTests extends OpenSearchTestCase {
     }
 
     private static EvalQueryQuality copy(EvalQueryQuality original) throws IOException {
-        return OpenSearchTestCase.copyWriteable(original, namedWritableRegistry, EvalQueryQuality::new);
+        return DensityTestCase.copyWriteable(original, namedWritableRegistry, EvalQueryQuality::new);
     }
 
     public void testEqualsAndHash() throws IOException {

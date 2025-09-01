@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggest.Suggestion;
+import org.density.common.lucene.Lucene;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchHit;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggest.Suggestion;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -57,9 +57,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.search.SearchHit.unknownMetaFieldConsumer;
-import static org.opensearch.search.suggest.Suggest.COMPARATOR;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.search.SearchHit.unknownMetaFieldConsumer;
+import static org.density.search.suggest.Suggest.COMPARATOR;
 
 /**
  * Suggestion response for {@link CompletionSuggester} results
@@ -76,7 +76,7 @@ import static org.opensearch.search.suggest.Suggest.COMPARATOR;
  *     ..
  * }
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSuggestion.Entry> {
 
@@ -259,7 +259,7 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
     /**
      * Entry in the completion suggester
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Entry extends Suggest.Suggestion.Entry<CompletionSuggestion.Entry.Option> {
 
@@ -295,7 +295,7 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
         /**
          * Options for the completion suggester
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Option extends Suggest.Suggestion.Entry.Option {
             private final Map<String, Set<String>> contexts;
@@ -332,7 +332,7 @@ public final class CompletionSuggestion extends Suggest.Suggestion<CompletionSug
             @Override
             protected void mergeInto(Suggest.Suggestion.Entry.Option otherOption) {
                 // Completion suggestions are reduced by
-                // org.opensearch.search.suggest.completion.CompletionSuggestion.reduce()
+                // org.density.search.suggest.completion.CompletionSuggestion.reduce()
                 throw new UnsupportedOperationException();
             }
 

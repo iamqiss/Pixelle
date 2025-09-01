@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.PostingsEnum;
@@ -38,10 +38,10 @@ import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.termvectors.TermVectorsRequest.Flag;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.action.termvectors.TermVectorsRequest.Flag;
+import org.density.common.Nullable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.Set;
  * Writer for the term vector (doc frequency, positions, offsets) for a
  * document.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // package only - this is an internal class!
 final class TermVectorsWriter {

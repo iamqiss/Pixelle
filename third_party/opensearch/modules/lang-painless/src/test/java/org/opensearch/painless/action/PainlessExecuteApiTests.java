@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.action;
+package org.density.painless.action;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.painless.PainlessModulePlugin;
-import org.opensearch.painless.action.PainlessExecuteAction.Request;
-import org.opensearch.painless.action.PainlessExecuteAction.Response;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.painless.PainlessModulePlugin;
+import org.density.painless.action.PainlessExecuteAction.Request;
+import org.density.painless.action.PainlessExecuteAction.Response;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptException;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -53,10 +53,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.painless.action.PainlessExecuteAction.TransportAction.innerShardOperation;
+import static org.density.painless.action.PainlessExecuteAction.TransportAction.innerShardOperation;
 import static org.hamcrest.Matchers.equalTo;
 
-public class PainlessExecuteApiTests extends OpenSearchSingleNodeTestCase {
+public class PainlessExecuteApiTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {

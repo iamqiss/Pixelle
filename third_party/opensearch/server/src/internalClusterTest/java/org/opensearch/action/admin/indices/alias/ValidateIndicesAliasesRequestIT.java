@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias;
+package org.density.action.admin.indices.alias;
 
-import org.opensearch.action.RequestValidators;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesResponse;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.RequestValidators;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesResponse;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -50,13 +50,13 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasToString;
 
-public class ValidateIndicesAliasesRequestIT extends OpenSearchSingleNodeTestCase {
+public class ValidateIndicesAliasesRequestIT extends DensitySingleNodeTestCase {
 
     public static class IndicesAliasesPlugin extends Plugin implements ActionPlugin {
 

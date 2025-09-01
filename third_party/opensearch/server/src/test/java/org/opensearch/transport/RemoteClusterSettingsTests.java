@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.node.NodeRoleSettings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.node.NodeRoleSettings;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.test.NodeRoles.nonRemoteClusterClientNode;
-import static org.opensearch.test.NodeRoles.remoteClusterClientNode;
-import static org.opensearch.transport.RemoteClusterService.ENABLE_REMOTE_CLUSTERS;
-import static org.opensearch.transport.RemoteClusterService.REMOTE_CLUSTER_SKIP_UNAVAILABLE;
-import static org.opensearch.transport.RemoteClusterService.REMOTE_INITIAL_CONNECTION_TIMEOUT_SETTING;
-import static org.opensearch.transport.RemoteClusterService.REMOTE_NODE_ATTRIBUTE;
-import static org.opensearch.transport.SniffConnectionStrategy.REMOTE_CLUSTERS_PROXY;
-import static org.opensearch.transport.SniffConnectionStrategy.REMOTE_CLUSTER_SEEDS;
-import static org.opensearch.transport.SniffConnectionStrategy.REMOTE_CONNECTIONS_PER_CLUSTER;
+import static org.density.test.NodeRoles.nonRemoteClusterClientNode;
+import static org.density.test.NodeRoles.remoteClusterClientNode;
+import static org.density.transport.RemoteClusterService.ENABLE_REMOTE_CLUSTERS;
+import static org.density.transport.RemoteClusterService.REMOTE_CLUSTER_SKIP_UNAVAILABLE;
+import static org.density.transport.RemoteClusterService.REMOTE_INITIAL_CONNECTION_TIMEOUT_SETTING;
+import static org.density.transport.RemoteClusterService.REMOTE_NODE_ATTRIBUTE;
+import static org.density.transport.SniffConnectionStrategy.REMOTE_CLUSTERS_PROXY;
+import static org.density.transport.SniffConnectionStrategy.REMOTE_CLUSTER_SEEDS;
+import static org.density.transport.SniffConnectionStrategy.REMOTE_CONNECTIONS_PER_CLUSTER;
 import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
-public class RemoteClusterSettingsTests extends OpenSearchTestCase {
+public class RemoteClusterSettingsTests extends DensityTestCase {
 
     public void testConnectionsPerClusterDefault() {
         assertThat(REMOTE_CONNECTIONS_PER_CLUSTER.get(Settings.EMPTY), equalTo(3));

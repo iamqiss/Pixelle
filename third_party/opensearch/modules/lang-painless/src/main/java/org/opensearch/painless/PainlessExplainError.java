@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.api.Debug;
-import org.opensearch.painless.lookup.PainlessClass;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.script.ScriptException;
+import org.density.painless.api.Debug;
+import org.density.painless.lookup.PainlessClass;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.script.ScriptException;
 
 import java.util.List;
 import java.util.Map;
@@ -76,12 +76,12 @@ public class PainlessExplainError extends Error {
             }
         }
 
-        headers.put("opensearch.to_string", singletonList(toString));
+        headers.put("density.to_string", singletonList(toString));
         if (painlessClassName != null) {
-            headers.put("opensearch.painless_class", singletonList(painlessClassName));
+            headers.put("density.painless_class", singletonList(painlessClassName));
         }
         if (javaClassName != null) {
-            headers.put("opensearch.java_class", singletonList(javaClassName));
+            headers.put("density.java_class", singletonList(javaClassName));
         }
         return headers;
     }

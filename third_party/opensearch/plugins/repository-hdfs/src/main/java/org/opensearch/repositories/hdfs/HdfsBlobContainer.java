@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import org.apache.hadoop.fs.CreateFlag;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -39,16 +39,16 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Options.CreateOpts;
 import org.apache.hadoop.fs.Path;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.support.AbstractBlobContainer;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.io.Streams;
-import org.opensearch.repositories.hdfs.HdfsBlobStore.Operation;
+import org.density.common.Nullable;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.support.AbstractBlobContainer;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.io.Streams;
+import org.density.repositories.hdfs.HdfsBlobStore.Operation;
 
 import java.io.FileNotFoundException;
 import java.io.FilterInputStream;

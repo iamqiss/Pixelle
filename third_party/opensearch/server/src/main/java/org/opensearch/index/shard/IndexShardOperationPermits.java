@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.support.ContextPreservingActionListener;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.common.util.concurrent.ThreadContext.StoredContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionRunnable;
+import org.density.action.support.ContextPreservingActionListener;
+import org.density.common.CheckedRunnable;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.common.util.concurrent.ThreadContext.StoredContext;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ import java.util.stream.Collectors;
  * and return their permits. Delayed operations will acquire permits and be completed after the operation that blocked all operations has
  * completed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class IndexShardOperationPermits implements Closeable {
 
@@ -365,7 +365,7 @@ final class IndexShardOperationPermits implements Closeable {
     /**
      * Represents a delayed operation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class DelayedOperation {
         private final ActionListener<Releasable> listener;

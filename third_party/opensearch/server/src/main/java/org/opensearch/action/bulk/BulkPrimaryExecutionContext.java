@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportWriteAction;
-import org.opensearch.core.index.AppendOnlyIndexOperationRetryException;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.translog.Translog;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportWriteAction;
+import org.density.core.index.AppendOnlyIndexOperationRetryException;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.index.translog.Translog;
 
 import java.util.Arrays;
 
@@ -50,7 +50,7 @@ import java.util.Arrays;
  * More specifically, it maintains an index to the current executing bulk item, which allows execution
  * to stop and wait for external events such as mapping updates.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class BulkPrimaryExecutionContext {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest.IndexMetric;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest.Metric;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.os.OsStats;
-import org.opensearch.node.Node;
-import org.opensearch.node.NodeRoleSettings;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest.IndexMetric;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest.Metric;
+import org.density.action.index.IndexRequest;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.gateway.GatewayService;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.os.OsStats;
+import org.density.node.Node;
+import org.density.node.NodeRoleSettings;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -69,13 +69,13 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest.Metric.OS;
+import static org.density.action.admin.cluster.node.stats.NodesStatsRequest.Metric.OS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class ClusterStatsIT extends OpenSearchIntegTestCase {
+public class ClusterStatsIT extends DensityIntegTestCase {
 
     @Override
     protected boolean addMockIndexStorePlugin() {
@@ -389,7 +389,7 @@ public class ClusterStatsIT extends OpenSearchIntegTestCase {
 
     public void testAllocatedProcessors() throws Exception {
         // start one node with 7 processors.
-        internalCluster().startNode(Settings.builder().put(OpenSearchExecutors.NODE_PROCESSORS_SETTING.getKey(), 7).build());
+        internalCluster().startNode(Settings.builder().put(DensityExecutors.NODE_PROCESSORS_SETTING.getKey(), 7).build());
         waitForNodes(1);
 
         ClusterStatsResponse response = client().admin()

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.list;
+package org.density.action.admin.indices.dangling.list;
 
-import org.opensearch.action.admin.indices.dangling.DanglingIndexInfo;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesResponse.AggregatedDanglingIndexInfo;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.dangling.DanglingIndexInfo;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesResponse.AggregatedDanglingIndexInfo;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesResponse.resultsByIndexUUID;
+import static org.density.action.admin.indices.dangling.list.ListDanglingIndicesResponse.resultsByIndexUUID;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ListDanglingIndicesResponseTests extends OpenSearchTestCase {
+public class ListDanglingIndicesResponseTests extends DensityTestCase {
 
     public static final String UUID_1 = UUID.randomUUID().toString();
     public static final String UUID_2 = UUID.randomUUID().toString();

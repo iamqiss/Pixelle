@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OriginSettingClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.node.NodeClosedException;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.OriginSettingClient;
 
 import java.util.function.Predicate;
 
@@ -57,7 +57,7 @@ import java.util.function.Predicate;
  * to the cluster-manager node so that the cluster-manager can update the cluster state and can track of the states
  * of the persistent tasks.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PersistentTasksService {
 
@@ -248,7 +248,7 @@ public class PersistentTasksService {
     /**
      * Interface for a class that waits and listens for a persistent task.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface WaitForPersistentTaskListener<P extends PersistentTaskParams> extends ActionListener<PersistentTask<P>> {
         default void onTimeout(TimeValue timeout) {

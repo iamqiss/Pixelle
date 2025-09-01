@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.ir;
+package org.density.painless.ir;
 
-import org.opensearch.painless.ClassWriter;
-import org.opensearch.painless.Location;
-import org.opensearch.painless.MethodWriter;
-import org.opensearch.painless.lookup.PainlessClassBinding;
-import org.opensearch.painless.lookup.PainlessInstanceBinding;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.phase.IRTreeVisitor;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
-import org.opensearch.painless.symbol.WriteScope;
+import org.density.painless.ClassWriter;
+import org.density.painless.Location;
+import org.density.painless.MethodWriter;
+import org.density.painless.lookup.PainlessClassBinding;
+import org.density.painless.lookup.PainlessInstanceBinding;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.phase.IRTreeVisitor;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.symbol.WriteScope;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.Method;
 
-import static org.opensearch.painless.WriterConstants.CLASS_TYPE;
+import static org.density.painless.WriterConstants.CLASS_TYPE;
 
 public class InvokeCallMemberNode extends ArgumentsNode {
 

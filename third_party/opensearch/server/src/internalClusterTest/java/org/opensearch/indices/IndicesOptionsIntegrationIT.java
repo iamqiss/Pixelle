@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,57 +25,57 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequestBuilder;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequestBuilder;
-import org.opensearch.action.admin.indices.flush.FlushRequestBuilder;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequestBuilder;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
-import org.opensearch.action.admin.indices.refresh.RefreshRequestBuilder;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequestBuilder;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequestBuilder;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequestBuilder;
-import org.opensearch.action.search.MultiSearchRequestBuilder;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
+import org.density.action.admin.indices.alias.get.GetAliasesRequestBuilder;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequestBuilder;
+import org.density.action.admin.indices.flush.FlushRequestBuilder;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequestBuilder;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
+import org.density.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
+import org.density.action.admin.indices.refresh.RefreshRequestBuilder;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequestBuilder;
+import org.density.action.admin.indices.settings.get.GetSettingsRequestBuilder;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.stats.IndicesStatsRequestBuilder;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequestBuilder;
+import org.density.action.search.MultiSearchRequestBuilder;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.index.IndexNotFoundException;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
-public class IndicesOptionsIntegrationIT extends OpenSearchIntegTestCase {
+public class IndicesOptionsIntegrationIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

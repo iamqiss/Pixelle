@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.auth.AuthCache;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -39,7 +39,7 @@ import org.apache.hc.client5.http.impl.auth.BasicScheme;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.reactor.IOReactorStatus;
-import org.opensearch.client.RestClient.NodeTuple;
+import org.density.client.RestClient.NodeTuple;
 
 import java.io.IOException;
 import java.net.URI;

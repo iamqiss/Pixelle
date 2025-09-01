@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequestBuilder;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequestBuilder;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.metadata.Metadata;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 
 import java.util.Arrays;
@@ -48,7 +48,7 @@ import java.util.function.Function;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class UpgradeSettingsIT extends OpenSearchSingleNodeTestCase {
+public class UpgradeSettingsIT extends DensitySingleNodeTestCase {
 
     @After
     public void cleanup() throws Exception {

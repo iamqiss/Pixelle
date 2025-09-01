@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.queries.intervals.IntervalIterator;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptFactory;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptFactory;
 
 /**
  * Base class for scripts used as interval filters, see {@link IntervalsSourceProvider.IntervalFilter}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IntervalFilterScript {
 
     /**
      * Internal interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Interval {
 
@@ -74,7 +74,7 @@ public abstract class IntervalFilterScript {
     /**
      * Factory to create a script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         IntervalFilterScript newInstance();

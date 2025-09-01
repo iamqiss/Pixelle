@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
+import org.density.DensityParseException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
 
 import java.util.Base64;
 import java.util.Comparator;
@@ -24,7 +24,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * Interface to be implemented by any strategy getting used for paginating rest responses.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface PaginationStrategy<T> {
 
@@ -82,7 +82,7 @@ public interface PaginationStrategy<T> {
         try {
             return new String(Base64.getDecoder().decode(encTokenString), UTF_8);
         } catch (IllegalArgumentException exception) {
-            throw new OpenSearchParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
+            throw new DensityParseException(INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE);
         }
     }
 }

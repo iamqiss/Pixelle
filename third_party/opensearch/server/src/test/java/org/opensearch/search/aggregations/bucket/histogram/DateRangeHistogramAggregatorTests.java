@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Document;
@@ -42,16 +42,16 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.lucene.queries.BinaryDocValuesRangeQuery;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
+import org.density.common.CheckedConsumer;
+import org.density.common.lucene.search.Queries;
+import org.density.common.time.DateFormatters;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
+import org.density.lucene.queries.BinaryDocValuesRangeQuery;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
 
 import java.io.IOException;
 import java.time.Instant;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptResponse;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.script.Script;
-import org.opensearch.script.StoredScriptSource;
+import org.density.DensityStatusException;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptResponse;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.script.Script;
+import org.density.script.StoredScriptSource;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.support.XContentMapValues.extractValue;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.common.xcontent.support.XContentMapValues.extractValue;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public class StoredScriptsIT extends OpenSearchRestHighLevelClientTestCase {
+public class StoredScriptsIT extends DensityRestHighLevelClientTestCase {
 
     private static final String id = "calculate-score";
 
@@ -101,8 +101,8 @@ public class StoredScriptsIT extends OpenSearchRestHighLevelClientTestCase {
 
         GetStoredScriptRequest getRequest = new GetStoredScriptRequest(id);
 
-        final OpenSearchStatusException statusException = expectThrows(
-            OpenSearchStatusException.class,
+        final DensityStatusException statusException = expectThrows(
+            DensityStatusException.class,
             () -> execute(getRequest, highLevelClient()::getScript, highLevelClient()::getScriptAsync)
         );
         assertThat(statusException.status(), equalTo(RestStatus.NOT_FOUND));

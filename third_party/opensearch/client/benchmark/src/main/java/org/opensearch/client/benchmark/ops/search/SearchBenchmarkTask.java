@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.benchmark.ops.search;
+package org.density.client.benchmark.ops.search;
 
-import org.opensearch.client.benchmark.BenchmarkTask;
-import org.opensearch.client.benchmark.metrics.Sample;
-import org.opensearch.client.benchmark.metrics.SampleRecorder;
+import org.density.client.benchmark.BenchmarkTask;
+import org.density.client.benchmark.metrics.Sample;
+import org.density.client.benchmark.metrics.SampleRecorder;
 
 import java.util.concurrent.TimeUnit;
 

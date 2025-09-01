@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.module;
+package org.density.common.cache.module;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.service.CacheService;
-import org.opensearch.common.cache.store.OpenSearchOnHeapCache;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.CachePlugin;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.ICache;
+import org.density.common.cache.service.CacheService;
+import org.density.common.cache.store.DensityOnHeapCache;
+import org.density.common.settings.Settings;
+import org.density.plugins.CachePlugin;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,10 +39,10 @@ public class CacheModule {
 
     private static Map<String, ICache.Factory> getCacheStoreTypeFactories(List<CachePlugin> cachePlugins) {
         Map<String, ICache.Factory> cacheStoreTypeFactories = new HashMap<>();
-        // Add the core OpenSearchOnHeapCache as well.
+        // Add the core DensityOnHeapCache as well.
         cacheStoreTypeFactories.put(
-            OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME,
-            new OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory()
+            DensityOnHeapCache.DensityOnHeapCacheFactory.NAME,
+            new DensityOnHeapCache.DensityOnHeapCacheFactory()
         );
         for (CachePlugin cachePlugin : cachePlugins) {
             Map<String, ICache.Factory> factoryMap = cachePlugin.getCacheFactoryMap();

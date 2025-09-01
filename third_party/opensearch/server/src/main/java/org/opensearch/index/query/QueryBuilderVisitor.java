@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.BooleanClause;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * QueryBuilderVisitor is an interface to define Visitor Object to be traversed in QueryBuilder tree.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.11.0")
 public interface QueryBuilderVisitor {

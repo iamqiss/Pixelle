@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.OpenSearchAllocationWithConstraintsTestCase;
+import org.density.cluster.DensityAllocationWithConstraintsTestCase;
 
-public class IndexShardHotSpotTests extends OpenSearchAllocationWithConstraintsTestCase {
+public class IndexShardHotSpotTests extends DensityAllocationWithConstraintsTestCase {
 
     /**
      * Test single node replacement without active indexing.
@@ -72,7 +72,7 @@ public class IndexShardHotSpotTests extends OpenSearchAllocationWithConstraintsT
     /**
      * Test cluster scale in scenario with skewed shard distribution in remaining nodes.
      */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/2063")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/2063")
     public void testClusterScaleInWithSkew() {
         setupInitialCluster(4, 100, 5, 1);
         buildAllocationService("node_0,node_1");

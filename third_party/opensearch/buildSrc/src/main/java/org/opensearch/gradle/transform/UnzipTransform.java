@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.transform;
+package org.density.gradle.transform;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.tools.zip.ZipEntry;
@@ -44,7 +44,7 @@ import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.function.Function;
 
-import static org.opensearch.gradle.util.PermissionUtils.chmod;
+import static org.density.gradle.util.PermissionUtils.chmod;
 
 public abstract class UnzipTransform implements UnpackTransform {
 

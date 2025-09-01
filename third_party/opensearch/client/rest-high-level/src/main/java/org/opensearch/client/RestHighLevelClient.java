@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,190 +26,190 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.HttpEntity;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptResponse;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.GetAllPitNodesResponse;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.client.core.CountRequest;
-import org.opensearch.client.core.CountResponse;
-import org.opensearch.client.core.GetSourceRequest;
-import org.opensearch.client.core.GetSourceResponse;
-import org.opensearch.client.core.MainRequest;
-import org.opensearch.client.core.MainResponse;
-import org.opensearch.client.core.MultiTermVectorsRequest;
-import org.opensearch.client.core.MultiTermVectorsResponse;
-import org.opensearch.client.core.TermVectorsRequest;
-import org.opensearch.client.core.TermVectorsResponse;
-import org.opensearch.client.tasks.TaskSubmissionResponse;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.rankeval.RankEvalRequest;
-import org.opensearch.index.rankeval.RankEvalResponse;
-import org.opensearch.index.reindex.BulkByScrollResponse;
-import org.opensearch.index.reindex.DeleteByQueryRequest;
-import org.opensearch.index.reindex.ReindexRequest;
-import org.opensearch.index.reindex.UpdateByQueryRequest;
-import org.opensearch.plugins.spi.NamedXContentProvider;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.script.mustache.MultiSearchTemplateRequest;
-import org.opensearch.script.mustache.MultiSearchTemplateResponse;
-import org.opensearch.script.mustache.SearchTemplateRequest;
-import org.opensearch.script.mustache.SearchTemplateResponse;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.bucket.adjacency.AdjacencyMatrixAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.adjacency.ParsedAdjacencyMatrix;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.ParsedComposite;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.filter.ParsedFilter;
-import org.opensearch.search.aggregations.bucket.filter.ParsedFilters;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.global.ParsedGlobal;
-import org.opensearch.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.ParsedAutoDateHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.ParsedDateHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.ParsedHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.ParsedVariableWidthHistogram;
-import org.opensearch.search.aggregations.bucket.histogram.VariableWidthHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.missing.MissingAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.missing.ParsedMissing;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.nested.ParsedNested;
-import org.opensearch.search.aggregations.bucket.nested.ParsedReverseNested;
-import org.opensearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.IpRangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.range.ParsedBinaryRange;
-import org.opensearch.search.aggregations.bucket.range.ParsedDateRange;
-import org.opensearch.search.aggregations.bucket.range.ParsedGeoDistance;
-import org.opensearch.search.aggregations.bucket.range.ParsedRange;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.sampler.InternalSampler;
-import org.opensearch.search.aggregations.bucket.sampler.ParsedSampler;
-import org.opensearch.search.aggregations.bucket.terms.DoubleTerms;
-import org.opensearch.search.aggregations.bucket.terms.LongRareTerms;
-import org.opensearch.search.aggregations.bucket.terms.LongTerms;
-import org.opensearch.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.ParsedDoubleTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedLongRareTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedLongTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedMultiTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedSignificantLongTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedSignificantStringTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedStringRareTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedStringTerms;
-import org.opensearch.search.aggregations.bucket.terms.ParsedUnsignedLongTerms;
-import org.opensearch.search.aggregations.bucket.terms.SignificantLongTerms;
-import org.opensearch.search.aggregations.bucket.terms.SignificantStringTerms;
-import org.opensearch.search.aggregations.bucket.terms.StringRareTerms;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.UnsignedLongTerms;
-import org.opensearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.CardinalityAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.GeoCentroidAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentileRanks;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentiles;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentileRanks;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentiles;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ParsedAvg;
-import org.opensearch.search.aggregations.metrics.ParsedCardinality;
-import org.opensearch.search.aggregations.metrics.ParsedExtendedStats;
-import org.opensearch.search.aggregations.metrics.ParsedGeoCentroid;
-import org.opensearch.search.aggregations.metrics.ParsedHDRPercentileRanks;
-import org.opensearch.search.aggregations.metrics.ParsedHDRPercentiles;
-import org.opensearch.search.aggregations.metrics.ParsedMax;
-import org.opensearch.search.aggregations.metrics.ParsedMedianAbsoluteDeviation;
-import org.opensearch.search.aggregations.metrics.ParsedMin;
-import org.opensearch.search.aggregations.metrics.ParsedScriptedMetric;
-import org.opensearch.search.aggregations.metrics.ParsedStats;
-import org.opensearch.search.aggregations.metrics.ParsedSum;
-import org.opensearch.search.aggregations.metrics.ParsedTDigestPercentileRanks;
-import org.opensearch.search.aggregations.metrics.ParsedTDigestPercentiles;
-import org.opensearch.search.aggregations.metrics.ParsedTopHits;
-import org.opensearch.search.aggregations.metrics.ParsedValueCount;
-import org.opensearch.search.aggregations.metrics.ParsedWeightedAvg;
-import org.opensearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.StatsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.ValueCountAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.InternalBucketMetricValue;
-import org.opensearch.search.aggregations.pipeline.InternalSimpleValue;
-import org.opensearch.search.aggregations.pipeline.ParsedBucketMetricValue;
-import org.opensearch.search.aggregations.pipeline.ParsedDerivative;
-import org.opensearch.search.aggregations.pipeline.ParsedExtendedStatsBucket;
-import org.opensearch.search.aggregations.pipeline.ParsedPercentilesBucket;
-import org.opensearch.search.aggregations.pipeline.ParsedSimpleValue;
-import org.opensearch.search.aggregations.pipeline.ParsedStatsBucket;
-import org.opensearch.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
-import org.opensearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.opensearch.search.suggest.phrase.PhraseSuggestion;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestion;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptResponse;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.explain.ExplainResponse;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.GetAllPitNodesResponse;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.client.core.CountRequest;
+import org.density.client.core.CountResponse;
+import org.density.client.core.GetSourceRequest;
+import org.density.client.core.GetSourceResponse;
+import org.density.client.core.MainRequest;
+import org.density.client.core.MainResponse;
+import org.density.client.core.MultiTermVectorsRequest;
+import org.density.client.core.MultiTermVectorsResponse;
+import org.density.client.core.TermVectorsRequest;
+import org.density.client.core.TermVectorsResponse;
+import org.density.client.tasks.TaskSubmissionResponse;
+import org.density.common.CheckedConsumer;
+import org.density.common.CheckedFunction;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.rankeval.RankEvalRequest;
+import org.density.index.rankeval.RankEvalResponse;
+import org.density.index.reindex.BulkByScrollResponse;
+import org.density.index.reindex.DeleteByQueryRequest;
+import org.density.index.reindex.ReindexRequest;
+import org.density.index.reindex.UpdateByQueryRequest;
+import org.density.plugins.spi.NamedXContentProvider;
+import org.density.rest.BytesRestResponse;
+import org.density.script.mustache.MultiSearchTemplateRequest;
+import org.density.script.mustache.MultiSearchTemplateResponse;
+import org.density.script.mustache.SearchTemplateRequest;
+import org.density.script.mustache.SearchTemplateResponse;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.bucket.adjacency.AdjacencyMatrixAggregationBuilder;
+import org.density.search.aggregations.bucket.adjacency.ParsedAdjacencyMatrix;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.ParsedComposite;
+import org.density.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.density.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.density.search.aggregations.bucket.filter.ParsedFilter;
+import org.density.search.aggregations.bucket.filter.ParsedFilters;
+import org.density.search.aggregations.bucket.global.GlobalAggregationBuilder;
+import org.density.search.aggregations.bucket.global.ParsedGlobal;
+import org.density.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.ParsedAutoDateHistogram;
+import org.density.search.aggregations.bucket.histogram.ParsedDateHistogram;
+import org.density.search.aggregations.bucket.histogram.ParsedHistogram;
+import org.density.search.aggregations.bucket.histogram.ParsedVariableWidthHistogram;
+import org.density.search.aggregations.bucket.histogram.VariableWidthHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.missing.MissingAggregationBuilder;
+import org.density.search.aggregations.bucket.missing.ParsedMissing;
+import org.density.search.aggregations.bucket.nested.NestedAggregationBuilder;
+import org.density.search.aggregations.bucket.nested.ParsedNested;
+import org.density.search.aggregations.bucket.nested.ParsedReverseNested;
+import org.density.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
+import org.density.search.aggregations.bucket.range.DateRangeAggregationBuilder;
+import org.density.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
+import org.density.search.aggregations.bucket.range.IpRangeAggregationBuilder;
+import org.density.search.aggregations.bucket.range.ParsedBinaryRange;
+import org.density.search.aggregations.bucket.range.ParsedDateRange;
+import org.density.search.aggregations.bucket.range.ParsedGeoDistance;
+import org.density.search.aggregations.bucket.range.ParsedRange;
+import org.density.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.density.search.aggregations.bucket.sampler.InternalSampler;
+import org.density.search.aggregations.bucket.sampler.ParsedSampler;
+import org.density.search.aggregations.bucket.terms.DoubleTerms;
+import org.density.search.aggregations.bucket.terms.LongRareTerms;
+import org.density.search.aggregations.bucket.terms.LongTerms;
+import org.density.search.aggregations.bucket.terms.MultiTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.ParsedDoubleTerms;
+import org.density.search.aggregations.bucket.terms.ParsedLongRareTerms;
+import org.density.search.aggregations.bucket.terms.ParsedLongTerms;
+import org.density.search.aggregations.bucket.terms.ParsedMultiTerms;
+import org.density.search.aggregations.bucket.terms.ParsedSignificantLongTerms;
+import org.density.search.aggregations.bucket.terms.ParsedSignificantStringTerms;
+import org.density.search.aggregations.bucket.terms.ParsedStringRareTerms;
+import org.density.search.aggregations.bucket.terms.ParsedStringTerms;
+import org.density.search.aggregations.bucket.terms.ParsedUnsignedLongTerms;
+import org.density.search.aggregations.bucket.terms.SignificantLongTerms;
+import org.density.search.aggregations.bucket.terms.SignificantStringTerms;
+import org.density.search.aggregations.bucket.terms.StringRareTerms;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.UnsignedLongTerms;
+import org.density.search.aggregations.metrics.AvgAggregationBuilder;
+import org.density.search.aggregations.metrics.CardinalityAggregationBuilder;
+import org.density.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
+import org.density.search.aggregations.metrics.GeoCentroidAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalHDRPercentileRanks;
+import org.density.search.aggregations.metrics.InternalHDRPercentiles;
+import org.density.search.aggregations.metrics.InternalTDigestPercentileRanks;
+import org.density.search.aggregations.metrics.InternalTDigestPercentiles;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
+import org.density.search.aggregations.metrics.MinAggregationBuilder;
+import org.density.search.aggregations.metrics.ParsedAvg;
+import org.density.search.aggregations.metrics.ParsedCardinality;
+import org.density.search.aggregations.metrics.ParsedExtendedStats;
+import org.density.search.aggregations.metrics.ParsedGeoCentroid;
+import org.density.search.aggregations.metrics.ParsedHDRPercentileRanks;
+import org.density.search.aggregations.metrics.ParsedHDRPercentiles;
+import org.density.search.aggregations.metrics.ParsedMax;
+import org.density.search.aggregations.metrics.ParsedMedianAbsoluteDeviation;
+import org.density.search.aggregations.metrics.ParsedMin;
+import org.density.search.aggregations.metrics.ParsedScriptedMetric;
+import org.density.search.aggregations.metrics.ParsedStats;
+import org.density.search.aggregations.metrics.ParsedSum;
+import org.density.search.aggregations.metrics.ParsedTDigestPercentileRanks;
+import org.density.search.aggregations.metrics.ParsedTDigestPercentiles;
+import org.density.search.aggregations.metrics.ParsedTopHits;
+import org.density.search.aggregations.metrics.ParsedValueCount;
+import org.density.search.aggregations.metrics.ParsedWeightedAvg;
+import org.density.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
+import org.density.search.aggregations.metrics.StatsAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.density.search.aggregations.metrics.ValueCountAggregationBuilder;
+import org.density.search.aggregations.metrics.WeightedAvgAggregationBuilder;
+import org.density.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.InternalBucketMetricValue;
+import org.density.search.aggregations.pipeline.InternalSimpleValue;
+import org.density.search.aggregations.pipeline.ParsedBucketMetricValue;
+import org.density.search.aggregations.pipeline.ParsedDerivative;
+import org.density.search.aggregations.pipeline.ParsedExtendedStatsBucket;
+import org.density.search.aggregations.pipeline.ParsedPercentilesBucket;
+import org.density.search.aggregations.pipeline.ParsedSimpleValue;
+import org.density.search.aggregations.pipeline.ParsedStatsBucket;
+import org.density.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.completion.CompletionSuggestion;
+import org.density.search.suggest.completion.CompletionSuggestionBuilder;
+import org.density.search.suggest.phrase.PhraseSuggestion;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestion;
+import org.density.search.suggest.term.TermSuggestionBuilder;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -240,21 +240,21 @@ import static java.util.stream.Collectors.toList;
  * {@link #RestHighLevelClient(RestClient, CheckedConsumer, List)} constructor can be used.
  * <p>
  *
- * This class can also be sub-classed to expose additional client methods that make use of endpoints added to OpenSearch through plugins,
- * or to add support for custom response sections, again added to OpenSearch through plugins.
+ * This class can also be sub-classed to expose additional client methods that make use of endpoints added to Density through plugins,
+ * or to add support for custom response sections, again added to Density through plugins.
  * <p>
  *
  * The majority of the methods in this class come in two flavors, a blocking and an asynchronous version (e.g.
  * {@link #search(SearchRequest, RequestOptions)} and {@link #searchAsync(SearchRequest, RequestOptions, ActionListener)}, where the later
  * takes an implementation of an {@link ActionListener} as an argument that needs to implement methods that handle successful responses and
- * failure scenarios. Most of the blocking calls can throw an {@link IOException} or an unchecked {@link OpenSearchException} in the
+ * failure scenarios. Most of the blocking calls can throw an {@link IOException} or an unchecked {@link DensityException} in the
  * following cases:
  *
  * <ul>
  * <li>an {@link IOException} is usually thrown in case of failing to parse the REST response in the high-level REST client, the request
- * times out or similar cases where there is no response coming back from the OpenSearch server</li>
- * <li>an {@link OpenSearchException} is usually thrown in case where the server returns a 4xx or 5xx error code. The high-level client
- * then tries to parse the response body error details into a generic OpenSearchException and suppresses the original
+ * times out or similar cases where there is no response coming back from the Density server</li>
+ * <li>an {@link DensityException} is usually thrown in case where the server returns a 4xx or 5xx error code. The high-level client
+ * then tries to parse the response body error details into a generic DensityException and suppresses the original
  * {@link ResponseException}</li>
  * </ul>
  *
@@ -282,7 +282,7 @@ public class RestHighLevelClient implements Closeable {
 
     /**
      * Creates a {@link RestHighLevelClient} given the low level {@link RestClientBuilder} that allows to build the
-     * {@link RestClient} to be used to perform requests and parsers for custom response sections added to OpenSearch through plugins.
+     * {@link RestClient} to be used to perform requests and parsers for custom response sections added to Density through plugins.
      */
     protected RestHighLevelClient(RestClientBuilder restClientBuilder, List<NamedXContentRegistry.Entry> namedXContentEntries) {
         this(restClientBuilder.build(), RestClient::close, namedXContentEntries);
@@ -290,10 +290,10 @@ public class RestHighLevelClient implements Closeable {
 
     /**
      * Creates a {@link RestHighLevelClient} given the low level {@link RestClient} that it should use to perform requests and
-     * a list of entries that allow to parse custom response sections added to OpenSearch through plugins.
+     * a list of entries that allow to parse custom response sections added to Density through plugins.
      * This constructor can be called by subclasses in case an externally created low-level REST client needs to be provided.
      * The consumer argument allows to control what needs to be done when the {@link #close()} method is called.
-     * Also subclasses can provide parsers for custom response sections added to OpenSearch through plugins.
+     * Also subclasses can provide parsers for custom response sections added to Density through plugins.
      */
     protected RestHighLevelClient(
         RestClient restClient,
@@ -680,7 +680,7 @@ public class RestHighLevelClient implements Closeable {
     }
 
     /**
-     * Pings the remote OpenSearch cluster and returns true if the ping succeeded, false otherwise
+     * Pings the remote Density cluster and returns true if the ping succeeded, false otherwise
      * @param options the request options (e.g. headers), use {@link RequestOptions#DEFAULT} if nothing needs to be customized
      * @return <code>true</code> if the ping succeeded, false otherwise
      */
@@ -2193,30 +2193,30 @@ public class RestHighLevelClient implements Closeable {
     }
 
     /**
-     * Converts a {@link ResponseException} obtained from the low level REST client into an {@link OpenSearchException}.
-     * If a response body was returned, tries to parse it as an error returned from OpenSearch.
-     * If no response body was returned or anything goes wrong while parsing the error, returns a new {@link OpenSearchStatusException}
+     * Converts a {@link ResponseException} obtained from the low level REST client into an {@link DensityException}.
+     * If a response body was returned, tries to parse it as an error returned from Density.
+     * If no response body was returned or anything goes wrong while parsing the error, returns a new {@link DensityStatusException}
      * that wraps the original {@link ResponseException}. The potential exception obtained while parsing is added to the returned
      * exception as a suppressed exception. This method is guaranteed to not throw any exception eventually thrown while parsing.
      */
-    protected final OpenSearchStatusException parseResponseException(ResponseException responseException) {
+    protected final DensityStatusException parseResponseException(ResponseException responseException) {
         Response response = responseException.getResponse();
         HttpEntity entity = response.getEntity();
-        OpenSearchStatusException opensearchException;
+        DensityStatusException densityException;
         RestStatus restStatus = RestStatus.fromCode(response.getStatusLine().getStatusCode());
 
         if (entity == null) {
-            opensearchException = new OpenSearchStatusException(responseException.getMessage(), restStatus, responseException);
+            densityException = new DensityStatusException(responseException.getMessage(), restStatus, responseException);
         } else {
             try {
-                opensearchException = parseEntity(entity, BytesRestResponse::errorFromXContent);
-                opensearchException.addSuppressed(responseException);
+                densityException = parseEntity(entity, BytesRestResponse::errorFromXContent);
+                densityException.addSuppressed(responseException);
             } catch (Exception e) {
-                opensearchException = new OpenSearchStatusException("Unable to parse response body", restStatus, responseException);
-                opensearchException.addSuppressed(e);
+                densityException = new DensityStatusException("Unable to parse response body", restStatus, responseException);
+                densityException.addSuppressed(e);
             }
         }
-        return opensearchException;
+        return densityException;
     }
 
     protected final <Resp> Resp parseEntity(final HttpEntity entity, final CheckedFunction<XContentParser, Resp, IOException> entityParser)
@@ -2225,7 +2225,7 @@ public class RestHighLevelClient implements Closeable {
             throw new IllegalStateException("Response body expected but not returned");
         }
         if (entity.getContentType() == null) {
-            throw new IllegalStateException("OpenSearch didn't return the [Content-Type] header, unable to parse response body");
+            throw new IllegalStateException("Density didn't return the [Content-Type] header, unable to parse response body");
         }
         MediaType mediaType = MediaType.fromMediaType(entity.getContentType());
         if (mediaType == null) {
@@ -2242,9 +2242,9 @@ public class RestHighLevelClient implements Closeable {
 
     /**
      * Ignores deprecation warnings. This is appropriate because it is only
-     * used to parse responses from OpenSearch. Any deprecation warnings
+     * used to parse responses from Density. Any deprecation warnings
      * emitted there just mean that you are talking to an old version of
-     * OpenSearch. There isn't anything you can do about the deprecation.
+     * Density. There isn't anything you can do about the deprecation.
      */
     private static final DeprecationHandler DEPRECATION_HANDLER = DeprecationHandler.IGNORE_DEPRECATIONS;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SynonymQuery;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.search.MatchQuery.ZeroTermsQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.core.common.ParsingException;
+import org.density.index.search.MatchQuery.ZeroTermsQuery;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;

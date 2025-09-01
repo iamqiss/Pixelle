@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.concurrent;
+package org.density.common.concurrent;
 
-import org.opensearch.common.util.concurrent.RefCounted;
+import org.density.common.util.concurrent.RefCounted;
 
 /**
  * Adapter class that enables a {@link RefCounted} implementation to function like an {@link AutoCloseable}.
  * The {@link #close()} API invokes {@link RefCounted#decRef()} and ensures idempotency using a {@link OneWayGate}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AutoCloseableRefCounted<T extends RefCounted> implements AutoCloseable {
 

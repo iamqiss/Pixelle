@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,14 +23,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.net.Inet6Address;
@@ -45,7 +45,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assume.assumeThat;
 
-public class InetAddressesTests extends OpenSearchTestCase {
+public class InetAddressesTests extends DensityTestCase {
     public void testForStringBogusInput() {
         String[] bogusInputs = {
             "",

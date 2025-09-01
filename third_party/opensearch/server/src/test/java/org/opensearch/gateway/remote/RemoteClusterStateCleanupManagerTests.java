@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.remote.InternalRemoteRoutingTableService;
-import org.opensearch.cluster.routing.remote.NoopRemoteRoutingTableService;
-import org.opensearch.cluster.routing.remote.RemoteRoutingTableService;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.remote.InternalRemoteRoutingTableService;
+import org.density.cluster.routing.remote.NoopRemoteRoutingTableService;
+import org.density.cluster.routing.remote.RemoteRoutingTableService;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.core.action.ActionListener;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -49,29 +49,29 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V1;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V2;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V3;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.AsyncStaleFileDeletion;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.CLUSTER_STATE_CLEANUP_INTERVAL_DEFAULT;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.REMOTE_CLUSTER_STATE_CLEANUP_INTERVAL_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.RETAINED_MANIFESTS;
-import static org.opensearch.gateway.remote.RemoteClusterStateCleanupManager.SKIP_CLEANUP_STATE_CHANGES;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_PATH_TOKEN;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.encodeString;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.getFormattedIndexFileName;
-import static org.opensearch.gateway.remote.model.RemoteClusterMetadataManifest.MANIFEST;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V1;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V2;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V3;
+import static org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import static org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.AsyncStaleFileDeletion;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.CLUSTER_STATE_CLEANUP_INTERVAL_DEFAULT;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.REMOTE_CLUSTER_STATE_CLEANUP_INTERVAL_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.RETAINED_MANIFESTS;
+import static org.density.gateway.remote.RemoteClusterStateCleanupManager.SKIP_CLEANUP_STATE_CHANGES;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_PATH_TOKEN;
+import static org.density.gateway.remote.RemoteClusterStateUtils.encodeString;
+import static org.density.gateway.remote.RemoteClusterStateUtils.getFormattedIndexFileName;
+import static org.density.gateway.remote.model.RemoteClusterMetadataManifest.MANIFEST;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
@@ -84,7 +84,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
+public class RemoteClusterStateCleanupManagerTests extends DensityTestCase {
     private RemoteClusterStateCleanupManager remoteClusterStateCleanupManager;
     private Supplier<RepositoriesService> repositoriesServiceSupplier;
     private RepositoriesService repositoriesService;
@@ -199,7 +199,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .clusterStateCustomMetadataMap(Map.of("snapshots", new UploadedMetadataAttribute("snapshots", "snapshot_file1")))
             .committed(true)
@@ -234,7 +234,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)
@@ -251,7 +251,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)
@@ -334,7 +334,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)
@@ -400,7 +400,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)
@@ -446,7 +446,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID("cluster-uuid1")
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .build();
@@ -546,7 +546,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)
@@ -621,7 +621,7 @@ public class RemoteClusterStateCleanupManagerTests extends OpenSearchTestCase {
             .stateUUID(randomAlphaOfLength(10))
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(ClusterState.UNKNOWN_UUID)
             .committed(true)
             .routingTableVersion(0L)

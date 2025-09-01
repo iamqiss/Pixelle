@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias;
+package org.density.action.admin.indices.alias;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
+import org.density.DensityGenerationException;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Represents an alias, to be associated with an index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Alias implements Writeable, ToXContentFragment {
@@ -133,7 +133,7 @@ public class Alias implements Writeable, ToXContentFragment {
             this.filter = builder.toString();
             return this;
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + filter + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + filter + "]", e);
         }
     }
 
@@ -152,7 +152,7 @@ public class Alias implements Writeable, ToXContentFragment {
             this.filter = builder.toString();
             return this;
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to build json for alias request", e);
+            throw new DensityGenerationException("Failed to build json for alias request", e);
         }
     }
 

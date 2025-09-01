@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.transport;
+package org.density.test.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.node.Node;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.tasks.MockTaskManager;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ClusterConnectionManager;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.RequestHandlerRegistry;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.TransportSettings;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.node.Node;
+import org.density.plugins.Plugin;
+import org.density.tasks.TaskManager;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.tasks.MockTaskManager;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ClusterConnectionManager;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.RequestHandlerRegistry;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
+import org.density.transport.TransportSettings;
+import org.density.transport.nio.MockNioTransport;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -99,7 +99,7 @@ import java.util.function.Supplier;
  * Matching requests to rules is based on the delegate address associated with the
  * discovery node of the request, namely by DiscoveryNode.getAddress().
  * This address is usually the publish address of the node but can also be a different one
- * (for example, @see org.opensearch.discovery.HandshakingTransportAddressConnector, which constructs
+ * (for example, @see org.density.discovery.HandshakingTransportAddressConnector, which constructs
  * fake DiscoveryNode instances where the publish address is one of the bound addresses).
  */
 public final class MockTransportService extends TransportService {
@@ -133,7 +133,7 @@ public final class MockTransportService extends TransportService {
     }
 
     public static MockNioTransport newMockTransport(Settings settings, Version version, ThreadPool threadPool) {
-        settings = Settings.builder().put(TransportSettings.PORT.getKey(), OpenSearchTestCase.getPortRange()).put(settings).build();
+        settings = Settings.builder().put(TransportSettings.PORT.getKey(), DensityTestCase.getPortRange()).put(settings).build();
         NamedWriteableRegistry namedWriteableRegistry = new NamedWriteableRegistry(ClusterModule.getNamedWriteables());
         return new MockNioTransport(
             settings,

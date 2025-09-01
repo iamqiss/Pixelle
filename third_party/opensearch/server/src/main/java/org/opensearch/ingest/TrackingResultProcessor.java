@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ingest.SimulateProcessorResult;
-import org.opensearch.common.collect.Tuple;
+import org.density.DensityException;
+import org.density.action.ingest.SimulateProcessorResult;
+import org.density.common.collect.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.ingest.IngestDocument.PIPELINE_CYCLE_ERROR_MESSAGE;
+import static org.density.ingest.IngestDocument.PIPELINE_CYCLE_ERROR_MESSAGE;
 
 /**
  * Processor to be used within Simulate API to keep track of processors executed in pipeline.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TrackingResultProcessor implements Processor {
 
@@ -104,7 +104,7 @@ public final class TrackingResultProcessor implements Processor {
             }
             ingestDocumentCopy.executePipeline(pipelineToCall, (result, e) -> {
                 // special handling for pipeline cycle errors
-                if (e instanceof OpenSearchException
+                if (e instanceof DensityException
                     && e.getCause() instanceof IllegalStateException
                     && e.getCause().getMessage().startsWith(PIPELINE_CYCLE_ERROR_MESSAGE)) {
                     if (ignoreFailure) {

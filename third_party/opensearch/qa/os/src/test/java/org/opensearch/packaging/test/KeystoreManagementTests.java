@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
-import org.opensearch.packaging.util.Distribution;
-import org.opensearch.packaging.util.Docker;
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Installation;
-import org.opensearch.packaging.util.Packages;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.ServerUtils;
-import org.opensearch.packaging.util.Shell;
+import org.density.packaging.util.Distribution;
+import org.density.packaging.util.Docker;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Installation;
+import org.density.packaging.util.Packages;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.ServerUtils;
+import org.density.packaging.util.Shell;
 import org.junit.Ignore;
 
 import java.io.IOException;
@@ -53,23 +53,23 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.packaging.util.Archives.ARCHIVE_OWNER;
-import static org.opensearch.packaging.util.Archives.installArchive;
-import static org.opensearch.packaging.util.Archives.verifyArchiveInstallation;
-import static org.opensearch.packaging.util.Docker.assertPermissionsAndOwnership;
-import static org.opensearch.packaging.util.Docker.runContainer;
-import static org.opensearch.packaging.util.Docker.runContainerExpectingFailure;
-import static org.opensearch.packaging.util.Docker.waitForOpenSearch;
-import static org.opensearch.packaging.util.Docker.waitForPathToExist;
-import static org.opensearch.packaging.util.FileMatcher.Fileness.File;
-import static org.opensearch.packaging.util.FileMatcher.file;
-import static org.opensearch.packaging.util.FileMatcher.p600;
-import static org.opensearch.packaging.util.FileMatcher.p660;
-import static org.opensearch.packaging.util.FileUtils.rm;
-import static org.opensearch.packaging.util.Packages.assertInstalled;
-import static org.opensearch.packaging.util.Packages.assertRemoved;
-import static org.opensearch.packaging.util.Packages.installPackage;
-import static org.opensearch.packaging.util.Packages.verifyPackageInstallation;
+import static org.density.packaging.util.Archives.ARCHIVE_OWNER;
+import static org.density.packaging.util.Archives.installArchive;
+import static org.density.packaging.util.Archives.verifyArchiveInstallation;
+import static org.density.packaging.util.Docker.assertPermissionsAndOwnership;
+import static org.density.packaging.util.Docker.runContainer;
+import static org.density.packaging.util.Docker.runContainerExpectingFailure;
+import static org.density.packaging.util.Docker.waitForDensity;
+import static org.density.packaging.util.Docker.waitForPathToExist;
+import static org.density.packaging.util.FileMatcher.Fileness.File;
+import static org.density.packaging.util.FileMatcher.file;
+import static org.density.packaging.util.FileMatcher.p600;
+import static org.density.packaging.util.FileMatcher.p660;
+import static org.density.packaging.util.FileUtils.rm;
+import static org.density.packaging.util.Packages.assertInstalled;
+import static org.density.packaging.util.Packages.assertRemoved;
+import static org.density.packaging.util.Packages.installPackage;
+import static org.density.packaging.util.Packages.verifyPackageInstallation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -84,7 +84,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
     public static final String ERROR_INCORRECT_PASSWORD = "Provided keystore password was incorrect";
     public static final String ERROR_CORRUPTED_KEYSTORE = "Keystore has been corrupted or tampered with";
     public static final String ERROR_KEYSTORE_NOT_PASSWORD_PROTECTED = "ERROR: Keystore is not password-protected";
-    public static final String ERROR_KEYSTORE_NOT_FOUND = "ERROR: OpenSearch keystore not found";
+    public static final String ERROR_KEYSTORE_NOT_FOUND = "ERROR: Density keystore not found";
 
     /** Test initial archive state */
     public void test10InstallArchiveDistribution() throws Exception {
@@ -123,7 +123,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
         installation = Docker.runContainer(distribution());
 
         try {
-            waitForPathToExist(installation.config("opensearch.keystore"));
+            waitForPathToExist(installation.config("density.keystore"));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -151,10 +151,10 @@ public class KeystoreManagementTests extends PackagingTestCase {
         assumeTrue("Packages and docker are installed with a keystore file", distribution.isArchive());
         rmKeystoreIfExists();
 
-        startOpenSearch();
-        stopOpenSearch();
+        startDensity();
+        stopDensity();
 
-        Platforms.onWindows(() -> sh.chown(installation.config("opensearch.keystore")));
+        Platforms.onWindows(() -> sh.chown(installation.config("density.keystore")));
 
         verifyKeystorePermissions();
 
@@ -174,9 +174,9 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         assertPasswordProtectedKeystore();
 
-        awaitOpenSearchStartup(runOpenSearchStartCommand(password, true, false));
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        awaitDensityStartup(runDensityStartCommand(password, true, false));
+        ServerUtils.runDensityTests();
+        stopDensity();
     }
 
     public void test41WrongKeystorePasswordOnStandardInput() throws Exception {
@@ -185,12 +185,12 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         assertPasswordProtectedKeystore();
 
-        Shell.Result result = runOpenSearchStartCommand("wrong", false, false);
-        assertOpenSearchFailure(result, Arrays.asList(ERROR_INCORRECT_PASSWORD, ERROR_CORRUPTED_KEYSTORE), null);
+        Shell.Result result = runDensityStartCommand("wrong", false, false);
+        assertDensityFailure(result, Arrays.asList(ERROR_INCORRECT_PASSWORD, ERROR_CORRUPTED_KEYSTORE), null);
     }
 
     /**
-     * This test simulates a user starting OpenSearch on the command line without daemonizing
+     * This test simulates a user starting Density on the command line without daemonizing
      */
     public void test42KeystorePasswordOnTtyRunningInForeground() throws Exception {
         /* Windows issue awaits fix: https://github.com/elastic/elasticsearch/issues/49340 */
@@ -205,9 +205,9 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         assertPasswordProtectedKeystore();
 
-        awaitOpenSearchStartup(runOpenSearchStartCommand(password, false, true));
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        awaitDensityStartup(runDensityStartCommand(password, false, true));
+        ServerUtils.runDensityTests();
+        stopDensity();
     }
 
     @Ignore // awaits fix: https://github.com/elastic/elasticsearch/issues/49340
@@ -224,9 +224,9 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         assertPasswordProtectedKeystore();
 
-        awaitOpenSearchStartup(runOpenSearchStartCommand(password, true, true));
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        awaitDensityStartup(runDensityStartCommand(password, true, true));
+        ServerUtils.runDensityTests();
+        stopDensity();
     }
 
     public void test44WrongKeystorePasswordOnTty() throws Exception {
@@ -239,7 +239,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         // daemonization shouldn't matter for this test
         boolean daemonize = randomBoolean();
-        Shell.Result result = runOpenSearchStartCommand("wrong", daemonize, true);
+        Shell.Result result = runDensityStartCommand("wrong", daemonize, true);
         // error will be on stdout for "expect"
         assertThat(result.stdout, anyOf(containsString(ERROR_INCORRECT_PASSWORD), containsString(ERROR_CORRUPTED_KEYSTORE)));
     }
@@ -249,7 +249,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
      * view help information.
      */
     public void test45EncryptedKeystoreAllowsHelpMessage() throws Exception {
-        assumeTrue("users call opensearch directly in archive case", distribution.isArchive());
+        assumeTrue("users call density directly in archive case", distribution.isArchive());
 
         String password = "keystorepass";
 
@@ -257,8 +257,8 @@ public class KeystoreManagementTests extends PackagingTestCase {
         createKeystore(password);
 
         assertPasswordProtectedKeystore();
-        Shell.Result r = installation.executables().opensearch.run("--help");
-        assertThat(r.stdout, startsWith("Starts OpenSearch"));
+        Shell.Result r = installation.executables().density.run("--help");
+        assertThat(r.stdout, startsWith("Starts Density"));
     }
 
     public void test50KeystorePasswordFromFile() throws Exception {
@@ -272,16 +272,16 @@ public class KeystoreManagementTests extends PackagingTestCase {
         assertPasswordProtectedKeystore();
 
         try {
-            sh.run("sudo systemctl set-environment OPENSEARCH_KEYSTORE_PASSPHRASE_FILE=" + esKeystorePassphraseFile);
+            sh.run("sudo systemctl set-environment DENSITY_KEYSTORE_PASSPHRASE_FILE=" + esKeystorePassphraseFile);
 
             Files.createFile(esKeystorePassphraseFile);
             Files.write(esKeystorePassphraseFile, singletonList(password));
 
-            startOpenSearch();
-            ServerUtils.runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            ServerUtils.runDensityTests();
+            stopDensity();
         } finally {
-            sh.run("sudo systemctl unset-environment OPENSEARCH_KEYSTORE_PASSPHRASE_FILE");
+            sh.run("sudo systemctl unset-environment DENSITY_KEYSTORE_PASSPHRASE_FILE");
         }
     }
 
@@ -292,7 +292,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
         assertPasswordProtectedKeystore();
 
         try {
-            sh.run("sudo systemctl set-environment OPENSEARCH_KEYSTORE_PASSPHRASE_FILE=" + esKeystorePassphraseFile);
+            sh.run("sudo systemctl set-environment DENSITY_KEYSTORE_PASSPHRASE_FILE=" + esKeystorePassphraseFile);
 
             if (Files.exists(esKeystorePassphraseFile)) {
                 rm(esKeystorePassphraseFile);
@@ -302,10 +302,10 @@ public class KeystoreManagementTests extends PackagingTestCase {
             Files.write(esKeystorePassphraseFile, singletonList("wrongpassword"));
 
             Packages.JournaldWrapper journaldWrapper = new Packages.JournaldWrapper(sh);
-            Shell.Result result = runOpenSearchStartCommand(null, false, false);
-            assertOpenSearchFailure(result, Arrays.asList(ERROR_INCORRECT_PASSWORD, ERROR_CORRUPTED_KEYSTORE), journaldWrapper);
+            Shell.Result result = runDensityStartCommand(null, false, false);
+            assertDensityFailure(result, Arrays.asList(ERROR_INCORRECT_PASSWORD, ERROR_CORRUPTED_KEYSTORE), journaldWrapper);
         } finally {
-            sh.run("sudo systemctl unset-environment OPENSEARCH_KEYSTORE_PASSPHRASE_FILE");
+            sh.run("sudo systemctl unset-environment DENSITY_KEYSTORE_PASSPHRASE_FILE");
         }
     }
 
@@ -316,7 +316,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
     public void test60DockerEnvironmentVariablePassword() throws Exception {
         assumeTrue(distribution().isDocker());
         String password = "password";
-        Path dockerKeystore = installation.config("opensearch.keystore");
+        Path dockerKeystore = installation.config("density.keystore");
 
         Path localKeystoreFile = getKeystoreFileFromDockerContainer(password, dockerKeystore);
 
@@ -326,8 +326,8 @@ public class KeystoreManagementTests extends PackagingTestCase {
         Map<String, String> envVars = new HashMap<>();
         envVars.put("KEYSTORE_PASSWORD", password);
         runContainer(distribution(), volumes, envVars);
-        waitForOpenSearch(installation);
-        ServerUtils.runOpenSearchTests();
+        waitForDensity(installation);
+        ServerUtils.runDensityTests();
     }
 
     /**
@@ -346,7 +346,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
             Files.write(tempDir.resolve(passwordFilename), singletonList(password));
             Files.setPosixFilePermissions(tempDir.resolve(passwordFilename), p600);
 
-            Path dockerKeystore = installation.config("opensearch.keystore");
+            Path dockerKeystore = installation.config("density.keystore");
 
             Path localKeystoreFile = getKeystoreFileFromDockerContainer(password, dockerKeystore);
 
@@ -360,8 +360,8 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
             runContainer(distribution(), volumes, envVars);
 
-            waitForOpenSearch(installation);
-            ServerUtils.runOpenSearchTests();
+            waitForDensity(installation);
+            ServerUtils.runDensityTests();
         } finally {
             if (tempDir != null) {
                 rm(tempDir);
@@ -371,12 +371,12 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
     /**
      * Check that if we provide the wrong password for a mounted and password-protected
-     * keystore, OpenSearch doesn't start.
+     * keystore, Density doesn't start.
      */
     public void test62DockerEnvironmentVariableBadPassword() throws Exception {
         assumeTrue(distribution().isDocker());
         String password = "password";
-        Path dockerKeystore = installation.config("opensearch.keystore");
+        Path dockerKeystore = installation.config("density.keystore");
 
         Path localKeystoreFile = getKeystoreFileFromDockerContainer(password, dockerKeystore);
 
@@ -423,19 +423,19 @@ public class KeystoreManagementTests extends PackagingTestCase {
 
         // We need a local shell to put the correct permissions on our mounted directory.
         Shell localShell = new Shell();
-        localShell.run("docker exec --tty " + Docker.getContainerId() + " chown opensearch:root " + dockerTemp);
-        localShell.run("docker exec --tty " + Docker.getContainerId() + " chown opensearch:root " + dockerTemp.resolve("set-pass.sh"));
+        localShell.run("docker exec --tty " + Docker.getContainerId() + " chown density:root " + dockerTemp);
+        localShell.run("docker exec --tty " + Docker.getContainerId() + " chown density:root " + dockerTemp.resolve("set-pass.sh"));
 
         sh.run("bash " + dockerTemp.resolve("set-pass.sh"));
 
         // copy keystore to temp file to make it available to docker host
         sh.run("cp " + dockerKeystore + " " + dockerTemp);
-        return tempDirectory.resolve("opensearch.keystore");
+        return tempDirectory.resolve("density.keystore");
     }
 
     /** Create a keystore. Provide a password to password-protect it, otherwise use null */
     private void createKeystore(String password) throws Exception {
-        Path keystore = installation.config("opensearch.keystore");
+        Path keystore = installation.config("density.keystore");
         final Installation.Executables bin = installation.executables();
         bin.keystoreTool.run("create");
 
@@ -459,7 +459,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
     }
 
     private void rmKeystoreIfExists() {
-        Path keystore = installation.config("opensearch.keystore");
+        Path keystore = installation.config("density.keystore");
         if (distribution().isDocker()) {
             try {
                 waitForPathToExist(keystore);
@@ -493,7 +493,7 @@ public class KeystoreManagementTests extends PackagingTestCase {
     }
 
     private void verifyKeystorePermissions() {
-        Path keystore = installation.config("opensearch.keystore");
+        Path keystore = installation.config("density.keystore");
         switch (distribution.packaging) {
             case TAR:
             case ZIP:
@@ -501,13 +501,13 @@ public class KeystoreManagementTests extends PackagingTestCase {
                 break;
             case DEB:
             case RPM:
-                assertThat(keystore, file(File, "root", "opensearch", p660));
+                assertThat(keystore, file(File, "root", "density", p660));
                 break;
             case DOCKER:
                 assertPermissionsAndOwnership(keystore, p660);
                 break;
             default:
-                throw new IllegalStateException("Unknown OpenSearch packaging type.");
+                throw new IllegalStateException("Unknown Density packaging type.");
         }
     }
 }

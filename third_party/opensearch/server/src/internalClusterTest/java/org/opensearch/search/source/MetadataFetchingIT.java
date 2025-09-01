@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.source;
+package org.density.search.source;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.SearchException;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.ExceptionsHelper;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.SearchException;
+import org.density.search.SearchHits;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MetadataFetchingIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class MetadataFetchingIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public MetadataFetchingIT(Settings staticSettings) {
         super(staticSettings);

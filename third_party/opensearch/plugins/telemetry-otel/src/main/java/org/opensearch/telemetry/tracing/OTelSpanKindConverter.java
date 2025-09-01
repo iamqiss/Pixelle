@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
 import io.opentelemetry.api.trace.SpanKind;
 
 /**
- * Converts {@link org.opensearch.telemetry.tracing.SpanKind} to OTel {@link SpanKind}
+ * Converts {@link org.density.telemetry.tracing.SpanKind} to OTel {@link SpanKind}
  */
 final class OTelSpanKindConverter {
 
@@ -25,7 +25,7 @@ final class OTelSpanKindConverter {
      * @param spanKind span kind.
      * @return otel attributes.
      */
-    static SpanKind convert(org.opensearch.telemetry.tracing.SpanKind spanKind) {
+    static SpanKind convert(org.density.telemetry.tracing.SpanKind spanKind) {
         if (spanKind == null) {
             return SpanKind.INTERNAL;
         } else {

@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.telemetry.tracing.noop.NoopScopedSpan;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.telemetry.tracing.noop.NoopScopedSpan;
 
 /**
  * An auto-closeable that represents scoped span.
  * It provides interface for all the span operations.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface ScopedSpan extends AutoCloseable {

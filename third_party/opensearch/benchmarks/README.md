@@ -1,6 +1,6 @@
-# OpenSearch Microbenchmark Suite
+# Density Microbenchmark Suite
 
-This directory contains the microbenchmark suite of OpenSearch. It relies on [JMH](http://openjdk.java.net/projects/code-tools/jmh/).
+This directory contains the microbenchmark suite of Density. It relies on [JMH](http://openjdk.java.net/projects/code-tools/jmh/).
 
 ## Purpose
 

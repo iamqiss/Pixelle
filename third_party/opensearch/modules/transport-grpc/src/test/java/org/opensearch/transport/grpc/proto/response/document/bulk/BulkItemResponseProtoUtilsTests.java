@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.document.bulk;
+package org.density.transport.grpc.proto.response.document.bulk;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.protobufs.Item;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.update.UpdateResponse;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.get.GetResult;
+import org.density.protobufs.Item;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +31,7 @@ import java.util.Map;
 
 import io.grpc.Status;
 
-public class BulkItemResponseProtoUtilsTests extends OpenSearchTestCase {
+public class BulkItemResponseProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithIndexResponse() throws IOException {
         // Create a ShardId

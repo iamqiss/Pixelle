@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.Priority;
+import org.density.common.Priority;
 
 import java.util.concurrent.Callable;
 
 /**
  * A prioritized callable.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PrioritizedCallable<T> implements Callable<T>, Comparable<PrioritizedCallable> {
 
@@ -64,7 +64,7 @@ public abstract class PrioritizedCallable<T> implements Callable<T>, Comparable<
     /**
      * Wrapped generic
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Wrapped<T> extends PrioritizedCallable<T> {
 

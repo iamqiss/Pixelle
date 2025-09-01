@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -54,9 +54,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.client.RestClientTestUtil.getAllStatusCodes;
-import static org.opensearch.client.RestClientTestUtil.randomErrorNoRetryStatusCode;
-import static org.opensearch.client.RestClientTestUtil.randomOkStatusCode;
+import static org.density.client.RestClientTestUtil.getAllStatusCodes;
+import static org.density.client.RestClientTestUtil.randomErrorNoRetryStatusCode;
+import static org.density.client.RestClientTestUtil.randomOkStatusCode;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;

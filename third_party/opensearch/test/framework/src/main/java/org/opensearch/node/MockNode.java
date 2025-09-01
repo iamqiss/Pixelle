@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,52 +26,52 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.MockInternalClusterInfoService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.env.Environment;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.MockScriptService;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.MockSearchService;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.MockInternalClusterInfoService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.env.Environment;
+import org.density.http.HttpServerTransport;
+import org.density.indices.IndicesService;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.SearchPlugin;
+import org.density.script.MockScriptService;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptService;
+import org.density.search.MockSearchService;
+import org.density.search.SearchService;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.query.QueryPhase;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.telemetry.tracing.Tracer;
+import org.density.test.MockHttpTransport;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.nio.file.Path;
 import java.util.Collection;

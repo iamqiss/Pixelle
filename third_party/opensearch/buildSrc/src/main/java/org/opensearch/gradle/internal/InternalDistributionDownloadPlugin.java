@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
-import org.opensearch.gradle.Architecture;
-import org.opensearch.gradle.BwcVersions;
-import org.opensearch.gradle.DistributionDependency;
-import org.opensearch.gradle.DistributionDownloadPlugin;
-import org.opensearch.gradle.DistributionResolution;
-import org.opensearch.gradle.JavaPackageType;
-import org.opensearch.gradle.OpenSearchDistribution;
-import org.opensearch.gradle.Version;
-import org.opensearch.gradle.VersionProperties;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin;
+import org.density.gradle.Architecture;
+import org.density.gradle.BwcVersions;
+import org.density.gradle.DistributionDependency;
+import org.density.gradle.DistributionDownloadPlugin;
+import org.density.gradle.DistributionResolution;
+import org.density.gradle.JavaPackageType;
+import org.density.gradle.DensityDistribution;
+import org.density.gradle.Version;
+import org.density.gradle.VersionProperties;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.info.GlobalBuildInfoPlugin;
 import org.gradle.api.GradleException;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
@@ -51,11 +51,11 @@ import org.gradle.api.artifacts.Dependency;
 
 import java.util.function.Function;
 
-import static org.opensearch.gradle.util.GradleUtils.projectDependency;
+import static org.density.gradle.util.GradleUtils.projectDependency;
 
 /**
- * An internal opensearch build plugin that registers additional
- * distribution resolution strategies to the 'opensearch.download-distribution' plugin
+ * An internal density build plugin that registers additional
+ * distribution resolution strategies to the 'density.download-distribution' plugin
  * to resolve distributions from a local snapshot or a locally built bwc snapshot.
  */
 public class InternalDistributionDownloadPlugin implements Plugin<Project> {
@@ -68,8 +68,8 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
         project.getRootProject().getPluginManager().apply(GlobalBuildInfoPlugin.class);
         if (!BuildParams.isInternal()) {
             throw new GradleException(
-                "Plugin 'opensearch.internal-distribution-download' is not supported. "
-                    + "Use 'opensearch.distribution-download' plugin instead."
+                "Plugin 'density.internal-distribution-download' is not supported. "
+                    + "Use 'density.distribution-download' plugin instead."
             );
         }
         project.getPluginManager().apply(DistributionDownloadPlugin.class);
@@ -80,7 +80,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
     /**
      * Registers internal distribution resolutions.
      * <p>
-     * OpenSearch distributions are resolved as project dependencies either representing
+     * Density distributions are resolved as project dependencies either representing
      * the current version pointing to a project either under `:distribution:archives` or :distribution:packages`.
      * <p>
      * BWC versions are resolved as project to projects under `:distribution:bwc`.
@@ -88,7 +88,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
     private void registerInternalDistributionResolutions(NamedDomainObjectContainer<DistributionResolution> resolutions) {
 
         resolutions.register("localBuild", distributionResolution -> distributionResolution.setResolver((project, distribution) -> {
-            if (VersionProperties.getOpenSearch().equals(distribution.getVersion())) {
+            if (VersionProperties.getDensity().equals(distribution.getVersion())) {
                 // non-external project, so depend on local build
                 return new ProjectBasedDistributionDependency(
                     config -> projectDependency(project, distributionProjectPath(distribution), config)
@@ -120,7 +120,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
     /**
      * Will be removed once this is backported to all unreleased branches.
      */
-    private static String getProjectConfig(OpenSearchDistribution distribution, BwcVersions.UnreleasedVersionInfo info) {
+    private static String getProjectConfig(DensityDistribution distribution, BwcVersions.UnreleasedVersionInfo info) {
         String distributionProjectName = distributionProjectName(distribution);
         if (distribution.getType().shouldExtract()) {
             return (info.gradleProjectPath.equals(":distribution") || info.version.before("7.10.0"))
@@ -133,7 +133,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
 
     }
 
-    private static String distributionProjectPath(OpenSearchDistribution distribution) {
+    private static String distributionProjectPath(DensityDistribution distribution) {
         String projectPath = ":distribution";
         switch (distribution.getType()) {
             case INTEG_TEST_ZIP:
@@ -146,7 +146,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
                 break;
 
             default:
-                projectPath += distribution.getType() == OpenSearchDistribution.Type.ARCHIVE ? ":archives:" : ":packages:";
+                projectPath += distribution.getType() == DensityDistribution.Type.ARCHIVE ? ":archives:" : ":packages:";
                 projectPath += distributionProjectName(distribution);
                 break;
         }
@@ -159,12 +159,12 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
      * @param distribution the distribution from which to derive a project name
      * @return the name of a project. It is not the full project path, only the name.
      */
-    private static String distributionProjectName(OpenSearchDistribution distribution) {
-        OpenSearchDistribution.Platform platform = distribution.getPlatform();
+    private static String distributionProjectName(DensityDistribution distribution) {
+        DensityDistribution.Platform platform = distribution.getPlatform();
         Architecture architecture = distribution.getArchitecture();
         String projectName = "";
 
-        final String archString = platform == OpenSearchDistribution.Platform.WINDOWS || architecture == Architecture.X64
+        final String archString = platform == DensityDistribution.Platform.WINDOWS || architecture == Architecture.X64
             ? ""
             : "-" + architecture.toString().toLowerCase();
 
@@ -176,7 +176,7 @@ public class InternalDistributionDownloadPlugin implements Plugin<Project> {
         switch (distribution.getType()) {
             case ARCHIVE:
                 if (Version.fromString(distribution.getVersion()).onOrAfter("7.0.0")) {
-                    projectName += platform.toString() + archString + (platform == OpenSearchDistribution.Platform.WINDOWS
+                    projectName += platform.toString() + archString + (platform == DensityDistribution.Platform.WINDOWS
                         ? "-zip"
                         : "-tar");
                 } else {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.transport.NettyAllocator;
+import org.density.common.Booleans;
+import org.density.transport.NettyAllocator;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ import io.netty.handler.codec.http.HttpResponse;
 @ChannelHandler.Sharable
 class Netty4HttpResponseCreator extends MessageToMessageEncoder<Netty4HttpResponse> {
 
-    private static final String DO_NOT_SPLIT = "opensearch.unsafe.do_not_split_http_responses";
+    private static final String DO_NOT_SPLIT = "density.unsafe.do_not_split_http_responses";
 
     private static final boolean DO_NOT_SPLIT_HTTP_RESPONSES;
     private static final int SPLIT_THRESHOLD;

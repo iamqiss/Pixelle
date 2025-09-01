@@ -15,21 +15,21 @@ run_as_other_user_if_needed() {
   fi
 }
 
-# Allow user specify custom CMD, maybe bin/opensearch itself
-# for example to directly specify `-E` style parameters for opensearch on k8s
+# Allow user specify custom CMD, maybe bin/density itself
+# for example to directly specify `-E` style parameters for density on k8s
 # or simply to run /bin/bash to check the image
-if [[ "$1" != "opensearchwrapper" ]]; then
-  if [[ "$(id -u)" == "0" && $(basename "$1") == "opensearch" ]]; then
+if [[ "$1" != "densitywrapper" ]]; then
+  if [[ "$(id -u)" == "0" && $(basename "$1") == "density" ]]; then
     # centos:7 chroot doesn't have the `--skip-chdir` option and
     # changes our CWD.
-    # Rewrite CMD args to replace $1 with `opensearch` explicitly,
+    # Rewrite CMD args to replace $1 with `density` explicitly,
     # so that we are backwards compatible with the docs
     # from the previous Elasticsearch versions<6
     # and configuration option D:
     # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/docker.html#_d_override_the_image_8217_s_default_ulink_url_https_docs_docker_com_engine_reference_run_cmd_default_command_or_options_cmd_ulink
-    # Without this, user could specify `opensearch -E x.y=z` but
-    # `bin/opensearch -E x.y=z` would not work.
-    set -- "opensearch" "${@:2}"
+    # Without this, user could specify `density -E x.y=z` but
+    # `bin/density -E x.y=z` would not work.
+    set -- "density" "${@:2}"
     # Use chroot to switch to UID 1000 / GID 0
     exec chroot --userspec=1000:0 / "$@"
   else
@@ -43,12 +43,12 @@ fi
 # point to it. This can be used to provide secrets to a container, without
 # the values being specified explicitly when running the container.
 #
-# This is also sourced in opensearch-env, and is only needed here
+# This is also sourced in density-env, and is only needed here
 # as well because we use ELASTIC_PASSWORD below. Sourcing this script
 # is idempotent.
-source /usr/share/opensearch/bin/opensearch-env-from-file
+source /usr/share/density/bin/density-env-from-file
 
-if [[ -f bin/opensearch-users ]]; then
+if [[ -f bin/density-users ]]; then
   # Check for the ELASTIC_PASSWORD environment variable to set the
   # bootstrap password for Security.
   #
@@ -56,24 +56,24 @@ if [[ -f bin/opensearch-users ]]; then
   # enabled, but we have no way of knowing which node we are yet. We'll just
   # honor the variable if it's present.
   if [[ -n "$ELASTIC_PASSWORD" ]]; then
-    [[ -f /usr/share/opensearch/config/opensearch.keystore ]] || (run_as_other_user_if_needed opensearch-keystore create)
-    if ! (run_as_other_user_if_needed opensearch-keystore has-passwd --silent) ; then
+    [[ -f /usr/share/density/config/density.keystore ]] || (run_as_other_user_if_needed density-keystore create)
+    if ! (run_as_other_user_if_needed density-keystore has-passwd --silent) ; then
       # keystore is unencrypted
-      if ! (run_as_other_user_if_needed opensearch-keystore list | grep -q '^bootstrap.password$'); then
-        (run_as_other_user_if_needed echo "$ELASTIC_PASSWORD" | opensearch-keystore add -x 'bootstrap.password')
+      if ! (run_as_other_user_if_needed density-keystore list | grep -q '^bootstrap.password$'); then
+        (run_as_other_user_if_needed echo "$ELASTIC_PASSWORD" | density-keystore add -x 'bootstrap.password')
       fi
     else
       # keystore requires password
       if ! (run_as_other_user_if_needed echo "$KEYSTORE_PASSWORD" \
-          | opensearch-keystore list | grep -q '^bootstrap.password$') ; then
+          | density-keystore list | grep -q '^bootstrap.password$') ; then
         COMMANDS="$(printf "%s\n%s" "$KEYSTORE_PASSWORD" "$ELASTIC_PASSWORD")"
-        (run_as_other_user_if_needed echo "$COMMANDS" | opensearch-keystore add -x 'bootstrap.password')
+        (run_as_other_user_if_needed echo "$COMMANDS" | density-keystore add -x 'bootstrap.password')
       fi
     fi
   fi
 fi
 
-if ls "/usr/share/opensearch/lib" | grep -E -q "bc-fips.*\.jar"; then
+if ls "/usr/share/density/lib" | grep -E -q "bc-fips.*\.jar"; then
   # If BouncyCastle FIPS is detected - enforcing keystore password policy.
 
   if [[ -z "$KEYSTORE_PASSWORD" ]]; then
@@ -81,16 +81,16 @@ if ls "/usr/share/opensearch/lib" | grep -E -q "bc-fips.*\.jar"; then
     exit 1
   fi
 
-  if [[ ! -f /usr/share/opensearch/config/opensearch.keystore ]]; then
+  if [[ ! -f /usr/share/density/config/density.keystore ]]; then
     # Keystore not found - creating with password.
     COMMANDS="$(printf "%s\n%s" "$KEYSTORE_PASSWORD" "$KEYSTORE_PASSWORD")"
-    echo "$COMMANDS" | run_as_other_user_if_needed opensearch-keystore create -p
+    echo "$COMMANDS" | run_as_other_user_if_needed density-keystore create -p
   else
     # Keystore already exists - checking encryption.
-    if ! run_as_other_user_if_needed opensearch-keystore has-passwd --silent; then
+    if ! run_as_other_user_if_needed density-keystore has-passwd --silent; then
       # Keystore is unencrypted - securing it for FIPS mode.
       COMMANDS="$(printf "%s\n%s" "$KEYSTORE_PASSWORD" "$KEYSTORE_PASSWORD")"
-      echo "$COMMANDS" | run_as_other_user_if_needed opensearch-keystore passwd
+      echo "$COMMANDS" | run_as_other_user_if_needed density-keystore passwd
     fi
   fi
 
@@ -99,8 +99,8 @@ fi
 if [[ "$(id -u)" == "0" ]]; then
   # If requested and running as root, mutate the ownership of bind-mounts
   if [[ -n "$TAKE_FILE_OWNERSHIP" ]]; then
-    chown -R 1000:0 /usr/share/opensearch/{data,logs}
+    chown -R 1000:0 /usr/share/density/{data,logs}
   fi
 fi
 
-run_as_other_user_if_needed /usr/share/opensearch/bin/opensearch <<<"$KEYSTORE_PASSWORD"
+run_as_other_user_if_needed /usr/share/density/bin/density <<<"$KEYSTORE_PASSWORD"

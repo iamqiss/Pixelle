@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.intervals.FilteredIntervalsSource;
@@ -43,22 +43,22 @@ import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.script.Script;
+import org.density.common.unit.Fuzziness;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.MappedFieldType;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,8 +67,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Factory class for {@link IntervalsSource}
@@ -78,7 +78,7 @@ import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalCons
  * strict the matching should be); {@link Combine}, which allows proximity queries
  * between different sub-sources; and {@link Disjunction}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IntervalsSourceProvider implements NamedWriteable, ToXContentFragment {
 
@@ -130,7 +130,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Match interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Match extends IntervalsSourceProvider {
 
@@ -302,7 +302,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Disjunction interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Disjunction extends IntervalsSourceProvider {
 
@@ -412,7 +412,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Combine interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Combine extends IntervalsSourceProvider {
 
@@ -559,7 +559,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Prefix interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Prefix extends IntervalsSourceProvider {
 
@@ -678,7 +678,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Regular expression interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Regexp extends IntervalsSourceProvider {
 
@@ -857,7 +857,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Wildcard interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Wildcard extends IntervalsSourceProvider {
 
@@ -1006,7 +1006,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Fuzzy interval
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Fuzzy extends IntervalsSourceProvider {
 
@@ -1181,7 +1181,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * Script filter source
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ScriptFilterSource extends FilteredIntervalsSource {
 
@@ -1203,7 +1203,7 @@ public abstract class IntervalsSourceProvider implements NamedWriteable, ToXCont
     /**
      * An interval filter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class IntervalFilter implements ToXContentObject, Writeable {
 

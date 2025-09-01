@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.Nullable;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.network.InetAddresses;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.common.Booleans.parseBoolean;
+import static org.density.common.Booleans.parseBoolean;
 
 /**
  * Transport information
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportInfo implements ReportingService.Info {
 
@@ -59,7 +59,7 @@ public class TransportInfo implements ReportingService.Info {
 
     /** Whether to add hostname to publish host field when serializing. */
     private static final boolean CNAME_IN_PUBLISH_ADDRESS = parseBoolean(
-        System.getProperty("opensearch.transport.cname_in_publish_address"),
+        System.getProperty("density.transport.cname_in_publish_address"),
         false
     );
 
@@ -130,7 +130,7 @@ public class TransportInfo implements ReportingService.Info {
                     propertyName
                         + " was printed as [ip:port] instead of [hostname/ip:port]. "
                         + "This format is deprecated and will change to [hostname/ip:port] in a future version. "
-                        + "Use -Dopensearch.transport.cname_in_publish_address=true to enforce non-deprecated formatting."
+                        + "Use -Ddensity.transport.cname_in_publish_address=true to enforce non-deprecated formatting."
                 );
             }
         }

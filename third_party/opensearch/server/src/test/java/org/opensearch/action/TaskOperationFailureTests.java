@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 
@@ -57,8 +57,8 @@ public class TaskOperationFailureTests extends AbstractXContentTestCase<TaskOper
         assertThat(newInstance.getNodeId(), equalTo(expectedInstance.getNodeId()));
         assertThat(newInstance.getTaskId(), equalTo(expectedInstance.getTaskId()));
         assertThat(newInstance.getStatus(), equalTo(expectedInstance.getStatus()));
-        // XContent loses the original exception and wraps it as a message in OpenSearch exception
-        assertThat(newInstance.getCause().getMessage(), equalTo("OpenSearch exception [type=illegal_state_exception, reason=message]"));
+        // XContent loses the original exception and wraps it as a message in Density exception
+        assertThat(newInstance.getCause().getMessage(), equalTo("Density exception [type=illegal_state_exception, reason=message]"));
     }
 
     @Override

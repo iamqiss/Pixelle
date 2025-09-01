@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.BytesTransportRequest;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
+import org.density.transport.BytesTransportRequest;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 /**
  * Contains tests for {@link CompressedStreamUtils}
  */
-public class CompressedStreamUtilsTests extends OpenSearchTestCase {
+public class CompressedStreamUtilsTests extends DensityTestCase {
 
     public void testCreateCompressedStream() throws IOException {
         // serialization success with normal state

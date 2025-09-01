@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
@@ -28,23 +28,23 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.InfoStream;
 import org.apache.lucene.util.Version;
-import org.opensearch.index.codec.composite.LuceneDocValuesProducerFactory;
-import org.opensearch.index.codec.composite.composite912.Composite912Codec;
-import org.opensearch.index.codec.composite.composite912.Composite912DocValuesFormat;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNodeType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.mapper.FieldValueConverter;
+import org.density.index.codec.composite.LuceneDocValuesProducerFactory;
+import org.density.index.codec.composite.composite912.Composite912Codec;
+import org.density.index.codec.composite.composite912.Composite912DocValuesFormat;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeTestUtils;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNodeType;
+import org.density.index.compositeindex.datacube.startree.utils.SequentialDocValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.mapper.FieldValueConverter;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -58,9 +58,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
-import static org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils.validateFileFormats;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
+import static org.density.index.compositeindex.datacube.startree.StarTreeTestUtils.validateFileFormats;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeDimensionsDocValues;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
 import static org.apache.lucene.tests.util.LuceneTestCase.newIOContext;
 import static org.apache.lucene.tests.util.LuceneTestCase.random;
 import static org.junit.Assert.assertEquals;

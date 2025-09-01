@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.example.systemingestprocessor;
+package org.density.example.systemingestprocessor;
 
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.IngestDocumentWrapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.IngestDocumentWrapper;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.opensearch.example.systemingestprocessor.ExampleSystemIngestProcessor.AUTO_ADDED_FIELD_NAME;
-import static org.opensearch.example.systemingestprocessor.ExampleSystemIngestProcessor.AUTO_ADDED_FIELD_VALUE;
+import static org.density.example.systemingestprocessor.ExampleSystemIngestProcessor.AUTO_ADDED_FIELD_NAME;
+import static org.density.example.systemingestprocessor.ExampleSystemIngestProcessor.AUTO_ADDED_FIELD_VALUE;
 
-public class ExampleSystemIngestProcessorTests extends OpenSearchTestCase {
+public class ExampleSystemIngestProcessorTests extends DensityTestCase {
     private final ExampleSystemIngestProcessor exampleSystemIngestProcessor = new ExampleSystemIngestProcessor("tag", "description", 10);
 
     public void testExecute() {

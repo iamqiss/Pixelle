@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.time.ZoneOffset;
@@ -43,7 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DateIndexNameFactoryTests extends OpenSearchTestCase {
+public class DateIndexNameFactoryTests extends DensityTestCase {
 
     public void testDefaults() throws Exception {
         DateIndexNameProcessor.Factory factory = new DateIndexNameProcessor.Factory(TestTemplateService.instance());
@@ -102,12 +102,12 @@ public class DateIndexNameFactoryTests extends OpenSearchTestCase {
         DateIndexNameProcessor.Factory factory = new DateIndexNameProcessor.Factory(TestTemplateService.instance());
         Map<String, Object> config = new HashMap<>();
         config.put("date_rounding", "y");
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), Matchers.equalTo("[field] required property is missing"));
 
         config.clear();
         config.put("field", "_field");
-        e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), Matchers.equalTo("[date_rounding] required property is missing"));
     }
 }

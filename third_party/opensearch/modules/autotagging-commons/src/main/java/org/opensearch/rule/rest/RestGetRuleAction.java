@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.rest;
+package org.density.rule.rest;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.rule.action.GetRuleAction;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.rule.action.GetRuleAction;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rule.autotagging.Rule.ID_STRING;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rule.autotagging.Rule.ID_STRING;
 
 /**
  * Rest action to get a Rule
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class RestGetRuleAction extends BaseRestHandler {

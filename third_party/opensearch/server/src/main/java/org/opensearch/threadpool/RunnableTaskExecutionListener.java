@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
 /**
  * Listener for events when a runnable execution starts or finishes on a thread and is aware of the task for which the

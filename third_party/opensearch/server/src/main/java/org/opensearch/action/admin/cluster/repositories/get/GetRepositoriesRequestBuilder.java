@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.repositories.get;
+package org.density.action.admin.cluster.repositories.get;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.ArrayUtils;
+import org.density.transport.client.DensityClient;
 
 /**
  * Get repository request builder
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetRepositoriesRequestBuilder extends ClusterManagerNodeReadOperationRequestBuilder<
@@ -51,14 +51,14 @@ public class GetRepositoriesRequestBuilder extends ClusterManagerNodeReadOperati
     /**
      * Creates new get repository request builder
      */
-    public GetRepositoriesRequestBuilder(OpenSearchClient client, GetRepositoriesAction action) {
+    public GetRepositoriesRequestBuilder(DensityClient client, GetRepositoriesAction action) {
         super(client, action, new GetRepositoriesRequest());
     }
 
     /**
      * Creates new get repository request builder
      */
-    public GetRepositoriesRequestBuilder(OpenSearchClient client, GetRepositoriesAction action, String... repositories) {
+    public GetRepositoriesRequestBuilder(DensityClient client, GetRepositoriesAction action, String... repositories) {
         super(client, action, new GetRepositoriesRequest(repositories));
     }
 

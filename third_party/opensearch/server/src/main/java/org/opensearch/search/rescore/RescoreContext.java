@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.ParsedQuery;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.ParsedQuery;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.Set;
  * implementations should extend this with any additional resources that
  * they will need while rescoring.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RescoreContext {

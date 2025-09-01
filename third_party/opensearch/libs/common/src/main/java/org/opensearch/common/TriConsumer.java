@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 /**
  * Represents an operation that accepts three arguments and returns no result.
@@ -39,7 +39,7 @@ package org.opensearch.common;
  * @param <T> the type of the second argument
  * @param <U> the type of the third argument
  *
- * @opensearch.internal
+ * @density.internal
  */
 @FunctionalInterface
 public interface TriConsumer<S, T, U> {

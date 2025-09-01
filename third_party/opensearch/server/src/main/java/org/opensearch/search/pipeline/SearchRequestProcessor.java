@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.search.SearchRequest;
+import org.density.core.action.ActionListener;
 
 /**
  * Interface for a search pipeline processor that modifies a search request.
@@ -37,7 +37,7 @@ public interface SearchRequestProcessor extends Processor {
     }
 
     /**
-     * Transform a {@link SearchRequest}. Executed on the coordinator node before any {@link org.opensearch.action.search.SearchPhase}
+     * Transform a {@link SearchRequest}. Executed on the coordinator node before any {@link org.density.action.search.SearchPhase}
      * executes.
      * <p>
      * Expert method: Implement this if the processor needs to make asynchronous calls. Otherwise, implement processRequest.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.support.QueryParsers;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.index.search.MultiMatchQuery;
-import org.opensearch.index.search.QueryParserHelper;
+import org.density.DensityParseException;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.support.QueryParsers;
+import org.density.index.search.MatchQuery;
+import org.density.index.search.MultiMatchQuery;
+import org.density.index.search.QueryParserHelper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +62,7 @@ import java.util.TreeMap;
 /**
  * Same as {@link MatchQueryBuilder} but supports multiple fields.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQueryBuilder> {
 
@@ -119,7 +119,7 @@ public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQuery
     /**
      * Type of the match
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type implements Writeable {
 
@@ -191,7 +191,7 @@ public class MultiMatchQueryBuilder extends AbstractQueryBuilder<MultiMatchQuery
                 }
             }
             if (type == null) {
-                throw new OpenSearchParseException("failed to parse [{}] query type [{}]. unknown type.", NAME, value);
+                throw new DensityParseException("failed to parse [{}] query type [{}]. unknown type.", NAME, value);
             }
             return type;
         }

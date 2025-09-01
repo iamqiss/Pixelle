@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.transport.RemoteConnectionStrategy;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.monitor.fs.FsService;
+import org.density.plugins.Plugin;
+import org.density.transport.RemoteConnectionStrategy;
 
 import java.util.Arrays;
 import java.util.List;

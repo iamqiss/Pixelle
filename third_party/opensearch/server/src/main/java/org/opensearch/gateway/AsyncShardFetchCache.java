@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.transport.ReceiveTimeoutTransportException;
+import org.density.ExceptionsHelper;
+import org.density.DensityTimeoutException;
+import org.density.action.FailedNodeException;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.transport.ReceiveTimeoutTransportException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ import reactor.util.annotation.NonNull;
  *
  * @param <K> Response type of transport action which has the data to be stored in the cache.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AsyncShardFetchCache<K extends BaseNodeResponse> {
 
@@ -220,9 +220,9 @@ public abstract class AsyncShardFetchCache<K extends BaseNodeResponse> {
     }
 
     boolean retryableException(Throwable unwrappedCause) {
-        return unwrappedCause instanceof OpenSearchRejectedExecutionException
+        return unwrappedCause instanceof DensityRejectedExecutionException
             || unwrappedCause instanceof ReceiveTimeoutTransportException
-            || unwrappedCause instanceof OpenSearchTimeoutException;
+            || unwrappedCause instanceof DensityTimeoutException;
     }
 
     void processFailures(List<FailedNodeException> failures, long fetchingRound) {

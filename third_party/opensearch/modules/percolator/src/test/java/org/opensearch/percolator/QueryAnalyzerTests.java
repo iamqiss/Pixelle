@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.document.DoublePoint;
 import org.apache.lucene.document.FloatPoint;
@@ -68,16 +68,16 @@ import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.join.QueryBitSetProducer;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.RandomScoreFunction;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.lucene.queries.BlendedTermQuery;
-import org.opensearch.percolator.QueryAnalyzer.QueryExtraction;
-import org.opensearch.percolator.QueryAnalyzer.Result;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.RandomScoreFunction;
+import org.density.common.network.InetAddresses;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.lucene.queries.BlendedTermQuery;
+import org.density.percolator.QueryAnalyzer.QueryExtraction;
+import org.density.percolator.QueryAnalyzer.Result;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,14 +89,14 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.percolator.QueryAnalyzer.analyze;
-import static org.opensearch.percolator.QueryAnalyzer.selectBestResult;
+import static org.density.percolator.QueryAnalyzer.analyze;
+import static org.density.percolator.QueryAnalyzer.selectBestResult;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
-public class QueryAnalyzerTests extends OpenSearchTestCase {
+public class QueryAnalyzerTests extends DensityTestCase {
 
     public void testExtractQueryMetadata_termQuery() {
         TermQuery termQuery = new TermQuery(new Term("_field", "_term"));
@@ -1117,7 +1117,7 @@ public class QueryAnalyzerTests extends OpenSearchTestCase {
     public void testToParentBlockJoinQuery() {
         TermQuery termQuery = new TermQuery(new Term("field", "value"));
         QueryBitSetProducer queryBitSetProducer = new QueryBitSetProducer(new TermQuery(new Term("_type", "child")));
-        OpenSearchToParentBlockJoinQuery query = new OpenSearchToParentBlockJoinQuery(
+        DensityToParentBlockJoinQuery query = new DensityToParentBlockJoinQuery(
             termQuery,
             queryBitSetProducer,
             ScoreMode.None,

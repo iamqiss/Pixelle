@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.settings.SecureString;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -44,7 +44,7 @@ import java.util.Set;
 /**
  * An accessor for settings which are securely stored. See {@link SecureSetting}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface SecureSettings extends Closeable {

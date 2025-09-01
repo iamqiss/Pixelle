@@ -1,53 +1,53 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LogEvent;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateAction;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateAction;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionAction;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.cluster.decommission.DecommissionStatus;
-import org.opensearch.cluster.decommission.DecommissioningFailedException;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
+import org.density.DensityTimeoutException;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateAction;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateAction;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateResponse;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionAction;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.cluster.decommission.DecommissionStatus;
+import org.density.cluster.decommission.DecommissioningFailedException;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.discovery.Discovery;
+import org.density.plugins.Plugin;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
 import org.junit.After;
 
 import java.util.ArrayList;
@@ -64,11 +64,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
-import static org.opensearch.test.NodeRoles.onlyRole;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoTimeout;
+import static org.density.test.NodeRoles.onlyRole;
+import static org.density.test.hamcrest.DensityAssertions.assertNoTimeout;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class AwarenessAttributeDecommissionIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class AwarenessAttributeDecommissionIT extends DensityIntegTestCase {
     private final Logger logger = LogManager.getLogger(AwarenessAttributeDecommissionIT.class);
 
     @Override
@@ -827,8 +827,8 @@ public class AwarenessAttributeDecommissionIT extends OpenSearchIntegTestCase {
         // and hence due to which the leader won't get abdicated and decommission request should eventually fail.
         // And in this case, to ensure decommission request doesn't leave mutating change in the cluster, we ensure
         // that no exclusion is set to the cluster and state for decommission is marked as FAILED
-        OpenSearchTimeoutException ex = expectThrows(
-            OpenSearchTimeoutException.class,
+        DensityTimeoutException ex = expectThrows(
+            DensityTimeoutException.class,
             () -> client().execute(DecommissionAction.INSTANCE, decommissionRequest).actionGet()
         );
         assertTrue(ex.getMessage().contains("while removing to-be-decommissioned cluster manager eligible nodes"));

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.RulePersistenceServiceRegistry;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.RulePersistenceServiceRegistry;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 /**
  * Transport action to get Rules
- * @opensearch.experimental
+ * @density.experimental
  */
 public class TransportGetRuleAction extends HandledTransportAction<GetRuleRequest, GetRuleResponse> {
 

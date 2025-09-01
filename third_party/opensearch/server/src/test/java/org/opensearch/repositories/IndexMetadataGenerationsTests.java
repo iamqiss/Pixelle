@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.snapshots.SnapshotId;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class IndexMetadataGenerationsTests extends OpenSearchTestCase {
+public class IndexMetadataGenerationsTests extends DensityTestCase {
 
     private final int MAX_TEST_INDICES = 10;
     private final String SNAPSHOT = "snapshot";

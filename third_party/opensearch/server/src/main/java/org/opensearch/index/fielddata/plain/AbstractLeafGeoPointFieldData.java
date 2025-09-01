@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.util.Accountable;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.LeafGeoPointFieldData;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.LeafGeoPointFieldData;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -44,7 +44,7 @@ import java.util.Collections;
 /**
  * Base class for retrieving LatLonPoint docvalues
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractLeafGeoPointFieldData implements LeafGeoPointFieldData {
 

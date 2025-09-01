@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache.bitset;
+package org.density.index.cache.bitset;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.FilterLeafReader;
@@ -47,28 +47,28 @@ import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.BitDocIdSet;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.cache.Cache;
-import org.opensearch.common.cache.CacheBuilder;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexWarmer;
-import org.opensearch.index.IndexWarmer.TerminationHandle;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardUtils;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.common.annotation.PublicApi;
+import org.density.common.cache.Cache;
+import org.density.common.cache.CacheBuilder;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
+import org.density.index.IndexWarmer;
+import org.density.index.IndexWarmer.TerminationHandle;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardUtils;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -84,9 +84,9 @@ import java.util.concurrent.Executor;
  * <p>
  * Use this cache with care, only components that require that a filter is to be materialized as a {@link BitDocIdSet}
  * and require that it should always be around should use this cache, otherwise the
- * {@link org.opensearch.index.cache.query.QueryCache} should be used instead.
+ * {@link org.density.index.cache.query.QueryCache} should be used instead.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class BitsetFilterCache extends AbstractIndexComponent
@@ -197,7 +197,7 @@ public final class BitsetFilterCache extends AbstractIndexComponent
     /**
      * Value for bitset filter cache
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Value {
@@ -225,7 +225,7 @@ public final class BitsetFilterCache extends AbstractIndexComponent
             try {
                 return getAndLoadIfNotPresent(query, context);
             } catch (ExecutionException e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
 
@@ -255,7 +255,7 @@ public final class BitsetFilterCache extends AbstractIndexComponent
         }
 
         @Override
-        public IndexWarmer.TerminationHandle warmReader(final IndexShard indexShard, final OpenSearchDirectoryReader reader) {
+        public IndexWarmer.TerminationHandle warmReader(final IndexShard indexShard, final DensityDirectoryReader reader) {
             if (indexSettings.getIndex().equals(indexShard.indexSettings().getIndex()) == false) {
                 // this is from a different index
                 return TerminationHandle.NO_WAIT;
@@ -325,7 +325,7 @@ public final class BitsetFilterCache extends AbstractIndexComponent
     /**
      *  A listener interface that is executed for each onCache / onRemoval event
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Listener {
         /**

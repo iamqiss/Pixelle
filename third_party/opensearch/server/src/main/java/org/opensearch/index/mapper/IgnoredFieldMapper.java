@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 
 /**
  * A field mapper that records fields that have been ignored because they were malformed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IgnoredFieldMapper extends MetadataFieldMapper {
 
@@ -56,7 +56,7 @@ public final class IgnoredFieldMapper extends MetadataFieldMapper {
     /**
      * Default parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final String NAME = IgnoredFieldMapper.NAME;
@@ -77,7 +77,7 @@ public final class IgnoredFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for Ignored fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class IgnoredFieldType extends StringFieldType {
 

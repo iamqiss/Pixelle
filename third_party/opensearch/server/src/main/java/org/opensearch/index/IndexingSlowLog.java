@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.StringBuilders;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.logging.OpenSearchLogMessage;
-import org.opensearch.common.logging.SlowLogLevel;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.shard.IndexingOperationListener;
+import org.density.common.Booleans;
+import org.density.common.logging.Loggers;
+import org.density.common.logging.DensityLogMessage;
+import org.density.common.logging.SlowLogLevel;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.shard.IndexingOperationListener;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The indexing slowlog implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IndexingSlowLog implements IndexingOperationListener {
     public static final String INDEX_INDEXING_SLOWLOG_PREFIX = "index.indexing.slowlog";
@@ -124,7 +124,7 @@ public final class IndexingSlowLog implements IndexingOperationListener {
     /**
      * Reads how much of the source to log. The user can specify any value they
      * like and numbers are interpreted the maximum number of characters to log
-     * and everything else is interpreted as OpenSearch interprets booleans
+     * and everything else is interpreted as Density interprets booleans
      * which is then converted to 0 for false and Integer.MAX_VALUE for true.
      */
     public static final Setting<Integer> INDEX_INDEXING_SLOWLOG_MAX_SOURCE_CHARS_TO_LOG_SETTING = new Setting<>(
@@ -216,9 +216,9 @@ public final class IndexingSlowLog implements IndexingOperationListener {
     /**
      * Slow log message for indexing
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    static final class IndexingSlowLogMessage extends OpenSearchLogMessage {
+    static final class IndexingSlowLogMessage extends DensityLogMessage {
 
         IndexingSlowLogMessage(Index index, ParsedDocument doc, long tookInNanos, boolean reformat, int maxSourceCharsToLog) {
             super(

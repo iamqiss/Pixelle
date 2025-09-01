@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -38,38 +38,38 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.lifecycle.LifecycleListener;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestLogsAppender;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ClusterConnectionManager;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.TransportStats;
+import org.density.DensityTimeoutException;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.CheckedRunnable;
+import org.density.common.UUIDs;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.LifecycleListener;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.TestLogsAppender;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ClusterConnectionManager;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.Transport;
+import org.density.transport.TransportException;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
+import org.density.transport.TransportStats;
 import org.junit.After;
 import org.junit.Before;
 
@@ -87,15 +87,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.NodeConnectionsService.CLUSTER_NODE_RECONNECT_INTERVAL_SETTING;
-import static org.opensearch.common.settings.Settings.builder;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.cluster.NodeConnectionsService.CLUSTER_NODE_RECONNECT_INTERVAL_SETTING;
+import static org.density.common.settings.Settings.builder;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class NodeConnectionsServiceTests extends OpenSearchTestCase {
+public class NodeConnectionsServiceTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private TransportService transportService;
@@ -288,7 +288,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
             // however, now node0 is considered to be a new node so we will block on a subsequent attempt to connect to it
             final PlainActionFuture<Void> future3 = new PlainActionFuture<>();
             service.connectToNodes(nodes01, () -> future3.onResponse(null));
-            expectThrows(OpenSearchTimeoutException.class, () -> future3.actionGet(timeValueMillis(scaledRandomIntBetween(1, 1000))));
+            expectThrows(DensityTimeoutException.class, () -> future3.actionGet(timeValueMillis(scaledRandomIntBetween(1, 1000))));
 
             // once the connection is unblocked we successfully connect to it.
             connectionBarrier.await(10, TimeUnit.SECONDS);
@@ -318,7 +318,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
             // if we disconnect from a node while blocked trying to connect to it then the listener is notified
             final PlainActionFuture<Void> future6 = new PlainActionFuture<>();
             service.connectToNodes(nodes01, () -> future6.onResponse(null));
-            expectThrows(OpenSearchTimeoutException.class, () -> future6.actionGet(timeValueMillis(scaledRandomIntBetween(1, 1000))));
+            expectThrows(DensityTimeoutException.class, () -> future6.actionGet(timeValueMillis(scaledRandomIntBetween(1, 1000))));
 
             service.disconnectFromNodesExcept(nodes1);
             future6.actionGet(); // completed even though the connection attempt is still blocked
@@ -334,7 +334,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(reason = "testing that DEBUG-level logging is reasonable", value = "org.opensearch.cluster.NodeConnectionsService:DEBUG")
+    @TestLogging(reason = "testing that DEBUG-level logging is reasonable", value = "org.density.cluster.NodeConnectionsService:DEBUG")
     public void testDebugLogging() throws IllegalAccessException {
         final DeterministicTaskQueue deterministicTaskQueue = new DeterministicTaskQueue(
             builder().put(NODE_NAME_SETTING.getKey(), "node").build(),
@@ -363,14 +363,14 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
         for (DiscoveryNode disconnectedNode : disconnectedNodes) {
             transportService.disconnectFromNode(disconnectedNode);
         }
-        final Logger logger = LogManager.getLogger("org.opensearch.cluster.NodeConnectionsService");
+        final Logger logger = LogManager.getLogger("org.density.cluster.NodeConnectionsService");
         try (MockLogAppender appender = MockLogAppender.createForLoggers(logger)) {
             for (DiscoveryNode targetNode : targetNodes) {
                 if (disconnectedNodes.contains(targetNode)) {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connecting to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connecting to " + targetNode
                         )
@@ -378,7 +378,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connected to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connected to " + targetNode
                         )
@@ -387,7 +387,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.UnseenEventExpectation(
                             "connecting to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connecting to " + targetNode
                         )
@@ -395,7 +395,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.UnseenEventExpectation(
                             "connected to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connected to " + targetNode
                         )
@@ -422,7 +422,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connecting to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connecting to " + targetNode
                         )
@@ -430,7 +430,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connected to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connected to " + targetNode
                         )
@@ -439,7 +439,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.UnseenEventExpectation(
                             "connecting to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connecting to " + targetNode
                         )
@@ -447,7 +447,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.UnseenEventExpectation(
                             "connected to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connected to " + targetNode
                         )
@@ -457,7 +457,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "disconnected from " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "disconnected from " + targetNode
                         )
@@ -468,7 +468,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                 appender.addExpectation(
                     new MockLogAppender.UnseenEventExpectation(
                         "disconnected from " + targetNode,
-                        "org.opensearch.cluster.NodeConnectionsService",
+                        "org.density.cluster.NodeConnectionsService",
                         Level.DEBUG,
                         "disconnected from " + targetNode
                     )
@@ -477,7 +477,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connecting to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connecting to " + targetNode
                         )
@@ -485,7 +485,7 @@ public class NodeConnectionsServiceTests extends OpenSearchTestCase {
                     appender.addExpectation(
                         new MockLogAppender.SeenEventExpectation(
                             "connected to " + targetNode,
-                            "org.opensearch.cluster.NodeConnectionsService",
+                            "org.density.cluster.NodeConnectionsService",
                             Level.DEBUG,
                             "connected to " + targetNode
                         )

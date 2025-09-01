@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.TaskGroup;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.client.tasks.CancelTasksRequest;
-import org.opensearch.client.tasks.CancelTasksResponse;
-import org.opensearch.client.tasks.GetTaskRequest;
-import org.opensearch.client.tasks.GetTaskResponse;
-import org.opensearch.client.tasks.TaskId;
-import org.opensearch.client.tasks.TaskSubmissionResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.reindex.ReindexRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.TaskGroup;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.client.tasks.CancelTasksRequest;
+import org.density.client.tasks.CancelTasksResponse;
+import org.density.client.tasks.GetTaskRequest;
+import org.density.client.tasks.GetTaskResponse;
+import org.density.client.tasks.TaskId;
+import org.density.client.tasks.TaskSubmissionResponse;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.reindex.ReindexRequest;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TasksIT extends OpenSearchRestHighLevelClientTestCase {
+public class TasksIT extends DensityRestHighLevelClientTestCase {
 
     public void testListTasks() throws IOException {
         ListTasksRequest request = new ListTasksRequest();
@@ -71,12 +71,12 @@ public class TasksIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(response.getTasks().size(), greaterThanOrEqualTo(2));
         boolean listTasksFound = false;
         for (TaskGroup taskGroup : response.getTaskGroups()) {
-            org.opensearch.tasks.TaskInfo parent = taskGroup.getTaskInfo();
+            org.density.tasks.TaskInfo parent = taskGroup.getTaskInfo();
             if ("cluster:monitor/tasks/lists".equals(parent.getAction())) {
                 assertThat(taskGroup.getChildTasks().size(), equalTo(1));
                 TaskGroup childGroup = taskGroup.getChildTasks().iterator().next();
                 assertThat(childGroup.getChildTasks().isEmpty(), equalTo(true));
-                org.opensearch.tasks.TaskInfo child = childGroup.getTaskInfo();
+                org.density.tasks.TaskInfo child = childGroup.getTaskInfo();
                 assertThat(child.getAction(), equalTo("cluster:monitor/tasks/lists[n]"));
                 assertThat(child.getParentTaskId(), equalTo(parent.getTaskId()));
                 listTasksFound = true;
@@ -115,7 +115,7 @@ public class TasksIT extends OpenSearchRestHighLevelClientTestCase {
         if (gtr.getWaitForCompletion()) {
             assertTrue(taskResponse.isCompleted());
         }
-        org.opensearch.tasks.TaskInfo info = taskResponse.getTaskInfo();
+        org.density.tasks.TaskInfo info = taskResponse.getTaskInfo();
         assertTrue(info.isCancellable());
         assertEquals("reindex from [source1] to [dest]", info.getDescription());
         assertEquals("indices:data/write/reindex", info.getAction());
@@ -136,7 +136,7 @@ public class TasksIT extends OpenSearchRestHighLevelClientTestCase {
         ListTasksResponse listResponse = execute(listRequest, highLevelClient().tasks()::list, highLevelClient().tasks()::listAsync);
         // in this case, probably no task will actually be cancelled.
         // this is ok, that case is covered in TasksIT.testTasksCancellation
-        org.opensearch.tasks.TaskInfo firstTask = listResponse.getTasks().get(0);
+        org.density.tasks.TaskInfo firstTask = listResponse.getTasks().get(0);
         String node = listResponse.getPerNodeTasks().keySet().iterator().next();
 
         CancelTasksRequest cancelTasksRequest = new CancelTasksRequest.Builder().withTaskId(new TaskId(node, firstTask.getId())).build();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RestoreServiceTests extends OpenSearchTestCase {
+public class RestoreServiceTests extends DensityTestCase {
 
     public void testUpdateDataStream() {
         String dataStreamName = "data-stream-1";

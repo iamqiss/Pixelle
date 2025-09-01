@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.common.inject.ModuleTestCase;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.search.SearchService;
+import org.density.common.inject.ModuleTestCase;
+import org.density.common.settings.Setting.Property;
+import org.density.index.IndexSettings;
+import org.density.search.SearchService;
 import org.hamcrest.Matchers;
 
 import java.util.Arrays;
 
 import static java.util.Collections.emptySet;
-import static org.opensearch.common.util.FeatureFlags.EXTENSIONS;
+import static org.density.common.util.FeatureFlags.EXTENSIONS;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexReaderContext;
@@ -47,7 +47,7 @@ import org.apache.lucene.search.MultiTermQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.AttributeSource;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.lucene.queries.SpanMatchNoDocsQuery;
+import org.density.lucene.queries.SpanMatchNoDocsQuery;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -60,7 +60,7 @@ import java.util.Set;
  * The rewrite throws an error if more than <code>maxExpansions</code> terms are found and <code>hardLimit</code>
  * is set.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SpanBooleanQueryRewriteWithMaxClause extends SpanMultiTermQueryWrapper.SpanRewriteMethod {
     private final int maxExpansions;

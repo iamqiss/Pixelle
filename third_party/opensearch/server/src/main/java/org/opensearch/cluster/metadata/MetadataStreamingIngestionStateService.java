@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.streamingingestion.state.TransportUpdateIngestionStateAction;
-import org.opensearch.action.admin.indices.streamingingestion.state.UpdateIngestionStateRequest;
-import org.opensearch.action.admin.indices.streamingingestion.state.UpdateIngestionStateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
+import org.density.DensityException;
+import org.density.action.admin.indices.streamingingestion.state.TransportUpdateIngestionStateAction;
+import org.density.action.admin.indices.streamingingestion.state.UpdateIngestionStateRequest;
+import org.density.action.admin.indices.streamingingestion.state.UpdateIngestionStateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
 
 import java.util.Collections;
 
 /**
  * Service responsible for submitting metadata updates (for example, ingestion pause/resume state change updates).
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class MetadataStreamingIngestionStateService {
     private static final Logger logger = LogManager.getLogger(MetadataStreamingIngestionStateService.class);
@@ -112,7 +112,7 @@ public class MetadataStreamingIngestionStateService {
             @Override
             public void onFailure(String source, Exception e) {
                 listener.onFailure(
-                    new OpenSearchException(
+                    new DensityException(
                         "Ingestion cluster state update failed to set ingestionPaused={}",
                         request.getIngestionPaused(),
                         e

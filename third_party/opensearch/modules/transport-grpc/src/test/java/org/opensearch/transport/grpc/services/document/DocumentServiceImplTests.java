@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.services.document;
+package org.density.transport.grpc.services.document;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.BulkRequestBody;
-import org.opensearch.protobufs.IndexOperation;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.grpc.services.DocumentServiceImpl;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.BulkRequestBody;
+import org.density.protobufs.IndexOperation;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.grpc.services.DocumentServiceImpl;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
-public class DocumentServiceImplTests extends OpenSearchTestCase {
+public class DocumentServiceImplTests extends DensityTestCase {
 
     private DocumentServiceImpl service;
 
@@ -35,7 +35,7 @@ public class DocumentServiceImplTests extends OpenSearchTestCase {
     private NodeClient client;
 
     @Mock
-    private StreamObserver<org.opensearch.protobufs.BulkResponse> responseObserver;
+    private StreamObserver<org.density.protobufs.BulkResponse> responseObserver;
 
     @Before
     public void setup() throws IOException {
@@ -51,7 +51,7 @@ public class DocumentServiceImplTests extends OpenSearchTestCase {
         service.bulk(request, responseObserver);
 
         // Verify that client.bulk was called with any BulkRequest and any ActionListener
-        verify(client).bulk(any(org.opensearch.action.bulk.BulkRequest.class), any());
+        verify(client).bulk(any(org.density.action.bulk.BulkRequest.class), any());
     }
 
     public void testBulkError() throws IOException {
@@ -59,7 +59,7 @@ public class DocumentServiceImplTests extends OpenSearchTestCase {
         BulkRequest request = createTestBulkRequest();
 
         // Make the client throw an exception when bulk is called
-        doThrow(new RuntimeException("Test exception")).when(client).bulk(any(org.opensearch.action.bulk.BulkRequest.class), any());
+        doThrow(new RuntimeException("Test exception")).when(client).bulk(any(org.density.action.bulk.BulkRequest.class), any());
 
         // Call the bulk method
         service.bulk(request, responseObserver);

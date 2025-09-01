@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.node.NodesResourceUsageStats;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ReceiveTimeoutTransportException;
-import org.opensearch.transport.client.Client;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.index.store.StoreStats;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.monitor.fs.FsInfo;
+import org.density.node.NodeResourceUsageStats;
+import org.density.node.NodesResourceUsageStats;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ReceiveTimeoutTransportException;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -88,7 +88,7 @@ import java.util.stream.Collectors;
  * Every time the timer runs, gathers information about the disk usage, resource usage(jvm,cpu,i/o stats) and
  * shard sizes across the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalClusterInfoService implements ClusterInfoService, ClusterStateListener {
 
@@ -521,7 +521,7 @@ public class InternalClusterInfoService implements ClusterInfoService, ClusterSt
     /**
      * Indices statistics summary.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class IndicesStatsSummary {
         static final IndicesStatsSummary EMPTY = new IndicesStatsSummary(Map.of(), Map.of(), Map.of());
@@ -544,7 +544,7 @@ public class InternalClusterInfoService implements ClusterInfoService, ClusterSt
     /**
      * Runs {@link InternalClusterInfoService#refresh()}, logging failures/rejections appropriately.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class RefreshRunnable extends AbstractRunnable {
         private final String reason;
@@ -570,8 +570,8 @@ public class InternalClusterInfoService implements ClusterInfoService, ClusterSt
 
         @Override
         public void onRejection(Exception e) {
-            final boolean shutDown = e instanceof OpenSearchRejectedExecutionException
-                && ((OpenSearchRejectedExecutionException) e).isExecutorShutdown();
+            final boolean shutDown = e instanceof DensityRejectedExecutionException
+                && ((DensityRejectedExecutionException) e).isExecutorShutdown();
             logger.log(shutDown ? Level.DEBUG : Level.WARN, "refreshing cluster info rejected [{}]", reason, e);
         }
     }
@@ -579,7 +579,7 @@ public class InternalClusterInfoService implements ClusterInfoService, ClusterSt
     /**
      * Runs {@link InternalClusterInfoService#refresh()}, logging failures/rejections appropriately, and reschedules itself on completion.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class RefreshAndRescheduleRunnable extends RefreshRunnable {
         RefreshAndRescheduleRunnable() {

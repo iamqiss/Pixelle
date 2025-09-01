@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.network.IfConfig;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.fips.FipsMode;
-import org.opensearch.javaagent.bootstrap.AgentPolicy;
-import org.opensearch.plugins.PluginInfo;
+import org.density.common.Booleans;
+import org.density.common.SuppressForbidden;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.io.PathUtils;
+import org.density.common.network.IfConfig;
+import org.density.common.network.NetworkAddress;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.util.FileSystemUtils;
+import org.density.fips.FipsMode;
+import org.density.javaagent.bootstrap.AgentPolicy;
+import org.density.plugins.PluginInfo;
 import org.junit.Assert;
 
 import java.io.InputStream;
@@ -189,25 +189,25 @@ public class BootstrapForTesting {
 
                 // read test-framework permissions
                 Map<String, URL> codebases = Security.getCodebaseJarMap(JarHell.parseClassPath());
-                // when testing server, the main opensearch code is not yet in a jar, so we need to manually add it
-                addClassCodebase(codebases, "opensearch", "org.opensearch.plugins.PluginsService");
+                // when testing server, the main density code is not yet in a jar, so we need to manually add it
+                addClassCodebase(codebases, "density", "org.density.plugins.PluginsService");
                 if (System.getProperty("tests.gradle") == null) {
                     // intellij and eclipse don't package our internal libs, so we need to set the codebases for them manually
-                    addClassCodebase(codebases, "plugin-classloader", "org.opensearch.plugins.ExtendedPluginsClassLoader");
-                    addClassCodebase(codebases, "opensearch-nio", "org.opensearch.nio.ChannelFactory");
-                    addClassCodebase(codebases, "opensearch-rest-client", "org.opensearch.client.RestClient");
-                    addClassCodebase(codebases, "opensearch-ssl-config", "org.opensearch.common.ssl.SslKeyConfig");
+                    addClassCodebase(codebases, "plugin-classloader", "org.density.plugins.ExtendedPluginsClassLoader");
+                    addClassCodebase(codebases, "density-nio", "org.density.nio.ChannelFactory");
+                    addClassCodebase(codebases, "density-rest-client", "org.density.client.RestClient");
+                    addClassCodebase(codebases, "density-ssl-config", "org.density.common.ssl.SslKeyConfig");
                 }
                 final Policy testFramework = Security.readPolicy(Bootstrap.class.getResource("test-framework.policy"), codebases);
                 // Allow modules to define own test policy in ad-hoc fashion (if needed) that is not really applicable to other modules
                 final Optional<Policy> testPolicy = Optional.ofNullable(Bootstrap.class.getResource("test.policy"))
                     .map(policy -> Security.readPolicy(policy, codebases));
-                final Policy opensearchPolicy = new OpenSearchPolicy(codebases, perms, getPluginPermissions(), true, new Permissions());
+                final Policy densityPolicy = new DensityPolicy(codebases, perms, getPluginPermissions(), true, new Permissions());
                 AgentPolicy.setPolicy(new Policy() {
                     @Override
                     public boolean implies(ProtectionDomain domain, Permission permission) {
                         // implements union
-                        return opensearchPolicy.implies(domain, permission)
+                        return densityPolicy.implies(domain, permission)
                             || testFramework.implies(domain, permission)
                             || testPolicy.map(policy -> policy.implies(domain, permission)).orElse(false /* no policy */);
                     }
@@ -225,7 +225,7 @@ public class BootstrapForTesting {
                 // guarantee plugin classes are initialized first, in case they have one-time hacks.
                 // this just makes unit testing more realistic
                 for (URL url : Collections.list(
-                    BootstrapForTesting.class.getClassLoader().getResources(PluginInfo.OPENSEARCH_PLUGIN_PROPERTIES)
+                    BootstrapForTesting.class.getClassLoader().getResources(PluginInfo.DENSITY_PLUGIN_PROPERTIES)
                 )) {
                     Properties properties = new Properties();
                     try (InputStream stream = FileSystemUtils.openFileURLStream(url)) {
@@ -265,7 +265,7 @@ public class BootstrapForTesting {
     @SuppressForbidden(reason = "accesses fully qualified URLs to configure security")
     static Map<String, Policy> getPluginPermissions() throws Exception {
         List<URL> pluginPolicies = Collections.list(
-            BootstrapForTesting.class.getClassLoader().getResources(PluginInfo.OPENSEARCH_PLUGIN_POLICY)
+            BootstrapForTesting.class.getClassLoader().getResources(PluginInfo.DENSITY_PLUGIN_POLICY)
         );
         if (pluginPolicies.isEmpty()) {
             return Collections.emptyMap();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.index.stats.IndexingPressureStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.index.stats.IndexingPressureStats;
+import org.density.test.DensityTestCase;
 
-public class IndexingPressureTests extends OpenSearchTestCase {
+public class IndexingPressureTests extends DensityTestCase {
 
     private final Settings settings = Settings.builder()
         .put(IndexingPressure.MAX_INDEXING_BYTES.getKey(), "10KB")
@@ -101,7 +101,7 @@ public class IndexingPressureTests extends OpenSearchTestCase {
         ) {
             if (randomBoolean()) {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> indexingPressure.markCoordinatingOperationStarted(1024 * 2, false)
                 );
                 IndexingPressureStats stats = indexingPressure.stats();
@@ -109,7 +109,7 @@ public class IndexingPressureTests extends OpenSearchTestCase {
                 assertEquals(1024 * 6, stats.getCurrentCombinedCoordinatingAndPrimaryBytes());
             } else {
                 expectThrows(
-                    OpenSearchRejectedExecutionException.class,
+                    DensityRejectedExecutionException.class,
                     () -> indexingPressure.markPrimaryOperationStarted(1024 * 2, false)
                 );
                 IndexingPressureStats stats = indexingPressure.stats();
@@ -146,7 +146,7 @@ public class IndexingPressureTests extends OpenSearchTestCase {
             Releasable replica2 = indexingPressure.markReplicaOperationStarted(1024 * 11, false);
             assertEquals(1024 * 14, indexingPressure.stats().getCurrentReplicaBytes());
             // Replica will be rejected once we cross 15KB
-            expectThrows(OpenSearchRejectedExecutionException.class, () -> indexingPressure.markReplicaOperationStarted(1024 * 2, false));
+            expectThrows(DensityRejectedExecutionException.class, () -> indexingPressure.markReplicaOperationStarted(1024 * 2, false));
             IndexingPressureStats stats = indexingPressure.stats();
             assertEquals(1, stats.getReplicaRejections());
             assertEquals(1024 * 14, stats.getCurrentReplicaBytes());
@@ -164,7 +164,7 @@ public class IndexingPressureTests extends OpenSearchTestCase {
 
     public void testForceExecutionOnCoordinating() {
         IndexingPressure indexingPressure = new IndexingPressure(settings);
-        expectThrows(OpenSearchRejectedExecutionException.class, () -> indexingPressure.markCoordinatingOperationStarted(1024 * 11, false));
+        expectThrows(DensityRejectedExecutionException.class, () -> indexingPressure.markCoordinatingOperationStarted(1024 * 11, false));
         try (Releasable ignore = indexingPressure.markCoordinatingOperationStarted(1024 * 11, true)) {
             assertEquals(1024 * 11, indexingPressure.stats().getCurrentCoordinatingBytes());
         }

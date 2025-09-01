@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.action.ActionType;
+import org.density.action.support.ActiveShardCount;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionResponse;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for a replication operation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ReplicationRequestBuilder<
     Request extends ReplicationRequest<Request>,
     Response extends ActionResponse,
     RequestBuilder extends ReplicationRequestBuilder<Request, Response, RequestBuilder>> extends ActionRequestBuilder<Request, Response> {
 
-    protected ReplicationRequestBuilder(OpenSearchClient client, ActionType<Response> action, Request request) {
+    protected ReplicationRequestBuilder(DensityClient client, ActionType<Response> action, Request request) {
         super(client, action, request);
     }
 

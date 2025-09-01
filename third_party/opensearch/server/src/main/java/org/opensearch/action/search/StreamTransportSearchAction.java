@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchService;
+import org.density.search.internal.AliasFilter;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.StreamTransportService;
+import org.density.transport.Transport;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +37,7 @@ import java.util.function.BiFunction;
 
 /**
  * Transport search action for streaming search
- * @opensearch.internal
+ * @density.internal
  */
 public class StreamTransportSearchAction extends TransportSearchAction {
     @Inject

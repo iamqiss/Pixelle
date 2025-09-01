@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.index.FieldInvertState;
 import org.apache.lucene.search.CollectionStatistics;
@@ -37,19 +37,19 @@ import org.apache.lucene.search.TermStatistics;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.lucene.similarity.LegacyBM25Similarity;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.lucene.similarity.LegacyBM25Similarity;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class SimilarityServiceTests extends OpenSearchTestCase {
+public class SimilarityServiceTests extends DensityTestCase {
     public void testDefaultSimilarity() {
         Settings settings = Settings.builder().build();
         IndexSettings indexSettings = IndexSettingsModule.newIndexSettings("test", settings);

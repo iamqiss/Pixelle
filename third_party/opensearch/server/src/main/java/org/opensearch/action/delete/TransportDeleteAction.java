@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.delete;
+package org.density.action.delete;
 
-import org.opensearch.action.bulk.TransportBulkAction;
-import org.opensearch.action.bulk.TransportSingleItemBulkWriteAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.transport.TransportService;
+import org.density.action.bulk.TransportBulkAction;
+import org.density.action.bulk.TransportSingleItemBulkWriteAction;
+import org.density.action.support.ActionFilters;
+import org.density.common.inject.Inject;
+import org.density.transport.TransportService;
 
 /**
  * Performs the delete operation.
  * <p>
  * Deprecated use TransportBulkAction with a single item instead
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Deprecated
 public class TransportDeleteAction extends TransportSingleItemBulkWriteAction<DeleteRequest, DeleteResponse> {

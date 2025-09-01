@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.node.ResponseCollectorService;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.Diff;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Nullable;
+import org.density.common.Randomness;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.node.ResponseCollectorService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,12 +71,12 @@ import static java.util.Collections.emptyMap;
 
 /**
  * {@link IndexShardRoutingTable} encapsulates all instances of a single shard.
- * Each OpenSearch index consists of multiple shards, each shard encapsulates
+ * Each Density index consists of multiple shards, each shard encapsulates
  * a disjoint set of the index data and each shard has one or more instances
  * referred to as replicas of a shard. Given that, this class encapsulates all
  * replicas (instances) for a single index shard.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexShardRoutingTable extends AbstractDiffable<IndexShardRoutingTable> implements Iterable<ShardRouting> {
@@ -495,7 +495,7 @@ public class IndexShardRoutingTable extends AbstractDiffable<IndexShardRoutingTa
     /**
      * Adjust the for all other nodes' collected stats. In the original ranking paper there is no need to adjust other nodes' stats because
      * Cassandra sends occasional requests to all copies of the data, so their stats will be updated during that broadcast phase. In
-     * OpenSearch, however, we do not have that sort of broadcast-to-all behavior. In order to prevent a node that gets a high score and
+     * Density, however, we do not have that sort of broadcast-to-all behavior. In order to prevent a node that gets a high score and
      * then never gets any more requests, we must ensure it eventually returns to a more normal score and can be a candidate for serving
      * requests.
      * <p>
@@ -986,7 +986,7 @@ public class IndexShardRoutingTable extends AbstractDiffable<IndexShardRoutingTa
     /**
      * Key for WeightedRouting Shard Iterator
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "2.4.0")
     public static class WeightedRoutingKey {
@@ -1015,7 +1015,7 @@ public class IndexShardRoutingTable extends AbstractDiffable<IndexShardRoutingTa
     /**
      * Holder class for shard routing(s) which are classified and stored based on their weights.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "2.14.0")
     public static class WeightedShardRoutings {
@@ -1115,7 +1115,7 @@ public class IndexShardRoutingTable extends AbstractDiffable<IndexShardRoutingTa
     /**
      * Builder of an index shard routing table.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
 

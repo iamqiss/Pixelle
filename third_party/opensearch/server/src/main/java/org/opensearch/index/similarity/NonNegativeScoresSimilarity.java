@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.index.FieldInvertState;
 import org.apache.lucene.search.CollectionStatistics;
@@ -43,23 +43,23 @@ import org.apache.lucene.search.similarities.Similarity;
  * an error instead of silently corrupt top hits. It should be applied to any custom or
  * scripted similarity.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // public for testing
 public final class NonNegativeScoresSimilarity extends Similarity {
 
     // Escape hatch
-    private static final String OPENSEARCH_ENFORCE_POSITIVE_SCORES = "opensearch.enforce.positive.scores";
+    private static final String DENSITY_ENFORCE_POSITIVE_SCORES = "density.enforce.positive.scores";
     private static final boolean ENFORCE_POSITIVE_SCORES;
     static {
-        String enforcePositiveScores = System.getProperty(OPENSEARCH_ENFORCE_POSITIVE_SCORES);
+        String enforcePositiveScores = System.getProperty(DENSITY_ENFORCE_POSITIVE_SCORES);
         if (enforcePositiveScores == null) {
             ENFORCE_POSITIVE_SCORES = true;
         } else if ("false".equals(enforcePositiveScores)) {
             ENFORCE_POSITIVE_SCORES = false;
         } else {
             throw new IllegalArgumentException(
-                OPENSEARCH_ENFORCE_POSITIVE_SCORES + " may only be unset or set to [false], but got [" + enforcePositiveScores + "]"
+                DENSITY_ENFORCE_POSITIVE_SCORES + " may only be unset or set to [false], but got [" + enforcePositiveScores + "]"
             );
         }
     }

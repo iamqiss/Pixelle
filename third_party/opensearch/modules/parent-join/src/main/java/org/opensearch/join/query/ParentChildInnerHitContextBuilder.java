@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.query;
+package org.density.join.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.ReaderUtil;
@@ -47,26 +47,26 @@ import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.MaxScoreCollector;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.InnerHitContextBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.join.mapper.ParentIdFieldMapper;
-import org.opensearch.join.mapper.ParentJoinFieldMapper;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.internal.SearchContext;
+import org.density.ExceptionsHelper;
+import org.density.action.search.MaxScoreCollector;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.InnerHitContextBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.join.mapper.ParentIdFieldMapper;
+import org.density.join.mapper.ParentJoinFieldMapper;
+import org.density.search.SearchHit;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.search.fetch.subphase.InnerHitsContext.intersect;
+import static org.density.search.fetch.subphase.InnerHitsContext.intersect;
 
 class ParentChildInnerHitContextBuilder extends InnerHitContextBuilder {
     private final String typeName;
@@ -203,7 +203,7 @@ class ParentChildInnerHitContextBuilder extends InnerHitContextBuilder {
                 BytesRef joinName = docValues.lookupOrd(ord);
                 return joinName.utf8ToString();
             } catch (IOException e) {
-                throw ExceptionsHelper.convertToOpenSearchException(e);
+                throw ExceptionsHelper.convertToDensityException(e);
             }
         }
 

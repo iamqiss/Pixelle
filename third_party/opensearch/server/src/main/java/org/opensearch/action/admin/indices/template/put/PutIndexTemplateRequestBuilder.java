@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.template.put;
+package org.density.action.admin.indices.template.put;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.transport.client.DensityClient;
 
 import java.util.List;
 import java.util.Map;
@@ -48,7 +48,7 @@ import java.util.Map;
 /**
  * A request builder for putting an index template into the cluster state
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PutIndexTemplateRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -56,11 +56,11 @@ public class PutIndexTemplateRequestBuilder extends ClusterManagerNodeOperationR
     AcknowledgedResponse,
     PutIndexTemplateRequestBuilder> {
 
-    public PutIndexTemplateRequestBuilder(OpenSearchClient client, PutIndexTemplateAction action) {
+    public PutIndexTemplateRequestBuilder(DensityClient client, PutIndexTemplateAction action) {
         super(client, action, new PutIndexTemplateRequest());
     }
 
-    public PutIndexTemplateRequestBuilder(OpenSearchClient client, PutIndexTemplateAction action, String name) {
+    public PutIndexTemplateRequestBuilder(DensityClient client, PutIndexTemplateAction action, String name) {
         super(client, action, new PutIndexTemplateRequest(name));
     }
 

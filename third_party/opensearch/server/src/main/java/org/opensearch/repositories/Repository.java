@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.MapperService;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.indices.recovery.RecoveryState;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -79,16 +79,16 @@ import java.util.function.Function;
  * <li>When all shard calls return cluster-manager calls {@link #finalizeSnapshot} with possible list of failures</li>
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface Repository extends LifecycleComponent {
 
     /**
      * An factory interface for constructing repositories.
-     * See {@link org.opensearch.plugins.RepositoryPlugin}.
+     * See {@link org.density.plugins.RepositoryPlugin}.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface Factory {
@@ -335,7 +335,7 @@ public interface Repository extends LifecycleComponent {
 
     /**
      * Verifies repository settings on data node.
-     * @param verificationToken value returned by {@link org.opensearch.repositories.Repository#startVerification()}
+     * @param verificationToken value returned by {@link org.density.repositories.Repository#startVerification()}
      * @param localNode         the local node information, for inclusion in verification errors
      */
     void verify(String verificationToken, DiscoveryNode localNode);
@@ -356,7 +356,7 @@ public interface Repository extends LifecycleComponent {
     /**
      * Creates a snapshot of the shard based on the index commit point.
      * <p>
-     * The index commit point can be obtained by using {@link org.opensearch.index.engine.Engine#acquireLastIndexCommit} method.
+     * The index commit point can be obtained by using {@link org.density.index.engine.Engine#acquireLastIndexCommit} method.
      * Repository implementations shouldn't release the snapshot index commit point. It is done by the method caller.
      * <p>
      * As snapshot process progresses, implementation of this method should update {@link IndexShardSnapshotStatus} object and check
@@ -390,7 +390,7 @@ public interface Repository extends LifecycleComponent {
     /**
      * Adds a reference of remote store data for a index commit point.
      * <p>
-     * The index commit point can be obtained by using {@link org.opensearch.index.engine.Engine#acquireLastIndexCommit} method.
+     * The index commit point can be obtained by using {@link org.density.index.engine.Engine#acquireLastIndexCommit} method.
      * Repository implementations shouldn't release the snapshot index commit point. It is done by the method caller.
      * <p>
      * As snapshot process progresses, implementation of this method should update {@link IndexShardSnapshotStatus} object and check
@@ -424,8 +424,8 @@ public interface Repository extends LifecycleComponent {
     /**
      * Adds a reference of remote store data for a index commit point.
      * <p>
-     * The index commit point can be obtained by using {@link org.opensearch.index.engine.Engine#acquireLastIndexCommit} method.
-     * Or for closed index can be obtained by reading last remote uploaded metadata by using {@link org.opensearch.index.shard.IndexShard#fetchLastRemoteUploadedSegmentMetadata()} method.
+     * The index commit point can be obtained by using {@link org.density.index.engine.Engine#acquireLastIndexCommit} method.
+     * Or for closed index can be obtained by reading last remote uploaded metadata by using {@link org.density.index.shard.IndexShard#fetchLastRemoteUploadedSegmentMetadata()} method.
      * Repository implementations shouldn't release the snapshot index commit point. It is done by the method caller.
      * <p>
      * As snapshot process progresses, implementation of this method should update {@link IndexShardSnapshotStatus} object and check
@@ -528,7 +528,7 @@ public interface Repository extends LifecycleComponent {
 
     /**
      * Update the repository with the incoming cluster state. This method is invoked from {@link RepositoriesService#applyClusterState} and
-     * thus the same semantics as with {@link org.opensearch.cluster.ClusterStateApplier#applyClusterState} apply for the
+     * thus the same semantics as with {@link org.density.cluster.ClusterStateApplier#applyClusterState} apply for the
      * {@link ClusterState} that is passed here.
      *
      * @param state new cluster state

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,60 +25,60 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata;
-import org.opensearch.cluster.applicationtemplates.SystemTemplatesService;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.logging.HeaderWarning;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndexTemplateMissingException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.InvalidIndexTemplateException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.applicationtemplates.ClusterStateSystemTemplateLoader;
+import org.density.cluster.applicationtemplates.SystemTemplateMetadata;
+import org.density.cluster.applicationtemplates.SystemTemplatesService;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.ValidationException;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.inject.Inject;
+import org.density.common.logging.HeaderWarning;
+import org.density.common.regex.Regex;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.index.translog.Translog;
+import org.density.indices.IndexTemplateMissingException;
+import org.density.indices.IndicesService;
+import org.density.indices.InvalidIndexTemplateException;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -99,23 +99,23 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.MetadataCreateDataStreamService.validateTimestampFieldMapping;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateIndexTotalPrimaryShardsPerNodeSetting;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateRefreshIntervalSettings;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateTranslogFlushIntervalSettingsForCompositeIndex;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_COMPONENT_TEMPLATE;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_INDEX_TEMPLATE;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_INDEX_TEMPLATE_V2;
-import static org.opensearch.cluster.service.ClusterManagerTask.REMOVE_COMPONENT_TEMPLATE;
-import static org.opensearch.cluster.service.ClusterManagerTask.REMOVE_INDEX_TEMPLATE;
-import static org.opensearch.cluster.service.ClusterManagerTask.REMOVE_INDEX_TEMPLATE_V2;
-import static org.opensearch.common.util.concurrent.ThreadContext.ACTION_ORIGIN_TRANSIENT_NAME;
-import static org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
+import static org.density.cluster.metadata.MetadataCreateDataStreamService.validateTimestampFieldMapping;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateIndexTotalPrimaryShardsPerNodeSetting;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateRefreshIntervalSettings;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateTranslogFlushIntervalSettingsForCompositeIndex;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_COMPONENT_TEMPLATE;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_INDEX_TEMPLATE;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_INDEX_TEMPLATE_V2;
+import static org.density.cluster.service.ClusterManagerTask.REMOVE_COMPONENT_TEMPLATE;
+import static org.density.cluster.service.ClusterManagerTask.REMOVE_INDEX_TEMPLATE;
+import static org.density.cluster.service.ClusterManagerTask.REMOVE_INDEX_TEMPLATE_V2;
+import static org.density.common.util.concurrent.ThreadContext.ACTION_ORIGIN_TRANSIENT_NAME;
+import static org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
 
 /**
  * Service responsible for submitting index templates updates
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataIndexTemplateService {
 
@@ -1696,7 +1696,7 @@ public class MetadataIndexTemplateService {
     /**
      * Listener for putting metadata in the template
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface PutListener {
 
@@ -1708,7 +1708,7 @@ public class MetadataIndexTemplateService {
     /**
      * A PUT request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PutRequest {
         final String name;
@@ -1776,7 +1776,7 @@ public class MetadataIndexTemplateService {
     /**
      * The PUT response.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PutResponse {
         private final boolean acknowledged;
@@ -1793,7 +1793,7 @@ public class MetadataIndexTemplateService {
     /**
      * A remove Request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RemoveRequest {
         final String name;
@@ -1812,7 +1812,7 @@ public class MetadataIndexTemplateService {
     /**
      * A remove Response.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RemoveResponse {
         private final boolean acknowledged;
@@ -1829,7 +1829,7 @@ public class MetadataIndexTemplateService {
     /**
      * A remove listener.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface RemoveListener {
 

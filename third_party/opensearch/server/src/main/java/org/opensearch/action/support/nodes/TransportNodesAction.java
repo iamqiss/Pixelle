@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.nodes;
+package org.density.action.support.nodes;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.NodeShouldNotConnectException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.NodeShouldNotConnectException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 /**
  * Base action class for transport nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportNodesAction<
     NodesRequest extends BaseNodesRequest<NodesRequest>,
@@ -219,7 +219,7 @@ public abstract class TransportNodesAction<
     /**
      * Asynchronous action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class AsyncAction {
 
@@ -323,7 +323,7 @@ public abstract class TransportNodesAction<
     /**
      * A node transport handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class NodeTransportHandler implements TransportRequestHandler<NodeRequest> {
 

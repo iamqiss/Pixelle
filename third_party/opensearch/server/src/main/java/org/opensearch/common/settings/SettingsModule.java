@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Module;
+import org.density.common.util.FeatureFlags;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ import java.util.stream.IntStream;
 /**
  * A module that binds the provided settings to the {@link Settings} interface.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SettingsModule implements Module {
     private static final Logger logger = LogManager.getLogger(SettingsModule.class);
@@ -138,7 +138,7 @@ public class SettingsModule implements Module {
                 builder.append(System.lineSeparator());
                 int count = 0;
                 for (String word : ("Index level settings can NOT be set on the nodes configuration like "
-                    + "the opensearch.yaml, in system properties or command line arguments."
+                    + "the density.yaml, in system properties or command line arguments."
                     + "In order to upgrade all indices the settings must be updated via the /${index}/_settings API. "
                     + "Unless all settings are dynamic all indices must be closed in order to apply the upgrade"
                     + "Indices created in the future should use index templates to set default values.").split(" ")) {

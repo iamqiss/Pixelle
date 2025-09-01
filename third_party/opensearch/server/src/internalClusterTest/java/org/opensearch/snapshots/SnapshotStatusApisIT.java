@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStats;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStats;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexNotFoundException;
+import org.density.repositories.IndexId;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -71,8 +71,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.opensearch.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;

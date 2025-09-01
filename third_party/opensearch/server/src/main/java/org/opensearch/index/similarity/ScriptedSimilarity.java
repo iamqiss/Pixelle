@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.index.FieldInvertState;
 import org.apache.lucene.search.CollectionStatistics;
@@ -38,13 +38,13 @@ import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TermStatistics;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.util.SmallFloat;
-import org.opensearch.script.SimilarityScript;
-import org.opensearch.script.SimilarityWeightScript;
+import org.density.script.SimilarityScript;
+import org.density.script.SimilarityWeightScript;
 
 /**
  * A {@link Similarity} implementation that allows scores to be scripted.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ScriptedSimilarity extends Similarity {
 
@@ -166,7 +166,7 @@ public final class ScriptedSimilarity extends Similarity {
     /**
      * Scoring factors that come from the query.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Query {
         private final float boost;
@@ -184,7 +184,7 @@ public final class ScriptedSimilarity extends Similarity {
     /**
      * Statistics that are specific to a given field.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Field {
         private final long docCount;
@@ -218,7 +218,7 @@ public final class ScriptedSimilarity extends Similarity {
     /**
      * Statistics that are specific to a given term.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Term {
         private final long docFreq;
@@ -243,7 +243,7 @@ public final class ScriptedSimilarity extends Similarity {
     /**
      * Statistics that are specific to a document.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Doc {
         private float freq;

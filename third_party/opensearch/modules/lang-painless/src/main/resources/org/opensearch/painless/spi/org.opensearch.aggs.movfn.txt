@@ -19,7 +19,7 @@
 
 # This file contains an allowlist for the Moving Function pipeline aggregator in core
 
-class org.opensearch.search.aggregations.pipeline.MovingFunctions {
+class org.density.search.aggregations.pipeline.MovingFunctions {
   double max(double[])
   double min(double[])
   double sum(double[])

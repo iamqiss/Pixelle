@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.cluster.dangling;
+package org.density.rest.action.admin.cluster.dangling;
 
-import org.opensearch.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.rest.RestStatus;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.core.rest.RestStatus.ACCEPTED;
-import static org.opensearch.rest.RestRequest.Method.DELETE;
+import static org.density.core.rest.RestStatus.ACCEPTED;
+import static org.density.rest.RestRequest.Method.DELETE;
 
 /**
  * Transport action to delete dangling index
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestDeleteDanglingIndexAction extends BaseRestHandler {
 

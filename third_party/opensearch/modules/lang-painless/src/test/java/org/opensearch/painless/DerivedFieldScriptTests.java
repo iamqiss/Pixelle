@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.memory.MemoryIndex;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafGeoPointFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.plain.AbstractLeafGeoPointFieldData;
-import org.opensearch.index.fielddata.plain.LeafDoubleFieldData;
-import org.opensearch.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistLoader;
-import org.opensearch.script.DerivedFieldScript;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptException;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.collect.Tuple;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafGeoPointFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.plain.AbstractLeafGeoPointFieldData;
+import org.density.index.fielddata.plain.LeafDoubleFieldData;
+import org.density.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistLoader;
+import org.density.script.DerivedFieldScript;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptException;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class DerivedFieldScriptTests extends ScriptTestCase {
         // Adding derived field script to the contexts for the script engine
         Map<ScriptContext<?>, List<Allowlist>> contexts = newDefaultContexts();
         List<Allowlist> allowlists = new ArrayList<>(Allowlist.BASE_ALLOWLISTS);
-        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.opensearch.derived.txt"));
+        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.density.derived.txt"));
         contexts.put(DerivedFieldScript.CONTEXT, allowlists);
 
         SCRIPT_ENGINE = new PainlessScriptEngine(Settings.EMPTY, contexts);

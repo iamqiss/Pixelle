@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.ingest.IngestDocument;
+import org.density.DensityException;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.ingest.IngestDocument;
 
 import java.io.IOException;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Holds the end result of what a pipeline did to sample document provided via the simulate api.
@@ -62,7 +62,7 @@ public final class SimulateDocumentBaseResult implements SimulateDocumentResult 
                 return new SimulateDocumentBaseResult(((WriteableIngestDocument) a[0]).getIngestDocument());
             } else {
                 assert a[0] == null;
-                return new SimulateDocumentBaseResult((OpenSearchException) a[1]);
+                return new SimulateDocumentBaseResult((DensityException) a[1]);
             }
         }
     );
@@ -72,7 +72,7 @@ public final class SimulateDocumentBaseResult implements SimulateDocumentResult 
             WriteableIngestDocument.INGEST_DOC_PARSER,
             new ParseField(WriteableIngestDocument.DOC_FIELD)
         );
-        PARSER.declareObject(optionalConstructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField("error"));
+        PARSER.declareObject(optionalConstructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField("error"));
     }
 
     public SimulateDocumentBaseResult(IngestDocument ingestDocument) {
@@ -125,7 +125,7 @@ public final class SimulateDocumentBaseResult implements SimulateDocumentResult 
         if (failure == null) {
             ingestDocument.toXContent(builder, params);
         } else {
-            OpenSearchException.generateFailureXContent(builder, params, failure, true);
+            DensityException.generateFailureXContent(builder, params, failure, true);
         }
         builder.endObject();
         return builder;

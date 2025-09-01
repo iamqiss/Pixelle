@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.ShardIndexingPressureTracker.OperationTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.PerformanceTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.RejectionTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.StatsTracker;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.ShardIndexingPressureTracker.OperationTracker;
+import org.density.index.ShardIndexingPressureTracker.PerformanceTracker;
+import org.density.index.ShardIndexingPressureTracker.RejectionTracker;
+import org.density.index.ShardIndexingPressureTracker.StatsTracker;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -52,7 +52,7 @@ import java.util.function.ToLongFunction;
  * goes above operating_factor.upper of current shard limits. MemoryManager attempts to update the new shard limit such that the new value
  * remains withing the operating_factor.optimal range of current shard utilization.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardIndexingPressureMemoryManager {
     private static final Logger logger = LogManager.getLogger(ShardIndexingPressureMemoryManager.class);

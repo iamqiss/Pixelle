@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.network.NetworkAddress;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.Map;
 
-public class TransportInfoTests extends OpenSearchTestCase {
+public class TransportInfoTests extends DensityTestCase {
 
     private TransportInfo createTransportInfo(InetAddress address, int port, boolean cnameInPublishAddress) {
         BoundTransportAddress boundAddress = new BoundTransportAddress(
@@ -69,11 +69,11 @@ public class TransportInfoTests extends OpenSearchTestCase {
         assertWarnings(
             "transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. "
                 + "This format is deprecated and will change to [hostname/ip:port] in a future version. "
-                + "Use -Dopensearch.transport.cname_in_publish_address=true to enforce non-deprecated formatting.",
+                + "Use -Ddensity.transport.cname_in_publish_address=true to enforce non-deprecated formatting.",
 
             "transport.test_profile.publish_address was printed as [ip:port] instead of [hostname/ip:port]. "
                 + "This format is deprecated and will change to [hostname/ip:port] in a future version. "
-                + "Use -Dopensearch.transport.cname_in_publish_address=true to enforce non-deprecated formatting."
+                + "Use -Ddensity.transport.cname_in_publish_address=true to enforce non-deprecated formatting."
         );
     }
 

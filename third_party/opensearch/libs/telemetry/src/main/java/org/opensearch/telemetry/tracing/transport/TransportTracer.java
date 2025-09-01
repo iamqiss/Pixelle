@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.transport;
+package org.density.telemetry.tracing.transport;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanCreationContext;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanCreationContext;
 
 import java.util.Collection;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
  * <p>
  * All methods on the Tracer object are multi-thread safe.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface TransportTracer {

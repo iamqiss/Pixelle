@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Netty4NioSocketChannel;
+import org.density.test.DensityTestCase;
+import org.density.transport.Netty4NioSocketChannel;
 import org.junit.Before;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ import io.netty.channel.ServerChannel;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 
-public class Netty4HttpChannelTests extends OpenSearchTestCase {
+public class Netty4HttpChannelTests extends DensityTestCase {
     private Netty4HttpChannel netty4HttpChannel;
     private Channel channel;
 

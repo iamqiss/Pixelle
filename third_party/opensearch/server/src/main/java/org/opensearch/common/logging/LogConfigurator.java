@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -47,13 +47,13 @@ import org.apache.logging.log4j.status.StatusConsoleListener;
 import org.apache.logging.log4j.status.StatusData;
 import org.apache.logging.log4j.status.StatusListener;
 import org.apache.logging.log4j.status.StatusLogger;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.UserException;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.node.Node;
+import org.density.cli.ExitCodes;
+import org.density.cli.UserException;
+import org.density.cluster.ClusterName;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.node.Node;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -75,7 +75,7 @@ import java.util.stream.StreamSupport;
 /**
  * Configures the logger
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LogConfigurator {
 
@@ -141,7 +141,7 @@ public class LogConfigurator {
 
     /**
      * Sets the node name. This is called before logging is configured if the
-     * node name is set in opensearch.yml. Otherwise it is called as soon
+     * node name is set in density.yml. Otherwise it is called as soon
      * as the node id is available.
      */
     public static void setNodeName(String nodeName) {
@@ -227,13 +227,13 @@ public class LogConfigurator {
      * properties here:
      * <ul>
      * <li>
-     * {@code opensearch.logs.base_path} the base path containing the log files
+     * {@code density.logs.base_path} the base path containing the log files
      * </li>
      * <li>
-     * {@code opensearch.logs.cluster_name} the cluster name, used as the prefix of log filenames in the default configuration
+     * {@code density.logs.cluster_name} the cluster name, used as the prefix of log filenames in the default configuration
      * </li>
      * <li>
-     * {@code opensearch.logs.node_name} the node name, can be used as part of log filenames
+     * {@code density.logs.node_name} the node name, can be used as part of log filenames
      * </li>
      * </ul>
      *
@@ -243,9 +243,9 @@ public class LogConfigurator {
     @SuppressForbidden(reason = "sets system property for logging configuration")
     private static void setLogConfigurationSystemProperty(final Path logsPath, final Settings settings) {
         System.setProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager");
-        System.setProperty("opensearch.logs.base_path", logsPath.toString());
-        System.setProperty("opensearch.logs.cluster_name", ClusterName.CLUSTER_NAME_SETTING.get(settings).value());
-        System.setProperty("opensearch.logs.node_name", Node.NODE_NAME_SETTING.get(settings));
+        System.setProperty("density.logs.base_path", logsPath.toString());
+        System.setProperty("density.logs.cluster_name", ClusterName.CLUSTER_NAME_SETTING.get(settings).value());
+        System.setProperty("density.logs.node_name", Node.NODE_NAME_SETTING.get(settings));
     }
 
 }

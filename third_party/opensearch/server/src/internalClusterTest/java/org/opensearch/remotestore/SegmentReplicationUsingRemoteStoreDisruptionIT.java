@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.indices.replication.SegmentReplicationTarget;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.SlowClusterStateProcessing;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.stats.ClusterStatsResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.Index;
+import org.density.index.IndexService;
+import org.density.index.ReplicationStats;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.indices.replication.SegmentReplicationTarget;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.SlowClusterStateProcessing;
 
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
 /**
  * This class runs tests with remote store + segRep while blocking file downloads
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SegmentReplicationUsingRemoteStoreDisruptionIT extends AbstractRemoteStoreMockRepositoryIntegTestCase {
 
     @Override

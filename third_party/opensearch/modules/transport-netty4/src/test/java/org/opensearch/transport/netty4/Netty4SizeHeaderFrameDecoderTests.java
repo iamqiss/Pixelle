@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
-import org.opensearch.Version;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.TransportSettings;
+import org.density.Version;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.TransportSettings;
 import org.junit.After;
 import org.junit.Before;
 
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.is;
  * This test checks, if an HTTP look-alike request (starting with an HTTP method and a space)
  * actually returns text response instead of just dropping the connection
  */
-public class Netty4SizeHeaderFrameDecoderTests extends OpenSearchTestCase {
+public class Netty4SizeHeaderFrameDecoderTests extends DensityTestCase {
 
     private final Settings settings = Settings.builder()
         .put("node.name", "NettySizeHeaderFrameDecoderTests")

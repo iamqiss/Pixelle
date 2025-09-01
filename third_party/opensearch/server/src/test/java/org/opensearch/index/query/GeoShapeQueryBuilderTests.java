@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.geo.RandomShapeGenerator;
-import org.opensearch.test.geo.RandomShapeGenerator.ShapeType;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResult;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.geo.RandomShapeGenerator;
+import org.density.test.geo.RandomShapeGenerator.ShapeType;
 import org.junit.After;
 
 import java.io.IOException;
@@ -109,7 +109,7 @@ public abstract class GeoShapeQueryBuilderTests extends AbstractQueryTestCase<Ge
             builder.endObject();
             json = builder.toString();
         } catch (IOException ex) {
-            throw new OpenSearchException("boom", ex);
+            throw new DensityException("boom", ex);
         }
         return new GetResponse(new GetResult(indexedShapeIndex, indexedShapeId, 0, 1, 0, true, new BytesArray(json), null, null));
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.stats;
+package org.density.index.search.stats;
 
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.collect.MapBuilder;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.regex.Regex;
+import org.density.core.common.util.CollectionUtils;
+import org.density.index.shard.SearchOperationListener;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ import static java.util.Collections.emptyMap;
 /**
  * Shard level search stats
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ShardSearchStats implements SearchOperationListener {
 
@@ -233,7 +233,7 @@ public final class ShardSearchStats implements SearchOperationListener {
     /**
      * Holder of statistics values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class StatsHolder {
         final MeanMetric queryMetric = new MeanMetric();

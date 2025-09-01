@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.ScrollableHitSource.BasicHit;
-import org.opensearch.index.reindex.ScrollableHitSource.Hit;
-import org.opensearch.index.reindex.ScrollableHitSource.Response;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
-import org.opensearch.search.SearchHits;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.common.collect.Tuple;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.ScrollableHitSource.BasicHit;
+import org.density.index.reindex.ScrollableHitSource.Hit;
+import org.density.index.reindex.ScrollableHitSource.Response;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.search.SearchHits;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,8 +60,8 @@ import java.util.function.BiFunction;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Parsers to convert the response from the remote host into objects useful for {@link RemoteScrollableHitSource}.
@@ -259,7 +259,7 @@ final class RemoteResponseParsers {
             switch (type) {
                 // Make some effort to use the right exceptions
                 case "rejected_execution_exception":
-                    return new OpenSearchRejectedExecutionException(reason);
+                    return new DensityRejectedExecutionException(reason);
                 case "parsing_exception":
                     XContentLocation location = null;
                     if (line != null && column != null) {

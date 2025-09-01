@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.settings;
+package org.density.indices.settings;
 
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.common.ValidationException;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -48,7 +48,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class PrivateSettingsIT extends OpenSearchIntegTestCase {
+public class PrivateSettingsIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -73,7 +73,7 @@ public class PrivateSettingsIT extends OpenSearchIntegTestCase {
                 .setSettings(Settings.builder().put("index.private", "private-update"))
                 .get()
         );
-        final String message = "can not update private setting [index.private]; this setting is managed by OpenSearch";
+        final String message = "can not update private setting [index.private]; this setting is managed by Density";
         assertThat(e, hasToString(containsString(message)));
         final GetSettingsResponse responseAfterAttemptedUpdate = client().admin().indices().prepareGetSettings("test").get();
         assertNull(responseAfterAttemptedUpdate.getSetting("test", "index.private"));

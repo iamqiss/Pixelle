@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.action;
+package org.density.extensions.action;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 import java.util.Objects;
 
 /**
  * An {@link ActionType} to be used in extension action transport handling.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ExtensionAction extends ActionType<RemoteExtensionActionResponse> {
 

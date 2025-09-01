@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.get;
+package org.density.action.admin.indices.get;
 
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ClusterStateCreationUtils;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.IndicesRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ClusterStateCreationUtils;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Context;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.indices.IndicesService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 
-public class GetIndexActionTests extends OpenSearchSingleNodeTestCase {
+public class GetIndexActionTests extends DensitySingleNodeTestCase {
 
     private TransportService transportService;
     private ClusterService clusterService;

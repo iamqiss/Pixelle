@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.listeners;
+package org.density.transport.grpc.listeners;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchResponseSections;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchResponseSections;
+import org.density.action.search.ShardSearchFailure;
+import org.density.search.SearchHits;
+import org.density.test.DensityTestCase;
 
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -23,10 +23,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SearchRequestActionListenerTests extends OpenSearchTestCase {
+public class SearchRequestActionListenerTests extends DensityTestCase {
 
     @Mock
-    private StreamObserver<org.opensearch.protobufs.SearchResponse> responseObserver;
+    private StreamObserver<org.density.protobufs.SearchResponse> responseObserver;
 
     private SearchRequestActionListener listener;
 
@@ -55,14 +55,14 @@ public class SearchRequestActionListenerTests extends OpenSearchTestCase {
         listener.onResponse(mockSearchResponse);
 
         // Verify that onNext and onCompleted were called
-        verify(responseObserver, times(1)).onNext(any(org.opensearch.protobufs.SearchResponse.class));
+        verify(responseObserver, times(1)).onNext(any(org.density.protobufs.SearchResponse.class));
         verify(responseObserver, times(1)).onCompleted();
     }
 
     public void testOnFailure() {
         // Create a mock StreamObserver
         @SuppressWarnings("unchecked")
-        StreamObserver<org.opensearch.protobufs.SearchResponse> mockResponseObserver = mock(StreamObserver.class);
+        StreamObserver<org.density.protobufs.SearchResponse> mockResponseObserver = mock(StreamObserver.class);
 
         // Create a SearchRequestActionListener
         SearchRequestActionListener listener = new SearchRequestActionListener(mockResponseObserver);

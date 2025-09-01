@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.terms.InternalTerms;
-import org.opensearch.search.aggregations.bucket.terms.LongTerms;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregator;
-import org.opensearch.search.aggregations.metrics.InternalAvg;
-import org.opensearch.search.aggregations.support.AggregationPath;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.terms.InternalTerms;
+import org.density.search.aggregations.bucket.terms.LongTerms;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregator;
+import org.density.search.aggregations.metrics.InternalAvg;
+import org.density.search.aggregations.support.AggregationPath;
+import org.density.test.DensityTestCase;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.search.aggregations.InternalMultiBucketAggregation.resolvePropertyFromPath;
+import static org.density.search.aggregations.InternalMultiBucketAggregation.resolvePropertyFromPath;
 import static org.hamcrest.Matchers.equalTo;
 
-public class InternalMultiBucketAggregationTests extends OpenSearchTestCase {
+public class InternalMultiBucketAggregationTests extends DensityTestCase {
 
     public void testResolveToAgg() {
         AggregationPath path = AggregationPath.parse("the_avg");

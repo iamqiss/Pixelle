@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.PlainListenableActionFuture;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.PlainListenableActionFuture;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterApplier;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,8 +63,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.settings.Setting.Property;
-import static org.opensearch.common.settings.Setting.positiveTimeSetting;
+import static org.density.common.settings.Setting.Property;
+import static org.density.common.settings.Setting.positiveTimeSetting;
 
 /**
  * This component is responsible for maintaining connections from this node to all the nodes listed in the cluster state, and for
@@ -82,7 +82,7 @@ import static org.opensearch.common.settings.Setting.positiveTimeSetting;
  * This component does not block on disconnections at all, because a disconnection might need to wait for an ongoing (background) connection
  * attempt to complete first.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NodeConnectionsService extends AbstractLifecycleComponent {
@@ -247,7 +247,7 @@ public class NodeConnectionsService extends AbstractLifecycleComponent {
     /**
      * A connection checker.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class ConnectionChecker extends AbstractRunnable {
         protected void doRun() {
@@ -332,7 +332,7 @@ public class NodeConnectionsService extends AbstractLifecycleComponent {
      * disconnection listeners are immediately removed for failure notification and a connection is started once the disconnection is
      * complete.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected class ConnectionTarget {
         private final DiscoveryNode discoveryNode;
@@ -507,7 +507,7 @@ public class NodeConnectionsService extends AbstractLifecycleComponent {
             activityType = newActivityType;
             final PlainListenableActionFuture<Void> oldFuture = getAndClearFuture();
             addListener(listener);
-            return () -> oldFuture.onFailure(new OpenSearchException(cancellationMessage));
+            return () -> oldFuture.onFailure(new DensityException(cancellationMessage));
         }
 
         private void onCompletion(ActivityType completedActivityType, @Nullable Exception e, Runnable oppositeActivity) {

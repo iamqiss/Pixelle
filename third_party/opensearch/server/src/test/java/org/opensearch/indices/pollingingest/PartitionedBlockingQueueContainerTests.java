@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.engine.FakeIngestionSource;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.Strings;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.engine.FakeIngestionSource;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class PartitionedBlockingQueueContainerTests extends OpenSearchTestCase {
+public class PartitionedBlockingQueueContainerTests extends DensityTestCase {
     private MessageProcessorRunnable processorRunnable;
     private MessageProcessorRunnable.MessageProcessor processor;
     private PartitionedBlockingQueueContainer blockingQueueContainer;

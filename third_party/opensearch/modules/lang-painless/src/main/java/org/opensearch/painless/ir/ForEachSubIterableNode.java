@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.ir;
+package org.density.painless.ir;
 
-import org.opensearch.painless.ClassWriter;
-import org.opensearch.painless.DefBootstrap;
-import org.opensearch.painless.Location;
-import org.opensearch.painless.MethodWriter;
-import org.opensearch.painless.lookup.PainlessCast;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.phase.IRTreeVisitor;
-import org.opensearch.painless.symbol.WriteScope;
-import org.opensearch.painless.symbol.WriteScope.Variable;
+import org.density.painless.ClassWriter;
+import org.density.painless.DefBootstrap;
+import org.density.painless.Location;
+import org.density.painless.MethodWriter;
+import org.density.painless.lookup.PainlessCast;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.phase.IRTreeVisitor;
+import org.density.painless.symbol.WriteScope;
+import org.density.painless.symbol.WriteScope.Variable;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
 import java.util.Iterator;
 
-import static org.opensearch.painless.WriterConstants.ITERATOR_HASNEXT;
-import static org.opensearch.painless.WriterConstants.ITERATOR_NEXT;
-import static org.opensearch.painless.WriterConstants.ITERATOR_TYPE;
+import static org.density.painless.WriterConstants.ITERATOR_HASNEXT;
+import static org.density.painless.WriterConstants.ITERATOR_NEXT;
+import static org.density.painless.WriterConstants.ITERATOR_TYPE;
 
 /**
  * Represents a for-each loop for iterables.

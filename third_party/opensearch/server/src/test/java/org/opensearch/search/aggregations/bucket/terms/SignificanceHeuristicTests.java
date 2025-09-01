@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.ChiSquare;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.GND;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.JLHScore;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.MutualInformation;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.PercentageScore;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchModule;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.terms.heuristic.ChiSquare;
+import org.density.search.aggregations.bucket.terms.heuristic.GND;
+import org.density.search.aggregations.bucket.terms.heuristic.JLHScore;
+import org.density.search.aggregations.bucket.terms.heuristic.MutualInformation;
+import org.density.search.aggregations.bucket.terms.heuristic.PercentageScore;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -71,8 +71,8 @@ import java.util.stream.IntStream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
-import static org.opensearch.search.aggregations.AggregationBuilders.significantTerms;
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.search.aggregations.AggregationBuilders.significantTerms;
+import static org.density.test.VersionUtils.randomVersion;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -81,7 +81,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class SignificanceHeuristicTests extends OpenSearchTestCase {
+public class SignificanceHeuristicTests extends DensityTestCase {
 
     // test that stream output can actually be read - does not replace bwc test
     public void testStreamResponse() throws Exception {

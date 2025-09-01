@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.term;
+package org.density.search.suggest.term;
 
-import org.opensearch.common.io.stream.AbstractWriteableEnumTestCase;
-import org.opensearch.search.suggest.SortBy;
+import org.density.common.io.stream.AbstractWriteableEnumTestCase;
+import org.density.search.suggest.SortBy;
 
 import java.io.IOException;
 

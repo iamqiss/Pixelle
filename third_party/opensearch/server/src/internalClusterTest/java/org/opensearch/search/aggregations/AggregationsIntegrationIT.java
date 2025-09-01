@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.search.aggregations.bucket.terms.IncludeExclude;
-import org.opensearch.search.aggregations.bucket.terms.RareTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTermsAggregatorFactory;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregatorFactory;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.search.aggregations.bucket.terms.IncludeExclude;
+import org.density.search.aggregations.bucket.terms.RareTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.SignificantTermsAggregatorFactory;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.TermsAggregatorFactory;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
-import static org.opensearch.search.aggregations.AggregationBuilders.global;
-import static org.opensearch.search.aggregations.AggregationBuilders.stats;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+import static org.density.search.aggregations.AggregationBuilders.global;
+import static org.density.search.aggregations.AggregationBuilders.stats;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
-public class AggregationsIntegrationIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.SuiteScopeTestCase
+public class AggregationsIntegrationIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     static int numDocs;
 
@@ -167,7 +167,7 @@ public class AggregationsIntegrationIT extends ParameterizedStaticSettingsOpenSe
             exceptionThrown = true;
             Throwable nestedException = ex.getCause();
             assertNotNull(nestedException);
-            assertTrue(nestedException instanceof OpenSearchException);
+            assertTrue(nestedException instanceof DensityException);
             assertNotNull(nestedException.getCause());
             assertTrue(nestedException.getCause() instanceof IllegalArgumentException);
             String actualExceptionMessage = nestedException.getCause().getMessage();

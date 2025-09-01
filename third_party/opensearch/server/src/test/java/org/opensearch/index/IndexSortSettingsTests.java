@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.search.MultiValueMode;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.common.settings.Settings.Builder.EMPTY_SETTINGS;
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
+import static org.density.common.settings.Settings.Builder.EMPTY_SETTINGS;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class IndexSortSettingsTests extends OpenSearchTestCase {
+public class IndexSortSettingsTests extends DensityTestCase {
     private static IndexSettings indexSettings(Settings settings) {
         return new IndexSettings(newIndexMeta("test", settings), Settings.EMPTY);
     }

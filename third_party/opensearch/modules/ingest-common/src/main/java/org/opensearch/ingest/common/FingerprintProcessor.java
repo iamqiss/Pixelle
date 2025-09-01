@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.hash.MessageDigests;
-import org.opensearch.core.common.Strings;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
+import org.density.common.Nullable;
+import org.density.common.hash.MessageDigests;
+import org.density.core.common.Strings;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.ConfigurationUtils;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -27,14 +27,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Processor that generating hash value for the specified fields or fields not in the specified excluded list
  */
 public final class FingerprintProcessor extends AbstractProcessor {
     public static final String TYPE = "fingerprint";
-    // this processor is introduced in 2.16.0, we append the OpenSearch version to the hash method name to ensure
+    // this processor is introduced in 2.16.0, we append the Density version to the hash method name to ensure
     // that this processor always generates same hash value based on a specific hash method, if the processing logic
     // of this processor changes in future version, the version number in the hash method should be increased correspondingly.
     private static final Set<String> HASH_METHODS = Set.of("MD5@2.16.0", "SHA-1@2.16.0", "SHA-256@2.16.0", "SHA3-256@2.16.0");

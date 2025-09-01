@@ -1,6 +1,6 @@
 # Arrow Flight RPC Plugin
 
-The Arrow Flight RPC plugin provides streaming transport for node to node communication in OpenSearch using Apache Arrow Flight protocol. It integrates with the OpenSearch Security plugin to provide secure, authenticated streaming with TLS encryption.
+The Arrow Flight RPC plugin provides streaming transport for node to node communication in Density using Apache Arrow Flight protocol. It integrates with the Density Security plugin to provide secure, authenticated streaming with TLS encryption.
 
 ## Installation and Setup
 
@@ -8,9 +8,9 @@ The Arrow Flight RPC plugin provides streaming transport for node to node commun
 
 For development using gradle:
 
-1. Enable feature flag in `opensearch.yml`:
+1. Enable feature flag in `density.yml`:
 ```yaml
-opensearch.experimental.feature.transport.stream.enabled: true
+density.experimental.feature.transport.stream.enabled: true
 ```
 
 2. Run with plugin:
@@ -22,9 +22,9 @@ opensearch.experimental.feature.transport.stream.enabled: true
 
 For manual configuration and deployment:
 
-1. Enable feature flag in `opensearch.yml`:
+1. Enable feature flag in `density.yml`:
 ```yaml
-opensearch.experimental.feature.transport.stream.enabled: true
+density.experimental.feature.transport.stream.enabled: true
 ```
 
 2. Add system properties and JVM options:
@@ -58,4 +58,4 @@ See the [stream-transport-example](../examples/stream-transport-example/) plugin
 
 ## Limitations
 
-- **REST Client Support**: Arrow Flight streaming is not available for REST API clients. It only works for node-to-node transport within the OpenSearch cluster.
+- **REST Client Support**: Arrow Flight streaming is not available for REST API clients. It only works for node-to-node transport within the Density cluster.

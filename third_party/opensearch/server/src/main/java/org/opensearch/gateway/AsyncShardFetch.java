@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.store.ShardAttributes;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadata;
+import org.density.action.FailedNodeException;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.logging.Loggers;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.store.ShardAttributes;
+import org.density.indices.store.TransportNodesListShardStoreMetadata;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +67,7 @@ import static java.util.Collections.unmodifiableMap;
  * The async fetch logic maintains a cache {@link AsyncShardFetchCache} which is filled in async manner when nodes respond back.
  * It also schedules a reroute to make sure those results will be taken into account.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AsyncShardFetch<T extends BaseNodeResponse> implements Releasable {
 

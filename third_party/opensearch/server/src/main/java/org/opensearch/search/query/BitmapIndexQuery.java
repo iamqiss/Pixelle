@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.index.LeafReader;
@@ -39,7 +39,7 @@ import org.roaringbitmap.RoaringBitmap;
 /**
  * A query that matches all documents that contain a set of integer numbers represented by bitmap
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BitmapIndexQuery extends Query implements Accountable {
 
@@ -125,7 +125,7 @@ public class BitmapIndexQuery extends Query implements Accountable {
                     public long cost() {
                         if (cost == -1) {
                             // rough estimate of the cost, 20 times penalty is based on the experiment results
-                            // details in https://github.com/opensearch-project/OpenSearch/pull/16936
+                            // details in https://github.com/density-project/Density/pull/16936
                             cost = cardinality * 20;
                         }
                         return cost;

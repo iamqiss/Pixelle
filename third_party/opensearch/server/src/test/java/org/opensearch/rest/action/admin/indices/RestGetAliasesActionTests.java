@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.RestResponse;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.core.rest.RestStatus.NOT_FOUND;
-import static org.opensearch.core.rest.RestStatus.OK;
+import static org.density.core.rest.RestStatus.NOT_FOUND;
+import static org.density.core.rest.RestStatus.OK;
 import static org.hamcrest.Matchers.equalTo;
 
-public class RestGetAliasesActionTests extends OpenSearchTestCase {
+public class RestGetAliasesActionTests extends DensityTestCase {
 
     // # Assumes the following setup
     // curl -X PUT "localhost:9200/index" -H "Content-Type: application/json" -d'

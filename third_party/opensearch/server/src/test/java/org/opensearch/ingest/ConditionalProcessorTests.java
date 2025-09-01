@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.IngestConditionalScript;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptService;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.StoredScriptSource;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.metrics.OperationStats;
+import org.density.common.settings.Settings;
+import org.density.script.IngestConditionalScript;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptService;
+import org.density.script.Script;
+import org.density.script.ScriptException;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.StoredScriptSource;
+import org.density.test.DensityTestCase;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ConditionalProcessorTests extends OpenSearchTestCase {
+public class ConditionalProcessorTests extends DensityTestCase {
 
     private static final String scriptName = "conditionalScript";
 

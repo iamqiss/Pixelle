@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join;
+package org.density.join;
 
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.join.aggregations.ChildrenAggregationBuilder;
-import org.opensearch.join.aggregations.InternalChildren;
-import org.opensearch.join.aggregations.InternalParent;
-import org.opensearch.join.aggregations.ParentAggregationBuilder;
-import org.opensearch.join.mapper.ParentJoinFieldMapper;
-import org.opensearch.join.query.HasChildQueryBuilder;
-import org.opensearch.join.query.HasParentQueryBuilder;
-import org.opensearch.join.query.ParentIdQueryBuilder;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
+import org.density.index.mapper.Mapper;
+import org.density.join.aggregations.ChildrenAggregationBuilder;
+import org.density.join.aggregations.InternalChildren;
+import org.density.join.aggregations.InternalParent;
+import org.density.join.aggregations.ParentAggregationBuilder;
+import org.density.join.mapper.ParentJoinFieldMapper;
+import org.density.join.query.HasChildQueryBuilder;
+import org.density.join.query.HasParentQueryBuilder;
+import org.density.join.query.ParentIdQueryBuilder;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
 
 import java.util.Arrays;
 import java.util.Collections;

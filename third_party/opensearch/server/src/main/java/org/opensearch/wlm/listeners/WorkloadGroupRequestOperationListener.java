@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.listeners;
+package org.density.wlm.listeners;
 
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchRequestContext;
-import org.opensearch.action.search.SearchRequestOperationsListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.WorkloadGroupService;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchRequestContext;
+import org.density.action.search.SearchRequestOperationsListener;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.WorkloadGroupService;
+import org.density.wlm.WorkloadGroupTask;
 
 /**
  * This listener is used to listen for request lifecycle events for a workloadGroup

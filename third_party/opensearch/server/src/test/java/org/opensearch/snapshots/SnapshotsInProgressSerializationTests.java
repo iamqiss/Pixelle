@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterState.Custom;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress.Entry;
-import org.opensearch.cluster.SnapshotsInProgress.ShardState;
-import org.opensearch.cluster.SnapshotsInProgress.State;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.test.AbstractDiffableWireSerializationTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterState.Custom;
+import org.density.cluster.Diff;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.SnapshotsInProgress.Entry;
+import org.density.cluster.SnapshotsInProgress.ShardState;
+import org.density.cluster.SnapshotsInProgress.State;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.repositories.IndexId;
+import org.density.test.AbstractDiffableWireSerializationTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.test.VersionUtils.randomVersion;
 
 public class SnapshotsInProgressSerializationTests extends AbstractDiffableWireSerializationTestCase<Custom> {
 

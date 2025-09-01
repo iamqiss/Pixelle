@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchRequestStatsTests extends OpenSearchTestCase {
+public class SearchRequestStatsTests extends DensityTestCase {
     public void testSearchRequestStats_OnRequestFailure() {
         ClusterSettings clusterSettings = new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
         SearchRequestStats testRequestStats = new SearchRequestStats(clusterSettings);

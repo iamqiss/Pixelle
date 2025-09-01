@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class IndexingStatsTests extends OpenSearchTestCase {
+public class IndexingStatsTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         IndexingStats stats = createTestInstance();
@@ -158,19 +158,19 @@ public class IndexingStatsTests extends OpenSearchTestCase {
 
         // Serialize with V_3_1_0 (should include the field)
         BytesStreamOutput outNew = new BytesStreamOutput();
-        outNew.setVersion(org.opensearch.Version.V_3_2_0);
+        outNew.setVersion(org.density.Version.V_3_2_0);
         stats.writeTo(outNew);
         StreamInput inNew = outNew.bytes().streamInput();
-        inNew.setVersion(org.opensearch.Version.V_3_2_0);
+        inNew.setVersion(org.density.Version.V_3_2_0);
         IndexingStats.Stats deserializedNew = new IndexingStats.Stats(inNew);
         assertEquals(ts, deserializedNew.getMaxLastIndexRequestTimestamp());
 
         // Serialize with V_2_11_0 (should NOT include the field, should default to 0)
         BytesStreamOutput outOld = new BytesStreamOutput();
-        outOld.setVersion(org.opensearch.Version.V_2_11_0);
+        outOld.setVersion(org.density.Version.V_2_11_0);
         stats.writeTo(outOld);
         StreamInput inOld = outOld.bytes().streamInput();
-        inOld.setVersion(org.opensearch.Version.V_2_11_0);
+        inOld.setVersion(org.density.Version.V_2_11_0);
         IndexingStats.Stats deserializedOld = new IndexingStats.Stats(inOld);
         assertEquals(0L, deserializedOld.getMaxLastIndexRequestTimestamp());
     }

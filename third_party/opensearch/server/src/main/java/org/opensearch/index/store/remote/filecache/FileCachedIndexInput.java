@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.RandomAccessInput;
@@ -21,7 +21,7 @@ import java.nio.file.Path;
  * Every time a clone is closed, RC - 1.
  * When there is an eviction in FileCache, it only cleanups those origins with RC = 0.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileCachedIndexInput extends IndexInput implements RandomAccessInput {
 

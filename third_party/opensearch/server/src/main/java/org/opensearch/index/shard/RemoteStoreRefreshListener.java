@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.codecs.CodecUtil;
@@ -15,25 +15,25 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.UploadListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.engine.EngineException;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.cluster.routing.RecoverySource;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.logging.Loggers;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.UploadListener;
+import org.density.core.action.ActionListener;
+import org.density.index.engine.EngineException;
+import org.density.index.engine.InternalEngine;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.index.translog.Translog;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -48,12 +48,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
+import static org.density.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
 
 /**
  * RefreshListener implementation to upload newly created segment files to the remote store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteStoreRefreshListener extends ReleasableRetryableRefreshListener {
 

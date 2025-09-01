@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -50,21 +50,21 @@ import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.index.compositeindex.datacube.DimensionType;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.common.Explicit;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.network.InetAddresses;
+import org.density.common.network.NetworkAddress;
+import org.density.index.compositeindex.datacube.DimensionType;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -81,7 +81,7 @@ import java.util.function.Supplier;
 /**
  * A {@link FieldMapper} for ip addresses.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IpFieldMapper extends ParametrizedFieldMapper {
 
@@ -96,7 +96,7 @@ public class IpFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -210,7 +210,7 @@ public class IpFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for IP fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class IpFieldType extends SimpleMappedFieldType {
 
@@ -485,7 +485,7 @@ public class IpFieldMapper extends ParametrizedFieldMapper {
         /**
          * Field type for IP Scripted doc values
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static final class IpScriptDocValues extends ScriptDocValues<String> {
 

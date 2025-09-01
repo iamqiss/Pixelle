@@ -21,26 +21,26 @@ jobs:
 
             - [ ] Supports safe upgrade paths from all supported BWC versions to the current version
             - [ ] Supports compatibility with all plugins
-                - [ ] opensearch-alerting
-                - [ ] opensearch-anomaly-detection
-                - [ ] opensearch-asynchronous-search
-                - [ ] opensearch-cross-cluster-replication
-                - [ ] opensearch-geospatial
-                - [ ] opensearch-index-management
-                - [ ] opensearch-job-scheduler
-                - [ ] opensearch-knn
-                - [ ] opensearch-ml
-                - [ ] opensearch-notifications
-                - [ ] opensearch-notifications-core
-                - [ ] opensearch-observability
-                - [ ] opensearch-performance-analyzer
-                - [ ] opensearch-reports-scheduler
-                - [ ] opensearch-security
-                - [ ] opensearch-sql
+                - [ ] density-alerting
+                - [ ] density-anomaly-detection
+                - [ ] density-asynchronous-search
+                - [ ] density-cross-cluster-replication
+                - [ ] density-geospatial
+                - [ ] density-index-management
+                - [ ] density-job-scheduler
+                - [ ] density-knn
+                - [ ] density-ml
+                - [ ] density-notifications
+                - [ ] density-notifications-core
+                - [ ] density-observability
+                - [ ] density-performance-analyzer
+                - [ ] density-reports-scheduler
+                - [ ] density-security
+                - [ ] density-sql
             - [ ] Supports lucene upgrades across minor lucene versions
             - [ ] Supports lucene upgrades across major lucene versions
             - [ ] Supports lucene upgrades across underlying lucene codec bumps (Eg: Lucene95Codec -> Lucene96Codec)
-            - [ ] Supports wire compatibility of OpenSearch
+            - [ ] Supports wire compatibility of Density
             - [ ] Plan to measure performance degradation/improvement (if any)
             - [ ] Plan to document any user facing changes introduced by this feature
             - [ ] Ensure working and passing CI

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.store.ShardAttributes;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionType;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.store.ShardAttributes;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.getShardInfoOnLocalNode;
+import static org.density.gateway.TransportNodesGatewayStartedShardHelper.getShardInfoOnLocalNode;
 
 /**
  * This transport action is used to fetch the shard version from each node during primary allocation in {@link GatewayAllocator}.
  * We use this to find out which node holds the latest shard version and which of them used to be a primary in order to allocate
  * shards after node or cluster restarts.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesListGatewayStartedShards extends TransportNodesAction<
     TransportNodesListGatewayStartedShards.Request,
@@ -175,14 +175,14 @@ public class TransportNodesListGatewayStartedShards extends TransportNodesAction
                 )
             );
         } catch (Exception e) {
-            throw new OpenSearchException("failed to load started shards", e);
+            throw new DensityException("failed to load started shards", e);
         }
     }
 
     /**
      * The nodes request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends BaseNodesRequest<Request> {
 
@@ -227,7 +227,7 @@ public class TransportNodesListGatewayStartedShards extends TransportNodesAction
     /**
      *  The nodes response.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodesGatewayStartedShards extends BaseNodesResponse<NodeGatewayStartedShards> {
 
@@ -257,7 +257,7 @@ public class TransportNodesListGatewayStartedShards extends TransportNodesAction
     /**
      * The request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeRequest extends TransportRequest {
 
@@ -302,7 +302,7 @@ public class TransportNodesListGatewayStartedShards extends TransportNodesAction
     /**
      * The response.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeGatewayStartedShards extends BaseNodeResponse {
         private final GatewayStartedShard gatewayStartedShard;

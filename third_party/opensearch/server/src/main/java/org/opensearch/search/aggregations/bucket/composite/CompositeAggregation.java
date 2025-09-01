@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,13 +42,13 @@ import java.util.Map;
 /**
  * Aggregation creates a composite of multiple aggs
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface CompositeAggregation extends MultiBucketsAggregation {
     /**
      * Bucket in a composite agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface Bucket extends MultiBucketsAggregation.Bucket {
         Map<String, Object> getKey();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.breaker;
+package org.density.indices.breaker;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.breaker.ChildMemoryCircuitBreaker;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.AllCircuitBreakerStats;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.CircuitBreakerStats;
-import org.opensearch.monitor.jvm.GcNames;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.common.Booleans;
+import org.density.common.breaker.ChildMemoryCircuitBreaker;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.AllCircuitBreakerStats;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.CircuitBreakerStats;
+import org.density.monitor.jvm.GcNames;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
@@ -68,19 +68,19 @@ import java.util.function.Function;
 import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.indices.breaker.BreakerSettings.CIRCUIT_BREAKER_LIMIT_SETTING;
-import static org.opensearch.indices.breaker.BreakerSettings.CIRCUIT_BREAKER_OVERHEAD_SETTING;
+import static org.density.indices.breaker.BreakerSettings.CIRCUIT_BREAKER_LIMIT_SETTING;
+import static org.density.indices.breaker.BreakerSettings.CIRCUIT_BREAKER_OVERHEAD_SETTING;
 
 /**
  * CircuitBreakerService that attempts to redistribute space between breakers
  * if tripped
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HierarchyCircuitBreakerService extends CircuitBreakerService {
     private static final Logger logger = LogManager.getLogger(HierarchyCircuitBreakerService.class);
 
-    private static final String CHILD_LOGGER_PREFIX = "org.opensearch.indices.breaker.";
+    private static final String CHILD_LOGGER_PREFIX = "org.density.indices.breaker.";
 
     private static final MemoryMXBean MEMORY_MX_BEAN = ManagementFactory.getMemoryMXBean();
 
@@ -347,7 +347,7 @@ public class HierarchyCircuitBreakerService extends CircuitBreakerService {
     /**
      * Tracks memory usage
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class MemoryUsage {
         final long baseUsage;
@@ -475,9 +475,9 @@ public class HierarchyCircuitBreakerService extends CircuitBreakerService {
         JvmInfo jvmInfo = JvmInfo.jvmInfo();
         if (trackRealMemoryUsage && jvmInfo.useG1GC().equals("true")
         // messing with GC is "dangerous" so we apply an escape hatch. Not intended to be used.
-            && Booleans.parseBoolean(System.getProperty("opensearch.real_memory_circuit_breaker.g1_over_limit_strategy.enabled"), true)) {
+            && Booleans.parseBoolean(System.getProperty("density.real_memory_circuit_breaker.g1_over_limit_strategy.enabled"), true)) {
             TimeValue lockTimeout = TimeValue.timeValueMillis(
-                Integer.parseInt(System.getProperty("opensearch.real_memory_circuit_breaker.g1_over_limit_strategy.lock_timeout_ms", "500"))
+                Integer.parseInt(System.getProperty("density.real_memory_circuit_breaker.g1_over_limit_strategy.lock_timeout_ms", "500"))
             );
             // hardcode interval, do not want any tuning of it outside code changes.
             return new G1OverLimitStrategy(
@@ -516,7 +516,7 @@ public class HierarchyCircuitBreakerService extends CircuitBreakerService {
     /**
      * Kicks in G1GC if heap gets too high
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class G1OverLimitStrategy implements OverLimitStrategy {
         private final long g1RegionSize;

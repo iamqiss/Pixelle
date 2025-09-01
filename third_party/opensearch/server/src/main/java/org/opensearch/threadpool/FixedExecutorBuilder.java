@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.SizeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.node.Node;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.SizeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.node.Node;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * A builder for fixed executors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FixedExecutorBuilder extends ExecutorBuilder<FixedExecutorBuilder.FixedExecutorSettings> {
 
@@ -146,10 +146,10 @@ public final class FixedExecutorBuilder extends ExecutorBuilder<FixedExecutorBui
     ThreadPool.ExecutorHolder build(final FixedExecutorSettings settings, final ThreadContext threadContext) {
         int size = settings.size;
         int queueSize = settings.queueSize;
-        final ThreadFactory threadFactory = OpenSearchExecutors.daemonThreadFactory(
-            OpenSearchExecutors.threadName(settings.nodeName, name())
+        final ThreadFactory threadFactory = DensityExecutors.daemonThreadFactory(
+            DensityExecutors.threadName(settings.nodeName, name())
         );
-        final ExecutorService executor = OpenSearchExecutors.newFixed(
+        final ExecutorService executor = DensityExecutors.newFixed(
             settings.nodeName + "/" + name(),
             size,
             queueSize,

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class SuggestingErrorOnUnknownTests extends OpenSearchTestCase {
+public class SuggestingErrorOnUnknownTests extends DensityTestCase {
     private String errorMessage(String unknownField, String... candidates) {
         return new SuggestingErrorOnUnknown().errorMessage("test", unknownField, Arrays.asList(candidates));
     }

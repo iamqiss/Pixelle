@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.nio;
+package org.density.nio;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -65,7 +65,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressForbidden(reason = "allow call to socket connect")
-public class SocketChannelContextTests extends OpenSearchTestCase {
+public class SocketChannelContextTests extends DensityTestCase {
 
     private SocketChannel rawChannel;
     private TestSocketChannelContext context;

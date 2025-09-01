@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class DotExpanderProcessorFactoryTests extends OpenSearchTestCase {
+public class DotExpanderProcessorFactoryTests extends DensityTestCase {
 
     public void testCreate() throws Exception {
         DotExpanderProcessor.Factory factory = new DotExpanderProcessor.Factory();
@@ -79,7 +79,7 @@ public class DotExpanderProcessorFactoryTests extends OpenSearchTestCase {
 
         Map<String, Object> config = new HashMap<>();
         config.put("path", "_path");
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
         assertThat(e.getMessage(), equalTo("[field] required property is missing"));
     }
 
@@ -89,7 +89,7 @@ public class DotExpanderProcessorFactoryTests extends OpenSearchTestCase {
         for (String field : fields) {
             Map<String, Object> config = new HashMap<>();
             config.put("field", field);
-            Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+            Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
             assertThat(e.getMessage(), equalTo("[field] field does not contain a dot"));
         }
 
@@ -97,7 +97,7 @@ public class DotExpanderProcessorFactoryTests extends OpenSearchTestCase {
         for (String field : fields) {
             Map<String, Object> config = new HashMap<>();
             config.put("field", field);
-            Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+            Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
             assertThat(e.getMessage(), equalTo("[field] Field can't start or end with a dot"));
         }
 
@@ -105,7 +105,7 @@ public class DotExpanderProcessorFactoryTests extends OpenSearchTestCase {
         for (String field : fields) {
             Map<String, Object> config = new HashMap<>();
             config.put("field", field);
-            Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+            Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
             assertThat(e.getMessage(), equalTo("[field] No space between dots"));
         }
     }

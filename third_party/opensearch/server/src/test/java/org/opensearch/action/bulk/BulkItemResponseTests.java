@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.action.delete.DeleteResponseTests;
-import org.opensearch.action.index.IndexResponseTests;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.action.update.UpdateResponseTests;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.action.delete.DeleteResponseTests;
+import org.density.action.index.IndexResponseTests;
+import org.density.action.update.UpdateResponse;
+import org.density.action.update.UpdateResponseTests;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 
-import static org.opensearch.OpenSearchExceptionTests.assertDeepEquals;
-import static org.opensearch.OpenSearchExceptionTests.randomExceptions;
+import static org.density.DensityExceptionTests.assertDeepEquals;
+import static org.density.DensityExceptionTests.randomExceptions;
 import static org.hamcrest.Matchers.containsString;
 
-public class BulkItemResponseTests extends OpenSearchTestCase {
+public class BulkItemResponseTests extends DensityTestCase {
 
     public void testFailureToString() {
         Failure failure = new Failure("index", "id", new RuntimeException("test"));
@@ -109,7 +109,7 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
         String id = randomAlphaOfLength(5);
         DocWriteRequest.OpType opType = randomFrom(DocWriteRequest.OpType.values());
 
-        final Tuple<Throwable, OpenSearchException> exceptions = randomExceptions();
+        final Tuple<Throwable, DensityException> exceptions = randomExceptions();
 
         Exception bulkItemCause = (Exception) exceptions.v1();
         Failure bulkItemFailure = new Failure(index, id, bulkItemCause);
@@ -135,7 +135,7 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
     }
 
     public void testSerializationForFailure() throws Exception {
-        final Failure failure = new Failure("index", "id", new OpenSearchException("test"));
+        final Failure failure = new Failure("index", "id", new DensityException("test"));
         try (BytesStreamOutput out = new BytesStreamOutput()) {
             failure.writeTo(out);
 
@@ -148,13 +148,13 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
             assertEquals(failure.getMessage(), deserializedFailure.getMessage());
             assertEquals(failure.getStatus(), deserializedFailure.getStatus());
             assertEquals(failure.getSource(), deserializedFailure.getSource());
-            assertDeepEquals((OpenSearchException) failure.getCause(), (OpenSearchException) deserializedFailure.getCause());
+            assertDeepEquals((DensityException) failure.getCause(), (DensityException) deserializedFailure.getCause());
         }
     }
 
     public void testBwcSerialization() throws Exception {
         {
-            final Failure failure = new Failure("index", "id", new OpenSearchException("test"));
+            final Failure failure = new Failure("index", "id", new DensityException("test"));
             final Version version = VersionUtils.randomCompatibleVersion(random(), Version.CURRENT);
             try (BytesStreamOutput out = new BytesStreamOutput()) {
                 out.setVersion(version);
@@ -180,13 +180,13 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
                     assertEquals(failure.getSeqNo(), seqNo);
                     assertEquals(failure.getTerm(), term);
                     assertEquals(failure.isAborted(), aborted);
-                    assertDeepEquals((OpenSearchException) failure.getCause(), (OpenSearchException) cause);
+                    assertDeepEquals((DensityException) failure.getCause(), (DensityException) cause);
                 }
             }
         }
 
         {
-            final Failure failure = new Failure("index", "id", new OpenSearchException("test"));
+            final Failure failure = new Failure("index", "id", new DensityException("test"));
             final Version version = VersionUtils.randomCompatibleVersion(random(), Version.CURRENT);
             try (BytesStreamOutput out = new BytesStreamOutput()) {
                 out.setVersion(version);
@@ -213,7 +213,7 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
                 assertEquals(failure.getSeqNo(), deserializedFailure.getSeqNo());
                 assertEquals(failure.getTerm(), deserializedFailure.getTerm());
                 assertEquals(failure.isAborted(), deserializedFailure.isAborted());
-                assertDeepEquals((OpenSearchException) failure.getCause(), (OpenSearchException) deserializedFailure.getCause());
+                assertDeepEquals((DensityException) failure.getCause(), (DensityException) deserializedFailure.getCause());
             }
         }
     }
@@ -235,7 +235,7 @@ public class BulkItemResponseTests extends OpenSearchTestCase {
             assertEquals(expectedFailure.getMessage(), actualFailure.getMessage());
             assertEquals(expectedFailure.getStatus(), actualFailure.getStatus());
             assertEquals(expectedFailure.getSource(), actualFailure.getSource());
-            assertDeepEquals((OpenSearchException) expectedFailure.getCause(), (OpenSearchException) actualFailure.getCause());
+            assertDeepEquals((DensityException) expectedFailure.getCause(), (DensityException) actualFailure.getCause());
         } else {
             DocWriteResponse expectedDocResponse = expected.getResponse();
             DocWriteResponse actualDocResponse = expected.getResponse();

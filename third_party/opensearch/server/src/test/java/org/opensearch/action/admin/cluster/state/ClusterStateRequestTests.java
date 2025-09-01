@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.state;
+package org.density.action.admin.cluster.state;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.support.IndicesOptions;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
 /**
  * Unit tests for the {@link ClusterStateRequest}.
  */
-public class ClusterStateRequestTests extends OpenSearchTestCase {
+public class ClusterStateRequestTests extends DensityTestCase {
     public void testSerialization() throws Exception {
         int iterations = randomIntBetween(5, 20);
         for (int i = 0; i < iterations; i++) {

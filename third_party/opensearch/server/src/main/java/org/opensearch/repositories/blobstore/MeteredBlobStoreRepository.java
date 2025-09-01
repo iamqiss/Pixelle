@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.RepositoryInfo;
-import org.opensearch.repositories.RepositoryStatsSnapshot;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.RepositoryInfo;
+import org.density.repositories.RepositoryStatsSnapshot;
 
 import java.util.Map;
 
 /**
  * A blob store repository that is metered
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MeteredBlobStoreRepository extends BlobStoreRepository {
     private final RepositoryInfo repositoryInfo;

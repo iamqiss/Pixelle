@@ -1,47 +1,47 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeInputStream;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.repositories.blobstore.ChecksumBlobStoreFormat;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeInputStream;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ToXContent;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.repositories.blobstore.ChecksumBlobStoreFormat;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -61,13 +61,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.opensearch.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
+import static org.density.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class BlobStoreTransferServiceTests extends OpenSearchTestCase {
+public class BlobStoreTransferServiceTests extends DensityTestCase {
 
     private ThreadPool threadPool;
 

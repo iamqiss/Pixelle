@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.index.query.Operator;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.Operator;
+import org.density.protobufs.SearchRequest;
+import org.density.test.DensityTestCase;
 
-public class OperatorProtoUtilsTests extends OpenSearchTestCase {
+public class OperatorProtoUtilsTests extends DensityTestCase {
 
     public void testFromEnumWithAnd() {
         // Call the method under test with AND operator

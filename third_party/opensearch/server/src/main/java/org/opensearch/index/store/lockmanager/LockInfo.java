@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * An Interface that defines Remote Store Lock Information.
  * Individual Implemented Classes of this interface can decide how the lock should look like and its contents.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public interface LockInfo {

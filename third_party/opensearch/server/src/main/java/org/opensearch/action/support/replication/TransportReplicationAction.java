@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,72 +26,72 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.action.support.replication.ReplicationOperation.Replicas;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.UnavailableShardsException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.TransportAction;
+import org.density.action.support.TransportActions;
+import org.density.action.support.replication.ReplicationOperation.Replicas;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.ReplicationGroup;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.indices.IndexClosedException;
+import org.density.indices.IndicesService;
+import org.density.node.NodeClosedException;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
+import org.density.transport.client.transport.NoNodeAvailableException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -106,7 +106,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * primary node to validate request before primary operation followed by sampling state again for resolving
  * nodes with replica copies to perform replication.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportReplicationAction<
     Request extends ReplicationRequest<Request>,
@@ -497,7 +497,7 @@ public abstract class TransportReplicationAction<
     /**
      * Asynchronous primary action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class AsyncPrimaryAction extends AbstractRunnable {
         private final ActionListener<Response> onCompletionListener;
@@ -683,7 +683,7 @@ public abstract class TransportReplicationAction<
     /**
      * The Primary Result
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PrimaryResult<ReplicaRequest extends ReplicationRequest<ReplicaRequest>, Response extends ReplicationResponse>
         implements
@@ -737,7 +737,7 @@ public abstract class TransportReplicationAction<
     /**
      * The replica result
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ReplicaResult {
         final Exception finalFailure;
@@ -784,9 +784,9 @@ public abstract class TransportReplicationAction<
     /**
      * Thrown if there are any errors retrying on the replica
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static class RetryOnReplicaException extends OpenSearchException {
+    public static class RetryOnReplicaException extends DensityException {
 
         public RetryOnReplicaException(ShardId shardId, String msg) {
             super(msg);
@@ -801,7 +801,7 @@ public abstract class TransportReplicationAction<
     /**
      * Asynchronous replica action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private final class AsyncReplicaAction extends AbstractRunnable implements ActionListener<Releasable> {
         private final ActionListener<ReplicaResponse> onCompletionListener;
@@ -946,7 +946,7 @@ public abstract class TransportReplicationAction<
      * <p>
      * Resolves index and shard id for the request before routing it to target node
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ReroutePhase extends AbstractRunnable {
         private final ActionListener<Response> listener;
@@ -1284,7 +1284,7 @@ public abstract class TransportReplicationAction<
     /**
      * The primary shard reference
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class PrimaryShardReference
         implements
@@ -1381,7 +1381,7 @@ public abstract class TransportReplicationAction<
     /**
      * The replica response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ReplicaResponse extends ActionResponse implements ReplicationOperation.ReplicaResponse {
         private long localCheckpoint;
@@ -1440,7 +1440,7 @@ public abstract class TransportReplicationAction<
      * shards. It also encapsulates the logic required for failing the replica
      * if deemed necessary as well as marking it as stale when needed.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected class ReplicasProxy implements Replicas<ReplicaRequest> {
 
@@ -1501,7 +1501,7 @@ public abstract class TransportReplicationAction<
     /**
      * a wrapper class to encapsulate a request when being sent to a specific allocation id
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ConcreteShardRequest<R extends TransportRequest> extends TransportRequest {
 
@@ -1611,7 +1611,7 @@ public abstract class TransportReplicationAction<
     /**
      * Internal request for concrete replica
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class ConcreteReplicaRequest<R extends TransportRequest> extends ConcreteShardRequest<R> {
         // public for tests

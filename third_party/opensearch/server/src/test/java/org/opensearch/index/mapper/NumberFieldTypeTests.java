@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -56,29 +56,29 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.document.SortedUnsignedLongDocValuesRangeQuery;
-import org.opensearch.index.document.SortedUnsignedLongDocValuesSetQuery;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.MappedFieldType.Relation;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.query.BitmapDocValuesQuery;
-import org.opensearch.search.query.BitmapIndexQuery;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Numbers;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.document.SortedUnsignedLongDocValuesRangeQuery;
+import org.density.index.document.SortedUnsignedLongDocValuesSetQuery;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.MappedFieldType.Relation;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.query.BitmapDocValuesQuery;
+import org.density.search.query.BitmapIndexQuery;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;

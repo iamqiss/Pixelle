@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.tracker.ResourceUsageCalculatorTrackerServiceTests;
+import org.density.test.DensityTestCase;
+import org.density.wlm.tracker.ResourceUsageCalculatorTrackerServiceTests;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
-import static org.opensearch.wlm.tracker.CpuUsageCalculator.PROCESSOR_COUNT;
-import static org.opensearch.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
-import static org.opensearch.wlm.tracker.ResourceUsageCalculatorTests.createMockTaskWithResourceStats;
+import static org.density.wlm.cancellation.WorkloadGroupTaskCancellationService.MIN_VALUE;
+import static org.density.wlm.tracker.CpuUsageCalculator.PROCESSOR_COUNT;
+import static org.density.wlm.tracker.MemoryUsageCalculator.HEAP_SIZE_BYTES;
+import static org.density.wlm.tracker.ResourceUsageCalculatorTests.createMockTaskWithResourceStats;
 import static org.mockito.Mockito.mock;
 
-public class WorkloadGroupLevelResourceUsageViewTests extends OpenSearchTestCase {
+public class WorkloadGroupLevelResourceUsageViewTests extends DensityTestCase {
     Map<ResourceType, Double> resourceUsage;
     List<WorkloadGroupTask> activeTasks;
     ResourceUsageCalculatorTrackerServiceTests.TestClock clock;

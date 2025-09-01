@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm.tracker;
+package org.density.wlm.tracker;
 
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.WorkloadGroupLevelResourceUsageView;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.search.SearchTask;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.WorkloadGroupLevelResourceUsageView;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorkloadGroupTaskResourceTrackingTests extends OpenSearchTestCase {
+public class WorkloadGroupTaskResourceTrackingTests extends DensityTestCase {
     ThreadPool threadPool;
     WorkloadGroupResourceUsageTrackerService workloadGroupResourceUsageTrackerService;
     TaskResourceTrackingService taskResourceTrackingService;

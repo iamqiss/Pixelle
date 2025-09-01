@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.http.HttpRequest;
+import org.density.http.HttpResponse;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -25,11 +25,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.core.rest.RestStatus.ACCEPTED;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.rest.BytesRestResponse.TEXT_CONTENT_TYPE;
+import static org.density.core.rest.RestStatus.ACCEPTED;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.rest.BytesRestResponse.TEXT_CONTENT_TYPE;
 
-public class ExtensionRestResponseTests extends OpenSearchTestCase {
+public class ExtensionRestResponseTests extends DensityTestCase {
 
     private static final String OCTET_CONTENT_TYPE = "application/octet-stream";
     private static final String JSON_CONTENT_TYPE = "application/json; charset=UTF-8";

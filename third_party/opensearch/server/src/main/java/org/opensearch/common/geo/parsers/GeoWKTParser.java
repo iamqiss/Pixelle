@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.parsers;
+package org.density.common.geo.parsers;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.AbstractShapeGeometryFieldMapper;
+import org.density.DensityParseException;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.logging.Loggers;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.AbstractShapeGeometryFieldMapper;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
@@ -62,7 +62,7 @@ import org.locationtech.jts.geom.Coordinate;
  * complies with OGC® document: 12-063r5 and ISO/IEC 13249-3:2016 standard
  * located at http://docs.opengeospatial.org/is/12-063r5/12-063r5.html
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoWKTParser {
     public static final String EMPTY = "EMPTY";
@@ -80,12 +80,12 @@ public class GeoWKTParser {
     private GeoWKTParser() {}
 
     public static ShapeBuilder parse(XContentParser parser, final AbstractShapeGeometryFieldMapper shapeMapper) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         return parseExpectedType(parser, null, shapeMapper);
     }
 
     public static ShapeBuilder parseExpectedType(XContentParser parser, final GeoShapeType shapeType) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         return parseExpectedType(parser, shapeType, null);
     }
 
@@ -94,7 +94,7 @@ public class GeoWKTParser {
         XContentParser parser,
         final GeoShapeType shapeType,
         final AbstractShapeGeometryFieldMapper shapeMapper
-    ) throws IOException, OpenSearchParseException {
+    ) throws IOException, DensityParseException {
         try (StringReader reader = new StringReader(parser.text())) {
             Explicit<Boolean> ignoreZValue = (shapeMapper == null)
                 ? AbstractShapeGeometryFieldMapper.Defaults.IGNORE_Z_VALUE
@@ -124,11 +124,11 @@ public class GeoWKTParser {
         GeoShapeType shapeType,
         final boolean ignoreZValue,
         final boolean coerce
-    ) throws IOException, OpenSearchParseException {
+    ) throws IOException, DensityParseException {
         final GeoShapeType type = GeoShapeType.forName(nextWord(stream));
         if (shapeType != null && shapeType != GeoShapeType.GEOMETRYCOLLECTION) {
             if (type.wktName().equals(shapeType.wktName()) == false) {
-                throw new OpenSearchParseException("Expected geometry type [{}] but found [{}]", shapeType, type);
+                throw new DensityParseException("Expected geometry type [{}] but found [{}]", shapeType, type);
             }
         }
         switch (type) {
@@ -153,7 +153,7 @@ public class GeoWKTParser {
         }
     }
 
-    private static EnvelopeBuilder parseBBox(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static EnvelopeBuilder parseBBox(StreamTokenizer stream) throws IOException, DensityParseException {
         if (nextEmptyOrOpen(stream).equals(EMPTY)) {
             return null;
         }
@@ -169,7 +169,7 @@ public class GeoWKTParser {
     }
 
     private static PointBuilder parsePoint(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         if (nextEmptyOrOpen(stream).equals(EMPTY)) {
             return null;
         }
@@ -182,7 +182,7 @@ public class GeoWKTParser {
     }
 
     private static List<Coordinate> parseCoordinateList(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce)
-        throws IOException, OpenSearchParseException {
+        throws IOException, DensityParseException {
         CoordinatesBuilder coordinates = new CoordinatesBuilder();
         boolean isOpenParen = false;
         if (isNumberNext(stream) || (isOpenParen = nextWord(stream).equals(LPAREN))) {
@@ -190,7 +190,7 @@ public class GeoWKTParser {
         }
 
         if (isOpenParen && nextCloser(stream).equals(RPAREN) == false) {
-            throw new OpenSearchParseException("expected: [{}]" + RPAREN + " but found: [{}]" + tokenString(stream), stream.lineno());
+            throw new DensityParseException("expected: [{}]" + RPAREN + " but found: [{}]" + tokenString(stream), stream.lineno());
         }
 
         while (nextCloserOrComma(stream).equals(COMMA)) {
@@ -199,14 +199,14 @@ public class GeoWKTParser {
                 coordinates.coordinate(parseCoordinate(stream, ignoreZValue, coerce));
             }
             if (isOpenParen && nextCloser(stream).equals(RPAREN) == false) {
-                throw new OpenSearchParseException("expected: " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
+                throw new DensityParseException("expected: " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
             }
         }
         return coordinates.build();
     }
 
     private static Coordinate parseCoordinate(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         final double lon = nextNumber(stream);
         final double lat = nextNumber(stream);
         Double z = null;
@@ -217,7 +217,7 @@ public class GeoWKTParser {
     }
 
     private static MultiPointBuilder parseMultiPoint(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce)
-        throws IOException, OpenSearchParseException {
+        throws IOException, DensityParseException {
         String token = nextEmptyOrOpen(stream);
         if (token.equals(EMPTY)) {
             return new MultiPointBuilder();
@@ -226,7 +226,7 @@ public class GeoWKTParser {
     }
 
     private static LineStringBuilder parseLine(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         String token = nextEmptyOrOpen(stream);
         if (token.equals(EMPTY)) {
             return null;
@@ -237,7 +237,7 @@ public class GeoWKTParser {
     // A LinearRing is closed LineString with 4 or more positions. The first and last positions
     // are equivalent (they represent equivalent points).
     private static LineStringBuilder parseLinearRing(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce)
-        throws IOException, OpenSearchParseException {
+        throws IOException, DensityParseException {
         String token = nextEmptyOrOpen(stream);
         if (token.equals(EMPTY)) {
             return null;
@@ -249,18 +249,18 @@ public class GeoWKTParser {
                 if (coerce) {
                     coordinates.add(coordinates.get(0));
                 } else {
-                    throw new OpenSearchParseException("invalid LinearRing found (coordinates are not closed)");
+                    throw new DensityParseException("invalid LinearRing found (coordinates are not closed)");
                 }
             }
         }
         if (coordinates.size() < 4) {
-            throw new OpenSearchParseException("invalid number of points in LinearRing (found [{}] - must be >= 4)", coordinates.size());
+            throw new DensityParseException("invalid number of points in LinearRing (found [{}] - must be >= 4)", coordinates.size());
         }
         return new LineStringBuilder(coordinates);
     }
 
     private static MultiLineStringBuilder parseMultiLine(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce)
-        throws IOException, OpenSearchParseException {
+        throws IOException, DensityParseException {
         String token = nextEmptyOrOpen(stream);
         if (token.equals(EMPTY)) {
             return new MultiLineStringBuilder();
@@ -274,7 +274,7 @@ public class GeoWKTParser {
     }
 
     private static PolygonBuilder parsePolygon(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         if (nextEmptyOrOpen(stream).equals(EMPTY)) {
             return null;
         }
@@ -289,7 +289,7 @@ public class GeoWKTParser {
     }
 
     private static MultiPolygonBuilder parseMultiPolygon(StreamTokenizer stream, final boolean ignoreZValue, final boolean coerce)
-        throws IOException, OpenSearchParseException {
+        throws IOException, DensityParseException {
         if (nextEmptyOrOpen(stream).equals(EMPTY)) {
             return null;
         }
@@ -304,7 +304,7 @@ public class GeoWKTParser {
         StreamTokenizer stream,
         final boolean ignoreZValue,
         final boolean coerce
-    ) throws IOException, OpenSearchParseException {
+    ) throws IOException, DensityParseException {
         if (nextEmptyOrOpen(stream).equals(EMPTY)) {
             return null;
         }
@@ -318,7 +318,7 @@ public class GeoWKTParser {
     }
 
     /** next word in the stream */
-    private static String nextWord(StreamTokenizer stream) throws OpenSearchParseException, IOException {
+    private static String nextWord(StreamTokenizer stream) throws DensityParseException, IOException {
         switch (stream.nextToken()) {
             case StreamTokenizer.TT_WORD:
                 final String word = stream.sval;
@@ -330,10 +330,10 @@ public class GeoWKTParser {
             case ',':
                 return COMMA;
         }
-        throw new OpenSearchParseException("expected word but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected word but found: " + tokenString(stream), stream.lineno());
     }
 
-    private static double nextNumber(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static double nextNumber(StreamTokenizer stream) throws IOException, DensityParseException {
         if (stream.nextToken() == StreamTokenizer.TT_WORD) {
             if (stream.sval.equalsIgnoreCase(NAN)) {
                 return Double.NaN;
@@ -341,11 +341,11 @@ public class GeoWKTParser {
                 try {
                     return Double.parseDouble(stream.sval);
                 } catch (NumberFormatException e) {
-                    throw new OpenSearchParseException("invalid number found: " + stream.sval, stream.lineno());
+                    throw new DensityParseException("invalid number found: " + stream.sval, stream.lineno());
                 }
             }
         }
-        throw new OpenSearchParseException("expected number but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected number but found: " + tokenString(stream), stream.lineno());
     }
 
     private static String tokenString(StreamTokenizer stream) {
@@ -368,40 +368,40 @@ public class GeoWKTParser {
         return type == StreamTokenizer.TT_WORD;
     }
 
-    private static String nextEmptyOrOpen(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static String nextEmptyOrOpen(StreamTokenizer stream) throws IOException, DensityParseException {
         final String next = nextWord(stream);
         if (next.equals(EMPTY) || next.equals(LPAREN)) {
             return next;
         }
-        throw new OpenSearchParseException("expected " + EMPTY + " or " + LPAREN + " but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected " + EMPTY + " or " + LPAREN + " but found: " + tokenString(stream), stream.lineno());
     }
 
-    private static String nextCloser(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static String nextCloser(StreamTokenizer stream) throws IOException, DensityParseException {
         if (nextWord(stream).equals(RPAREN)) {
             return RPAREN;
         }
-        throw new OpenSearchParseException("expected " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
     }
 
-    private static String nextComma(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static String nextComma(StreamTokenizer stream) throws IOException, DensityParseException {
         if (nextWord(stream).equals(COMMA)) {
             return COMMA;
         }
-        throw new OpenSearchParseException("expected " + COMMA + " but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected " + COMMA + " but found: " + tokenString(stream), stream.lineno());
     }
 
-    private static String nextCloserOrComma(StreamTokenizer stream) throws IOException, OpenSearchParseException {
+    private static String nextCloserOrComma(StreamTokenizer stream) throws IOException, DensityParseException {
         String token = nextWord(stream);
         if (token.equals(COMMA) || token.equals(RPAREN)) {
             return token;
         }
-        throw new OpenSearchParseException("expected " + COMMA + " or " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
+        throw new DensityParseException("expected " + COMMA + " or " + RPAREN + " but found: " + tokenString(stream), stream.lineno());
     }
 
     /** next word in the stream */
-    private static void checkEOF(StreamTokenizer stream) throws OpenSearchParseException, IOException {
+    private static void checkEOF(StreamTokenizer stream) throws DensityParseException, IOException {
         if (stream.nextToken() != StreamTokenizer.TT_EOF) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "expected end of WKT string but found additional text: " + tokenString(stream),
                 stream.lineno()
             );

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query.rewriters;
+package org.density.search.query.rewriters;
 
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.query.QueryRewriter;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.search.query.QueryRewriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
  * or must-in-must. This rewriter handles those additional patterns that are common in
  * user-generated and template-based queries but not optimized by Lucene.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BooleanFlatteningRewriter implements QueryRewriter {
 

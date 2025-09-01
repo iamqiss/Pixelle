@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,98 +26,98 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.cluster;
+package org.density.indices.cluster;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteRequest;
-import org.opensearch.action.admin.cluster.reroute.TransportClusterRerouteAction;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.close.TransportCloseIndexAction;
-import org.opensearch.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.TransportCreateIndexAction;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.delete.TransportDeleteIndexAction;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.open.TransportOpenIndexAction;
-import org.opensearch.action.admin.indices.readonly.TransportVerifyShardIndexBlockAction;
-import org.opensearch.action.admin.indices.settings.put.TransportUpdateSettingsAction;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.DestructiveOperations;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeActionUtils;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskExecutor.ClusterTasksResult;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.EmptyClusterInfoService;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.action.shard.ShardStateAction.FailedShardEntry;
-import org.opensearch.cluster.action.shard.ShardStateAction.StartedShardEntry;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.coordination.JoinTaskExecutor;
-import org.opensearch.cluster.coordination.NodeRemovalClusterStateTaskExecutor;
-import org.opensearch.cluster.metadata.AliasValidator;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.cluster.metadata.MetadataDeleteIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.metadata.MetadataIndexStateServiceUtils;
-import org.opensearch.cluster.metadata.MetadataIndexUpgradeService;
-import org.opensearch.cluster.metadata.MetadataUpdateSettingsService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.RandomAllocationDeciderTests;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Priority;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MappingTransformerRegistry;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.gateway.TestGatewayAllocator;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.admin.cluster.reroute.ClusterRerouteRequest;
+import org.density.action.admin.cluster.reroute.TransportClusterRerouteAction;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.close.TransportCloseIndexAction;
+import org.density.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.TransportCreateIndexAction;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.delete.TransportDeleteIndexAction;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.open.TransportOpenIndexAction;
+import org.density.action.admin.indices.readonly.TransportVerifyShardIndexBlockAction;
+import org.density.action.admin.indices.settings.put.TransportUpdateSettingsAction;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.DestructiveOperations;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeActionUtils;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskExecutor.ClusterTasksResult;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.EmptyClusterInfoService;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.action.shard.ShardStateAction.FailedShardEntry;
+import org.density.cluster.action.shard.ShardStateAction.StartedShardEntry;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.coordination.JoinTaskExecutor;
+import org.density.cluster.coordination.NodeRemovalClusterStateTaskExecutor;
+import org.density.cluster.metadata.AliasValidator;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.cluster.metadata.MetadataDeleteIndexService;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.metadata.MetadataIndexStateServiceUtils;
+import org.density.cluster.metadata.MetadataIndexUpgradeService;
+import org.density.cluster.metadata.MetadataUpdateSettingsService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.RandomAllocationDeciderTests;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedFunction;
+import org.density.common.Priority;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexService;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MappingTransformerRegistry;
+import org.density.index.shard.IndexEventListener;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesService;
+import org.density.indices.ShardLimitValidator;
+import org.density.indices.SystemIndices;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.repositories.RepositoriesService;
+import org.density.snapshots.EmptySnapshotsInfoService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.gateway.TestGatewayAllocator;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,7 +130,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.env.Environment.PATH_HOME_SETTING;
+import static org.density.env.Environment.PATH_HOME_SETTING;
 import static org.hamcrest.Matchers.notNullValue;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.getRandom;
 import static org.junit.Assert.assertThat;
@@ -202,7 +202,7 @@ public class ClusterStateChanges {
         // mocks
         clusterService = mock(ClusterService.class);
         Metadata metadata = Metadata.builder().build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         when(clusterService.state()).thenReturn(clusterState);

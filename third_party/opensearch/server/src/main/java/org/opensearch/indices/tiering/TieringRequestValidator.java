@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.tiering;
+package org.density.indices.tiering;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.tiering.TieringValidationResult;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterIndexHealth;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexModule;
+import org.density.action.admin.indices.tiering.TieringValidationResult;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterIndexHealth;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.core.index.Index;
+import org.density.index.IndexModule;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +30,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.IndexModule.INDEX_TIERING_STATE;
+import static org.density.index.IndexModule.INDEX_TIERING_STATE;
 
 /**
  * Validator class to validate the tiering requests of the index
- * @opensearch.experimental
+ * @density.experimental
  */
 public class TieringRequestValidator {
 

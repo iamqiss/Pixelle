@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.plugins.IdentityPlugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.identity.IdentityService;
+import org.density.plugins.IdentityPlugin;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 
-public class ShiroIdentityPluginTests extends OpenSearchTestCase {
+public class ShiroIdentityPluginTests extends DensityTestCase {
 
     public void testSingleIdentityPluginSucceeds() {
         IdentityPlugin identityPlugin1 = new ShiroIdentityPlugin(Settings.EMPTY);
@@ -38,7 +38,7 @@ public class ShiroIdentityPluginTests extends OpenSearchTestCase {
         IdentityPlugin identityPlugin3 = new ShiroIdentityPlugin(Settings.EMPTY);
         List<IdentityPlugin> pluginList = List.of(identityPlugin1, identityPlugin2, identityPlugin3);
         Exception ex = assertThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> new IdentityService(Settings.EMPTY, mock(ThreadPool.class), pluginList)
         );
         assert (ex.getMessage().contains("Multiple identity plugins are not supported,"));

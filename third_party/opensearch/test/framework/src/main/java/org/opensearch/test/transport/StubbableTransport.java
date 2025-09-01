@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.transport;
+package org.density.test.transport;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.lifecycle.LifecycleListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.RequestHandlerRegistry;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportStats;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.LifecycleListener;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.tasks.Task;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.RequestHandlerRegistry;
+import org.density.transport.Transport;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportStats;
 
 import java.io.IOException;
 import java.net.UnknownHostException;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.icu.segmentation.ICUTokenizer;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.env.Environment;
-import org.opensearch.plugin.analysis.icu.AnalysisICUPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.env.Environment;
+import org.density.plugin.analysis.icu.AnalysisICUPlugin;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +50,7 @@ import java.nio.file.Path;
 
 import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.assertTokenStreamContents;
 
-public class IcuTokenizerFactoryTests extends OpenSearchTestCase {
+public class IcuTokenizerFactoryTests extends DensityTestCase {
 
     public void testSimpleIcuTokenizer() throws IOException {
         TestAnalysis analysis = createTestAnalysis();
@@ -118,7 +118,7 @@ public class IcuTokenizerFactoryTests extends OpenSearchTestCase {
         Files.copy(keywords, config.resolve("KeywordTokenizer.rbbi"));
         Files.copy(latin, config.resolve("Latin-dont-break-on-hyphens.rbbi"));
 
-        String json = "/org/opensearch/index/analysis/icu_analysis.json";
+        String json = "/org/density/index/analysis/icu_analysis.json";
 
         Settings settings = Settings.builder()
             .loadFromStream(json, IcuTokenizerFactoryTests.class.getResourceAsStream(json), false)

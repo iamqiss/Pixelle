@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.store.disk;
+package org.density.cache.store.disk;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.cache.EhcacheDiskCacheSettings;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.LoadAwareCacheLoader;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.serializer.BytesReferenceSerializer;
-import org.opensearch.common.cache.serializer.Serializer;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.stats.ImmutableCacheStats;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.cache.EhcacheDiskCacheSettings;
+import org.density.common.Randomness;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.LoadAwareCacheLoader;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.serializer.BytesReferenceSerializer;
+import org.density.common.cache.serializer.Serializer;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.stats.ImmutableCacheStats;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.env.NodeEnvironment;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -53,15 +53,15 @@ import java.util.function.ToLongBiFunction;
 
 import org.ehcache.PersistentCacheManager;
 
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
-import static org.opensearch.cache.store.disk.EhcacheDiskCache.MINIMUM_MAX_SIZE_IN_BYTES;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_LISTENER_MODE_SYNC_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_MAX_SIZE_IN_BYTES_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_STORAGE_PATH_KEY;
+import static org.density.cache.store.disk.EhcacheDiskCache.MINIMUM_MAX_SIZE_IN_BYTES;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.mockito.Mockito.mock;
 
 @ThreadLeakFilters(filters = { EhcacheThreadLeakFilter.class })
-public class EhCacheDiskCacheTests extends OpenSearchSingleNodeTestCase {
+public class EhCacheDiskCacheTests extends DensitySingleNodeTestCase {
 
     private static final int CACHE_SIZE_IN_BYTES = 1024 * 101;
     private final String dimensionName = "shardId";
@@ -873,7 +873,7 @@ public class EhCacheDiskCacheTests extends OpenSearchSingleNodeTestCase {
         }
     }
 
-    // Modified from OpenSearchOnHeapCacheTests.java
+    // Modified from DensityOnHeapCacheTests.java
     public void testInvalidateWithDropDimensions() throws Exception {
         Settings settings = Settings.builder().build();
         List<String> dimensionNames = List.of("dim1", "dim2");
@@ -1205,7 +1205,7 @@ public class EhCacheDiskCacheTests extends OpenSearchSingleNodeTestCase {
         cache.close();
     }
 
-    // Modified from OpenSearchOnHeapCacheTests. Can't reuse, as we can't add a dependency on the server.test module.
+    // Modified from DensityOnHeapCacheTests. Can't reuse, as we can't add a dependency on the server.test module.
     private EhcacheDiskCache<String, String> setupMaxSizeTest(long maxSizeFromSetting, long maxSizeFromConfig, boolean putSizeInConfig)
         throws Exception {
         MockRemovalListener<String, String> listener = new MockRemovalListener<>();

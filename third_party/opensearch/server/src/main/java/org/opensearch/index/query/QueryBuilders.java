@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.query.DistanceFeatureQueryBuilder.Origin;
-import org.opensearch.index.query.MoreLikeThisQueryBuilder.Item;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilder;
-import org.opensearch.index.query.functionscore.ScriptScoreQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.script.Script;
+import org.density.common.Nullable;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.core.common.bytes.BytesReference;
+import org.density.geometry.Geometry;
+import org.density.index.query.DistanceFeatureQueryBuilder.Origin;
+import org.density.index.query.MoreLikeThisQueryBuilder.Item;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.ScoreFunctionBuilder;
+import org.density.index.query.functionscore.ScriptScoreQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Utility class to create search queries.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class QueryBuilders {
 

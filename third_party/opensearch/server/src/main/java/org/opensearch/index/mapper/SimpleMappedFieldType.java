@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.time.DateMathParser;
+import org.density.index.query.QueryShardContext;
 
 import java.time.ZoneId;
 import java.util.Map;
@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * {@link MappedFieldType} base impl for field types that are neither dates nor ranges.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SimpleMappedFieldType extends MappedFieldType {
 

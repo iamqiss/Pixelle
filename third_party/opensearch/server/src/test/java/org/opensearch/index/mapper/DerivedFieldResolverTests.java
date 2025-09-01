@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -14,11 +14,11 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
+import org.density.DensityException;
+import org.density.common.lucene.Lucene;
+import org.density.core.index.Index;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -418,14 +418,14 @@ public class DerivedFieldResolverTests extends MapperServiceTestCase {
         assertNull(resolver.resolve("indexed_field_2.sub_field"));
 
         assertThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> DerivedFieldResolverFactory.createResolver(queryShardContext, createDerivedFieldsObject(), createDerivedFields(), false)
         );
 
         when(queryShardContext.allowExpensiveQueries()).thenReturn(false);
 
         assertThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> DerivedFieldResolverFactory.createResolver(queryShardContext, createDerivedFieldsObject(), createDerivedFields(), true)
         );
     }

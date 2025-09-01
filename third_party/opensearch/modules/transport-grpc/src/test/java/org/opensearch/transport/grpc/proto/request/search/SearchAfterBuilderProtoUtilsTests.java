@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.GeneralNumber;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.GeneralNumber;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchAfterBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class SearchAfterBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithEmptyList() throws IOException {
         // Call the method under test with an empty list

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContentObject;
 
 /**
  * Objects that can both render themselves in as json/yaml/etc and can provide a {@link RestStatus} for their response. Usually should be
  * implemented by top level responses sent back to users from REST endpoints.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface StatusToXContentObject extends ToXContentObject {
 

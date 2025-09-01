@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.decider.DiskThresholdDecider;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.transport.client.Client;
+import org.density.action.support.GroupedActionListener;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.decider.DiskThresholdDecider;
+import org.density.common.Priority;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -68,15 +68,15 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.cluster.routing.RoutingPool.REMOTE_CAPABLE;
-import static org.opensearch.cluster.routing.RoutingPool.getNodePool;
+import static org.density.cluster.routing.RoutingPool.REMOTE_CAPABLE;
+import static org.density.cluster.routing.RoutingPool.getNodePool;
 
 /**
  * Listens for a node to go over the high watermark and kicks off an empty
  * reroute if it does. Also responsible for logging about nodes that have
  * passed the disk watermarks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiskThresholdMonitor {
 

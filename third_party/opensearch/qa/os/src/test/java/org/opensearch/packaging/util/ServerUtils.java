@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -75,8 +75,8 @@ public class ServerUtils {
     private static final long timeoutLength = TimeUnit.SECONDS.toMillis(30);
     private static final long requestInterval = TimeUnit.SECONDS.toMillis(5);
 
-    public static void waitForOpenSearch(Installation installation) throws Exception {
-        waitForOpenSearch("green", null, installation, null, null);
+    public static void waitForDensity(Installation installation) throws Exception {
+        waitForDensity("green", null, installation, null, null);
     }
 
     /**
@@ -126,7 +126,7 @@ public class ServerUtils {
         return executor.execute(request).returnResponse();
     }
 
-    public static void waitForOpenSearch(String status, String index, Installation installation, String username, String password)
+    public static void waitForDensity(String status, String index, Installation installation, String username, String password)
         throws Exception {
 
         Objects.requireNonNull(status);
@@ -159,7 +159,7 @@ public class ServerUtils {
                     if (response.getStatusLine().getStatusCode() >= 300) {
                         final String statusLine = response.getStatusLine().toString();
                         final String body = EntityUtils.toString(response.getEntity());
-                        throw new RuntimeException("Connecting to opensearch cluster health API failed:\n" + statusLine + "\n" + body);
+                        throw new RuntimeException("Connecting to density cluster health API failed:\n" + statusLine + "\n" + body);
                     }
 
                     started = true;
@@ -183,7 +183,7 @@ public class ServerUtils {
                 FileUtils.logAllLogs(installation.logs, logger);
             }
 
-            throw new RuntimeException("OpenSearch did not start", thrownException);
+            throw new RuntimeException("Density did not start", thrownException);
         }
 
         final String url;
@@ -197,7 +197,7 @@ public class ServerUtils {
         assertThat("cluster health response must contain desired status", body, containsString(status));
     }
 
-    public static void runOpenSearchTests() throws Exception {
+    public static void runDensityTests() throws Exception {
         makeRequest(
             Request.Post("http://localhost:9200/library/_doc/1?refresh=true&pretty")
                 .bodyString("{ \"title\": \"Book #1\", \"pages\": 123 }", ContentType.APPLICATION_JSON)

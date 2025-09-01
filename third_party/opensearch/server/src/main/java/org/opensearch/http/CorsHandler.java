@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -41,19 +41,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestUtils;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.rest.RestStatus;
+import org.density.rest.RestRequest;
+import org.density.rest.RestUtils;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -70,22 +70,22 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ALLOW_CREDENTIALS;
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ALLOW_HEADERS;
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ALLOW_METHODS;
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ALLOW_ORIGIN;
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_ENABLED;
-import static org.opensearch.http.HttpTransportSettings.SETTING_CORS_MAX_AGE;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ALLOW_CREDENTIALS;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ALLOW_HEADERS;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ALLOW_METHODS;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ALLOW_ORIGIN;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_ENABLED;
+import static org.density.http.HttpTransportSettings.SETTING_CORS_MAX_AGE;
 
 /**
  * This file is forked from the https://netty.io project. In particular it combines the following three
  * files: io.netty.handler.codec.http.cors.CorsHandler, io.netty.handler.codec.http.cors.CorsConfig, and
  * io.netty.handler.codec.http.cors.CorsConfigBuilder.
  * <p>
- * It modifies the original netty code to operate on OpenSearch http request/response abstractions.
- * Additionally, it removes CORS features that are not used by OpenSearch.
+ * It modifies the original netty code to operate on Density http request/response abstractions.
+ * Additionally, it removes CORS features that are not used by Density.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CorsHandler {
 
@@ -264,7 +264,7 @@ public class CorsHandler {
     /**
      * The cors handler configuration
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Config {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.node.NodesResourceUsageStats;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.monitor.fs.FsInfo;
+import org.density.node.NodeResourceUsageStats;
+import org.density.node.NodesResourceUsageStats;
+import org.density.plugins.Plugin;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.IndexSearcher;
@@ -20,10 +20,10 @@ import java.util.PriorityQueue;
 /**
  * Supplier to compute leaf slices based on passed in leaves and max target slice count to limit the number of computed slices. It sorts
  * all the leaves based on document count and then assign each leaf in round-robin fashion to the target slice count slices. Based on
- * experiment results as shared in <a href=https://github.com/opensearch-project/OpenSearch/issues/7358>issue-7358</a>
+ * experiment results as shared in <a href=https://github.com/density-project/Density/issues/7358>issue-7358</a>
  * we can see this mechanism helps to achieve better tail/median latency over default lucene slice computation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class MaxTargetSliceSupplier {
 

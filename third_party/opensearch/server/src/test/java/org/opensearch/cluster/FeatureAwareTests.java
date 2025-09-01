@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState.FeatureAware;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.ClusterState.FeatureAware;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,9 +47,9 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Optional;
 
-import static org.opensearch.test.VersionUtils.randomVersionBetween;
+import static org.density.test.VersionUtils.randomVersionBetween;
 
-public class FeatureAwareTests extends OpenSearchTestCase {
+public class FeatureAwareTests extends DensityTestCase {
 
     abstract static class Custom implements Metadata.Custom {
 

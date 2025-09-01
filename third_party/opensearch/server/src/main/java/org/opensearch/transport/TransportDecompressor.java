@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.recycler.Recycler;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.CompressorRegistry;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.recycler.Recycler;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.CompressorRegistry;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -51,7 +51,7 @@ import java.util.zip.Inflater;
 /**
  * Decompresses data over the transport wire
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportDecompressor implements Closeable {
 

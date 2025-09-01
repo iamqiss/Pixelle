@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.ibm.icu.text.Collator;
 import com.ibm.icu.text.RawCollationKey;
@@ -39,9 +39,9 @@ import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.IndexableFieldType;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugin.analysis.icu.AnalysisICUPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugin.analysis.icu.AnalysisICUPlugin;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -295,7 +295,7 @@ public class ICUCollationKeywordFieldMapperTests extends FieldMapperTestCase2<IC
         IndexableField[] fields = doc.rootDoc().getFields("field");
         assertEquals(2, fields.length);
 
-        doc = mapper.parse(source(b -> b.field("field", "opensearch")));
+        doc = mapper.parse(source(b -> b.field("field", "density")));
         fields = doc.rootDoc().getFields("field");
         assertEquals(0, fields.length);
     }
@@ -303,7 +303,7 @@ public class ICUCollationKeywordFieldMapperTests extends FieldMapperTestCase2<IC
     public void testUpdateIgnoreAbove() throws IOException {
         MapperService mapperService = createMapperService(fieldMapping(this::minimalMapping));
         merge(mapperService, fieldMapping(b -> b.field("type", FIELD_TYPE).field("ignore_above", 5)));
-        ParsedDocument doc = mapperService.documentMapper().parse(source(b -> b.field("field", "opensearch")));
+        ParsedDocument doc = mapperService.documentMapper().parse(source(b -> b.field("field", "density")));
         IndexableField[] fields = doc.rootDoc().getFields("field");
         assertEquals(0, fields.length);
     }

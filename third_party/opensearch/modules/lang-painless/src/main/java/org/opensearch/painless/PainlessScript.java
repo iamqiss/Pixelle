@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.script.ScriptException;
+import org.density.script.ScriptException;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -115,7 +115,7 @@ public interface PainlessScript {
 
     /** returns true for methods that are part of the runtime */
     default boolean shouldFilter(StackTraceElement element) {
-        return element.getClassName().startsWith("org.opensearch.painless.")
+        return element.getClassName().startsWith("org.density.painless.")
             || element.getClassName().startsWith("java.lang.invoke.")
             || element.getClassName().startsWith("sun.invoke.");
     }

@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.noop.NoopIdentityPlugin;
-import org.opensearch.identity.noop.NoopTokenManager;
-import org.opensearch.plugins.IdentityPlugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.identity.IdentityService;
+import org.density.identity.noop.NoopIdentityPlugin;
+import org.density.identity.noop.NoopTokenManager;
+import org.density.plugins.IdentityPlugin;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-public class IdentityPluginTests extends OpenSearchTestCase {
+public class IdentityPluginTests extends DensityTestCase {
 
     public void testSingleIdentityPluginSucceeds() {
         TestThreadPool threadPool = new TestThreadPool(getTestName());
@@ -40,7 +40,7 @@ public class IdentityPluginTests extends OpenSearchTestCase {
         IdentityPlugin identityPlugin2 = new NoopIdentityPlugin(threadPool);
         IdentityPlugin identityPlugin3 = new NoopIdentityPlugin(threadPool);
         List<IdentityPlugin> pluginList = List.of(identityPlugin1, identityPlugin2, identityPlugin3);
-        Exception ex = assertThrows(OpenSearchException.class, () -> new IdentityService(Settings.EMPTY, threadPool, pluginList));
+        Exception ex = assertThrows(DensityException.class, () -> new IdentityService(Settings.EMPTY, threadPool, pluginList));
         assert (ex.getMessage().contains("Multiple identity plugins are not supported,"));
         terminate(threadPool);
     }

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.protobufs.TermsLookupField;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.indices.TermsLookup;
+import org.density.protobufs.TermsLookupField;
+import org.density.test.DensityTestCase;
 
-public class TermsLookupProtoUtilsTests extends OpenSearchTestCase {
+public class TermsLookupProtoUtilsTests extends DensityTestCase {
 
     public void testParseTermsLookupWithBasicFields() {
         // Create a TermsLookupField instance with basic fields

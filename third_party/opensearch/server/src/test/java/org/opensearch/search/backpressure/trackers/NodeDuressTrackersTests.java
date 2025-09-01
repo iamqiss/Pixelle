@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure.trackers;
+package org.density.search.backpressure.trackers;
 
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.ResourceType;
+import org.density.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
+import org.density.test.DensityTestCase;
+import org.density.wlm.ResourceType;
 
 import java.util.EnumMap;
 import java.util.function.BooleanSupplier;
 
-public class NodeDuressTrackersTests extends OpenSearchTestCase {
+public class NodeDuressTrackersTests extends DensityTestCase {
 
     final BooleanSupplier resourceCacheExpiryChecker = () -> true;
 

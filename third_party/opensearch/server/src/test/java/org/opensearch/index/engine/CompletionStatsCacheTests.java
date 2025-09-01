@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.codecs.PostingsFormat;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
@@ -42,10 +42,10 @@ import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.suggest.document.Completion101PostingsFormat;
 import org.apache.lucene.search.suggest.document.SuggestField;
 import org.apache.lucene.store.Directory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.util.io.IOUtils;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.concurrent.BrokenBarrierException;
@@ -55,16 +55,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class CompletionStatsCacheTests extends OpenSearchTestCase {
+public class CompletionStatsCacheTests extends DensityTestCase {
 
     public void testExceptionsAreNotCached() {
         final AtomicInteger openCount = new AtomicInteger();
         final CompletionStatsCache completionStatsCache = new CompletionStatsCache(() -> {
-            throw new OpenSearchException("simulated " + openCount.incrementAndGet());
+            throw new DensityException("simulated " + openCount.incrementAndGet());
         });
 
-        assertThat(expectThrows(OpenSearchException.class, completionStatsCache::get).getMessage(), equalTo("simulated 1"));
-        assertThat(expectThrows(OpenSearchException.class, completionStatsCache::get).getMessage(), equalTo("simulated 2"));
+        assertThat(expectThrows(DensityException.class, completionStatsCache::get).getMessage(), equalTo("simulated 1"));
+        assertThat(expectThrows(DensityException.class, completionStatsCache::get).getMessage(), equalTo("simulated 2"));
     }
 
     public void testCompletionStatsCache() throws IOException, InterruptedException {

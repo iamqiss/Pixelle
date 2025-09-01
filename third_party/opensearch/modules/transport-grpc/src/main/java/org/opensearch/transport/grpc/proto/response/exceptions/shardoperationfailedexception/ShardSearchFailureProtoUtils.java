@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
+package org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ShardFailure;
-import org.opensearch.transport.grpc.proto.response.exceptions.opensearchexception.OpenSearchExceptionProtoUtils;
+import org.density.action.search.ShardSearchFailure;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ShardFailure;
+import org.density.transport.grpc.proto.response.exceptions.densityexception.DensityExceptionProtoUtils;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class ShardSearchFailureProtoUtils {
         if (exception.shard() != null && exception.shard().getNodeId() != null) {
             shardFailure.setNode(exception.shard().getNodeId());
         }
-        shardFailure.setReason(OpenSearchExceptionProtoUtils.generateThrowableProto(exception.getCause()));
+        shardFailure.setReason(DensityExceptionProtoUtils.generateThrowableProto(exception.getCause()));
         return shardFailure.build();
     }
 }

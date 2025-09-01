@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
 
 import java.util.Comparator;
 
@@ -52,7 +52,7 @@ import java.util.Comparator;
  *         name, e.g. <code>logstash-2015.05.03</code></li>
  * </ol>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PriorityComparator implements Comparator<ShardRouting> {
 

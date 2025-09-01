@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -26,25 +26,25 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.codec.composite.CompositeIndexReader;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.bucket.terms.InternalTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.common.lucene.Lucene;
+import org.density.common.util.FeatureFlags;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.codec.composite.CompositeIndexReader;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.index.codec.composite912.datacube.startree.StarTreeDocValuesFormatTests;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.bucket.terms.InternalTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,16 +52,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
-import static org.opensearch.index.codec.composite912.datacube.startree.AbstractStarTreeDVFormatTests.topMapping;
-import static org.opensearch.search.aggregations.AggregationBuilders.avg;
-import static org.opensearch.search.aggregations.AggregationBuilders.count;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.min;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode.BREADTH_FIRST;
-import static org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode.DEPTH_FIRST;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.index.codec.composite912.datacube.startree.AbstractStarTreeDVFormatTests.topMapping;
+import static org.density.search.aggregations.AggregationBuilders.avg;
+import static org.density.search.aggregations.AggregationBuilders.count;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.min;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.aggregations.Aggregator.SubAggCollectionMode.BREADTH_FIRST;
+import static org.density.search.aggregations.Aggregator.SubAggCollectionMode.DEPTH_FIRST;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 
 public class NumericTermsAggregatorTests extends AggregatorTestCase {
     private static FeatureFlags.TestUtils.FlagWriteLock fflock = null;

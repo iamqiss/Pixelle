@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.service;
+package org.density.common.cache.service;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.store.OpenSearchOnHeapCache;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.store.DensityOnHeapCache;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class CacheService {
             // settings, so we fallback to onHeap to maintain backward compatibility.
             // It is guaranteed that we will have this store name registered, so
             // should be safe.
-            storeName = OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME;
+            storeName = DensityOnHeapCache.DensityOnHeapCacheFactory.NAME;
         }
         if (!cacheStoreTypeFactories.containsKey(storeName)) {
             throw new IllegalArgumentException("No store name: [" + storeName + "] is registered for cache type: " + cacheType);

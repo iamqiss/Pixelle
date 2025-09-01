@@ -4,7 +4,7 @@
     "successful": 8,
     "failed": 0
   },
-  "cluster_name": "opensearch",
+  "cluster_name": "density",
   "nodes": {
     "qr-SOrELSaGW8SlU8nflBw": {
       "name": "m1",

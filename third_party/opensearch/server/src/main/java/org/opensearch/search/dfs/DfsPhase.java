@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.dfs;
+package org.density.search.dfs;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.CollectionStatistics;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.TermStatistics;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.rescore.RescoreContext;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.index.query.ParsedQuery;
+import org.density.search.internal.SearchContext;
+import org.density.search.rescore.RescoreContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ import java.util.Map;
  * Dfs phase of a search request, used to make scoring 100% accurate by collecting additional info from each shard before the query phase.
  * The additional information is used to better compare the scores coming from all the shards, which depend on local factors (e.g. idf)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DfsPhase {
 

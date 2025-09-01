@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.stats;
+package org.density.action.admin.cluster.remotestore.stats;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.store.DirectoryFileTransferTracker;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.store.DirectoryFileTransferTracker;
 
 import java.util.Map;
 
-import static org.opensearch.test.OpenSearchTestCase.assertEquals;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.assertEquals;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 

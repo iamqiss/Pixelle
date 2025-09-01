@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.CompositeReader;
@@ -42,19 +42,19 @@ import org.apache.lucene.search.FieldExistsQuery;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.BigArrays;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.test.DensityTestCase;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SingleDimensionValuesSourceTests extends OpenSearchTestCase {
+public class SingleDimensionValuesSourceTests extends DensityTestCase {
     public void testBinarySorted() {
         MappedFieldType keyword = new KeywordFieldMapper.KeywordFieldType("keyword");
         BinaryValuesSource source = new BinaryValuesSource(

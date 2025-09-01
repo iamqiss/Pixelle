@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
@@ -37,34 +37,34 @@ import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 import org.apache.lucene.analysis.TokenStreamToAutomaton;
 import org.apache.lucene.search.suggest.document.ContextSuggestField;
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressCodecs;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.segments.IndexShardSegments;
-import org.opensearch.action.admin.indices.segments.ShardSegments;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.FieldMemoryStats;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
-import org.opensearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.opensearch.search.suggest.completion.FuzzyOptions;
-import org.opensearch.search.suggest.completion.context.CategoryContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.GeoContextMapping;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.segments.IndexShardSegments;
+import org.density.action.admin.indices.segments.ShardSegments;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.FieldMemoryStats;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.plugins.Plugin;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.search.suggest.completion.CompletionSuggestion;
+import org.density.search.suggest.completion.CompletionSuggestionBuilder;
+import org.density.search.suggest.completion.FuzzyOptions;
+import org.density.search.suggest.completion.context.CategoryContextMapping;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.GeoContextMapping;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,17 +77,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.WAIT_UNTIL;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.core.common.util.CollectionUtils.iterableAsArrayList;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasScore;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.action.support.WriteRequest.RefreshPolicy.WAIT_UNTIL;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.core.common.util.CollectionUtils.iterableAsArrayList;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
+import static org.density.test.hamcrest.DensityAssertions.hasScore;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -99,7 +99,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
 @SuppressCodecs("*") // requires custom completion format
-public class CompletionSuggestSearchIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class CompletionSuggestSearchIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public CompletionSuggestSearchIT(Settings settings) {
         super(settings);
     }
@@ -940,7 +940,7 @@ public class CompletionSuggestSearchIT extends ParameterizedStaticSettingsOpenSe
         refresh();
 
         // suggestion with a character, which needs unicode awareness
-        org.opensearch.search.suggest.completion.CompletionSuggestionBuilder completionSuggestionBuilder = SuggestBuilders
+        org.density.search.suggest.completion.CompletionSuggestionBuilder completionSuggestionBuilder = SuggestBuilders
             .completionSuggestion(FIELD)
             .prefix("öööи", FuzzyOptions.builder().setUnicodeAware(true).build())
             .size(10);

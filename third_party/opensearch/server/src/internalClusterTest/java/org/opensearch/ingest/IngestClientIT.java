@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.SimulateDocumentBaseResult;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.SimulateDocumentBaseResult;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.ingest.SimulatePipelineResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.client.Requests;
 import org.hamcrest.MatcherAssert;
 
 import java.util.Arrays;
@@ -69,8 +69,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.NodeRoles.nonIngestNode;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.NodeRoles.nonIngestNode;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -78,8 +78,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
-public class IngestClientIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
+public class IngestClientIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public IngestClientIT(Settings settings) {
         super(settings);
@@ -192,7 +192,7 @@ public class IngestClientIT extends ParameterizedStaticSettingsOpenSearchIntegTe
             BulkItemResponse itemResponse = response.getItems()[i];
             if (i % 2 == 0) {
                 BulkItemResponse.Failure failure = itemResponse.getFailure();
-                OpenSearchException compoundProcessorException = (OpenSearchException) failure.getCause();
+                DensityException compoundProcessorException = (DensityException) failure.getCause();
                 assertThat(compoundProcessorException.getRootCause().getMessage(), equalTo("test processor failed"));
             } else {
                 IndexResponse indexResponse = itemResponse.getResponse();
@@ -442,7 +442,7 @@ public class IngestClientIT extends ParameterizedStaticSettingsOpenSearchIntegTe
         );
         PutPipelineRequest putPipelineRequest = new PutPipelineRequest("_id2", source, MediaTypeRegistry.JSON);
         Exception e = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> client().admin().cluster().putPipeline(putPipelineRequest).actionGet()
         );
         assertThat(e.getMessage(), equalTo("processor [test] doesn't support one or more provided configuration parameters [unused]"));

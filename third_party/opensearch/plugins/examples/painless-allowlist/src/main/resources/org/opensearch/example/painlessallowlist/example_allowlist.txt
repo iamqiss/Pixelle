@@ -19,7 +19,7 @@
 
 # This file contains an allowlist for an example class which may be access from painless
 
-class org.opensearch.example.painlessallowlist.ExampleAllowlistedClass {
+class org.density.example.painlessallowlist.ExampleAllowlistedClass {
   # constructor
   (int, int)
 
@@ -41,9 +41,9 @@ class org.opensearch.example.painlessallowlist.ExampleAllowlistedClass {
 class java.lang.String {
   # existing classes can be "augmented" to have additional methods, which take the object
   # to operate on as the first argument to a static method
-  int org.opensearch.example.painlessallowlist.ExampleAllowlistedClass toInt()
+  int org.density.example.painlessallowlist.ExampleAllowlistedClass toInt()
 }
 
 static_import {
-  int exampleAddInts(int, int) from_class org.opensearch.example.painlessallowlist.ExampleStaticMethodClass
+  int exampleAddInts(int, int) from_class org.density.example.painlessallowlist.ExampleStaticMethodClass
 }

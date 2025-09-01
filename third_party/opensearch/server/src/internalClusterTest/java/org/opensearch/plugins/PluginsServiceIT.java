@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +21,8 @@ import java.nio.file.Path;
 
 import static org.hamcrest.Matchers.containsString;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class PluginsServiceIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class PluginsServiceIT extends DensityIntegTestCase {
 
     public void testNodeBootstrapWithCompatiblePlugin() throws IOException {
         // Prepare the plugins directory and then start a node
@@ -36,7 +36,7 @@ public class PluginsServiceIT extends OpenSearchIntegTestCase {
             "dummyPlugin",
             "version",
             "1.0",
-            "opensearch.version",
+            "density.version",
             Version.CURRENT.toString(),
             "java.version",
             System.getProperty("java.specification.version"),
@@ -66,7 +66,7 @@ public class PluginsServiceIT extends OpenSearchIntegTestCase {
             "version",
             "1.0",
             "dependencies",
-            "{opensearch:\"~" + Version.CURRENT + "\"}",
+            "{density:\"~" + Version.CURRENT + "\"}",
             "java.version",
             System.getProperty("java.specification.version"),
             "classname",
@@ -97,7 +97,7 @@ public class PluginsServiceIT extends OpenSearchIntegTestCase {
             "version",
             "1.0",
             "dependencies",
-            "{opensearch:\"" + incompatibleRange + "\"}",
+            "{density:\"" + incompatibleRange + "\"}",
             "java.version",
             System.getProperty("java.specification.version"),
             "classname",
@@ -110,6 +110,6 @@ public class PluginsServiceIT extends OpenSearchIntegTestCase {
             IllegalArgumentException.class,
             () -> internalCluster().startNode(Settings.builder().put(Environment.PATH_HOME_SETTING.getKey(), baseDir))
         );
-        assertThat(e.getMessage(), containsString("Plugin [dummyPlugin] was built for OpenSearch version "));
+        assertThat(e.getMessage(), containsString("Plugin [dummyPlugin] was built for Density version "));
     }
 }

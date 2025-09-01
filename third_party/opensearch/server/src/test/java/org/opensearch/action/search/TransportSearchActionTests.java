@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,72 +26,72 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.OriginalIndicesTests;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsGroup;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.GroupShardsIteratorTests;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.NodeDisconnectedException;
-import org.opensearch.transport.RemoteClusterConnectionTests;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.RemoteClusterServiceTests;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportConnectionListener;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.action.OriginalIndices;
+import org.density.action.OriginalIndicesTests;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsGroup;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.GroupShardsIteratorTests;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.SetOnce;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.search.Scroll;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortBuilders;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.NodeDisconnectedException;
+import org.density.transport.RemoteClusterConnectionTests;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.RemoteClusterServiceTests;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.Transport;
+import org.density.transport.TransportConnectionListener;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,13 +109,13 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.opensearch.test.InternalAggregationTestCase.emptyReduceContextBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.awaitLatch;
+import static org.density.test.InternalAggregationTestCase.emptyReduceContextBuilder;
+import static org.density.test.hamcrest.DensityAssertions.awaitLatch;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.startsWith;
 
-public class TransportSearchActionTests extends OpenSearchTestCase {
+public class TransportSearchActionTests extends DensityTestCase {
 
     private final ThreadPool threadPool = new TestThreadPool(getClass().getName());
 

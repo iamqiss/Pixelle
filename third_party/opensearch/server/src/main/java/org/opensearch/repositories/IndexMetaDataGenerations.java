@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.snapshots.SnapshotId;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.snapshots.SnapshotId;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -47,11 +47,11 @@ import java.util.stream.Collectors;
 /**
  * Tracks the blob uuids of blobs containing {@link IndexMetadata} for snapshots as well an identifier for each of these blobs.
  * Before writing a new {@link IndexMetadata} blob during snapshot finalization in
- * {@link org.opensearch.repositories.blobstore.BlobStoreRepository#finalizeSnapshot} the identifier for an instance of
+ * {@link org.density.repositories.blobstore.BlobStoreRepository#finalizeSnapshot} the identifier for an instance of
  * {@link IndexMetadata} should be computed and then used to check if it already exists in the repository via
  * {@link #getIndexMetaBlobId(String)}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexMetaDataGenerations {
@@ -82,7 +82,7 @@ public final class IndexMetaDataGenerations {
     }
 
     /**
-     * Gets the blob id by the identifier of {@link org.opensearch.cluster.metadata.IndexMetadata}
+     * Gets the blob id by the identifier of {@link org.density.cluster.metadata.IndexMetadata}
      * (computed via {@link #buildUniqueIdentifier}) or {@code null} if none is tracked for the identifier.
      *
      * @param metaIdentifier identifier for {@link IndexMetadata}
@@ -96,7 +96,7 @@ public final class IndexMetaDataGenerations {
     /**
      * Get the blob id by {@link SnapshotId} and {@link IndexId}. If none is found, we fall back to the value
      * of {@link SnapshotId#getUUID()} to allow for extended backwards compatibility use-cases with
-     * {@link org.opensearch.LegacyESVersion} versions which used the snapshot UUID as the index metadata blob id.
+     * {@link org.density.LegacyESVersion} versions which used the snapshot UUID as the index metadata blob id.
      *
      * @param snapshotId Snapshot Id
      * @param indexId    Index Id

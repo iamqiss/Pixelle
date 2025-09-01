@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationTestScriptsPlugin;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.search.aggregations.bucket.terms.IncludeExclude;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.Terms.Bucket;
-import org.opensearch.search.aggregations.metrics.Avg;
-import org.opensearch.search.aggregations.metrics.ExtendedStats;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.aggregations.metrics.Stats;
-import org.opensearch.search.aggregations.metrics.Sum;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationTestScriptsPlugin;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.search.aggregations.bucket.terms.IncludeExclude;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.Terms.Bucket;
+import org.density.search.aggregations.metrics.Avg;
+import org.density.search.aggregations.metrics.ExtendedStats;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.aggregations.metrics.Stats;
+import org.density.search.aggregations.metrics.Sum;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,22 +68,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.aggregations.AggregationBuilders.avg;
-import static org.opensearch.search.aggregations.AggregationBuilders.extendedStats;
-import static org.opensearch.search.aggregations.AggregationBuilders.filter;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.stats;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.aggregations.AggregationBuilders.avg;
+import static org.density.search.aggregations.AggregationBuilders.extendedStats;
+import static org.density.search.aggregations.AggregationBuilders.filter;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.stats;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class LongTermsIT extends AbstractTermsTestCase {
 
     public LongTermsIT(Settings staticSettings) {
@@ -684,7 +684,7 @@ public class LongTermsIT extends AbstractTermsTestCase {
 
                 fail("Expected search to fail when trying to sort terms aggregation by sug-aggregation that doesn't exist");
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -704,7 +704,7 @@ public class LongTermsIT extends AbstractTermsTestCase {
 
                 fail("Expected search to fail when trying to sort terms aggregation by sug-aggregation which is not of a metrics type");
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -727,7 +727,7 @@ public class LongTermsIT extends AbstractTermsTestCase {
                         + "with an unknown specified metric to order by"
                 );
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }
@@ -750,7 +750,7 @@ public class LongTermsIT extends AbstractTermsTestCase {
                         + "where the metric name is not specified"
                 );
 
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 // expected
             }
         }

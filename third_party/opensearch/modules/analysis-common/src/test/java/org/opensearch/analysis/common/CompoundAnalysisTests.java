@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.MyFilterTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.MyFilterTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 
@@ -66,7 +66,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class CompoundAnalysisTests extends OpenSearchTestCase {
+public class CompoundAnalysisTests extends DensityTestCase {
 
     Settings[] settingsArr;
 
@@ -153,7 +153,7 @@ public class CompoundAnalysisTests extends OpenSearchTestCase {
     }
 
     private Settings getJsonSettings(Path home) throws IOException {
-        String json = "/org/opensearch/analysis/common/test1.json";
+        String json = "/org/density/analysis/common/test1.json";
         return Settings.builder()
             .loadFromStream(json, getClass().getResourceAsStream(json), false)
             .put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT)
@@ -162,7 +162,7 @@ public class CompoundAnalysisTests extends OpenSearchTestCase {
     }
 
     private Settings getYamlSettings(Path home) throws IOException {
-        String yaml = "/org/opensearch/analysis/common/test1.yml";
+        String yaml = "/org/density/analysis/common/test1.yml";
         return Settings.builder()
             .loadFromStream(yaml, getClass().getResourceAsStream(yaml), false)
             .put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT)

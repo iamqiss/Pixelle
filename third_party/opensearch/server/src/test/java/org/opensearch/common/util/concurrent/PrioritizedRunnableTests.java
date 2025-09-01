@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.Priority;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Priority;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class PrioritizedRunnableTests extends OpenSearchTestCase {
+public class PrioritizedRunnableTests extends DensityTestCase {
 
     // test unit conversion with a controlled clock
     public void testGetAgeInMillis() throws Exception {

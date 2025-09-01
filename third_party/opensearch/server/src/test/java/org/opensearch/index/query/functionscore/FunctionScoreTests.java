@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -54,32 +54,32 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.search.RandomApproximationQuery;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery.FilterScoreFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery.ScoreMode;
-import org.opensearch.common.lucene.search.function.LeafScoreFunction;
-import org.opensearch.common.lucene.search.function.RandomScoreFunction;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.common.lucene.search.function.WeightFactorFunction;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FieldValueFactorFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.FunctionScoreQuery.FilterScoreFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery.ScoreMode;
+import org.density.common.lucene.search.function.LeafScoreFunction;
+import org.density.common.lucene.search.function.RandomScoreFunction;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.common.lucene.search.function.WeightFactorFunction;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -93,7 +93,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 
-public class FunctionScoreTests extends OpenSearchTestCase {
+public class FunctionScoreTests extends DensityTestCase {
 
     private static final String UNSUPPORTED = "Method not implemented. This is just a stub for testing.";
 
@@ -628,7 +628,7 @@ public class FunctionScoreTests extends OpenSearchTestCase {
     private static double[] randomPositiveDoubles(int size) {
         double[] values = new double[size];
         for (int i = 0; i < values.length; i++) {
-            double rand = randomValueOtherThanMany((d) -> Double.compare(d, 0) < 0, OpenSearchTestCase::randomDouble);
+            double rand = randomValueOtherThanMany((d) -> Double.compare(d, 0) < 0, DensityTestCase::randomDouble);
             values[i] = rand * randomInt(100) + 1.e-5d;
         }
         return values;
@@ -1062,7 +1062,7 @@ public class FunctionScoreTests extends OpenSearchTestCase {
             null,
             Float.POSITIVE_INFINITY
         );
-        OpenSearchException exc = expectThrows(OpenSearchException.class, () -> localSearcher.search(query1, 1));
+        DensityException exc = expectThrows(DensityException.class, () -> localSearcher.search(query1, 1));
         assertThat(exc.getMessage(), containsString("function score query returned an invalid score: " + Float.NaN));
         FunctionScoreQuery query2 = new FunctionScoreQuery(
             new TermQuery(new Term(FIELD, "out")),
@@ -1071,7 +1071,7 @@ public class FunctionScoreTests extends OpenSearchTestCase {
             null,
             Float.POSITIVE_INFINITY
         );
-        exc = expectThrows(OpenSearchException.class, () -> localSearcher.search(query2, 1));
+        exc = expectThrows(DensityException.class, () -> localSearcher.search(query2, 1));
         assertThat(exc.getMessage(), containsString("function score query returned an invalid score: " + Float.NEGATIVE_INFINITY));
     }
 

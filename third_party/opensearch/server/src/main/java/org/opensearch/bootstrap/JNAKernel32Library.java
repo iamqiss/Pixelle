@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import com.sun.jna.IntegerType;
 import com.sun.jna.Native;
@@ -52,7 +52,7 @@ import java.util.List;
 /**
  * Library for Windows/Kernel32
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class JNAKernel32Library {
 

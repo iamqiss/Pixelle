@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-# The OpenSearch Contributors require contributions made to
+# The Density Contributors require contributions made to
 # this file be licensed under the Apache-2.0 license or a
 # compatible open source license.
 #
@@ -25,7 +25,7 @@
 # under the License.
 
 #
-# Modifications Copyright OpenSearch Contributors. See
+# Modifications Copyright Density Contributors. See
 # GitHub history for details.
 #
 
@@ -47,14 +47,14 @@ MARKER_FILE=/etc/marker
 REALM_NAME=$(cat $ENVPROP_FILE | grep realm= | cut -d '=' -f 2)
 KDC_NAME=$(cat $ENVPROP_FILE | grep kdc= | cut -d '=' -f 2)
 BUILD_ZONE=$(cat $ENVPROP_FILE | grep zone= | cut -d '=' -f 2)
-OPENSEARCH_ZONE=$(echo $BUILD_ZONE | cut -d '.' -f 1,2)
+DENSITY_ZONE=$(echo $BUILD_ZONE | cut -d '.' -f 1,2)
 
 # Transfer and interpolate krb5.conf
 cp $PROV_DIR/krb5.conf.template $LOCALSTATEDIR/krb5.conf
 sed -i 's/${REALM_NAME}/'$REALM_NAME'/g' $LOCALSTATEDIR/krb5.conf
 sed -i 's/${KDC_NAME}/'$KDC_NAME'/g' $LOCALSTATEDIR/krb5.conf
 sed -i 's/${BUILD_ZONE}/'$BUILD_ZONE'/g' $LOCALSTATEDIR/krb5.conf
-sed -i 's/${OPENSEARCH_ZONE}/'$OPENSEARCH_ZONE'/g' $LOCALSTATEDIR/krb5.conf
+sed -i 's/${DENSITY_ZONE}/'$DENSITY_ZONE'/g' $LOCALSTATEDIR/krb5.conf
 
 
 # Transfer and interpolate the kdc.conf
@@ -63,7 +63,7 @@ cp $PROV_DIR/kdc.conf.template $LOCALSTATEDIR/krb5kdc/kdc.conf
 sed -i 's/${REALM_NAME}/'$REALM_NAME'/g' $LOCALSTATEDIR/krb5kdc/kdc.conf
 sed -i 's/${KDC_NAME}/'$KDC_NAME'/g' $LOCALSTATEDIR/krb5kdc/kdc.conf
 sed -i 's/${BUILD_ZONE}/'$BUILD_ZONE'/g' $LOCALSTATEDIR/krb5kdc/kdc.conf
-sed -i 's/${OPENSEARCH_ZONE}/'$OPENSEARCH_ZONE'/g' $LOCALSTATEDIR/krb5.conf
+sed -i 's/${DENSITY_ZONE}/'$DENSITY_ZONE'/g' $LOCALSTATEDIR/krb5.conf
 
 # Touch logging locations
 mkdir -p $LOGDIR
@@ -103,7 +103,7 @@ cat << EOF > /etc/krb5kdc/kadm5.acl
 EOF
 
 # Create admin principal
-kadmin.local -q "addprinc -pw opensearch admin/admin@$REALM_NAME"
+kadmin.local -q "addprinc -pw density admin/admin@$REALM_NAME"
 kadmin.local -q "ktadd -k /etc/admin.keytab admin/admin@$REALM_NAME"
 
 # Create a link so addprinc.sh is on path

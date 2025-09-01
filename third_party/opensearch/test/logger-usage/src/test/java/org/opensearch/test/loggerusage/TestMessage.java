@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.loggerusage;
+package org.density.test.loggerusage;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 /**
- * This class is for testing that <code>OpenSearchLoggerUsageChecker</code> can find incorrect usages of LogMessages
+ * This class is for testing that <code>DensityLoggerUsageChecker</code> can find incorrect usages of LogMessages
  * which are subclasses of <code>ParametrizedMessage</code>
- * @see OpenSearchLoggerUsageTests
+ * @see DensityLoggerUsageTests
  */
 class TestMessage extends ParameterizedMessage {
     TestMessage(String messagePattern, String xOpaqueId, Object... args) {

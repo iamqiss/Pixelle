@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Locale;
 /**
  * Service used to validate if the incoming indexing request should be rejected based on the {@link RemoteSegmentTransferTracker}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStorePressureService {
 
@@ -80,7 +80,7 @@ public class RemoteStorePressureService {
                 remoteSegmentTransferTracker.incrementRejectionCount(lagValidator.name());
                 String rejectionMessage = lagValidator.rejectionMessage(remoteSegmentTransferTracker, shardId);
                 logger.warn("Rejecting write requests for shard due to remote backpressure:  {}", rejectionMessage);
-                throw new OpenSearchRejectedExecutionException(rejectionMessage);
+                throw new DensityRejectedExecutionException(rejectionMessage);
             }
         }
     }
@@ -88,7 +88,7 @@ public class RemoteStorePressureService {
     /**
      * Abstract class for validating if lag is acceptable or not.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static abstract class LagValidator {
 
@@ -120,7 +120,7 @@ public class RemoteStorePressureService {
     /**
      * Check if the remote store is lagging more than the upload bytes average multiplied by a variance factor
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class BytesLagValidator extends LagValidator {
 
@@ -166,7 +166,7 @@ public class RemoteStorePressureService {
     /**
      * Check if the remote store is lagging more than the upload time average multiplied by a variance factor
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TimeLagValidator extends LagValidator {
 
@@ -213,7 +213,7 @@ public class RemoteStorePressureService {
     /**
      * Check if consecutive failure limit has been breached
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ConsecutiveFailureValidator extends LagValidator {
 

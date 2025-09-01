@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.utils.WellKnownText;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.AggregationExecutionException;
+import org.density.DensityParseException;
+import org.density.common.Rounding;
+import org.density.common.geo.GeoPoint;
+import org.density.common.time.DateFormatter;
+import org.density.geometry.Geometry;
+import org.density.geometry.utils.WellKnownText;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.script.AggregationScript;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.AggregationExecutionException;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -66,7 +66,7 @@ import java.util.function.LongSupplier;
 /**
  * {@link CoreValuesSourceType} holds the {@link ValuesSourceType} implementations for the core aggregations package.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum CoreValuesSourceType implements ValuesSourceType {
 
@@ -262,7 +262,7 @@ public enum CoreValuesSourceType implements ValuesSourceType {
                 final Geometry geometry = WellKnownText.INSTANCE.fromWKT((String) rawMissing);
                 return MissingValues.replaceMissing((ValuesSource.GeoShape) valuesSource, geometry);
             } catch (Exception e) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     String.format(Locale.ROOT, "Unable to parse the missing value [%s] provided in the input.", rawMissing),
                     e
                 );

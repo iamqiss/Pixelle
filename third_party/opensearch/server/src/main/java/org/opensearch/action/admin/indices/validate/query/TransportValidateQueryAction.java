@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.validate.query;
+package org.density.action.admin.indices.validate.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.broadcast.BroadcastShardOperationFailedException;
-import org.opensearch.action.support.broadcast.TransportBroadcastAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.broadcast.BroadcastShardOperationFailedException;
+import org.density.action.support.broadcast.TransportBroadcastAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Randomness;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasables;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.IndexNotFoundException;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.Rewriteable;
+import org.density.indices.IndexClosedException;
+import org.density.search.SearchService;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ import java.util.function.LongSupplier;
 /**
  * Transport Action to Validate a Query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportValidateQueryAction extends TransportBroadcastAction<
     ValidateQueryRequest,
@@ -110,7 +110,7 @@ public class TransportValidateQueryAction extends TransportBroadcastAction<
     protected void doExecute(Task task, ValidateQueryRequest request, ActionListener<ValidateQueryResponse> listener) {
         request.nowInMillis = System.currentTimeMillis();
         LongSupplier timeProvider = () -> request.nowInMillis;
-        ActionListener<org.opensearch.index.query.QueryBuilder> rewriteListener = ActionListener.wrap(rewrittenQuery -> {
+        ActionListener<org.density.index.query.QueryBuilder> rewriteListener = ActionListener.wrap(rewrittenQuery -> {
             request.query(rewrittenQuery);
             super.doExecute(task, request, listener);
         }, ex -> {

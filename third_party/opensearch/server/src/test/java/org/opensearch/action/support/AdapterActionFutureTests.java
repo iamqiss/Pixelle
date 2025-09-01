@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.UncategorizedExecutionException;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.DensityException;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.UncategorizedExecutionException;
+import org.density.test.DensityTestCase;
+import org.density.transport.RemoteTransportException;
 
 import java.util.Objects;
 import java.util.concurrent.BrokenBarrierException;
@@ -45,7 +45,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class AdapterActionFutureTests extends OpenSearchTestCase {
+public class AdapterActionFutureTests extends DensityTestCase {
 
     public void testInterruption() throws Exception {
         final AdapterActionFuture<String, Integer> adapter = new AdapterActionFuture<String, Integer>() {
@@ -114,7 +114,7 @@ public class AdapterActionFutureTests extends OpenSearchTestCase {
             RemoteTransportException.class
         );
         checkUnwrap(new Exception(), UncategorizedExecutionException.class, Exception.class);
-        checkUnwrap(new OpenSearchException("test", new Exception()), OpenSearchException.class, OpenSearchException.class);
+        checkUnwrap(new DensityException("test", new Exception()), DensityException.class, DensityException.class);
     }
 
     private void checkUnwrap(Exception exception, Class<? extends Exception> actionGetException, Class<? extends Exception> getException) {

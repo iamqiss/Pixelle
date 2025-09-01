@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.Map;
 
 /**
  * A script used by the Search Script Processor.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SearchScript {
 
@@ -47,7 +47,7 @@ public abstract class SearchScript {
     /**
      * Factory for search script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory {
         SearchScript newInstance(Map<String, Object> params);

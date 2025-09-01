@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Visits each of the strategies used to find an instance to satisfy an injection.
@@ -38,7 +38,7 @@ import org.opensearch.common.annotation.PublicApi;
  *            {@code return null} if no return type is needed.
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface BindingTargetVisitor<T, V> {
@@ -94,7 +94,7 @@ public interface BindingTargetVisitor<T, V> {
     V visit(ConvertedConstantBinding<? extends T> binding);
 
     /**
-     * Visit a binding to a {@link org.opensearch.common.inject.Provider} that delegates to the binding for the
+     * Visit a binding to a {@link org.density.common.inject.Provider} that delegates to the binding for the
      * provided type. This target is found only on injector bindings.
      */
     V visit(ProviderBinding<? extends T> binding);

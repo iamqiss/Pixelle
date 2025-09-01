@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.ingest;
+package org.density.rest.action.ingest;
 
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.common.logging.DeprecationLogger;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.rest.RestRequest.Method.DELETE;
+import static org.density.rest.RestRequest.Method.DELETE;
 
 /**
  * Transport action to delete an ingest pipeline
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestDeletePipelineAction extends BaseRestHandler {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(RestDeletePipelineAction.class);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 import com.carrotsearch.randomizedtesting.SeedUtils;
@@ -39,11 +39,11 @@ import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.Accountables;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.util.BigArray;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
+import org.density.common.util.set.Sets;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.util.BigArray;
+import org.density.core.common.util.ByteArray;
+import org.density.core.indices.breaker.CircuitBreakerService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.test.OpenSearchTestCase.assertBusy;
+import static org.density.test.DensityTestCase.assertBusy;
 import static org.junit.Assert.assertTrue;
 
 public class MockBigArrays extends BigArrays {

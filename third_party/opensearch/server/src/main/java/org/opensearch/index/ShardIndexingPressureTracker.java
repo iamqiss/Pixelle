@@ -1,11 +1,11 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.core.index.shard.ShardId;
+import org.density.core.index.shard.ShardId;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * To prefer simplicity we have modelled by keeping explicit fields for different operation tracking, while tracker by itself is
  * agnostic of the actual shard role.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardIndexingPressureTracker {
 
@@ -93,7 +93,7 @@ public class ShardIndexingPressureTracker {
      * b. RejectionTracker : To track the rejection statistics for a shard
      * c. Performance Tracker : To track the request performance statistics for a shard
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class OperationTracker {
         private final StatsTracker statsTracker = new StatsTracker();
@@ -119,7 +119,7 @@ public class ShardIndexingPressureTracker {
      * b. totalBytes - Total bytes that are processed/completed successfully for a shard.
      * c. requestCount - Total number of requests that are processed/completed successfully for a shard.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class StatsTracker {
         private final AtomicLong currentBytes = new AtomicLong();
@@ -161,7 +161,7 @@ public class ShardIndexingPressureTracker {
      * d. throughputDegradationLimitsBreachedRejections - Total number of requests that were rejected due to the
      *          throughput degradation in the request path for a shard i.e. partial failure.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RejectionTracker {
         private final AtomicLong totalRejections = new AtomicLong();
@@ -212,7 +212,7 @@ public class ShardIndexingPressureTracker {
      *          which keeps moving everytime a new request comes. At any given point it tracks last N requests only.
      *          EWMA cannot be used here as it evaluate the historical average, while here it just needs the average of last N requests.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PerformanceTracker {
         private final AtomicLong latencyInMillis = new AtomicLong();
@@ -282,7 +282,7 @@ public class ShardIndexingPressureTracker {
      * b. totalCombinedCoordinatingAndPrimaryBytes - Total bytes that are processed/completed successfully for a shard
      *      when primary is local to coordinator node. Hence common accounting for coordinator and primary operation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CommonOperationTracker {
         private final AtomicLong currentCombinedCoordinatingAndPrimaryBytes = new AtomicLong();

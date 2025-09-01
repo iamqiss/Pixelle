@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
-public class TaskCancellationMonitoringSettingsTests extends OpenSearchTestCase {
+public class TaskCancellationMonitoringSettingsTests extends DensityTestCase {
 
     public void testDefaults() {
         ClusterSettings clusterSettings = new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);

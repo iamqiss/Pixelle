@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.index.BaseTermsEnum;
 import org.apache.lucene.index.Fields;
@@ -44,8 +44,8 @@ import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -132,7 +132,7 @@ import static org.apache.lucene.util.ArrayUtil.grow;
  * </ul></li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TermVectorsFields extends Fields {
 
@@ -208,7 +208,7 @@ public final class TermVectorsFields extends Fields {
     /**
      * Internal term vector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private final class TermVector extends Terms {
 
@@ -429,7 +429,7 @@ public final class TermVectorsFields extends Fields {
     /**
      * Internal postings enumerator for term vectors
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private final class TermVectorPostingsEnum extends PostingsEnum {
         private boolean hasPositions;

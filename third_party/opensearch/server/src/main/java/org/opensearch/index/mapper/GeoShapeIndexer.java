@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.LatLonShape;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.geo.GeoLineDecomposer;
-import org.opensearch.common.geo.GeoPolygonDecomposer;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.GeoShapeUtils;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
+import org.density.common.geo.GeoLineDecomposer;
+import org.density.common.geo.GeoPolygonDecomposer;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.GeoShapeUtils;
+import org.density.common.geo.GeoUtils;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.common.geo.GeoUtils.normalizePoint;
+import static org.density.common.geo.GeoUtils.normalizePoint;
 
 /**
  * Utility class that converts geometries into Lucene-compatible form for indexing in a geo_shape field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeIndexer implements AbstractGeometryFieldMapper.Indexer<Geometry, Geometry> {
 
@@ -205,7 +205,7 @@ public class GeoShapeIndexer implements AbstractGeometryFieldMapper.Indexer<Geom
     /**
      * The shape indexer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LuceneGeometryIndexer implements GeometryVisitor<Void, RuntimeException> {
         private List<IndexableField> fields = new ArrayList<>();

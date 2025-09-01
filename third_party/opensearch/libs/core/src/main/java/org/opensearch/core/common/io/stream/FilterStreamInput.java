@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
-import org.opensearch.Version;
+import org.density.Version;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import java.io.IOException;
 /**
  * Wraps a {@link StreamInput} and delegates to it. To be used to add functionality to an existing stream by subclassing.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class FilterStreamInput extends StreamInput {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -47,22 +47,22 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.ConstantKeywordFieldMapper;
-import org.opensearch.index.mapper.FlatObjectFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper.TextFieldType;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.bucket.sampler.InternalSampler;
-import org.opensearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.ConstantKeywordFieldMapper;
+import org.density.index.mapper.FlatObjectFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.mapper.TextFieldMapper.TextFieldType;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.bucket.sampler.InternalSampler;
+import org.density.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -71,8 +71,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.sampler;
-import static org.opensearch.search.aggregations.AggregationBuilders.significantText;
+import static org.density.search.aggregations.AggregationBuilders.sampler;
+import static org.density.search.aggregations.AggregationBuilders.significantText;
 
 public class SignificantTextAggregatorTests extends AggregatorTestCase {
 

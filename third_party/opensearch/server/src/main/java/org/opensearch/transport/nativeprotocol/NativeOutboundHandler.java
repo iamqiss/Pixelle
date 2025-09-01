@@ -1,7 +1,7 @@
 /*
 * SPDX-License-Identifier: Apache-2.0
 *
-* The OpenSearch Contributors require contributions made to
+* The Density Contributors require contributions made to
 * this file be licensed under the Apache-2.0 license or a
 * compatible open source license.
 */
@@ -26,33 +26,33 @@
 */
 
 /*
-* Modifications Copyright OpenSearch Contributors. See
+* Modifications Copyright Density Contributors. See
 * GitHub history for details.
 */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.io.stream.ReleasableBytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.OutboundHandler;
-import org.opensearch.transport.ProtocolOutboundHandler;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.StatsTracker;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.CheckedSupplier;
+import org.density.common.io.stream.ReleasableBytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.OutboundHandler;
+import org.density.transport.ProtocolOutboundHandler;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.StatsTracker;
+import org.density.transport.TcpChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
 
 import java.io.IOException;
 import java.util.Set;
@@ -60,7 +60,7 @@ import java.util.Set;
 /**
  * Outbound data handler
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NativeOutboundHandler extends ProtocolOutboundHandler {
     private final String nodeName;
@@ -199,7 +199,7 @@ public final class NativeOutboundHandler extends ProtocolOutboundHandler {
     /**
      * Internal message serializer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MessageSerializer implements CheckedSupplier<BytesReference, IOException>, Releasable {
 

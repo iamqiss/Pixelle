@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.test.DensityTestCase;
 
-public class ValueAggregatorFactoryTests extends OpenSearchTestCase {
+public class ValueAggregatorFactoryTests extends DensityTestCase {
 
     public void testGetValueAggregatorForSumType() {
         ValueAggregator aggregator = ValueAggregatorFactory.getValueAggregator(MetricStat.SUM, NumberFieldMapper.NumberType.LONG);

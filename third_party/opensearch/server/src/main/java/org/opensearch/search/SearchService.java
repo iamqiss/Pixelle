@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,124 +38,124 @@ import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.DeletePitInfo;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.ListPitInfo;
-import org.opensearch.action.search.PitSearchContextIdForNode;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.search.UpdatePitContextRequest;
-import org.opensearch.action.search.UpdatePitContextResponse;
-import org.opensearch.action.support.StreamSearchChannelListener;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ConcurrentMapLong;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.DerivedFieldResolver;
-import org.opensearch.index.mapper.DerivedFieldResolverFactory;
-import org.opensearch.index.query.InnerHitContextBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryCoordinatorContext;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
-import org.opensearch.node.ResponseCollectorService;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.FieldScript;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.AggregationInitializationException;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseContext;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.dfs.DfsPhase;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.fetch.ScrollQueryFetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchRequest;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext.ScriptField;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.search.internal.LegacyReaderContext;
-import org.opensearch.search.internal.PitReaderContext;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.Profilers;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.search.query.QueryRewriterRegistry;
-import org.opensearch.search.query.QuerySearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.query.ScrollQuerySearchResult;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.searchafter.SearchAfterBuilder;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.MinAndMax;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.startree.StarTreeQueryContext;
-import org.opensearch.search.startree.StarTreeQueryHelper;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.completion.CompletionSuggestion;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportRequest;
+import org.density.DensityException;
+import org.density.action.ActionRunnable;
+import org.density.action.IndicesRequest;
+import org.density.action.OriginalIndices;
+import org.density.action.search.DeletePitInfo;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.ListPitInfo;
+import org.density.action.search.PitSearchContextIdForNode;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchType;
+import org.density.action.search.UpdatePitContextRequest;
+import org.density.action.search.UpdatePitContextResponse;
+import org.density.action.support.StreamSearchChannelListener;
+import org.density.action.support.TransportActions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedSupplier;
+import org.density.common.UUIDs;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ConcurrentMapLong;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.DerivedFieldResolver;
+import org.density.index.mapper.DerivedFieldResolverFactory;
+import org.density.index.query.InnerHitContextBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryCoordinatorContext;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.indices.IndicesService;
+import org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason;
+import org.density.node.ResponseCollectorService;
+import org.density.plugins.SearchPlugin;
+import org.density.script.FieldScript;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.AggregationInitializationException;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseContext;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.dfs.DfsPhase;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.fetch.ScrollQueryFetchSearchResult;
+import org.density.search.fetch.ShardFetchRequest;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.ScriptFieldsContext.ScriptField;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.search.internal.LegacyReaderContext;
+import org.density.search.internal.PitReaderContext;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.Profilers;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.query.QueryPhase;
+import org.density.search.query.QueryRewriterRegistry;
+import org.density.search.query.QuerySearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.query.ScrollQuerySearchResult;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.searchafter.SearchAfterBuilder;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.MinAndMax;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.search.startree.StarTreeQueryContext;
+import org.density.search.startree.StarTreeQueryHelper;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.completion.CompletionSuggestion;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -175,15 +175,15 @@ import java.util.function.Function;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.unit.TimeValue.timeValueHours;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueMinutes;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
+import static org.density.common.unit.TimeValue.timeValueHours;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMinutes;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
 
 /**
  * The main search service
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchService extends AbstractLifecycleComponent implements IndexEventListener {
     private static final Logger logger = LogManager.getLogger(SearchService.class);
@@ -835,7 +835,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
             if (exception instanceof ExecutionException) {
                 exception = (exception.getCause() == null || exception.getCause() instanceof Exception)
                     ? (Exception) exception.getCause()
-                    : new OpenSearchException(exception.getCause());
+                    : new DensityException(exception.getCause());
             }
             logger.trace("Query phase failed", exception);
             processFailure(readerContext, exception);
@@ -1075,7 +1075,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
             if (request.scroll() != null) {
                 decreaseScrollContexts = openScrollContexts::decrementAndGet;
                 if (openScrollContexts.incrementAndGet() > maxOpenScrollContext) {
-                    throw new OpenSearchRejectedExecutionException(
+                    throw new DensityRejectedExecutionException(
                         "Trying to create too many scroll contexts. Must be less than or equal to: ["
                             + maxOpenScrollContext
                             + "]. "
@@ -1135,7 +1135,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
             Releasable decreasePitContexts = openPitContexts::decrementAndGet;
             try {
                 if (openPitContexts.incrementAndGet() > maxOpenPitContext) {
-                    throw new OpenSearchRejectedExecutionException(
+                    throw new DensityRejectedExecutionException(
                         "Trying to create too many Point In Time contexts. Must be less than or equal to: ["
                             + maxOpenPitContext
                             + "]. "
@@ -1623,7 +1623,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
                         + "] index level setting."
                 );
             }
-            for (org.opensearch.search.builder.SearchSourceBuilder.ScriptField field : source.scriptFields()) {
+            for (org.density.search.builder.SearchSourceBuilder.ScriptField field : source.scriptFields()) {
                 FieldScript.Factory factory = scriptService.compile(field.script(), FieldScript.CONTEXT);
                 SearchLookup lookup = context.getQueryShardContext().lookup();
                 FieldScript.LeafFactory searchScript = factory.newFactory(field.script().getParams(), lookup);
@@ -1977,7 +1977,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
     /**
      * Search phase result that can match a response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class CanMatchResponse extends SearchPhaseResult {
         private final boolean canMatch;
@@ -2033,7 +2033,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
 
     /**
      * This helper class ensures we only execute either the success or the failure path for {@link SearchOperationListener}.
-     * This is crucial for some implementations like {@link org.opensearch.index.search.stats.ShardSearchStats}.
+     * This is crucial for some implementations like {@link org.density.index.search.stats.ShardSearchStats}.
      */
     private static final class SearchOperationListenerExecutor implements AutoCloseable {
         private final SearchOperationListener listener;

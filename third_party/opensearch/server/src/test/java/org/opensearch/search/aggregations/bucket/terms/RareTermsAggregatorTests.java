@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.document.BinaryDocValuesField;
 import org.apache.lucene.document.Document;
@@ -50,42 +50,42 @@ import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.global.InternalGlobal;
-import org.opensearch.search.aggregations.bucket.nested.InternalNested;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalTopHits;
-import org.opensearch.search.aggregations.metrics.Max;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.text.Text;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.global.GlobalAggregationBuilder;
+import org.density.search.aggregations.bucket.global.InternalGlobal;
+import org.density.search.aggregations.bucket.nested.InternalNested;
+import org.density.search.aggregations.bucket.nested.NestedAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalTopHits;
+import org.density.search.aggregations.metrics.Max;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.ScoreSortBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.index.mapper.SeqNoFieldMapper.PRIMARY_TERM_NAME;
+import static org.density.index.mapper.SeqNoFieldMapper.PRIMARY_TERM_NAME;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.Mockito.mock;

@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.remote;
+package org.density.cluster.routing.remote;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 
 import java.util.function.Supplier;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
 
-public class RemoteRoutingTableServiceFactoryTests extends OpenSearchTestCase {
+public class RemoteRoutingTableServiceFactoryTests extends DensityTestCase {
 
     Supplier<RepositoriesService> repositoriesService;
     private ThreadPool threadPool = new TestThreadPool(getClass().getName());

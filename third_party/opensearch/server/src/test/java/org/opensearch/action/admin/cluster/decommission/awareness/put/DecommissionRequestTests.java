@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.decommission.awareness.put;
+package org.density.action.admin.cluster.decommission.awareness.put;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class DecommissionRequestTests extends OpenSearchTestCase {
+public class DecommissionRequestTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         String attributeName = "zone";

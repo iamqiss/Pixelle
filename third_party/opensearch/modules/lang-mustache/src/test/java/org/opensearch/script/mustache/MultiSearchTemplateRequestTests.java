@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.StreamsUtils;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.search.SearchRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestRequest;
+import org.density.script.ScriptType;
+import org.density.search.Scroll;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.StreamsUtils;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -52,10 +52,10 @@ import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MultiSearchTemplateRequestTests extends OpenSearchTestCase {
+public class MultiSearchTemplateRequestTests extends DensityTestCase {
 
     public void testParseRequest() throws Exception {
-        byte[] data = StreamsUtils.copyToBytesFromClasspath("/org/opensearch/script/mustache/simple-msearch-template.json");
+        byte[] data = StreamsUtils.copyToBytesFromClasspath("/org/density/script/mustache/simple-msearch-template.json");
         RestRequest restRequest = new FakeRestRequest.Builder(xContentRegistry()).withContent(new BytesArray(data), MediaTypeRegistry.JSON)
             .build();
 
@@ -169,7 +169,7 @@ public class MultiSearchTemplateRequestTests extends OpenSearchTestCase {
     }
 
     public void testParseRequestWithSearchPipeline() throws Exception {
-        byte[] data = StreamsUtils.copyToBytesFromClasspath("/org/opensearch/script/mustache/simple-msearch-template.json");
+        byte[] data = StreamsUtils.copyToBytesFromClasspath("/org/density/script/mustache/simple-msearch-template.json");
         RestRequest restRequest = new FakeRestRequest.Builder(xContentRegistry()).withContent(new BytesArray(data), MediaTypeRegistry.JSON)
             .build();
 

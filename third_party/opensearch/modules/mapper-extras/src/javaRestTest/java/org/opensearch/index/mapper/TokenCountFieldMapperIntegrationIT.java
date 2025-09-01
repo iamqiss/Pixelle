@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.carrotsearch.randomizedtesting.annotations.Name;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public class TokenCountFieldMapperIntegrationIT extends OpenSearchIntegTestCase {
+public class TokenCountFieldMapperIntegrationIT extends DensityIntegTestCase {
     @ParametersFactory
     public static Iterable<Object[]> buildParameters() {
         List<Object[]> parameters = new ArrayList<>();
@@ -233,7 +233,7 @@ public class TokenCountFieldMapperIntegrationIT extends OpenSearchIntegTestCase 
             } else if (id.equals("multibulk2")) {
                 assertSearchHit(hit, new int[] { 6, 10 }, new int[] { 3, 9 });
             } else {
-                throw new OpenSearchException("Unexpected response!");
+                throw new DensityException("Unexpected response!");
             }
         }
     }

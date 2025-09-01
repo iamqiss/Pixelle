@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.protobufs.InlineScript;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.protobufs.ScriptLanguage;
-import org.opensearch.protobufs.ScriptLanguage.BuiltinScriptLanguage;
-import org.opensearch.protobufs.StoredScriptId;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.InlineScript;
+import org.density.protobufs.ObjectMap;
+import org.density.protobufs.ScriptLanguage;
+import org.density.protobufs.ScriptLanguage.BuiltinScriptLanguage;
+import org.density.protobufs.StoredScriptId;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.script.Script.DEFAULT_SCRIPT_LANG;
+import static org.density.script.Script.DEFAULT_SCRIPT_LANG;
 
-public class ScriptProtoUtilsTests extends OpenSearchTestCase {
+public class ScriptProtoUtilsTests extends DensityTestCase {
 
     public void testParseFromProtoRequestWithInlineScript() {
         // Create a protobuf Script with an inline script
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -48,7 +48,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseFromProtoRequestWithInlineScriptAndCustomLanguage() {
         // Create a protobuf Script with an inline script and custom language
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -75,7 +75,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
             .putFields("name", ObjectMap.Value.newBuilder().setString("test").build())
             .build();
 
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * params.factor")
@@ -103,7 +103,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
         Map<String, String> options = new HashMap<>();
         options.put("content_type", "application/json");
 
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -135,7 +135,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
         options.put("content_type", "application/json");
         options.put("invalid_option", "value");
 
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -151,7 +151,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseFromProtoRequestWithStoredScript() {
         // Create a protobuf Script with a stored script
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setStoredScriptId(StoredScriptId.newBuilder().setId("my-stored-script").build())
             .build();
 
@@ -174,7 +174,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
             .putFields("name", ObjectMap.Value.newBuilder().setString("test").build())
             .build();
 
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setStoredScriptId(StoredScriptId.newBuilder().setId("my-stored-script").setParams(params).build())
             .build();
 
@@ -193,7 +193,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseFromProtoRequestWithNoScriptType() {
         // Create a protobuf Script with no script type
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder().build();
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder().build();
 
         // Parse the protobuf Script, should throw UnsupportedOperationException
         expectThrows(UnsupportedOperationException.class, () -> ScriptProtoUtils.parseFromProtoRequest(protoScript));
@@ -201,7 +201,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseScriptLanguageWithExpressionLanguage() {
         // Create a protobuf Script with expression language
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -220,7 +220,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseScriptLanguageWithJavaLanguage() {
         // Create a protobuf Script with java language
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -239,7 +239,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseScriptLanguageWithMustacheLanguage() {
         // Create a protobuf Script with mustache language
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")
@@ -258,7 +258,7 @@ public class ScriptProtoUtilsTests extends OpenSearchTestCase {
 
     public void testParseScriptLanguageWithUnspecifiedLanguage() {
         // Create a protobuf Script with unspecified language
-        org.opensearch.protobufs.Script protoScript = org.opensearch.protobufs.Script.newBuilder()
+        org.density.protobufs.Script protoScript = org.density.protobufs.Script.newBuilder()
             .setInlineScript(
                 InlineScript.newBuilder()
                     .setSource("doc['field'].value * 2")

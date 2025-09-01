@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilderTestCase;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilderTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.scroll;
+package org.density.search.scroll;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.ExceptionsHelper;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.search.ShardSearchFailure;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.search.SearchHit;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.InternalTestCluster;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 import org.junit.After;
 
 import java.io.IOException;
@@ -69,19 +69,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertNoSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -91,7 +91,7 @@ import static org.hamcrest.Matchers.notNullValue;
 /**
  * Tests for scrolling.
  */
-public class SearchScrollIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SearchScrollIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public SearchScrollIT(Settings settings) {
         super(settings);
     }
@@ -536,7 +536,7 @@ public class SearchScrollIT extends ParameterizedStaticSettingsOpenSearchIntegTe
 
             SearchResponse response = builder.get();
             try {
-                OpenSearchAssertions.assertHitCount(response, 1L);
+                DensityAssertions.assertHitCount(response, 1L);
             } finally {
                 String scrollId = response.getScrollId();
                 if (scrollId != null) {

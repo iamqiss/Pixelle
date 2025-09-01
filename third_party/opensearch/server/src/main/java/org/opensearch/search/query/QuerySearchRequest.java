@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportRequest;
+import org.density.action.IndicesRequest;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchShardTask;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Nullable;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.Task;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.Map;
@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * Transport request for query search
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QuerySearchRequest extends TransportRequest implements IndicesRequest {
 

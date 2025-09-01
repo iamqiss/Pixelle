@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket;
+package org.density.geo.search.aggregations.bucket;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.geo.GeoModulePluginIntegTestCase;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGrid;
-import org.opensearch.geo.tests.common.AggregationBuilders;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.geo.GeoModulePluginIntegTestCase;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGrid;
+import org.density.geo.tests.common.AggregationBuilders;
+import org.density.geometry.utils.Geohash;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateHistogram;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.aggregations.AggregationBuilders.dateHistogram;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
  * compute empty buckets, its {@code reduce()} method must be called. So by adding the date histogram under other buckets,
  * we can make sure that the reduce is properly propagated by checking that empty buckets were created.
  */
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class ShardReduceIT extends GeoModulePluginIntegTestCase {
 
     public ShardReduceIT(Settings dynamicSettings) {

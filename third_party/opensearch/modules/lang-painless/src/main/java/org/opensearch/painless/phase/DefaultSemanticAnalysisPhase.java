@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,132 +26,132 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.phase;
+package org.density.painless.phase;
 
-import org.opensearch.painless.AnalyzerCaster;
-import org.opensearch.painless.CompilerSettings;
-import org.opensearch.painless.FunctionRef;
-import org.opensearch.painless.Location;
-import org.opensearch.painless.Operation;
-import org.opensearch.painless.lookup.PainlessCast;
-import org.opensearch.painless.lookup.PainlessClassBinding;
-import org.opensearch.painless.lookup.PainlessConstructor;
-import org.opensearch.painless.lookup.PainlessField;
-import org.opensearch.painless.lookup.PainlessInstanceBinding;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.lookup.def;
-import org.opensearch.painless.node.AExpression;
-import org.opensearch.painless.node.ANode;
-import org.opensearch.painless.node.AStatement;
-import org.opensearch.painless.node.EAssignment;
-import org.opensearch.painless.node.EBinary;
-import org.opensearch.painless.node.EBooleanComp;
-import org.opensearch.painless.node.EBooleanConstant;
-import org.opensearch.painless.node.EBrace;
-import org.opensearch.painless.node.ECall;
-import org.opensearch.painless.node.ECallLocal;
-import org.opensearch.painless.node.EComp;
-import org.opensearch.painless.node.EConditional;
-import org.opensearch.painless.node.EDecimal;
-import org.opensearch.painless.node.EDot;
-import org.opensearch.painless.node.EElvis;
-import org.opensearch.painless.node.EExplicit;
-import org.opensearch.painless.node.EFunctionRef;
-import org.opensearch.painless.node.EInstanceof;
-import org.opensearch.painless.node.ELambda;
-import org.opensearch.painless.node.EListInit;
-import org.opensearch.painless.node.EMapInit;
-import org.opensearch.painless.node.ENewArray;
-import org.opensearch.painless.node.ENewArrayFunctionRef;
-import org.opensearch.painless.node.ENewObj;
-import org.opensearch.painless.node.ENull;
-import org.opensearch.painless.node.ENumeric;
-import org.opensearch.painless.node.ERegex;
-import org.opensearch.painless.node.EString;
-import org.opensearch.painless.node.ESymbol;
-import org.opensearch.painless.node.EUnary;
-import org.opensearch.painless.node.SBlock;
-import org.opensearch.painless.node.SBreak;
-import org.opensearch.painless.node.SCatch;
-import org.opensearch.painless.node.SClass;
-import org.opensearch.painless.node.SContinue;
-import org.opensearch.painless.node.SDeclBlock;
-import org.opensearch.painless.node.SDeclaration;
-import org.opensearch.painless.node.SDo;
-import org.opensearch.painless.node.SEach;
-import org.opensearch.painless.node.SExpression;
-import org.opensearch.painless.node.SFor;
-import org.opensearch.painless.node.SFunction;
-import org.opensearch.painless.node.SIf;
-import org.opensearch.painless.node.SIfElse;
-import org.opensearch.painless.node.SReturn;
-import org.opensearch.painless.node.SThrow;
-import org.opensearch.painless.node.STry;
-import org.opensearch.painless.node.SWhile;
-import org.opensearch.painless.spi.annotation.NonDeterministicAnnotation;
-import org.opensearch.painless.symbol.Decorations;
-import org.opensearch.painless.symbol.Decorations.AllEscape;
-import org.opensearch.painless.symbol.Decorations.AnyBreak;
-import org.opensearch.painless.symbol.Decorations.AnyContinue;
-import org.opensearch.painless.symbol.Decorations.BeginLoop;
-import org.opensearch.painless.symbol.Decorations.BinaryType;
-import org.opensearch.painless.symbol.Decorations.CapturesDecoration;
-import org.opensearch.painless.symbol.Decorations.ComparisonType;
-import org.opensearch.painless.symbol.Decorations.CompoundType;
-import org.opensearch.painless.symbol.Decorations.ContinuousLoop;
-import org.opensearch.painless.symbol.Decorations.DefOptimized;
-import org.opensearch.painless.symbol.Decorations.DowncastPainlessCast;
-import org.opensearch.painless.symbol.Decorations.EncodingDecoration;
-import org.opensearch.painless.symbol.Decorations.Explicit;
-import org.opensearch.painless.symbol.Decorations.ExpressionPainlessCast;
-import org.opensearch.painless.symbol.Decorations.GetterPainlessMethod;
-import org.opensearch.painless.symbol.Decorations.InLoop;
-import org.opensearch.painless.symbol.Decorations.InstanceType;
-import org.opensearch.painless.symbol.Decorations.Internal;
-import org.opensearch.painless.symbol.Decorations.IterablePainlessMethod;
-import org.opensearch.painless.symbol.Decorations.LastLoop;
-import org.opensearch.painless.symbol.Decorations.LastSource;
-import org.opensearch.painless.symbol.Decorations.ListShortcut;
-import org.opensearch.painless.symbol.Decorations.LoopEscape;
-import org.opensearch.painless.symbol.Decorations.MapShortcut;
-import org.opensearch.painless.symbol.Decorations.MethodEscape;
-import org.opensearch.painless.symbol.Decorations.MethodNameDecoration;
-import org.opensearch.painless.symbol.Decorations.Negate;
-import org.opensearch.painless.symbol.Decorations.ParameterNames;
-import org.opensearch.painless.symbol.Decorations.PartialCanonicalTypeName;
-import org.opensearch.painless.symbol.Decorations.Read;
-import org.opensearch.painless.symbol.Decorations.ReferenceDecoration;
-import org.opensearch.painless.symbol.Decorations.ReturnType;
-import org.opensearch.painless.symbol.Decorations.SemanticVariable;
-import org.opensearch.painless.symbol.Decorations.SetterPainlessMethod;
-import org.opensearch.painless.symbol.Decorations.ShiftType;
-import org.opensearch.painless.symbol.Decorations.Shortcut;
-import org.opensearch.painless.symbol.Decorations.StandardConstant;
-import org.opensearch.painless.symbol.Decorations.StandardLocalFunction;
-import org.opensearch.painless.symbol.Decorations.StandardPainlessClassBinding;
-import org.opensearch.painless.symbol.Decorations.StandardPainlessConstructor;
-import org.opensearch.painless.symbol.Decorations.StandardPainlessField;
-import org.opensearch.painless.symbol.Decorations.StandardPainlessInstanceBinding;
-import org.opensearch.painless.symbol.Decorations.StandardPainlessMethod;
-import org.opensearch.painless.symbol.Decorations.StaticType;
-import org.opensearch.painless.symbol.Decorations.TargetType;
-import org.opensearch.painless.symbol.Decorations.TypeParameters;
-import org.opensearch.painless.symbol.Decorations.UnaryType;
-import org.opensearch.painless.symbol.Decorations.UpcastPainlessCast;
-import org.opensearch.painless.symbol.Decorations.ValueType;
-import org.opensearch.painless.symbol.Decorations.Write;
-import org.opensearch.painless.symbol.FunctionTable;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
-import org.opensearch.painless.symbol.ScriptScope;
-import org.opensearch.painless.symbol.SemanticScope;
-import org.opensearch.painless.symbol.SemanticScope.FunctionScope;
-import org.opensearch.painless.symbol.SemanticScope.LambdaScope;
-import org.opensearch.painless.symbol.SemanticScope.Variable;
+import org.density.painless.AnalyzerCaster;
+import org.density.painless.CompilerSettings;
+import org.density.painless.FunctionRef;
+import org.density.painless.Location;
+import org.density.painless.Operation;
+import org.density.painless.lookup.PainlessCast;
+import org.density.painless.lookup.PainlessClassBinding;
+import org.density.painless.lookup.PainlessConstructor;
+import org.density.painless.lookup.PainlessField;
+import org.density.painless.lookup.PainlessInstanceBinding;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.lookup.def;
+import org.density.painless.node.AExpression;
+import org.density.painless.node.ANode;
+import org.density.painless.node.AStatement;
+import org.density.painless.node.EAssignment;
+import org.density.painless.node.EBinary;
+import org.density.painless.node.EBooleanComp;
+import org.density.painless.node.EBooleanConstant;
+import org.density.painless.node.EBrace;
+import org.density.painless.node.ECall;
+import org.density.painless.node.ECallLocal;
+import org.density.painless.node.EComp;
+import org.density.painless.node.EConditional;
+import org.density.painless.node.EDecimal;
+import org.density.painless.node.EDot;
+import org.density.painless.node.EElvis;
+import org.density.painless.node.EExplicit;
+import org.density.painless.node.EFunctionRef;
+import org.density.painless.node.EInstanceof;
+import org.density.painless.node.ELambda;
+import org.density.painless.node.EListInit;
+import org.density.painless.node.EMapInit;
+import org.density.painless.node.ENewArray;
+import org.density.painless.node.ENewArrayFunctionRef;
+import org.density.painless.node.ENewObj;
+import org.density.painless.node.ENull;
+import org.density.painless.node.ENumeric;
+import org.density.painless.node.ERegex;
+import org.density.painless.node.EString;
+import org.density.painless.node.ESymbol;
+import org.density.painless.node.EUnary;
+import org.density.painless.node.SBlock;
+import org.density.painless.node.SBreak;
+import org.density.painless.node.SCatch;
+import org.density.painless.node.SClass;
+import org.density.painless.node.SContinue;
+import org.density.painless.node.SDeclBlock;
+import org.density.painless.node.SDeclaration;
+import org.density.painless.node.SDo;
+import org.density.painless.node.SEach;
+import org.density.painless.node.SExpression;
+import org.density.painless.node.SFor;
+import org.density.painless.node.SFunction;
+import org.density.painless.node.SIf;
+import org.density.painless.node.SIfElse;
+import org.density.painless.node.SReturn;
+import org.density.painless.node.SThrow;
+import org.density.painless.node.STry;
+import org.density.painless.node.SWhile;
+import org.density.painless.spi.annotation.NonDeterministicAnnotation;
+import org.density.painless.symbol.Decorations;
+import org.density.painless.symbol.Decorations.AllEscape;
+import org.density.painless.symbol.Decorations.AnyBreak;
+import org.density.painless.symbol.Decorations.AnyContinue;
+import org.density.painless.symbol.Decorations.BeginLoop;
+import org.density.painless.symbol.Decorations.BinaryType;
+import org.density.painless.symbol.Decorations.CapturesDecoration;
+import org.density.painless.symbol.Decorations.ComparisonType;
+import org.density.painless.symbol.Decorations.CompoundType;
+import org.density.painless.symbol.Decorations.ContinuousLoop;
+import org.density.painless.symbol.Decorations.DefOptimized;
+import org.density.painless.symbol.Decorations.DowncastPainlessCast;
+import org.density.painless.symbol.Decorations.EncodingDecoration;
+import org.density.painless.symbol.Decorations.Explicit;
+import org.density.painless.symbol.Decorations.ExpressionPainlessCast;
+import org.density.painless.symbol.Decorations.GetterPainlessMethod;
+import org.density.painless.symbol.Decorations.InLoop;
+import org.density.painless.symbol.Decorations.InstanceType;
+import org.density.painless.symbol.Decorations.Internal;
+import org.density.painless.symbol.Decorations.IterablePainlessMethod;
+import org.density.painless.symbol.Decorations.LastLoop;
+import org.density.painless.symbol.Decorations.LastSource;
+import org.density.painless.symbol.Decorations.ListShortcut;
+import org.density.painless.symbol.Decorations.LoopEscape;
+import org.density.painless.symbol.Decorations.MapShortcut;
+import org.density.painless.symbol.Decorations.MethodEscape;
+import org.density.painless.symbol.Decorations.MethodNameDecoration;
+import org.density.painless.symbol.Decorations.Negate;
+import org.density.painless.symbol.Decorations.ParameterNames;
+import org.density.painless.symbol.Decorations.PartialCanonicalTypeName;
+import org.density.painless.symbol.Decorations.Read;
+import org.density.painless.symbol.Decorations.ReferenceDecoration;
+import org.density.painless.symbol.Decorations.ReturnType;
+import org.density.painless.symbol.Decorations.SemanticVariable;
+import org.density.painless.symbol.Decorations.SetterPainlessMethod;
+import org.density.painless.symbol.Decorations.ShiftType;
+import org.density.painless.symbol.Decorations.Shortcut;
+import org.density.painless.symbol.Decorations.StandardConstant;
+import org.density.painless.symbol.Decorations.StandardLocalFunction;
+import org.density.painless.symbol.Decorations.StandardPainlessClassBinding;
+import org.density.painless.symbol.Decorations.StandardPainlessConstructor;
+import org.density.painless.symbol.Decorations.StandardPainlessField;
+import org.density.painless.symbol.Decorations.StandardPainlessInstanceBinding;
+import org.density.painless.symbol.Decorations.StandardPainlessMethod;
+import org.density.painless.symbol.Decorations.StaticType;
+import org.density.painless.symbol.Decorations.TargetType;
+import org.density.painless.symbol.Decorations.TypeParameters;
+import org.density.painless.symbol.Decorations.UnaryType;
+import org.density.painless.symbol.Decorations.UpcastPainlessCast;
+import org.density.painless.symbol.Decorations.ValueType;
+import org.density.painless.symbol.Decorations.Write;
+import org.density.painless.symbol.FunctionTable;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.symbol.ScriptScope;
+import org.density.painless.symbol.SemanticScope;
+import org.density.painless.symbol.SemanticScope.FunctionScope;
+import org.density.painless.symbol.SemanticScope.LambdaScope;
+import org.density.painless.symbol.SemanticScope.Variable;
 
 import java.lang.reflect.Modifier;
 import java.time.ZonedDateTime;
@@ -163,8 +163,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
-import static org.opensearch.painless.symbol.SemanticScope.newFunctionScope;
+import static org.density.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
+import static org.density.painless.symbol.SemanticScope.newFunctionScope;
 
 /**
  * Semantically validates a user tree visiting all user tree nodes to check for
@@ -2271,7 +2271,7 @@ public class DefaultSemanticAnalysisPhase extends UserTreeBaseVisitor<SemanticSc
             throw userRegexNode.createError(
                 new IllegalStateException(
                     "Regexes are disabled. Set [script.painless.regex.enabled] to [true] "
-                        + "in opensearch.yaml to allow them. Be careful though, regexes break out of Painless's protection against deep "
+                        + "in density.yaml to allow them. Be careful though, regexes break out of Painless's protection against deep "
                         + "recursion and long loops."
                 )
             );

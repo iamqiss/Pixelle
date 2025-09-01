@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.rest.action.admin.cluster.RestClusterStatsAction;
-import org.opensearch.rest.action.admin.cluster.RestNodesInfoAction;
-import org.opensearch.rest.action.admin.cluster.RestNodesStatsAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.rest.action.admin.cluster.RestClusterStatsAction;
+import org.density.rest.action.admin.cluster.RestNodesInfoAction;
+import org.density.rest.action.admin.cluster.RestNodesStatsAction;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.threadpool.TestThreadPool;
+import org.density.transport.client.node.NodeClient;
 import org.junit.After;
 
 import java.util.Collections;
 
-public class RestStatsActionTests extends OpenSearchTestCase {
+public class RestStatsActionTests extends DensityTestCase {
     private final TestThreadPool threadPool = new TestThreadPool(RestStatsActionTests.class.getName());
     private final NodeClient client = new NodeClient(Settings.EMPTY, threadPool);
 

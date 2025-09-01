@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,19 +26,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.plugin
+package org.density.gradle.plugin
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import org.gradle.api.tasks.bundling.AbstractArchiveTask
-import org.opensearch.gradle.BuildPlugin
-import org.opensearch.gradle.NoticeTask
-import org.opensearch.gradle.Version
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.dependencies.CompileOnlyResolvePlugin
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.test.RestTestBasePlugin
-import org.opensearch.gradle.testclusters.RunTask
-import org.opensearch.gradle.util.Util
+import org.density.gradle.BuildPlugin
+import org.density.gradle.NoticeTask
+import org.density.gradle.Version
+import org.density.gradle.VersionProperties
+import org.density.gradle.dependencies.CompileOnlyResolvePlugin
+import org.density.gradle.info.BuildParams
+import org.density.gradle.test.RestTestBasePlugin
+import org.density.gradle.testclusters.RunTask
+import org.density.gradle.util.Util
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -56,11 +56,11 @@ import org.gradle.api.tasks.bundling.Zip
 import org.gradle.jvm.tasks.Jar
 
 /**
- * Encapsulates build configuration for an OpenSearch plugin.
+ * Encapsulates build configuration for an Density plugin.
  */
 class PluginBuildPlugin implements Plugin<Project> {
 
-    public static final String PLUGIN_EXTENSION_NAME = 'opensearchplugin'
+    public static final String PLUGIN_EXTENSION_NAME = 'densityplugin'
 
     @Override
     void apply(Project project) {
@@ -93,13 +93,13 @@ class PluginBuildPlugin implements Plugin<Project> {
             project.description = extension1.description
 
             if (extension1.name == null) {
-                throw new InvalidUserDataException('name is a required setting for opensearchplugin')
+                throw new InvalidUserDataException('name is a required setting for densityplugin')
             }
             if (extension1.description == null) {
-                throw new InvalidUserDataException('description is a required setting for opensearchplugin')
+                throw new InvalidUserDataException('description is a required setting for densityplugin')
             }
             if (extension1.classname == null) {
-                throw new InvalidUserDataException('classname is a required setting for opensearchplugin')
+                throw new InvalidUserDataException('classname is a required setting for densityplugin')
             }
 
             JavaPluginExtension java = project.getExtensions().findByType(JavaPluginExtension.class)
@@ -107,7 +107,7 @@ class PluginBuildPlugin implements Plugin<Project> {
                     'name'                : extension1.name,
                     'description'         : extension1.description,
                     'version'             : extension1.version,
-                    'opensearchVersion'   : Version.fromString(VersionProperties.getOpenSearch()).toString(),
+                    'densityVersion'   : Version.fromString(VersionProperties.getDensity()).toString(),
                     'javaVersion'         : java.targetCompatibility as String,
                     'classname'           : extension1.classname,
                     'customFolderName'    : extension1.customFolderName,
@@ -131,9 +131,9 @@ class PluginBuildPlugin implements Plugin<Project> {
                     baseClass 'org.apache.lucene.tests.util.LuceneTestCase'
                 }
                 IT {
-                    baseClass 'org.opensearch.test.OpenSearchIntegTestCase'
-                    baseClass 'org.opensearch.test.rest.OpenSearchRestTestCase'
-                    baseClass 'org.opensearch.test.OpenSearchSingleNodeTestCase'
+                    baseClass 'org.density.test.DensityIntegTestCase'
+                    baseClass 'org.density.test.rest.DensityRestTestCase'
+                    baseClass 'org.density.test.DensitySingleNodeTestCase'
                 }
             }
         }
@@ -163,7 +163,7 @@ class PluginBuildPlugin implements Plugin<Project> {
             project.publishing.publications.nebula(MavenPublication).artifactId = extension.name + "-client"
             final BasePluginExtension base = project.getExtensions().findByType(BasePluginExtension.class)
             project.tasks.withType(GenerateMavenPom.class).configureEach { GenerateMavenPom generatePOMTask ->
-                generatePOMTask.destination = "${project.buildDir}/distributions/${base.archivesName}-client-${project.versions.opensearch}.pom"
+                generatePOMTask.destination = "${project.buildDir}/distributions/${base.archivesName}-client-${project.versions.density}.pom"
             }
         } else {
             if (project.plugins.hasPlugin(MavenPublishPlugin)) {
@@ -178,11 +178,11 @@ class PluginBuildPlugin implements Plugin<Project> {
                 compileOnly project.project(':server')
                 testImplementation project.project(':test:framework')
             } else {
-                compileOnly "org.opensearch:opensearch:${project.versions.opensearch}"
-                testImplementation "org.opensearch.test:framework:${project.versions.opensearch}"
+                compileOnly "org.density:density:${project.versions.density}"
+                testImplementation "org.density.test:framework:${project.versions.density}"
             }
             // we "upgrade" these optional deps to provided for plugins, since they will run
-            // with a full opensearch server that includes optional deps
+            // with a full density server that includes optional deps
             compileOnly "org.locationtech.spatial4j:spatial4j:${project.versions.spatial4j}"
             compileOnly "org.locationtech.jts:jts-core:${project.versions.jts}"
             compileOnly "org.apache.logging.log4j:log4j-api:${project.versions.log4j}"

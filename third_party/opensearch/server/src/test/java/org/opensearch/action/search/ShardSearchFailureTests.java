@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.action.OriginalIndices;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.XContentTestUtils.insertRandomFields;
 
-public class ShardSearchFailureTests extends OpenSearchTestCase {
+public class ShardSearchFailureTests extends DensityTestCase {
 
     public static ShardSearchFailure createTestItem(String indexUuid) {
         String randomMessage = randomAlphaOfLengthBetween(3, 20);
@@ -108,15 +108,15 @@ public class ShardSearchFailureTests extends OpenSearchTestCase {
 
         /*
          * we cannot compare the cause, because it will be wrapped in an outer
-         * OpenSearchException best effort: try to check that the original
+         * DensityException best effort: try to check that the original
          * message appears somewhere in the rendered xContent
          */
         String originalMsg = response.getCause().getMessage();
-        assertEquals(parsed.getCause().getMessage(), "OpenSearch exception [type=parsing_exception, reason=" + originalMsg + "]");
+        assertEquals(parsed.getCause().getMessage(), "Density exception [type=parsing_exception, reason=" + originalMsg + "]");
         String nestedMsg = response.getCause().getCause().getMessage();
         assertEquals(
             parsed.getCause().getCause().getMessage(),
-            "OpenSearch exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
+            "Density exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
         );
     }
 

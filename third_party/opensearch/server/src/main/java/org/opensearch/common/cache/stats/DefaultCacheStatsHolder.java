@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.stats;
+package org.density.common.cache.stats;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  * operations done on them yet. This might be changed in the future, by exposing a method to add empty nodes to the
  * tree in CacheStatsHolder in the ICache interface.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class DefaultCacheStatsHolder implements CacheStatsHolder {
 

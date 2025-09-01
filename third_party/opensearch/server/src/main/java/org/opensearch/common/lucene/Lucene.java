@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene;
+package org.density.common.lucene;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
@@ -81,18 +81,18 @@ import org.apache.lucene.store.Lock;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.iterable.Iterables;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.search.sort.SortedWiderNumericSortField;
+import org.density.ExceptionsHelper;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.iterable.Iterables;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.search.sort.SortedWiderNumericSortField;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -107,7 +107,7 @@ import java.util.Map;
 /**
  * Main lucene class.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Lucene {
     public static final String LATEST_CODEC = "Lucene101";
@@ -139,9 +139,9 @@ public class Lucene {
     /**
      * A variant of {@link #readSegmentInfos(Directory)} that supports reading indices written by
      * older major versions of Lucene. This leverages Lucene's "expert" readLatestCommit API. The
-     * {@link org.opensearch.Version} parameter determines the minimum supported Lucene major version.
+     * {@link org.density.Version} parameter determines the minimum supported Lucene major version.
      */
-    public static SegmentInfos readSegmentInfos(Directory directory, org.opensearch.Version minimumVersion) throws IOException {
+    public static SegmentInfos readSegmentInfos(Directory directory, org.density.Version minimumVersion) throws IOException {
         final int minSupportedLuceneMajor = minimumVersion.minimumIndexCompatibilityVersion().luceneVersion.major;
         return SegmentInfos.readLatestCommit(directory, minSupportedLuceneMajor);
     }

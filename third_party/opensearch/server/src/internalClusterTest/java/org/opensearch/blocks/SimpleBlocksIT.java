@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.blocks;
+package org.density.blocks;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockRequestBuilder;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata.APIBlock;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.density.action.admin.indices.readonly.AddIndexBlockRequestBuilder;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexMetadata.APIBlock;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.index.IndexNotFoundException;
+import org.density.test.BackgroundIndexer;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,13 +65,13 @@ import java.util.stream.IntStream;
 
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.action.support.IndicesOptions.lenientExpandOpen;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.support.IndicesOptions.lenientExpandOpen;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_WRITE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -79,8 +79,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class SimpleBlocksIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class SimpleBlocksIT extends DensityIntegTestCase {
     public void testVerifyIndexAndClusterReadOnly() throws Exception {
         // cluster.read_only = null: write and metadata not blocked
         canCreateIndex("test1");

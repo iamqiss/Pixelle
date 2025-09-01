@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,282 +26,282 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.Build;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionModule;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.snapshots.status.TransportNodesSnapshotsStatus;
-import org.opensearch.action.admin.indices.view.ViewService;
-import org.opensearch.action.search.SearchExecutionStatsCollector;
-import org.opensearch.action.search.SearchPhaseController;
-import org.opensearch.action.search.SearchRequestOperationsCompositeListenerFactory;
-import org.opensearch.action.search.SearchRequestOperationsListener;
-import org.opensearch.action.search.SearchRequestSlowLog;
-import org.opensearch.action.search.SearchRequestStats;
-import org.opensearch.action.search.SearchTaskRequestOperationsListener;
-import org.opensearch.action.search.SearchTransportService;
-import org.opensearch.action.search.StreamSearchTransportService;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.action.update.UpdateHelper;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.bootstrap.BootstrapCheck;
-import org.opensearch.bootstrap.BootstrapContext;
-import org.opensearch.cluster.ClusterInfoService;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.InternalClusterInfoService;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.StreamNodeConnectionsService;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.action.shard.LocalShardStateAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.applicationtemplates.SystemTemplatesPlugin;
-import org.opensearch.cluster.applicationtemplates.SystemTemplatesService;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.metadata.AliasValidator;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataCreateDataStreamService;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexUpgradeService;
-import org.opensearch.cluster.metadata.SystemIndexMetadataUpgradeService;
-import org.opensearch.cluster.metadata.TemplateUpgradeService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.BatchedRerouteService;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.routing.allocation.DiskThresholdMonitor;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.cluster.service.LocalClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.StopWatch;
-import org.opensearch.common.cache.module.CacheModule;
-import org.opensearch.common.cache.service.CacheService;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.inject.ModulesBuilder;
-import org.opensearch.common.inject.util.Providers;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.logging.HeaderWarning;
-import org.opensearch.common.logging.NodeAndClusterIdStateListener;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.ConsistentSettingsService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.SettingUpgrader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.unit.RatioValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.crypto.CryptoHandlerRegistry;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.LocalDiscovery;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeMetadata;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.extensions.NoopExtensionsManager;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.gateway.GatewayModule;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.gateway.MetaStateService;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
-import org.opensearch.gateway.remote.RemoteClusterStateCleanupManager;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.SegmentReplicationStatsTracker;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.autoforcemerge.AutoForceMergeManager;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.MergedSegmentWarmerFactory;
-import org.opensearch.index.mapper.MappingTransformerRegistry;
-import org.opensearch.index.recovery.RemoteStoreRestoreService;
-import org.opensearch.index.remote.RemoteIndexPathUploader;
-import org.opensearch.index.remote.RemoteStoreStatsTrackerFactory;
-import org.opensearch.index.store.DefaultCompositeDirectoryFactory;
-import org.opensearch.index.store.IndexStoreListener;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheCleaner;
-import org.opensearch.index.store.remote.filecache.FileCacheFactory;
-import org.opensearch.index.store.remote.filecache.FileCacheSettings;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.breaker.BreakerSettings;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.indices.cluster.IndicesClusterStateService;
-import org.opensearch.indices.recovery.PeerRecoverySourceService;
-import org.opensearch.indices.recovery.PeerRecoveryTargetService;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.SegmentReplicationSourceFactory;
-import org.opensearch.indices.replication.SegmentReplicationSourceService;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.indices.replication.SegmentReplicator;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentPublisher;
-import org.opensearch.indices.replication.checkpoint.PublishMergedSegmentAction;
-import org.opensearch.indices.replication.checkpoint.RemoteStorePublishMergedSegmentAction;
-import org.opensearch.indices.store.IndicesStore;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.ingest.SystemIngestPipelineCache;
-import org.opensearch.monitor.MonitorService;
-import org.opensearch.monitor.fs.FsHealthService;
-import org.opensearch.monitor.fs.FsProbe;
-import org.opensearch.monitor.fs.FsServiceProvider;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.node.resource.tracker.NodeResourceUsageTracker;
-import org.opensearch.persistent.PersistentTasksClusterService;
-import org.opensearch.persistent.PersistentTasksExecutor;
-import org.opensearch.persistent.PersistentTasksExecutorRegistry;
-import org.opensearch.persistent.PersistentTasksService;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.CachePlugin;
-import org.opensearch.plugins.CircuitBreakerPlugin;
-import org.opensearch.plugins.ClusterPlugin;
-import org.opensearch.plugins.CryptoKeyProviderPlugin;
-import org.opensearch.plugins.CryptoPlugin;
-import org.opensearch.plugins.DiscoveryPlugin;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.ExtensionAwarePlugin;
-import org.opensearch.plugins.IdentityAwarePlugin;
-import org.opensearch.plugins.IdentityPlugin;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.plugins.IngestPlugin;
-import org.opensearch.plugins.IngestionConsumerPlugin;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.MetadataUpgrader;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.PersistentTaskPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.plugins.RepositoryPlugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.plugins.SearchPipelinePlugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.plugins.SecureSettingsFactory;
-import org.opensearch.plugins.StreamManagerPlugin;
-import org.opensearch.plugins.SystemIndexPlugin;
-import org.opensearch.plugins.TaskManagerClientPlugin;
-import org.opensearch.plugins.TelemetryAwarePlugin;
-import org.opensearch.plugins.TelemetryPlugin;
-import org.opensearch.ratelimitting.admissioncontrol.AdmissionControlService;
-import org.opensearch.ratelimitting.admissioncontrol.transport.AdmissionControlTransportInterceptor;
-import org.opensearch.repositories.RepositoriesModule;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.RestController;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.support.AggregationUsageService;
-import org.opensearch.search.backpressure.SearchBackpressureService;
-import org.opensearch.search.backpressure.settings.SearchBackpressureSettings;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.snapshots.InternalSnapshotsInfoService;
-import org.opensearch.snapshots.RestoreService;
-import org.opensearch.snapshots.SnapshotShardsService;
-import org.opensearch.snapshots.SnapshotsInfoService;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.task.commons.clients.TaskManagerClient;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskCancellationMonitoringService;
-import org.opensearch.tasks.TaskCancellationMonitoringSettings;
-import org.opensearch.tasks.TaskCancellationService;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.tasks.TaskResultsService;
-import org.opensearch.tasks.consumer.TopNSearchTasksLogger;
-import org.opensearch.telemetry.TelemetryModule;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.MetricsRegistryFactory;
-import org.opensearch.telemetry.metrics.NoopMetricsRegistryFactory;
-import org.opensearch.telemetry.tracing.NoopTracerFactory;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.TracerFactory;
-import org.opensearch.threadpool.ExecutorBuilder;
-import org.opensearch.threadpool.RunnableTaskExecutionListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
-import org.opensearch.watcher.ResourceWatcherService;
-import org.opensearch.wlm.WorkloadGroupService;
-import org.opensearch.wlm.WorkloadGroupsStateAccessor;
-import org.opensearch.wlm.WorkloadManagementSettings;
-import org.opensearch.wlm.WorkloadManagementTransportInterceptor;
-import org.opensearch.wlm.cancellation.MaximumResourceTaskSelectionStrategy;
-import org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService;
-import org.opensearch.wlm.listeners.WorkloadGroupRequestOperationListener;
-import org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
+import org.density.Build;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.DensityTimeoutException;
+import org.density.Version;
+import org.density.action.ActionModule;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.snapshots.status.TransportNodesSnapshotsStatus;
+import org.density.action.admin.indices.view.ViewService;
+import org.density.action.search.SearchExecutionStatsCollector;
+import org.density.action.search.SearchPhaseController;
+import org.density.action.search.SearchRequestOperationsCompositeListenerFactory;
+import org.density.action.search.SearchRequestOperationsListener;
+import org.density.action.search.SearchRequestSlowLog;
+import org.density.action.search.SearchRequestStats;
+import org.density.action.search.SearchTaskRequestOperationsListener;
+import org.density.action.search.SearchTransportService;
+import org.density.action.search.StreamSearchTransportService;
+import org.density.action.support.TransportAction;
+import org.density.action.update.UpdateHelper;
+import org.density.arrow.spi.StreamManager;
+import org.density.bootstrap.BootstrapCheck;
+import org.density.bootstrap.BootstrapContext;
+import org.density.cluster.ClusterInfoService;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.InternalClusterInfoService;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.StreamNodeConnectionsService;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.action.shard.LocalShardStateAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.applicationtemplates.SystemTemplatesPlugin;
+import org.density.cluster.applicationtemplates.SystemTemplatesService;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.metadata.AliasValidator;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataCreateDataStreamService;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.cluster.metadata.MetadataIndexUpgradeService;
+import org.density.cluster.metadata.SystemIndexMetadataUpgradeService;
+import org.density.cluster.metadata.TemplateUpgradeService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.BatchedRerouteService;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.routing.allocation.DiskThresholdMonitor;
+import org.density.cluster.service.ClusterService;
+import org.density.cluster.service.LocalClusterService;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.StopWatch;
+import org.density.common.cache.module.CacheModule;
+import org.density.common.cache.service.CacheService;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Key;
+import org.density.common.inject.Module;
+import org.density.common.inject.ModulesBuilder;
+import org.density.common.inject.util.Providers;
+import org.density.common.lease.Releasables;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.logging.HeaderWarning;
+import org.density.common.logging.NodeAndClusterIdStateListener;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkModule;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.ConsistentSettingsService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.SettingUpgrader;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.settings.SettingsModule;
+import org.density.common.unit.RatioValue;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.crypto.CryptoHandlerRegistry;
+import org.density.discovery.Discovery;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.LocalDiscovery;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeMetadata;
+import org.density.extensions.ExtensionsManager;
+import org.density.extensions.NoopExtensionsManager;
+import org.density.gateway.GatewayAllocator;
+import org.density.gateway.GatewayMetaState;
+import org.density.gateway.GatewayModule;
+import org.density.gateway.GatewayService;
+import org.density.gateway.MetaStateService;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.gateway.ShardsBatchGatewayAllocator;
+import org.density.gateway.remote.RemoteClusterStateCleanupManager;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.http.HttpServerTransport;
+import org.density.identity.IdentityService;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.IndexingPressureService;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.SegmentReplicationStatsTracker;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.autoforcemerge.AutoForceMergeManager;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.MergedSegmentWarmerFactory;
+import org.density.index.mapper.MappingTransformerRegistry;
+import org.density.index.recovery.RemoteStoreRestoreService;
+import org.density.index.remote.RemoteIndexPathUploader;
+import org.density.index.remote.RemoteStoreStatsTrackerFactory;
+import org.density.index.store.DefaultCompositeDirectoryFactory;
+import org.density.index.store.IndexStoreListener;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheCleaner;
+import org.density.index.store.remote.filecache.FileCacheFactory;
+import org.density.index.store.remote.filecache.FileCacheSettings;
+import org.density.indices.IndicesModule;
+import org.density.indices.IndicesService;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.ShardLimitValidator;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.indices.SystemIndices;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.breaker.BreakerSettings;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.indices.cluster.IndicesClusterStateService;
+import org.density.indices.recovery.PeerRecoverySourceService;
+import org.density.indices.recovery.PeerRecoveryTargetService;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.SegmentReplicationSourceFactory;
+import org.density.indices.replication.SegmentReplicationSourceService;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.indices.replication.SegmentReplicator;
+import org.density.indices.replication.checkpoint.MergedSegmentPublisher;
+import org.density.indices.replication.checkpoint.PublishMergedSegmentAction;
+import org.density.indices.replication.checkpoint.RemoteStorePublishMergedSegmentAction;
+import org.density.indices.store.IndicesStore;
+import org.density.ingest.IngestService;
+import org.density.ingest.SystemIngestPipelineCache;
+import org.density.monitor.MonitorService;
+import org.density.monitor.fs.FsHealthService;
+import org.density.monitor.fs.FsProbe;
+import org.density.monitor.fs.FsServiceProvider;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.node.resource.tracker.NodeResourceUsageTracker;
+import org.density.persistent.PersistentTasksClusterService;
+import org.density.persistent.PersistentTasksExecutor;
+import org.density.persistent.PersistentTasksExecutorRegistry;
+import org.density.persistent.PersistentTasksService;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.CachePlugin;
+import org.density.plugins.CircuitBreakerPlugin;
+import org.density.plugins.ClusterPlugin;
+import org.density.plugins.CryptoKeyProviderPlugin;
+import org.density.plugins.CryptoPlugin;
+import org.density.plugins.DiscoveryPlugin;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.ExtensionAwarePlugin;
+import org.density.plugins.IdentityAwarePlugin;
+import org.density.plugins.IdentityPlugin;
+import org.density.plugins.IndexStorePlugin;
+import org.density.plugins.IngestPlugin;
+import org.density.plugins.IngestionConsumerPlugin;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.MetadataUpgrader;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.PersistentTaskPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginsService;
+import org.density.plugins.RepositoryPlugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.plugins.SearchPipelinePlugin;
+import org.density.plugins.SearchPlugin;
+import org.density.plugins.SecureSettingsFactory;
+import org.density.plugins.StreamManagerPlugin;
+import org.density.plugins.SystemIndexPlugin;
+import org.density.plugins.TaskManagerClientPlugin;
+import org.density.plugins.TelemetryAwarePlugin;
+import org.density.plugins.TelemetryPlugin;
+import org.density.ratelimitting.admissioncontrol.AdmissionControlService;
+import org.density.ratelimitting.admissioncontrol.transport.AdmissionControlTransportInterceptor;
+import org.density.repositories.RepositoriesModule;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.RestController;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.search.SearchModule;
+import org.density.search.SearchService;
+import org.density.search.aggregations.support.AggregationUsageService;
+import org.density.search.backpressure.SearchBackpressureService;
+import org.density.search.backpressure.settings.SearchBackpressureSettings;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.search.query.QueryPhase;
+import org.density.snapshots.InternalSnapshotsInfoService;
+import org.density.snapshots.RestoreService;
+import org.density.snapshots.SnapshotShardsService;
+import org.density.snapshots.SnapshotsInfoService;
+import org.density.snapshots.SnapshotsService;
+import org.density.task.commons.clients.TaskManagerClient;
+import org.density.tasks.Task;
+import org.density.tasks.TaskCancellationMonitoringService;
+import org.density.tasks.TaskCancellationMonitoringSettings;
+import org.density.tasks.TaskCancellationService;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.tasks.TaskResultsService;
+import org.density.tasks.consumer.TopNSearchTasksLogger;
+import org.density.telemetry.TelemetryModule;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.MetricsRegistryFactory;
+import org.density.telemetry.metrics.NoopMetricsRegistryFactory;
+import org.density.telemetry.tracing.NoopTracerFactory;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.TracerFactory;
+import org.density.threadpool.ExecutorBuilder;
+import org.density.threadpool.RunnableTaskExecutionListener;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.StreamTransportService;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
+import org.density.watcher.ResourceWatcherService;
+import org.density.wlm.WorkloadGroupService;
+import org.density.wlm.WorkloadGroupsStateAccessor;
+import org.density.wlm.WorkloadManagementSettings;
+import org.density.wlm.WorkloadManagementTransportInterceptor;
+import org.density.wlm.cancellation.MaximumResourceTaskSelectionStrategy;
+import org.density.wlm.cancellation.WorkloadGroupTaskCancellationService;
+import org.density.wlm.listeners.WorkloadGroupRequestOperationListener;
+import org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService;
 
 import javax.net.ssl.SNIHostName;
 
@@ -341,21 +341,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS_SETTING;
-import static org.opensearch.common.util.FeatureFlags.BACKGROUND_TASK_EXECUTION_EXPERIMENTAL;
-import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
-import static org.opensearch.common.util.FeatureFlags.TELEMETRY;
-import static org.opensearch.index.ShardIndexingPressureSettings.SHARD_INDEXING_PRESSURE_ENABLED_ATTRIBUTE_KEY;
-import static org.opensearch.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteDataAttributePresent;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreAttributePresent;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS_SETTING;
+import static org.density.common.util.FeatureFlags.BACKGROUND_TASK_EXECUTION_EXPERIMENTAL;
+import static org.density.common.util.FeatureFlags.STREAM_TRANSPORT;
+import static org.density.common.util.FeatureFlags.TELEMETRY;
+import static org.density.index.ShardIndexingPressureSettings.SHARD_INDEXING_PRESSURE_ENABLED_ATTRIBUTE_KEY;
+import static org.density.indices.RemoteStoreSettings.CLUSTER_REMOTE_STORE_PINNED_TIMESTAMP_ENABLED;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteDataAttributePresent;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreAttributePresent;
 
 /**
  * A node represent a node within a cluster ({@code cluster.name}). The {@link #client()} can be used
  * in order to use a {@link Client} to perform actions/operations against the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Node implements Closeable {
     public static final Setting<Boolean> WRITE_PORTS_FILE_SETTING = Setting.boolSetting("node.portsfile", false, Property.NodeScope);
@@ -438,7 +438,7 @@ public class Node implements Closeable {
     /**
      * The discovery settings for the node.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class DiscoverySettings {
         public static final Setting<TimeValue> INITIAL_STATE_TIMEOUT_SETTING = Setting.positiveTimeSetting(
@@ -529,7 +529,7 @@ public class Node implements Closeable {
             logger.info("JVM arguments {}", Arrays.toString(jvmInfo.getInputArguments()));
             if (Build.CURRENT.isProductionRelease() == false) {
                 logger.warn(
-                    "version [{}] is a pre-release version of OpenSearch and is not suitable for production",
+                    "version [{}] is a pre-release version of Density and is not suitable for production",
                     Build.CURRENT.getQualifiedVersion()
                 );
             }
@@ -544,7 +544,7 @@ public class Node implements Closeable {
                 );
             }
 
-            // Ensure feature flags from opensearch.yml are valid during plugin initialization.
+            // Ensure feature flags from density.yml are valid during plugin initialization.
             FeatureFlags.initializeFeatureFlags(tmpSettings);
 
             this.pluginsService = new PluginsService(
@@ -1723,7 +1723,7 @@ public class Node implements Closeable {
 
             success = true;
         } catch (IOException ex) {
-            throw new OpenSearchException("failed to bind service", ex);
+            throw new DensityException("failed to bind service", ex);
         } finally {
             if (!success) {
                 IOUtils.closeWhileHandlingException(resourcesToClose);
@@ -1946,7 +1946,7 @@ public class Node implements Closeable {
                 try {
                     latch.await();
                 } catch (InterruptedException e) {
-                    throw new OpenSearchTimeoutException("Interrupted while waiting for initial discovery state");
+                    throw new DensityTimeoutException("Interrupted while waiting for initial discovery state");
                 }
             }
         }
@@ -2304,7 +2304,7 @@ public class Node implements Closeable {
         return service;
     }
 
-    /** Constructs a {@link org.opensearch.http.HttpServerTransport} which may be mocked for tests. */
+    /** Constructs a {@link org.density.http.HttpServerTransport} which may be mocked for tests. */
     protected HttpServerTransport newHttpTransport(NetworkModule networkModule) {
         return networkModule.getHttpServerTransportSupplier().get();
     }
@@ -2400,7 +2400,7 @@ public class Node implements Closeable {
         loadFileCacheThreadpool.shutdown();
         if (exception.get() != null) {
             logger.error("File cache initialization failed.", exception.get());
-            throw new OpenSearchException(exception.get());
+            throw new DensityException(exception.get());
         }
     }
 
@@ -2419,10 +2419,10 @@ public class Node implements Closeable {
         try {
             RatioValue ratioValue = RatioValue.parseRatioValue(capacityRaw);
             return Math.round(totalSpace * ratioValue.getAsRatio());
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             try {
                 return ByteSizeValue.parseBytesSizeValue(capacityRaw, NODE_SEARCH_CACHE_SIZE_SETTING.getKey()).getBytes();
-            } catch (OpenSearchParseException ex) {
+            } catch (DensityParseException ex) {
                 ex.addSuppressed(e);
                 throw ex;
             }

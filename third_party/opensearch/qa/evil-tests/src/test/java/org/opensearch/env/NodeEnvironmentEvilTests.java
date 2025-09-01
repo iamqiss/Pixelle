@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.PosixPermissionsResetter;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
+import org.density.test.PosixPermissionsResetter;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class NodeEnvironmentEvilTests extends OpenSearchTestCase {
+public class NodeEnvironmentEvilTests extends DensityTestCase {
 
     private static boolean isPosix;
 

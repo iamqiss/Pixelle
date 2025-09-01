@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.forcemerge;
+package org.density.action.admin.indices.forcemerge;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.broadcast.BroadcastRequest;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.transport.client.IndicesAdminClient;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.support.broadcast.BroadcastRequest;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.index.engine.Engine;
+import org.density.transport.client.IndicesAdminClient;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -57,7 +57,7 @@ import java.util.Arrays;
  * @see IndicesAdminClient#forceMerge(ForceMergeRequest)
  * @see ForceMergeResponse
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ForceMergeRequest extends BroadcastRequest<ForceMergeRequest> {
@@ -65,7 +65,7 @@ public class ForceMergeRequest extends BroadcastRequest<ForceMergeRequest> {
     /**
      * Defaults for the Force Merge Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Defaults {
         public static final int MAX_NUM_SEGMENTS = -1;
@@ -83,7 +83,7 @@ public class ForceMergeRequest extends BroadcastRequest<ForceMergeRequest> {
 
     /**
      * Force merge UUID to store in the live commit data of a shard under
-     * {@link org.opensearch.index.engine.Engine#FORCE_MERGE_UUID_KEY} after force merging it.
+     * {@link org.density.index.engine.Engine#FORCE_MERGE_UUID_KEY} after force merging it.
      */
     private final String forceMergeUUID;
 

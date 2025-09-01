@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,21 +23,21 @@ limitations under the License.
 */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.HasDependencies;
-import org.opensearch.common.inject.spi.InjectionPoint;
-import org.opensearch.common.inject.spi.ProviderInstanceBinding;
+import org.density.common.inject.Binder;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Key;
+import org.density.common.inject.Provider;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.HasDependencies;
+import org.density.common.inject.spi.InjectionPoint;
+import org.density.common.inject.spi.ProviderInstanceBinding;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -47,7 +47,7 @@ import static java.util.Collections.unmodifiableSet;
 /**
  * Provider instance binding
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ProviderInstanceBindingImpl<T> extends BindingImpl<T> implements ProviderInstanceBinding<T> {
 

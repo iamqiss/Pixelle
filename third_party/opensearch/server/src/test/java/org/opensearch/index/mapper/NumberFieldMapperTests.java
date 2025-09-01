@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.DoublePoint;
@@ -49,14 +49,14 @@ import org.apache.lucene.sandbox.document.BigIntegerPoint;
 import org.apache.lucene.sandbox.document.HalfFloatPoint;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.mapper.NumberFieldTypeTests.OutOfRangeSpec;
-import org.opensearch.index.termvectors.TermVectorsService;
+import org.density.common.Numbers;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.mapper.NumberFieldTypeTests.OutOfRangeSpec;
+import org.density.index.termvectors.TermVectorsService;
 
 import java.io.IOException;
 import java.math.BigInteger;

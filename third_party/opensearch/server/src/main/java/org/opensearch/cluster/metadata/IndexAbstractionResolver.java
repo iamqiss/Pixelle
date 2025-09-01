@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.index.IndexNotFoundException;
+import org.density.action.support.IndicesOptions;
+import org.density.common.regex.Regex;
+import org.density.index.IndexNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ import java.util.Set;
 /**
  * Utility class to resolve index abstractions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexAbstractionResolver {
 

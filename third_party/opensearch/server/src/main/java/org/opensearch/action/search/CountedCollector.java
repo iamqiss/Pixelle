@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
+import org.density.common.Nullable;
+import org.density.common.util.concurrent.CountDown;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
 
 /**
  * This is a simple base class to simplify fan out to shards and collect their results. Each results passed to
  * {@link #onResult(SearchPhaseResult)} will be set to the provided result array
  * where the given index is used to set the result on the array.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class CountedCollector<R extends SearchPhaseResult> {
     private final ArraySearchPhaseResults<R> resultConsumer;

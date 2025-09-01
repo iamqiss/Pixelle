@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
+import org.density.ResourceNotFoundException;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -76,7 +76,7 @@ import java.util.stream.Collectors;
 /**
  * Service for scripting
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ScriptService implements Closeable, ClusterStateApplier {
@@ -198,7 +198,7 @@ public class ScriptService implements Closeable, ClusterStateApplier {
                 DISABLE_DYNAMIC_SCRIPTING_SETTING
                     + " is not a supported setting, replace with "
                     + "fine-grained script settings. \n Dynamic scripts can be enabled for all languages and all operations not "
-                    + "using `script.disable_dynamic: false` in opensearch.yml"
+                    + "using `script.disable_dynamic: false` in density.yml"
             );
         }
 

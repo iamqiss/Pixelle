@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -44,28 +44,28 @@ import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.ByteBuffersDirectory;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.FlatObjectFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper.BuilderContext;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.FlatObjectFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper.BuilderContext;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.indices.IndicesService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -77,7 +77,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 
-public abstract class AbstractFieldDataTestCase extends OpenSearchSingleNodeTestCase {
+public abstract class AbstractFieldDataTestCase extends DensitySingleNodeTestCase {
 
     protected IndexService indexService;
     protected MapperService mapperService;
@@ -170,7 +170,7 @@ public abstract class AbstractFieldDataTestCase extends OpenSearchSingleNodeTest
         if (readerContexts != null && topLevelReader != null) {
             topLevelReader.close();
         }
-        topLevelReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        topLevelReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         readerContexts = topLevelReader.leaves();
         return readerContexts;
     }

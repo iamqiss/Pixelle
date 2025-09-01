@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.block;
+package org.density.cluster.block;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,19 +31,19 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.opensearch.cluster.block.ClusterBlockTests.randomClusterBlock;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_READ_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_ALLOW_DELETE_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_WRITE_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.REMOTE_READ_ONLY_ALLOW_DELETE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.block.ClusterBlockTests.randomClusterBlock;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_METADATA_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_READ_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_ALLOW_DELETE_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_WRITE_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.REMOTE_READ_ONLY_ALLOW_DELETE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
 
-public class ClusterBlocksTests extends OpenSearchTestCase {
+public class ClusterBlocksTests extends DensityTestCase {
 
     public void testWriteVerifiableTo() throws Exception {
         ClusterBlock clusterBlock1 = randomClusterBlock();

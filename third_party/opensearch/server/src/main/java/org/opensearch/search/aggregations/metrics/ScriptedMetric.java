@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.search.aggregations.Aggregation;
+import org.density.search.aggregations.Aggregation;
 
 /**
  * A metric aggregation that computes both its final and intermediate states using scripts.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ScriptedMetric extends Aggregation {
 

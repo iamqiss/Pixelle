@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.replication;
+package org.density.action.admin.indices.replication;
 
-import org.opensearch.action.support.broadcast.BroadcastOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.broadcast.BroadcastOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Segment Replication stats information request builder.
  *
-  * @opensearch.api
+  * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SegmentReplicationStatsRequestBuilder extends BroadcastOperationRequestBuilder<
@@ -23,7 +23,7 @@ public class SegmentReplicationStatsRequestBuilder extends BroadcastOperationReq
     SegmentReplicationStatsResponse,
     SegmentReplicationStatsRequestBuilder> {
 
-    public SegmentReplicationStatsRequestBuilder(OpenSearchClient client, SegmentReplicationStatsAction action) {
+    public SegmentReplicationStatsRequestBuilder(DensityClient client, SegmentReplicationStatsAction action) {
         super(client, action, new SegmentReplicationStatsRequest());
     }
 

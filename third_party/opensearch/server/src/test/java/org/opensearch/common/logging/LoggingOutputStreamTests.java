@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -41,13 +41,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.common.logging.LoggingOutputStream.DEFAULT_BUFFER_LENGTH;
-import static org.opensearch.common.logging.LoggingOutputStream.MAX_BUFFER_LENGTH;
+import static org.density.common.logging.LoggingOutputStream.DEFAULT_BUFFER_LENGTH;
+import static org.density.common.logging.LoggingOutputStream.MAX_BUFFER_LENGTH;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class LoggingOutputStreamTests extends OpenSearchTestCase {
+public class LoggingOutputStreamTests extends DensityTestCase {
 
     class TestLoggingOutputStream extends LoggingOutputStream {
         List<String> lines = new ArrayList<>();

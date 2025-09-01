@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.node.Node;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.node.Node;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A builder for scaling executors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ScalingExecutorBuilder extends ExecutorBuilder<ScalingExecutorBuilder.ScalingExecutorSettings> {
 
@@ -108,10 +108,10 @@ public final class ScalingExecutorBuilder extends ExecutorBuilder<ScalingExecuto
         int core = settings.core;
         int max = settings.max;
         final ThreadPool.Info info = new ThreadPool.Info(name(), ThreadPool.ThreadPoolType.SCALING, core, max, keepAlive, null);
-        final ThreadFactory threadFactory = OpenSearchExecutors.daemonThreadFactory(
-            OpenSearchExecutors.threadName(settings.nodeName, name())
+        final ThreadFactory threadFactory = DensityExecutors.daemonThreadFactory(
+            DensityExecutors.threadName(settings.nodeName, name())
         );
-        final ExecutorService executor = OpenSearchExecutors.newScaling(
+        final ExecutorService executor = DensityExecutors.newScaling(
             settings.nodeName + "/" + name(),
             core,
             max,

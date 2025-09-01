@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.Locale;
 
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class DiskThresholdSettingsTests extends OpenSearchTestCase {
+public class DiskThresholdSettingsTests extends DensityTestCase {
 
     public void testDefaults() {
         ClusterSettings nss = new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
@@ -87,7 +87,7 @@ public class DiskThresholdSettingsTests extends OpenSearchTestCase {
         assertFalse(diskThresholdSettings.includeRelocations());
 
         assertWarnings(
-            "[cluster.routing.allocation.disk.include_relocations] setting was deprecated in OpenSearch and "
+            "[cluster.routing.allocation.disk.include_relocations] setting was deprecated in Density and "
                 + "will be removed in a future release! See the breaking changes documentation for the next major version."
         );
     }

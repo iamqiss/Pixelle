@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots;
+package org.density.action.admin.cluster.snapshots;
 
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 import org.junit.Before;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_BLOCKS_READ;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -56,8 +56,8 @@ import static org.hamcrest.Matchers.hasSize;
  * <p>
  * The @NodeScope TEST is needed because this class updates the cluster setting "cluster.blocks.read_only".
  */
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class SnapshotBlocksIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class SnapshotBlocksIT extends DensityIntegTestCase {
 
     protected static final String INDEX_NAME = "test-blocks-1";
     protected static final String OTHER_INDEX_NAME = "test-blocks-2";
@@ -81,7 +81,7 @@ public class SnapshotBlocksIT extends OpenSearchIntegTestCase {
         logger.info("--> register a repository");
 
         Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), REPOSITORY_NAME, "fs", settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), REPOSITORY_NAME, "fs", settings);
 
         logger.info("--> verify the repository");
         VerifyRepositoryResponse verifyResponse = client().admin().cluster().prepareVerifyRepository(REPOSITORY_NAME).get();

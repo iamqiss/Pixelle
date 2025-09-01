@@ -132,7 +132,7 @@ Note: All duration and size fields include both human-readable formats (e.g., "1
 
 ```json
 {
-  "cluster_name": "opensearch",
+  "cluster_name": "density",
   "nodes": {
     "node_id": {
       "name": "node_name",

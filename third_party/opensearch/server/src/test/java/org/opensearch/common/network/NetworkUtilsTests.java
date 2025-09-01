@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OptionalMatchers;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.OptionalMatchers;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests for network utils. Please avoid using any methods that cause DNS lookups!
  */
-public class NetworkUtilsTests extends OpenSearchTestCase {
+public class NetworkUtilsTests extends DensityTestCase {
 
     /**
      * test sort key order respects PREFER_IPV4

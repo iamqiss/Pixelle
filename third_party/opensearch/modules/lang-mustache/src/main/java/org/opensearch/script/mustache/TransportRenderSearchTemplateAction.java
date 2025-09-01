@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.script.ScriptService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.support.ActionFilters;
+import org.density.common.inject.Inject;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.script.ScriptService;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 public class TransportRenderSearchTemplateAction extends TransportSearchTemplateAction {
 

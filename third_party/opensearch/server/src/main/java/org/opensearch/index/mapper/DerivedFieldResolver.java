@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Set;
 
 /**
  * DerivedFieldResolver is used as a lookup to resolve derived fields from their name.
- * It is created per search request and needs to be set at {@link org.opensearch.index.query.QueryShardContext#setDerivedFieldResolver(DerivedFieldResolver)}
+ * It is created per search request and needs to be set at {@link org.density.index.query.QueryShardContext#setDerivedFieldResolver(DerivedFieldResolver)}
  * for derived fields resolution.
  */
 @PublicApi(since = "2.15.0")

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.BytesRefs;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ import java.util.Objects;
  * Suggesting works by suggesting terms/phrases that appear in the suggest text that are similar compared
  * to the terms in provided text. These suggestions are based on several options described in this class.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SuggestBuilder implements Writeable, ToXContentObject {
@@ -98,7 +98,7 @@ public class SuggestBuilder implements Writeable, ToXContentObject {
 
     /**
      * Sets the text to provide suggestions for. The suggest text is a required option that needs
-     * to be set either via this setter or via the {@link org.opensearch.search.suggest.SuggestionBuilder#text(String)} method.
+     * to be set either via this setter or via the {@link org.density.search.suggest.SuggestionBuilder#text(String)} method.
      * <p>
      * The suggest text gets analyzed by the suggest analyzer or the suggest field search analyzer.
      * For each analyzed token, suggested terms are suggested if possible.
@@ -117,7 +117,7 @@ public class SuggestBuilder implements Writeable, ToXContentObject {
     }
 
     /**
-     * Adds an {@link org.opensearch.search.suggest.SuggestionBuilder} instance under a user defined name.
+     * Adds an {@link org.density.search.suggest.SuggestionBuilder} instance under a user defined name.
      * The order in which the <code>Suggestions</code> are added, is the same as in the response.
      * @throws IllegalArgumentException if two suggestions added have the same name
      */

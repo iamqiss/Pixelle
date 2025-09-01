@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.FieldComparator;
@@ -42,20 +42,20 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.NotEqualMessageBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.NotEqualMessageBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,12 +86,12 @@ public class InternalTopHitsTests extends InternalAggregationTestCase<InternalTo
                 name,
                 between(1, 40),
                 metadata,
-                OpenSearchTestCase::randomFloat,
+                DensityTestCase::randomFloat,
                 randomSortFields(),
                 InternalTopHitsTests::randomOfType
             );
         }
-        return createTestInstanceSortedScore(name, between(1, 40), metadata, OpenSearchTestCase::randomFloat);
+        return createTestInstanceSortedScore(name, between(1, 40), metadata, DensityTestCase::randomFloat);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class InternalTopHitsTests extends InternalAggregationTestCase<InternalTo
          */
         Set<Float> usedScores = new HashSet<>();
         Supplier<Float> scoreSupplier = () -> {
-            float score = randomValueOtherThanMany(usedScores::contains, OpenSearchTestCase::randomFloat);
+            float score = randomValueOtherThanMany(usedScores::contains, DensityTestCase::randomFloat);
             usedScores.add(score);
             return score;
         };

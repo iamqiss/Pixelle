@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.gateway.remote.IndexMetadataUploadListener;
-import org.opensearch.gateway.remote.RemoteStateTransferException;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.ConfigBlobStoreFormat;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.gateway.remote.IndexMetadataUploadListener;
+import org.density.gateway.remote.RemoteStateTransferException;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.ConfigBlobStoreFormat;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,19 +45,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_SETTING;
-import static org.opensearch.index.remote.RemoteIndexPath.COMBINED_PATH;
-import static org.opensearch.index.remote.RemoteIndexPath.SEGMENT_PATH;
-import static org.opensearch.index.remote.RemoteIndexPath.TRANSLOG_PATH;
-import static org.opensearch.index.remote.RemoteStoreUtils.determineRemoteStorePathStrategy;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteDataAttributePresent;
+import static org.density.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_SETTING;
+import static org.density.index.remote.RemoteIndexPath.COMBINED_PATH;
+import static org.density.index.remote.RemoteIndexPath.SEGMENT_PATH;
+import static org.density.index.remote.RemoteIndexPath.TRANSLOG_PATH;
+import static org.density.index.remote.RemoteStoreUtils.determineRemoteStorePathStrategy;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteDataAttributePresent;
 
 /**
- * Uploads the remote store path for all possible combinations of {@link org.opensearch.index.remote.RemoteStoreEnums.DataCategory}
- * and {@link org.opensearch.index.remote.RemoteStoreEnums.DataType} for each shard of an index.
+ * Uploads the remote store path for all possible combinations of {@link org.density.index.remote.RemoteStoreEnums.DataCategory}
+ * and {@link org.density.index.remote.RemoteStoreEnums.DataType} for each shard of an index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class RemoteIndexPathUploader extends IndexMetadataUploadListener {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilders;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilders;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.aggregations.AggregationExecutionException;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryShardContext;
+import org.density.search.SearchModule;
+import org.density.search.aggregations.AggregationExecutionException;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * directly instantiate this class, instead get an already-configured copy from {@link QueryShardContext#getValuesSourceRegistry()}, or (in
  * the case of some test scenarios only) directly from {@link SearchModule#getValuesSourceRegistry()}
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ValuesSourceRegistry {
@@ -58,7 +58,7 @@ public class ValuesSourceRegistry {
     /**
      * The registry key for the values source registry key
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class RegistryKey<T> {
@@ -93,7 +93,7 @@ public class ValuesSourceRegistry {
     /**
      * Builder for the values source registry
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

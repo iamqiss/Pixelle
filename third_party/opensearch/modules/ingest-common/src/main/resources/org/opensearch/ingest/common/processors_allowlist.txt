@@ -19,7 +19,7 @@
 
 # This file contains a allowlist of static processor methods that can be accessed from painless
 
-class org.opensearch.ingest.common.Processors {
+class org.density.ingest.common.Processors {
   long bytes(String)
   String lowercase(String)
   String uppercase(String)

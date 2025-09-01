@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -64,37 +64,37 @@ import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.Version;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
-import org.opensearch.common.util.concurrent.RefCounted;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.iterable.Iterables;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLock;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.CombinedDeletionPolicy;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.AbstractIndexShardComponent;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.translog.Translog;
+import org.density.ExceptionsHelper;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRefCounted;
+import org.density.common.util.concurrent.RefCounted;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.iterable.Iterables;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLock;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.index.IndexSettings;
+import org.density.index.engine.CombinedDeletionPolicy;
+import org.density.index.engine.Engine;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.AbstractIndexShardComponent;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardPath;
+import org.density.index.translog.Translog;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -122,11 +122,11 @@ import java.util.zip.Checksum;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
-import static org.opensearch.index.store.Store.MetadataSnapshot.loadMetadata;
+import static org.density.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
+import static org.density.index.store.Store.MetadataSnapshot.loadMetadata;
 
 /**
- * A Store provides plain access to files written by an opensearch index shard. Each shard
+ * A Store provides plain access to files written by an density index shard. Each shard
  * has a dedicated store that is uses to access Lucene's Directory which represents the lowest level
  * of file abstraction in Lucene used to read and write Lucene indices.
  * This class also provides access to metadata information like checksums for committed files. A committed
@@ -145,7 +145,7 @@ import static org.opensearch.index.store.Store.MetadataSnapshot.loadMetadata;
  *      }
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Store extends AbstractIndexShardComponent implements Closeable, RefCounted {
@@ -212,7 +212,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
         this.onClose = onClose;
         this.shardPath = shardPath;
         this.isIndexSortEnabled = indexSettings.getIndexSortConfig().hasIndexSort();
-        this.isParentFieldEnabledVersion = indexSettings.getIndexVersionCreated().onOrAfter(org.opensearch.Version.V_3_2_0);
+        this.isParentFieldEnabledVersion = indexSettings.getIndexVersionCreated().onOrAfter(org.density.Version.V_3_2_0);
         assert onClose != null;
         assert shardLock != null;
         assert shardLock.getShardId().equals(shardId);
@@ -888,7 +888,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
     /**
      * A store directory
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class StoreDirectory extends FilterDirectory {
         private final Logger deletesLogger;
@@ -995,7 +995,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
      *
      * @see StoreFileMetadata
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class MetadataSnapshot implements Iterable<StoreFileMetadata>, Writeable {
@@ -1080,7 +1080,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
         /**
          * Metadata that is currently loaded
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "3.2.0")
         public static class LoadedMetadata {
@@ -1164,7 +1164,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
                 }
             }
             if (maxVersion == null) {
-                maxVersion = org.opensearch.Version.CURRENT.minimumIndexCompatibilityVersion().luceneVersion;
+                maxVersion = org.density.Version.CURRENT.minimumIndexCompatibilityVersion().luceneVersion;
             }
             if (ignoreSegmentsFile == false) {
                 final String segmentsFile = segmentInfos.getSegmentsFileName();
@@ -1402,9 +1402,9 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
     /**
      * A class representing the diff between a recovery source and recovery target
      *
-     * @see MetadataSnapshot#recoveryDiff(org.opensearch.index.store.Store.MetadataSnapshot)
+     * @see MetadataSnapshot#recoveryDiff(org.density.index.store.Store.MetadataSnapshot)
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class RecoveryDiff {
@@ -1458,7 +1458,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
     /**
      * Class to verify the lucene index output
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class LuceneVerifyingIndexOutput extends VerifyingIndexOutput {
 
@@ -1559,7 +1559,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
      * mechanism that is used in some repository plugins (S3 for example). However, the checksum is only calculated on
      * the first read. All consecutive reads of the same data are not used to calculate the checksum.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class VerifyingIndexInput extends ChecksumIndexInput {
         private final IndexInput input;
@@ -1733,13 +1733,13 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
     /**
      * A listener that is executed once the store is closed and all references to it are released
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "3.2.0")
     public interface OnClose extends Consumer<ShardLock> {
         OnClose EMPTY = new OnClose() {
             /**
-             * This method is called while the provided {@link org.opensearch.env.ShardLock} is held.
+             * This method is called while the provided {@link org.density.env.ShardLock} is held.
              * This method is only called once after all resources for a store are released.
              */
             @Override
@@ -1897,7 +1897,7 @@ public class Store extends AbstractIndexShardComponent implements Closeable, Ref
     }
 
     /**
-     * Returns a {@link org.opensearch.index.seqno.SequenceNumbers.CommitInfo} of the safe commit if exists.
+     * Returns a {@link org.density.index.seqno.SequenceNumbers.CommitInfo} of the safe commit if exists.
      */
     public Optional<SequenceNumbers.CommitInfo> findSafeIndexCommit(long globalCheckpoint) throws IOException {
         final List<IndexCommit> commits = DirectoryReader.listCommits(directory);

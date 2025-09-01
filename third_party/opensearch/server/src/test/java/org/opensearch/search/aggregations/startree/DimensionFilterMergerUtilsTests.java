@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNode;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.StarTreeNodeCollector;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.DimensionFilterMergerUtils;
-import org.opensearch.search.startree.filter.ExactMatchDimFilter;
-import org.opensearch.search.startree.filter.RangeMatchDimFilter;
-import org.opensearch.search.startree.filter.provider.DimensionFilterMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNode;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.StarTreeNodeCollector;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.DimensionFilterMergerUtils;
+import org.density.search.startree.filter.ExactMatchDimFilter;
+import org.density.search.startree.filter.RangeMatchDimFilter;
+import org.density.search.startree.filter.provider.DimensionFilterMapper;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 
-public class DimensionFilterMergerUtilsTests extends OpenSearchTestCase {
+public class DimensionFilterMergerUtilsTests extends DensityTestCase {
 
     private DimensionFilterMapper numericMapper;
     private DimensionFilterMapper keywordMapper;

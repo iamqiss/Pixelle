@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 /**
  * The interface that orchestrates Translog operations and manages the {@link Translog} and interfaces with the Engine
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface TranslogManager extends Closeable {
@@ -72,7 +72,7 @@ public interface TranslogManager extends Closeable {
 
     /**
      * checks and removes translog files that no longer need to be retained. See
-     * {@link org.opensearch.index.translog.TranslogDeletionPolicy} for details
+     * {@link org.density.index.translog.TranslogDeletionPolicy} for details
      */
     void trimUnreferencedTranslogFiles() throws TranslogException;
 

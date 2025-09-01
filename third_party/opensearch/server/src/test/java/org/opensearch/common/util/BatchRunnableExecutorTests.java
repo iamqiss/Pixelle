@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.TimeoutAwareRunnable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.TimeoutAwareRunnable;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class BatchRunnableExecutorTests extends OpenSearchTestCase {
+public class BatchRunnableExecutorTests extends DensityTestCase {
     private Supplier<TimeValue> timeoutSupplier;
     private TimeoutAwareRunnable runnable1;
     private TimeoutAwareRunnable runnable2;

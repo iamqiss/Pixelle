@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.LongPoint;
@@ -38,15 +38,15 @@ import org.apache.lucene.document.NumericDocValuesField;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.query.QueryShardContext;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -61,13 +61,13 @@ import java.util.function.Supplier;
  * doing range searches. Therefore the {@code _seq_no} field is stored both
  * as a numeric doc value and as numeric indexed field.
  * <p>
- * This mapper also manages the primary term field, which has no OpenSearch named
+ * This mapper also manages the primary term field, which has no Density named
  * equivalent. The primary term is only used during collision after receiving
  * identical seq# values for two document copies. The primary term is stored as
  * a doc value field without being indexed, since it is only intended for use
  * as a key-value lookup.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SeqNoFieldMapper extends MetadataFieldMapper {
 
@@ -75,7 +75,7 @@ public class SeqNoFieldMapper extends MetadataFieldMapper {
      * A sequence ID, which is made up of a sequence number (both the searchable
      * and doc_value version of the field) and the primary term.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class SequenceIDFields {
@@ -115,7 +115,7 @@ public class SeqNoFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for internal sequence numbers
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SeqNoFieldType extends SimpleMappedFieldType {
 

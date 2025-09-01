@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.index.SoftDeletesDirectoryReaderWrapper;
 import org.apache.lucene.search.ReferenceManager;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogCorruptedException;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogException;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogOperationHelper;
-import org.opensearch.index.translog.WriteOnlyTranslogManager;
-import org.opensearch.index.translog.listener.TranslogEventListener;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.common.annotation.PublicApi;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogCorruptedException;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogException;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogOperationHelper;
+import org.density.index.translog.WriteOnlyTranslogManager;
+import org.density.index.translog.listener.TranslogEventListener;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -46,14 +46,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
 
-import static org.opensearch.index.seqno.SequenceNumbers.MAX_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.MAX_SEQ_NO;
 
 /**
  * This is an {@link Engine} implementation intended for replica shards when Segment Replication
  * is enabled.  This Engine does not create an IndexWriter, rather it refreshes a {@link NRTReplicationReaderManager}
  * with new Segments when received from an external source.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NRTReplicationEngine extends Engine {
@@ -150,7 +150,7 @@ public class NRTReplicationEngine extends Engine {
 
     private NRTReplicationReaderManager buildReaderManager() throws IOException {
         return new NRTReplicationReaderManager(
-            OpenSearchDirectoryReader.wrap(getDirectoryReader(), shardId),
+            DensityDirectoryReader.wrap(getDirectoryReader(), shardId),
             replicaFileTracker::incRef,
             replicaFileTracker::decRef,
             engineConfig
@@ -273,7 +273,7 @@ public class NRTReplicationEngine extends Engine {
     }
 
     @Override
-    protected ReferenceManager<OpenSearchDirectoryReader> getReferenceManager(SearcherScope scope) {
+    protected ReferenceManager<DensityDirectoryReader> getReferenceManager(SearcherScope scope) {
         return readerManager;
     }
 

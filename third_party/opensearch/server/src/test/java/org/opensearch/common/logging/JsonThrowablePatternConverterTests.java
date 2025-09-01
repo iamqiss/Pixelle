@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.message.SimpleMessage;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.BufferedReader;
@@ -45,7 +45,7 @@ import java.io.StringReader;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class JsonThrowablePatternConverterTests extends OpenSearchTestCase {
+public class JsonThrowablePatternConverterTests extends DensityTestCase {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private JsonThrowablePatternConverter converter = JsonThrowablePatternConverter.newInstance(null, null);
 

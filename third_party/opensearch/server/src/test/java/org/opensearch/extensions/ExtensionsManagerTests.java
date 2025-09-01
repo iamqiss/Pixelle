@@ -1,62 +1,62 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionModule;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.ClusterSettingsResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.settings.WriteableSetting;
-import org.opensearch.common.settings.WriteableSetting.SettingType;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.discovery.InitializeExtensionRequest;
-import org.opensearch.env.Environment;
-import org.opensearch.env.EnvironmentSettingsResponse;
-import org.opensearch.extensions.ExtensionsSettings.Extension;
-import org.opensearch.extensions.proto.ExtensionRequestProto;
-import org.opensearch.extensions.rest.RegisterRestActionsRequest;
-import org.opensearch.extensions.settings.RegisterCustomSettingsRequest;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.plugins.ExtensionAwarePlugin;
-import org.opensearch.rest.RestController;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.nio.MockNioTransport;
-import org.opensearch.usage.UsageService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionModule;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.ClusterSettingsResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.settings.WriteableSetting;
+import org.density.common.settings.WriteableSetting.SettingType;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.transport.TransportResponse;
+import org.density.discovery.InitializeExtensionRequest;
+import org.density.env.Environment;
+import org.density.env.EnvironmentSettingsResponse;
+import org.density.extensions.ExtensionsSettings.Extension;
+import org.density.extensions.proto.ExtensionRequestProto;
+import org.density.extensions.rest.RegisterRestActionsRequest;
+import org.density.extensions.settings.RegisterCustomSettingsRequest;
+import org.density.identity.IdentityService;
+import org.density.plugins.ExtensionAwarePlugin;
+import org.density.rest.RestController;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.nio.MockNioTransport;
+import org.density.usage.UsageService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -73,8 +73,8 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.common.util.FeatureFlags.EXTENSIONS;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
+import static org.density.common.util.FeatureFlags.EXTENSIONS;
+import static org.density.test.ClusterServiceUtils.createClusterService;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -85,7 +85,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ExtensionsManagerTests extends OpenSearchTestCase {
+public class ExtensionsManagerTests extends DensityTestCase {
     private static FeatureFlags.TestUtils.FlagWriteLock ffLock = null;
     private TransportService transportService;
     private ActionModule actionModule;
@@ -288,7 +288,7 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
         extensionsManager.loadExtension(firstExtension);
         IOException exception = expectThrows(IOException.class, () -> extensionsManager.loadExtension(secondExtension));
         assertEquals(
-            "Duplicate uniqueId [uniqueid1]. Did not load extension: Extension [name=secondExtension, uniqueId=uniqueid1, hostAddress=127.0.0.0, port=9300, version=0.0.7, opensearchVersion=3.0.0, minimumCompatibleVersion=3.0.0]",
+            "Duplicate uniqueId [uniqueid1]. Did not load extension: Extension [name=secondExtension, uniqueId=uniqueid1, hostAddress=127.0.0.0, port=9300, version=0.0.7, densityVersion=3.0.0, minimumCompatibleVersion=3.0.0]",
             exception.getMessage()
         );
 
@@ -326,7 +326,7 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
         ExtensionsManager extensionsManager = new ExtensionsManager(Set.of(), identityService);
 
         IOException exception = expectThrows(IOException.class, () -> extensionsManager.loadExtension(firstExtension));
-        assertEquals("Required field [minimum opensearch version] is missing in the request", exception.getMessage());
+        assertEquals("Required field [minimum density version] is missing in the request", exception.getMessage());
 
         assertEquals(0, extensionsManager.getExtensionIdMap().values().size());
     }
@@ -389,7 +389,7 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "Node Not Connected Exception 1",
-                    "org.opensearch.extensions.ExtensionsManager",
+                    "org.density.extensions.ExtensionsManager",
                     Level.ERROR,
                     "[secondExtension][127.0.0.1:9301] Node not connected"
                 )
@@ -398,7 +398,7 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "Node Not Connected Exception 2",
-                    "org.opensearch.extensions.ExtensionsManager",
+                    "org.density.extensions.ExtensionsManager",
                     Level.ERROR,
                     "[firstExtension][127.0.0.0:9300] Node not connected"
                 )
@@ -407,14 +407,14 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "No Response From Extension",
-                    "org.opensearch.extensions.ExtensionsManager",
+                    "org.density.extensions.ExtensionsManager",
                     Level.INFO,
                     "No response from extension to request."
                 )
             );
 
             // Test needs to be changed to mock the connection between the local node and an extension.
-            // Link to issue: https://github.com/opensearch-project/OpenSearch/issues/4045
+            // Link to issue: https://github.com/density-project/Density/issues/4045
             // mockLogAppender.assertAllExpectationsMatched();
         }
     }
@@ -936,7 +936,7 @@ public class ExtensionsManagerTests extends OpenSearchTestCase {
             List.of(),
             null
         );
-        expectThrows(OpenSearchException.class, () -> extensionsManager.loadExtension(firstExtension));
+        expectThrows(DensityException.class, () -> extensionsManager.loadExtension(firstExtension));
         assertEquals(0, extensionsManager.getExtensionIdMap().values().size());
     }
 

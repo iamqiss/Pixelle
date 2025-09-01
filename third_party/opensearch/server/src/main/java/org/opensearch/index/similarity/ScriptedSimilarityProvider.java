@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.Version;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.SimilarityScript;
-import org.opensearch.script.SimilarityWeightScript;
+import org.density.Version;
+import org.density.common.TriFunction;
+import org.density.common.settings.Settings;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.SimilarityScript;
+import org.density.script.SimilarityWeightScript;
 
 /**
  * Provider of scripted similarities.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class ScriptedSimilarityProvider implements TriFunction<Settings, Version, ScriptService, Similarity> {
 

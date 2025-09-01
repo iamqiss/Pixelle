@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
+import org.density.geometry.Circle;
+import org.density.geometry.Line;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
 
 /**
- * Utility class that transforms OpenSearch geometry objects to the Lucene representation
+ * Utility class that transforms Density geometry objects to the Lucene representation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeUtils {
 

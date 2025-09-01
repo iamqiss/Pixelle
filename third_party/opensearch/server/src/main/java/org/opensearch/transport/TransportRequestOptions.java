@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
 
 /**
  * Options for transport requests
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TransportRequestOptions {
@@ -64,7 +64,7 @@ public class TransportRequestOptions {
     /**
      * Type of transport request
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Type {
@@ -83,7 +83,7 @@ public class TransportRequestOptions {
     /**
      * Builder for transport request options
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

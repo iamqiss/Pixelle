@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.ByteBufferStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.channels.TraceableTcpTransportChannel;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.nativeprotocol.NativeOutboundHandler;
+import org.density.Version;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lease.Releasable;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.ByteBufferStreamInput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.transport.TransportResponse;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.channels.TraceableTcpTransportChannel;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.nativeprotocol.NativeOutboundHandler;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -68,7 +68,7 @@ import java.util.stream.Collectors;
 /**
  * Native handler for inbound data
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class NativeMessageHandler implements ProtocolMessageHandler {
@@ -510,7 +510,7 @@ public class NativeMessageHandler implements ProtocolMessageHandler {
     /**
      * Internal request handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class RequestHandler<T extends TransportRequest> extends AbstractRunnable {
         private final RequestHandlerRegistry<T> reg;

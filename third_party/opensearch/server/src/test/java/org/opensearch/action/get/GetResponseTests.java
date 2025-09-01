@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResult;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.function.Predicate;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.index.get.GetResultTests.copyGetResult;
-import static org.opensearch.index.get.GetResultTests.mutateGetResult;
-import static org.opensearch.index.get.GetResultTests.randomGetResult;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.index.get.GetResultTests.copyGetResult;
+import static org.density.index.get.GetResultTests.mutateGetResult;
+import static org.density.index.get.GetResultTests.randomGetResult;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class GetResponseTests extends OpenSearchTestCase {
+public class GetResponseTests extends DensityTestCase {
 
     public void testToAndFromXContent() throws Exception {
         doFromXContentTestWithRandomFields(false);

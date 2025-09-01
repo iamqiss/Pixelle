@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.reroute;
+package org.density.action.admin.cluster.reroute;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresAction;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresRequest;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.RoutingExplanations;
-import org.opensearch.cluster.routing.allocation.command.AbstractAllocateAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommand;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.admin.indices.shards.IndicesShardStoresAction;
+import org.density.action.admin.indices.shards.IndicesShardStoresRequest;
+import org.density.action.admin.indices.shards.IndicesShardStoresResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.RoutingExplanations;
+import org.density.cluster.routing.allocation.command.AbstractAllocateAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommand;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,12 +69,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.CLUSTER_REROUTE_API;
+import static org.density.cluster.service.ClusterManagerTask.CLUSTER_REROUTE_API;
 
 /**
  * Transport action for rerouting cluster allocation commands
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportClusterRerouteAction extends TransportClusterManagerNodeAction<ClusterRerouteRequest, ClusterRerouteResponse> {
 
@@ -220,7 +220,7 @@ public class TransportClusterRerouteAction extends TransportClusterManagerNodeAc
     /**
      * Inner Reroute Response Acknowledged the Cluster State Update
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ClusterRerouteResponseAckedClusterStateUpdateTask extends AckedClusterStateUpdateTask<ClusterRerouteResponse> {
 

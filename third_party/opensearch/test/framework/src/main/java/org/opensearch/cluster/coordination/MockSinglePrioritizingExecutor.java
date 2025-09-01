@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * Mock single threaded {@link PrioritizedOpenSearchThreadPoolExecutor} based on {@link DeterministicTaskQueue},
- * simulating the behaviour of an executor returned by {@link OpenSearchExecutors#newSinglePrioritizing}.
+ * Mock single threaded {@link PrioritizedDensityThreadPoolExecutor} based on {@link DeterministicTaskQueue},
+ * simulating the behaviour of an executor returned by {@link DensityExecutors#newSinglePrioritizing}.
  */
-public class MockSinglePrioritizingExecutor extends PrioritizedOpenSearchThreadPoolExecutor {
+public class MockSinglePrioritizingExecutor extends PrioritizedDensityThreadPoolExecutor {
 
     public MockSinglePrioritizingExecutor(String name, DeterministicTaskQueue deterministicTaskQueue, ThreadPool threadPool) {
         super(name, 0, 1, 0L, TimeUnit.MILLISECONDS, r -> {

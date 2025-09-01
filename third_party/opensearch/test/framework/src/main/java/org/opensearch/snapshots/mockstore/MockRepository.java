@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots.mockstore;
+package org.density.snapshots.mockstore;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.support.FilterBlobContainer;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.plugins.RepositoryPlugin;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
+import org.density.DensityException;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.support.FilterBlobContainer;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.plugins.RepositoryPlugin;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,7 +81,7 @@ public class MockRepository extends FsRepository {
 
     private static final String DUMMY_FILE_NAME_LIST_BLOBS = "dummy-name-list-blobs";
 
-    public static class Plugin extends org.opensearch.plugins.Plugin implements RepositoryPlugin {
+    public static class Plugin extends org.density.plugins.Plugin implements RepositoryPlugin {
 
         public static final Setting<String> USERNAME_SETTING = Setting.simpleString("secret.mock.username", Property.NodeScope);
         public static final Setting<String> PASSWORD_SETTING = Setting.simpleString(
@@ -384,7 +384,7 @@ public class MockRepository extends FsRepository {
                     int i = 0;
                     return ((bytes[i++] & 0xFF) << 24) | ((bytes[i++] & 0xFF) << 16) | ((bytes[i++] & 0xFF) << 8) | (bytes[i++] & 0xFF);
                 } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-                    throw new OpenSearchException("cannot calculate hashcode", ex);
+                    throw new DensityException("cannot calculate hashcode", ex);
                 }
             }
 

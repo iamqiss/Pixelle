@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.rest.RestStatus;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
@@ -45,23 +45,23 @@ import java.io.IOException;
  * the throwable it was created with instead of it's own. The stacktrace has no indication
  * of where this exception was created.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public final class NotSerializableExceptionWrapper extends OpenSearchException {
+public final class NotSerializableExceptionWrapper extends DensityException {
 
     private final String name;
     private final RestStatus status;
 
     public NotSerializableExceptionWrapper(Throwable other) {
-        super(OpenSearchException.getExceptionName(other) + ": " + other.getMessage(), other.getCause());
-        this.name = OpenSearchException.getExceptionName(other);
+        super(DensityException.getExceptionName(other) + ": " + other.getMessage(), other.getCause());
+        this.name = DensityException.getExceptionName(other);
         this.status = ExceptionsHelper.status(other);
         setStackTrace(other.getStackTrace());
         for (Throwable otherSuppressed : other.getSuppressed()) {
             addSuppressed(otherSuppressed);
         }
-        if (other instanceof OpenSearchException) {
-            OpenSearchException ex = (OpenSearchException) other;
+        if (other instanceof DensityException) {
+            DensityException ex = (DensityException) other;
             for (String key : ex.getHeaderKeys()) {
                 this.addHeader(key, ex.getHeader(key));
             }

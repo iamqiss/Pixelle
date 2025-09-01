@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.FutureUtils;
 
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ScheduledFuture;
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A cancellable adapter that is scheduled
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ScheduledCancellableAdapter implements Scheduler.ScheduledCancellable {
     private final ScheduledFuture<?> scheduledFuture;

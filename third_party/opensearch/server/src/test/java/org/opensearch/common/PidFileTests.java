@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -44,9 +44,9 @@ import java.nio.file.StandardOpenOption;
 import static org.hamcrest.Matchers.containsString;
 
 /**
- * UnitTest for {@link org.opensearch.common.PidFile}
+ * UnitTest for {@link org.density.common.PidFile}
  */
-public class PidFileTests extends OpenSearchTestCase {
+public class PidFileTests extends DensityTestCase {
     public void testParentIsFile() throws IOException {
         Path dir = createTempDir();
         Path parent = dir.resolve("foo");

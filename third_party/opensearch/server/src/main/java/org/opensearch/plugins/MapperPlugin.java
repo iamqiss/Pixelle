@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MappingTransformer;
-import org.opensearch.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MappingTransformer;
+import org.density.index.mapper.MetadataFieldMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.function.Predicate;
 /**
  * An extension point for {@link Plugin} implementations to add custom mappers
  *
- * @opensearch.api
+ * @density.api
  */
 public interface MapperPlugin {
 

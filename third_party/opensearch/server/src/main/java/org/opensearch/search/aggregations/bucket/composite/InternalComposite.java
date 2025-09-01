@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.KeyComparable;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.KeyComparable;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
 
 import java.io.IOException;
 import java.util.AbstractMap;
@@ -59,7 +59,7 @@ import java.util.Set;
 /**
  * Internal coordination class for composite aggs
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalComposite extends InternalMultiBucketAggregation<InternalComposite, InternalComposite.InternalBucket>
     implements
@@ -308,7 +308,7 @@ public class InternalComposite extends InternalMultiBucketAggregation<InternalCo
     /**
      * The bucket iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class BucketIterator implements Comparable<BucketIterator> {
         final Iterator<InternalBucket> it;
@@ -331,7 +331,7 @@ public class InternalComposite extends InternalMultiBucketAggregation<InternalCo
     /**
      * Internal bucket for the internal composite agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class InternalBucket extends InternalMultiBucketAggregation.InternalBucket
         implements
@@ -521,7 +521,7 @@ public class InternalComposite extends InternalMultiBucketAggregation<InternalCo
     /**
      * An array map used for the internal composite agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ArrayMap extends AbstractMap<String, Object> implements Comparable<ArrayMap> {
         final List<String> keys;

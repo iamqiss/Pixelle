@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.geogrid;
+package org.density.search.aggregations.bucket.geogrid;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.geometry.Rectangle;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.MAX_ZOOM;
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.checkPrecisionRange;
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.hashToGeoPoint;
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.keyToGeoPoint;
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.longEncode;
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.stringEncode;
+import static org.density.search.aggregations.bucket.GeoTileUtils.MAX_ZOOM;
+import static org.density.search.aggregations.bucket.GeoTileUtils.checkPrecisionRange;
+import static org.density.search.aggregations.bucket.GeoTileUtils.hashToGeoPoint;
+import static org.density.search.aggregations.bucket.GeoTileUtils.keyToGeoPoint;
+import static org.density.search.aggregations.bucket.GeoTileUtils.longEncode;
+import static org.density.search.aggregations.bucket.GeoTileUtils.stringEncode;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GeoTileUtilsTests extends OpenSearchTestCase {
+public class GeoTileUtilsTests extends DensityTestCase {
 
     private static final double GEOTILE_TOLERANCE = 1E-5D;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.termvectors.MultiTermVectorsItemResponse;
-import org.opensearch.action.termvectors.MultiTermVectorsRequest;
-import org.opensearch.action.termvectors.MultiTermVectorsResponse;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.MoreLikeThisQuery;
-import org.opensearch.common.lucene.search.XMoreLikeThis;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper.KeywordFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.TextFieldMapper.TextFieldType;
-import org.opensearch.transport.client.Client;
+import org.density.ExceptionsHelper;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.RoutingMissingException;
+import org.density.action.termvectors.MultiTermVectorsItemResponse;
+import org.density.action.termvectors.MultiTermVectorsRequest;
+import org.density.action.termvectors.MultiTermVectorsResponse;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.MoreLikeThisQuery;
+import org.density.common.lucene.search.XMoreLikeThis;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper.KeywordFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.TextFieldMapper.TextFieldType;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,14 +83,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * A more like this query that finds documents that are "like" the provided set of document(s).
  * <p>
  * The documents are provided as a set of strings and/or a list of {@link Item}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQueryBuilder> {
     public static final String NAME = "more_like_this";
@@ -164,7 +164,7 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
     /**
      * A single item to be used for a {@link MoreLikeThisQueryBuilder}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Item implements ToXContentObject, Writeable {
         public static final Item[] EMPTY_ARRAY = new Item[0];
@@ -392,7 +392,7 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
                             }
                             item.fields(fields.toArray(new String[0]));
                         } else {
-                            throw new OpenSearchParseException("failed to parse More Like This item. field [fields] must be an array");
+                            throw new DensityParseException("failed to parse More Like This item. field [fields] must be an array");
                         }
                     } else if (PER_FIELD_ANALYZER.match(currentFieldName, parser.getDeprecationHandler())) {
                         item.perFieldAnalyzer(TermVectorsRequest.readPerFieldAnalyzer(parser.map()));
@@ -403,17 +403,17 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
                     } else if (VERSION_TYPE.match(currentFieldName, parser.getDeprecationHandler())) {
                         item.versionType = VersionType.fromString(parser.text());
                     } else {
-                        throw new OpenSearchParseException("failed to parse More Like This item. unknown field [{}]", currentFieldName);
+                        throw new DensityParseException("failed to parse More Like This item. unknown field [{}]", currentFieldName);
                     }
                 }
             }
             if (item.id != null && item.doc != null) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "failed to parse More Like This item. either [id] or [doc] can be specified, but not both!"
                 );
             }
             if (item.id == null && item.doc == null) {
-                throw new OpenSearchParseException("failed to parse More Like This item. neither [id] nor [doc] is specified!");
+                throw new DensityParseException("failed to parse More Like This item. neither [id] nor [doc] is specified!");
             }
             return item;
         }
@@ -714,7 +714,7 @@ public class MoreLikeThisQueryBuilder extends AbstractQueryBuilder<MoreLikeThisQ
      * Number of terms that must match the generated query expressed in the
      * common syntax for minimum should match. Defaults to {@code 30%}.
      *
-     * @see    org.opensearch.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
+     * @see    org.density.common.lucene.search.Queries#calculateMinShouldMatch(int, String)
      */
     public MoreLikeThisQueryBuilder minimumShouldMatch(String minimumShouldMatch) {
         if (minimumShouldMatch == null) {

@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.index.remote.RemoteStoreEnums.DataCategory;
-import org.opensearch.index.remote.RemoteStoreEnums.DataType;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.common.Nullable;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.blobstore.BlobPath;
+import org.density.index.remote.RemoteStoreEnums.DataCategory;
+import org.density.index.remote.RemoteStoreEnums.DataType;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.util.Objects;
 
 /**
  * This class wraps internal details on the remote store path for an index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "2.14.0")
 @ExperimentalApi
@@ -76,7 +76,7 @@ public class RemoteStorePathStrategy {
      * Wrapper class for the path input required to generate path for remote store uploads. This input is composed of
      * basePath and indexUUID.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "2.14.0")
     @ExperimentalApi
@@ -125,7 +125,7 @@ public class RemoteStorePathStrategy {
         /**
          * Builder for {@link PathInput}.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         @PublicApi(since = "2.14.0")
         @ExperimentalApi
@@ -163,7 +163,7 @@ public class RemoteStorePathStrategy {
      * A subclass of {@link PathInput} that represents the input required to generate a path
      * for a shard in a snapshot. It includes the base path, index UUID, and shard ID.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SnapshotShardPathInput extends PathInput {
         private final String shardId;
@@ -197,7 +197,7 @@ public class RemoteStorePathStrategy {
         /**
          * Builder for {@link SnapshotShardPathInput}.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Builder extends PathInput.Builder<SnapshotShardPathInput.Builder> {
             private String shardId;
@@ -222,7 +222,7 @@ public class RemoteStorePathStrategy {
      * Wrapper class for the data aware path input required to generate path for remote store uploads. This input is
      * composed of the parent inputs, shard id, data category and data type.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "2.14.0")
     @ExperimentalApi
@@ -278,7 +278,7 @@ public class RemoteStorePathStrategy {
         /**
          * Builder for {@link ShardDataPathInput}.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         @PublicApi(since = "2.14.0")
         @ExperimentalApi

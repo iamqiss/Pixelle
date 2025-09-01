@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.datastream.DataStreamRolloverIT;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.template.put.PutComponentTemplateAction;
-import org.opensearch.action.admin.indices.template.put.PutComposableIndexTemplateAction;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.metadata.ComponentTemplate;
-import org.opensearch.cluster.metadata.ComponentTemplateMetadata;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.ComposableIndexTemplateMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.datastream.DataStreamRolloverIT;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.template.put.PutComponentTemplateAction;
+import org.density.action.admin.indices.template.put.PutComposableIndexTemplateAction;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.metadata.ComponentTemplate;
+import org.density.cluster.metadata.ComponentTemplateMetadata;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.ComposableIndexTemplateMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.Template;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.io.IOError;
@@ -55,17 +55,17 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_SETTING;
-import static org.opensearch.cluster.metadata.Metadata.CLUSTER_READ_ONLY_BLOCK;
-import static org.opensearch.cluster.metadata.Metadata.SETTING_READ_ONLY_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.encodeString;
-import static org.opensearch.indices.ShardLimitValidator.SETTING_CLUSTER_MAX_SHARDS_PER_NODE;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_SETTING;
+import static org.density.cluster.metadata.Metadata.CLUSTER_READ_ONLY_BLOCK;
+import static org.density.cluster.metadata.Metadata.SETTING_READ_ONLY_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateUtils.encodeString;
+import static org.density.indices.ShardLimitValidator.SETTING_CLUSTER_MAX_SHARDS_PER_NODE;
+import static org.density.repositories.blobstore.BlobStoreRepository.SYSTEM_REPOSITORY_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreClusterStateRestoreIT extends BaseRemoteStoreRestoreIT {
     static final String TEMPLATE_NAME = "remote-store-test-template";
     static final String COMPONENT_TEMPLATE_NAME = "remote-component-template1";

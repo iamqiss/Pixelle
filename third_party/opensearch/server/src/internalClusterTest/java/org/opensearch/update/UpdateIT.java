@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.update;
+package org.density.update;
 
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateRequestBuilder;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.index.engine.DocumentMissingException;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
+import org.density.DensityTimeoutException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateRequestBuilder;
+import org.density.action.update.UpdateResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.geometry.utils.Geohash;
+import org.density.index.MergePolicyProvider;
+import org.density.index.engine.DocumentMissingException;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.transport.NoNodeAvailableException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,15 +75,15 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class UpdateIT extends OpenSearchIntegTestCase {
+public class UpdateIT extends DensityIntegTestCase {
 
     private static final String UPDATE_SCRIPTS = "update_scripts";
     private static final String PUT_VALUES_SCRIPT = "put_values";
@@ -202,7 +202,7 @@ public class UpdateIT extends OpenSearchIntegTestCase {
 
         // Script logic is
         // 1) New accounts take balance from "balance" in upsert doc and first payment is charged at 50%
-        // 2) Existing accounts subtract full payment from balance stored in opensearch
+        // 2) Existing accounts subtract full payment from balance stored in density
 
         int openingBalance = 10;
 
@@ -802,7 +802,7 @@ public class UpdateIT extends OpenSearchIntegTestCase {
                     try {
                         waitForOutstandingRequests(TimeValue.timeValueSeconds(60), updateRequestsOutstanding, maxUpdateRequests, "Update");
                         waitForOutstandingRequests(TimeValue.timeValueSeconds(60), deleteRequestsOutstanding, maxDeleteRequests, "Delete");
-                    } catch (OpenSearchTimeoutException ete) {
+                    } catch (DensityTimeoutException ete) {
                         failures.add(ete);
                     }
                     latch.countDown();
@@ -834,7 +834,7 @@ public class UpdateIT extends OpenSearchIntegTestCase {
                         // Just keep swimming
                     }
                 } while ((System.currentTimeMillis() - start) < timeOut.getMillis());
-                throw new OpenSearchTimeoutException(
+                throw new DensityTimeoutException(
                     "Requests were still outstanding after the timeout [" + timeOut + "] for type [" + name + "]"
                 );
             }

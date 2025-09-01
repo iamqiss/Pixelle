@@ -55,7 +55,7 @@
                     "type":"synonym",
                     "synonyms":[
                         "foobar => fred",
-                        "dude => opensearch",
+                        "dude => density",
                         "abides => man!"
                     ]
                 },
@@ -89,13 +89,13 @@
                 },
                 "stop_within_synonym":{
                     "type": "stop",
-                    "stopwords":["foobar", "opensearch"]
+                    "stopwords":["foobar", "density"]
                 },
                 "synonym_expand":{
                     "type":"synonym",
                     "synonyms":[
                         "foobar , fred",
-                        "dude , opensearch",
+                        "dude , density",
                         "abides , man!"
                     ]
                 }

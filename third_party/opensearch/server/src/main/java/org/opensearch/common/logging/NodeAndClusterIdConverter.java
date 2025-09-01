@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
 import org.apache.logging.log4j.core.pattern.PatternConverter;
-import org.opensearch.common.SetOnce;
+import org.density.common.SetOnce;
 
 import java.util.Locale;
 
@@ -45,7 +45,7 @@ import java.util.Locale;
  * Pattern converter to format the node_and_cluster_id variable into JSON fields <code>node.id</code> and <code>cluster.uuid</code>.
  * Keeping those two fields together assures that they will be atomically set and become visible in logs at the same time.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Plugin(category = PatternConverter.CATEGORY, name = "NodeAndClusterIdConverter")
 @ConverterKeys({ "node_and_cluster_id" })

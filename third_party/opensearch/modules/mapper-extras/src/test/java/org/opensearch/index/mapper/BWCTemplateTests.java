@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Collection;
 
-import static org.opensearch.test.StreamsUtils.copyToBytesFromClasspath;
+import static org.density.test.StreamsUtils.copyToBytesFromClasspath;
 
 /**
  * Rudimentary tests that the templates used by Logstash and Beats
  * prior to their 5.x releases work for newly created indices
  */
-public class BWCTemplateTests extends OpenSearchSingleNodeTestCase {
+public class BWCTemplateTests extends DensitySingleNodeTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
         return pluginList(MapperExtrasModulePlugin.class);
     }
 
     public void testBeatsTemplatesBWC() throws Exception {
-        byte[] metricBeat = copyToBytesFromClasspath("/org/opensearch/index/mapper/metricbeat-6.0.template.json");
-        byte[] packetBeat = copyToBytesFromClasspath("/org/opensearch/index/mapper/packetbeat-6.0.template.json");
-        byte[] fileBeat = copyToBytesFromClasspath("/org/opensearch/index/mapper/filebeat-6.0.template.json");
+        byte[] metricBeat = copyToBytesFromClasspath("/org/density/index/mapper/metricbeat-6.0.template.json");
+        byte[] packetBeat = copyToBytesFromClasspath("/org/density/index/mapper/packetbeat-6.0.template.json");
+        byte[] fileBeat = copyToBytesFromClasspath("/org/density/index/mapper/filebeat-6.0.template.json");
         client().admin().indices().preparePutTemplate("metricbeat").setSource(metricBeat, MediaTypeRegistry.JSON).get();
         client().admin().indices().preparePutTemplate("packetbeat").setSource(packetBeat, MediaTypeRegistry.JSON).get();
         client().admin().indices().preparePutTemplate("filebeat").setSource(fileBeat, MediaTypeRegistry.JSON).get();

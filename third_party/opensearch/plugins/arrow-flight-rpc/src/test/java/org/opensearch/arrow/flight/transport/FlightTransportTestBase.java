@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.FlightClient;
 import org.apache.arrow.flight.Location;
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.arrow.flight.stats.FlightStatsCollector;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.arrow.flight.stats.FlightStatsCollector;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.transport.TransportResponse;
+import org.density.tasks.TaskManager;
+import org.density.telemetry.tracing.Tracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.StreamTransportService;
+import org.density.transport.Transport;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -45,7 +45,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-public abstract class FlightTransportTestBase extends OpenSearchTestCase {
+public abstract class FlightTransportTestBase extends DensityTestCase {
 
     private static final AtomicInteger portCounter = new AtomicInteger(0);
 

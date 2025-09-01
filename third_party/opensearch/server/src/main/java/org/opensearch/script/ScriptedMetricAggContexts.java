@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.DensityException;
+import org.density.common.logging.DeprecationLogger;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,14 +50,14 @@ import java.util.function.Function;
 /**
  * Contexts for scripted metric aggregations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptedMetricAggContexts {
 
     /**
      * Base initialization script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class InitScript {
         private final Map<String, Object> params;
@@ -81,7 +81,7 @@ public class ScriptedMetricAggContexts {
         /**
          * Factory for a scripted metric agg context
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public interface Factory extends ScriptFactory {
             InitScript newInstance(Map<String, Object> params, Map<String, Object> state);
@@ -94,7 +94,7 @@ public class ScriptedMetricAggContexts {
     /**
      * Base map script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class MapScript {
 
@@ -171,7 +171,7 @@ public class ScriptedMetricAggContexts {
             try {
                 return scorer.score();
             } catch (IOException e) {
-                throw new OpenSearchException("Couldn't look up score", e);
+                throw new DensityException("Couldn't look up score", e);
             }
         }
 
@@ -180,7 +180,7 @@ public class ScriptedMetricAggContexts {
         /**
          * Factory for a scripted metric agg context
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public interface LeafFactory {
             MapScript newInstance(LeafReaderContext ctx);
@@ -189,7 +189,7 @@ public class ScriptedMetricAggContexts {
         /**
          * Factory for a scripted metric agg factory
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public interface Factory extends ScriptFactory {
             LeafFactory newFactory(Map<String, Object> params, Map<String, Object> state, SearchLookup lookup);
@@ -202,7 +202,7 @@ public class ScriptedMetricAggContexts {
     /**
      * Base combination script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class CombineScript {
         private final Map<String, Object> params;
@@ -226,7 +226,7 @@ public class ScriptedMetricAggContexts {
         /**
          * Factory for a scripted metric agg context
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public interface Factory extends ScriptFactory {
             CombineScript newInstance(Map<String, Object> params, Map<String, Object> state);
@@ -239,7 +239,7 @@ public class ScriptedMetricAggContexts {
     /**
      * Base reduce script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class ReduceScript {
         private final Map<String, Object> params;
@@ -263,7 +263,7 @@ public class ScriptedMetricAggContexts {
         /**
          * Factory for a scripted metric agg context
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public interface Factory extends ScriptFactory {
             ReduceScript newInstance(Map<String, Object> params, List<Object> states);

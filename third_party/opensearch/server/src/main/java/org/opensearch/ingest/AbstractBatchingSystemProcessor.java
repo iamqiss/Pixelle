@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import java.util.Map;
 
@@ -18,9 +18,9 @@ import java.util.Map;
  * bulk update operations which may pass in partial docs not containing all fields a full doc should. This means
  * system ingest processors MUST add additional validations to handle missing field cases, or else bulk updates
  * targeting indexes with mappings that trigger system ingest processors will fail.
- * See https://github.com/opensearch-project/OpenSearch/issues/18276 for more details.
+ * See https://github.com/density-project/Density/issues/18276 for more details.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractBatchingSystemProcessor extends AbstractBatchingProcessor {
     protected AbstractBatchingSystemProcessor(String tag, String description, int batchSize) {
@@ -40,7 +40,7 @@ public abstract class AbstractBatchingSystemProcessor extends AbstractBatchingPr
      * implementation of the newProcessor to handle it.
      *
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Factory implements Processor.Factory {
         final String processorType;

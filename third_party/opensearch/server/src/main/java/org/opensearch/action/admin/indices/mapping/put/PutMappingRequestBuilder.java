@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.put;
+package org.density.action.admin.indices.mapping.put;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequestBuilder;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedRequestBuilder;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * Builder for a put mapping request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class PutMappingRequestBuilder extends AcknowledgedRequestBuilder<
@@ -54,7 +54,7 @@ public class PutMappingRequestBuilder extends AcknowledgedRequestBuilder<
     AcknowledgedResponse,
     PutMappingRequestBuilder> {
 
-    public PutMappingRequestBuilder(OpenSearchClient client, PutMappingAction action) {
+    public PutMappingRequestBuilder(DensityClient client, PutMappingAction action) {
         super(client, action, new PutMappingRequest());
     }
 

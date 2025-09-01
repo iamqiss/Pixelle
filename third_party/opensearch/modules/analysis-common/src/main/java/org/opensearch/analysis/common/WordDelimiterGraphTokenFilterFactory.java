@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilter;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterIterator;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AbstractTokenFilterFactory;
-import org.opensearch.index.analysis.Analysis;
-import org.opensearch.index.analysis.MappingRule;
-import org.opensearch.index.analysis.TokenFilterFactory;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AbstractTokenFilterFactory;
+import org.density.index.analysis.Analysis;
+import org.density.index.analysis.MappingRule;
+import org.density.index.analysis.TokenFilterFactory;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.analysis.common.WordDelimiterTokenFilterFactory.parseTypes;
+import static org.density.analysis.common.WordDelimiterTokenFilterFactory.parseTypes;
 import static org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilter.CATENATE_ALL;
 import static org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilter.CATENATE_NUMBERS;
 import static org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilter.CATENATE_WORDS;

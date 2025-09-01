@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.cli;
+package org.density.common.cli;
 
-import org.opensearch.cli.MultiCommand;
+import org.density.cli.MultiCommand;
 
 /**
  * A multi-command that is aware of logging. This class should be preferred over the base {@link MultiCommand} class for any CLI tools that
- * depend on core OpenSearch as they could directly or indirectly touch classes that touch logging and as such logging needs to be
+ * depend on core Density as they could directly or indirectly touch classes that touch logging and as such logging needs to be
  * configured.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class LoggingAwareMultiCommand extends MultiCommand {
 
     /**
-     * Construct the command with the specified command description. This command will have logging configured without reading OpenSearch
+     * Construct the command with the specified command description. This command will have logging configured without reading Density
      * configuration files.
      *
      * @param description the command description

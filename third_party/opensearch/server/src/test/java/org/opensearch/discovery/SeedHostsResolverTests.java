@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
+import org.density.transport.nio.MockNioTransport;
 import org.junit.After;
 import org.junit.Before;
 
@@ -89,7 +89,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class SeedHostsResolverTests extends OpenSearchTestCase {
+public class SeedHostsResolverTests extends DensityTestCase {
 
     private List<TransportAddress> transportAddresses;
     private SeedHostsResolver seedHostsResolver;
@@ -109,8 +109,8 @@ public class SeedHostsResolverTests extends OpenSearchTestCase {
         seedHostsResolver = new SeedHostsResolver("test_node", Settings.EMPTY, transportService, hostsResolver -> transportAddresses);
         seedHostsResolver.start();
 
-        final ThreadFactory threadFactory = OpenSearchExecutors.daemonThreadFactory("[" + getClass().getName() + "]");
-        executorService = OpenSearchExecutors.newScaling(
+        final ThreadFactory threadFactory = DensityExecutors.daemonThreadFactory("[" + getClass().getName() + "]");
+        executorService = DensityExecutors.newScaling(
             getClass().getName() + "/" + getTestName(),
             0,
             2,

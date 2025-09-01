@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.LowerCaseFilter;
@@ -58,8 +58,8 @@ import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.search.suggest.phrase.NoisyChannelSpellChecker.Result;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.suggest.phrase.NoisyChannelSpellChecker.Result;
+import org.density.test.DensityTestCase;
 
 import java.io.CharArrayReader;
 import java.io.IOException;
@@ -67,12 +67,12 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.search.suggest.phrase.NoisyChannelSpellChecker.DEFAULT_TOKEN_LIMIT;
-import static org.opensearch.search.suggest.phrase.NoisyChannelSpellChecker.REAL_WORD_LIKELIHOOD;
+import static org.density.search.suggest.phrase.NoisyChannelSpellChecker.DEFAULT_TOKEN_LIMIT;
+import static org.density.search.suggest.phrase.NoisyChannelSpellChecker.REAL_WORD_LIKELIHOOD;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class NoisyChannelSpellCheckerTests extends OpenSearchTestCase {
+public class NoisyChannelSpellCheckerTests extends DensityTestCase {
     private final BytesRef space = new BytesRef(" ");
     private final BytesRef preTag = new BytesRef("<em>");
     private final BytesRef postTag = new BytesRef("</em>");

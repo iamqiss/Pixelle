@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.Version;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.extensions.ExtensionDependency;
-import org.opensearch.extensions.ExtensionScopedSettings;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.extensions.ExtensionsSettings.Extension;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.NamedRoute;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.extensions.ExtensionDependency;
+import org.density.extensions.ExtensionScopedSettings;
+import org.density.extensions.ExtensionsManager;
+import org.density.extensions.ExtensionsSettings.Extension;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.NamedRoute;
+import org.density.rest.RestRequest;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * An action that initializes an extension
@@ -94,7 +94,7 @@ public class RestInitializeExtensionAction extends BaseRestHandler {
                 "hostAddress",
                 "port",
                 "version",
-                "opensearchVersion",
+                "densityVersion",
                 "minimumCompatibleVersion" };
             List<String> missingFields = Arrays.stream(requiredFields)
                 .filter(field -> !extensionMap.containsKey(field))
@@ -139,7 +139,7 @@ public class RestInitializeExtensionAction extends BaseRestHandler {
             hostAddress = extensionMap.get("hostAddress").toString();
             port = extensionMap.get("port").toString();
             version = extensionMap.get("version").toString();
-            openSearchVersion = extensionMap.get("opensearchVersion").toString();
+            openSearchVersion = extensionMap.get("densityVersion").toString();
             minimumCompatibleVersion = extensionMap.get("minimumCompatibleVersion").toString();
             dependencies = extensionDependencyList;
         } catch (IOException e) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,11 +42,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.client.indices.GetComponentTemplatesResponseTests.randomMeta;
-import static org.opensearch.client.indices.GetComponentTemplatesResponseTests.randomTemplate;
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.client.indices.GetComponentTemplatesResponseTests.randomMeta;
+import static org.density.client.indices.GetComponentTemplatesResponseTests.randomTemplate;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class GetComposableIndexTemplatesResponseTests extends OpenSearchTestCase {
+public class GetComposableIndexTemplatesResponseTests extends DensityTestCase {
 
     public void testFromXContent() throws Exception {
         xContentTester(

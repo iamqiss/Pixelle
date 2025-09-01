@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ConstantScoreScorer;
@@ -43,27 +43,27 @@ import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.node.MockNode;
-import org.opensearch.node.Node;
-import org.opensearch.node.NodeValidationException;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.nio.MockNioTransportPlugin;
+import org.density.cluster.ClusterName;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.bytes.BytesArray;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.node.MockNode;
+import org.density.node.Node;
+import org.density.node.NodeValidationException;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockHttpTransport;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.nio.MockNioTransportPlugin;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -71,14 +71,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
-import static org.opensearch.test.NodeRoles.dataNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
+import static org.density.test.NodeRoles.dataNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class IndicesServiceCloseTests extends OpenSearchTestCase {
+public class IndicesServiceCloseTests extends DensityTestCase {
 
     private static class DummyQuery extends Query {
 
@@ -149,7 +149,7 @@ public class IndicesServiceCloseTests extends OpenSearchTestCase {
             .put(Environment.PATH_REPO_SETTING.getKey(), tempDir.resolve("repo"))
             .put(Environment.PATH_SHARED_DATA_SETTING.getKey(), createTempDir().getParent())
             .put(Node.NODE_NAME_SETTING.getKey(), nodeName)
-            .put(OpenSearchExecutors.NODE_PROCESSORS_SETTING.getKey(), 1) // limit the number of threads created
+            .put(DensityExecutors.NODE_PROCESSORS_SETTING.getKey(), 1) // limit the number of threads created
             .put("transport.type", getTestTransportType())
             .put(dataNode())
             .put(NodeEnvironment.NODE_ID_SEED_SETTING.getKey(), random().nextLong())
@@ -246,7 +246,7 @@ public class IndicesServiceCloseTests extends OpenSearchTestCase {
                 .setSettings(Settings.builder().put(SETTING_NUMBER_OF_SHARDS, 1).put(SETTING_NUMBER_OF_REPLICAS, 0))
         );
         node.client().prepareIndex("test").setId("1").setSource(Collections.emptyMap()).get();
-        OpenSearchAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
+        DensityAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
 
         assertEquals(2, indicesService.indicesRefCount.refCount());
 
@@ -280,7 +280,7 @@ public class IndicesServiceCloseTests extends OpenSearchTestCase {
                 )
         );
         node.client().prepareIndex("test").setId("1").setSource(Collections.singletonMap("foo", 3L)).get();
-        OpenSearchAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
+        DensityAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
 
         assertEquals(2, indicesService.indicesRefCount.refCount());
 
@@ -323,7 +323,7 @@ public class IndicesServiceCloseTests extends OpenSearchTestCase {
                 )
         );
         node.client().prepareIndex("test").setId("1").setSource(Collections.singletonMap("foo", 3L)).get();
-        OpenSearchAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
+        DensityAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
 
         assertEquals(2, indicesService.indicesRefCount.refCount());
 
@@ -365,7 +365,7 @@ public class IndicesServiceCloseTests extends OpenSearchTestCase {
                 )
         );
         node.client().prepareIndex("test").setId("1").setSource(Collections.singletonMap("foo", 3L)).get();
-        OpenSearchAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
+        DensityAssertions.assertAllSuccessful(node.client().admin().indices().prepareRefresh("test").get());
 
         assertEquals(2, indicesService.indicesRefCount.refCount());
 

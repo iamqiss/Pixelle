@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.single;
+package org.density.discovery.single;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LogEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.JoinHelper;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.Node.DiscoverySettings;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.NodeConfigurationSource;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.JoinHelper;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.node.Node.DiscoverySettings;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockHttpTransport;
+import org.density.test.MockLogAppender;
+import org.density.test.NodeConfigurationSource;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -57,8 +57,8 @@ import java.util.function.Function;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 1, numClientNodes = 0, supportsDedicatedMasters = false, autoManageMasterNodes = false)
-public class SingleNodeDiscoveryIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 1, numClientNodes = 0, supportsDedicatedMasters = false, autoManageMasterNodes = false)
+public class SingleNodeDiscoveryIT extends DensityIntegTestCase {
 
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {

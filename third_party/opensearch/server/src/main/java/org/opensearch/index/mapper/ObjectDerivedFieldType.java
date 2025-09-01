@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.DerivedFieldScript;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.DensityParseException;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.query.QueryShardContext;
+import org.density.script.DerivedFieldScript;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Represents a derived field in OpenSearch, which behaves similarly to an Object field type within the context of derived fields.
+ * Represents a derived field in Density, which behaves similarly to an Object field type within the context of derived fields.
  * It is not a primitive field type and does not directly support queries. However, any nested derived fields contained within a DerivedField object
  * are also classified as Object derived fields, which support queries depending on their inferred type.
  *
@@ -159,7 +159,7 @@ public class ObjectDerivedFieldType extends DerivedFieldType {
                     } else {
                         result.add(dateFormatter != null ? dateFormatter.apply(nestedFieldObj) : nestedFieldObj);
                     }
-                } catch (OpenSearchParseException e) {
+                } catch (DensityParseException e) {
                     if (!ignoreOnMalFormed) {
                         throw e;
                     }

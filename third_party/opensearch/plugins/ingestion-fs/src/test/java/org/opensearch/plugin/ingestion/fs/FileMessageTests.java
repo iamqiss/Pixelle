@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.ingestion.fs;
+package org.density.plugin.ingestion.fs;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
-public class FileMessageTests extends OpenSearchTestCase {
+public class FileMessageTests extends DensityTestCase {
     public void testConstructorAndGetters() {
         byte[] payload = { 1, 2, 3 };
         FileMessage message = new FileMessage(payload, 1000L);

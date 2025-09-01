@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -40,38 +40,38 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.lucene.search.function.WeightFactorFunction;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.RandomQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.WrapperQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.approximate.ApproximateMatchAllQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.common.geo.GeoPoint;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.FieldValueFactorFunction;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.lucene.search.function.WeightFactorFunction;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentHelper;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.RandomQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.WrapperQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder.FilterFunctionBuilder;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.MultiValueMode;
+import org.density.search.approximate.ApproximateMatchAllQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.hamcrest.CoreMatchers;
@@ -88,13 +88,13 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.weightFactorFunction;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.weightFactorFunction;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;

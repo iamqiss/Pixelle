@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -38,30 +38,30 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BytesRefHash;
-import org.opensearch.common.util.ObjectArray;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.analysis.miscellaneous.DeDuplicatingTokenFilter;
-import org.opensearch.lucene.analysis.miscellaneous.DuplicateByteSequenceSpotter;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.Aggregator.SubAggCollectionMode;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.BucketUtils;
-import org.opensearch.search.aggregations.bucket.terms.IncludeExclude.StringFilter;
-import org.opensearch.search.aggregations.bucket.terms.MapStringTermsAggregator.CollectConsumer;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregator.BucketCountThresholds;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BytesRefHash;
+import org.density.common.util.ObjectArray;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.analysis.miscellaneous.DeDuplicatingTokenFilter;
+import org.density.lucene.analysis.miscellaneous.DuplicateByteSequenceSpotter;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.Aggregator.SubAggCollectionMode;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.BucketUtils;
+import org.density.search.aggregations.bucket.terms.IncludeExclude.StringFilter;
+import org.density.search.aggregations.bucket.terms.MapStringTermsAggregator.CollectConsumer;
+import org.density.search.aggregations.bucket.terms.TermsAggregator.BucketCountThresholds;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -71,7 +71,7 @@ import java.util.function.LongConsumer;
 /**
  * Aggregation Factory for significant_text agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SignificantTextAggregatorFactory extends AggregatorFactory {
     private static final int MEMORY_GROWTH_REPORTING_INTERVAL_BYTES = 5000;
@@ -175,7 +175,7 @@ public class SignificantTextAggregatorFactory extends AggregatorFactory {
     /**
      * Collects significant text
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SignificantTextCollectorSource implements MapStringTermsAggregator.CollectorSource {
         private final SourceLookup sourceLookup;

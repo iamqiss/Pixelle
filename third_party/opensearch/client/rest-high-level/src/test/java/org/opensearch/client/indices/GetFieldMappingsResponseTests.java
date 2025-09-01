@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.client.indices.GetFieldMappingsResponse.FieldMappingMetadata;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.client.indices.GetFieldMappingsResponse.FieldMappingMetadata;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class GetFieldMappingsResponseTests extends OpenSearchTestCase {
+public class GetFieldMappingsResponseTests extends DensityTestCase {
 
     public void testFromXContent() throws IOException {
         xContentTester(

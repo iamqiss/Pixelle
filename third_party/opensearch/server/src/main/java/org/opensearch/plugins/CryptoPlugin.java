@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.MasterKeyProvider;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.MasterKeyProvider;
 
 /**
  * Crypto plugin to provide encryption and decryption support.
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public interface CryptoPlugin<T, U> {

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.rule.autotagging.Attribute;
+import org.density.rule.autotagging.Attribute;
 
 /**
  * Generic Rule attributes that features can use out of the use by using the lib.
- * @opensearch.experimental
+ * @density.experimental
  */
 public enum RuleAttribute implements Attribute {
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.engine;
+package org.density.test.engine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,15 +38,15 @@ import org.apache.lucene.index.FilterDirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.tests.index.AssertingDirectoryReader;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineException;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -109,7 +109,7 @@ public final class MockEngineSupport {
     public MockEngineSupport(EngineConfig config, Class<? extends FilterDirectoryReader> wrapper) {
         Settings settings = config.getIndexSettings().getSettings();
         shardId = config.getShardId();
-        final long seed = config.getIndexSettings().getValue(OpenSearchIntegTestCase.INDEX_TEST_SEED_SETTING);
+        final long seed = config.getIndexSettings().getValue(DensityIntegTestCase.INDEX_TEST_SEED_SETTING);
         Random random = new Random(seed);
         final double ratio = WRAP_READER_RATIO.get(settings);
         boolean wrapReader = random.nextDouble() < ratio;
@@ -176,7 +176,7 @@ public final class MockEngineSupport {
                 return (DirectoryReader) nonRandom.newInstance(reader);
             }
         } catch (Exception e) {
-            throw new OpenSearchException("Can not wrap reader", e);
+            throw new DensityException("Can not wrap reader", e);
         }
         return reader;
     }

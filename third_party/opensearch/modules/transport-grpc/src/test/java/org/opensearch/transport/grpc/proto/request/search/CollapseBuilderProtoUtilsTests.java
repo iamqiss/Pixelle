@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.protobufs.FieldCollapse;
-import org.opensearch.protobufs.InnerHits;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.FieldCollapse;
+import org.density.protobufs.InnerHits;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class CollapseBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class CollapseBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithBasicField() throws IOException {
         // Create a protobuf FieldCollapse with just a field name

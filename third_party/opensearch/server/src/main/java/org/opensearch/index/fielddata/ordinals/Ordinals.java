@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.util.Accountable;
@@ -39,7 +39,7 @@ import org.apache.lucene.util.BytesRef;
 /**
  * A thread safe ordinals abstraction. Ordinals can only be positive integers.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class Ordinals implements Accountable {
 
@@ -65,7 +65,7 @@ public abstract class Ordinals implements Accountable {
     /**
      * Holder of values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface ValuesHolder {
 

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InitializeExtensionResponseTests extends OpenSearchTestCase {
+public class InitializeExtensionResponseTests extends DensityTestCase {
     public void testInitializeExtensionResponse() throws Exception {
         String expectedName = "testsample-sdk";
         List<String> expectedImplementedInterfaces = new ArrayList<>(Arrays.asList("Action", "Search"));

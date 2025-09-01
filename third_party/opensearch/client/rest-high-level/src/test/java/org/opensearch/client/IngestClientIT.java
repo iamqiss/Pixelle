@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.SimulateDocumentBaseResult;
-import org.opensearch.action.ingest.SimulateDocumentResult;
-import org.opensearch.action.ingest.SimulateDocumentVerboseResult;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.ingest.PipelineConfiguration;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.SimulateDocumentBaseResult;
+import org.density.action.ingest.SimulateDocumentResult;
+import org.density.action.ingest.SimulateDocumentVerboseResult;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.ingest.SimulatePipelineResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.ingest.PipelineConfiguration;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +53,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-public class IngestClientIT extends OpenSearchRestHighLevelClientTestCase {
+public class IngestClientIT extends DensityRestHighLevelClientTestCase {
 
     public void testPutPipeline() throws IOException {
         String id = "some_pipeline_id";

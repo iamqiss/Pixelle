@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.script.IngestScript;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentParseException;
+import org.density.script.IngestScript;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptException;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -56,7 +56,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ScriptProcessorFactoryTests extends OpenSearchTestCase {
+public class ScriptProcessorFactoryTests extends DensityTestCase {
 
     private ScriptProcessor.Factory factory;
     private static final Map<String, String> ingestScriptParamToType;
@@ -155,8 +155,8 @@ public class ScriptProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(randomType, "my_script");
 
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> factory.create(null, randomAlphaOfLength(10), null, configMap)
         );
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Map;
@@ -53,7 +53,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class CreateIndexRequestTests extends OpenSearchTestCase {
+public class CreateIndexRequestTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         CreateIndexRequest request = new CreateIndexRequest("foo");
@@ -93,8 +93,8 @@ public class CreateIndexRequestTests extends OpenSearchTestCase {
             + "}";
 
         CreateIndexRequest request = new CreateIndexRequest();
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> { request.source(createIndex, MediaTypeRegistry.JSON); }
         );
         assertEquals("unknown key [FOO_SHOULD_BE_ILLEGAL_HERE] for create index", e.getMessage());
@@ -147,7 +147,7 @@ public class CreateIndexRequestTests extends OpenSearchTestCase {
         builder.startObject().startArray("settings").endArray().endObject();
 
         CreateIndexRequest parsedCreateIndexRequest = new CreateIndexRequest();
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> parsedCreateIndexRequest.source(builder));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> parsedCreateIndexRequest.source(builder));
         assertThat(e.getMessage(), equalTo("key [settings] must be an object"));
     }
 

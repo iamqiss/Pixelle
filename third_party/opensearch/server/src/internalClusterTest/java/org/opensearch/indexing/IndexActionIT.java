@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indexing;
+package org.density.indexing;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.MetadataCreateIndexService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.indices.InvalidIndexNameException;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.MetadataCreateIndexService;
+import org.density.common.settings.Settings;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperParsingException;
+import org.density.indices.InvalidIndexNameException;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class IndexActionIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class IndexActionIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public IndexActionIT(Settings settings) {
         super(settings);
@@ -102,7 +102,7 @@ public class IndexActionIT extends ParameterizedStaticSettingsOpenSearchIntegTes
                             + " but "
                             + numOfDocs
                             + " was expected. "
-                            + OpenSearchAssertions.formatShardStatus(response);
+                            + DensityAssertions.formatShardStatus(response);
                         logger.error("{}. search response: \n{}", message, response);
                         fail(message);
                     }

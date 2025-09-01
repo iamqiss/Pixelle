@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.util.BigArray;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.util.BigArray;
+import org.density.core.common.util.ByteArray;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.lang.reflect.InvocationTargetException;
@@ -52,12 +52,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.opensearch.indices.breaker.HierarchyCircuitBreakerService.REQUEST_CIRCUIT_BREAKER_LIMIT_SETTING;
+import static org.density.indices.breaker.HierarchyCircuitBreakerService.REQUEST_CIRCUIT_BREAKER_LIMIT_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 
-public class BigArraysTests extends OpenSearchTestCase {
+public class BigArraysTests extends DensityTestCase {
 
     private BigArrays randombigArrays() {
         return new MockBigArrays(new MockPageCacheRecycler(Settings.EMPTY), new NoneCircuitBreakerService());

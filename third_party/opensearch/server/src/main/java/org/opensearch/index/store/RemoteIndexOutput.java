@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.DataInput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.lucene.store.InputStreamIndexInput;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ import java.io.IOException;
  * ToDo: Extend ChecksumIndexInput
  * @see RemoteDirectory
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteIndexOutput extends IndexOutput {
 

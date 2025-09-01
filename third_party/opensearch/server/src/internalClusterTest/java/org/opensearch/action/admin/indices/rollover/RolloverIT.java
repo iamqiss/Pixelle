@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.rollover;
+package org.density.action.admin.indices.rollover;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequestBuilder;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AutoExpandReplicas;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.ResourceAlreadyExistsException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequestBuilder;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AutoExpandReplicas;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityIntegTestCase;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -61,8 +61,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.index.mapper.MapperService.SINGLE_MAPPING_NAME;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.mapper.MapperService.SINGLE_MAPPING_NAME;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -74,8 +74,8 @@ import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.CombinableMatcher.both;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class RolloverIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class RolloverIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {

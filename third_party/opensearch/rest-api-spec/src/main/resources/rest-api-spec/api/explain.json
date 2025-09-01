@@ -1,7 +1,7 @@
 {
   "explain":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/explain/",
+      "url":"https://density.org/docs/latest/api-reference/explain/",
       "description":"Returns information about why a specific matches (or doesn't match) a query."
     },
     "stability":"stable",

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.util.ArrayUtil;
@@ -42,7 +42,7 @@ import java.util.function.LongConsumer;
 /**
  * Base class for building {@link SortedNumericDocValues} instances based on unsorted content.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SortingNumericDocValues extends SortedNumericDocValues {
 

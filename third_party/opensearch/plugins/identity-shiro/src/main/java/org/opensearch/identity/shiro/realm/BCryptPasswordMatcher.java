@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro.realm;
+package org.density.identity.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.opensearch.SpecialPermission;
+import org.density.SpecialPermission;
 
 import java.nio.CharBuffer;
 import java.security.AccessController;
@@ -21,7 +21,7 @@ import java.security.PrivilegedAction;
 import com.password4j.BcryptFunction;
 import com.password4j.Password;
 
-import static org.opensearch.core.common.Strings.isNullOrEmpty;
+import static org.density.core.common.Strings.isNullOrEmpty;
 
 /**
  * Password matcher for BCrypt

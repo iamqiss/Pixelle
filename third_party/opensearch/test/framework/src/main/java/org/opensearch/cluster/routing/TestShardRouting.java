@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.core.index.shard.ShardId;
+import org.density.repositories.IndexId;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
 import static org.apache.lucene.tests.util.LuceneTestCase.random;
 
 /**
@@ -262,7 +262,7 @@ public class TestShardRouting {
             case UNASSIGNED:
             case INITIALIZING:
                 if (primary) {
-                    return OpenSearchTestCase.randomFrom(
+                    return DensityTestCase.randomFrom(
                         RecoverySource.EmptyStoreRecoverySource.INSTANCE,
                         RecoverySource.ExistingStoreRecoverySource.INSTANCE
                     );
@@ -296,7 +296,7 @@ public class TestShardRouting {
         switch (state) {
             case UNASSIGNED:
             case INITIALIZING:
-                return new UnassignedInfo(OpenSearchTestCase.randomFrom(UnassignedInfo.Reason.values()), "auto generated for test");
+                return new UnassignedInfo(DensityTestCase.randomFrom(UnassignedInfo.Reason.values()), "auto generated for test");
             case STARTED:
             case RELOCATING:
                 return null;
@@ -306,7 +306,7 @@ public class TestShardRouting {
     }
 
     public static RecoverySource randomRecoverySource() {
-        return OpenSearchTestCase.randomFrom(
+        return DensityTestCase.randomFrom(
             RecoverySource.EmptyStoreRecoverySource.INSTANCE,
             RecoverySource.ExistingStoreRecoverySource.INSTANCE,
             RecoverySource.PeerRecoverySource.INSTANCE,

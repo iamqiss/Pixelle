@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.aggregation;
+package org.density.search.profile.aggregation;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.profile.AbstractProfiler;
+import org.density.common.annotation.PublicApi;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.profile.AbstractProfiler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Main class to profile aggregations
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AggregationProfiler extends AbstractProfiler<AggregationProfileBreakdown, Aggregator> {
@@ -56,7 +56,7 @@ public class AggregationProfiler extends AbstractProfiler<AggregationProfileBrea
     /**
      * This method does not need to be thread safe for concurrent search use case as well.
      * The {@link AggregationProfileBreakdown} for each Aggregation operator is created in sync path when
-     * {@link org.opensearch.search.aggregations.BucketCollector#preCollection()} is called
+     * {@link org.density.search.aggregations.BucketCollector#preCollection()} is called
      * on the Aggregation collector instances during construction.
      */
     @Override

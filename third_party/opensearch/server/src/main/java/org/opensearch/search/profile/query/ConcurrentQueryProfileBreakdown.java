@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
-import org.opensearch.OpenSearchException;
-import org.opensearch.search.profile.AbstractProfileBreakdown;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.profile.Timer;
+import org.density.DensityException;
+import org.density.search.profile.AbstractProfileBreakdown;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.profile.Timer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,15 +28,15 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.profile.Timer.TIMING_TYPE_COUNT_SUFFIX;
-import static org.opensearch.search.profile.Timer.TIMING_TYPE_START_TIME_SUFFIX;
+import static org.density.search.profile.Timer.TIMING_TYPE_COUNT_SUFFIX;
+import static org.density.search.profile.Timer.TIMING_TYPE_START_TIME_SUFFIX;
 
 /**
  * A record of timings for the various operations that may happen during query execution.
  * A node's time may be composed of several internal attributes (rewriting, weighting,
  * scoring, etc). The class supports profiling the concurrent search over segments.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ConcurrentQueryProfileBreakdown extends ContextualProfileBreakdown {
     static final String SLICE_END_TIME_SUFFIX = "_slice_end_time";
@@ -277,7 +277,7 @@ public final class ConcurrentQueryProfileBreakdown extends ContextualProfileBrea
             if (sliceMinStartTime == Long.MAX_VALUE && sliceMaxEndTime == Long.MIN_VALUE) {
                 currentSliceNodeTime = 0L;
             } else if (sliceMinStartTime == Long.MAX_VALUE || sliceMaxEndTime == Long.MIN_VALUE) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "Unexpected value of sliceMinStartTime ["
                         + sliceMinStartTime
                         + "] or sliceMaxEndTime ["
@@ -374,7 +374,7 @@ public final class ConcurrentQueryProfileBreakdown extends ContextualProfileBrea
             }
 
             if (queryTimingTypeCount > 0L && (queryTimingTypeStartTime == Long.MAX_VALUE || queryTimingTypeEndTime == Long.MIN_VALUE)) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "Unexpected timing type ["
                         + metric
                         + "] start ["
@@ -412,7 +412,7 @@ public final class ConcurrentQueryProfileBreakdown extends ContextualProfileBrea
         }
 
         if (queryEndTime == Long.MIN_VALUE) {
-            throw new OpenSearchException("Unexpected error while computing the query end time across slices in profile result");
+            throw new DensityException("Unexpected error while computing the query end time across slices in profile result");
         }
         queryNodeTime = queryEndTime - createWeightStartTime;
         return queryBreakdownMap;
@@ -427,7 +427,7 @@ public final class ConcurrentQueryProfileBreakdown extends ContextualProfileBrea
     private Set<String> getTimingMetrics() {
         Set<String> result = new HashSet<>();
         for (Map.Entry<String, ProfileMetric> entry : metrics.entrySet()) {
-            if (entry.getValue() instanceof org.opensearch.search.profile.Timer) {
+            if (entry.getValue() instanceof org.density.search.profile.Timer) {
                 result.add(entry.getKey());
             }
         }

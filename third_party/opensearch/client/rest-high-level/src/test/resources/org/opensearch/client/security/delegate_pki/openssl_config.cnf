@@ -85,10 +85,10 @@ string_mask = nombstr
 0.organizationName_default      = org
 
 organizationalUnitName          = Organizational Unit Name (eg, section)
-organizationalUnitName_default  = opensearch
+organizationalUnitName_default  = density
 
 commonName                      = Common Name (hostname, IP, or your name)
-commonName_default              = OpenSearch Test Certificate
+commonName_default              = Density Test Certificate
 commonName_max = 64
 
 ####################################################################

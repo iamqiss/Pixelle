@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.searchafter.SearchAfterBuilder;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.search.sort.ScriptSortBuilder;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchType;
+import org.density.action.support.IndicesOptions;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilders;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.searchafter.SearchAfterBuilder;
+import org.density.search.slice.SliceBuilder;
+import org.density.search.sort.ScriptSortBuilder;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,21 +70,21 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.test.OpenSearchTestCase.between;
-import static org.opensearch.test.OpenSearchTestCase.generateRandomStringArray;
-import static org.opensearch.test.OpenSearchTestCase.mockScript;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLengthBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
-import static org.opensearch.test.OpenSearchTestCase.randomByte;
-import static org.opensearch.test.OpenSearchTestCase.randomDouble;
-import static org.opensearch.test.OpenSearchTestCase.randomFloat;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
-import static org.opensearch.test.OpenSearchTestCase.randomInt;
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
-import static org.opensearch.test.OpenSearchTestCase.randomLong;
-import static org.opensearch.test.OpenSearchTestCase.randomPositiveTimeValue;
-import static org.opensearch.test.OpenSearchTestCase.randomShort;
-import static org.opensearch.test.OpenSearchTestCase.randomTimeValue;
+import static org.density.test.DensityTestCase.between;
+import static org.density.test.DensityTestCase.generateRandomStringArray;
+import static org.density.test.DensityTestCase.mockScript;
+import static org.density.test.DensityTestCase.randomAlphaOfLengthBetween;
+import static org.density.test.DensityTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.randomByte;
+import static org.density.test.DensityTestCase.randomDouble;
+import static org.density.test.DensityTestCase.randomFloat;
+import static org.density.test.DensityTestCase.randomFrom;
+import static org.density.test.DensityTestCase.randomInt;
+import static org.density.test.DensityTestCase.randomIntBetween;
+import static org.density.test.DensityTestCase.randomLong;
+import static org.density.test.DensityTestCase.randomPositiveTimeValue;
+import static org.density.test.DensityTestCase.randomShort;
+import static org.density.test.DensityTestCase.randomTimeValue;
 
 /**
  * Builds random search requests.

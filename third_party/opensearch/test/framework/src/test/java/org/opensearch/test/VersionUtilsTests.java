@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.collect.Tuple;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.collect.Tuple;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
  * Tests VersionUtils. Note: this test should remain unchanged across major versions
  * it uses the hardcoded versions on purpose.
  */
-public class VersionUtilsTests extends OpenSearchTestCase {
+public class VersionUtilsTests extends DensityTestCase {
 
     public void testAllVersionsSorted() {
         List<Version> allVersions = VersionUtils.allReleasedVersions();

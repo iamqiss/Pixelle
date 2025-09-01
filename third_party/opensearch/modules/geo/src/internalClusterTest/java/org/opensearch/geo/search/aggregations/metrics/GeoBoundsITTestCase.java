@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.util.BigArray;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.global.Global;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.bucket.terms.Terms.Bucket;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.core.common.util.BigArray;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.global.Global;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.bucket.terms.Terms.Bucket;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.util.List;
 
-import static org.opensearch.geo.tests.common.AggregationBuilders.geoBounds;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.aggregations.AggregationBuilders.global;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.geo.tests.common.AggregationBuilders.geoBounds;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.aggregations.AggregationBuilders.global;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
@@ -58,7 +58,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class GeoBoundsITTestCase extends AbstractGeoAggregatorModulePluginTestCase {
     private static final String aggName = "geoBounds";
 

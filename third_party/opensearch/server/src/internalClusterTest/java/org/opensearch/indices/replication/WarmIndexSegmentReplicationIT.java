@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
@@ -22,67 +22,67 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.termvectors.TermVectorsRequestBuilder;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.Preference;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.CancelAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCacheStats;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.node.Node;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.stats.ClusterStatsResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.support.WriteRequest;
+import org.density.action.termvectors.TermVectorsRequestBuilder;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.Preference;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.CancelAllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.set.Sets;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexModule;
+import org.density.index.ReplicationStats;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.EngineConfig;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCacheStats;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.node.Node;
+import org.density.search.sort.SortOrder;
+import org.density.test.BackgroundIndexer;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 import org.junit.After;
 import org.junit.Before;
 
@@ -102,24 +102,24 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 /**
  * This class runs Segment Replication Integ test suite with partial locality indices (warm indices).
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
 public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
 
@@ -412,7 +412,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
         verifyStoreContent();
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/17526")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/17526")
     public void testStartReplicaAfterPrimaryIndexesDocs() throws Exception {
         final String primaryNode = internalCluster().startDataAndWarmNodes(1).get(0);
         createIndex(INDEX_NAME, Settings.builder().put(indexSettings()).put(IndexMetadata.SETTING_NUMBER_OF_REPLICAS, 0).build());
@@ -458,7 +458,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
      * the new primary starts indexing from the correct maxSeqNo and replays the correct count of docs
      * from xlog.
      */
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/18157")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/18157")
     public void testReplicationPostDeleteAndForceMerge() throws Exception {
         final String primary = internalCluster().startDataAndWarmNodes(1).get(0);
         createIndex(INDEX_NAME);
@@ -517,7 +517,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
         assertHitCount(client(replica).prepareSearch(INDEX_NAME).setSize(0).setPreference("_only_local").get(), expectedHitCount + 1);
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/18157")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/18157")
     public void testScrollWithConcurrentIndexAndSearch() throws Exception {
         final String primary = internalCluster().startDataAndWarmNodes(1).get(0);
         final String replica = internalCluster().startDataAndWarmNodes(1).get(0);
@@ -811,7 +811,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
         assertDocCounts(docCount, primaryNode);
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testDeleteOperations() throws Exception {
         final String nodeA = internalCluster().startDataAndWarmNodes(1).get(0);
         final String nodeB = internalCluster().startDataAndWarmNodes(1).get(0);
@@ -946,7 +946,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
         }
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testReplicaHasDiffFilesThanPrimary() throws Exception {
         final String primaryNode = internalCluster().startDataAndWarmNodes(1).get(0);
         createIndex(INDEX_NAME, Settings.builder().put(indexSettings()).put(IndexMetadata.SETTING_NUMBER_OF_REPLICAS, 1).build());
@@ -1003,7 +1003,7 @@ public class WarmIndexSegmentReplicationIT extends SegmentReplicationBaseIT {
         assertNotEquals(replicaAfterFailure.routingEntry().allocationId().getId(), replicaShard.routingEntry().allocationId().getId());
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/18157")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/18157")
     public void testPressureServiceStats() throws Exception {
         final String primaryNode = internalCluster().startDataAndWarmNodes(1).get(0);
         createIndex(INDEX_NAME);

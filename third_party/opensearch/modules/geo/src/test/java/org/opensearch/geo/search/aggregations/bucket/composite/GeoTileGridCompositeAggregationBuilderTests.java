@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.composite;
+package org.density.geo.search.aggregations.bucket.composite;
 
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.plugins.Plugin;
+import org.density.search.aggregations.BaseAggregationTestCase;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;

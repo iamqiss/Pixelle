@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,39 +25,39 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.net.NetUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Netty4NioSocketChannel;
-import org.opensearch.transport.NettyAllocator;
-import org.opensearch.transport.NettyByteBufSizer;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.TcpTransport;
-import org.opensearch.transport.TransportSettings;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.SuppressForbidden;
+import org.density.common.lease.Releasables;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.net.NetUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Netty4NioSocketChannel;
+import org.density.transport.NettyAllocator;
+import org.density.transport.NettyByteBufSizer;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.TcpTransport;
+import org.density.transport.TransportSettings;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -79,9 +79,9 @@ import io.netty.channel.RecvByteBufAllocator;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.util.AttributeKey;
 
-import static org.opensearch.common.settings.Setting.byteSizeSetting;
-import static org.opensearch.common.settings.Setting.intSetting;
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.common.settings.Setting.byteSizeSetting;
+import static org.density.common.settings.Setting.intSetting;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
 
 /**
  * There are 4 types of connections per node, low/med/high/ping. Low if for batch oriented APIs (like recovery or
@@ -94,7 +94,7 @@ public class Netty4Transport extends TcpTransport {
 
     public static final Setting<Integer> WORKER_COUNT = new Setting<>(
         "transport.netty.worker_count",
-        (s) -> Integer.toString(OpenSearchExecutors.allocatedProcessors(s)),
+        (s) -> Integer.toString(DensityExecutors.allocatedProcessors(s)),
         (s) -> Setting.parseInt(s, 1, "transport.netty.worker_count"),
         Property.NodeScope
     );
@@ -136,7 +136,7 @@ public class Netty4Transport extends TcpTransport {
         Tracer tracer
     ) {
         super(settings, version, threadPool, pageCacheRecycler, circuitBreakerService, namedWriteableRegistry, networkService, tracer);
-        Netty4Utils.setAvailableProcessors(OpenSearchExecutors.NODE_PROCESSORS_SETTING.get(settings));
+        Netty4Utils.setAvailableProcessors(DensityExecutors.NODE_PROCESSORS_SETTING.get(settings));
         NettyAllocator.logAllocatorDescriptionIfNeeded();
         this.sharedGroupFactory = sharedGroupFactory;
 
@@ -354,7 +354,7 @@ public class Netty4Transport extends TcpTransport {
             addClosedExceptionLogger(ch);
             assert ch instanceof Netty4NioSocketChannel;
             NetUtils.tryEnsureReasonableKeepAliveConfig(((Netty4NioSocketChannel) ch).javaChannel());
-            ch.pipeline().addLast("logging", new OpenSearchLoggingHandler());
+            ch.pipeline().addLast("logging", new DensityLoggingHandler());
             // using a dot as a prefix means this cannot come from any settings parsed
             ch.pipeline().addLast("dispatcher", new Netty4MessageChannelHandler(pageCacheRecycler, Netty4Transport.this));
         }
@@ -383,7 +383,7 @@ public class Netty4Transport extends TcpTransport {
             Netty4TcpChannel nettyTcpChannel = new Netty4TcpChannel(ch, true, name, ch.newSucceededFuture());
             ch.attr(CHANNEL_KEY).set(nettyTcpChannel);
             ch.pipeline().addLast("byte_buf_sizer", sizer);
-            ch.pipeline().addLast("logging", new OpenSearchLoggingHandler());
+            ch.pipeline().addLast("logging", new DensityLoggingHandler());
             ch.pipeline().addLast("dispatcher", new Netty4MessageChannelHandler(pageCacheRecycler, Netty4Transport.this));
             serverAcceptedChannel(nettyTcpChannel);
         }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
@@ -38,7 +38,7 @@ import org.apache.lucene.store.MMapDirectory;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class SmbMMapDirectoryTests extends OpenSearchBaseDirectoryTestCase {
+public class SmbMMapDirectoryTests extends DensityBaseDirectoryTestCase {
 
     @Override
     protected Directory getDirectory(Path file) throws IOException {

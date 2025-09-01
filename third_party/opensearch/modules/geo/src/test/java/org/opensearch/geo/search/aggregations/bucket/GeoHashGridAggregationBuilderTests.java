@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket;
+package org.density.geo.search.aggregations.bucket;
 
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.plugins.Plugin;
+import org.density.search.aggregations.BaseAggregationTestCase;
 
 import java.util.Collection;
 import java.util.Collections;

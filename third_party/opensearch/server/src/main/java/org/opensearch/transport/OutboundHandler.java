@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.common.transport.NetworkExceptionHelper;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.CheckedSupplier;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.network.CloseableChannel;
+import org.density.common.transport.NetworkExceptionHelper;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.NotifyOnceListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 
 /**
  * Outbound data handler
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class OutboundHandler {
 
@@ -100,7 +100,7 @@ public final class OutboundHandler {
     /**
      * Internal message serializer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SendContext extends NotifyOnceListener<Void> implements CheckedSupplier<BytesReference, IOException> {
         private final StatsTracker statsTracker;

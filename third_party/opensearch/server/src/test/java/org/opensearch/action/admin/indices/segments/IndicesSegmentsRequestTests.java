@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.segments;
+package org.density.action.admin.indices.segments;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.common.settings.Settings;
+import org.density.index.MergePolicyProvider;
+import org.density.indices.IndexClosedException;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.is;
 
-public class IndicesSegmentsRequestTests extends OpenSearchSingleNodeTestCase {
+public class IndicesSegmentsRequestTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {

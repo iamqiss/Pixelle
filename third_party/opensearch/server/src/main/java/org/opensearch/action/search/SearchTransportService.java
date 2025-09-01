@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.fetch.ScrollQueryFetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchRequest;
-import org.opensearch.search.fetch.ShardFetchSearchRequest;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.query.ScrollQuerySearchResult;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportActionProxy;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.IndicesRequest;
+import org.density.action.OriginalIndices;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.transport.TransportResponse;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchService;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.fetch.ScrollQueryFetchSearchResult;
+import org.density.search.fetch.ShardFetchRequest;
+import org.density.search.fetch.ShardFetchSearchRequest;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.query.ScrollQuerySearchResult;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.Transport;
+import org.density.transport.TransportActionProxy;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,10 +78,10 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
- * An encapsulation of {@link org.opensearch.search.SearchService} operations exposed through
+ * An encapsulation of {@link org.density.search.SearchService} operations exposed through
  * transport.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchTransportService {
 
@@ -361,7 +361,7 @@ public class SearchTransportService {
     /**
      * A scroll free context request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ScrollFreeContextRequest extends TransportRequest {
         private ShardSearchContextId contextId;
@@ -427,7 +427,7 @@ public class SearchTransportService {
     /**
      * A search free context request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class SearchFreeContextRequest extends ScrollFreeContextRequest implements IndicesRequest {
         private OriginalIndices originalIndices;
@@ -469,7 +469,7 @@ public class SearchTransportService {
     /**
      * A search free context response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SearchFreeContextResponse extends TransportResponse {
 
@@ -727,7 +727,7 @@ public class SearchTransportService {
     /**
      * A handler that counts connections
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ConnectionCountingHandler<Response extends TransportResponse> extends ActionListenerResponseHandler<Response> {
         private final Map<String, Long> clientConnections;

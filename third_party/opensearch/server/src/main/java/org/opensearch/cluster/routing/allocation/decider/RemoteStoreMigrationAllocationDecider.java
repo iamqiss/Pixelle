@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
-import org.opensearch.node.remotestore.RemoteStoreNodeService.Direction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
+import org.density.node.remotestore.RemoteStoreNodeService.Direction;
 
 /**
  * A new allocation decider for migration of document replication clusters to remote store backed clusters:
@@ -53,7 +53,7 @@ import org.opensearch.node.remotestore.RemoteStoreNodeService.Direction;
  *      - New replica shards can be allocated to a remote node iff the primary has been migrated/allocated to a remote node
  * - For other directions ("DOCREP", "NONE"), the decision is always YES
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStoreMigrationAllocationDecider extends AllocationDecider {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.index.MergePolicyProvider;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_STALENESS_THRESHOLD_SETTING;
-import static org.opensearch.indices.IndicesService.INDICES_CACHE_CLEANUP_INTERVAL_SETTING_KEY;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_STALENESS_THRESHOLD_SETTING;
+import static org.density.indices.IndicesService.INDICES_CACHE_CLEANUP_INTERVAL_SETTING_KEY;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
-public class IndicesRequestCacheCleanupIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
+public class IndicesRequestCacheCleanupIT extends DensityIntegTestCase {
 
     private static final long MAX_ITERATIONS = 5;
 
@@ -82,7 +82,7 @@ public class IndicesRequestCacheCleanupIT extends OpenSearchIntegTestCase {
         forceMerge(client, index);
         SearchResponse resp = client.prepareSearch(index).setRequestCache(true).setQuery(QueryBuilders.termQuery("k", "hello")).get();
         assertSearchResponse(resp);
-        OpenSearchAssertions.assertAllSuccessful(resp);
+        DensityAssertions.assertAllSuccessful(resp);
         assertThat(resp.getHits().getTotalHits().value(), equalTo(1L));
 
         assertCacheState(client, index, 0, 1);
@@ -695,14 +695,14 @@ public class IndicesRequestCacheCleanupIT extends OpenSearchIntegTestCase {
 
     private void forceMerge(Client client, String index) {
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge(index).setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
         refreshAndWaitForReplication();
     }
 
     private void createCacheEntry(Client client, String index, String value) {
         SearchResponse resp = client.prepareSearch(index).setRequestCache(true).setQuery(QueryBuilders.termQuery("k", value)).get();
         assertSearchResponse(resp);
-        OpenSearchAssertions.assertAllSuccessful(resp);
+        DensityAssertions.assertAllSuccessful(resp);
     }
 
     private static void assertCacheState(Client client, String index, long expectedHits, long expectedMisses) {

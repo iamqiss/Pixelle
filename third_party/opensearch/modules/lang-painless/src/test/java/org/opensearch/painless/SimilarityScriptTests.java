@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -49,12 +49,12 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.similarity.ScriptedSimilarity;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.SimilarityScript;
-import org.opensearch.script.SimilarityWeightScript;
+import org.density.common.settings.Settings;
+import org.density.index.similarity.ScriptedSimilarity;
+import org.density.painless.spi.Allowlist;
+import org.density.script.ScriptContext;
+import org.density.script.SimilarityScript;
+import org.density.script.SimilarityWeightScript;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 

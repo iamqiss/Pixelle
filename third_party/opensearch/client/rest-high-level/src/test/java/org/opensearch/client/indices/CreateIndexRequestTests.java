@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractXContentTestCase;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static org.opensearch.client.indices.CreateIndexRequest.ALIASES;
-import static org.opensearch.client.indices.CreateIndexRequest.MAPPINGS;
-import static org.opensearch.client.indices.CreateIndexRequest.SETTINGS;
+import static org.density.client.indices.CreateIndexRequest.ALIASES;
+import static org.density.client.indices.CreateIndexRequest.MAPPINGS;
+import static org.density.client.indices.CreateIndexRequest.SETTINGS;
 
 public class CreateIndexRequestTests extends AbstractXContentTestCase<CreateIndexRequest> {
 

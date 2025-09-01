@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.clustermanager.ShardsAcknowledgedResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
+import org.density.DensityException;
+import org.density.action.support.clustermanager.ShardsAcknowledgedResponse;
+import org.density.common.Nullable;
+import org.density.core.ParseField;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
 
 import java.util.List;
 import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
-import static org.opensearch.core.xcontent.ObjectParser.ValueType;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ObjectParser.ValueType;
 
 public class CloseIndexResponse extends ShardsAcknowledgedResponse {
 
@@ -109,7 +109,7 @@ public class CloseIndexResponse extends ShardsAcknowledgedResponse {
             PARSER.declareObject(optionalConstructorArg(), (p, c) -> {
                 XContentParserUtils.ensureExpectedToken(XContentParser.Token.START_OBJECT, p.currentToken(), p);
                 XContentParserUtils.ensureExpectedToken(XContentParser.Token.FIELD_NAME, p.nextToken(), p);
-                Exception e = OpenSearchException.failureFromXContent(p);
+                Exception e = DensityException.failureFromXContent(p);
                 XContentParserUtils.ensureExpectedToken(XContentParser.Token.END_OBJECT, p.nextToken(), p);
                 return e;
             }, new ParseField("exception"));

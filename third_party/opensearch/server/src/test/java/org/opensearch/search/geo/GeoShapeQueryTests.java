@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 
 import org.apache.lucene.tests.geo.GeoTestUtil;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.query.ExistsQueryBuilder;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.geo.RandomShapeGenerator;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.CheckedSupplier;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.settings.Settings;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.query.ExistsQueryBuilder;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.test.geo.RandomShapeGenerator;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -68,16 +68,16 @@ import java.util.Locale;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.spatial4j.shape.Rectangle;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.geoIntersectionQuery;
-import static org.opensearch.index.query.QueryBuilders.geoShapeQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.geo.RandomShapeGenerator.createGeometryCollectionWithin;
-import static org.opensearch.test.geo.RandomShapeGenerator.xRandomPoint;
-import static org.opensearch.test.geo.RandomShapeGenerator.xRandomRectangle;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.geoIntersectionQuery;
+import static org.density.index.query.QueryBuilders.geoShapeQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.geo.RandomShapeGenerator.createGeometryCollectionWithin;
+import static org.density.test.geo.RandomShapeGenerator.xRandomPoint;
+import static org.density.test.geo.RandomShapeGenerator.xRandomRectangle;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;

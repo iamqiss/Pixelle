@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexOptions;
@@ -16,23 +16,23 @@ import org.apache.lucene.search.FieldExistsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.TriFunction;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.CONTENT_TYPE;
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.VALUE_AND_PATH_SUFFIX;
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.VALUE_SUFFIX;
+import static org.density.index.mapper.FlatObjectFieldMapper.CONTENT_TYPE;
+import static org.density.index.mapper.FlatObjectFieldMapper.VALUE_AND_PATH_SUFFIX;
+import static org.density.index.mapper.FlatObjectFieldMapper.VALUE_SUFFIX;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.IsEqual.equalTo;

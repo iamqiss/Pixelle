@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.action.search.CreatePitAction;
-import org.opensearch.action.search.CreatePitController;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitAction;
-import org.opensearch.action.search.DeletePitInfo;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.PitTestsUtil;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.search.CreatePitAction;
+import org.density.action.search.CreatePitController;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitAction;
+import org.density.action.search.DeletePitInfo;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.PitTestsUtil;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensitySingleNodeTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.ArrayList;
@@ -38,13 +38,13 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.action.search.PitTestsUtil.assertSegments;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.search.PitTestsUtil.assertSegments;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.blankOrNullString;
 import static org.hamcrest.Matchers.not;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.not;
 /**
  * Single node integration tests for various PIT use cases such as create pit, search etc
  */
-public class CreatePitSingleNodeTests extends OpenSearchSingleNodeTestCase {
+public class CreatePitSingleNodeTests extends DensitySingleNodeTestCase {
     @Override
     protected boolean resetNodeAfterTest() {
         return true;
@@ -374,7 +374,7 @@ public class CreatePitSingleNodeTests extends OpenSearchSingleNodeTestCase {
                     throw new AssertionError(e);
                 }
             });
-            threads[i].setName("opensearch[node_s_0][search]");
+            threads[i].setName("density[node_s_0][search]");
             threads[i].start();
         }
         for (Thread thread : threads) {
@@ -600,7 +600,7 @@ public class CreatePitSingleNodeTests extends OpenSearchSingleNodeTestCase {
                     throw new AssertionError(e);
                 }
             });
-            threads[i].setName("opensearch[node_s_0][search]");
+            threads[i].setName("density[node_s_0][search]");
             threads[i].start();
         }
         for (Thread thread : threads) {

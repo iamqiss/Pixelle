@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.annotation.ExperimentalApi;
 
 import java.util.Map;
 
@@ -22,8 +22,8 @@ import java.util.Map;
 public interface IngestionConsumerFactory<T extends IngestionShardConsumer, P extends IngestionShardPointer> {
     /**
      * Initialize the factory with the configuration parameters. This method is called once when the factory is created,
-     * and the parameters are parsed from the {@link org.opensearch.cluster.metadata.IngestionSource} in
-     * {@link  org.opensearch.cluster.metadata.IndexMetadata}.
+     * and the parameters are parsed from the {@link org.density.cluster.metadata.IngestionSource} in
+     * {@link  org.density.cluster.metadata.IndexMetadata}.
      * @param params the configuration parameters to initialize the factory
      */
     void initialize(Map<String, Object> params);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.repositories.blobstore.ChecksumBlobStoreFormat;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityCorruptionException;
+import org.density.DensityParseException;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.io.Streams;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.repositories.blobstore.ChecksumBlobStoreFormat;
+import org.density.test.DensityTestCase;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -76,7 +76,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class BlobStoreFormatTests extends OpenSearchTestCase {
+public class BlobStoreFormatTests extends DensityTestCase {
 
     public static final String BLOB_CODEC = "blob";
 
@@ -101,7 +101,7 @@ public class BlobStoreFormatTests extends OpenSearchTestCase {
             if (token == XContentParser.Token.START_OBJECT) {
                 while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
                     if (token != XContentParser.Token.FIELD_NAME) {
-                        throw new OpenSearchParseException("unexpected token [{}]", token);
+                        throw new DensityParseException("unexpected token [{}]", token);
                     }
                     String currentFieldName = parser.currentName();
                     token = parser.nextToken();
@@ -109,15 +109,15 @@ public class BlobStoreFormatTests extends OpenSearchTestCase {
                         if ("text".equals(currentFieldName)) {
                             text = parser.text();
                         } else {
-                            throw new OpenSearchParseException("unexpected field [{}]", currentFieldName);
+                            throw new DensityParseException("unexpected field [{}]", currentFieldName);
                         }
                     } else {
-                        throw new OpenSearchParseException("unexpected token [{}]", token);
+                        throw new DensityParseException("unexpected token [{}]", token);
                     }
                 }
             }
             if (text == null) {
-                throw new OpenSearchParseException("missing mandatory parameter text");
+                throw new DensityParseException("missing mandatory parameter text");
             }
             return new BlobObj(text);
         }
@@ -254,7 +254,7 @@ public class BlobStoreFormatTests extends OpenSearchTestCase {
         try {
             checksumFormat.read(blobContainer, "test-path", xContentRegistry());
             fail("Should have failed due to corruption");
-        } catch (OpenSearchCorruptionException ex) {
+        } catch (DensityCorruptionException ex) {
             assertThat(ex.getMessage(), containsString("test-path"));
         } catch (EOFException ex) {
             // This can happen if corrupt the byte length

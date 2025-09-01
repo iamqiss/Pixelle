@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 
-public class TrimTokenFilterTests extends OpenSearchTokenStreamTestCase {
+public class TrimTokenFilterTests extends DensityTokenStreamTestCase {
 
     public void testNormalizer() throws IOException {
         Settings settings = Settings.builder()
             .putList("index.analysis.normalizer.my_normalizer.filter", "trim")
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             settings,
             new CommonAnalysisModulePlugin()
         );

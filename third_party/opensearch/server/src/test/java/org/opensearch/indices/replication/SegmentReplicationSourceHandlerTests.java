@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.FileChunkWriter;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.CopyState;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.FileChunkWriter;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.CopyState;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -140,7 +140,7 @@ public class SegmentReplicationSourceHandlerTests extends IndexShardTestCase {
         indexDoc(primary, "1", "{\"foo\" : \"baz\"}", MediaTypeRegistry.JSON, "foobar");
         primary.refresh("Test");
         chunkWriter = (fileMetadata, position, content, lastChunk, totalTranslogOps, listener) -> listener.onFailure(
-            new OpenSearchException("Test")
+            new DensityException("Test")
         );
 
         final ReplicationCheckpoint latestReplicationCheckpoint = primary.getLatestReplicationCheckpoint();
@@ -172,7 +172,7 @@ public class SegmentReplicationSourceHandlerTests extends IndexShardTestCase {
 
             @Override
             public void onFailure(Exception e) {
-                assertEquals(e.getClass(), OpenSearchException.class);
+                assertEquals(e.getClass(), DensityException.class);
             }
         });
         copyState.close();
@@ -203,7 +203,7 @@ public class SegmentReplicationSourceHandlerTests extends IndexShardTestCase {
         );
 
         handler.sendFiles(getSegmentFilesRequest, mock(ActionListener.class));
-        Assert.assertThrows(OpenSearchException.class, () -> { handler.sendFiles(getSegmentFilesRequest, mock(ActionListener.class)); });
+        Assert.assertThrows(DensityException.class, () -> { handler.sendFiles(getSegmentFilesRequest, mock(ActionListener.class)); });
     }
 
     public void testCancelReplication() throws IOException, InterruptedException {

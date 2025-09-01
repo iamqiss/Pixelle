@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias;
+package org.density.action.admin.indices.alias;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.index.alias.RandomAliasActionsGenerator.randomAliasAction;
+import static org.density.index.alias.RandomAliasActionsGenerator.randomAliasAction;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class IndicesAliasesRequestTests extends OpenSearchTestCase {
+public class IndicesAliasesRequestTests extends DensityTestCase {
 
     public void testToAndFromXContent() throws IOException {
         IndicesAliasesRequest indicesAliasesRequest = createTestInstance();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import org.apache.lucene.geo.GeoEncodingUtils;
 import org.apache.lucene.util.SloppyMath;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.common.util.OpenSearchSloppyMath;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Rectangle;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.common.util.DensitySloppyMath;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Rectangle;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static org.opensearch.common.geo.GeoUtils.normalizeLat;
-import static org.opensearch.common.geo.GeoUtils.normalizeLon;
+import static org.density.common.geo.GeoUtils.normalizeLat;
+import static org.density.common.geo.GeoUtils.normalizeLon;
 
 /**
  * Implements geotile key hashing, same as used by many map tile implementations.
@@ -58,7 +58,7 @@ import static org.opensearch.common.geo.GeoUtils.normalizeLon;
  *   bits 29..57 -- X tile index (0..2^zoom)
  *   bits  0..28 -- Y tile index (0..2^zoom)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class GeoTileUtils {
 
@@ -107,7 +107,7 @@ public final class GeoTileUtils {
      * @param parser {@link XContentParser} to parse the value from
      * @return int representing precision
      */
-    public static int parsePrecision(XContentParser parser) throws IOException, OpenSearchParseException {
+    public static int parsePrecision(XContentParser parser) throws IOException, DensityParseException {
         final Object node = parser.currentToken().equals(XContentParser.Token.VALUE_NUMBER)
             ? Integer.valueOf(parser.intValue())
             : parser.text();
@@ -326,9 +326,9 @@ public final class GeoTileUtils {
         final double tiles = validateZXY(precision, xTile, yTile);
         final double minN = Math.PI - (2.0 * Math.PI * (yTile + 1)) / tiles;
         final double maxN = Math.PI - (2.0 * Math.PI * (yTile)) / tiles;
-        final double minY = Math.toDegrees(OpenSearchSloppyMath.atan(OpenSearchSloppyMath.sinh(minN)));
+        final double minY = Math.toDegrees(DensitySloppyMath.atan(DensitySloppyMath.sinh(minN)));
         final double minX = ((xTile) / tiles * 360.0) - 180;
-        final double maxY = Math.toDegrees(OpenSearchSloppyMath.atan(OpenSearchSloppyMath.sinh(maxN)));
+        final double maxY = Math.toDegrees(DensitySloppyMath.atan(DensitySloppyMath.sinh(maxN)));
         final double maxX = ((xTile + 1) / tiles * 360.0) - 180;
 
         return new Rectangle(minX, maxX, maxY, minY);
@@ -353,7 +353,7 @@ public final class GeoTileUtils {
     private static GeoPoint zxyToGeoPoint(int zoom, int xTile, int yTile) {
         final int tiles = validateZXY(zoom, xTile, yTile);
         final double n = Math.PI - (2.0 * Math.PI * (yTile + 0.5)) / tiles;
-        final double lat = Math.toDegrees(OpenSearchSloppyMath.atan(OpenSearchSloppyMath.sinh(n)));
+        final double lat = Math.toDegrees(DensitySloppyMath.atan(DensitySloppyMath.sinh(n)));
         final double lon = ((xTile + 0.5) / tiles * 360.0) - 180;
         return new GeoPoint(lat, lon);
     }

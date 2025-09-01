@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
+import org.density.common.annotation.PublicApi;
+import org.density.index.store.RemoteBufferedOutputDirectory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * It uses {@code LockFileInfo} instance to get the information about the lock file on which operations need to
  * be executed.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public class RemoteStoreMetadataLockManager implements RemoteStoreLockManager {

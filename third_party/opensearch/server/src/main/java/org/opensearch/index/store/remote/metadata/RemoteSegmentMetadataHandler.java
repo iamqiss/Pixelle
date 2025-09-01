@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.metadata;
+package org.density.index.store.remote.metadata;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.io.IndexIOStreamHandler;
+import org.density.common.io.IndexIOStreamHandler;
 
 import java.io.IOException;
 
 /**
  * Handler for {@link RemoteSegmentMetadata}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteSegmentMetadataHandler implements IndexIOStreamHandler<RemoteSegmentMetadata> {
 

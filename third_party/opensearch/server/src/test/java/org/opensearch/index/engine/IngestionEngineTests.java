@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.NoMergePolicy;
-import org.opensearch.action.admin.indices.streamingingestion.state.ShardIngestionState;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.pollingingest.IngestionSettings;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.indices.pollingingest.StreamPoller;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.action.admin.indices.streamingingestion.state.ShardIngestionState;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.common.lucene.Lucene;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.IngestionShardPointer;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.MapperService;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.Translog;
+import org.density.indices.pollingingest.IngestionSettings;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.indices.pollingingest.StreamPoller;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.IndexSettingsModule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

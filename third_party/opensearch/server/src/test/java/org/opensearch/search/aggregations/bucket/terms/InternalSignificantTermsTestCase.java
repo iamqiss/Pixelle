@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.ChiSquare;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.GND;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.JLHScore;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.MutualInformation;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
-import org.opensearch.test.InternalMultiBucketAggregationTestCase;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.terms.heuristic.ChiSquare;
+import org.density.search.aggregations.bucket.terms.heuristic.GND;
+import org.density.search.aggregations.bucket.terms.heuristic.JLHScore;
+import org.density.search.aggregations.bucket.terms.heuristic.MutualInformation;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.test.InternalMultiBucketAggregationTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;

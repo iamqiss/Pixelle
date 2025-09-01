@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache.query;
+package org.density.index.cache.query;
 
 import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.Weight;
-import org.opensearch.OpenSearchException;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.IndicesQueryCache;
+import org.density.DensityException;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
+import org.density.indices.IndicesQueryCache;
 
 /**
  * The index-level query cache. This class mostly delegates to the node-level
  * query cache: {@link IndicesQueryCache}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexQueryCache extends AbstractIndexComponent implements QueryCache {
 
@@ -55,7 +55,7 @@ public class IndexQueryCache extends AbstractIndexComponent implements QueryCach
     }
 
     @Override
-    public void close() throws OpenSearchException {
+    public void close() throws DensityException {
         clear("close");
     }
 

@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
-import org.opensearch.arrow.flight.stats.FlightCallTracker;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.arrow.flight.stats.FlightCallTracker;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.io.IOException;
 

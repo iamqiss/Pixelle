@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.query.QuerySearchResult;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.search.SearchPhaseResult;
+import org.density.search.query.QuerySearchResult;
 
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 /**
  * Streaming query phase result consumer
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StreamQueryPhaseResultConsumer extends QueryPhaseResultConsumer {
 

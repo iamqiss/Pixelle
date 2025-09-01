@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.Diff;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractDiffableSerializationTestCase;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.ResourceType;
+import org.density.cluster.Diff;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractDiffableSerializationTestCase;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.ResourceType;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.cluster.metadata.WorkloadGroupTests.createRandomWorkloadGroup;
+import static org.density.cluster.metadata.WorkloadGroupTests.createRandomWorkloadGroup;
 
 public class WorkloadGroupMetadataTests extends AbstractDiffableSerializationTestCase<Metadata.Custom> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.fetch.subphase.FetchFieldsPhase;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.annotation.PublicApi;
+import org.density.search.fetch.subphase.FetchFieldsPhase;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.List;
  * A helper class for fetching field values during the {@link FetchFieldsPhase}. Each {@link MappedFieldType}
  * is in charge of defining a value fetcher through {@link MappedFieldType#valueFetcher}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ValueFetcher {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket;
+package org.density.search.aggregations.bucket;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.aggregations.BaseAggregationTestCase;
-import org.opensearch.search.aggregations.bucket.terms.IncludeExclude;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregatorFactory.ExecutionMode;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.ChiSquare;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.GND;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.JLHScore;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.MutualInformation;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.PercentageScore;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.ScriptHeuristic;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.index.query.QueryBuilders;
+import org.density.search.aggregations.BaseAggregationTestCase;
+import org.density.search.aggregations.bucket.terms.IncludeExclude;
+import org.density.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.TermsAggregatorFactory.ExecutionMode;
+import org.density.search.aggregations.bucket.terms.heuristic.ChiSquare;
+import org.density.search.aggregations.bucket.terms.heuristic.GND;
+import org.density.search.aggregations.bucket.terms.heuristic.JLHScore;
+import org.density.search.aggregations.bucket.terms.heuristic.MutualInformation;
+import org.density.search.aggregations.bucket.terms.heuristic.PercentageScore;
+import org.density.search.aggregations.bucket.terms.heuristic.ScriptHeuristic;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
 
 import java.util.SortedSet;
 import java.util.TreeSet;

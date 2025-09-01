@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * Tests for {@link GeometryParser}
  */
-public class GeometryParserTests extends OpenSearchTestCase {
+public class GeometryParserTests extends DensityTestCase {
 
     public void testGeoJsonParsing() throws Exception {
 
@@ -194,8 +194,8 @@ public class GeometryParserTests extends OpenSearchTestCase {
             parser.nextToken(); // Start object
             parser.nextToken(); // Field Name
             parser.nextToken(); // Field Value
-            OpenSearchParseException ex = expectThrows(
-                OpenSearchParseException.class,
+            DensityParseException ex = expectThrows(
+                DensityParseException.class,
                 () -> new GeometryParser(true, randomBoolean(), randomBoolean()).parse(parser)
             );
             assertEquals("shape must be an object consisting of type and coordinates", ex.getMessage());
@@ -249,7 +249,7 @@ public class GeometryParserTests extends OpenSearchTestCase {
                 Arrays.asList(expectedPoint, expectedPoint, expectedPoint, expectedPoint, expectedLine, expectedPolygon)
             )
         );
-        expectThrows(OpenSearchParseException.class, () -> testBasics(parser, "not a geometry", null));
+        expectThrows(DensityParseException.class, () -> testBasics(parser, "not a geometry", null));
     }
 
     private void testBasics(GeometryParser parser, Object value, Geometry expected) {

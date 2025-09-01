@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.PeerFinder.TransportAddressConnector;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.ConnectionProfile;
-import org.opensearch.transport.Transport.Connection;
-import org.opensearch.transport.TransportRequestOptions.Type;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Randomness;
+import org.density.common.UUIDs;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.action.NotifyOnceListener;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.PeerFinder.TransportAddressConnector;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.ConnectionProfile;
+import org.density.transport.Transport.Connection;
+import org.density.transport.TransportRequestOptions.Type;
+import org.density.transport.TransportService;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
@@ -60,7 +60,7 @@ import static java.util.Collections.emptySet;
 /**
  * Connector for transport handshake
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HandshakingTransportAddressConnector implements TransportAddressConnector {
 

@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.lucene.codecs.Codec;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationDecision;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationDecision;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.common.Nullable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.index.shard.ShardId;
+import org.density.env.Environment;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.test.IndexSettingsModule;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -50,10 +50,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.routing.UnassignedInfo.Reason.CLUSTER_RECOVERED;
-import static org.opensearch.cluster.routing.UnassignedInfo.Reason.INDEX_CREATED;
+import static org.density.cluster.routing.UnassignedInfo.Reason.CLUSTER_RECOVERED;
+import static org.density.cluster.routing.UnassignedInfo.Reason.INDEX_CREATED;
 
-public class PrimaryShardBatchAllocatorTests extends OpenSearchAllocationTestCase {
+public class PrimaryShardBatchAllocatorTests extends DensityAllocationTestCase {
 
     private final ShardId shardId = new ShardId("test", "_na_", 0);
     private static Set<ShardId> shardsInBatch;
@@ -328,7 +328,7 @@ public class PrimaryShardBatchAllocatorTests extends OpenSearchAllocationTestCas
             default:
                 throw new IllegalArgumentException("can't do " + reason + " for you. teach me");
         }
-        ClusterState state = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState state = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTableBuilder.build())
             .nodes(DiscoveryNodes.builder().add(node1).add(node2).add(node3))

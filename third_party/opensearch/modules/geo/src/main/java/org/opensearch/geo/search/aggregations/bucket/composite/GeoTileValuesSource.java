@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.composite;
+package org.density.geo.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.search.aggregations.bucket.composite.LongValuesSource;
-import org.opensearch.search.aggregations.bucket.composite.SingleDimensionValuesSource;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
+import org.density.common.CheckedFunction;
+import org.density.common.util.BigArrays;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.search.aggregations.bucket.composite.LongValuesSource;
+import org.density.search.aggregations.bucket.composite.SingleDimensionValuesSource;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
 
 import java.io.IOException;
 import java.util.function.LongUnaryOperator;
@@ -52,7 +52,7 @@ import java.util.function.LongUnaryOperator;
  * Since geotile values can be represented as long values, this class is almost the same as {@link LongValuesSource}
  * The main differences is {@link GeoTileValuesSource#setAfter(Comparable)} as it needs to accept geotile string values i.e. "zoom/x/y".
  *
- * @opensearch.internal
+ * @density.internal
  */
 class GeoTileValuesSource extends LongValuesSource {
     GeoTileValuesSource(

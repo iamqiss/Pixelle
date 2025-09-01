@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -55,28 +55,28 @@ import org.bouncycastle.openpgp.operator.jcajce.JcaPGPDigestCalculatorProviderBu
 import org.bouncycastle.openpgp.operator.jcajce.JcaPGPKeyPair;
 import org.bouncycastle.openpgp.operator.jcajce.JcePBESecretKeyDecryptorBuilder;
 import org.bouncycastle.openpgp.operator.jcajce.JcePBESecretKeyEncryptorBuilder;
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.hash.MessageDigests;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.plugins.Platforms;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginTestUtil;
-import org.opensearch.semver.SemverRange;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.PosixPermissionsResetter;
-import org.opensearch.test.VersionUtils;
+import org.density.Build;
+import org.density.Version;
+import org.density.cli.ExitCodes;
+import org.density.cli.MockTerminal;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.SuppressForbidden;
+import org.density.common.collect.Tuple;
+import org.density.common.hash.MessageDigests;
+import org.density.common.io.PathUtils;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.settings.Settings;
+import org.density.core.util.FileSystemUtils;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.plugins.Platforms;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginTestUtil;
+import org.density.semver.SemverRange;
+import org.density.test.DensityTestCase;
+import org.density.test.PosixPermissionsResetter;
+import org.density.test.VersionUtils;
 import org.junit.After;
 import org.junit.Before;
 
@@ -127,7 +127,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.opensearch.test.hamcrest.RegexMatcher.matches;
+import static org.density.test.hamcrest.RegexMatcher.matches;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
@@ -138,7 +138,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
 @LuceneTestCase.SuppressFileSystems("*")
-public class InstallPluginCommandTests extends OpenSearchTestCase {
+public class InstallPluginCommandTests extends DensityTestCase {
 
     static {
         if (Security.getProvider(BouncyCastleFipsProvider.PROVIDER_NAME) == null) {
@@ -230,9 +230,9 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     static Tuple<Path, Environment> createEnv(FileSystem fs, Function<String, Path> temp) throws IOException {
         Path home = temp.apply("install-plugin-command-tests");
         Files.createDirectories(home.resolve("bin"));
-        Files.createFile(home.resolve("bin").resolve("opensearch"));
+        Files.createFile(home.resolve("bin").resolve("density"));
         Files.createDirectories(home.resolve("config"));
-        Files.createFile(home.resolve("config").resolve("opensearch.yml"));
+        Files.createFile(home.resolve("config").resolve("density.yml"));
         Path plugins = Files.createDirectories(home.resolve("plugins"));
         assertTrue(Files.exists(plugins));
         Settings settings = Settings.builder().put("path.home", home).build();
@@ -282,7 +282,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
                 name,
                 "version",
                 "1.0",
-                "opensearch.version",
+                "density.version",
                 Version.CURRENT.toString(),
                 "java.version",
                 System.getProperty("java.specification.version"),
@@ -296,7 +296,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
         writeJar(structure.resolve("plugin.jar"), className);
     }
 
-    static void writePlugin(String name, Path structure, SemverRange opensearchVersionRange, String... additionalProps) throws IOException {
+    static void writePlugin(String name, Path structure, SemverRange densityVersionRange, String... additionalProps) throws IOException {
         String[] properties = Stream.concat(
             Stream.of(
                 "description",
@@ -306,7 +306,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
                 "version",
                 "1.0",
                 "dependencies",
-                "{opensearch:\"" + opensearchVersionRange + "\"}",
+                "{density:\"" + densityVersionRange + "\"}",
                 "java.version",
                 System.getProperty("java.specification.version"),
                 "classname",
@@ -319,9 +319,9 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
         writeJar(structure.resolve("plugin.jar"), className);
     }
 
-    static Path createPlugin(String name, Path structure, SemverRange opensearchVersionRange, String... additionalProps)
+    static Path createPlugin(String name, Path structure, SemverRange densityVersionRange, String... additionalProps)
         throws IOException {
-        writePlugin(name, structure, opensearchVersionRange, additionalProps);
+        writePlugin(name, structure, densityVersionRange, additionalProps);
         return writeZip(structure, null);
     }
 
@@ -515,7 +515,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
         final IllegalStateException e = expectThrows(IllegalStateException.class, () -> installPlugin(pluginZip, env.v1()));
         final String expected = String.format(
             Locale.ROOT,
-            "found file [%s] from a failed attempt to remove the plugin [failed]; execute [opensearch-plugin remove failed]",
+            "found file [%s] from a failed attempt to remove the plugin [failed]; execute [density-plugin remove failed]",
             removing
         );
         assertThat(e, hasToString(containsString(expected)));
@@ -669,9 +669,9 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
         Path binDir = pluginDir.resolve("bin");
         Files.createDirectory(binDir);
         Files.createFile(binDir.resolve("somescript"));
-        String pluginZip = createPluginUrl("opensearch", pluginDir);
+        String pluginZip = createPluginUrl("density", pluginDir);
         FileAlreadyExistsException e = expectThrows(FileAlreadyExistsException.class, () -> installPlugin(pluginZip, env.v1()));
-        assertTrue(e.getMessage(), e.getMessage().contains(env.v2().binDir().resolve("opensearch").toString()));
+        assertTrue(e.getMessage(), e.getMessage().contains(env.v2().binDir().resolve("density").toString()));
         assertInstallCleaned(env.v2());
     }
 
@@ -821,8 +821,8 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     public void testContainsIntermediateDirectory() throws Exception {
         Tuple<Path, Environment> env = createEnv(fs, temp);
         Path pluginDir = createPluginDir(temp);
-        Files.createFile(pluginDir.resolve(PluginInfo.OPENSEARCH_PLUGIN_PROPERTIES));
-        String pluginZip = writeZip(pluginDir, "opensearch").toUri().toURL().toString();
+        Files.createFile(pluginDir.resolve(PluginInfo.DENSITY_PLUGIN_PROPERTIES));
+        String pluginZip = writeZip(pluginDir, "density").toUri().toURL().toString();
         UserException e = expectThrows(UserException.class, () -> installPlugin(pluginZip, env.v1()));
         assertThat(e.getMessage(), containsString("This plugin was built with an older plugin structure"));
         assertInstallCleaned(env.v2());
@@ -931,7 +931,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
             IllegalArgumentException.class,
             () -> skipJarHellCommand.execute(terminal, Collections.singletonList(pluginZip), false, env.v2())
         );
-        assertThat(e.getMessage(), containsString("Plugin [fake] was built for OpenSearch version ~" + pluginVersion));
+        assertThat(e.getMessage(), containsString("Plugin [fake] was built for Density version ~" + pluginVersion));
     }
 
     public void testBatchFlag() throws Exception {
@@ -1104,7 +1104,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testOfficialPlugin() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1115,7 +1115,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     public void testOfficialPluginSnapshot() throws Exception {
         String url = String.format(
             Locale.ROOT,
-            "https://artifacts.opensearch.org/snapshots/plugins/analysis-icu/%s-SNAPSHOT/analysis-icu-%s.zip",
+            "https://artifacts.density.org/snapshots/plugins/analysis-icu/%s-SNAPSHOT/analysis-icu-%s.zip",
             Version.CURRENT,
             Build.CURRENT.getQualifiedVersion()
         );
@@ -1123,7 +1123,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testOfficialPlatformPlugin() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Platforms.PLATFORM_NAME
@@ -1157,7 +1157,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testOfficialChecksumWithoutFilename() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1172,7 +1172,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testOfficialShaMissing() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1197,7 +1197,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testInvalidShaFileMissingFilename() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1212,7 +1212,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testInvalidShaFileMismatchFilename() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1236,7 +1236,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testInvalidShaFileContainingExtraLine() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1260,7 +1260,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
     }
 
     public void testSha512Mismatch() throws Exception {
-        String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/analysis-icu-"
             + Build.CURRENT.getQualifiedVersion()
@@ -1303,7 +1303,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
 
     public void testPublicKeyIdMismatchToExpectedPublicKeyId() throws Exception {
         final String icu = "analysis-icu";
-        final String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        final String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/"
             + icu
@@ -1330,7 +1330,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
 
     public void testFailedSignatureVerification() throws Exception {
         final String icu = "analysis-icu";
-        final String url = "https://artifacts.opensearch.org/releases/plugins/analysis-icu/"
+        final String url = "https://artifacts.density.org/releases/plugins/analysis-icu/"
             + Build.CURRENT.getQualifiedVersion()
             + "/"
             + icu
@@ -1345,7 +1345,7 @@ public class InstallPluginCommandTests extends OpenSearchTestCase {
          */
         final BiFunction<byte[], PGPSecretKey, String> signature = (b, p) -> {
             final byte[] bytes = Arrays.copyOf(b, b.length);
-            bytes[0] = randomValueOtherThan(b[0], OpenSearchTestCase::randomByte);
+            bytes[0] = randomValueOtherThan(b[0], DensityTestCase::randomByte);
             return signature(bytes, p);
         };
         final IllegalStateException e = expectThrows(

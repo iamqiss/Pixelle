@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.IntPoint;
@@ -60,24 +60,24 @@ import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.indices.IndicesQueryCache.OpenseachUsageTrackingQueryCachingPolicy;
+import static org.density.indices.IndicesQueryCache.OpenseachUsageTrackingQueryCachingPolicy;
 import static org.apache.lucene.search.MultiTermQuery.CONSTANT_SCORE_BLENDED_REWRITE;
 import static org.apache.lucene.search.MultiTermQuery.CONSTANT_SCORE_REWRITE;
 
-public class IndicesQueryCacheTests extends OpenSearchTestCase {
+public class IndicesQueryCacheTests extends DensityTestCase {
 
     private static class DummyQuery extends Query {
 
@@ -155,7 +155,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r = DirectoryReader.open(w);
         w.close();
         ShardId shard = new ShardId("index", "_na_", 0);
-        r = OpenSearchDirectoryReader.wrap(r, shard);
+        r = DensityDirectoryReader.wrap(r, shard);
         IndexSearcher s = new IndexSearcher(r);
         s.setQueryCachingPolicy(alwaysCachePolicy());
 
@@ -232,7 +232,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r1 = DirectoryReader.open(w1);
         w1.close();
         ShardId shard1 = new ShardId("index", "_na_", 0);
-        r1 = OpenSearchDirectoryReader.wrap(r1, shard1);
+        r1 = DensityDirectoryReader.wrap(r1, shard1);
         IndexSearcher s1 = new IndexSearcher(r1);
         s1.setQueryCachingPolicy(alwaysCachePolicy());
 
@@ -242,7 +242,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r2 = DirectoryReader.open(w2);
         w2.close();
         ShardId shard2 = new ShardId("index", "_na_", 1);
-        r2 = OpenSearchDirectoryReader.wrap(r2, shard2);
+        r2 = DensityDirectoryReader.wrap(r2, shard2);
         IndexSearcher s2 = new IndexSearcher(r2);
         s2.setQueryCachingPolicy(alwaysCachePolicy());
 
@@ -370,7 +370,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r1 = DirectoryReader.open(w1);
         w1.close();
         ShardId shard1 = new ShardId("index", "_na_", 0);
-        r1 = OpenSearchDirectoryReader.wrap(r1, shard1);
+        r1 = DensityDirectoryReader.wrap(r1, shard1);
         IndexSearcher s1 = new IndexSearcher(r1);
         s1.setQueryCachingPolicy(alwaysCachePolicy());
 
@@ -380,7 +380,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r2 = DirectoryReader.open(w2);
         w2.close();
         ShardId shard2 = new ShardId("index", "_na_", 1);
-        r2 = OpenSearchDirectoryReader.wrap(r2, shard2);
+        r2 = DensityDirectoryReader.wrap(r2, shard2);
         IndexSearcher s2 = new IndexSearcher(r2);
         s2.setQueryCachingPolicy(alwaysCachePolicy());
 
@@ -457,7 +457,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r = DirectoryReader.open(w);
         w.close();
         ShardId shard = new ShardId("index", "_na_", 0);
-        r = OpenSearchDirectoryReader.wrap(r, shard);
+        r = DensityDirectoryReader.wrap(r, shard);
         IndexSearcher s = new IndexSearcher(r);
         s.setQueryCachingPolicy(new QueryCachingPolicy() {
             @Override
@@ -496,7 +496,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r = DirectoryReader.open(w);
         w.close();
         ShardId shard = new ShardId("index", "_na_", 0);
-        r = OpenSearchDirectoryReader.wrap(r, shard);
+        r = DensityDirectoryReader.wrap(r, shard);
         IndexSearcher s = new IndexSearcher(r);
         IndicesQueryCache cache = new IndicesQueryCache(Settings.EMPTY);
         s.setQueryCache(cache);
@@ -527,7 +527,7 @@ public class IndicesQueryCacheTests extends OpenSearchTestCase {
         DirectoryReader r = DirectoryReader.open(w);
         w.close();
         ShardId shard = new ShardId("index", "_na_", 0);
-        r = OpenSearchDirectoryReader.wrap(r, shard);
+        r = DensityDirectoryReader.wrap(r, shard);
 
         IndexSearcher searcher = new IndexSearcher(r);
         Settings settings = Settings.builder().build();

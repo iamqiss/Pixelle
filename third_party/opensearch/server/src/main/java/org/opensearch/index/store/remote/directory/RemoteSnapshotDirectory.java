@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.directory;
+package org.density.index.store.remote.directory;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -15,11 +15,11 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.NoLockFactory;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.store.remote.file.OnDemandBlockSnapshotIndexInput;
-import org.opensearch.index.store.remote.utils.TransferManager;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.store.remote.file.OnDemandBlockSnapshotIndexInput;
+import org.density.index.store.remote.utils.TransferManager;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -30,9 +30,9 @@ import java.util.stream.Collectors;
 
 /**
  * a Directory implementation that can read directly from index snapshot stored remotely in a blob store repository.
- * This implementation is following this design https://github.com/opensearch-project/OpenSearch/issues/4033
+ * This implementation is following this design https://github.com/density-project/Density/issues/4033
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteSnapshotDirectory extends Directory {
 

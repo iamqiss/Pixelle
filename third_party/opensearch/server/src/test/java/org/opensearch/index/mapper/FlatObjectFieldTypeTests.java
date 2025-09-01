@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.SortedSetDocValuesField;
@@ -28,11 +28,11 @@ import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.FlatObjectFieldMapper.FlatObjectFieldType;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.unit.Fuzziness;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.FlatObjectFieldMapper.FlatObjectFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.VALUE_AND_PATH_SUFFIX;
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.VALUE_SUFFIX;
+import static org.density.index.mapper.FlatObjectFieldMapper.VALUE_AND_PATH_SUFFIX;
+import static org.density.index.mapper.FlatObjectFieldMapper.VALUE_SUFFIX;
 import static org.apache.lucene.search.MultiTermQuery.CONSTANT_SCORE_BLENDED_REWRITE;
 import static org.apache.lucene.search.MultiTermQuery.CONSTANT_SCORE_REWRITE;
 import static org.apache.lucene.search.MultiTermQuery.DOC_VALUES_REWRITE;

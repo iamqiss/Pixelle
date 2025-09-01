@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket;
+package org.density.geo.search.aggregations.bucket;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.common.GeoBoundsHelper;
-import org.opensearch.geo.tests.common.AggregationBuilders;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.query.GeoBoundingBoxQueryBuilder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.common.settings.Settings;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
+import org.density.geo.search.aggregations.common.GeoBoundsHelper;
+import org.density.geo.tests.common.AggregationBuilders;
+import org.density.geometry.Geometry;
+import org.density.geometry.Rectangle;
+import org.density.geometry.utils.Geohash;
+import org.density.index.query.GeoBoundingBoxQueryBuilder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,13 +54,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static org.opensearch.geometry.utils.Geohash.PRECISION;
-import static org.opensearch.geometry.utils.Geohash.stringEncode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.geometry.utils.Geohash.PRECISION;
+import static org.density.geometry.utils.Geohash.stringEncode;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class GeoHashGridIT extends AbstractGeoBucketAggregationIntegTest {
 
     private static final String AGG_NAME = "geohashgrid";
@@ -163,7 +163,7 @@ public class GeoHashGridIT extends AbstractGeoBucketAggregationIntegTest {
         for (int precision = 1; precision <= PRECISION; precision++) {
             SearchResponse response = client().prepareSearch("idx")
                 .addAggregation(
-                    org.opensearch.search.aggregations.AggregationBuilders.filter("filtered", bbox)
+                    org.density.search.aggregations.AggregationBuilders.filter("filtered", bbox)
                         .subAggregation(AggregationBuilders.geohashGrid(AGG_NAME).field(GEO_POINT_FIELD_NAME).precision(precision))
                 )
                 .get();

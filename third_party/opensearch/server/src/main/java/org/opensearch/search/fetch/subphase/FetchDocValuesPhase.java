@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.index.mapper.DocValueFetcher;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
+import org.density.common.document.DocumentField;
+import org.density.common.logging.DeprecationLogger;
+import org.density.index.mapper.DocValueFetcher;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.ValueFetcher;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import java.util.List;
  * <p>
  * Specifying {@code "docvalue_fields": ["field1", "field2"]}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FetchDocValuesPhase implements FetchSubPhase {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.TopFieldDocs;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.transport.Transport;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.telemetry.tracing.Tracer;
+import org.density.transport.Transport;
 
 import java.util.Map;
 import java.util.Set;
@@ -54,7 +54,7 @@ import java.util.function.BiFunction;
 /**
  * Async transport action for query then fetch
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SearchQueryThenFetchAsyncAction extends AbstractSearchAsyncAction<SearchPhaseResult> {
 

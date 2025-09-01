@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.delete;
+package org.density.action.delete;
 
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.RandomObjects;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.DensityTestCase;
+import org.density.test.RandomObjects;
 
 import java.io.IOException;
 import java.util.function.Predicate;
 
-import static org.opensearch.action.index.IndexResponseTests.assertDocWriteResponse;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
+import static org.density.action.index.IndexResponseTests.assertDocWriteResponse;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
+import static org.density.test.XContentTestUtils.insertRandomFields;
 
-public class DeleteResponseTests extends OpenSearchTestCase {
+public class DeleteResponseTests extends DensityTestCase {
 
     public void testToXContent() {
         {

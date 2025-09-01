@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.useragent;
+package org.density.ingest.useragent;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,7 +62,7 @@ final class UserAgentParser {
         try {
             init(regexStream);
         } catch (IOException e) {
-            throw new OpenSearchParseException("error parsing regular expression file", e);
+            throw new DensityParseException("error parsing regular expression file", e);
         }
     }
 
@@ -127,7 +127,7 @@ final class UserAgentParser {
         }
 
         if (uaPatterns.isEmpty() && osPatterns.isEmpty() && devicePatterns.isEmpty()) {
-            throw new OpenSearchParseException("not a valid regular expression file");
+            throw new DensityParseException("not a valid regular expression file");
         }
     }
 
@@ -145,19 +145,19 @@ final class UserAgentParser {
 
         XContentParser.Token token = yamlParser.nextToken();
         if (token != XContentParser.Token.START_ARRAY) {
-            throw new OpenSearchParseException("malformed regular expression file, should continue with 'array' after 'object'");
+            throw new DensityParseException("malformed regular expression file, should continue with 'array' after 'object'");
         }
 
         token = yamlParser.nextToken();
         if (token != XContentParser.Token.START_OBJECT) {
-            throw new OpenSearchParseException("malformed regular expression file, expecting 'object'");
+            throw new DensityParseException("malformed regular expression file, expecting 'object'");
         }
 
         while (token == XContentParser.Token.START_OBJECT) {
             token = yamlParser.nextToken();
 
             if (token != XContentParser.Token.FIELD_NAME) {
-                throw new OpenSearchParseException("malformed regular expression file, should continue with 'field_name' after 'array'");
+                throw new DensityParseException("malformed regular expression file, should continue with 'field_name' after 'array'");
             }
 
             Map<String, String> regexMap = new HashMap<>();

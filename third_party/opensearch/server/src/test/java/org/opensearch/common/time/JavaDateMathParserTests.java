@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class JavaDateMathParserTests extends OpenSearchTestCase {
+public class JavaDateMathParserTests extends DensityTestCase {
 
     private final DateFormatter formatter = DateFormatter.forPattern("date_optional_time||epoch_millis");
     private final DateMathParser parser = formatter.toDateMathParser();
@@ -352,7 +352,7 @@ public class JavaDateMathParserTests extends OpenSearchTestCase {
     }
 
     void assertParseException(String msg, String date, String exc) {
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> parser.parse(date, () -> 0));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> parser.parse(date, () -> 0));
         assertThat(msg, e.getMessage(), containsString(exc));
     }
 

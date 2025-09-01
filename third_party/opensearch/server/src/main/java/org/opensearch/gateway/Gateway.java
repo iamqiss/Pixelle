@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
+import org.density.action.FailedNodeException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ import java.util.function.Function;
 /**
  * The Gateway
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Gateway {
 
@@ -147,7 +147,7 @@ public class Gateway {
     /**
      * The lister for state recovered.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface GatewayStateRecoveredListener {
         void onSuccess(ClusterState build);

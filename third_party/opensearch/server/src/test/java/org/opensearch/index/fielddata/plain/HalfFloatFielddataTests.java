@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -40,15 +40,15 @@ import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class HalfFloatFielddataTests extends OpenSearchTestCase {
+public class HalfFloatFielddataTests extends DensityTestCase {
 
     public void testSingleValued() throws IOException {
         Directory dir = newDirectory();

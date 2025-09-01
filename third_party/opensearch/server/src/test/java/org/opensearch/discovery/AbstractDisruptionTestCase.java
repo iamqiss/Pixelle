@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.coordination.LeaderChecker;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.NetworkDisruption.Bridge;
-import org.opensearch.test.disruption.NetworkDisruption.DisruptedLinks;
-import org.opensearch.test.disruption.NetworkDisruption.NetworkLinkDisruptionType;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.disruption.SlowClusterStateProcessing;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportSettings;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.coordination.LeaderChecker;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexService;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.NetworkDisruption.Bridge;
+import org.density.test.disruption.NetworkDisruption.DisruptedLinks;
+import org.density.test.disruption.NetworkDisruption.NetworkLinkDisruptionType;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.disruption.SlowClusterStateProcessing;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportSettings;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -68,7 +68,7 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-public abstract class AbstractDisruptionTestCase extends OpenSearchIntegTestCase {
+public abstract class AbstractDisruptionTestCase extends DensityIntegTestCase {
 
     static final TimeValue DISRUPTION_HEALING_OVERHEAD = TimeValue.timeValueSeconds(40); // we use 30s as timeout in many places.
 

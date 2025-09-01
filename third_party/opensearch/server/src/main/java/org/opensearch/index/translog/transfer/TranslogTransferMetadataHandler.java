@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.common.io.IndexIOStreamHandler;
+import org.density.common.io.IndexIOStreamHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Handler for {@link TranslogTransferMetadata}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogTransferMetadataHandler implements IndexIOStreamHandler<TranslogTransferMetadata> {
 

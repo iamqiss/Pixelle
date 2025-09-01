@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
-import org.opensearch.index.store.remote.utils.cache.RefCountedCache;
-import org.opensearch.index.store.remote.utils.cache.SegmentedCache;
-import org.opensearch.index.store.remote.utils.cache.stats.AggregateRefCountedCacheStats;
-import org.opensearch.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
-import org.opensearch.index.store.remote.utils.cache.stats.RefCountedCacheStats;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
+import org.density.index.store.remote.utils.cache.RefCountedCache;
+import org.density.index.store.remote.utils.cache.SegmentedCache;
+import org.density.index.store.remote.utils.cache.stats.AggregateRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.RefCountedCacheStats;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -34,9 +34,9 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static org.opensearch.env.NodeEnvironment.processDirectoryFiles;
-import static org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
-import static org.opensearch.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
+import static org.density.env.NodeEnvironment.processDirectoryFiles;
+import static org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
+import static org.density.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
 
 /**
  * File Cache (FC) is introduced to solve the problem that the local disk cannot hold
@@ -54,7 +54,7 @@ import static org.opensearch.index.store.remote.utils.FileTypeUtils.INDICES_FOLD
  * items from cache tail and triggers a callback to clean up the file from disk. The
  * cleanup process also includes closing file’s descriptor.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.7.0")
 public class FileCache implements RefCountedCache<Path, CachedIndexInput> {
@@ -222,7 +222,7 @@ public class FileCache implements RefCountedCache<Path, CachedIndexInput> {
 
     /**
      * Restores the file cache instance performing a folder scan of the
-     * {@link org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory#LOCAL_STORE_LOCATION}
+     * {@link org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory#LOCAL_STORE_LOCATION}
      * directory within the provided file cache path.
      */
     public void restoreFromDirectory(List<Path> fileCacheDataPaths) {

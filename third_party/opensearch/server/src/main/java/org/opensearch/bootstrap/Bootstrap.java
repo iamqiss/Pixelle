@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,31 +40,31 @@ import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.StringHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.PidFile;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.common.inject.CreationException;
-import org.opensearch.common.logging.LogConfigurator;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.network.IfConfig;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.env.Environment;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.os.OsProbe;
-import org.opensearch.monitor.process.ProcessProbe;
-import org.opensearch.node.InternalSettingsPreparer;
-import org.opensearch.node.Node;
-import org.opensearch.node.NodeValidationException;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.PidFile;
+import org.density.common.SuppressForbidden;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.common.inject.CreationException;
+import org.density.common.logging.LogConfigurator;
+import org.density.common.logging.Loggers;
+import org.density.common.network.IfConfig;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.settings.SecureString;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.env.Environment;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.os.OsProbe;
+import org.density.monitor.process.ProcessProbe;
+import org.density.node.InternalSettingsPreparer;
+import org.density.node.Node;
+import org.density.node.NodeValidationException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -84,7 +84,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Internal startup code.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class Bootstrap {
 
@@ -105,7 +105,7 @@ final class Bootstrap {
                     // bail out
                 }
             }
-        }, "opensearch[keepAlive/" + Version.CURRENT + "]");
+        }, "density[keepAlive/" + Version.CURRENT + "]");
         keepAliveThread.setDaemon(false);
         // keep this thread alive (non daemon thread) until we shutdown
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -122,7 +122,7 @@ final class Bootstrap {
 
         // check if the user is running as root, and bail
         if (Natives.definitelyRunningAsRoot()) {
-            throw new RuntimeException("can not run opensearch as root");
+            throw new RuntimeException("can not run density as root");
         }
 
         // enable system call filter
@@ -149,7 +149,7 @@ final class Bootstrap {
                         try {
                             Bootstrap.stop();
                         } catch (IOException e) {
-                            throw new OpenSearchException("failed to stop node", e);
+                            throw new DensityException("failed to stop node", e);
                         }
                         return true;
                     }
@@ -196,7 +196,7 @@ final class Bootstrap {
             BootstrapSettings.CTRLHANDLER_SETTING.get(settings)
         );
 
-        var cryptoStandard = System.getenv("OPENSEARCH_CRYPTO_STANDARD");
+        var cryptoStandard = System.getenv("DENSITY_CRYPTO_STANDARD");
         if ("FIPS-140-3".equals(cryptoStandard) || "true".equalsIgnoreCase(System.getProperty("org.bouncycastle.fips.approved_only"))) {
             LogManager.getLogger(Bootstrap.class).info("running in FIPS-140-3 mode");
             SecurityProviderManager.removeNonCompliantFipsProviders();
@@ -219,7 +219,7 @@ final class Bootstrap {
                             );
                         }
                     } catch (IOException ex) {
-                        throw new OpenSearchException("failed to stop node", ex);
+                        throw new DensityException("failed to stop node", ex);
                     } catch (InterruptedException e) {
                         LogManager.getLogger(Bootstrap.class).warn("Thread got interrupted while waiting for the node to shutdown.");
                         Thread.currentThread().interrupt();
@@ -337,7 +337,7 @@ final class Bootstrap {
             builder.build(),
             Collections.emptyMap(),
             configPath,
-            // HOSTNAME is set by opensearch-env and opensearch-env.bat so it is always available
+            // HOSTNAME is set by density-env and density-env.bat so it is always available
             () -> System.getenv("HOSTNAME")
         );
     }
@@ -362,7 +362,7 @@ final class Bootstrap {
     }
 
     /**
-     * This method is invoked by {@link OpenSearch#main(String[])} to startup opensearch.
+     * This method is invoked by {@link Density#main(String[])} to startup density.
      */
     static void init(final boolean foreground, final Path pidFile, final boolean quiet, final Environment initialEnv)
         throws BootstrapException, NodeValidationException, UserException {
@@ -406,7 +406,7 @@ final class Bootstrap {
             // install the default uncaught exception handler; must be done before security is
             // initialized as we do not want to grant the runtime permission
             // setDefaultUncaughtExceptionHandler
-            Thread.setDefaultUncaughtExceptionHandler(new OpenSearchUncaughtExceptionHandler());
+            Thread.setDefaultUncaughtExceptionHandler(new DensityUncaughtExceptionHandler());
 
             INSTANCE.setup(true, environment);
 
@@ -420,7 +420,7 @@ final class Bootstrap {
             INSTANCE.start();
 
             // We don't close stderr if `--quiet` is passed, because that
-            // hides fatal startup errors. For example, if OpenSearch is
+            // hides fatal startup errors. For example, if Density is
             // running via systemd, the init script only specifies
             // `--quiet`, not `-d`, so we want users to be able to see
             // startup errors via journalctl.
@@ -482,7 +482,7 @@ final class Bootstrap {
     private static void checkLucene() {
         if (Version.CURRENT.luceneVersion.equals(org.apache.lucene.util.Version.LATEST) == false) {
             throw new AssertionError(
-                "Lucene version mismatch this version of OpenSearch requires lucene version ["
+                "Lucene version mismatch this version of Density requires lucene version ["
                     + Version.CURRENT.luceneVersion
                     + "]  but the current lucene version is ["
                     + org.apache.lucene.util.Version.LATEST

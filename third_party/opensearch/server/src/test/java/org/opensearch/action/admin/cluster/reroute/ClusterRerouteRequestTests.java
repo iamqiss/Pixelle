@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.reroute;
+package org.density.action.admin.cluster.reroute;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.CancelAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.admin.cluster.RestClusterRerouteAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommand;
+import org.density.cluster.routing.allocation.command.CancelAllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.NetworkModule;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.RestRequest;
+import org.density.rest.action.admin.cluster.RestClusterRerouteAction;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -64,12 +64,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 
 /**
  * Test for serialization and parsing of {@link ClusterRerouteRequest} and its commands. See the superclass for, well, everything.
  */
-public class ClusterRerouteRequestTests extends OpenSearchTestCase {
+public class ClusterRerouteRequestTests extends DensityTestCase {
     private static final int ROUNDS = 30;
     private final List<Supplier<AllocationCommand>> RANDOM_COMMAND_GENERATORS = unmodifiableList(
         Arrays.<Supplier<AllocationCommand>>asList(

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.bucket.LocalBucketCountThresholds;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.search.aggregations.support.AggregationPath;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.BigArrays;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.bucket.LocalBucketCountThresholds;
+import org.density.search.aggregations.bucket.terms.TermsAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.search.aggregations.support.AggregationPath;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -62,14 +62,14 @@ import static java.util.Objects.requireNonNull;
 /**
  * An internal implementation of {@link Aggregation}. Serves as a base class for all aggregation implementations.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class InternalAggregation implements Aggregation, NamedWriteable {
     /**
      * Builds {@link ReduceContext}.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface ReduceContextBuilder {
@@ -87,7 +87,7 @@ public abstract class InternalAggregation implements Aggregation, NamedWriteable
     /**
      * The reduce context
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ReduceContext {

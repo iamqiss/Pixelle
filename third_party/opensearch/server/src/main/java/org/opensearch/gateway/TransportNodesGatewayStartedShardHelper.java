@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.shard.ShardStateMetadata;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.DensityException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardPath;
+import org.density.index.shard.ShardStateMetadata;
+import org.density.index.store.Store;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -39,7 +39,7 @@ import java.util.Objects;
  * {@link TransportNodesListGatewayStartedShards} will be deprecated and all the code will be moved to
  * {@link TransportNodesListGatewayStartedShardsBatch}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesGatewayStartedShardHelper {
     public static final String INDEX_NOT_FOUND = "node doesn't have meta data for index";
@@ -67,14 +67,14 @@ public class TransportNodesGatewayStartedShardHelper {
                 if (shardDataPathInRequest != null) {
                     customDataPath = shardDataPathInRequest;
                 } else {
-                    // TODO: Fallback for BWC with older OpenSearch versions.
+                    // TODO: Fallback for BWC with older Density versions.
                     // Remove once request.getCustomDataPath() always returns non-null
                     final IndexMetadata metadata = clusterService.state().metadata().index(shardId.getIndex());
                     if (metadata != null) {
                         customDataPath = new IndexSettings(metadata, settings).customDataPath();
                     } else {
                         logger.trace("{} node doesn't have meta data for the requests index", shardId);
-                        throw new OpenSearchException(INDEX_NOT_FOUND + " " + shardId.getIndex());
+                        throw new DensityException(INDEX_NOT_FOUND + " " + shardId.getIndex());
                     }
                 }
                 // we don't have an open shard on the store, validate the files on disk are openable
@@ -121,7 +121,7 @@ public class TransportNodesGatewayStartedShardHelper {
      * {@link DiscoveryNode} object like in {@link TransportNodesListGatewayStartedShards.NodeGatewayStartedShards}
      * which reduces memory footprint of its objects.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GatewayStartedShard {
         private final String allocationId;

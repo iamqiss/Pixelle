@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.network.CloseableChannel;
+import org.density.common.network.CloseableChannel;
 
 import java.net.InetSocketAddress;
 
@@ -41,7 +41,7 @@ import java.net.InetSocketAddress;
  * channel abstraction used by the {@link TcpTransport} and {@link TransportService}. All tcp transport
  * implementations must return server channels that adhere to the required method contracts.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface TcpServerChannel extends CloseableChannel {
 

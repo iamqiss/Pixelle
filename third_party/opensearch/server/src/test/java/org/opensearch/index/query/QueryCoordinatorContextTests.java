@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.plugins.SearchPipelinePlugin;
-import org.opensearch.search.pipeline.PipelinedRequest;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchPhaseResultsProcessor;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
-import org.opensearch.search.pipeline.SearchResponseProcessor;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.action.IndicesRequest;
+import org.density.action.search.SearchRequest;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.plugins.SearchPipelinePlugin;
+import org.density.search.pipeline.PipelinedRequest;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchPhaseResultsProcessor;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.search.pipeline.SearchRequestProcessor;
+import org.density.search.pipeline.SearchResponseProcessor;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 import org.junit.Before;
 
 import java.util.Collections;
@@ -35,7 +35,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class QueryCoordinatorContextTests extends OpenSearchTestCase {
+public class QueryCoordinatorContextTests extends DensityTestCase {
 
     private IndexNameExpressionResolver indexNameExpressionResolver;
 
@@ -56,7 +56,7 @@ public class QueryCoordinatorContextTests extends OpenSearchTestCase {
     private PipelinedRequest createDummyPipelinedRequest() {
         final Client client = mock(Client.class);
         final ThreadPool threadPool = mock(ThreadPool.class);
-        final ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        final ExecutorService executorService = DensityExecutors.newDirectExecutorService();
         when(threadPool.generic()).thenReturn(executorService);
         when(threadPool.executor(anyString())).thenReturn(executorService);
         final SearchPipelineService searchPipelineService = new SearchPipelineService(

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskListener;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Randomness;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskListener;
+import org.density.tasks.TaskManager;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,13 +70,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.action.support.PlainActionFuture.newFuture;
+import static org.density.action.support.PlainActionFuture.newFuture;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransportMultiSearchActionTests extends OpenSearchTestCase {
+public class TransportMultiSearchActionTests extends DensityTestCase {
 
     public void testParentTaskId() throws Exception {
         // Initialize dependencies of TransportMultiSearchAction
@@ -140,7 +140,7 @@ public class TransportMultiSearchActionTests extends OpenSearchTestCase {
             future.get();
             assertEquals(numSearchRequests, counter.get());
         } finally {
-            assertTrue(OpenSearchTestCase.terminate(threadPool));
+            assertTrue(DensityTestCase.terminate(threadPool));
         }
     }
 
@@ -247,7 +247,7 @@ public class TransportMultiSearchActionTests extends OpenSearchTestCase {
             assertThat(requests.size(), equalTo(numSearchRequests));
             assertThat(errorHolder.get(), nullValue());
         } finally {
-            assertTrue(OpenSearchTestCase.terminate(threadPool));
+            assertTrue(DensityTestCase.terminate(threadPool));
         }
     }
 
@@ -415,7 +415,7 @@ public class TransportMultiSearchActionTests extends OpenSearchTestCase {
             }
             assertTrue(cancelled);
         } finally {
-            assertTrue(OpenSearchTestCase.terminate(threadPool));
+            assertTrue(DensityTestCase.terminate(threadPool));
         }
     }
 }

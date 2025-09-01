@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,14 +26,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
-import org.opensearch.gradle.Version
+import org.density.gradle.Version
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 
-/** Configuration for an opensearch cluster, used for integration tests. */
+/** Configuration for an density cluster, used for integration tests. */
 class ClusterConfiguration {
 
     private final Project project
@@ -246,7 +246,7 @@ class ClusterConfiguration {
         plugins.put(name, mavenCoords)
     }
 
-    /** Add a module to the cluster. The project must be an opensearchplugin and have a single zip default artifact. */
+    /** Add a module to the cluster. The project must be an densityplugin and have a single zip default artifact. */
     @Input
     void module(Project moduleProject) {
         modules.add(moduleProject)
@@ -263,8 +263,8 @@ class ClusterConfiguration {
      */
     @Input
     void extraConfigFile(String path, Object sourceFile) {
-        if (path == 'opensearch.yml') {
-            throw new GradleException('Overwriting opensearch.yml is not allowed, add additional settings using cluster { setting "foo", "bar" }')
+        if (path == 'density.yml') {
+            throw new GradleException('Overwriting density.yml is not allowed, add additional settings using cluster { setting "foo", "bar" }')
         }
         extraConfigFiles.put(path, sourceFile)
     }

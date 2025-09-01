@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.settings.put;
+package org.density.action.admin.indices.settings.put;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.test.AbstractWireSerializingTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.support.IndicesOptions;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.util.CollectionUtils;
+import org.density.test.AbstractWireSerializingTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class UpdateSettingsRequestSerializationTests extends AbstractWireSeriali
     protected UpdateSettingsRequest mutateInstance(UpdateSettingsRequest request) {
         UpdateSettingsRequest mutation = copyRequest(request);
         List<Runnable> mutators = new ArrayList<>();
-        Supplier<TimeValue> timeValueSupplier = () -> TimeValue.parseTimeValue(OpenSearchTestCase.randomTimeValue(), "_setting");
+        Supplier<TimeValue> timeValueSupplier = () -> TimeValue.parseTimeValue(DensityTestCase.randomTimeValue(), "_setting");
         mutators.add(
             () -> mutation.clusterManagerNodeTimeout(randomValueOtherThan(request.clusterManagerNodeTimeout(), timeValueSupplier))
         );

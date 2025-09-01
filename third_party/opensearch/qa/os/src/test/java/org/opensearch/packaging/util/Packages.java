@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.packaging.util.Shell.Result;
+import org.density.packaging.util.Shell.Result;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,17 +46,17 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileDoesNotExist;
-import static org.opensearch.packaging.util.FileMatcher.Fileness.Directory;
-import static org.opensearch.packaging.util.FileMatcher.Fileness.File;
-import static org.opensearch.packaging.util.FileMatcher.file;
-import static org.opensearch.packaging.util.FileMatcher.p644;
-import static org.opensearch.packaging.util.FileMatcher.p660;
-import static org.opensearch.packaging.util.FileMatcher.p750;
-import static org.opensearch.packaging.util.FileMatcher.p755;
-import static org.opensearch.packaging.util.Platforms.isSysVInit;
-import static org.opensearch.packaging.util.Platforms.isSystemd;
-import static org.opensearch.packaging.util.ServerUtils.waitForOpenSearch;
+import static org.density.packaging.util.FileExistenceMatchers.fileDoesNotExist;
+import static org.density.packaging.util.FileMatcher.Fileness.Directory;
+import static org.density.packaging.util.FileMatcher.Fileness.File;
+import static org.density.packaging.util.FileMatcher.file;
+import static org.density.packaging.util.FileMatcher.p644;
+import static org.density.packaging.util.FileMatcher.p660;
+import static org.density.packaging.util.FileMatcher.p750;
+import static org.density.packaging.util.FileMatcher.p755;
+import static org.density.packaging.util.Platforms.isSysVInit;
+import static org.density.packaging.util.Platforms.isSystemd;
+import static org.density.packaging.util.ServerUtils.waitForDensity;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -68,8 +68,8 @@ public class Packages {
 
     private static final Logger logger = LogManager.getLogger(Packages.class);
 
-    public static final Path SYSVINIT_SCRIPT = Paths.get("/etc/init.d/opensearch");
-    public static final Path SYSTEMD_SERVICE = Paths.get("/usr/lib/systemd/system/opensearch.service");
+    public static final Path SYSVINIT_SCRIPT = Paths.get("/etc/init.d/density");
+    public static final Path SYSTEMD_SERVICE = Paths.get("/usr/lib/systemd/system/density.service");
 
     public static void assertInstalled(Distribution distribution) throws Exception {
         final Result status = packageStatus(distribution);
@@ -138,7 +138,7 @@ public class Packages {
 
     private static Result runPackageManager(Distribution distribution, Shell sh, PackageManagerCommand command) {
         final String distributionArg = command == PackageManagerCommand.QUERY || command == PackageManagerCommand.REMOVE
-            ? "opensearch"
+            ? "density"
             : distribution.path.toString();
 
         if (Platforms.isRPM()) {
@@ -178,53 +178,53 @@ public class Packages {
         verifyInstallation(installation, distribution, sh);
     }
 
-    private static void verifyInstallation(Installation opensearch, Distribution distribution, Shell sh) {
+    private static void verifyInstallation(Installation density, Distribution distribution, Shell sh) {
 
-        sh.run("id opensearch");
-        sh.run("getent group opensearch");
+        sh.run("id density");
+        sh.run("getent group density");
 
-        final Result passwdResult = sh.run("getent passwd opensearch");
+        final Result passwdResult = sh.run("getent passwd density");
         final Path homeDir = Paths.get(passwdResult.stdout.trim().split(":")[5]);
-        assertThat("opensearch user home directory must not exist", homeDir, fileDoesNotExist());
+        assertThat("density user home directory must not exist", homeDir, fileDoesNotExist());
 
-        Stream.of(opensearch.home, opensearch.plugins, opensearch.modules)
+        Stream.of(density.home, density.plugins, density.modules)
             .forEach(dir -> assertThat(dir, file(Directory, "root", "root", p755)));
 
-        Stream.of(opensearch.data, opensearch.logs).forEach(dir -> assertThat(dir, file(Directory, "opensearch", "opensearch", p750)));
+        Stream.of(density.data, density.logs).forEach(dir -> assertThat(dir, file(Directory, "density", "density", p750)));
 
         // we shell out here because java's posix file permission view doesn't support special modes
-        assertThat(opensearch.config, file(Directory, "root", "opensearch", p750));
-        assertThat(sh.run("find \"" + opensearch.config + "\" -maxdepth 0 -printf \"%m\"").stdout, containsString("750"));
+        assertThat(density.config, file(Directory, "root", "density", p750));
+        assertThat(sh.run("find \"" + density.config + "\" -maxdepth 0 -printf \"%m\"").stdout, containsString("750"));
 
-        final Path jvmOptionsDirectory = opensearch.config.resolve("jvm.options.d");
-        assertThat(jvmOptionsDirectory, file(Directory, "root", "opensearch", p750));
+        final Path jvmOptionsDirectory = density.config.resolve("jvm.options.d");
+        assertThat(jvmOptionsDirectory, file(Directory, "root", "density", p750));
         assertThat(sh.run("find \"" + jvmOptionsDirectory + "\" -maxdepth 0 -printf \"%m\"").stdout, containsString("750"));
 
-        Stream.of("opensearch.keystore", "opensearch.yml", "jvm.options", "log4j2.properties")
-            .forEach(configFile -> assertThat(opensearch.config(configFile), file(File, "root", "opensearch", p660)));
-        assertThat(opensearch.config(".opensearch.keystore.initial_md5sum"), file(File, "root", "opensearch", p644));
+        Stream.of("density.keystore", "density.yml", "jvm.options", "log4j2.properties")
+            .forEach(configFile -> assertThat(density.config(configFile), file(File, "root", "density", p660)));
+        assertThat(density.config(".density.keystore.initial_md5sum"), file(File, "root", "density", p644));
 
-        assertThat(sh.run("sudo -u opensearch " + opensearch.bin("opensearch-keystore") + " list").stdout, containsString("keystore.seed"));
+        assertThat(sh.run("sudo -u density " + density.bin("density-keystore") + " list").stdout, containsString("keystore.seed"));
 
-        Stream.of(opensearch.bin, opensearch.lib).forEach(dir -> assertThat(dir, file(Directory, "root", "root", p755)));
+        Stream.of(density.bin, density.lib).forEach(dir -> assertThat(dir, file(Directory, "root", "root", p755)));
 
-        Stream.of("opensearch", "opensearch-plugin", "opensearch-keystore", "opensearch-shard", "opensearch-shard")
-            .forEach(executable -> assertThat(opensearch.bin(executable), file(File, "root", "root", p755)));
+        Stream.of("density", "density-plugin", "density-keystore", "density-shard", "density-shard")
+            .forEach(executable -> assertThat(density.bin(executable), file(File, "root", "root", p755)));
 
-        Stream.of("NOTICE.txt", "README.md").forEach(doc -> assertThat(opensearch.home.resolve(doc), file(File, "root", "root", p644)));
+        Stream.of("NOTICE.txt", "README.md").forEach(doc -> assertThat(density.home.resolve(doc), file(File, "root", "root", p644)));
 
-        assertThat(opensearch.envFile, file(File, "root", "opensearch", p660));
+        assertThat(density.envFile, file(File, "root", "density", p660));
 
         if (distribution.packaging == Distribution.Packaging.RPM) {
-            assertThat(opensearch.home.resolve("LICENSE.txt"), file(File, "root", "root", p644));
+            assertThat(density.home.resolve("LICENSE.txt"), file(File, "root", "root", p644));
         } else {
-            Path copyrightDir = Paths.get(sh.run("readlink -f /usr/share/doc/opensearch").stdout.trim());
+            Path copyrightDir = Paths.get(sh.run("readlink -f /usr/share/doc/density").stdout.trim());
             assertThat(copyrightDir, file(Directory, "root", "root", p755));
             assertThat(copyrightDir.resolve("copyright"), file(File, "root", "root", p644));
         }
 
         if (isSystemd()) {
-            Stream.of(SYSTEMD_SERVICE, Paths.get("/usr/lib/tmpfiles.d/opensearch.conf"), Paths.get("/usr/lib/sysctl.d/opensearch.conf"))
+            Stream.of(SYSTEMD_SERVICE, Paths.get("/usr/lib/tmpfiles.d/density.conf"), Paths.get("/usr/lib/sysctl.d/density.conf"))
                 .forEach(confFile -> assertThat(confFile, file(File, "root", "root", p644)));
 
             final String sysctlExecutable = (distribution.packaging == Distribution.Packaging.RPM) ? "/usr/sbin/sysctl" : "/sbin/sysctl";
@@ -237,49 +237,49 @@ public class Packages {
     }
 
     /**
-     * Starts OpenSearch, without checking that startup is successful.
+     * Starts Density, without checking that startup is successful.
      */
-    public static Shell.Result runOpenSearchStartCommand(Shell sh) throws IOException {
+    public static Shell.Result runDensityStartCommand(Shell sh) throws IOException {
         if (isSystemd()) {
             sh.run("systemctl daemon-reload");
-            sh.run("systemctl enable opensearch.service");
-            sh.run("systemctl is-enabled opensearch.service");
-            return sh.runIgnoreExitCode("systemctl start opensearch.service");
+            sh.run("systemctl enable density.service");
+            sh.run("systemctl is-enabled density.service");
+            return sh.runIgnoreExitCode("systemctl start density.service");
         }
-        return sh.runIgnoreExitCode("service opensearch start");
+        return sh.runIgnoreExitCode("service density start");
     }
 
-    public static void assertOpenSearchStarted(Shell sh, Installation installation) throws Exception {
-        waitForOpenSearch(installation);
+    public static void assertDensityStarted(Shell sh, Installation installation) throws Exception {
+        waitForDensity(installation);
 
         if (isSystemd()) {
-            sh.run("systemctl is-active opensearch.service");
-            sh.run("systemctl status opensearch.service");
+            sh.run("systemctl is-active density.service");
+            sh.run("systemctl status density.service");
         } else {
-            sh.run("service opensearch status");
-        }
-    }
-
-    public static void stopOpenSearch(Shell sh) {
-        if (isSystemd()) {
-            sh.run("systemctl stop opensearch.service");
-        } else {
-            sh.run("service opensearch stop");
+            sh.run("service density status");
         }
     }
 
-    public static void restartOpenSearch(Shell sh, Installation installation) throws Exception {
+    public static void stopDensity(Shell sh) {
         if (isSystemd()) {
-            sh.run("systemctl restart opensearch.service");
+            sh.run("systemctl stop density.service");
         } else {
-            sh.run("service opensearch restart");
+            sh.run("service density stop");
         }
-        assertOpenSearchStarted(sh, installation);
+    }
+
+    public static void restartDensity(Shell sh, Installation installation) throws Exception {
+        if (isSystemd()) {
+            sh.run("systemctl restart density.service");
+        } else {
+            sh.run("service density restart");
+        }
+        assertDensityStarted(sh, installation);
     }
 
     /**
      * A small wrapper for retrieving only recent journald logs for the
-     * OpenSearch service. It works by creating a cursor for the logs
+     * Density service. It works by creating a cursor for the logs
      * when instantiated, and advancing that cursor when the {@code clear()}
      * method is called.
      */
@@ -288,7 +288,7 @@ public class Packages {
         private String cursor;
 
         /**
-         * Create a new wrapper for OpenSearch JournalD logs.
+         * Create a new wrapper for Density JournalD logs.
          * @param sh A shell with appropriate permissions.
          */
         public JournaldWrapper(Shell sh) {
@@ -298,19 +298,19 @@ public class Packages {
 
         /**
          * "Clears" the journaled messages by retrieving the latest cursor
-         * for OpenSearch logs and storing it in class state.
+         * for Density logs and storing it in class state.
          */
         public void clear() {
-            final String script = "sudo journalctl --unit=opensearch.service --lines=0 --show-cursor -o cat | sed -e 's/-- cursor: //'";
+            final String script = "sudo journalctl --unit=density.service --lines=0 --show-cursor -o cat | sed -e 's/-- cursor: //'";
             cursor = sh.run(script).stdout.trim();
         }
 
         /**
          * Retrieves all log messages coming after the stored cursor.
-         * @return Recent journald logs for the OpenSearch service.
+         * @return Recent journald logs for the Density service.
          */
         public Result getLogs() {
-            return sh.run("journalctl -u opensearch.service --after-cursor='" + this.cursor + "'");
+            return sh.run("journalctl -u density.service --after-cursor='" + this.cursor + "'");
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -63,7 +63,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SnapshotRequestConvertersTests extends OpenSearchTestCase {
+public class SnapshotRequestConvertersTests extends DensityTestCase {
 
     public void testGetRepositories() {
         Map<String, String> expectedParams = new HashMap<>();

@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.TriConsumer;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
+import org.density.common.TriConsumer;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -30,7 +30,7 @@ import java.util.Objects;
  * A configuration that tells aggregation how to retrieve data from index
  * in order to run a specific aggregation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BaseMultiValuesSourceFieldConfig implements Writeable, ToXContentObject {
     private final String fieldName;
@@ -157,7 +157,7 @@ public abstract class BaseMultiValuesSourceFieldConfig implements Writeable, ToX
     /**
      * Base builder for the multi values source field configuration
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder<C extends BaseMultiValuesSourceFieldConfig, B extends Builder<C, B>> {
         String fieldName;

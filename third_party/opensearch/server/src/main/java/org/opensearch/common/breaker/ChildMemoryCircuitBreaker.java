@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.breaker;
+package org.density.common.breaker;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.indices.breaker.BreakerSettings;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.indices.breaker.BreakerSettings;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Breaker that will check a parent's when incrementing
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ChildMemoryCircuitBreaker implements CircuitBreaker {
 
@@ -275,7 +275,7 @@ public class ChildMemoryCircuitBreaker implements CircuitBreaker {
     /**
      * Breaker limit and overhead info
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LimitAndOverhead {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search;
+package org.density.index.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CachingTokenFilter;
@@ -56,21 +56,21 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.QueryBuilder;
 import org.apache.lucene.util.graph.GraphTokenStreamFiniteStrings;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.lucene.search.SpanBooleanQueryRewriteWithMaxClause;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MatchOnlyTextFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.analysis.miscellaneous.DisableGraphAttribute;
-import org.opensearch.lucene.queries.ExtendedCommonTermsQuery;
+import org.density.DensityException;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.Queries;
+import org.density.common.lucene.search.SpanBooleanQueryRewriteWithMaxClause;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MatchOnlyTextFieldMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.analysis.miscellaneous.DisableGraphAttribute;
+import org.density.lucene.queries.ExtendedCommonTermsQuery;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,20 +80,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import static org.opensearch.common.lucene.search.Queries.newLenientFieldQuery;
-import static org.opensearch.common.lucene.search.Queries.newUnmappedFieldQuery;
+import static org.density.common.lucene.search.Queries.newLenientFieldQuery;
+import static org.density.common.lucene.search.Queries.newUnmappedFieldQuery;
 
 /**
  * Foundation match query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MatchQuery {
 
     /**
      * Type of the match
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type implements Writeable {
         /**
@@ -126,7 +126,7 @@ public class MatchQuery {
                     return type;
                 }
             }
-            throw new OpenSearchException("unknown serialized type [" + ord + "]");
+            throw new DensityException("unknown serialized type [" + ord + "]");
         }
 
         @Override
@@ -138,7 +138,7 @@ public class MatchQuery {
     /**
      * Query with zero terms
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ZeroTermsQuery implements Writeable {
         NONE(0),
@@ -160,7 +160,7 @@ public class MatchQuery {
                     return zeroTermsQuery;
                 }
             }
-            throw new OpenSearchException("unknown serialized type [" + ord + "]");
+            throw new DensityException("unknown serialized type [" + ord + "]");
         }
 
         @Override
@@ -537,7 +537,7 @@ public class MatchQuery {
                 if (source.hasAttribute(DisableGraphAttribute.class)) {
                     /*
                      * A {@link TokenFilter} in this {@link TokenStream} disabled the graph analysis to avoid
-                     * paths explosion. See {@link org.opensearch.index.analysis.ShingleTokenFilterFactory} for details.
+                     * paths explosion. See {@link org.density.index.analysis.ShingleTokenFilterFactory} for details.
                      */
                     setEnableGraphQueries(false);
                 }

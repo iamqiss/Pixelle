@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.settings;
+package org.density.action.admin.cluster.settings;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadRequest;
 
 /**
  * This request is specific to the REST client. {@link ClusterStateRequest}
  * is used on the transport layer.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterGetSettingsRequest extends ClusterManagerNodeReadRequest<ClusterGetSettingsRequest> {
     private boolean includeDefaults = false;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.functionscore;
+package org.density.search.functionscore;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.RandomScoreFunctionBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.ScoreAccessor;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.RandomScoreFunctionBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.ScoreAccessor;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 import org.hamcrest.CoreMatchers;
 
 import java.util.Arrays;
@@ -55,17 +55,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
-import static org.opensearch.script.MockScriptPlugin.NAME;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.fieldValueFactorFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.randomFunction;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
+import static org.density.script.MockScriptPlugin.NAME;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
@@ -75,7 +75,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class RandomScoreFunctionIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class RandomScoreFunctionIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public RandomScoreFunctionIT(Settings staticSettings) {
         super(staticSettings);

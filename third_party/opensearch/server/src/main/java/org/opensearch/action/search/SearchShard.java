@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.Nullable;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -42,7 +42,7 @@ import java.util.Objects;
  * A class that encapsulates the {@link ShardId} and the cluster alias
  * of a shard used during the search action.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchShard implements Comparable<SearchShard> {
     @Nullable

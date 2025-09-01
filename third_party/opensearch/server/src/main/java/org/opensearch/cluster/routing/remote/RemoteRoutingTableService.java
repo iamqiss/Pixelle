@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.remote;
+package org.density.cluster.routing.remote;
 
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.Diff;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.gateway.remote.ClusterMetadataManifest;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * A Service which provides APIs to upload and download routing table from remote store.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface RemoteRoutingTableService extends LifecycleComponent {
 

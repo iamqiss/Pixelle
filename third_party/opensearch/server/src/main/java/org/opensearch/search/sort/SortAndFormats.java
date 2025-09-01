@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.search.Sort;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.DocValueFormat;
+import org.density.cluster.metadata.DataStream;
+import org.density.common.annotation.PublicApi;
+import org.density.search.DocValueFormat;
 
 /**
  * Utility class to hold sort and doc value format instances
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SortAndFormats {

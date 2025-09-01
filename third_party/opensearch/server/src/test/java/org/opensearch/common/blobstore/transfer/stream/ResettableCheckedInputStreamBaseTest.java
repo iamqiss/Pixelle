@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer.stream;
+package org.density.common.blobstore.transfer.stream;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -17,7 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public abstract class ResettableCheckedInputStreamBaseTest extends OpenSearchTestCase {
+public abstract class ResettableCheckedInputStreamBaseTest extends DensityTestCase {
 
     private static final int TEST_FILE_SIZE_BYTES = 10;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,73 +26,73 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client;
+package org.density.transport.client;
 
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.usage.NodesUsageRequest;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresRequest;
-import org.opensearch.action.admin.indices.streamingingestion.pause.PauseIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.state.GetIngestionStateRequest;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.usage.NodesUsageRequest;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
+import org.density.action.admin.cluster.reroute.ClusterRerouteRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.shards.IndicesShardStoresRequest;
+import org.density.action.admin.indices.streamingingestion.pause.PauseIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.state.GetIngestionStateRequest;
+import org.density.action.admin.indices.upgrade.post.UpgradeRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.get.GetRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.pagination.PageParams;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchScrollRequest;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
 
 /**
  * A handy one stop shop for creating requests (make sure to import static this class).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Requests {
 
@@ -116,7 +116,7 @@ public class Requests {
      *
      * @param index The index name to index the request against
      * @return The index request
-     * @see Client#index(org.opensearch.action.index.IndexRequest)
+     * @see Client#index(org.density.action.index.IndexRequest)
      */
     public static IndexRequest indexRequest(String index) {
         return new IndexRequest(index);
@@ -128,7 +128,7 @@ public class Requests {
      *
      * @param index The index name to delete from
      * @return The delete request
-     * @see Client#delete(org.opensearch.action.delete.DeleteRequest)
+     * @see Client#delete(org.density.action.delete.DeleteRequest)
      */
     public static DeleteRequest deleteRequest(String index) {
         return new DeleteRequest(index);
@@ -147,7 +147,7 @@ public class Requests {
      *
      * @param index The index to get the JSON source from
      * @return The get request
-     * @see Client#get(org.opensearch.action.get.GetRequest)
+     * @see Client#get(org.density.action.get.GetRequest)
      */
     public static GetRequest getRequest(String index) {
         return new GetRequest(index);
@@ -155,11 +155,11 @@ public class Requests {
 
     /**
      * Creates a search request against one or more indices. Note, the search source must be set either using the
-     * actual JSON search source, or the {@link org.opensearch.search.builder.SearchSourceBuilder}.
+     * actual JSON search source, or the {@link org.density.search.builder.SearchSourceBuilder}.
      *
      * @param indices The indices to search against. Use {@code null} or {@code _all} to execute against all indices
      * @return The search request
-     * @see Client#search(org.opensearch.action.search.SearchRequest)
+     * @see Client#search(org.density.action.search.SearchRequest)
      */
     public static SearchRequest searchRequest(String... indices) {
         return new SearchRequest(indices);
@@ -170,7 +170,7 @@ public class Requests {
      *
      * @param scrollId The scroll id representing the scrollable search
      * @return The search scroll request
-     * @see Client#searchScroll(org.opensearch.action.search.SearchScrollRequest)
+     * @see Client#searchScroll(org.density.action.search.SearchScrollRequest)
      */
     public static SearchScrollRequest searchScrollRequest(String scrollId) {
         return new SearchScrollRequest(scrollId);

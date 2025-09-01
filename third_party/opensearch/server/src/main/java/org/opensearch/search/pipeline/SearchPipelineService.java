@@ -1,53 +1,53 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.UnicodeUtil;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.search.DeleteSearchPipelineRequest;
-import org.opensearch.action.search.PutSearchPipelineRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.metrics.OperationMetrics;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.plugins.SearchPipelinePlugin;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.ExceptionsHelper;
+import org.density.DensityParseException;
+import org.density.ResourceNotFoundException;
+import org.density.action.search.DeleteSearchPipelineRequest;
+import org.density.action.search.PutSearchPipelineRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.metrics.OperationMetrics;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.gateway.GatewayService;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.ingest.ConfigurationUtils;
+import org.density.plugins.SearchPipelinePlugin;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,14 +63,14 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_SEARCH_PIPELINE;
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_SEARCH_PIPELINE;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_SEARCH_PIPELINE;
+import static org.density.cluster.service.ClusterManagerTask.PUT_SEARCH_PIPELINE;
 
 /**
  * The main entry point for search pipelines. Handles CRUD operations and exposes the API to execute search pipelines
  * against requests and responses.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchPipelineService implements ClusterStateApplier, ReportingService<SearchPipelineInfo> {
 
@@ -164,7 +164,7 @@ public class SearchPipelineService implements ClusterStateApplier, ReportingServ
 
         try {
             innerUpdatePipelines(newSearchPipelineMetadata);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             logger.warn("failed to update search pipelines", e);
         }
     }
@@ -174,7 +174,7 @@ public class SearchPipelineService implements ClusterStateApplier, ReportingServ
 
         // Lazily initialize these variables in order to favour the most likely scenario that there are no pipeline changes:
         Map<String, PipelineHolder> newPipelines = null;
-        List<OpenSearchParseException> exceptions = null;
+        List<DensityParseException> exceptions = null;
         // Iterate over pipeline configurations in metadata and constructs a new pipeline if there is no pipeline
         // or the pipeline configuration has been modified
 
@@ -204,7 +204,7 @@ public class SearchPipelineService implements ClusterStateApplier, ReportingServ
                     newPipeline.copyMetrics(previous.pipeline);
                 }
             } catch (Exception e) {
-                OpenSearchParseException parseException = new OpenSearchParseException(
+                DensityParseException parseException = new DensityParseException(
                     "Error updating pipeline with id [" + newConfiguration.getId() + "]",
                     e
                 );

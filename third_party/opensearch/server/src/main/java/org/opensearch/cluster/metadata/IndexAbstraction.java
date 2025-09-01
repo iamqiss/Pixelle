@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.Strings;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.core.common.Strings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,15 +45,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.DataStream.getDefaultBackingIndexName;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_HIDDEN_SETTING;
+import static org.density.cluster.metadata.DataStream.getDefaultBackingIndexName;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_HIDDEN_SETTING;
 
 /**
  * An index abstraction is a reference to one or more concrete indices.
  * An index abstraction has a unique name and encapsulates all the  {@link IndexMetadata} instances it is pointing to.
  * Also depending on type it may refer to a single or many concrete indices and may or may not have a write index.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndexAbstraction {
@@ -105,7 +105,7 @@ public interface IndexAbstraction {
     /**
      * An index abstraction type.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     enum Type {
@@ -144,7 +144,7 @@ public interface IndexAbstraction {
     /**
      * Represents an concrete index and encapsulates its {@link IndexMetadata}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class Index implements IndexAbstraction {
 
@@ -199,7 +199,7 @@ public interface IndexAbstraction {
     /**
      * Represents an alias and groups all {@link IndexMetadata} instances sharing the same alias name together.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class Alias implements IndexAbstraction {
 
@@ -340,16 +340,16 @@ public interface IndexAbstraction {
     /**
      * A data stream.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     class DataStream implements IndexAbstraction {
 
-        private final org.opensearch.cluster.metadata.DataStream dataStream;
+        private final org.density.cluster.metadata.DataStream dataStream;
         private final List<IndexMetadata> dataStreamIndices;
         private final IndexMetadata writeIndex;
 
-        public DataStream(org.opensearch.cluster.metadata.DataStream dataStream, List<IndexMetadata> dataStreamIndices) {
+        public DataStream(org.density.cluster.metadata.DataStream dataStream, List<IndexMetadata> dataStreamIndices) {
             this.dataStream = dataStream;
             this.dataStreamIndices = List.copyOf(dataStreamIndices);
             this.writeIndex = dataStreamIndices.get(dataStreamIndices.size() - 1);
@@ -392,7 +392,7 @@ public interface IndexAbstraction {
             return false;
         }
 
-        public org.opensearch.cluster.metadata.DataStream getDataStream() {
+        public org.density.cluster.metadata.DataStream getDataStream() {
             return dataStream;
         }
     }

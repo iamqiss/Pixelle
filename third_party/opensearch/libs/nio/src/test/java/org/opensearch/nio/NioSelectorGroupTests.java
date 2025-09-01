@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.nio;
+package org.density.nio;
 
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedRunnable;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.function.Consumer;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
 import static org.mockito.Mockito.mock;
 
-public class NioSelectorGroupTests extends OpenSearchTestCase {
+public class NioSelectorGroupTests extends DensityTestCase {
 
     private NioSelectorGroup nioGroup;
 

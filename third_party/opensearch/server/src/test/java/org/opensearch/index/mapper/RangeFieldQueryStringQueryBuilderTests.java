@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.DoubleRange;
 import org.apache.lucene.document.FloatRange;
@@ -42,16 +42,16 @@ import org.apache.lucene.document.SortedNumericDocValuesField;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryStringQueryBuilder;
-import org.opensearch.lucene.queries.BinaryDocValuesRangeQuery;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.network.InetAddresses;
+import org.density.common.time.DateMathParser;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryStringQueryBuilder;
+import org.density.lucene.queries.BinaryDocValuesRangeQuery;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;

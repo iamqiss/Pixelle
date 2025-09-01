@@ -1,51 +1,51 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BatchRunnableExecutor;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.TimeoutAwareRunnable;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.store.ShardAttributes;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataHelper;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BatchRunnableExecutor;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.TimeoutAwareRunnable;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.index.store.Store;
+import org.density.indices.store.ShardAttributes;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
+import org.density.indices.store.TransportNodesListShardStoreMetadataHelper;
+import org.density.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +67,7 @@ import java.util.stream.StreamSupport;
 /**
  * Allocator for the gateway to assign batch of shards.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardsBatchGatewayAllocator implements ExistingShardsAllocator {
 

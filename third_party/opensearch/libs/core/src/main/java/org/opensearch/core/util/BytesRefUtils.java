@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.util;
+package org.density.core.util;
 
 import org.apache.lucene.util.BitUtil;
 import org.apache.lucene.util.BytesRef;
@@ -43,7 +43,7 @@ import java.util.Comparator;
 /**
  * Utilities for sorting Lucene {@link BytesRefArray}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BytesRefUtils {
     public static void sort(final BytesRefArray bytes, final int[] indices) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Randomness;
-import org.opensearch.index.VersionType;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.StreamsUtils;
+import org.density.DensityParseException;
+import org.density.common.Randomness;
+import org.density.index.VersionType;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
+import org.density.test.DensityTestCase;
+import org.density.test.StreamsUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -62,7 +62,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
+public class GeoIpProcessorFactoryTests extends DensityTestCase {
 
     private static Map<String, DatabaseReaderLazyLoader> databaseReaders;
 
@@ -187,7 +187,7 @@ public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
         asnOnlyProperties.remove(GeoIpProcessor.Property.IP);
         String asnProperty = RandomPicks.randomFrom(Randomness.get(), asnOnlyProperties).toString();
         config.put("properties", Collections.singletonList(asnProperty));
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(
             e.getMessage(),
             equalTo(
@@ -207,7 +207,7 @@ public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
         cityOnlyProperties.remove(GeoIpProcessor.Property.IP);
         String cityProperty = RandomPicks.randomFrom(Randomness.get(), cityOnlyProperties).toString();
         config.put("properties", Collections.singletonList(cityProperty));
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(
             e.getMessage(),
             equalTo("[properties] illegal property value [" + cityProperty + "]. valid values are [IP, ASN, ORGANIZATION_NAME, NETWORK]")
@@ -220,7 +220,7 @@ public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("field", "_field");
         config.put("database_file", "does-not-exist.mmdb");
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[database_file] database file [does-not-exist.mmdb] doesn't exist"));
     }
 
@@ -254,7 +254,7 @@ public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config1 = new HashMap<>();
         config1.put("field", "_field");
         config1.put("properties", Collections.singletonList("invalid"));
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config1));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config1));
         assertThat(
             e.getMessage(),
             equalTo(
@@ -266,7 +266,7 @@ public class GeoIpProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config2 = new HashMap<>();
         config2.put("field", "_field");
         config2.put("properties", "invalid");
-        e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config2));
+        e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config2));
         assertThat(e.getMessage(), equalTo("[properties] property isn't a list, but of type [java.lang.String]"));
     }
 

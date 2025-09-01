@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.resolve;
+package org.density.action.admin.indices.resolve;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.Request;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedAlias;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.TransportAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexAbstractionResolver;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.Strings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.Request;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedAlias;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedDataStream;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.ResolvedIndex;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.TransportAction;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexAbstractionResolver;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.Strings;
+import org.density.test.DensityTestCase;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -65,13 +65,13 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.oneOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-public class ResolveIndexTests extends OpenSearchTestCase {
+public class ResolveIndexTests extends DensityTestCase {
 
     private final Object[][] indices = new Object[][] {
         // name, isClosed, isHidden, isFrozen, dataStream, aliases

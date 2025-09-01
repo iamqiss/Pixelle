@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterState.Custom;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.repositories.blobstore.ChecksumWritableBlobStoreFormat;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterState.Custom;
+import org.density.common.io.Streams;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.BlobPathParameters;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.compress.Compressor;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.repositories.blobstore.ChecksumWritableBlobStoreFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTES_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_EPHEMERAL_PATH_TOKEN;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTES_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_EPHEMERAL_PATH_TOKEN;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
 
 /**
  * Wrapper class for uploading/downloading {@link Custom} to/from remote blob store

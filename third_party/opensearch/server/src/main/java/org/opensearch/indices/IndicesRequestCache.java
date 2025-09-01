@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,39 +38,39 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.LoadAwareCacheLoader;
-import org.opensearch.common.cache.RemovalListener;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.common.cache.policy.CachedQueryResult;
-import org.opensearch.common.cache.serializer.BytesReferenceSerializer;
-import org.opensearch.common.cache.service.CacheService;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.cache.store.config.CacheConfig;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.RatioValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityParseException;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedSupplier;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.LoadAwareCacheLoader;
+import org.density.common.cache.RemovalListener;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.common.cache.policy.CachedQueryResult;
+import org.density.common.cache.serializer.BytesReferenceSerializer;
+import org.density.common.cache.service.CacheService;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.cache.store.config.CacheConfig;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.RatioValue;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.index.shard.IndexShard;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -89,7 +89,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.ToLongBiFunction;
 
-import static org.opensearch.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
+import static org.density.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
 
 /**
  * The indices request cache allows to cache a shard level request stage responses, helping with improving
@@ -104,7 +104,7 @@ import static org.opensearch.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL
  * There are still several TODOs left in this class, some easily addressable, some more complex, but the support
  * is functional.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IndicesRequestCache implements RemovalListener<ICacheKey<IndicesRequestCache.Key>, BytesReference>, Closeable {
 
@@ -127,7 +127,7 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
 
     /**
      * If pluggable caching is off, or pluggable caching is on but a store name isn't specified, this setting determines the cache size.
-     * Otherwise, the implementation-specific size setting like indices.requests.cache.opensearch_onheap.size is used instead.
+     * Otherwise, the implementation-specific size setting like indices.requests.cache.density_onheap.size is used instead.
      *
      * Deprecated; once pluggable caching is no longer behind a feature flag (likely in 2.19), this setting will no longer have any effect.
      */
@@ -311,9 +311,9 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
         BytesReference cacheKey
     ) throws Exception {
         assert reader.getReaderCacheHelper() != null;
-        assert reader.getReaderCacheHelper() instanceof OpenSearchDirectoryReader.DelegatingCacheHelper;
+        assert reader.getReaderCacheHelper() instanceof DensityDirectoryReader.DelegatingCacheHelper;
 
-        OpenSearchDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (OpenSearchDirectoryReader.DelegatingCacheHelper) reader
+        DensityDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (DensityDirectoryReader.DelegatingCacheHelper) reader
             .getReaderCacheHelper();
         String readerCacheKeyId = delegatingCacheHelper.getDelegatingCacheKey().getId();
         assert readerCacheKeyId != null;
@@ -328,7 +328,7 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
             if (!registeredClosedListeners.containsKey(cleanupKey)) {
                 Boolean previous = registeredClosedListeners.putIfAbsent(cleanupKey, Boolean.TRUE);
                 if (previous == null) {
-                    OpenSearchDirectoryReader.addReaderCloseListener(reader, cleanupKey);
+                    DensityDirectoryReader.addReaderCloseListener(reader, cleanupKey);
                 }
             }
             cacheCleanupManager.updateStaleCountOnCacheInsert(cleanupKey);
@@ -345,8 +345,8 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
      * @param cacheKey the cache key to invalidate
      */
     void invalidate(IndicesService.IndexShardCacheEntity cacheEntity, DirectoryReader reader, BytesReference cacheKey) {
-        assert reader.getReaderCacheHelper() instanceof OpenSearchDirectoryReader.DelegatingCacheHelper;
-        OpenSearchDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (OpenSearchDirectoryReader.DelegatingCacheHelper) reader
+        assert reader.getReaderCacheHelper() instanceof DensityDirectoryReader.DelegatingCacheHelper;
+        DensityDirectoryReader.DelegatingCacheHelper delegatingCacheHelper = (DensityDirectoryReader.DelegatingCacheHelper) reader
             .getReaderCacheHelper();
         String readerCacheKeyId = delegatingCacheHelper.getDelegatingCacheKey().getId();
 
@@ -357,7 +357,7 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
     /**
      * Loader for the request cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Loader implements LoadAwareCacheLoader<ICacheKey<Key>, BytesReference> {
 
@@ -425,7 +425,7 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
     /**
      * Unique key for the cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Key implements Accountable, Writeable {
         public final ShardId shardId; // use as identity equality
@@ -925,18 +925,18 @@ public final class IndicesRequestCache implements RemovalListener<ICacheKey<Indi
      * Validates the staleness setting for the cache cleanup threshold.
      *
      * <p>This method checks if the provided staleness threshold is a valid percentage or a valid double value.
-     * If the staleness threshold is not valid, it throws an OpenSearchParseException.
+     * If the staleness threshold is not valid, it throws an DensityParseException.
      *
      * @param staleThreshold The staleness threshold to validate.
      * @return The validated staleness threshold.
-     * @throws OpenSearchParseException If the staleness threshold is not a valid percentage or double value.
+     * @throws DensityParseException If the staleness threshold is not a valid percentage or double value.
      *
      * <p>package private for testing
      */
     static String validateStalenessSetting(String staleThreshold) {
         try {
             RatioValue.parseRatioValue(staleThreshold);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             e.addSuppressed(e);
             throw e;
         }

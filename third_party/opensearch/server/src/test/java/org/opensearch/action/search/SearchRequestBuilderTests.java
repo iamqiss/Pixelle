@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.DensityClient;
 
 import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class SearchRequestBuilderTests extends OpenSearchTestCase {
+public class SearchRequestBuilderTests extends DensityTestCase {
 
     private SearchRequestBuilder createBuilder() {
-        OpenSearchClient client = Mockito.mock(OpenSearchClient.class);
+        DensityClient client = Mockito.mock(DensityClient.class);
         return new SearchRequestBuilder(client, SearchAction.INSTANCE);
     }
 

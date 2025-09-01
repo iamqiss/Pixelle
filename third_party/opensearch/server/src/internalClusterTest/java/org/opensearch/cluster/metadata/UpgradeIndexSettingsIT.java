@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.test.DensitySingleNodeTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class UpgradeIndexSettingsIT extends OpenSearchSingleNodeTestCase {
+public class UpgradeIndexSettingsIT extends DensitySingleNodeTestCase {
 
     @Override
     protected boolean forbidPrivateIndexSettings() {

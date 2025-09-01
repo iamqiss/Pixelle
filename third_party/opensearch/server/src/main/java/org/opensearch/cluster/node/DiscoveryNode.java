@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.Version;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VerifiableWriteable;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.node.Node;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.Version;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VerifiableWriteable;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.node.Node;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -62,15 +62,15 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.node.NodeRoleSettings.NODE_ROLES_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_NODE_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isClusterStateRepoConfigured;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRoutingTableRepoConfigured;
+import static org.density.node.NodeRoleSettings.NODE_ROLES_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_NODE_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isClusterStateRepoConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRoutingTableRepoConfigured;
 
 /**
  * A discovery node represents a node that is part of the cluster.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DiscoveryNode implements VerifiableWriteable, ToXContentFragment {
@@ -145,7 +145,7 @@ public class DiscoveryNode implements VerifiableWriteable, ToXContentFragment {
      * Creates a new {@link DiscoveryNode}
      * <p>
      * <b>Note:</b> if the version of the node is unknown {@link Version#minimumCompatibilityVersion()} should be used for the current
-     * version. it corresponds to the minimum version this opensearch version can communicate with. If a higher version is used
+     * version. it corresponds to the minimum version this density version can communicate with. If a higher version is used
      * the node might not be able to communicate with the remote node. After initial handshakes node versions will be discovered
      * and updated.
      * </p>
@@ -162,7 +162,7 @@ public class DiscoveryNode implements VerifiableWriteable, ToXContentFragment {
      * Creates a new {@link DiscoveryNode}
      * <p>
      * <b>Note:</b> if the version of the node is unknown {@link Version#minimumCompatibilityVersion()} should be used for the current
-     * version. it corresponds to the minimum version this opensearch version can communicate with. If a higher version is used
+     * version. it corresponds to the minimum version this density version can communicate with. If a higher version is used
      * the node might not be able to communicate with the remote node. After initial handshakes node versions will be discovered
      * and updated.
      * </p>
@@ -187,7 +187,7 @@ public class DiscoveryNode implements VerifiableWriteable, ToXContentFragment {
      * Creates a new {@link DiscoveryNode}
      * <p>
      * <b>Note:</b> if the version of the node is unknown {@link Version#minimumCompatibilityVersion()} should be used for the current
-     * version. it corresponds to the minimum version this opensearch version can communicate with. If a higher version is used
+     * version. it corresponds to the minimum version this density version can communicate with. If a higher version is used
      * the node might not be able to communicate with the remote node. After initial handshakes node versions will be discovered
      * and updated.
      * </p>
@@ -238,7 +238,7 @@ public class DiscoveryNode implements VerifiableWriteable, ToXContentFragment {
      * Creates a new {@link DiscoveryNode}.
      * <p>
      * <b>Note:</b> if the version of the node is unknown {@link Version#minimumCompatibilityVersion()} should be used for the current
-     * version. it corresponds to the minimum version this opensearch version can communicate with. If a higher version is used
+     * version. it corresponds to the minimum version this density version can communicate with. If a higher version is used
      * the node might not be able to communicate with the remote node. After initial handshakes node versions will be discovered
      * and updated.
      * </p>

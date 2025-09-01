@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
-import org.opensearch.search.aggregations.AggregationCollectorManager;
-import org.opensearch.search.query.EarlyTerminatingListener;
-import org.opensearch.search.query.ReduceableSearchResult;
+import org.density.search.aggregations.AggregationCollectorManager;
+import org.density.search.query.EarlyTerminatingListener;
+import org.density.search.query.ReduceableSearchResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Collector Manager for internal agg profiling
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalProfileCollectorManager
     implements

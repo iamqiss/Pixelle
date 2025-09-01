@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.action.admin.indices.get.GetIndexRequest;
-import org.opensearch.action.admin.indices.get.GetIndexResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.fieldcaps.FieldCapabilities;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.action.admin.indices.get.GetIndexRequest;
+import org.density.action.admin.indices.get.GetIndexResponse;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsResponse;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.fieldcaps.FieldCapabilities;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.indices.IndicesModule;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -58,11 +58,11 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.opensearch.cluster.metadata.MetadataTests.assertLeafs;
-import static org.opensearch.cluster.metadata.MetadataTests.assertMultiField;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.MetadataTests.assertLeafs;
+import static org.density.cluster.metadata.MetadataTests.assertMultiField;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class FieldFilterMapperPluginTests extends OpenSearchSingleNodeTestCase {
+public class FieldFilterMapperPluginTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {

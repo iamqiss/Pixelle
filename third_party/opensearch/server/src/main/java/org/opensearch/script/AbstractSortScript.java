@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.lucene.ScorerAware;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.DensityException;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.lucene.ScorerAware;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ import java.util.function.Function;
 /**
  * Base sort script
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AbstractSortScript implements ScorerAware {
 
@@ -110,7 +110,7 @@ abstract class AbstractSortScript implements ScorerAware {
         try {
             return scorer.score();
         } catch (IOException e) {
-            throw new OpenSearchException("couldn't lookup score", e);
+            throw new DensityException("couldn't lookup score", e);
         }
     }
 

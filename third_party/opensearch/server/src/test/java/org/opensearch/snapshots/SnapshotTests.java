@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 /**
  * Tests for the {@link Snapshot} class.
  */
-public class SnapshotTests extends OpenSearchTestCase {
+public class SnapshotTests extends DensityTestCase {
 
     public void testSnapshotEquals() {
         final SnapshotId snapshotId = new SnapshotId("snap", UUIDs.randomBase64UUID());

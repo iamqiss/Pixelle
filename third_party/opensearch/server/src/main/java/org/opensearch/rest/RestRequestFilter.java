@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -47,9 +47,9 @@ import java.util.Set;
 
 /**
  * Identifies an object that supplies a filter for the content of a {@link RestRequest}. This interface should be implemented by a
- * {@link org.opensearch.rest.RestHandler} that expects there will be sensitive content in the body of the request such as a password
+ * {@link org.density.rest.RestHandler} that expects there will be sensitive content in the body of the request such as a password
  *
- * @opensearch.api
+ * @density.api
  */
 public interface RestRequestFilter {
 
@@ -82,7 +82,7 @@ public interface RestRequestFilter {
                             XContentBuilder xContentBuilder = XContentBuilder.builder(result.v1().xContent()).map(transformedSource);
                             filteredBytes = BytesReference.bytes(xContentBuilder);
                         } catch (IOException e) {
-                            throw new OpenSearchException("failed to parse request", e);
+                            throw new DensityException("failed to parse request", e);
                         }
                     }
                     return filteredBytes;

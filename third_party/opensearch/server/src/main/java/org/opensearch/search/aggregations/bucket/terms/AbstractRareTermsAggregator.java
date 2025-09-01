@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.common.util.SetBackedScalingCuckooFilter;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.bucket.DeferableBucketAggregator;
-import org.opensearch.search.aggregations.bucket.DeferringBucketCollector;
-import org.opensearch.search.aggregations.bucket.MergingBucketsDeferringCollector;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregator;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.util.SetBackedScalingCuckooFilter;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.bucket.DeferableBucketAggregator;
+import org.density.search.aggregations.bucket.DeferringBucketCollector;
+import org.density.search.aggregations.bucket.MergingBucketsDeferringCollector;
+import org.density.search.aggregations.bucket.nested.NestedAggregator;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -50,7 +50,7 @@ import java.util.Random;
 /**
  * Base class to Aggregate all docs that contain rare terms
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractRareTermsAggregator extends DeferableBucketAggregator {
 

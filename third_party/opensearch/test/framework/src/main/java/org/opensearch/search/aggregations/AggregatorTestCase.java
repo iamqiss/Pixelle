@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.BinaryDocValuesField;
@@ -62,94 +62,94 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.search.AssertingIndexSearcher;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.TriConsumer;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.cache.bitset.BitsetFilterCache.Listener;
-import org.opensearch.index.cache.query.DisabledQueryCache;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.CompositeMappedFieldType;
-import org.opensearch.index.mapper.ConstantKeywordFieldMapper;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DerivedFieldMapper;
-import org.opensearch.index.mapper.FieldAliasMapper;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.Mapper.BuilderContext;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MatchOnlyTextFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.ObjectMapper.Nested;
-import org.opensearch.index.mapper.RangeFieldMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.index.mapper.SemanticVersionFieldMapper;
-import org.opensearch.index.mapper.StarTreeMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.MultiBucketConsumerService.MultiBucketConsumer;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MetricsAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.subphase.FetchDocValuesPhase;
-import org.opensearch.search.fetch.subphase.FetchSourcePhase;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.startree.StarTreeQueryContext;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedConsumer;
+import org.density.common.TriConsumer;
+import org.density.common.TriFunction;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.network.NetworkAddress;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.cache.bitset.BitsetFilterCache.Listener;
+import org.density.index.cache.query.DisabledQueryCache;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.CompositeMappedFieldType;
+import org.density.index.mapper.ConstantKeywordFieldMapper;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DerivedFieldMapper;
+import org.density.index.mapper.FieldAliasMapper;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.Mapper.BuilderContext;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MatchOnlyTextFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.ObjectMapper.Nested;
+import org.density.index.mapper.RangeFieldMapper;
+import org.density.index.mapper.RangeType;
+import org.density.index.mapper.SemanticVersionFieldMapper;
+import org.density.index.mapper.StarTreeMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.indices.IndicesModule;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.SearchPlugin;
+import org.density.script.ScriptService;
+import org.density.search.SearchModule;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.MultiBucketConsumerService.MultiBucketConsumer;
+import org.density.search.aggregations.bucket.nested.NestedAggregationBuilder;
+import org.density.search.aggregations.metrics.MetricsAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator.PipelineTree;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.subphase.FetchDocValuesPhase;
+import org.density.search.fetch.subphase.FetchSourcePhase;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.startree.StarTreeQueryContext;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -174,7 +174,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.any;
@@ -188,7 +188,7 @@ import static org.mockito.Mockito.when;
  * Provides helpers for constructing and searching an {@link Aggregator} implementation based on a provided
  * {@link AggregationBuilder} instance.
  */
-public abstract class AggregatorTestCase extends OpenSearchTestCase {
+public abstract class AggregatorTestCase extends DensityTestCase {
     private static final String NESTEDFIELD_PREFIX = "nested_";
     private List<Releasable> releasables = new ArrayList<>();
     private static final String TYPE_NAME = "type";
@@ -928,7 +928,7 @@ public abstract class AggregatorTestCase extends OpenSearchTestCase {
     }
 
     protected static DirectoryReader wrapInMockESDirectoryReader(DirectoryReader directoryReader) throws IOException {
-        return OpenSearchDirectoryReader.wrap(directoryReader, new ShardId(new Index("_index", "_na_"), 0));
+        return DensityDirectoryReader.wrap(directoryReader, new ShardId(new Index("_index", "_na_"), 0));
     }
 
     /**

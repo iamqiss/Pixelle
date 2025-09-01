@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -51,7 +51,7 @@ public class WordDelimiterTokenFilterFactoryTests extends BaseWordDelimiterToken
      * Correct offset order when doing both parts and concatenation: PowerShot is a synonym of Power
      */
     public void testPartsAndCatenate() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             Settings.builder()
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .put("index.analysis.filter.my_word_delimiter.type", type)

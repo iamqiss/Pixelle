@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.highlight.Encoder;
 import org.apache.lucene.search.uhighlight.PassageFormatter;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedHighlighterAnalyzer;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter;
-import org.opensearch.search.fetch.FetchSubPhase.HitContext;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedHighlighterAnalyzer;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.search.uhighlight.CustomUnifiedHighlighter;
+import org.density.search.fetch.FetchSubPhase.HitContext;
 
 import java.io.IOException;
 import java.util.ArrayList;

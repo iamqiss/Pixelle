@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,22 +23,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Binder;
-import org.opensearch.common.inject.ConfigurationException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Binder;
+import org.density.common.inject.ConfigurationException;
 
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * A request to inject the static fields and methods of a type. Requests are created
- * explicitly in a module using {@link org.opensearch.common.inject.Binder#requestStaticInjection(Class[])
+ * explicitly in a module using {@link org.density.common.inject.Binder#requestStaticInjection(Class[])
  * requestStaticInjection()} statements:
  * <pre>
  *     requestStaticInjection(MyLegacyService.class);</pre>
@@ -46,7 +46,7 @@ import java.util.Set;
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class StaticInjectionRequest implements Element {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,63 +26,63 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.TransportBulkAction;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.cbor.CborXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.VersionType;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.IngestPlugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityParseException;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.TransportBulkAction;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.metrics.OperationStats;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.cbor.CborXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.VersionType;
+import org.density.indices.IndicesService;
+import org.density.plugins.IngestPlugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.test.MockLogAppender;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 
@@ -114,7 +114,7 @@ import reactor.util.annotation.NonNull;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.ingest.IngestService.NOOP_PIPELINE_NAME;
+import static org.density.ingest.IngestService.NOOP_PIPELINE_NAME;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -139,7 +139,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class IngestServiceTests extends OpenSearchSingleNodeTestCase {
+public class IngestServiceTests extends DensitySingleNodeTestCase {
 
     @Mock
     private static Processor.Factory mockSystemProcessorFactory;
@@ -164,7 +164,7 @@ public class IngestServiceTests extends OpenSearchSingleNodeTestCase {
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
         threadPool = mock(ThreadPool.class);
-        ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        ExecutorService executorService = DensityExecutors.newDirectExecutorService();
         when(threadPool.generic()).thenReturn(executorService);
         when(threadPool.executor(anyString())).thenReturn(executorService);
         when(mockSystemProcessorFactory.isSystemGenerated()).thenReturn(true);
@@ -779,13 +779,13 @@ public class IngestServiceTests extends OpenSearchSingleNodeTestCase {
         ingestInfos.put(node1, new IngestInfo(Arrays.asList(new ProcessorInfo("set"), new ProcessorInfo("remove"))));
         ingestInfos.put(node2, new IngestInfo(Arrays.asList(new ProcessorInfo("set"))));
 
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> ingestService.validatePipeline(ingestInfos, putRequest)
         );
         assertEquals("Processor type [remove] is not installed on node [" + node2 + "]", e.getMessage());
-        assertEquals("remove", e.getMetadata("opensearch.processor_type").get(0));
-        assertEquals("tag2", e.getMetadata("opensearch.processor_tag").get(0));
+        assertEquals("remove", e.getMetadata("density.processor_type").get(0));
+        assertEquals("tag2", e.getMetadata("density.processor_tag").get(0));
 
         ingestInfos.put(node2, new IngestInfo(Arrays.asList(new ProcessorInfo("set"), new ProcessorInfo("remove"))));
         ingestService.validatePipeline(ingestInfos, putRequest);
@@ -2431,7 +2431,7 @@ public class IngestServiceTests extends OpenSearchSingleNodeTestCase {
     ) {
         Client client = mock(Client.class);
         ThreadPool threadPool = mock(ThreadPool.class);
-        ExecutorService executorService = OpenSearchExecutors.newDirectExecutorService();
+        ExecutorService executorService = DensityExecutors.newDirectExecutorService();
         when(threadPool.generic()).thenReturn(executorService);
         when(threadPool.executor(anyString())).thenReturn(executorService);
         ClusterService clusterService = mock(ClusterService.class);

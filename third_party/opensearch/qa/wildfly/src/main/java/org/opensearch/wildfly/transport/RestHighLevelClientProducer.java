@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.wildfly.transport;
+package org.density.wildfly.transport;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
 
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -48,13 +48,13 @@ public final class RestHighLevelClientProducer {
 
     @Produces
     public RestHighLevelClient createRestHighLevelClient() throws URISyntaxException {
-        String httpUri = System.getProperty("opensearch.uri");
+        String httpUri = System.getProperty("density.uri");
 
         return new RestHighLevelClient(RestClient.builder(HttpHost.create(httpUri)));
     }
 
     @SuppressForbidden(reason = "get path not configured in environment")
-    private Path getPath(final String OpenSearchProperties) {
-        return PathUtils.get(OpenSearchProperties);
+    private Path getPath(final String DensityProperties) {
+        return PathUtils.get(DensityProperties);
     }
 }

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
@@ -22,73 +22,73 @@ import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.index.StandardDirectoryReader;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.CreatePitAction;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitAction;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.PitTestsUtil;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.action.termvectors.TermVectorsRequestBuilder;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.Preference;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.CancelAllocationCommand;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.NRTReplicationReaderManager;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.recovery.FileChunkRequest;
-import org.opensearch.indices.replication.checkpoint.PublishCheckpointAction;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.internal.PitReaderContext;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.cluster.stats.ClusterStatsResponse;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.CreatePitAction;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitAction;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.PitTestsUtil;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.action.termvectors.TermVectorsRequestBuilder;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.Preference;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.CancelAllocationCommand;
+import org.density.common.action.ActionFuture;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexModule;
+import org.density.index.ReplicationStats;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.NRTReplicationReaderManager;
+import org.density.index.shard.IndexShard;
+import org.density.indices.recovery.FileChunkRequest;
+import org.density.indices.replication.checkpoint.PublishCheckpointAction;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.node.NodeClosedException;
+import org.density.search.SearchService;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.internal.PitReaderContext;
+import org.density.search.sort.SortOrder;
+import org.density.test.BackgroundIndexer;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportService;
+import org.density.transport.client.Requests;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -107,24 +107,24 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.action.search.PitTestsUtil.assertSegments;
-import static org.opensearch.action.search.SearchContextId.decode;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.indices.replication.SegmentReplicationTarget.REPLICATION_PREFIX;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.action.search.PitTestsUtil.assertSegments;
+import static org.density.action.search.SearchContextId.decode;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.indices.replication.SegmentReplicationTarget.REPLICATION_PREFIX;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SegmentReplicationIT extends SegmentReplicationBaseIT {
 
     @Before
@@ -170,7 +170,7 @@ public class SegmentReplicationIT extends SegmentReplicationBaseIT {
             (handler, request, channel, task) -> {
                 if (mockReplicaReceivePublishCheckpointException.get()) {
                     logger.info("mock remote transport exception");
-                    throw new RemoteTransportException("mock remote transport exception", new OpenSearchRejectedExecutionException());
+                    throw new RemoteTransportException("mock remote transport exception", new DensityRejectedExecutionException());
                 }
                 logger.info("replica receive publish checkpoint request");
                 handler.messageReceived(request, channel, task);
@@ -411,7 +411,7 @@ public class SegmentReplicationIT extends SegmentReplicationBaseIT {
         waitForSearchableDocs(INDEX_NAME, 2 * searchCount, List.of(primary, replica));
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testMultipleShards() throws Exception {
         Settings indexSettings = Settings.builder()
             .put(super.indexSettings())
@@ -765,7 +765,7 @@ public class SegmentReplicationIT extends SegmentReplicationBaseIT {
         verifyStoreContent();
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testDeleteOperations() throws Exception {
         final String nodeA = internalCluster().startDataOnlyNode();
         final String nodeB = internalCluster().startDataOnlyNode();
@@ -963,7 +963,7 @@ public class SegmentReplicationIT extends SegmentReplicationBaseIT {
         }
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testReplicaHasDiffFilesThanPrimary() throws Exception {
         final String primaryNode = internalCluster().startDataOnlyNode();
         createIndex(INDEX_NAME, Settings.builder().put(indexSettings()).put(IndexMetadata.SETTING_NUMBER_OF_REPLICAS, 1).build());
@@ -1410,7 +1410,7 @@ public class SegmentReplicationIT extends SegmentReplicationBaseIT {
         );
         try (final Engine.Searcher searcher = pitReaderContext.acquireSearcher("test")) {
             final StandardDirectoryReader standardDirectoryReader = NRTReplicationReaderManager.unwrapStandardReader(
-                (OpenSearchDirectoryReader) searcher.getDirectoryReader()
+                (DensityDirectoryReader) searcher.getDirectoryReader()
             );
             final SegmentInfos infos = standardDirectoryReader.getSegmentInfos();
             snapshottedSegments = infos.files(false);

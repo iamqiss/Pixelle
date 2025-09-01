@@ -1,7 +1,7 @@
 {
   "update":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/document-apis/update-document/",
+      "url":"https://density.org/docs/latest/api-reference/document-apis/update-document/",
       "description":"Updates a document with a script or partial document."
     },
     "stability":"stable",

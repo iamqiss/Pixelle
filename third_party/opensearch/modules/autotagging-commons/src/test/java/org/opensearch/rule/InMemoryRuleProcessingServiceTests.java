@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.rule.attribute_extractor.AttributeExtractor;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.AutoTaggingRegistry;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.storage.AttributeValueStoreFactory;
-import org.opensearch.rule.storage.DefaultAttributeValueStore;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.rule.attribute_extractor.AttributeExtractor;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.AutoTaggingRegistry;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.storage.AttributeValueStoreFactory;
+import org.density.rule.storage.DefaultAttributeValueStore;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class InMemoryRuleProcessingServiceTests extends OpenSearchTestCase {
+public class InMemoryRuleProcessingServiceTests extends DensityTestCase {
     InMemoryRuleProcessingService sut;
 
     public void setUp() throws Exception {

@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.common;
+package org.density.core.common;
 
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,14 +34,14 @@ import java.util.TreeSet;
 import java.util.function.Supplier;
 
 import static java.util.Collections.unmodifiableSet;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.common.util.set.Sets.newHashSet;
 
 /**
  * String utility class.
  * <p>
  * TODO replace Strings in :server
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Strings {
     public static final String UNKNOWN_UUID_VALUE = "_na_";
@@ -741,7 +741,7 @@ public class Strings {
                 builder.endObject();
                 return builder.toString();
             } catch (IOException e2) {
-                throw new OpenSearchException("cannot generate error message for deserialization", e);
+                throw new DensityException("cannot generate error message for deserialization", e);
             }
         }
     }

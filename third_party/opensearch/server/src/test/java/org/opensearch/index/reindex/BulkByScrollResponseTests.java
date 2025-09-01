@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.BulkByScrollTask.Status;
-import org.opensearch.test.AbstractXContentTestCase;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
+import org.density.DensityException;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.BulkByScrollTask.Status;
+import org.density.test.AbstractXContentTestCase;
+import org.density.transport.client.transport.NoNodeAvailableException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ import java.util.Map;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMillis;
 import static org.apache.lucene.tests.util.TestUtil.randomSimpleString;
 
 public class BulkByScrollResponseTests extends AbstractXContentTestCase<BulkByScrollResponse> {
@@ -96,9 +96,9 @@ public class BulkByScrollResponseTests extends AbstractXContentTestCase<BulkBySc
             shardId = randomInt();
             nodeId = usually() ? randomAlphaOfLength(5) : null;
         }
-        OpenSearchException exception = randomFrom(
+        DensityException exception = randomFrom(
             new ResourceNotFoundException("bar"),
-            new OpenSearchException("foo"),
+            new DensityException("foo"),
             new NoNodeAvailableException("baz")
         );
         return singletonList(new ScrollableHitSource.SearchFailure(exception, index, shardId, nodeId));

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.reload;
+package org.density.action.admin.cluster.node.reload;
 
-import org.opensearch.action.support.nodes.BaseNodesRequest;
-import org.opensearch.common.CharArrays;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.action.support.nodes.BaseNodesRequest;
+import org.density.common.CharArrays;
+import org.density.common.Nullable;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.settings.SecureString;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ import java.util.Arrays;
 /**
  * Request for a reload secure settings action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodesReloadSecureSettingsRequest extends BaseNodesRequest<NodesReloadSecureSettingsRequest> {
 

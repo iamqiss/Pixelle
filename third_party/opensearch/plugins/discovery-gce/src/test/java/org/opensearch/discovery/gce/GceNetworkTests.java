@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
-import org.opensearch.cloud.gce.network.GceNameResolver;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cloud.gce.network.GceNameResolver;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.containsString;
  * Test for GCE network.host settings.
  * Related to https://github.com/elastic/elasticsearch/issues/13605
  */
-public class GceNetworkTests extends OpenSearchTestCase {
+public class GceNetworkTests extends DensityTestCase {
     /**
      * Test for network.host: _gce_
      */

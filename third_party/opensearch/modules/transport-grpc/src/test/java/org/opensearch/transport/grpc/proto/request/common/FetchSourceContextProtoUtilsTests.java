@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.protobufs.SourceConfig;
-import org.opensearch.protobufs.SourceConfigParam;
-import org.opensearch.protobufs.SourceFilter;
-import org.opensearch.protobufs.StringArray;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.Strings;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.SearchRequest;
+import org.density.protobufs.SourceConfig;
+import org.density.protobufs.SourceConfigParam;
+import org.density.protobufs.SourceFilter;
+import org.density.protobufs.StringArray;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.test.DensityTestCase;
 
-public class FetchSourceContextProtoUtilsTests extends OpenSearchTestCase {
+public class FetchSourceContextProtoUtilsTests extends DensityTestCase {
 
     public void testParseFromProtoRequestWithBoolValue() {
         // Create a BulkRequest with source as boolean

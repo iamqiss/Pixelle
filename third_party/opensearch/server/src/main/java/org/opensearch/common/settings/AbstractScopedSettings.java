@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.search.spell.LevenshteinDistance;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
+import org.density.ExceptionsHelper;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
  * A basic setting service that can be used for per-index and per-cluster settings.
  * This service offers transactional application of updates settings.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractScopedSettings {
 
@@ -469,7 +469,7 @@ public abstract class AbstractScopedSettings {
     /**
      * Adds a settings consumer.
      * <p>
-     * Note: Only settings registered in {@link org.opensearch.cluster.ClusterModule} can be changed dynamically.
+     * Note: Only settings registered in {@link org.density.cluster.ClusterModule} can be changed dynamically.
      * </p>
      */
     public synchronized <T> void addSettingsUpdateConsumer(Setting<T> setting, Consumer<T> consumer) {
@@ -634,7 +634,7 @@ public abstract class AbstractScopedSettings {
                     );
                 } else if (setting.isPrivateIndex()) {
                     throw new SettingsException(
-                        "can not update private setting [" + setting.getKey() + "]; this setting is managed by OpenSearch"
+                        "can not update private setting [" + setting.getKey() + "]; this setting is managed by Density"
                     );
                 }
             }
@@ -647,7 +647,7 @@ public abstract class AbstractScopedSettings {
      * @see Setting
      * @param <T> the type of the value of the setting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface SettingUpdater<T> {
 

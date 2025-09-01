@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -9,10 +9,10 @@
 /*
  * Based on code from the Apache Lucene project (https://github.com/apache/lucene) under the Apache License, version 2.0.
  * Copyright 2001-2022 The Apache Software Foundation
- * Modifications (C) OpenSearch Contributors. All Rights Reserved.
+ * Modifications (C) Density Contributors. All Rights Reserved.
  */
 
-package org.opensearch.index.codec.fuzzy;
+package org.density.index.codec.fuzzy;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,16 +20,16 @@ import org.apache.lucene.store.DataOutput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.Assertions;
+import org.density.common.CheckedSupplier;
+import org.density.common.util.io.IOUtils;
+import org.density.core.Assertions;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 /**
  * The code is based on Lucene's implementation of Bloom Filter.
- * It represents a subset of the Lucene implementation needed for OpenSearch use cases.
+ * It represents a subset of the Lucene implementation needed for Density use cases.
  * Since the Lucene implementation is marked experimental,
  * this aims to ensure we can provide a bwc implementation during upgrades.
  */

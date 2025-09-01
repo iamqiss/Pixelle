@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.common.Booleans;
+import org.density.common.util.ArrayUtils;
+import org.density.core.common.settings.SecureString;
 
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -46,15 +46,15 @@ import java.util.Set;
 /**
  * A secure setting.
  * <p>
- * This class allows access to settings from the OpenSearch keystore.
+ * This class allows access to settings from the Density keystore.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SecureSetting<T> extends Setting<T> {
 
     /** Determines whether legacy settings with sensitive values should be allowed. */
     private static final boolean ALLOW_INSECURE_SETTINGS = Booleans.parseBoolean(
-        System.getProperty("opensearch.allow_insecure_settings", "false")
+        System.getProperty("density.allow_insecure_settings", "false")
     );
 
     private static final Set<Property> ALLOWED_PROPERTIES = EnumSet.of(Property.Deprecated, Property.Consistent);
@@ -107,7 +107,7 @@ public abstract class SecureSetting<T> extends Setting<T> {
                     "Setting ["
                         + getKey()
                         + "] is a secure setting"
-                        + " and must be stored inside the OpenSearch keystore, but was found inside opensearch.yml"
+                        + " and must be stored inside the Density keystore, but was found inside density.yml"
                 );
             }
             return getFallback(settings);
@@ -169,7 +169,7 @@ public abstract class SecureSetting<T> extends Setting<T> {
 
     /**
      * A setting which contains a sensitive string, but usage is logged when found outside secure settings, regardless
-     * of the opensearch.allow_insecure_settings value. Typically. this is used when migrating old legacy settings
+     * of the density.allow_insecure_settings value. Typically. this is used when migrating old legacy settings
      * to secure variants while preserving existing functionality.
      * @see #insecureString(String)
      */
@@ -189,7 +189,7 @@ public abstract class SecureSetting<T> extends Setting<T> {
     /**
      * Setting for a secure string
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SecureStringSetting extends SecureSetting<SecureString> {
         private final Setting<SecureString> fallback;
@@ -216,7 +216,7 @@ public abstract class SecureSetting<T> extends Setting<T> {
     /**
      * An insecure string setting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class InsecureStringSetting extends Setting<SecureString> {
         private static final Logger LOG = LogManager.getLogger(InsecureStringSetting.class);
@@ -258,7 +258,7 @@ public abstract class SecureSetting<T> extends Setting<T> {
     /**
      * A secure file setting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SecureFileSetting extends SecureSetting<InputStream> {
         private final Setting<InputStream> fallback;

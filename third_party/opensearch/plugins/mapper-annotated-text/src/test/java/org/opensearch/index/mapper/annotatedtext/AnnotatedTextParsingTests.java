@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.annotatedtext;
+package org.density.index.mapper.annotatedtext;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText.AnnotationToken;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText.AnnotationToken;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class AnnotatedTextParsingTests extends OpenSearchTestCase {
+public class AnnotatedTextParsingTests extends DensityTestCase {
 
     private void checkParsing(String markup, String expectedPlainText, AnnotationToken... expectedTokens) {
         AnnotatedText at = AnnotatedText.parse(markup);
@@ -75,7 +75,7 @@ public class AnnotatedTextParsingTests extends OpenSearchTestCase {
 
     public void testAnnotationWithType() {
         Exception expectedException = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> checkParsing("foo [bar](type=foo) baz", "foo bar baz", new AnnotationToken(4, 7, "noType"))
         );
         assertThat(expectedException.getMessage(), equalTo("key=value pairs are not supported in annotations"));

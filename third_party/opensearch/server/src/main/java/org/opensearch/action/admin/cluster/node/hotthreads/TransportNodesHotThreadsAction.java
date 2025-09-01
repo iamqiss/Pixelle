@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.hotthreads;
+package org.density.action.admin.cluster.node.hotthreads;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.monitor.jvm.HotThreads;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.monitor.jvm.HotThreads;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Transport action for OpenSearch Hot Threads
+ * Transport action for Density Hot Threads
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesHotThreadsAction extends TransportNodesAction<
     NodesHotThreadsRequest,
@@ -108,14 +108,14 @@ public class TransportNodesHotThreadsAction extends TransportNodesAction<
         try {
             return new NodeHotThreads(clusterService.localNode(), hotThreads.detect());
         } catch (Exception e) {
-            throw new OpenSearchException("failed to detect hot threads", e);
+            throw new DensityException("failed to detect hot threads", e);
         }
     }
 
     /**
      * Inner node request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeRequest extends TransportRequest {
 

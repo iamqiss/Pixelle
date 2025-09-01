@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.flush;
+package org.density.action.admin.indices.flush;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 
 /**
  * Transport action for flushing one or more indices
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportShardFlushAction extends TransportReplicationAction<ShardFlushRequest, ShardFlushRequest, ReplicationResponse> {
 
@@ -122,13 +122,13 @@ public class TransportShardFlushAction extends TransportReplicationAction<ShardF
         });
     }
 
-    // TODO: Remove this transition in OpenSearch 3.0
+    // TODO: Remove this transition in Density 3.0
     private static final String PRE_SYNCED_FLUSH_ACTION_NAME = "internal:indices/flush/synced/pre";
 
     /**
      * A Pre Shard Synced Flush Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PreShardSyncedFlushRequest extends TransportRequest {
         private final ShardId shardId;
@@ -154,7 +154,7 @@ public class TransportShardFlushAction extends TransportReplicationAction<ShardF
     /**
      * Pre synced flush handler for the transport layer
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class PreSyncedFlushTransportHandler implements TransportRequestHandler<PreShardSyncedFlushRequest> {
         private final IndicesService indicesService;

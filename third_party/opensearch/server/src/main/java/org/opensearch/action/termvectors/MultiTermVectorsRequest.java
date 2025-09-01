@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.RealtimeRequest;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.RealtimeRequest;
+import org.density.action.ValidateActions;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import java.util.Set;
 /**
  * A single multi get request.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MultiTermVectorsRequest extends ActionRequest
@@ -149,16 +149,16 @@ public class MultiTermVectorsRequest extends ActionRequest
                             ids.add(parser.text());
                         }
                     } else {
-                        throw new OpenSearchParseException("no parameter named [{}] and type ARRAY", currentFieldName);
+                        throw new DensityParseException("no parameter named [{}] and type ARRAY", currentFieldName);
                     }
                 } else if (token == XContentParser.Token.START_OBJECT && currentFieldName != null) {
                     if ("parameters".equals(currentFieldName)) {
                         TermVectorsRequest.parseRequest(template, parser);
                     } else {
-                        throw new OpenSearchParseException("no parameter named [{}] and type OBJECT", currentFieldName);
+                        throw new DensityParseException("no parameter named [{}] and type OBJECT", currentFieldName);
                     }
                 } else if (currentFieldName != null) {
-                    throw new OpenSearchParseException("_mtermvectors: Parameter [{}] not supported", currentFieldName);
+                    throw new DensityParseException("_mtermvectors: Parameter [{}] not supported", currentFieldName);
                 }
             }
         }

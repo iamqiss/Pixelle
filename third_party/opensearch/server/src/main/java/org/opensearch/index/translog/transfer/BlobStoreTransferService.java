@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.InputStreamWithMetadata;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeFileInputStream;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.store.exception.ChecksumCombinationException;
-import org.opensearch.index.translog.ChannelFactory;
-import org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.ActionRunnable;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.InputStreamWithMetadata;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeFileInputStream;
+import org.density.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.action.ActionListener;
+import org.density.index.store.exception.ChecksumCombinationException;
+import org.density.index.translog.ChannelFactory;
+import org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import org.density.threadpool.ThreadPool;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -42,14 +42,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.common.blobstore.BlobContainer.BlobNameSortOrder.LEXICOGRAPHIC;
-import static org.opensearch.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
-import static org.opensearch.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
+import static org.density.common.blobstore.BlobContainer.BlobNameSortOrder.LEXICOGRAPHIC;
+import static org.density.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
+import static org.density.index.translog.transfer.TranslogTransferManager.CHECKPOINT_FILE_DATA_KEY;
 
 /**
  * Service that handles remote transfer of translog and checkpoint files
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BlobStoreTransferService implements TransferService {
 

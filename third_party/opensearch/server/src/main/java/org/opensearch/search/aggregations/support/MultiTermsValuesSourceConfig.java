@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.IncludeExclude;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.bucket.terms.IncludeExclude;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * A configuration that used by multi_terms aggregations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiTermsValuesSourceConfig extends BaseMultiValuesSourceFieldConfig {
     private final ValueType userValueTypeHint;
@@ -39,7 +39,7 @@ public class MultiTermsValuesSourceConfig extends BaseMultiValuesSourceFieldConf
     /**
      * Parser supplier function
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface ParserSupplier {
         ObjectParser<MultiTermsValuesSourceConfig.Builder, Void> apply(
@@ -164,7 +164,7 @@ public class MultiTermsValuesSourceConfig extends BaseMultiValuesSourceFieldConf
     /**
      * Builder for the multi terms values source configuration
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends BaseMultiValuesSourceFieldConfig.Builder<MultiTermsValuesSourceConfig, Builder> {
         private ValueType userValueTypeHint = null;

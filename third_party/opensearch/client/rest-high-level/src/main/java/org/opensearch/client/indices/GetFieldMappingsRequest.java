@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.client.Validatable;
-import org.opensearch.core.common.Strings;
+import org.density.action.support.IndicesOptions;
+import org.density.client.Validatable;
+import org.density.core.common.Strings;
 
 /** Request the mappings of specific fields */
 public class GetFieldMappingsRequest implements Validatable {

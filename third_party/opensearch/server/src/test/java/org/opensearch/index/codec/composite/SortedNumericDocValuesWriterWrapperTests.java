@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite;
+package org.density.index.codec.composite;
 
 import org.apache.lucene.index.DocValuesSkipIndexType;
 import org.apache.lucene.index.DocValuesType;
@@ -17,12 +17,12 @@ import org.apache.lucene.index.SortedNumericDocValuesWriterWrapper;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
 import org.apache.lucene.util.Counter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 
-public class SortedNumericDocValuesWriterWrapperTests extends OpenSearchTestCase {
+public class SortedNumericDocValuesWriterWrapperTests extends DensityTestCase {
 
     private SortedNumericDocValuesWriterWrapper wrapper;
     private FieldInfo fieldInfo;

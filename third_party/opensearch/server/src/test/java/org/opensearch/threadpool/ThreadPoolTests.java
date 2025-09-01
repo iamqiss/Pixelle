@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
-import static org.opensearch.threadpool.ThreadPool.ESTIMATED_TIME_INTERVAL_SETTING;
-import static org.opensearch.threadpool.ThreadPool.assertCurrentMethodIsNotCalledRecursively;
+import static org.density.threadpool.ThreadPool.ESTIMATED_TIME_INTERVAL_SETTING;
+import static org.density.threadpool.ThreadPool.assertCurrentMethodIsNotCalledRecursively;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class ThreadPoolTests extends OpenSearchTestCase {
+public class ThreadPoolTests extends DensityTestCase {
 
     public void testBoundedByBelowMin() {
         int min = randomIntBetween(0, 32);
@@ -110,15 +110,15 @@ public class ThreadPoolTests extends OpenSearchTestCase {
         assertThat(factorial(1), equalTo(1)); // is not called recursively
         assertThat(
             expectThrows(AssertionError.class, () -> factorial(between(2, 10))).getMessage(),
-            equalTo("org.opensearch.threadpool.ThreadPoolTests#factorial is called recursively")
+            equalTo("org.density.threadpool.ThreadPoolTests#factorial is called recursively")
         );
         TestThreadPool threadPool = new TestThreadPool("test");
         assertThat(factorialForked(1, threadPool.generic()), equalTo(1));
         assertThat(factorialForked(10, threadPool.generic()), equalTo(3628800));
         assertThat(
-            expectThrows(AssertionError.class, () -> factorialForked(between(2, 10), OpenSearchExecutors.newDirectExecutorService()))
+            expectThrows(AssertionError.class, () -> factorialForked(between(2, 10), DensityExecutors.newDirectExecutorService()))
                 .getMessage(),
-            equalTo("org.opensearch.threadpool.ThreadPoolTests#factorialForked is called recursively")
+            equalTo("org.density.threadpool.ThreadPoolTests#factorialForked is called recursively")
         );
         terminate(threadPool);
     }
@@ -161,12 +161,12 @@ public class ThreadPoolTests extends OpenSearchTestCase {
             Settings commonSettings = Settings.builder().put("snapshot.max", "10").put("snapshot.core", "2").put("get.size", "100").build();
             threadPool.setThreadPool(commonSettings);
             ExecutorService executorService = threadPool.executor("snapshot");
-            OpenSearchThreadPoolExecutor executor = (OpenSearchThreadPoolExecutor) executorService;
+            DensityThreadPoolExecutor executor = (DensityThreadPoolExecutor) executorService;
             assertEquals(10, executor.getMaximumPoolSize());
             assertEquals(2, executor.getCorePoolSize());
 
             executorService = threadPool.executor("get");
-            executor = (OpenSearchThreadPoolExecutor) executorService;
+            executor = (DensityThreadPoolExecutor) executorService;
             assertEquals(100, executor.getMaximumPoolSize());
             assertEquals(100, executor.getCorePoolSize());
 
@@ -174,12 +174,12 @@ public class ThreadPoolTests extends OpenSearchTestCase {
             commonSettings = Settings.builder().put("snapshot.max", "2").put("snapshot.core", "1").put("get.size", "90").build();
             threadPool.setThreadPool(commonSettings);
             executorService = threadPool.executor("snapshot");
-            executor = (OpenSearchThreadPoolExecutor) executorService;
+            executor = (DensityThreadPoolExecutor) executorService;
             assertEquals(2, executor.getMaximumPoolSize());
             assertEquals(1, executor.getCorePoolSize());
 
             executorService = threadPool.executor("get");
-            executor = (OpenSearchThreadPoolExecutor) executorService;
+            executor = (DensityThreadPoolExecutor) executorService;
             assertEquals(90, executor.getMaximumPoolSize());
             assertEquals(90, executor.getCorePoolSize());
         } finally {

@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -16,18 +16,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.rule.autotagging.RuleTests.ATTRIBUTE_MAP;
-import static org.opensearch.rule.autotagging.RuleTests.DESCRIPTION;
-import static org.opensearch.rule.autotagging.RuleTests.FEATURE_TYPE;
-import static org.opensearch.rule.autotagging.RuleTests.FEATURE_VALUE;
-import static org.opensearch.rule.autotagging.RuleTests.TestAttribute.TEST_ATTRIBUTE_1;
-import static org.opensearch.rule.autotagging.RuleTests.UPDATED_AT;
-import static org.opensearch.rule.autotagging.RuleTests._ID;
+import static org.density.rule.autotagging.RuleTests.ATTRIBUTE_MAP;
+import static org.density.rule.autotagging.RuleTests.DESCRIPTION;
+import static org.density.rule.autotagging.RuleTests.FEATURE_TYPE;
+import static org.density.rule.autotagging.RuleTests.FEATURE_VALUE;
+import static org.density.rule.autotagging.RuleTests.TestAttribute.TEST_ATTRIBUTE_1;
+import static org.density.rule.autotagging.RuleTests.UPDATED_AT;
+import static org.density.rule.autotagging.RuleTests._ID;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RuleValidatorTests extends OpenSearchTestCase {
+public class RuleValidatorTests extends DensityTestCase {
 
     public void testValidRule() {
         RuleValidator validator = new RuleValidator(_ID, DESCRIPTION, ATTRIBUTE_MAP, FEATURE_VALUE, UPDATED_AT, FEATURE_TYPE);

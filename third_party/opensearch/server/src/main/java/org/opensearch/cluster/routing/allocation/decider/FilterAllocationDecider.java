@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.decider;
+package org.density.cluster.routing.allocation.decider;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeFilters;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeFilters;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.node.remotestore.RemoteStoreNodeService;
 
 import java.util.Map;
 
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.IP_VALIDATOR;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.AND;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.OR;
+import static org.density.cluster.node.DiscoveryNodeFilters.IP_VALIDATOR;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.AND;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.OR;
 
 /**
  * This {@link AllocationDecider} control shard allocation by include and
@@ -79,7 +79,7 @@ import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.OR;
  * filtered node</li>
  * </ol>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilterAllocationDecider extends AllocationDecider {
 

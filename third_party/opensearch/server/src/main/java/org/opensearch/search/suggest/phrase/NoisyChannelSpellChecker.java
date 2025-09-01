@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.phrase;
+package org.density.search.suggest.phrase;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.shingle.ShingleFilter;
@@ -38,8 +38,8 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.codecs.TermStats;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.search.suggest.phrase.DirectCandidateGenerator.Candidate;
-import org.opensearch.search.suggest.phrase.DirectCandidateGenerator.CandidateSet;
+import org.density.search.suggest.phrase.DirectCandidateGenerator.Candidate;
+import org.density.search.suggest.phrase.DirectCandidateGenerator.CandidateSet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ import java.util.List;
 /**
  * Spell checker based on a noisy channel
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class NoisyChannelSpellChecker {
     public static final double REAL_WORD_LIKELIHOOD = 0.95d;

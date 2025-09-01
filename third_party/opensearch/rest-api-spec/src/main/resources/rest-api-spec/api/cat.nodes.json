@@ -1,7 +1,7 @@
 {
   "cat.nodes":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/cat/cat-nodes/",
+      "url":"https://density.org/docs/latest/api-reference/cat/cat-nodes/",
       "description":"Returns basic statistics about performance of cluster nodes."
     },
     "stability":"stable",

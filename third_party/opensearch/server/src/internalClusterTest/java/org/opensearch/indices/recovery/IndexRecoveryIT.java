@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,111 +26,111 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.PeerRecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.SnapshotRecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.gateway.ReplicaShardAllocatorIT;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MockEngineFactoryPlugin;
-import org.opensearch.index.analysis.AbstractTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.recovery.RecoveryStats;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.NodeIndicesStats;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.recovery.RecoveryState.Stage;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.engine.MockEngineSupport;
-import org.opensearch.test.store.MockFSIndexStore;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.test.transport.StubbableTransport;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.recovery.RecoveryRequest;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RecoverySource.PeerRecoverySource;
+import org.density.cluster.routing.RecoverySource.SnapshotRecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.SetOnce;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.gateway.ReplicaShardAllocatorIT;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.MockEngineFactoryPlugin;
+import org.density.index.analysis.AbstractTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.recovery.RecoveryStats;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreStats;
+import org.density.indices.IndicesService;
+import org.density.indices.NodeIndicesStats;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.recovery.RecoveryState.Stage;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.node.NodeClosedException;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotState;
+import org.density.tasks.Task;
+import org.density.test.BackgroundIndexer;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.engine.MockEngineSupport;
+import org.density.test.store.MockFSIndexStore;
+import org.density.test.transport.MockTransportService;
+import org.density.test.transport.StubbableTransport;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.Transport;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -154,11 +154,11 @@ import java.util.stream.StreamSupport;
 
 import static java.util.Collections.singletonMap;
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.action.DocWriteResponse.Result.CREATED;
-import static org.opensearch.action.DocWriteResponse.Result.UPDATED;
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.DocWriteResponse.Result.CREATED;
+import static org.density.action.DocWriteResponse.Result.UPDATED;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_CHUNK_SIZE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
@@ -171,7 +171,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class IndexRecoveryIT extends OpenSearchIntegTestCase {
+public class IndexRecoveryIT extends DensityIntegTestCase {
 
     private static final String INDEX_NAME = "test-idx-1";
     private static final String REPO_NAME = "test-repo-1";
@@ -1018,7 +1018,7 @@ public class IndexRecoveryIT extends OpenSearchIntegTestCase {
                 String reason = randomFrom(rejected, circuit, network);
                 if (reason.equals(rejected)) {
                     logger.info("--> preventing {} response by throwing exception", actionName);
-                    throw new OpenSearchRejectedExecutionException();
+                    throw new DensityRejectedExecutionException();
                 } else if (reason.equals(circuit)) {
                     logger.info("--> preventing {} response by throwing exception", actionName);
                     throw new CircuitBreakingException("Broken", CircuitBreaker.Durability.PERMANENT);
@@ -1616,11 +1616,11 @@ public class IndexRecoveryIT extends OpenSearchIntegTestCase {
             );
             /*
             Shard assignment is stuck because recovery is blocked at CLEAN_FILES stage. Once, it times out after 60s the replica shards get assigned.
-            https://github.com/opensearch-project/OpenSearch/issues/18098.
+            https://github.com/density-project/Density/issues/18098.
 
             Stack trace:
-            Caused by: org.opensearch.transport.ReceiveTimeoutTransportException: [node_t3][127.0.0.1:56648][internal:index/shard/recovery/clean_files] request_id [20] timed out after [60026ms]
-            at org.opensearch.transport.TransportService$TimeoutHandler.run(TransportService.java:1399) ~[main/:?]
+            Caused by: org.density.transport.ReceiveTimeoutTransportException: [node_t3][127.0.0.1:56648][internal:index/shard/recovery/clean_files] request_id [20] timed out after [60026ms]
+            at org.density.transport.TransportService$TimeoutHandler.run(TransportService.java:1399) ~[main/:?]
              */
             ensureGreen(TimeValue.timeValueSeconds(62), indexName);
         } finally {
@@ -2270,7 +2270,7 @@ public class IndexRecoveryIT extends OpenSearchIntegTestCase {
                             )
                             .get();
                         assertThat(response.getResult(), isOneOf(CREATED, UPDATED));
-                    } catch (IllegalStateException | OpenSearchException ignored) {}
+                    } catch (IllegalStateException | DensityException ignored) {}
                 }
             });
         }

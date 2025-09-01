@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CheckIndex.Level;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.Lock;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.collect.Tuple;
+import org.density.DensityException;
+import org.density.cli.Terminal;
+import org.density.common.collect.Tuple;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -45,7 +45,7 @@ import java.io.PrintStream;
 /**
  * Removes corrupted Lucene index segments
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoveCorruptedLuceneSegmentsAction {
 
@@ -104,7 +104,7 @@ public class RemoveCorruptedLuceneSegmentsAction {
                     terminal.println("Wrote new segments file \"" + status.segmentsFileName + "\"");
                 }
             } else {
-                throw new OpenSearchException("Index is unrecoverable - there are missing segments");
+                throw new DensityException("Index is unrecoverable - there are missing segments");
             }
         }
     }

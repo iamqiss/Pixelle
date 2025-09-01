@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import java.util.AbstractQueue;
 import java.util.Collection;
@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Mainly makes sense to use with blocking queues that are unbounded to provide the ability to do
  * capacity verification.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SizeBlockingQueue<E> extends AbstractQueue<E> implements BlockingQueue<E> {
 

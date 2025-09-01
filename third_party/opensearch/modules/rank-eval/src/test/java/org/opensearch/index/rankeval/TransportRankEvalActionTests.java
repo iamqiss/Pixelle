@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.IndicesOptions;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.script.ScriptService;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 
-public class TransportRankEvalActionTests extends OpenSearchTestCase {
+public class TransportRankEvalActionTests extends DensityTestCase {
 
     private Settings settings = Settings.builder()
         .put("path.home", createTempDir().toString())

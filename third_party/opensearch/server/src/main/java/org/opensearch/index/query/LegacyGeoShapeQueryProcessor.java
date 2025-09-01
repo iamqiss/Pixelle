@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -39,34 +39,34 @@ import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
 import org.apache.lucene.spatial.query.SpatialArgs;
 import org.apache.lucene.spatial.query.SpatialOperation;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.mapper.AbstractShapeGeometryFieldMapper;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper;
+import org.density.DensityException;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.unit.DistanceUnit;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.index.mapper.AbstractShapeGeometryFieldMapper;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +74,12 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.spatial4j.shape.Shape;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 
 /**
  * Query Processor for Legacy Geo Shape types (prefix trees)
  *
- * @opensearch.internal
+ * @density.internal
  *
  * @deprecated this will be removed in a future release
  */
@@ -100,7 +100,7 @@ public class LegacyGeoShapeQueryProcessor {
         QueryShardContext context
     ) {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[geo-shape] queries on [PrefixTree geo shapes] cannot be executed when '"
                     + ALLOW_EXPENSIVE_QUERIES.getKey()
                     + "' is set to false."

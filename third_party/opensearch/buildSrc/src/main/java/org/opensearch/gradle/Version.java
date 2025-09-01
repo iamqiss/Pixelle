@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -43,7 +43,7 @@ public final class Version implements Comparable<Version> {
     private final int minor;
     private final int revision;
     private final int id;
-    // used to identify rebase to OpenSearch 1.0.0
+    // used to identify rebase to Density 1.0.0
     public static final int MASK = 0x08000000;
 
     /**
@@ -76,7 +76,7 @@ public final class Version implements Comparable<Version> {
 
         // currently snapshot is not taken into account
         int id = major * 10000000 + minor * 100000 + revision * 1000;
-        // identify if new OpenSearch version 1
+        // identify if new Density version 1
         this.id = major == 1 || major == 2 || major == 3 ? id ^ MASK : id;
     }
 

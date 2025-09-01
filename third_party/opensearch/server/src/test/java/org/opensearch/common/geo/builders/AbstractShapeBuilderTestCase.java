@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
 
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 
-public abstract class AbstractShapeBuilderTestCase<SB extends ShapeBuilder<?, ?, ?>> extends OpenSearchTestCase {
+public abstract class AbstractShapeBuilderTestCase<SB extends ShapeBuilder<?, ?, ?>> extends DensityTestCase {
 
     private static final int NUMBER_OF_TESTBUILDERS = 20;
     private static NamedWriteableRegistry namedWriteableRegistry;
@@ -127,6 +127,6 @@ public abstract class AbstractShapeBuilderTestCase<SB extends ShapeBuilder<?, ?,
     protected static <T extends NamedWriteable> T copyShape(T original) throws IOException {
         @SuppressWarnings("unchecked")
         Reader<T> reader = (Reader<T>) namedWriteableRegistry.getReader(ShapeBuilder.class, original.getWriteableName());
-        return OpenSearchTestCase.copyWriteable(original, namedWriteableRegistry, reader);
+        return DensityTestCase.copyWriteable(original, namedWriteableRegistry, reader);
     }
 }

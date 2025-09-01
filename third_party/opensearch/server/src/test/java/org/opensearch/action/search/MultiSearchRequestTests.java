@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.search.RestMultiSearchAction;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.StreamsUtils;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.Version;
+import org.density.action.support.IndicesOptions;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.CheckedRunnable;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.rest.RestRequest;
+import org.density.rest.action.search.RestMultiSearchAction;
+import org.density.search.Scroll;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.StreamsUtils;
+import org.density.test.VersionUtils;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -71,20 +71,20 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.search.RandomSearchRequestGenerator.randomSearchRequest;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.search.RandomSearchRequestGenerator.randomSearchRequest;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MultiSearchRequestTests extends OpenSearchTestCase {
+public class MultiSearchRequestTests extends DensityTestCase {
 
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(MultiSearchRequestTests.class);
 
     public void testSimpleAdd() throws Exception {
-        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/opensearch/action/search/simple-msearch1.json");
+        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/density/action/search/simple-msearch1.json");
         assertThat(request.requests().size(), equalTo(8));
         assertThat(request.requests().get(0).indices()[0], equalTo("test"));
         assertThat(
@@ -197,7 +197,7 @@ public class MultiSearchRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleAdd2() throws Exception {
-        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/opensearch/action/search/simple-msearch2.json");
+        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/density/action/search/simple-msearch2.json");
         assertThat(request.requests().size(), equalTo(5));
         assertThat(request.requests().get(0).indices()[0], equalTo("test"));
         assertThat(request.requests().get(1).indices()[0], equalTo("test"));
@@ -208,7 +208,7 @@ public class MultiSearchRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleAdd3() throws Exception {
-        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/opensearch/action/search/simple-msearch3.json");
+        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/density/action/search/simple-msearch3.json");
         assertThat(request.requests().size(), equalTo(4));
         assertThat(request.requests().get(0).indices()[0], equalTo("test0"));
         assertThat(request.requests().get(0).indices()[1], equalTo("test1"));
@@ -221,7 +221,7 @@ public class MultiSearchRequestTests extends OpenSearchTestCase {
     }
 
     public void testSimpleAdd4() throws Exception {
-        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/opensearch/action/search/simple-msearch4.json");
+        MultiSearchRequest request = parseMultiSearchRequestFromFile("/org/density/action/search/simple-msearch4.json");
         assertThat(request.requests().size(), equalTo(3));
         assertThat(request.requests().get(0).indices()[0], equalTo("test0"));
         assertThat(request.requests().get(0).indices()[1], equalTo("test1"));
@@ -315,7 +315,7 @@ public class MultiSearchRequestTests extends OpenSearchTestCase {
     }
 
     public void testMsearchTerminatedByNewline() throws Exception {
-        String mserchAction = StreamsUtils.copyToStringFromClasspath("/org/opensearch/action/search/simple-msearch5.json");
+        String mserchAction = StreamsUtils.copyToStringFromClasspath("/org/density/action/search/simple-msearch5.json");
         RestRequest restRequest = new FakeRestRequest.Builder(xContentRegistry()).withContent(
             new BytesArray(mserchAction.getBytes(StandardCharsets.UTF_8)),
             MediaTypeRegistry.JSON

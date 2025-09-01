@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.search.startree.filter.DimensionFilter;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.search.startree.filter.DimensionFilter;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  * It is utilized by parent aggregation to retrieve a StarTreeBucketCollector which can be used to
  * pre-compute the associated aggregation along with its parent pre-computation using star-tree
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface StarTreePreComputeCollector {
     /**

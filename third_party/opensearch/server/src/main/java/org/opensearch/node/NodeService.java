@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,45 +26,45 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.search.SearchTransportService;
-import org.opensearch.cluster.routing.WeightedRoutingStats;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.cache.service.CacheService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.SegmentReplicationStatsTracker;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.monitor.MonitorService;
-import org.opensearch.node.remotestore.RemoteStoreNodeStats;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.ratelimitting.admissioncontrol.AdmissionControlService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.support.AggregationUsageService;
-import org.opensearch.search.backpressure.SearchBackpressureService;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.tasks.TaskCancellationMonitoringService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.Build;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.search.SearchTransportService;
+import org.density.cluster.routing.WeightedRoutingStats;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.cache.service.CacheService;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.util.io.IOUtils;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.discovery.Discovery;
+import org.density.http.HttpServerTransport;
+import org.density.index.IndexingPressureService;
+import org.density.index.SegmentReplicationStatsTracker;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.indices.IndicesService;
+import org.density.ingest.IngestService;
+import org.density.monitor.MonitorService;
+import org.density.node.remotestore.RemoteStoreNodeStats;
+import org.density.plugins.PluginsService;
+import org.density.ratelimitting.admissioncontrol.AdmissionControlService;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.support.AggregationUsageService;
+import org.density.search.backpressure.SearchBackpressureService;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.tasks.TaskCancellationMonitoringService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -73,7 +73,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Services exposed to nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeService implements Closeable {
     private final Settings settings;

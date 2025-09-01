@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Tracker responsible for computing SegmentReplicationStats.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationStatsTracker {
 

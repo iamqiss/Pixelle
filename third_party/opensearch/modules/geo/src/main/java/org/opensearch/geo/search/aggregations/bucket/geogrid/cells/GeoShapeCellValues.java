@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.cells;
+package org.density.geo.search.aggregations.bucket.geogrid.cells;
 
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.fielddata.AbstractSortingNumericDocValues;
-import org.opensearch.index.fielddata.GeoShapeValue;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.geometry.Rectangle;
+import org.density.index.fielddata.AbstractSortingNumericDocValues;
+import org.density.index.fielddata.GeoShapeValue;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  * Class representing the long-encoded grid-cells belonging to the geoshape-doc-values. Class must encode the values
  * as long and then sort them in order to account for the cells correctly.
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class GeoShapeCellValues extends AbstractSortingNumericDocValues {
     private final GeoShapeValue geoShapeValue;
@@ -55,7 +55,7 @@ abstract class GeoShapeCellValues extends AbstractSortingNumericDocValues {
 
     /**
      * Provides the {@link GeoShapeCellValues} for the input bounding box.
-     * @opensearch.internal
+     * @density.internal
      */
     static class BoundedCellValues extends GeoShapeCellValues {
         private final Rectangle geoBoundingBox;
@@ -97,7 +97,7 @@ abstract class GeoShapeCellValues extends AbstractSortingNumericDocValues {
 
     /**
      * Provides the {@link GeoShapeCellValues} for unbounded cells
-     * @opensearch.internal
+     * @density.internal
      */
     static class UnboundedCellValues extends GeoShapeCellValues {
 

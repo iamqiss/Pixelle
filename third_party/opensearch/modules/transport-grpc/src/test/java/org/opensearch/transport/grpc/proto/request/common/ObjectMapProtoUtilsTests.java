@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.protobufs.NullValue;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.protobufs.ObjectMap.ListValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.NullValue;
+import org.density.protobufs.ObjectMap;
+import org.density.protobufs.ObjectMap.ListValue;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Map;
 
-public class ObjectMapProtoUtilsTests extends OpenSearchTestCase {
+public class ObjectMapProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithEmptyMap() {
         // Create an empty ObjectMap

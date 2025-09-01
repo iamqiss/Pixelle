@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest.IndexMetric;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.search.suggest.completion.CompletionStats;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest.IndexMetric;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.StoreStats;
+import org.density.search.suggest.completion.CompletionStats;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ import java.util.Set;
 /**
  * Cluster Stats per index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterStatsIndices implements ToXContentFragment {
@@ -123,7 +123,7 @@ public class ClusterStatsIndices implements ToXContentFragment {
                 }
             } else {
                 // Default response from the node
-                for (org.opensearch.action.admin.indices.stats.ShardStats shardStats : r.shardsStats()) {
+                for (org.density.action.admin.indices.stats.ShardStats shardStats : r.shardsStats()) {
                     ShardStats indexShardStats = countsPerIndex.get(shardStats.getShardRouting().getIndexName());
                     if (indexShardStats == null) {
                         indexShardStats = new ShardStats();
@@ -214,7 +214,7 @@ public class ClusterStatsIndices implements ToXContentFragment {
     /**
      * Inner Fields used for creating XContent and parsing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String COUNT = "count";
@@ -256,7 +256,7 @@ public class ClusterStatsIndices implements ToXContentFragment {
     /**
      * Inner Shard Stats
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ShardStats implements ToXContentFragment {
@@ -416,7 +416,7 @@ public class ClusterStatsIndices implements ToXContentFragment {
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String SHARDS = "shards";

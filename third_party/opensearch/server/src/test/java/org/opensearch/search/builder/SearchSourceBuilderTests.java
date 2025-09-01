@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.builder;
+package org.density.search.builder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.BaseQueryRewriteContext;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RandomQueryBuilder;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.script.Script;
-import org.opensearch.search.AbstractSearchTestCase;
-import org.opensearch.search.rescore.QueryRescorerBuilder;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.BaseQueryRewriteContext;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RandomQueryBuilder;
+import org.density.index.query.Rewriteable;
+import org.density.script.Script;
+import org.density.search.AbstractSearchTestCase;
+import org.density.search.rescore.QueryRescorerBuilder;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Map;
@@ -175,7 +175,7 @@ public class SearchSourceBuilderTests extends AbstractSearchTestCase {
 
     // we use the streaming infra to create a copy of the builder provided as argument
     private SearchSourceBuilder copyBuilder(SearchSourceBuilder original) throws IOException {
-        return OpenSearchTestCase.copyWriteable(original, namedWriteableRegistry, SearchSourceBuilder::new);
+        return DensityTestCase.copyWriteable(original, namedWriteableRegistry, SearchSourceBuilder::new);
     }
 
     public void testParseIncludeExclude() throws IOException {

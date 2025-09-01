@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,42 +25,42 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.benchmark.search.aggregations;
+package org.density.benchmark.search.aggregations;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.QueryPhaseResultConsumer;
-import org.opensearch.action.search.SearchPhaseController;
-import org.opensearch.action.search.SearchProgressListener;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.query.QuerySearchResult;
+import org.density.action.OriginalIndices;
+import org.density.action.search.QueryPhaseResultConsumer;
+import org.density.action.search.SearchPhaseController;
+import org.density.action.search.SearchProgressListener;
+import org.density.action.search.SearchRequest;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchModule;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.query.QuerySearchResult;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;

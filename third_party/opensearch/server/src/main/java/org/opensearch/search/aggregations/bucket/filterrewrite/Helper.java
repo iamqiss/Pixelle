@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +19,12 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.query.DateRangeIncludingNowQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.Rounding;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.query.DateRangeIncludingNowQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.LONG;
 
 /**
  * Utility class to help range filters rewrite optimization
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class Helper {
 

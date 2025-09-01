@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,56 +26,56 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.AckedClusterStateTaskListener;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterState.Builder;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskExecutor.ClusterTasksResult;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.coordination.ClusterStatePublisher;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.telemetry.metrics.tags.Tags;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.AckedClusterStateTaskListener;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterState.Builder;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskExecutor.ClusterTasksResult;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.coordination.ClusterStatePublisher;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.CountDown;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.core.Assertions;
+import org.density.core.common.text.Text;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.discovery.Discovery;
+import org.density.node.Node;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.telemetry.metrics.tags.Tags;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -89,12 +89,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
 
 /**
  * Main Cluster Manager Node Service
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.2.0")
 public class ClusterManagerService extends AbstractLifecycleComponent {
@@ -121,7 +121,7 @@ public class ClusterManagerService extends AbstractLifecycleComponent {
 
     protected final ThreadPool threadPool;
 
-    private volatile PrioritizedOpenSearchThreadPoolExecutor threadPoolExecutor;
+    private volatile PrioritizedDensityThreadPoolExecutor threadPoolExecutor;
     private volatile Batcher taskBatcher;
     protected final ClusterManagerTaskThrottler clusterManagerTaskThrottler;
     private final ClusterManagerThrottlingStats throttlingStats;
@@ -178,8 +178,8 @@ public class ClusterManagerService extends AbstractLifecycleComponent {
         taskBatcher = new Batcher(logger, threadPoolExecutor, clusterManagerTaskThrottler);
     }
 
-    protected PrioritizedOpenSearchThreadPoolExecutor createThreadPoolExecutor() {
-        return OpenSearchExecutors.newSinglePrioritizing(
+    protected PrioritizedDensityThreadPoolExecutor createThreadPoolExecutor() {
+        return DensityExecutors.newSinglePrioritizing(
             nodeName + "/" + CLUSTER_MANAGER_UPDATE_THREAD_NAME,
             daemonThreadFactory(nodeName, CLUSTER_MANAGER_UPDATE_THREAD_NAME),
             threadPool.getThreadContext(),
@@ -190,7 +190,7 @@ public class ClusterManagerService extends AbstractLifecycleComponent {
     @SuppressWarnings("unchecked")
     class Batcher extends TaskBatcher {
 
-        Batcher(Logger logger, PrioritizedOpenSearchThreadPoolExecutor threadExecutor, TaskBatcherListener taskBatcherListener) {
+        Batcher(Logger logger, PrioritizedDensityThreadPoolExecutor threadExecutor, TaskBatcherListener taskBatcherListener) {
             super(logger, threadExecutor, taskBatcherListener);
         }
 
@@ -1007,7 +1007,7 @@ public class ClusterManagerService extends AbstractLifecycleComponent {
                 .map(e -> taskBatcher.new UpdateTask(config.priority(), source, e.getKey(), safe(e.getValue(), supplier), executor))
                 .collect(Collectors.toList());
             taskBatcher.submitTasks(safeTasks, config.timeout());
-        } catch (OpenSearchRejectedExecutionException e) {
+        } catch (DensityRejectedExecutionException e) {
             // ignore cases where we are shutting down..., there is really nothing interesting
             // to be done here...
             if (!lifecycle.stoppedOrClosed()) {

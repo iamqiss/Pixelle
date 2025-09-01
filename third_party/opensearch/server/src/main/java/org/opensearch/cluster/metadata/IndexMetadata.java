@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.rollover.RolloverInfo;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.Diffable;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.node.DiscoveryNodeFilters;
-import org.opensearch.cluster.routing.allocation.IndexMetadataUpdater;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VerifiableWriteable;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.indices.pollingingest.IngestionErrorStrategy;
-import org.opensearch.indices.pollingingest.StreamPoller;
-import org.opensearch.indices.replication.SegmentReplicationSource;
-import org.opensearch.indices.replication.common.ReplicationType;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.action.admin.indices.rollover.RolloverInfo;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.Diff;
+import org.density.cluster.Diffable;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.node.DiscoveryNodeFilters;
+import org.density.cluster.routing.allocation.IndexMetadataUpdater;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.Assertions;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VerifiableWriteable;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.MetadataStateFormat;
+import org.density.index.IndexModule;
+import org.density.index.mapper.MapperService;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.indices.pollingingest.IngestionErrorStrategy;
+import org.density.indices.pollingingest.StreamPoller;
+import org.density.indices.replication.SegmentReplicationSource;
+import org.density.indices.replication.common.ReplicationType;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -95,17 +95,17 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 
-import static org.opensearch.cluster.metadata.Metadata.CONTEXT_MODE_PARAM;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.IP_VALIDATOR;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.AND;
-import static org.opensearch.cluster.node.DiscoveryNodeFilters.OpType.OR;
-import static org.opensearch.common.settings.Settings.readSettingsFromStream;
-import static org.opensearch.common.settings.Settings.writeSettingsToStream;
+import static org.density.cluster.metadata.Metadata.CONTEXT_MODE_PARAM;
+import static org.density.cluster.node.DiscoveryNodeFilters.IP_VALIDATOR;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.AND;
+import static org.density.cluster.node.DiscoveryNodeFilters.OpType.OR;
+import static org.density.common.settings.Settings.readSettingsFromStream;
+import static org.density.common.settings.Settings.writeSettingsToStream;
 
 /**
  * Index metadata information
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragment, VerifiableWriteable {
@@ -187,7 +187,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
     /**
      * The state of the index.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum State {
@@ -263,8 +263,8 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
 
     public static final String INDEX_SETTING_PREFIX = "index.";
     public static final String SETTING_NUMBER_OF_SHARDS = "index.number_of_shards";
-    static final String DEFAULT_NUMBER_OF_SHARDS = "opensearch.index.default_number_of_shards";
-    static final String MAX_NUMBER_OF_SHARDS = "opensearch.index.max_number_of_shards";
+    static final String DEFAULT_NUMBER_OF_SHARDS = "density.index.default_number_of_shards";
+    static final String MAX_NUMBER_OF_SHARDS = "density.index.max_number_of_shards";
     public static final Setting<Integer> INDEX_NUMBER_OF_SHARDS_SETTING = buildNumberOfShardsSetting();
     public static final String SETTING_NUMBER_OF_REPLICAS = "index.number_of_replicas";
     public static final Setting<Integer> INDEX_NUMBER_OF_REPLICAS_SETTING = Setting.intSetting(
@@ -568,7 +568,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
     /**
      * Blocks the API.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum APIBlock implements Writeable {
@@ -1406,7 +1406,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
     /**
      * A diff of index metadata.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class IndexMetadataDiff implements Diff<IndexMetadata> {
 
@@ -1724,7 +1724,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
     /**
      * Builder of index metadata.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -2405,13 +2405,13 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
 
             final Version indexCreatedVersion = indexCreated(builder.settings);
             // Reference:
-            // https://github.com/opensearch-project/OpenSearch/blob/4dde0f2a3b445b2fc61dab29c5a2178967f4a3e3/server/src/main/java/org/opensearch/cluster/metadata/IndexMetadata.java#L1620-L1628
+            // https://github.com/density-project/Density/blob/4dde0f2a3b445b2fc61dab29c5a2178967f4a3e3/server/src/main/java/org/density/cluster/metadata/IndexMetadata.java#L1620-L1628
             if (Assertions.ENABLED && indexCreatedVersion.onOrAfter(LegacyESVersion.V_6_5_0)) {
                 assert mappingVersion : "mapping version should be present for indices";
                 assert settingsVersion : "settings version should be present for indices";
             }
             // Reference:
-            // https://github.com/opensearch-project/OpenSearch/blob/2e4b27b243d8bd2c515f66cf86c6d1d6a601307f/server/src/main/java/org/opensearch/cluster/metadata/IndexMetadata.java#L1824
+            // https://github.com/density-project/Density/blob/2e4b27b243d8bd2c515f66cf86c6d1d6a601307f/server/src/main/java/org/density/cluster/metadata/IndexMetadata.java#L1824
             if (Assertions.ENABLED && indexCreatedVersion.onOrAfter(LegacyESVersion.V_7_2_0)) {
                 assert aliasesVersion : "aliases version should be present for indices";
             }
@@ -2486,7 +2486,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
 
     /**
      * Returns the number of shards that should be used for routing. This basically defines the hash space we use in
-     * {@link org.opensearch.cluster.routing.OperationRouting#generateShardId(IndexMetadata, String, String)} to route documents
+     * {@link org.density.cluster.routing.OperationRouting#generateShardId(IndexMetadata, String, String)} to route documents
      * to shards based on their ID or their specific routing value. The default value is {@link #getNumberOfShards()}. This value only
      * changes if and index is shrunk.
      */
@@ -2618,7 +2618,7 @@ public class IndexMetadata implements Diffable<IndexMetadata>, ToXContentFragmen
     /**
      * Returns the routing factor for and shrunk index with the given number of target shards.
      * This factor is used in the hash function in
-     * {@link org.opensearch.cluster.routing.OperationRouting#generateShardId(IndexMetadata, String, String)} to guarantee consistent
+     * {@link org.density.cluster.routing.OperationRouting#generateShardId(IndexMetadata, String, String)} to guarantee consistent
      * hashing / routing of documents even if the number of shards changed (ie. a shrunk index).
      *
      * @param sourceNumberOfShards the total number of shards in the source index

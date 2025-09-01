@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.hamcrest.RegexMatcher;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.common.settings.Settings;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.hamcrest.RegexMatcher;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -47,11 +47,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0, numClientNodes = 0)
-public class SimpleThreadPoolIT extends OpenSearchIntegTestCase {
+public class SimpleThreadPoolIT extends DensityIntegTestCase {
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {
         return Settings.builder().build();
@@ -102,15 +102,15 @@ public class SimpleThreadPoolIT extends OpenSearchIntegTestCase {
         logger.info("post node *new* threads are {}", threadNames);
         for (String threadName : threadNames) {
             // ignore some shared threads we know that are created within the same VM, like the shared discovery one
-            // or the ones that are occasionally come up from OpenSearchSingleNodeTestCase
+            // or the ones that are occasionally come up from DensitySingleNodeTestCase
             if (threadName.contains("[node_s_0]") // TODO: this can't possibly be right! single node and integ test are unrelated!
                 || threadName.contains("Keep-Alive-Timer")) {
                 continue;
             }
             String nodePrefix = "("
-                + Pattern.quote(OpenSearchIntegTestCase.SUITE_CLUSTER_NODE_PREFIX)
+                + Pattern.quote(DensityIntegTestCase.SUITE_CLUSTER_NODE_PREFIX)
                 + "|"
-                + Pattern.quote(OpenSearchIntegTestCase.TEST_CLUSTER_NODE_PREFIX)
+                + Pattern.quote(DensityIntegTestCase.TEST_CLUSTER_NODE_PREFIX)
                 + ")";
             assertThat(threadName, RegexMatcher.matches("\\[" + nodePrefix + "\\d+\\]"));
         }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.Version;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.LeafTermFrequencyLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.Version;
+import org.density.common.logging.DeprecationLogger;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.query.functionscore.TermFrequencyFunctionFactory.TermFrequencyFunctionName;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.LeafTermFrequencyLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -54,14 +54,14 @@ import java.util.function.Function;
 /**
  * A script used for adjusting the score on a per document basis.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ScoreScript {
 
     /**
      * A helper to take in an explanation from a script and turn it into an {@link org.apache.lucene.search.Explanation}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ExplanationHolder {
         private String description;
@@ -261,7 +261,7 @@ public abstract class ScoreScript {
     /**
      * A factory to construct {@link ScoreScript} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface LeafFactory {
 
@@ -276,7 +276,7 @@ public abstract class ScoreScript {
     /**
      * A factory to construct stateful {@link ScoreScript} factories for a specific index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
 

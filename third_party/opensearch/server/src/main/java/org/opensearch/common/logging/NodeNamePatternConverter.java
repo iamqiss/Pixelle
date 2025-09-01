@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
 import org.apache.logging.log4j.core.pattern.PatternConverter;
-import org.opensearch.common.SetOnce;
+import org.density.common.SetOnce;
 
 import java.util.Arrays;
 
@@ -45,9 +45,9 @@ import java.util.Arrays;
  * Converts {@code %node_name} in log4j patterns into the current node name.
  * We can't use a system property for this because the node name system
  * property is only set if the node name is explicitly defined in
- * opensearch.yml.
+ * density.yml.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Plugin(category = PatternConverter.CATEGORY, name = "NodeNamePatternConverter")
 @ConverterKeys({ "node_name" })

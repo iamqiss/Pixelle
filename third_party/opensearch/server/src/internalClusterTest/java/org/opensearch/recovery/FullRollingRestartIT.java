@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.recovery;
+package org.density.recovery;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.Priority;
+import org.density.common.collect.MapBuilder;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.indices.recovery.RecoveryState;
+import org.density.search.SearchHit;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,13 +66,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class FullRollingRestartIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class FullRollingRestartIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public FullRollingRestartIT(Settings settings) {
         super(settings);

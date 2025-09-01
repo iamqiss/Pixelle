@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.lease.Releasables;
+import org.density.common.lease.Releasables;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -41,7 +41,7 @@ import java.util.NoSuchElementException;
  * A hash table from native longs to objects. This implementation resolves collisions
  * using open-addressing and does not support null values. This class is not thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LongObjectPagedHashMap<T> extends AbstractPagedHashMap implements Iterable<LongObjectPagedHashMap.Cursor<T>> {
 
@@ -205,7 +205,7 @@ public class LongObjectPagedHashMap<T> extends AbstractPagedHashMap implements I
     /**
      * Cursor for the map
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Cursor<T> {
         public long index;

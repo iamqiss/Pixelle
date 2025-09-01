@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,71 +26,71 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client;
+package org.density.transport.client;
 
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.PitSegmentsRequest;
-import org.opensearch.action.admin.indices.view.ListViewNamesAction;
-import org.opensearch.action.admin.indices.view.SearchViewAction;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteRequestBuilder;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.explain.ExplainRequestBuilder;
-import org.opensearch.action.explain.ExplainResponse;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequestBuilder;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesResponse;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetRequestBuilder;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetRequestBuilder;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.ClearScrollRequestBuilder;
-import org.opensearch.action.search.ClearScrollResponse;
-import org.opensearch.action.search.CreatePitRequest;
-import org.opensearch.action.search.CreatePitResponse;
-import org.opensearch.action.search.DeletePitRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.GetAllPitNodesRequest;
-import org.opensearch.action.search.GetAllPitNodesResponse;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.MultiSearchRequestBuilder;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.action.search.SearchScrollRequestBuilder;
-import org.opensearch.action.termvectors.MultiTermVectorsRequest;
-import org.opensearch.action.termvectors.MultiTermVectorsRequestBuilder;
-import org.opensearch.action.termvectors.MultiTermVectorsResponse;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsRequestBuilder;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateRequestBuilder;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.PitSegmentsRequest;
+import org.density.action.admin.indices.view.ListViewNamesAction;
+import org.density.action.admin.indices.view.SearchViewAction;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteRequestBuilder;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.explain.ExplainRequestBuilder;
+import org.density.action.explain.ExplainResponse;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesRequestBuilder;
+import org.density.action.fieldcaps.FieldCapabilitiesResponse;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetRequestBuilder;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetRequestBuilder;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.ClearScrollRequestBuilder;
+import org.density.action.search.ClearScrollResponse;
+import org.density.action.search.CreatePitRequest;
+import org.density.action.search.CreatePitResponse;
+import org.density.action.search.DeletePitRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.GetAllPitNodesRequest;
+import org.density.action.search.GetAllPitNodesResponse;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.MultiSearchRequestBuilder;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollRequest;
+import org.density.action.search.SearchScrollRequestBuilder;
+import org.density.action.termvectors.MultiTermVectorsRequest;
+import org.density.action.termvectors.MultiTermVectorsRequestBuilder;
+import org.density.action.termvectors.MultiTermVectorsResponse;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsRequestBuilder;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateRequestBuilder;
+import org.density.action.update.UpdateResponse;
+import org.density.common.Nullable;
+import org.density.common.action.ActionFuture;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -103,14 +103,14 @@ import java.util.concurrent.CompletionStage;
  * simply returns an {@link ActionFuture}, while the second accepts an
  * {@link ActionListener}.
  * <p>
- * A client can be retrieved from a started {@link org.opensearch.node.Node}.
+ * A client can be retrieved from a started {@link org.density.node.Node}.
  *
- * @see org.opensearch.node.Node#client()
+ * @see org.density.node.Node#client()
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
-public interface Client extends OpenSearchClient, Releasable {
+public interface Client extends DensityClient, Releasable {
 
     Setting<String> CLIENT_TYPE_SETTING_S = new Setting<>("client.type", "node", (s) -> {
         switch (s) {

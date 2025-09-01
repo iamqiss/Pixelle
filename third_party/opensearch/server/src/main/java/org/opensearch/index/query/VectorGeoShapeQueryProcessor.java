@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.LatLonShape;
 import org.apache.lucene.geo.GeoEncodingUtils;
 import org.apache.lucene.geo.LatLonGeometry;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.common.geo.GeoLineDecomposer;
-import org.opensearch.common.geo.GeoPolygonDecomposer;
-import org.opensearch.common.geo.GeoShapeUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
+import org.density.LegacyESVersion;
+import org.density.common.geo.GeoLineDecomposer;
+import org.density.common.geo.GeoPolygonDecomposer;
+import org.density.common.geo.GeoShapeUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ import java.util.List;
 /**
  * Query processor for Lucene 6 LatLonShape queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class VectorGeoShapeQueryProcessor {
 
@@ -87,7 +87,7 @@ public class VectorGeoShapeQueryProcessor {
     /**
      * Geometry collector for LatLonShape indexing types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LuceneGeometryCollector implements GeometryVisitor<Void, RuntimeException> {
         private final List<LatLonGeometry> geometries = new ArrayList<>();
@@ -120,9 +120,9 @@ public class VectorGeoShapeQueryProcessor {
         }
 
         @Override
-        public Void visit(org.opensearch.geometry.Line line) {
+        public Void visit(org.density.geometry.Line line) {
             if (line.isEmpty() == false) {
-                List<org.opensearch.geometry.Line> collector = new ArrayList<>();
+                List<org.density.geometry.Line> collector = new ArrayList<>();
                 GeoLineDecomposer.decomposeLine(line, collector);
                 collectLines(collector);
             }
@@ -136,7 +136,7 @@ public class VectorGeoShapeQueryProcessor {
 
         @Override
         public Void visit(MultiLine multiLine) {
-            List<org.opensearch.geometry.Line> collector = new ArrayList<>();
+            List<org.density.geometry.Line> collector = new ArrayList<>();
             GeoLineDecomposer.decomposeMultiLine(multiLine, collector);
             collectLines(collector);
             return null;
@@ -153,7 +153,7 @@ public class VectorGeoShapeQueryProcessor {
         @Override
         public Void visit(MultiPolygon multiPolygon) {
             if (multiPolygon.isEmpty() == false) {
-                List<org.opensearch.geometry.Polygon> collector = new ArrayList<>();
+                List<org.density.geometry.Polygon> collector = new ArrayList<>();
                 GeoPolygonDecomposer.decomposeMultiPolygon(multiPolygon, true, collector);
                 collectPolygons(collector);
             }
@@ -175,9 +175,9 @@ public class VectorGeoShapeQueryProcessor {
         }
 
         @Override
-        public Void visit(org.opensearch.geometry.Polygon polygon) {
+        public Void visit(org.density.geometry.Polygon polygon) {
             if (polygon.isEmpty() == false) {
-                List<org.opensearch.geometry.Polygon> collector = new ArrayList<>();
+                List<org.density.geometry.Polygon> collector = new ArrayList<>();
                 GeoPolygonDecomposer.decomposePolygon(polygon, true, collector);
                 collectPolygons(collector);
             }
@@ -192,13 +192,13 @@ public class VectorGeoShapeQueryProcessor {
             return null;
         }
 
-        private void collectLines(List<org.opensearch.geometry.Line> geometryLines) {
+        private void collectLines(List<org.density.geometry.Line> geometryLines) {
             for (Line line : geometryLines) {
                 geometries.add(GeoShapeUtils.toLuceneLine(line));
             }
         }
 
-        private void collectPolygons(List<org.opensearch.geometry.Polygon> geometryPolygons) {
+        private void collectPolygons(List<org.density.geometry.Polygon> geometryPolygons) {
             for (Polygon polygon : geometryPolygons) {
                 geometries.add(GeoShapeUtils.toLucenePolygon(polygon));
             }

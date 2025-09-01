@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class RemoveByPatternProcessorFactoryTests extends OpenSearchTestCase {
+public class RemoveByPatternProcessorFactoryTests extends DensityTestCase {
 
     private RemoveByPatternProcessor.Factory factory;
 
@@ -47,7 +47,7 @@ public class RemoveByPatternProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config3 = new HashMap<>();
         List<String> patterns = Arrays.asList("foo*", "*", " ", ",", "#", ":", "_");
         config3.put("field_pattern", patterns);
-        Exception exception = expectThrows(OpenSearchParseException.class, () -> factory.create(null, processorTag, null, config3));
+        Exception exception = expectThrows(DensityParseException.class, () -> factory.create(null, processorTag, null, config3));
         assertThat(
             exception.getMessage(),
             equalTo(
@@ -79,7 +79,7 @@ public class RemoveByPatternProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config3 = new HashMap<>();
         List<String> patterns = Arrays.asList("foo*", "*", " ", ",", "#", ":", "_");
         config3.put("exclude_field_pattern", patterns);
-        Exception exception = expectThrows(OpenSearchParseException.class, () -> factory.create(null, processorTag, null, config3));
+        Exception exception = expectThrows(DensityParseException.class, () -> factory.create(null, processorTag, null, config3));
         assertThat(
             exception.getMessage(),
             equalTo(
@@ -98,8 +98,8 @@ public class RemoveByPatternProcessorFactoryTests extends OpenSearchTestCase {
         config.put("field_pattern", List.of("foo*"));
         config.put("exclude_field_pattern", List.of("bar*"));
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(null, processorTag, null, config)
         );
         assertThat(exception.getMessage(), equalTo("[field_pattern] either field_pattern or exclude_field_pattern must be set"));
@@ -108,7 +108,7 @@ public class RemoveByPatternProcessorFactoryTests extends OpenSearchTestCase {
         config2.put("field_pattern", null);
         config2.put("exclude_field_pattern", null);
 
-        exception = expectThrows(OpenSearchParseException.class, () -> factory.create(null, processorTag, null, config2));
+        exception = expectThrows(DensityParseException.class, () -> factory.create(null, processorTag, null, config2));
         assertThat(exception.getMessage(), equalTo("[field_pattern] either field_pattern or exclude_field_pattern must be set"));
     }
 }

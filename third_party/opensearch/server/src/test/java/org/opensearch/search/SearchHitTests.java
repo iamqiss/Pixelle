@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResultTests;
-import org.opensearch.search.SearchHit.NestedIdentity;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.fetch.subphase.highlight.HighlightFieldTests;
-import org.opensearch.test.AbstractWireSerializingTestCase;
-import org.opensearch.test.RandomObjects;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.common.document.DocumentField;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResultTests;
+import org.density.search.SearchHit.NestedIdentity;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.fetch.subphase.highlight.HighlightFieldTests;
+import org.density.test.AbstractWireSerializingTestCase;
+import org.density.test.RandomObjects;
+import org.density.test.VersionUtils;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -67,9 +67,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;

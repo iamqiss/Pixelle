@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.stats;
+package org.density.action.admin.cluster.remotestore.stats;
 
-import org.opensearch.action.support.broadcast.BroadcastOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.broadcast.BroadcastOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for RemoteStoreStatsRequest
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.8.0")
 public class RemoteStoreStatsRequestBuilder extends BroadcastOperationRequestBuilder<
@@ -24,7 +24,7 @@ public class RemoteStoreStatsRequestBuilder extends BroadcastOperationRequestBui
     RemoteStoreStatsResponse,
     RemoteStoreStatsRequestBuilder> {
 
-    public RemoteStoreStatsRequestBuilder(OpenSearchClient client, RemoteStoreStatsAction action) {
+    public RemoteStoreStatsRequestBuilder(DensityClient client, RemoteStoreStatsAction action) {
         super(client, action, new RemoteStoreStatsRequest());
     }
 

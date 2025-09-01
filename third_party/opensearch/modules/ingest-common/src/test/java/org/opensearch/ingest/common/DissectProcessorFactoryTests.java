@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.dissect.DissectException;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.dissect.DissectException;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.is;
 
-public class DissectProcessorFactoryTests extends OpenSearchTestCase {
+public class DissectProcessorFactoryTests extends DensityTestCase {
 
     public void testCreate() {
         DissectProcessor.Factory factory = new DissectProcessor.Factory();
@@ -73,7 +73,7 @@ public class DissectProcessorFactoryTests extends OpenSearchTestCase {
         DissectProcessor.Factory factory = new DissectProcessor.Factory();
         Map<String, Object> config = new HashMap<>();
         config.put("pattern", "%{a},%{b},%{c}");
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
         assertThat(e.getMessage(), Matchers.equalTo("[field] required property is missing"));
     }
 
@@ -81,7 +81,7 @@ public class DissectProcessorFactoryTests extends OpenSearchTestCase {
         DissectProcessor.Factory factory = new DissectProcessor.Factory();
         Map<String, Object> config = new HashMap<>();
         config.put("field", randomAlphaOfLength(10));
-        Exception e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, "_tag", null, config));
+        Exception e = expectThrows(DensityParseException.class, () -> factory.create(null, "_tag", null, config));
         assertThat(e.getMessage(), Matchers.equalTo("[pattern] required property is missing"));
     }
 

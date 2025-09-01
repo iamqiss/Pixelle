@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.find;
+package org.density.action.admin.indices.dangling.find;
 
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.action.FailedNodeException;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterName;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.List;
  * Models a response to a {@link FindDanglingIndexRequest}. A find request queries every node in the
  * cluster looking for a dangling index with a specific UUID.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FindDanglingIndexResponse extends BaseNodesResponse<NodeFindDanglingIndexResponse> {
 

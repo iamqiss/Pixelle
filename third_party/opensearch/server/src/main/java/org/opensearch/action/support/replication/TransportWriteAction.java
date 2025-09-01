@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.WriteResponse;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.PrimaryShardClosedException;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.Translog.Location;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.listener.TraceableActionListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRunnable;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportActions;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.WriteResponse;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexingPressureService;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.PrimaryShardClosedException;
+import org.density.index.translog.Translog;
+import org.density.index.translog.Translog.Location;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.listener.TraceableActionListener;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,7 +77,7 @@ import java.util.function.Function;
  * Base class for transport actions that modify data in some shard like index, delete, and shardBulk.
  * Allows performing async actions (e.g. refresh) after performing write operations on primary and replica shards
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TransportWriteAction<
     Request extends ReplicatedWriteRequest<Request>,
@@ -327,7 +327,7 @@ public abstract class TransportWriteAction<
      * <p>
      * NOTE: public for testing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class WritePrimaryResult<
         ReplicaRequest extends ReplicatedWriteRequest<ReplicaRequest>,
@@ -384,7 +384,7 @@ public abstract class TransportWriteAction<
     /**
      * Result of taking the action on the replica.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class WriteReplicaResult<ReplicaRequest extends ReplicatedWriteRequest<ReplicaRequest>> extends ReplicaResult {
         public final Location location;
@@ -458,7 +458,7 @@ public abstract class TransportWriteAction<
      * translog syncs or waiting for a refresh to happen making the write operation
      * visible.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class AsyncAfterWriteAction {
         private final Location location;
@@ -558,7 +558,7 @@ public abstract class TransportWriteAction<
      * This extends {@code TransportReplicationAction.ReplicasProxy} to do the
      * failing and stale-ing.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected class WriteActionReplicasProxy extends ReplicasProxy {
 

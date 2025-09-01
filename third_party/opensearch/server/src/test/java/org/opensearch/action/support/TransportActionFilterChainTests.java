@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.node.Node;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityTimeoutException;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.LatchedActionListener;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.node.Node;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -65,7 +65,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class TransportActionFilterChainTests extends OpenSearchTestCase {
+public class TransportActionFilterChainTests extends DensityTestCase {
 
     private AtomicInteger counter;
     private ThreadPool threadPool;
@@ -288,7 +288,7 @@ public class TransportActionFilterChainTests extends OpenSearchTestCase {
                 ActionListener<Response> listener,
                 ActionFilterChain<Request, Response> actionFilterChain
             ) {
-                listener.onFailure(new OpenSearchTimeoutException(""));
+                listener.onFailure(new DensityTimeoutException(""));
             }
         }
     }

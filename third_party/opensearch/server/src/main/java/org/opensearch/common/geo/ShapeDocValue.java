@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.document.ShapeField;
 import org.apache.lucene.document.XYShapeDocValuesField;
@@ -15,9 +15,9 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * This class is an OpenSearch Internal representation of lucene {@link XYShapeDocValuesField} for GeoShape.
+ * This class is an Density Internal representation of lucene {@link XYShapeDocValuesField} for GeoShape.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShapeDocValue {
     protected Centroid centroid;

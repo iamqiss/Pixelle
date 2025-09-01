@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.KeywordField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.search.MatchAllDocsQuery;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DerivedField;
-import org.opensearch.index.mapper.DerivedFieldResolver;
-import org.opensearch.index.mapper.DerivedFieldResolverFactory;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.DerivedFieldValueFetcher;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.DerivedFieldScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DerivedField;
+import org.density.index.mapper.DerivedFieldResolver;
+import org.density.index.mapper.DerivedFieldResolverFactory;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.DerivedFieldValueFetcher;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.script.DerivedFieldScript;
+import org.density.script.Script;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 import org.junit.Before;
 
 import java.io.IOException;

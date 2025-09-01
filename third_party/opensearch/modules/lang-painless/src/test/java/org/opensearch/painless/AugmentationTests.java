@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistLoader;
-import org.opensearch.script.ScriptContext;
+import org.density.common.settings.Settings;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistLoader;
+import org.density.script.ScriptContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -54,7 +54,7 @@ public class AugmentationTests extends ScriptTestCase {
     public static void beforeClass() {
         Map<ScriptContext<?>, List<Allowlist>> contexts = newDefaultContexts();
         List<Allowlist> digestAllowlist = new ArrayList<>(Allowlist.BASE_ALLOWLISTS);
-        digestAllowlist.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.opensearch.ingest.txt"));
+        digestAllowlist.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.density.ingest.txt"));
         contexts.put(DigestTestScript.CONTEXT, digestAllowlist);
         SCRIPT_ENGINE = new PainlessScriptEngine(Settings.EMPTY, contexts);
     }
@@ -250,24 +250,24 @@ public class AugmentationTests extends ScriptTestCase {
         assertEquals(
             5,
             exec(
-                "org.opensearch.painless.FeatureTestObject ft = new org.opensearch.painless.FeatureTestObject();"
+                "org.density.painless.FeatureTestObject ft = new org.density.painless.FeatureTestObject();"
                     + " ft.setX(3); ft.setY(2); return ft.getTotal()"
             )
         );
         assertEquals(
             5,
-            exec("def ft = new org.opensearch.painless.FeatureTestObject();" + " ft.setX(3); ft.setY(2); return ft.getTotal()")
+            exec("def ft = new org.density.painless.FeatureTestObject();" + " ft.setX(3); ft.setY(2); return ft.getTotal()")
         );
         assertEquals(
             8,
             exec(
-                "org.opensearch.painless.FeatureTestObject ft = new org.opensearch.painless.FeatureTestObject();"
+                "org.density.painless.FeatureTestObject ft = new org.density.painless.FeatureTestObject();"
                     + " ft.setX(3); ft.setY(2); return ft.addToTotal(3)"
             )
         );
         assertEquals(
             8,
-            exec("def ft = new org.opensearch.painless.FeatureTestObject();" + " ft.setX(3); ft.setY(2); return ft.addToTotal(3)")
+            exec("def ft = new org.density.painless.FeatureTestObject();" + " ft.setX(3); ft.setY(2); return ft.addToTotal(3)")
         );
     }
 

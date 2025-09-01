@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.search.AbstractSearchTestCase;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.usage.UsageService;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.indices.validate.query.ValidateQueryAction;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.TransportAction;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.RestController;
+import org.density.rest.RestRequest;
+import org.density.search.AbstractSearchTestCase;
+import org.density.tasks.Task;
+import org.density.tasks.TaskManager;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
+import org.density.usage.UsageService;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;

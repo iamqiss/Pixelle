@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
-import static org.opensearch.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.LagDetector.CLUSTER_FOLLOWER_LAG_TIMEOUT_SETTING;
-import static org.opensearch.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.coordination.Coordinator.PUBLISH_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_INTERVAL_SETTING;
+import static org.density.cluster.coordination.FollowersChecker.FOLLOWER_CHECK_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.LagDetector.CLUSTER_FOLLOWER_LAG_TIMEOUT_SETTING;
+import static org.density.cluster.coordination.LeaderChecker.LEADER_CHECK_TIMEOUT_SETTING;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class CoordinationCheckerSettingsTests extends OpenSearchSingleNodeTestCase {
+public class CoordinationCheckerSettingsTests extends DensitySingleNodeTestCase {
     public void testFollowerCheckTimeoutValueUpdate() {
         Setting<TimeValue> setting1 = FOLLOWER_CHECK_TIMEOUT_SETTING;
         Settings timeSettings1 = Settings.builder().put(setting1.getKey(), "60s").build();

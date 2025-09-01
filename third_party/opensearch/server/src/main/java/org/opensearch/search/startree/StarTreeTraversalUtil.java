@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.startree;
+package org.density.search.startree;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.DocIdSetBuilder;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNodeType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.MatchAllFilter;
-import org.opensearch.search.startree.filter.StarTreeFilter;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNodeType;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.MatchAllFilter;
+import org.density.search.startree.filter.StarTreeFilter;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -40,8 +40,8 @@ import static org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
 /**
  * Filter operator for star tree data structure.
  *
- *  @opensearch.experimental
- *  @opensearch.internal
+ *  @density.experimental
+ *  @density.internal
  */
 public class StarTreeTraversalUtil {
     private static final Logger logger = LogManager.getLogger(StarTreeTraversalUtil.class);

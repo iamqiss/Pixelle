@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.tasks;
+package org.density.core.tasks;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
 /**
  * Task id that consists of node id and id of the task on the node
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class TaskId implements Writeable {
@@ -121,7 +121,7 @@ public final class TaskId implements Writeable {
             if (p.currentToken() == XContentParser.Token.VALUE_STRING) {
                 return new TaskId(p.text());
             }
-            throw new OpenSearchParseException("Expected a string but found [{}] instead", p.currentToken());
+            throw new DensityParseException("Expected a string but found [{}] instead", p.currentToken());
         };
     }
 

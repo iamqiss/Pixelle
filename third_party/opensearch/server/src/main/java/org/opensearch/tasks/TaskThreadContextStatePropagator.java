@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.common.util.concurrent.ThreadContextStatePropagator;
+import org.density.common.util.concurrent.ThreadContextStatePropagator;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_ID;
+import static org.density.tasks.TaskResourceTrackingService.TASK_ID;
 
 /**
  * Propagates TASK_ID across thread contexts

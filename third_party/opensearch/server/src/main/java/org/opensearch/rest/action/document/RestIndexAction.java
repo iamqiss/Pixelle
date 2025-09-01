@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.document;
+package org.density.rest.action.document;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.index.VersionType;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.index.VersionType;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestActions;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,13 +50,13 @@ import java.util.function.Supplier;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.POST;
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /**
  * Transport action to index a document
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestIndexAction extends BaseRestHandler {
 
@@ -73,7 +73,7 @@ public class RestIndexAction extends BaseRestHandler {
     /**
      * Create handler action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class CreateHandler extends RestIndexAction {
 
@@ -104,7 +104,7 @@ public class RestIndexAction extends BaseRestHandler {
     /**
      * The auto id handler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class AutoIdHandler extends RestIndexAction {
 

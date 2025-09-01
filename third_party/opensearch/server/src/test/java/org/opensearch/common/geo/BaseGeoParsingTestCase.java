@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.utils.GeographyValidator;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OpenSearchGeoAssertions;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.utils.GeographyValidator;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.DensityGeoAssertions;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -51,10 +51,10 @@ import org.locationtech.spatial4j.shape.Shape;
 import org.locationtech.spatial4j.shape.ShapeCollection;
 import org.locationtech.spatial4j.shape.jts.JtsGeometry;
 
-import static org.opensearch.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
+import static org.density.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
 
 /** Base class for all geo parsing tests */
-abstract class BaseGeoParsingTestCase extends OpenSearchTestCase {
+abstract class BaseGeoParsingTestCase extends DensityTestCase {
     protected static final GeometryFactory GEOMETRY_FACTORY = SPATIAL_CONTEXT.getGeometryFactory();
 
     public abstract void testParsePoint() throws IOException, ParseException;
@@ -76,7 +76,7 @@ abstract class BaseGeoParsingTestCase extends OpenSearchTestCase {
     protected void assertValidException(XContentBuilder builder, Class<?> expectedException) throws IOException {
         try (XContentParser parser = createParser(builder)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, expectedException);
+            DensityGeoAssertions.assertValidException(parser, expectedException);
         }
     }
 
@@ -84,17 +84,17 @@ abstract class BaseGeoParsingTestCase extends OpenSearchTestCase {
         try (XContentParser parser = createParser(geoJson)) {
             parser.nextToken();
             if (useJTS) {
-                OpenSearchGeoAssertions.assertEquals(expected, ShapeParser.parse(parser).buildS4J());
+                DensityGeoAssertions.assertEquals(expected, ShapeParser.parse(parser).buildS4J());
             } else {
                 GeometryParser geometryParser = new GeometryParser(true, true, true);
-                org.opensearch.geometry.Geometry shape = geometryParser.parse(parser);
+                org.density.geometry.Geometry shape = geometryParser.parse(parser);
                 shape = new GeoShapeIndexer(true, "name").prepareForIndexing(shape);
-                OpenSearchGeoAssertions.assertEquals(expected, shape);
+                DensityGeoAssertions.assertEquals(expected, shape);
             }
         }
     }
 
-    protected void assertGeometryEquals(org.opensearch.geometry.Geometry expected, XContentBuilder geoJson) throws IOException {
+    protected void assertGeometryEquals(org.density.geometry.Geometry expected, XContentBuilder geoJson) throws IOException {
         try (XContentParser parser = createParser(geoJson)) {
             parser.nextToken();
             assertEquals(expected, new GeoJson(true, false, new GeographyValidator(false)).fromXContent(parser));

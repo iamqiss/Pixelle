@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.search;
+package org.density.rest.action.search;
 
-import org.opensearch.action.search.SearchScrollRequest;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.search.Scroll;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.SearchScrollRequest;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.search.Scroll;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -46,14 +46,14 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * Transport action to perform a search scroll
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestSearchScrollAction extends BaseRestHandler {
     private static final Set<String> RESPONSE_PARAMS = Collections.singleton(RestSearchAction.TOTAL_HITS_AS_INT_PARAM);

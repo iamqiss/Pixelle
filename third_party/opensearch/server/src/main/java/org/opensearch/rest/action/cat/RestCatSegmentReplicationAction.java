@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsRequest;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Table;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentOpenSearchExtension;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsRequest;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Table;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentDensityExtension;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.util.List;
@@ -35,14 +35,14 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * RestCatSegmentReplicationAction provides information about the status of replica's segment replication event
  * in a string format, designed to be used at the command line. An Index can
  * be specified to limit output to a particular index or indices.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestCatSegmentReplicationAction extends AbstractCatAction {
     @Override
@@ -181,8 +181,8 @@ public class RestCatSegmentReplicationAction extends AbstractCatAction {
                         t.addCell(String.format(Locale.ROOT, "%1.1f%%", state.getIndex().recoveredFilesPercent()));
                         t.addCell(state.getIndex().recoveredBytes());
                         t.addCell(String.format(Locale.ROOT, "%1.1f%%", state.getIndex().recoveredBytesPercent()));
-                        t.addCell(XContentOpenSearchExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().startTime())));
-                        t.addCell(XContentOpenSearchExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().stopTime())));
+                        t.addCell(XContentDensityExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().startTime())));
+                        t.addCell(XContentDensityExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().stopTime())));
                         t.addCell(state.getIndex().totalRecoverFiles());
                         t.addCell(state.getIndex().totalFileCount());
                         t.addCell(new ByteSizeValue(state.getIndex().totalRecoverBytes()));

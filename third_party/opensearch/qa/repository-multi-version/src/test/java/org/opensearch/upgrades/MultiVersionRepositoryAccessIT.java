@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
 import com.sun.jna.StringArray;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.client.Node;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.client.Node;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.client.RestHighLevelClient;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.XContentParser;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.test.rest.DensityRestTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,7 +72,7 @@ import static org.hamcrest.Matchers.is;
  *     <li>Run against the current version cluster from the second step: {@link TestStep#STEP4_NEW_CLUSTER}</li>
  * </ul>
  */
-public class MultiVersionRepositoryAccessIT extends OpenSearchRestTestCase {
+public class MultiVersionRepositoryAccessIT extends DensityRestTestCase {
 
     private enum TestStep {
         STEP1_OLD_CLUSTER("step1"),

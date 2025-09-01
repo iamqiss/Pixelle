@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.aggregations.AggregationProcessor;
-import org.opensearch.search.aggregations.DefaultAggregationProcessor;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.annotation.PublicApi;
+import org.density.search.aggregations.AggregationProcessor;
+import org.density.search.aggregations.DefaultAggregationProcessor;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ import java.util.LinkedList;
  * The extension point which allows to plug in custom search implementation to be
  * used at {@link QueryPhase}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.0.0")
 public interface QueryPhaseSearcher {

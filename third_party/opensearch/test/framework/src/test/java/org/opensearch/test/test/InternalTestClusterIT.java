@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.test;
+package org.density.test.test;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.common.settings.Settings;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class InternalTestClusterIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class InternalTestClusterIT extends DensityIntegTestCase {
 
     public void testStartingAndStoppingNodes() throws IOException {
         logger.info("--> cluster has [{}] nodes", internalCluster().size());

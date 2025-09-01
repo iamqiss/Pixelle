@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.analyze.AnalyzeAction;
-import org.opensearch.action.admin.indices.analyze.AnalyzeAction.AnalyzeToken;
-import org.opensearch.action.support.replication.ReplicationResponse.ShardInfo;
-import org.opensearch.action.support.replication.ReplicationResponse.ShardInfo.Failure;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.shard.IndexShardRecoveringException;
-import org.opensearch.index.shard.ShardNotFoundException;
+import org.density.DensityException;
+import org.density.action.admin.indices.analyze.AnalyzeAction;
+import org.density.action.admin.indices.analyze.AnalyzeAction.AnalyzeToken;
+import org.density.action.support.replication.ReplicationResponse.ShardInfo;
+import org.density.action.support.replication.ReplicationResponse.ShardInfo.Failure;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.shard.IndexShardRecoveringException;
+import org.density.index.shard.ShardNotFoundException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -68,8 +68,8 @@ import java.util.Map;
 import java.util.Random;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
+import static org.density.test.DensityTestCase.randomFrom;
 import static com.carrotsearch.randomizedtesting.generators.RandomNumbers.randomIntBetween;
 import static com.carrotsearch.randomizedtesting.generators.RandomStrings.randomAsciiLettersOfLength;
 import static com.carrotsearch.randomizedtesting.generators.RandomStrings.randomUnicodeOfLengthBetween;
@@ -85,7 +85,7 @@ public final class RandomObjects {
      * via {@link ToXContent#toXContent(XContentBuilder, ToXContent.Params)} and parsed back via
      * {@link XContentParser#objectText()}.
      * Generates values based on what can get printed out. Stored fields values are retrieved from lucene and converted via
-     * {@link org.opensearch.index.mapper.MappedFieldType#valueForDisplay(Object)} to either strings, numbers or booleans.
+     * {@link org.density.index.mapper.MappedFieldType#valueForDisplay(Object)} to either strings, numbers or booleans.
      *
      * @param random Random generator
      * @param mediaType the content type, used to determine what the expected values are for float numbers.
@@ -152,7 +152,7 @@ public final class RandomObjects {
      * via {@link ToXContent#toXContent(XContentBuilder, ToXContent.Params)} and parsed back via
      * {@link XContentParser#objectText()}.
      * Generates values based on what can get printed out. Stored fields values are retrieved from lucene and converted via
-     * {@link org.opensearch.index.mapper.MappedFieldType#valueForDisplay(Object)} to either strings, numbers or booleans.
+     * {@link org.density.index.mapper.MappedFieldType#valueForDisplay(Object)} to either strings, numbers or booleans.
      */
     public static Object getExpectedParsedValue(MediaType mediaType, Object value) {
         if (value instanceof BytesArray) {
@@ -330,35 +330,35 @@ public final class RandomObjects {
         ShardId shard = new ShardId(index, indexUuid, shardId);
 
         Exception actualException;
-        OpenSearchException expectedException;
+        DensityException expectedException;
 
         int type = randomIntBetween(random, 0, 3);
         switch (type) {
             case 0:
                 actualException = new ClusterBlockException(singleton(NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_WRITES));
-                expectedException = new OpenSearchException(
-                    "OpenSearch exception [type=cluster_block_exception, "
+                expectedException = new DensityException(
+                    "Density exception [type=cluster_block_exception, "
                         + "reason=blocked by: [SERVICE_UNAVAILABLE/2/no cluster-manager];]"
                 );
                 break;
             case 1:
                 actualException = new ShardNotFoundException(shard);
-                expectedException = new OpenSearchException(
-                    "OpenSearch exception [type=shard_not_found_exception, " + "reason=no such shard]"
+                expectedException = new DensityException(
+                    "Density exception [type=shard_not_found_exception, " + "reason=no such shard]"
                 );
                 expectedException.setShard(shard);
                 break;
             case 2:
                 actualException = new IllegalArgumentException("Closed resource", new RuntimeException("Resource"));
-                expectedException = new OpenSearchException(
-                    "OpenSearch exception [type=illegal_argument_exception, " + "reason=Closed resource]",
-                    new OpenSearchException("OpenSearch exception [type=runtime_exception, reason=Resource]")
+                expectedException = new DensityException(
+                    "Density exception [type=illegal_argument_exception, " + "reason=Closed resource]",
+                    new DensityException("Density exception [type=runtime_exception, reason=Resource]")
                 );
                 break;
             case 3:
                 actualException = new IndexShardRecoveringException(shard);
-                expectedException = new OpenSearchException(
-                    "OpenSearch exception [type=index_shard_recovering_exception, " + "reason=CurrentState[RECOVERING] Already recovering]"
+                expectedException = new DensityException(
+                    "Density exception [type=index_shard_recovering_exception, " + "reason=CurrentState[RECOVERING] Already recovering]"
                 );
                 expectedException.setShard(shard);
                 break;

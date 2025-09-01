@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.script.mustache.MustacheScriptEngine;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.TemplateScript;
+import org.density.script.mustache.MustacheScriptEngine;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static org.opensearch.script.Script.DEFAULT_TEMPLATE_LANG;
+import static org.density.script.Script.DEFAULT_TEMPLATE_LANG;
 
-public abstract class AbstractScriptTestCase extends OpenSearchTestCase {
+public abstract class AbstractScriptTestCase extends DensityTestCase {
 
     protected ScriptService scriptService;
 

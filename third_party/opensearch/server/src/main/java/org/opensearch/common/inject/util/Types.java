@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,17 +23,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.util;
+package org.density.common.inject.util;
 
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.internal.MoreTypes;
-import org.opensearch.common.inject.internal.MoreTypes.GenericArrayTypeImpl;
-import org.opensearch.common.inject.internal.MoreTypes.ParameterizedTypeImpl;
-import org.opensearch.common.inject.internal.MoreTypes.WildcardTypeImpl;
+import org.density.common.inject.Provider;
+import org.density.common.inject.internal.MoreTypes;
+import org.density.common.inject.internal.MoreTypes.GenericArrayTypeImpl;
+import org.density.common.inject.internal.MoreTypes.ParameterizedTypeImpl;
+import org.density.common.inject.internal.MoreTypes.WildcardTypeImpl;
 
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
@@ -49,7 +49,7 @@ import java.util.Set;
  * @author crazybob@google.com (Bob Lee)
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Types {
     private Types() {}

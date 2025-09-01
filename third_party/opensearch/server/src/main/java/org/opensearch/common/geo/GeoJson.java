@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentSubParser;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.geometry.utils.GeometryValidator;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentSubParser;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.geometry.ShapeType;
+import org.density.geometry.utils.GeometryValidator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Utility class for converting libs/geo shapes to and from GeoJson
@@ -397,10 +397,10 @@ public final class GeoJson {
         }
         if (shapeType == ShapeType.GEOMETRYCOLLECTION) {
             if (geometries == null) {
-                throw new OpenSearchParseException("geometries not included");
+                throw new DensityParseException("geometries not included");
             }
             if (coordinates != null) {
-                throw new OpenSearchParseException("parameter coordinates is not supported for type " + type);
+                throw new DensityParseException("parameter coordinates is not supported for type " + type);
             }
             verifyNulls(type, null, orientation, radius);
             return new GeometryCollection<>(geometries);
@@ -408,13 +408,13 @@ public final class GeoJson {
 
         // We expect to have coordinates for all the rest
         if (coordinates == null) {
-            throw new OpenSearchParseException("coordinates not included");
+            throw new DensityParseException("coordinates not included");
         }
 
         switch (shapeType) {
             case CIRCLE:
                 if (radius == null) {
-                    throw new OpenSearchParseException("radius is not specified");
+                    throw new DensityParseException("radius is not specified");
                 }
                 verifyNulls(type, geometries, orientation, null);
                 Point point = coordinates.asPoint();
@@ -443,7 +443,7 @@ public final class GeoJson {
                 verifyNulls(type, geometries, orientation, radius);
                 return coordinates.asRectangle();
             default:
-                throw new OpenSearchParseException("unsupported shape type " + type);
+                throw new DensityParseException("unsupported shape type " + type);
         }
     }
 
@@ -452,13 +452,13 @@ public final class GeoJson {
      */
     private static void verifyNulls(String type, List<Geometry> geometries, Boolean orientation, DistanceUnit.Distance radius) {
         if (geometries != null) {
-            throw new OpenSearchParseException("parameter geometries is not supported for type " + type);
+            throw new DensityParseException("parameter geometries is not supported for type " + type);
         }
         if (orientation != null) {
-            throw new OpenSearchParseException("parameter orientation is not supported for type " + type);
+            throw new DensityParseException("parameter orientation is not supported for type " + type);
         }
         if (radius != null) {
-            throw new OpenSearchParseException("parameter radius is not supported for type " + type);
+            throw new DensityParseException("parameter radius is not supported for type " + type);
         }
     }
 
@@ -481,7 +481,7 @@ public final class GeoJson {
         while (token != XContentParser.Token.END_ARRAY) {
             CoordinateNode node = parseCoordinates(parser);
             if (nodes.isEmpty() == false && nodes.get(0).numDimensions() != node.numDimensions()) {
-                throw new OpenSearchParseException("Exception parsing coordinates: number of dimensions do not match");
+                throw new DensityParseException("Exception parsing coordinates: number of dimensions do not match");
             }
             nodes.add(node);
             token = parser.nextToken();
@@ -496,11 +496,11 @@ public final class GeoJson {
     private static Point parseCoordinate(XContentParser parser) throws IOException {
         // Add support for coerce here
         if (parser.currentToken() != XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates must be numbers");
+            throw new DensityParseException("geo coordinates must be numbers");
         }
         double lon = parser.doubleValue();
         if (parser.nextToken() != XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates must be numbers");
+            throw new DensityParseException("geo coordinates must be numbers");
         }
         double lat = parser.doubleValue();
         XContentParser.Token token = parser.nextToken();
@@ -512,7 +512,7 @@ public final class GeoJson {
         }
         // do not support > 3 dimensions
         if (parser.currentToken() == XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates greater than 3 dimensions are not supported");
+            throw new DensityParseException("geo coordinates greater than 3 dimensions are not supported");
         }
         return new Point(lon, lat, alt);
     }
@@ -596,7 +596,7 @@ public final class GeoJson {
     /**
      * A node for a geo coordinate
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class CoordinateNode implements ToXContentObject {
         public final Point coordinate;
@@ -628,7 +628,7 @@ public final class GeoJson {
 
         protected int numDimensions() {
             if (isEmpty()) {
-                throw new OpenSearchException("attempting to get number of dimensions on an empty coordinate node");
+                throw new DensityException("attempting to get number of dimensions on an empty coordinate node");
             }
             if (coordinate != null) {
                 return coordinate.hasZ() ? 3 : 2;
@@ -638,14 +638,14 @@ public final class GeoJson {
 
         public Point asPoint() {
             if (children != null) {
-                throw new OpenSearchException("expected a single points but got a list");
+                throw new DensityException("expected a single points but got a list");
             }
             return coordinate;
         }
 
         public MultiPoint asMultiPoint() {
             if (coordinate != null) {
-                throw new OpenSearchException("expected a list of points but got a point");
+                throw new DensityException("expected a list of points but got a point");
             }
             List<Point> points = new ArrayList<>();
             for (CoordinateNode node : children) {
@@ -656,11 +656,11 @@ public final class GeoJson {
 
         private double[][] asLineComponents(boolean orientation, boolean coerce, boolean close) {
             if (coordinate != null) {
-                throw new OpenSearchException("expected a list of points but got a point");
+                throw new DensityException("expected a list of points but got a point");
             }
 
             if (children.size() < 2) {
-                throw new OpenSearchException("not enough points to build a line");
+                throw new DensityException("not enough points to build a line");
             }
 
             boolean needsClosing;
@@ -712,7 +712,7 @@ public final class GeoJson {
 
         public MultiLine asMultiLineString(boolean coerce) {
             if (coordinate != null) {
-                throw new OpenSearchException("expected a list of points but got a point");
+                throw new DensityException("expected a list of points but got a point");
             }
             List<Line> lines = new ArrayList<>();
             for (CoordinateNode node : children) {
@@ -723,7 +723,7 @@ public final class GeoJson {
 
         public Polygon asPolygon(boolean orientation, boolean coerce) {
             if (coordinate != null) {
-                throw new OpenSearchException("expected a list of points but got a point");
+                throw new DensityException("expected a list of points but got a point");
             }
             List<LinearRing> lines = new ArrayList<>();
             for (CoordinateNode node : children) {
@@ -739,7 +739,7 @@ public final class GeoJson {
 
         public MultiPolygon asMultiPolygon(boolean orientation, boolean coerce) {
             if (coordinate != null) {
-                throw new OpenSearchException("expected a list of points but got a point");
+                throw new DensityException("expected a list of points but got a point");
             }
             List<Polygon> polygons = new ArrayList<>();
             for (CoordinateNode node : children) {
@@ -750,7 +750,7 @@ public final class GeoJson {
 
         public Rectangle asRectangle() {
             if (children.size() != 2) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid number of points [{}] provided for geo_shape [{}] when expecting an array of 2 coordinates",
                     children.size(),
                     ShapeType.ENVELOPE

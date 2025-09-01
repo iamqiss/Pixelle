@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache;
+package org.density.cache;
 
-import org.opensearch.cache.store.disk.EhcacheDiskCache;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.ICache;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.plugins.CachePlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.cache.store.disk.EhcacheDiskCache;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.ICache;
+import org.density.common.settings.Setting;
+import org.density.plugins.CachePlugin;
+import org.density.plugins.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cache.EhcacheDiskCacheSettings.CACHE_TYPE_MAP;
+import static org.density.cache.EhcacheDiskCacheSettings.CACHE_TYPE_MAP;
 
 /**
  * Ehcache based cache plugin.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.Nullable;
+import org.density.common.io.Streams;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -50,7 +50,7 @@ import static java.util.stream.Collectors.toSet;
 /**
  * Base REST channel
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class AbstractRestChannel implements RestChannel {
 

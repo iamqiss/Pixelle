@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.persistent.PersistentTasksCustomMetadata;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.persistent.PersistentTasksCustomMetadata;
 
 import java.util.List;
 
 /**
  * Update cluster state when node is removed from the cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeRemovalClusterStateTaskExecutor
     implements
@@ -59,7 +59,7 @@ public class NodeRemovalClusterStateTaskExecutor
     /**
      * Task for the executor.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Task {
 

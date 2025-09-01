@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.util.packed.PackedInts;
 
@@ -43,7 +43,7 @@ import org.apache.lucene.util.packed.PackedInts;
  * <p>
  * The algorithm just keep a record of all distinct values provided encoded as an integer.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractLinearCounting extends AbstractCardinalityAlgorithm {
 
@@ -105,7 +105,7 @@ public abstract class AbstractLinearCounting extends AbstractCardinalityAlgorith
     /**
      * Iterator over the hash values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface HashesIterator {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.basic;
+package org.density.search.basic;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.tests.util.English;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.store.MockFSDirectoryFactory;
-import org.opensearch.test.store.MockFSIndexStore;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.DocWriteResponse;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.store.MockFSDirectoryFactory;
+import org.density.test.store.MockFSIndexStore;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 
-public class SearchWithRandomIOExceptionsIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SearchWithRandomIOExceptionsIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SearchWithRandomIOExceptionsIT(Settings staticSettings) {
         super(staticSettings);
@@ -179,10 +179,10 @@ public class SearchWithRandomIOExceptionsIT extends ParameterizedStaticSettingsO
                     numCreated++;
                     added[i] = true;
                 }
-            } catch (OpenSearchException ex) {}
+            } catch (DensityException ex) {}
 
         }
-        OpenSearchIntegTestCase.NumShards numShards = getNumShards("test");
+        DensityIntegTestCase.NumShards numShards = getNumShards("test");
         logger.info("Start Refresh");
         // don't assert on failures here
         final RefreshResponse refreshResponse = client().admin().indices().prepareRefresh("test").execute().get();

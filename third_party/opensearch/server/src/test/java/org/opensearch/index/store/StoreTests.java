@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.document.Document;
@@ -64,32 +64,32 @@ import org.apache.lucene.tests.store.BaseDirectoryWrapper;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.LuceneTests;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.ShardLock;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.ExceptionsHelper;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.LuceneTests;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.env.ShardLock;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.ShardPath;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.indices.store.TransportNodesListShardStoreMetadataHelper.StoreFilesMetadata;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.ByteArrayInputStream;
@@ -110,8 +110,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
-import static org.opensearch.test.VersionUtils.randomVersion;
+import static org.density.index.seqno.SequenceNumbers.LOCAL_CHECKPOINT_KEY;
+import static org.density.test.VersionUtils.randomVersion;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
@@ -124,11 +124,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class StoreTests extends OpenSearchTestCase {
+public class StoreTests extends DensityTestCase {
 
     private static final IndexSettings INDEX_SETTINGS = IndexSettingsModule.newIndexSettings(
         "index",
-        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT).build()
+        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT).build()
     );
 
     IndexSettings SEGMENT_REPLICATION_INDEX_SETTINGS = new IndexSettings(
@@ -136,7 +136,7 @@ public class StoreTests extends OpenSearchTestCase {
         Settings.builder().put(INDEX_SETTINGS.getSettings()).put(IndexMetadata.SETTING_REPLICATION_TYPE, ReplicationType.SEGMENT).build()
     );
 
-    private static final Version MIN_SUPPORTED_LUCENE_VERSION = org.opensearch.Version.CURRENT
+    private static final Version MIN_SUPPORTED_LUCENE_VERSION = org.density.Version.CURRENT
         .minimumIndexCompatibilityVersion().luceneVersion;
 
     public void testRefCount() {
@@ -810,7 +810,7 @@ public class StoreTests extends OpenSearchTestCase {
     public void testStoreShardPath() {
         final ShardId shardId = new ShardId("index", "_na_", 1);
         final Settings settings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             .put(Store.INDEX_STORE_STATS_REFRESH_INTERVAL_SETTING.getKey(), TimeValue.timeValueMinutes(0))
             .build();
         final Path path = createTempDir().resolve(shardId.getIndex().getUUID()).resolve(String.valueOf(shardId.id()));
@@ -830,7 +830,7 @@ public class StoreTests extends OpenSearchTestCase {
     public void testStoreStats() throws IOException {
         final ShardId shardId = new ShardId("index", "_na_", 1);
         Settings settings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             .put(Store.INDEX_STORE_STATS_REFRESH_INTERVAL_SETTING.getKey(), TimeValue.timeValueMinutes(0))
             .build();
         Store store = new Store(
@@ -905,7 +905,7 @@ public class StoreTests extends OpenSearchTestCase {
 
     public void testMetadataSnapshotStreaming() throws Exception {
         Store.MetadataSnapshot outMetadataSnapshot = createMetadataSnapshot();
-        org.opensearch.Version targetNodeVersion = randomVersion(random());
+        org.density.Version targetNodeVersion = randomVersion(random());
 
         ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
         OutputStreamStreamOutput out = new OutputStreamStreamOutput(outBuffer);
@@ -984,7 +984,7 @@ public class StoreTests extends OpenSearchTestCase {
         );
         ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
         OutputStreamStreamOutput out = new OutputStreamStreamOutput(outBuffer);
-        org.opensearch.Version targetNodeVersion = randomVersion(random());
+        org.density.Version targetNodeVersion = randomVersion(random());
         out.setVersion(targetNodeVersion);
         outStoreFileMetadata.writeTo(out);
         ByteArrayInputStream inBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
@@ -1285,7 +1285,7 @@ public class StoreTests extends OpenSearchTestCase {
         IndexSettings indexSettings = IndexSettingsModule.newIndexSettings(
             "index",
             Settings.builder()
-                .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+                .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
                 .put(IndexModule.INDEX_STORE_TYPE_SETTING.getKey(), IndexModule.Type.FS.getSettingsKey())
                 .build()
         );

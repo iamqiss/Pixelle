@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene;
+package org.density.common.lucene;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -40,9 +40,9 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ShardCoreKeyMapTests extends OpenSearchTestCase {
+public class ShardCoreKeyMapTests extends DensityTestCase {
 
     public void testMissingShard() throws IOException {
         try (Directory dir = newDirectory(); RandomIndexWriter w = new RandomIndexWriter(random(), dir)) {
@@ -73,7 +73,7 @@ public class ShardCoreKeyMapTests extends OpenSearchTestCase {
         LeafReader reader;
         try (Directory dir = newDirectory(); RandomIndexWriter writer = new RandomIndexWriter(random(), dir)) {
             writer.addDocument(new Document());
-            try (DirectoryReader dirReader = OpenSearchDirectoryReader.wrap(writer.getReader(), new ShardId("index1", "_na_", 1))) {
+            try (DirectoryReader dirReader = DensityDirectoryReader.wrap(writer.getReader(), new ShardId("index1", "_na_", 1))) {
                 reader = dirReader.leaves().get(0).reader();
             }
         }
@@ -104,9 +104,9 @@ public class ShardCoreKeyMapTests extends OpenSearchTestCase {
         ShardId shardId2 = new ShardId("index1", "_na_", 3);
         ShardId shardId3 = new ShardId("index2", "_na_", 2);
 
-        OpenSearchDirectoryReader reader1 = OpenSearchDirectoryReader.wrap(w1.getReader(), shardId1);
-        OpenSearchDirectoryReader reader2 = OpenSearchDirectoryReader.wrap(w2.getReader(), shardId2);
-        OpenSearchDirectoryReader reader3 = OpenSearchDirectoryReader.wrap(w3.getReader(), shardId3);
+        DensityDirectoryReader reader1 = DensityDirectoryReader.wrap(w1.getReader(), shardId1);
+        DensityDirectoryReader reader2 = DensityDirectoryReader.wrap(w2.getReader(), shardId2);
+        DensityDirectoryReader reader3 = DensityDirectoryReader.wrap(w3.getReader(), shardId3);
 
         ShardCoreKeyMap map = new ShardCoreKeyMap();
         for (DirectoryReader reader : Arrays.asList(reader1, reader2, reader3)) {
@@ -127,14 +127,14 @@ public class ShardCoreKeyMapTests extends OpenSearchTestCase {
         }
 
         w1.addDocument(new Document());
-        OpenSearchDirectoryReader newReader1 = OpenSearchDirectoryReader.wrap(w1.getReader(), shardId1);
+        DensityDirectoryReader newReader1 = DensityDirectoryReader.wrap(w1.getReader(), shardId1);
         reader1.close();
         reader1 = newReader1;
 
         // same for reader2, but with a force merge to trigger evictions
         w2.addDocument(new Document());
         w2.forceMerge(1);
-        OpenSearchDirectoryReader newReader2 = OpenSearchDirectoryReader.wrap(w2.getReader(), shardId2);
+        DensityDirectoryReader newReader2 = DensityDirectoryReader.wrap(w2.getReader(), shardId2);
         reader2.close();
         reader2 = newReader2;
 

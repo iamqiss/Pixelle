@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,10 +27,10 @@
  * under the License.
  */
 
-package org.opensearch.gradle.internal
+package org.density.gradle.internal
 
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.VersionProperties
+import org.density.gradle.fixtures.AbstractGradleFuncTest
 import org.gradle.testkit.runner.TaskOutcome
 import spock.lang.Unroll
 
@@ -44,7 +44,7 @@ class InternalDistributionArchiveCheckPluginFuncTest extends AbstractGradleFuncT
 
             file("${projName}/build.gradle") << """
                 plugins {
-                  id 'opensearch.internal-distribution-archive-check'
+                  id 'density.internal-distribution-archive-check'
                 }"""
         }
         file("SomeFile.txt") << """
@@ -89,12 +89,12 @@ class InternalDistributionArchiveCheckPluginFuncTest extends AbstractGradleFuncT
     def "fails on unexpected notice content"() {
         given:
         license(file("LICENSE.txt"))
-        file("NOTICE.txt").text = """OpenSearch (https://opensearch.org/)
+        file("NOTICE.txt").text = """Density (https://density.org/)
 Copyright 2009-2018 Acme Coorp"""
         buildFile << """
             apply plugin:'base'
             tasks.withType(AbstractArchiveTask).configureEach {
-                into("opensearch-${VersionProperties.getOpenSearch()}") {
+                into("density-${VersionProperties.getDensity()}") {
                     from 'LICENSE.txt'
                     from 'SomeFile.txt'
                     from 'NOTICE.txt'
@@ -107,8 +107,8 @@ Copyright 2009-2018 Acme Coorp"""
         then:
         result.task(":darwin-tar:checkNotice").outcome == TaskOutcome.FAILED
         normalizedOutput(result.output).contains("> expected line [2] in " +
-                "[./darwin-tar/build/tar-extracted/opensearch-${VersionProperties.getOpenSearch()}/NOTICE.txt] " +
-                "to be [Copyright OpenSearch Contributors] but was [Copyright 2009-2018 Acme Coorp]")
+                "[./darwin-tar/build/tar-extracted/density-${VersionProperties.getDensity()}/NOTICE.txt] " +
+                "to be [Copyright Density Contributors] but was [Copyright 2009-2018 Acme Coorp]")
     }
 
     void license(File file = file("licenses/APACHE-LICENSE-2.0.txt")) {

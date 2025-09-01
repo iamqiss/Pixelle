@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.checkpoint;
+package org.density.indices.replication.checkpoint;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.index.shard.IndexShard;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.inject.Inject;
+import org.density.index.shard.IndexShard;
 
 import java.util.Objects;
 
 /**
  * Publish primary shard referenced segments.
  *
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public class ReferencedSegmentsPublisher {
@@ -40,7 +40,7 @@ public class ReferencedSegmentsPublisher {
     /**
      * Represents an action that is invoked to publish referenced segments checkpoint to replica shard
      *
-     * @opensearch.api
+     * @density.api
      */
     @ExperimentalApi
     public interface PublishAction {

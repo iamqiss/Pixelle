@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.javaagent;
+package org.density.javaagent;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class SocketChannelInterceptorTests extends AgentTestCase {
 
             assertThrows(SecurityException.class, () -> channel.connect(UnixDomainSocketAddress.of("fake-path")));
 
-            assertThrows(SecurityException.class, () -> channel.connect(new InetSocketAddress("opensearch.org", 80)));
+            assertThrows(SecurityException.class, () -> channel.connect(new InetSocketAddress("density.org", 80)));
         }
 
         assertThrows(SecurityException.class, () -> new Socket("localhost", 9200));

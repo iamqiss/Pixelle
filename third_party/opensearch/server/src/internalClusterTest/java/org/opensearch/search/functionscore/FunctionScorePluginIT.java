@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.functionscore;
+package org.density.search.functionscore;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.search.Explanation;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.Priority;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.query.functionscore.DecayFunction;
-import org.opensearch.index.query.functionscore.DecayFunctionBuilder;
-import org.opensearch.index.query.functionscore.DecayFunctionParser;
-import org.opensearch.index.query.functionscore.ScoreFunctionParser;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.common.Priority;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.query.functionscore.DecayFunction;
+import org.density.index.query.functionscore.DecayFunctionBuilder;
+import org.density.index.query.functionscore.DecayFunctionParser;
+import org.density.index.query.functionscore.ScoreFunctionParser;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.search.SearchHits;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -60,17 +60,17 @@ import java.util.Collection;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.transport.client.Requests.indexRequest;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.transport.client.Requests.indexRequest;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.equalTo;
 
 @ClusterScope(scope = Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 1)
-public class FunctionScorePluginIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class FunctionScorePluginIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public FunctionScorePluginIT(Settings staticSettings) {
         super(staticSettings);
@@ -125,7 +125,7 @@ public class FunctionScorePluginIT extends ParameterizedStaticSettingsOpenSearch
         );
 
         SearchResponse sr = response.actionGet();
-        OpenSearchAssertions.assertNoFailures(sr);
+        DensityAssertions.assertNoFailures(sr);
         SearchHits sh = sr.getHits();
 
         assertThat(sh.getHits().length, equalTo(2));

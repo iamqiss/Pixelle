@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.search.SearchPhaseResult;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.search.SearchPhaseResult;
 
 import java.util.stream.Stream;
 
 /**
  * This class acts as a basic result collection that can be extended to do on-the-fly reduction or result processing
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ArraySearchPhaseResults<Result extends SearchPhaseResult> extends SearchPhaseResults<Result> {
     final AtomicArray<Result> results;

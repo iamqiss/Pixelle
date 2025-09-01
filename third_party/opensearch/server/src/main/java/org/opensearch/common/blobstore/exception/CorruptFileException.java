@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.exception;
+package org.density.common.blobstore.exception;
 
 import java.io.IOException;
 
 /**
  * Exception thrown when remote integrity checks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CorruptFileException extends IOException {
 

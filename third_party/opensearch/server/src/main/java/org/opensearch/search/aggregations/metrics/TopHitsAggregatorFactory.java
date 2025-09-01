@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.SubSearchContext;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.SubSearchContext;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,7 +56,7 @@ import java.util.Optional;
 /**
  * Aggregation Factory for top_hits agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 class TopHitsAggregatorFactory extends AggregatorFactory {
 

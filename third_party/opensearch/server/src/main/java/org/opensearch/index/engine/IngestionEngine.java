@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.streamingingestion.state.ShardIngestionState;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IngestionSource;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.NoOpTranslogManager;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.index.translog.listener.CompositeTranslogEventListener;
-import org.opensearch.indices.pollingingest.DefaultStreamPoller;
-import org.opensearch.indices.pollingingest.IngestionErrorStrategy;
-import org.opensearch.indices.pollingingest.IngestionSettings;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.indices.pollingingest.StreamPoller;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.admin.indices.streamingingestion.state.ShardIngestionState;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IngestionSource;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.core.common.Strings;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.IngestionShardPointer;
+import org.density.index.VersionType;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.NoOpTranslogManager;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogStats;
+import org.density.index.translog.listener.CompositeTranslogEventListener;
+import org.density.indices.pollingingest.DefaultStreamPoller;
+import org.density.indices.pollingingest.IngestionErrorStrategy;
+import org.density.indices.pollingingest.IngestionSettings;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.indices.pollingingest.StreamPoller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,9 +54,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-import static org.opensearch.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
-import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_LOCATION;
-import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
+import static org.density.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
+import static org.density.index.translog.Translog.EMPTY_TRANSLOG_LOCATION;
+import static org.density.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
 
 /**
  * IngestionEngine is an engine that ingests data from a stream source.
@@ -594,14 +594,14 @@ public class IngestionEngine extends InternalEngine {
             unregisterStreamPollerListener();
             initializeStreamPoller(resetState, resetValue, startPointer);
         } catch (Exception e) {
-            throw new OpenSearchException("Failed to reset stream poller", e);
+            throw new DensityException("Failed to reset stream poller", e);
         }
 
         try {
             // force flush to persist the new batch start pointer
             flush(true, true);
         } catch (Exception e) {
-            throw new OpenSearchException("Exception during flush. Poller successfully reset, but reset value might not be persisted.", e);
+            throw new DensityException("Exception during flush. Poller successfully reset, but reset value might not be persisted.", e);
         }
     }
 

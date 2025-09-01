@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client.node;
+package org.density.transport.client.node;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpClient;
-import org.opensearch.transport.client.OriginSettingClient;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.SearchRequest;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpClient;
+import org.density.transport.client.OriginSettingClient;
 
-public class OriginSettingClientTests extends OpenSearchTestCase {
+public class OriginSettingClientTests extends DensityTestCase {
     public void testSetsParentId() {
         String origin = randomAlphaOfLength(7);
 

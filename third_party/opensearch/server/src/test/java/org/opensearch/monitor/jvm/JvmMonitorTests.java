@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JvmMonitorTests extends OpenSearchTestCase {
+public class JvmMonitorTests extends DensityTestCase {
 
     private static final JvmGcMonitorService.GcOverheadThreshold IGNORE = new JvmGcMonitorService.GcOverheadThreshold(0, 0, 0);
 

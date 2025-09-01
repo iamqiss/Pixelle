@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.PitSegmentsAction;
-import org.opensearch.action.admin.indices.segments.PitSegmentsRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.PitSegmentsAction;
+import org.density.action.admin.indices.segments.PitSegmentsRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.action.ActionFuture;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.index.shard.ShardId;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.transport.client.Client;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.test.OpenSearchTestCase.between;
-import static org.opensearch.test.OpenSearchTestCase.randomAlphaOfLength;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.between;
+import static org.density.test.DensityTestCase.randomAlphaOfLength;
+import static org.density.test.DensityTestCase.randomBoolean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

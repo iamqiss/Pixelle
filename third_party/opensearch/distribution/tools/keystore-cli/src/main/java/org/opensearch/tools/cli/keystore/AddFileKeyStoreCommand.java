@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.env.Environment;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.env.Environment;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

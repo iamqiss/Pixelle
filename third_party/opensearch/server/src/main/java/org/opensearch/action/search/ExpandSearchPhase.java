@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.internal.InternalSearchResponse;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.action.ActionListener;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchPhaseResult;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.internal.InternalSearchResponse;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,7 +54,7 @@ import java.util.List;
  * field-collapsing on the inner hits. This phase only executes if field collapsing is requested in the search request and otherwise
  * forwards to the next phase immediately.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class ExpandSearchPhase extends SearchPhase {
     private final SearchPhaseContext context;

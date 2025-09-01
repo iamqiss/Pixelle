@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geometry.utils;
+package org.density.geometry.utils;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.geometry.Rectangle;
+import org.density.test.DensityTestCase;
 
 /**
  * Tests for {@link Geohash}
  */
-public class GeoHashTests extends OpenSearchTestCase {
+public class GeoHashTests extends DensityTestCase {
     public void testGeohashAsLongRoutines() {
         final GeoPoint expected = new GeoPoint();
         final GeoPoint actual = new GeoPoint();

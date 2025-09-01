@@ -1,7 +1,7 @@
 {
   "indices.get_template":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/im-plugin/index-templates",
+      "url":"https://density.org/docs/latest/im-plugin/index-templates",
       "description":"Returns an index template."
     },
     "stability":"stable",

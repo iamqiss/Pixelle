@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.plugin;
+package org.density.index.query.plugin;
 
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 
-public class CustomQueryParserIT extends OpenSearchIntegTestCase {
+public class CustomQueryParserIT extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Arrays.asList(DummyQueryParserPlugin.class);

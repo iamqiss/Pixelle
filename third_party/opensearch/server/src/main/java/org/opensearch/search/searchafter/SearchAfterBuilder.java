@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.searchafter;
+package org.density.search.searchafter;
 
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSortField;
 import org.apache.lucene.search.SortedSetSortField;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.sort.SortAndFormats;
+import org.density.DensityException;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.search.DocValueFormat;
+import org.density.search.sort.SortAndFormats;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -61,7 +61,7 @@ import java.util.Objects;
 /**
  * Builds a search after object
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchAfterBuilder implements ToXContentObject, Writeable {
     public static final ParseField SEARCH_AFTER = new ParseField("search_after");
@@ -344,7 +344,7 @@ public class SearchAfterBuilder implements ToXContentObject, Writeable {
             toXContent(builder, EMPTY_PARAMS);
             return builder.toString();
         } catch (Exception e) {
-            throw new OpenSearchException("Failed to build xcontent.", e);
+            throw new DensityException("Failed to build xcontent.", e);
         }
     }
 }

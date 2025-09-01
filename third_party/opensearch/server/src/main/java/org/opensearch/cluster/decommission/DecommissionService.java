@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateObserver.Listener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityTimeoutException;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateObserver.Listener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,15 +43,15 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.admin.cluster.configuration.TransportAddVotingConfigExclusionsAction.MAXIMUM_VOTING_CONFIG_EXCLUSIONS_SETTING;
-import static org.opensearch.action.admin.cluster.configuration.VotingConfigExclusionsHelper.clearExclusionsAndGetState;
-import static org.opensearch.cluster.decommission.DecommissionHelper.addVotingConfigExclusionsForNodesToBeDecommissioned;
-import static org.opensearch.cluster.decommission.DecommissionHelper.deleteDecommissionAttributeInClusterState;
-import static org.opensearch.cluster.decommission.DecommissionHelper.filterNodesWithDecommissionAttribute;
-import static org.opensearch.cluster.decommission.DecommissionHelper.nodeHasDecommissionedAttribute;
-import static org.opensearch.cluster.decommission.DecommissionHelper.registerDecommissionAttributeInClusterState;
-import static org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_ATTRIBUTE_SETTING;
-import static org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_FORCE_GROUP_SETTING;
+import static org.density.action.admin.cluster.configuration.TransportAddVotingConfigExclusionsAction.MAXIMUM_VOTING_CONFIG_EXCLUSIONS_SETTING;
+import static org.density.action.admin.cluster.configuration.VotingConfigExclusionsHelper.clearExclusionsAndGetState;
+import static org.density.cluster.decommission.DecommissionHelper.addVotingConfigExclusionsForNodesToBeDecommissioned;
+import static org.density.cluster.decommission.DecommissionHelper.deleteDecommissionAttributeInClusterState;
+import static org.density.cluster.decommission.DecommissionHelper.filterNodesWithDecommissionAttribute;
+import static org.density.cluster.decommission.DecommissionHelper.nodeHasDecommissionedAttribute;
+import static org.density.cluster.decommission.DecommissionHelper.registerDecommissionAttributeInClusterState;
+import static org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_ATTRIBUTE_SETTING;
+import static org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider.CLUSTER_ROUTING_ALLOCATION_AWARENESS_FORCE_GROUP_SETTING;
 
 /**
  * Service responsible for entire lifecycle of decommissioning and recommissioning an awareness attribute.
@@ -66,7 +66,7 @@ import static org.opensearch.cluster.routing.allocation.decider.AwarenessAllocat
  * <li>If service fails at any step, it makes best attempt to mark the status as {@link DecommissionStatus#FAILED} and to clear voting config exclusion</li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DecommissionService {
 
@@ -281,7 +281,7 @@ public class DecommissionService {
                             + nodeIdsToBeExcluded.toString()
                             + "] from voting config";
                         logger.error(errorMsg);
-                        listener.onFailure(new OpenSearchTimeoutException(errorMsg));
+                        listener.onFailure(new DensityTimeoutException(errorMsg));
                         // will go ahead and clear the voting config and mark the status as failed
                         decommissionController.updateMetadataWithDecommissionStatus(DecommissionStatus.FAILED, statusUpdateListener());
                     }
@@ -541,7 +541,7 @@ public class DecommissionService {
         /*
          * For abandoned requests, we might not really know if it actually restored the exclusion list.
          * And can land up in cases where even after recommission, exclusions are set(which is unexpected).
-         * And by definition of OpenSearch - Clusters should have no voting configuration exclusions in normal operation.
+         * And by definition of Density - Clusters should have no voting configuration exclusions in normal operation.
          * Once the excluded nodes have stopped, clear the voting configuration exclusions with DELETE /_cluster/voting_config_exclusions.
          * And hence it is safe to remove the exclusion if any. User should make conscious choice before decommissioning awareness attribute.
          */

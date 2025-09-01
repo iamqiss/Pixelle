@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SuppressLoggerChecks;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressLoggerChecks;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.Callable;
 
@@ -49,7 +49,7 @@ import static org.mockito.Mockito.when;
 /**
  * Tests {@link AbstractLifecycleRunnable}.
  */
-public class AbstractLifecycleRunnableTests extends OpenSearchTestCase {
+public class AbstractLifecycleRunnableTests extends DensityTestCase {
     private final Lifecycle lifecycle = mock(Lifecycle.class);
     private final Logger logger = mock(Logger.class);
 

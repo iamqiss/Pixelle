@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.protobufs.MatchNoneQuery;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.protobufs.MatchNoneQuery;
 
 /**
- * Utility class for converting MatchNoneQuery Protocol Buffers to OpenSearch objects.
+ * Utility class for converting MatchNoneQuery Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of match_none queries
- * into their corresponding OpenSearch MatchNoneQueryBuilder implementations for search operations.
+ * into their corresponding Density MatchNoneQueryBuilder implementations for search operations.
  */
 public class MatchNoneQueryBuilderProtoUtils {
 
@@ -23,7 +23,7 @@ public class MatchNoneQueryBuilderProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer MatchNoneQuery to an OpenSearch MatchNoneQueryBuilder.
+     * Converts a Protocol Buffer MatchNoneQuery to an Density MatchNoneQueryBuilder.
      * Similar to {@link MatchNoneQueryBuilder#fromXContent(XContentParser)}, this method
      * parses the Protocol Buffer representation and creates a properly configured
      * MatchNoneQueryBuilder with the appropriate boost and name settings.

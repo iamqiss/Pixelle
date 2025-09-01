@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class MinHashFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class MinHashFilterFactoryTests extends DensityTokenStreamTestCase {
     public void testDefault() throws IOException {
         int default_hash_count = 1;
         int default_bucket_size = 512;
         int default_hash_set_size = 1;
         Settings settings = Settings.builder().put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString()).build();
-        OpenSearchTestCase.TestAnalysis analysis = getTestAnalysisFromSettings(settings);
+        DensityTestCase.TestAnalysis analysis = getTestAnalysisFromSettings(settings);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("min_hash");
         String source = "the quick brown fox";
         Tokenizer tokenizer = getTokenizer(source);
@@ -69,7 +69,7 @@ public class MinHashFilterFactoryTests extends OpenSearchTokenStreamTestCase {
             .put("index.analysis.filter.test_min_hash.with_rotation", false)
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = getTestAnalysisFromSettings(settings);
+        DensityTestCase.TestAnalysis analysis = getTestAnalysisFromSettings(settings);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("test_min_hash");
         String source = "sushi";
         Tokenizer tokenizer = getTokenizer(source);
@@ -90,7 +90,7 @@ public class MinHashFilterFactoryTests extends OpenSearchTokenStreamTestCase {
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
 
-        OpenSearchTestCase.TestAnalysis analysisWithBucketCount = getTestAnalysisFromSettings(settingsWithBucketCount);
+        DensityTestCase.TestAnalysis analysisWithBucketCount = getTestAnalysisFromSettings(settingsWithBucketCount);
 
         TokenFilterFactory tokenFilterWithBucketCount = analysisWithBucketCount.tokenFilter.get("test_min_hash");
         String sourceWithBucketCount = "salmon avocado roll uramaki";
@@ -110,7 +110,7 @@ public class MinHashFilterFactoryTests extends OpenSearchTokenStreamTestCase {
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
 
-        OpenSearchTestCase.TestAnalysis analysisWithHashSetSize = getTestAnalysisFromSettings(settingsWithHashSetSize);
+        DensityTestCase.TestAnalysis analysisWithHashSetSize = getTestAnalysisFromSettings(settingsWithHashSetSize);
 
         TokenFilterFactory tokenFilterWithHashSetSize = analysisWithHashSetSize.tokenFilter.get("test_min_hash");
         String sourceWithHashSetSize = "salmon avocado roll uramaki";
@@ -119,7 +119,7 @@ public class MinHashFilterFactoryTests extends OpenSearchTokenStreamTestCase {
         assertStreamHasNumberOfTokens(tokenFilterWithHashSetSize.create(tokenizerWithHashSetSize), 2);
     }
 
-    private static OpenSearchTestCase.TestAnalysis getTestAnalysisFromSettings(Settings settingsWithBucketCount) throws IOException {
+    private static DensityTestCase.TestAnalysis getTestAnalysisFromSettings(Settings settingsWithBucketCount) throws IOException {
         return AnalysisTestsHelper.createTestAnalysisFromSettings(settingsWithBucketCount, new CommonAnalysisModulePlugin());
     }
 

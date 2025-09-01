@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.node.NodeValidationException;
-import org.opensearch.test.AbstractBootstrapCheckTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.node.NodeValidationException;
+import org.density.test.AbstractBootstrapCheckTestCase;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +44,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.bootstrap.BootstrapChecks.OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS;
+import static org.density.bootstrap.BootstrapChecks.DENSITY_ENFORCE_BOOTSTRAP_CHECKS;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class EvilBootstrapChecksTests extends AbstractBootstrapCheckTestCase {
 
-    private String esEnforceBootstrapChecks = System.getProperty(OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS);
+    private String esEnforceBootstrapChecks = System.getProperty(DENSITY_ENFORCE_BOOTSTRAP_CHECKS);
 
     @Override
     @Before
@@ -101,16 +101,16 @@ public class EvilBootstrapChecksTests extends AbstractBootstrapCheckTestCase {
                 IllegalArgumentException.class,
                 () -> BootstrapChecks.check(emptyContext, enforceLimits, emptyList()));
         final Matcher<String> matcher = containsString(
-                "[opensearch.enforce.bootstrap.checks] must be [true] but was [" + value + "]");
+                "[density.enforce.bootstrap.checks] must be [true] but was [" + value + "]");
         assertThat(e, hasToString(matcher));
     }
 
-    @SuppressForbidden(reason = "set or clear system property opensearch.enforce.bootstrap.checks")
+    @SuppressForbidden(reason = "set or clear system property density.enforce.bootstrap.checks")
     public void setEsEnforceBootstrapChecks(final String value) {
         if (value == null) {
-            System.clearProperty(OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS);
+            System.clearProperty(DENSITY_ENFORCE_BOOTSTRAP_CHECKS);
         } else {
-            System.setProperty(OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS, value);
+            System.setProperty(DENSITY_ENFORCE_BOOTSTRAP_CHECKS, value);
         }
     }
 

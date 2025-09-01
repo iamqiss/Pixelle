@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.rollover.RolloverInfo;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestCustomMetadata;
+import org.density.Version;
+import org.density.action.admin.indices.rollover.RolloverInfo;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.TestCustomMetadata;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,17 +53,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createFirstBackingIndex;
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.cluster.metadata.AliasMetadata.newAliasMetadataBuilder;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
-import static org.opensearch.cluster.metadata.Metadata.CONTEXT_MODE_API;
-import static org.opensearch.cluster.metadata.Metadata.CONTEXT_MODE_GATEWAY;
+import static org.density.cluster.DataStreamTestHelper.createFirstBackingIndex;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.cluster.metadata.AliasMetadata.newAliasMetadataBuilder;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.Metadata.CONTEXT_MODE_API;
+import static org.density.cluster.metadata.Metadata.CONTEXT_MODE_GATEWAY;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class ToAndFromJsonMetadataTests extends OpenSearchTestCase {
+public class ToAndFromJsonMetadataTests extends DensityTestCase {
 
     public void testSimpleJsonFromAndTo() throws IOException {
         IndexMetadata idx1 = createFirstBackingIndex("data-stream1").build();

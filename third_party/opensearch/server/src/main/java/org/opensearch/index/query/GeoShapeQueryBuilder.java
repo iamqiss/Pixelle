@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.ConstantScoreQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.mapper.GeoShapeQueryable;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.index.mapper.GeoShapeQueryable;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -58,7 +58,7 @@ import java.util.function.Supplier;
  * <p>
  * GeoJson and WKT shape definitions are supported
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeQueryBuilder extends AbstractGeometryQueryBuilder<GeoShapeQueryBuilder> {
     public static final String NAME = "geo_shape";
@@ -234,7 +234,7 @@ public class GeoShapeQueryBuilder extends AbstractGeometryQueryBuilder<GeoShapeQ
     /**
      * Geoshape query parameters that have been parsed from xcontent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ParsedGeoShapeQueryParams extends ParsedGeometryQueryParams {
         SpatialStrategy strategy;

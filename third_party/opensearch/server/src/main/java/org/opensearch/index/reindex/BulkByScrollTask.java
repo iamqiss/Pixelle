@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,9 +67,9 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.min;
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.unit.TimeValue.timeValueNanos;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.common.unit.TimeValue.timeValueNanos;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Task storing information about a currently running BulkByScroll request.
@@ -84,7 +84,7 @@ import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedTok
  * be either depending on the number of shards in the source indices. We figure that out when the request is handled and set it on this
  * class with {@link #setWorkerCount(int)} or {@link #setWorker(float, Integer)}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BulkByScrollTask extends CancellableTask {
 
@@ -224,7 +224,7 @@ public class BulkByScrollTask extends CancellableTask {
      * {@link #buildStatus()} it is immutable. Used by an instance of {@link ObjectParser} when parsing from
      * XContent.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class StatusBuilder {
         private Integer sliceId = null;
@@ -359,7 +359,7 @@ public class BulkByScrollTask extends CancellableTask {
      * parses it. As such, we should be very careful about removing things from
      * this.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Status implements Task.Status, SuccessfullyProcessed {
         public static final String NAME = "bulk-by-scroll";
@@ -933,7 +933,7 @@ public class BulkByScrollTask extends CancellableTask {
      * The status of a slice of the request. Successful requests store the {@link StatusOrException#status} while failing requests store a
      * {@link StatusOrException#exception}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class StatusOrException implements Writeable, ToXContentObject {
         private final Status status;
@@ -999,7 +999,7 @@ public class BulkByScrollTask extends CancellableTask {
                 status.toXContent(builder, params);
             } else {
                 builder.startObject();
-                OpenSearchException.generateThrowableXContent(builder, params, exception);
+                DensityException.generateThrowableXContent(builder, params, exception);
                 builder.endObject();
             }
             return builder;
@@ -1031,7 +1031,7 @@ public class BulkByScrollTask extends CancellableTask {
                     if (Status.FIELDS_SET.contains(fieldName)) {
                         return new StatusOrException(Status.innerFromXContent(parser));
                     } else if (EXPECTED_EXCEPTION_FIELDS.contains(fieldName)) {
-                        return new StatusOrException(OpenSearchException.innerFromXContent(parser, false));
+                        return new StatusOrException(DensityException.innerFromXContent(parser, false));
                     } else {
                         // Ignore unknown tokens
                         token = parser.nextToken();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.hc.client5.http.auth.AuthScope;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
@@ -45,33 +45,33 @@ import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.util.Timeout;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilder;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.index.reindex.remote.RemoteScrollableHitSource;
-import org.opensearch.index.reindex.spi.RemoteReindexExtension;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.ParentTaskAssigningClient;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.index.IndexRequest;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilder;
+import org.density.cluster.service.ClusterService;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.index.reindex.remote.RemoteScrollableHitSource;
+import org.density.index.reindex.spi.RemoteReindexExtension;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.transport.client.ParentTaskAssigningClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,7 +87,7 @@ import java.util.function.BiFunction;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.synchronizedList;
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.index.VersionType.INTERNAL;
+import static org.density.index.VersionType.INTERNAL;
 
 public class Reindexer {
 
@@ -258,8 +258,8 @@ public class Reindexer {
     static class AsyncIndexBySearchAction extends AbstractAsyncBulkByScrollAction<ReindexRequest, TransportReindexAction> {
 
         /**
-         * List of threads created by this process. Usually actions don't create threads in OpenSearch. Instead they use the builtin
-         * {@link ThreadPool}s. But reindex-from-remote uses OpenSearch's {@link RestClient} which doesn't use the
+         * List of threads created by this process. Usually actions don't create threads in Density. Instead they use the builtin
+         * {@link ThreadPool}s. But reindex-from-remote uses Density's {@link RestClient} which doesn't use the
          * {@linkplain ThreadPool}s because it uses httpasyncclient. It'd be a ton of trouble to work around creating those threads. So
          * instead we let it create threads but we watch them carefully and assert that they are dead when the process is over.
          */

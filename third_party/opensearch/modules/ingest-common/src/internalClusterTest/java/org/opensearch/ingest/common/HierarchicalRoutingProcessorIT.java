@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.PrefixQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.PrefixQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class HierarchicalRoutingProcessorIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class HierarchicalRoutingProcessorIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -283,12 +283,12 @@ public class HierarchicalRoutingProcessorIT extends OpenSearchIntegTestCase {
     private String computeRouting(String anchor, String separator) {
         // This mirrors the logic in HierarchicalRoutingProcessor
         byte[] anchorBytes = anchor.getBytes(java.nio.charset.StandardCharsets.UTF_8);
-        long hash = org.opensearch.common.hash.MurmurHash3.hash128(
+        long hash = org.density.common.hash.MurmurHash3.hash128(
             anchorBytes,
             0,
             anchorBytes.length,
             0,
-            new org.opensearch.common.hash.MurmurHash3.Hash128()
+            new org.density.common.hash.MurmurHash3.Hash128()
         ).h1;
         return String.valueOf(hash == Long.MIN_VALUE ? 0L : (hash < 0 ? -hash : hash));
     }

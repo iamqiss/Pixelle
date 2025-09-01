@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,11 +23,11 @@
  * limitations under the license.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
@@ -38,7 +38,7 @@ import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.core.pattern.ExtendedThrowablePatternConverter;
 import org.apache.logging.log4j.core.pattern.PatternConverter;
 import org.apache.logging.log4j.core.pattern.ThrowablePatternConverter;
-import org.opensearch.core.common.Strings;
+import org.density.core.common.Strings;
 
 import java.nio.charset.Charset;
 import java.util.StringJoiner;
@@ -51,7 +51,7 @@ import java.util.StringJoiner;
  * Reusing @link org.apache.logging.log4j.core.pattern.ExtendedThrowablePatternConverter which already converts a Throwable from
  * LoggingEvent into a multiline string
  *
- * @opensearch.internal
+ * @density.internal
  */
 @Plugin(name = "JsonThrowablePatternConverter", category = PatternConverter.CATEGORY)
 @ConverterKeys({ "exceptionAsJson" })

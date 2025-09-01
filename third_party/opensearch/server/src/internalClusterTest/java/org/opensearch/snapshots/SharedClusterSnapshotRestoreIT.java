@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,64 +26,64 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.SnapshotsInProgress.State;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.BytesRefUtils;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.SnapshotsInProgress.State;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.BytesRefUtils;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.mapper.MapperService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
@@ -101,15 +101,15 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider.SETTING_ALLOCATION_MAX_RETRY;
-import static org.opensearch.index.shard.IndexShardTests.getEngineFromShard;
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAllSuccessful;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider.SETTING_ALLOCATION_MAX_RETRY;
+import static org.density.index.shard.IndexShardTests.getEngineFromShard;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAllSuccessful;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
@@ -394,7 +394,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
             .put("location", randomRepoPath())
             .put("random", randomAlphaOfLength(10))
             .put("random_control_io_exception_rate", 0.2);
-        OpenSearchIntegTestCase.putRepository(clusterAdmin(), "test-repo", "mock", false, settings);
+        DensityIntegTestCase.putRepository(clusterAdmin(), "test-repo", "mock", false, settings);
 
         createIndexWithRandomDocs("test-idx", 100);
 
@@ -427,7 +427,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
 
             final Throwable cause = ex.getCause();
             assertThat(cause, notNullValue());
-            final Throwable rootCause = new OpenSearchException(cause).getRootCause();
+            final Throwable rootCause = new DensityException(cause).getRootCause();
             assertThat(rootCause, notNullValue());
             assertThat(rootCause.getMessage(), containsString("Random IOException"));
         }
@@ -686,7 +686,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
 
         // update the test repository
         Settings.Builder settings = Settings.builder().put("location", repositoryLocation).put(repositorySettings);
-        OpenSearchIntegTestCase.putRepository(clusterAdmin(), "test-repo", "mock", settings);
+        DensityIntegTestCase.putRepository(clusterAdmin(), "test-repo", "mock", settings);
 
         // attempt to restore the snapshot with the given settings
         RestoreSnapshotResponse restoreResponse = clusterAdmin().prepareRestoreSnapshot("test-repo", "test-snap")
@@ -1009,7 +1009,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
         logger.info("--> trying to move repository to another location");
         Settings.Builder settings = Settings.builder().put("location", repositoryLocation.resolve("test"));
         try {
-            OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "fs", settings);
+            DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "fs", settings);
             fail("shouldn't be able to replace in-use repository");
         } catch (Exception ex) {
             logger.info("--> in-use repository replacement failed");
@@ -1017,7 +1017,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
 
         logger.info("--> trying to create a repository with different name");
         Settings.Builder settingsBuilder = Settings.builder().put("location", repositoryLocation.resolve("test"));
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo-2", "fs", false, settingsBuilder);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo-2", "fs", false, settingsBuilder);
 
         logger.info("--> unblocking blocked node");
         unblockNode("test-repo", blockedNode);
@@ -1928,7 +1928,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
             .put("random_control_io_exception_rate", randomIntBetween(5, 20) / 100f)
             // test that we can take a snapshot after a failed one, even if a partial index-N was written
             .put("random", randomAlphaOfLength(10));
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "mock", false, settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "mock", false, settings);
 
         assertAcked(
             prepareCreate("test-idx").setSettings(
@@ -1979,7 +1979,7 @@ public class SharedClusterSnapshotRestoreIT extends AbstractSnapshotIntegTestCas
         final Path repoPath = randomRepoPath();
         final Client client = client();
         Settings.Builder settings = Settings.builder().put("location", repoPath);
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "fs", false, settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo", "fs", false, settings);
 
         logger.info("--> creating random number of indices");
         final int numIndices = randomIntBetween(1, 10);

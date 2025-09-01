@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.protobufs.StringArray;
-import org.opensearch.protobufs.TermsLookupFieldStringArrayMap;
-import org.opensearch.protobufs.TermsQueryField;
-import org.opensearch.protobufs.ValueType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.protobufs.QueryContainer;
+import org.density.protobufs.StringArray;
+import org.density.protobufs.TermsLookupFieldStringArrayMap;
+import org.density.protobufs.TermsQueryField;
+import org.density.protobufs.ValueType;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TermsQueryBuilderProtoConverterTests extends OpenSearchTestCase {
+public class TermsQueryBuilderProtoConverterTests extends DensityTestCase {
 
     private TermsQueryBuilderProtoConverter converter;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent.decider;
+package org.density.persistent.decider;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -40,7 +40,7 @@ import java.util.Objects;
  *
  * @see EnableAssignmentDecider
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class AssignmentDecision {
 
@@ -70,7 +70,7 @@ public final class AssignmentDecision {
     /**
      * The decision.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type {
         NO(0),

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.SnapshotRecoverySource;
-import org.opensearch.common.Table;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentOpenSearchExtension;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.recovery.RecoveryRequest;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RecoverySource.SnapshotRecoverySource;
+import org.density.common.Table;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentDensityExtension;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.indices.recovery.RecoveryState;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.util.Comparator;
@@ -56,14 +56,14 @@ import java.util.Locale;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * RestRecoveryAction provides information about the status of replica recovery
  * in a string format, designed to be used at the command line. An Index can
  * be specified to limit output to a particular index or indices.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestCatRecoveryAction extends AbstractCatAction {
 
@@ -172,9 +172,9 @@ public class RestCatRecoveryAction extends AbstractCatAction {
                 t.startRow();
                 t.addCell(index);
                 t.addCell(state.getShardId().id());
-                t.addCell(XContentOpenSearchExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().startTime())));
+                t.addCell(XContentDensityExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().startTime())));
                 t.addCell(state.getTimer().startTime());
-                t.addCell(XContentOpenSearchExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().stopTime())));
+                t.addCell(XContentDensityExtension.DEFAULT_FORMATTER.format(Instant.ofEpochMilli(state.getTimer().stopTime())));
                 t.addCell(state.getTimer().stopTime());
                 t.addCell(new TimeValue(state.getTimer().time()));
                 t.addCell(state.getRecoverySource().getType().toString().toLowerCase(Locale.ROOT));

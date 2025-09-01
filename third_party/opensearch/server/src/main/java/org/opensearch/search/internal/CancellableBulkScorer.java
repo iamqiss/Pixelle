@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.search.BulkScorer;
 import org.apache.lucene.search.LeafCollector;
@@ -43,7 +43,7 @@ import java.util.Objects;
  * A {@link BulkScorer} wrapper that runs a {@link Runnable} on a regular basis
  * so that the query can be interrupted.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class CancellableBulkScorer extends BulkScorer {
 

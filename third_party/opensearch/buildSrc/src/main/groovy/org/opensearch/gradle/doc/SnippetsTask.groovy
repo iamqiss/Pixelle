@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,7 +27,7 @@
  * under the License.
  */
 
-package org.opensearch.gradle.doc
+package org.density.gradle.doc
 
 import groovy.json.JsonException
 import groovy.json.JsonParserType
@@ -67,7 +67,7 @@ class SnippetsTask extends DefaultTask {
 
     /**
      * The docs to scan. Defaults to every file in the directory exception the
-     * build.gradle file because that is appropriate for OpenSearch's docs
+     * build.gradle file because that is appropriate for Density's docs
      * directory.
      */
     @InputFiles
@@ -121,7 +121,7 @@ class SnippetsTask extends DefaultTask {
                 if (snippet.language == null) {
                     throw new InvalidUserDataException("$snippet: "
                         + "Snippet missing a language. This is required by "
-                        + "OpenSearch's doc testing infrastructure so we "
+                        + "Density's doc testing infrastructure so we "
                         + "be sure we don't accidentally forget to test a "
                         + "snippet.")
                 }

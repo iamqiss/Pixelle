@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.geo.GeometryFormat;
-import org.opensearch.common.geo.GeometryParser;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
+import org.density.common.geo.GeometryFormat;
+import org.density.common.geo.GeometryParser;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -49,7 +49,7 @@ import java.util.Collections;
 /**
  * Utility class that parses geo shapes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeParser extends AbstractGeometryFieldMapper.Parser<Geometry> {
     private final GeometryParser geometryParser;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
 import org.apache.hc.client5.http.ssl.DefaultHostnameVerifier;
@@ -38,17 +38,17 @@ import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.function.Factory;
 import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
 import org.apache.hc.core5.reactor.ssl.TlsDetails;
-import org.opensearch.common.settings.SecureSetting;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.ssl.SslConfiguration;
-import org.opensearch.common.ssl.SslConfigurationKeys;
-import org.opensearch.common.ssl.SslConfigurationLoader;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.watcher.FileChangesListener;
-import org.opensearch.watcher.FileWatcher;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.common.settings.SecureSetting;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.ssl.SslConfiguration;
+import org.density.common.ssl.SslConfigurationKeys;
+import org.density.common.ssl.SslConfigurationLoader;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.watcher.FileChangesListener;
+import org.density.watcher.FileWatcher;
+import org.density.watcher.ResourceWatcherService;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -64,8 +64,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.settings.Setting.listSetting;
-import static org.opensearch.common.settings.Setting.simpleString;
+import static org.density.common.settings.Setting.listSetting;
+import static org.density.common.settings.Setting.simpleString;
 
 /**
  * Loads "reindex.ssl.*" configuration from Settings, and makes the applicable configuration (trust manager / key manager / hostname

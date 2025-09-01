@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.AbstractRemoteWritableEntityManager;
-import org.opensearch.common.remote.RemoteWriteableEntityBlobStore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.model.RemoteIndexMetadata;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.AbstractRemoteWritableEntityManager;
+import org.density.common.remote.RemoteWriteableEntityBlobStore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.model.RemoteIndexMetadata;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -31,7 +31,7 @@ import java.util.Locale;
 /**
  * A Manager which provides APIs to write and read Index Metadata to remote store
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteIndexMetadataManager extends AbstractRemoteWritableEntityManager {
 

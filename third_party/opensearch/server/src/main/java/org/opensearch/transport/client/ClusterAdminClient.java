@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,157 +26,157 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client;
+package org.density.transport.client;
 
-import org.opensearch.action.admin.cluster.allocation.ClusterAllocationExplainRequest;
-import org.opensearch.action.admin.cluster.allocation.ClusterAllocationExplainRequestBuilder;
-import org.opensearch.action.admin.cluster.allocation.ClusterAllocationExplainResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequestBuilder;
-import org.opensearch.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequestBuilder;
-import org.opensearch.action.admin.cluster.decommission.awareness.get.GetDecommissionStateResponse;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionRequestBuilder;
-import org.opensearch.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodesHotThreadsRequest;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodesHotThreadsRequestBuilder;
-import org.opensearch.action.admin.cluster.node.hotthreads.NodesHotThreadsResponse;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequestBuilder;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.reload.NodesReloadSecureSettingsRequestBuilder;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequestBuilder;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequestBuilder;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskRequest;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskRequestBuilder;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequestBuilder;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.cluster.node.usage.NodesUsageRequest;
-import org.opensearch.action.admin.cluster.node.usage.NodesUsageRequestBuilder;
-import org.opensearch.action.admin.cluster.node.usage.NodesUsageResponse;
-import org.opensearch.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataRequest;
-import org.opensearch.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataRequestBuilder;
-import org.opensearch.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataResponse;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequest;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequestBuilder;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteRequest;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteRequestBuilder;
-import org.opensearch.action.admin.cluster.reroute.ClusterRerouteResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequestBuilder;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequestBuilder;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequestBuilder;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequestBuilder;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequestBuilder;
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
-import org.opensearch.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.clone.CloneSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusRequestBuilder;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequestBuilder;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequestBuilder;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.DeleteStoredScriptRequestBuilder;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptRequestBuilder;
-import org.opensearch.action.admin.cluster.storedscripts.GetStoredScriptResponse;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequest;
-import org.opensearch.action.admin.cluster.storedscripts.PutStoredScriptRequestBuilder;
-import org.opensearch.action.admin.cluster.tasks.PendingClusterTasksRequest;
-import org.opensearch.action.admin.cluster.tasks.PendingClusterTasksRequestBuilder;
-import org.opensearch.action.admin.cluster.tasks.PendingClusterTasksResponse;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsRequest;
-import org.opensearch.action.admin.cluster.wlm.WlmStatsResponse;
-import org.opensearch.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
-import org.opensearch.action.admin.indices.dangling.import_index.ImportDanglingIndexRequest;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
-import org.opensearch.action.ingest.DeletePipelineRequest;
-import org.opensearch.action.ingest.DeletePipelineRequestBuilder;
-import org.opensearch.action.ingest.GetPipelineRequest;
-import org.opensearch.action.ingest.GetPipelineRequestBuilder;
-import org.opensearch.action.ingest.GetPipelineResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.action.ingest.PutPipelineRequestBuilder;
-import org.opensearch.action.ingest.SimulatePipelineRequest;
-import org.opensearch.action.ingest.SimulatePipelineRequestBuilder;
-import org.opensearch.action.ingest.SimulatePipelineResponse;
-import org.opensearch.action.search.DeleteSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineResponse;
-import org.opensearch.action.search.PutSearchPipelineRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaType;
+import org.density.action.admin.cluster.allocation.ClusterAllocationExplainRequest;
+import org.density.action.admin.cluster.allocation.ClusterAllocationExplainRequestBuilder;
+import org.density.action.admin.cluster.allocation.ClusterAllocationExplainResponse;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateRequestBuilder;
+import org.density.action.admin.cluster.decommission.awareness.delete.DeleteDecommissionStateResponse;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequest;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateRequestBuilder;
+import org.density.action.admin.cluster.decommission.awareness.get.GetDecommissionStateResponse;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionRequest;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionRequestBuilder;
+import org.density.action.admin.cluster.decommission.awareness.put.DecommissionResponse;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.hotthreads.NodesHotThreadsRequest;
+import org.density.action.admin.cluster.node.hotthreads.NodesHotThreadsRequestBuilder;
+import org.density.action.admin.cluster.node.hotthreads.NodesHotThreadsResponse;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoRequestBuilder;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.reload.NodesReloadSecureSettingsRequestBuilder;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequestBuilder;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequestBuilder;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskRequest;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskRequestBuilder;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequestBuilder;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.cluster.node.usage.NodesUsageRequest;
+import org.density.action.admin.cluster.node.usage.NodesUsageRequestBuilder;
+import org.density.action.admin.cluster.node.usage.NodesUsageResponse;
+import org.density.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataRequest;
+import org.density.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataRequestBuilder;
+import org.density.action.admin.cluster.remotestore.metadata.RemoteStoreMetadataResponse;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreResponse;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequest;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequestBuilder;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequestBuilder;
+import org.density.action.admin.cluster.repositories.cleanup.CleanupRepositoryResponse;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.density.action.admin.cluster.repositories.delete.DeleteRepositoryRequestBuilder;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequest;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequest;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryRequest;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryRequestBuilder;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.action.admin.cluster.reroute.ClusterRerouteRequest;
+import org.density.action.admin.cluster.reroute.ClusterRerouteRequestBuilder;
+import org.density.action.admin.cluster.reroute.ClusterRerouteResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequestBuilder;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequestBuilder;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingRequestBuilder;
+import org.density.action.admin.cluster.shards.routing.weighted.delete.ClusterDeleteWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingRequestBuilder;
+import org.density.action.admin.cluster.shards.routing.weighted.get.ClusterGetWeightedRoutingResponse;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequest;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingRequestBuilder;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
+import org.density.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.clone.CloneSnapshotRequestBuilder;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequestBuilder;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequest;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusRequestBuilder;
+import org.density.action.admin.cluster.snapshots.status.SnapshotsStatusResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateRequestBuilder;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest;
+import org.density.action.admin.cluster.stats.ClusterStatsRequestBuilder;
+import org.density.action.admin.cluster.stats.ClusterStatsResponse;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.DeleteStoredScriptRequestBuilder;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptRequestBuilder;
+import org.density.action.admin.cluster.storedscripts.GetStoredScriptResponse;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequest;
+import org.density.action.admin.cluster.storedscripts.PutStoredScriptRequestBuilder;
+import org.density.action.admin.cluster.tasks.PendingClusterTasksRequest;
+import org.density.action.admin.cluster.tasks.PendingClusterTasksRequestBuilder;
+import org.density.action.admin.cluster.tasks.PendingClusterTasksResponse;
+import org.density.action.admin.cluster.wlm.WlmStatsRequest;
+import org.density.action.admin.cluster.wlm.WlmStatsResponse;
+import org.density.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
+import org.density.action.admin.indices.dangling.import_index.ImportDanglingIndexRequest;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
+import org.density.action.ingest.DeletePipelineRequest;
+import org.density.action.ingest.DeletePipelineRequestBuilder;
+import org.density.action.ingest.GetPipelineRequest;
+import org.density.action.ingest.GetPipelineRequestBuilder;
+import org.density.action.ingest.GetPipelineResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.action.ingest.PutPipelineRequestBuilder;
+import org.density.action.ingest.SimulatePipelineRequest;
+import org.density.action.ingest.SimulatePipelineRequestBuilder;
+import org.density.action.ingest.SimulatePipelineResponse;
+import org.density.action.search.DeleteSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineResponse;
+import org.density.action.search.PutSearchPipelineRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.action.ActionFuture;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaType;
 
 /**
  * Administrative actions/operations against indices.
  *
  * @see AdminClient#cluster()
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
-public interface ClusterAdminClient extends OpenSearchClient {
+public interface ClusterAdminClient extends DensityClient {
 
     /**
      * The health of the cluster.

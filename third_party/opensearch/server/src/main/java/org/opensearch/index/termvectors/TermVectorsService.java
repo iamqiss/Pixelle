@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.termvectors;
+package org.density.index.termvectors;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Fields;
@@ -42,32 +42,32 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermVectors;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.memory.MemoryIndex;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.termvectors.TermVectorsFilter;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.StringFieldType;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.shard.IndexShard;
+import org.density.DensityException;
+import org.density.action.termvectors.TermVectorsFilter;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.termvectors.TermVectorsResponse;
+import org.density.common.Nullable;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.index.engine.Engine;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.StringFieldType;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.mapper.Uid;
+import org.density.index.shard.IndexShard;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ import java.util.function.LongSupplier;
 /**
  * Service for Term Vectors
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermVectorsService {
 
@@ -154,7 +154,7 @@ public class TermVectorsService {
                     try {
                         termVectorsFilter.selectBestTerms();
                     } catch (IOException e) {
-                        throw new OpenSearchException("failed to select best terms", e);
+                        throw new DensityException("failed to select best terms", e);
                     }
                 }
                 // write term vectors
@@ -168,7 +168,7 @@ public class TermVectorsService {
             }
             termVectorsResponse.setTookInMillis(TimeUnit.NANOSECONDS.toMillis(nanoTimeSupplier.getAsLong() - startTime));
         } catch (Exception ex) {
-            throw new OpenSearchException("failed to execute term vector request", ex);
+            throw new DensityException("failed to execute term vector request", ex);
         }
         return termVectorsResponse;
     }
@@ -429,7 +429,7 @@ public class TermVectorsService {
     /**
      * Poached from Lucene ParallelLeafReader
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ParallelFields extends Fields {
         final Map<String, Terms> fields = new TreeMap<>();

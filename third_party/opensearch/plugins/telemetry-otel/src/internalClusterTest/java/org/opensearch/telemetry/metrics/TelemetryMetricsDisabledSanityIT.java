@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.metrics;
+package org.density.telemetry.metrics;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.telemetry.IntegrationTestOTelTelemetryPlugin;
-import org.opensearch.telemetry.OTelTelemetrySettings;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.noop.NoopCounter;
-import org.opensearch.telemetry.metrics.noop.NoopHistogram;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.plugins.Plugin;
+import org.density.telemetry.IntegrationTestOTelTelemetryPlugin;
+import org.density.telemetry.OTelTelemetrySettings;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.noop.NoopCounter;
+import org.density.telemetry.metrics.noop.NoopHistogram;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, minNumDataNodes = 1)
-public class TelemetryMetricsDisabledSanityIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, minNumDataNodes = 1)
+public class TelemetryMetricsDisabledSanityIT extends DensityIntegTestCase {
 
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {
@@ -32,7 +32,7 @@ public class TelemetryMetricsDisabledSanityIT extends OpenSearchIntegTestCase {
             .put(TelemetrySettings.METRICS_FEATURE_ENABLED_SETTING.getKey(), false)
             .put(
                 OTelTelemetrySettings.OTEL_METRICS_EXPORTER_CLASS_SETTING.getKey(),
-                "org.opensearch.telemetry.metrics.InMemorySingletonMetricsExporter"
+                "org.density.telemetry.metrics.InMemorySingletonMetricsExporter"
             )
             .put(TelemetrySettings.METRICS_PUBLISH_INTERVAL_SETTING.getKey(), TimeValue.timeValueSeconds(1))
             .build();

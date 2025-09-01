@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
 import org.apache.lucene.document.SortedDocValuesField;
 import org.apache.lucene.document.SortedSetDocValuesField;
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParseContext.Document;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParseContext.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ import java.util.stream.Collectors;
  * {@link CategoryQueryContext} defines options for constructing
  * a unit of query context for this context type
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CategoryContextMapping extends ContextMapping<CategoryQueryContext> {
 
@@ -97,7 +97,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
      *
      * Acceptable map param: <code>path</code>
      */
-    protected static CategoryContextMapping load(String name, Map<String, Object> config) throws OpenSearchParseException {
+    protected static CategoryContextMapping load(String name, Map<String, Object> config) throws DensityParseException {
         CategoryContextMapping.Builder mapping = new CategoryContextMapping.Builder(name);
         Object fieldName = config.get(FIELD_FIELDNAME);
         if (fieldName != null) {
@@ -125,7 +125,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
      *  </ul>
      */
     @Override
-    public Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, OpenSearchParseException {
+    public Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, DensityParseException {
         final Set<String> contexts = new HashSet<>();
         Token token = parser.currentToken();
         if (token == Token.VALUE_STRING || token == Token.VALUE_NUMBER || token == Token.VALUE_BOOLEAN) {
@@ -135,11 +135,11 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
                 if (token == Token.VALUE_STRING || token == Token.VALUE_NUMBER || token == Token.VALUE_BOOLEAN) {
                     contexts.add(parser.text());
                 } else {
-                    throw new OpenSearchParseException("context array must have string, number or boolean values, but was [" + token + "]");
+                    throw new DensityParseException("context array must have string, number or boolean values, but was [" + token + "]");
                 }
             }
         } else {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "contexts must be a string, number or boolean or a list of string, number or boolean, but was [" + token + "]"
             );
         }
@@ -220,7 +220,7 @@ public class CategoryContextMapping extends ContextMapping<CategoryQueryContext>
     /**
      * Builder for {@link CategoryContextMapping}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ContextBuilder<CategoryContextMapping> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4;
+package org.density.transport.netty4;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.InboundPipeline;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.Transports;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasables;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.bytes.BytesReference;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.InboundPipeline;
+import org.density.transport.Transport;
+import org.density.transport.Transports;
 
 import java.nio.channels.ClosedChannelException;
 import java.util.ArrayDeque;
@@ -100,7 +100,7 @@ final class Netty4MessageChannelHandler extends ChannelDuplexHandler {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         assert Transports.assertDefaultThreadContext(transport.getThreadPool().getThreadContext());
         ExceptionsHelper.maybeDieOnAnotherThread(cause);
-        final Throwable unwrapped = ExceptionsHelper.unwrap(cause, OpenSearchException.class);
+        final Throwable unwrapped = ExceptionsHelper.unwrap(cause, DensityException.class);
         final Throwable newCause = unwrapped != null ? unwrapped : cause;
         Netty4TcpChannel tcpChannel = ctx.channel().attr(Netty4Transport.CHANNEL_KEY).get();
         if (newCause instanceof Error) {

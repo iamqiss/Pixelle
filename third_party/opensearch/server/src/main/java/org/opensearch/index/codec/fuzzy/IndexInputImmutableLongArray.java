@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.fuzzy;
+package org.density.index.codec.fuzzy;
 
 import org.apache.lucene.store.RandomAccessInput;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.util.LongArray;
+import org.density.DensityException;
+import org.density.common.util.LongArray;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ class IndexInputImmutableLongArray implements LongArray {
             // RandomAccessInput being accessed.
             return input.readLong(index << 3);
         } catch (IOException ex) {
-            throw new OpenSearchException(ex);
+            throw new DensityException(ex);
         }
     }
 

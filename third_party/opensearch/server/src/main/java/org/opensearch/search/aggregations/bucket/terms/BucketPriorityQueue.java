@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.util.PriorityQueue;
 
@@ -38,7 +38,7 @@ import java.util.Comparator;
 /**
  * Internal priority queue for computing terms aggs
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BucketPriorityQueue<B extends Terms.Bucket> extends PriorityQueue<B> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationState.VoteCollection;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationState.VoteCollection;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Map;
@@ -55,13 +55,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.LongConsumer;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * Collects information prior to a promotion vote
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PreVoteCollector {
 
@@ -170,7 +170,7 @@ public class PreVoteCollector {
     /**
      * The pre vote round.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class PreVotingRound implements Releasable {
         private final Map<DiscoveryNode, PreVoteResponse> preVotesReceived = newConcurrentMap();

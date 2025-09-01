@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.command;
+package org.density.cluster.routing.allocation.command;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.RerouteExplanation;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.shard.ShardNotFoundException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.RerouteExplanation;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexNotFoundException;
+import org.density.index.shard.ShardNotFoundException;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -54,7 +54,7 @@ import java.util.Optional;
  * Allocates an unassigned stale primary shard to a specific node. Use with extreme care as this will result in data loss.
  * Allocation deciders are ignored.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AllocateStalePrimaryAllocationCommand extends BasePrimaryAllocationCommand {
     public static final String NAME = "allocate_stale_primary";
@@ -98,7 +98,7 @@ public class AllocateStalePrimaryAllocationCommand extends BasePrimaryAllocation
     /**
      * Builder for a stale primary allocation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends BasePrimaryAllocationCommand.Builder<AllocateStalePrimaryAllocationCommand> {
 

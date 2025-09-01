@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.http.HttpPipelinedRequest;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.NullDispatcher;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.SharedGroupFactory;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.http.HttpPipelinedRequest;
+import org.density.http.HttpResponse;
+import org.density.http.HttpServerTransport;
+import org.density.http.NullDispatcher;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.SharedGroupFactory;
 import org.junit.After;
 import org.junit.Before;
 
@@ -74,9 +74,9 @@ import io.netty.util.ReferenceCounted;
 import static org.hamcrest.Matchers.contains;
 
 /**
- * This test just tests, if he pipelining works in general with out any connection the OpenSearch handler
+ * This test just tests, if he pipelining works in general with out any connection the Density handler
  */
-public class Netty4HttpServerPipeliningTests extends OpenSearchTestCase {
+public class Netty4HttpServerPipeliningTests extends DensityTestCase {
     private NetworkService networkService;
     private ThreadPool threadPool;
     private MockBigArrays bigArrays;

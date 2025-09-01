@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore.support;
+package org.density.common.blobstore.support;
 
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
 
 /**
  * A base abstract blob container that implements higher level container methods.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractBlobContainer implements BlobContainer {
 

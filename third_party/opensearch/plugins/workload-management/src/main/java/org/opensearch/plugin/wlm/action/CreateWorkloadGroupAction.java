@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Transport action to create WorkloadGroup
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class CreateWorkloadGroupAction extends ActionType<CreateWorkloadGroupResponse> {
 
@@ -25,7 +25,7 @@ public class CreateWorkloadGroupAction extends ActionType<CreateWorkloadGroupRes
     /**
      * Name for CreateWorkloadGroupAction
      */
-    public static final String NAME = "cluster:admin/opensearch/wlm/workload_group/_create";
+    public static final String NAME = "cluster:admin/density/wlm/workload_group/_create";
 
     /**
      * Default constructor

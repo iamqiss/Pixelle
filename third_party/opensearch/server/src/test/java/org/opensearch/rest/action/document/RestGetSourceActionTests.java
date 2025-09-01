@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.document;
+package org.density.rest.action.document;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.document.RestGetSourceAction.RestGetSourceResponseListener;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.test.rest.RestActionTestCase;
+import org.density.ResourceNotFoundException;
+import org.density.action.get.GetResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.get.GetResult;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.document.RestGetSourceAction.RestGetSourceResponseListener;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
+import org.density.test.rest.RestActionTestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 import static org.hamcrest.Matchers.equalTo;
 
 public class RestGetSourceActionTests extends RestActionTestCase {

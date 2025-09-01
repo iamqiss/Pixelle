@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.script.Script;
-import org.opensearch.search.aggregations.pipeline.AvgBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketSelectorPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketSortPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.CumulativeSumPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.MinBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.MovAvgPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.MovFnPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.SerialDiffPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.SumBucketPipelineAggregationBuilder;
-import org.opensearch.search.sort.FieldSortBuilder;
+import org.density.script.Script;
+import org.density.search.aggregations.pipeline.AvgBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketSelectorPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketSortPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.CumulativeSumPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.MinBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.MovAvgPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.MovFnPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.SerialDiffPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.SumBucketPipelineAggregationBuilder;
+import org.density.search.sort.FieldSortBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -56,7 +56,7 @@ import java.util.Map;
 /**
  * Builder utility class for pipeline aggs
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PipelineAggregatorBuilders {
 

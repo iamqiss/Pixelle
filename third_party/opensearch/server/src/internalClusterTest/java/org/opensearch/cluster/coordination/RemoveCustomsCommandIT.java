@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.cli.MockTerminal;
+import org.density.cli.UserException;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.test.DensityIntegTestCase;
 
 import static org.hamcrest.Matchers.containsString;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class RemoveCustomsCommandIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+public class RemoveCustomsCommandIT extends DensityIntegTestCase {
 
     public void testRemoveCustomsAbortedByUser() throws Exception {
         internalCluster().setBootstrapClusterManagerNodeIndex(0);
@@ -55,7 +55,7 @@ public class RemoveCustomsCommandIT extends OpenSearchIntegTestCase {
         Environment environment = TestEnvironment.newEnvironment(
             Settings.builder().put(internalCluster().getDefaultSettings()).put(dataPathSettings).build()
         );
-        expectThrows(() -> removeCustoms(environment, true, new String[] { "index-graveyard" }), OpenSearchNodeCommand.ABORTED_BY_USER_MSG);
+        expectThrows(() -> removeCustoms(environment, true, new String[] { "index-graveyard" }), DensityNodeCommand.ABORTED_BY_USER_MSG);
     }
 
     public void testRemoveCustomsSuccessful() throws Exception {
@@ -107,7 +107,7 @@ public class RemoveCustomsCommandIT extends OpenSearchIntegTestCase {
         );
     }
 
-    private MockTerminal executeCommand(OpenSearchNodeCommand command, Environment environment, boolean abort, String... args)
+    private MockTerminal executeCommand(DensityNodeCommand command, Environment environment, boolean abort, String... args)
         throws Exception {
         final MockTerminal terminal = new MockTerminal();
         final OptionSet options = command.getParser().parse(args);
@@ -124,7 +124,7 @@ public class RemoveCustomsCommandIT extends OpenSearchIntegTestCase {
         try {
             command.execute(terminal, options, environment);
         } finally {
-            assertThat(terminal.getOutput(), containsString(OpenSearchNodeCommand.STOP_WARNING_MSG));
+            assertThat(terminal.getOutput(), containsString(DensityNodeCommand.STOP_WARNING_MSG));
         }
 
         return terminal;
@@ -138,7 +138,7 @@ public class RemoveCustomsCommandIT extends OpenSearchIntegTestCase {
     }
 
     private void expectThrows(ThrowingRunnable runnable, String message) {
-        OpenSearchException ex = expectThrows(OpenSearchException.class, runnable);
+        DensityException ex = expectThrows(DensityException.class, runnable);
         assertThat(ex.getMessage(), containsString(message));
     }
 }

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +27,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-import static org.opensearch.index.remote.RemoteSegmentTransferTracker.currentTimeMsUsingSystemNanos;
-import static org.opensearch.index.remote.RemoteStoreTestsHelper.createIndexShard;
+import static org.density.index.remote.RemoteSegmentTransferTracker.currentTimeMsUsingSystemNanos;
+import static org.density.index.remote.RemoteStoreTestsHelper.createIndexShard;
 
-public class RemoteStorePressureServiceTests extends OpenSearchTestCase {
+public class RemoteStorePressureServiceTests extends DensityTestCase {
 
     private ClusterService clusterService;
 
@@ -103,7 +103,7 @@ public class RemoteStorePressureServiceTests extends OpenSearchTestCase {
             Thread.sleep((long) (4 * avg));
         }
         pressureTracker.updateLatestLocalFileNameLengthMap(List.of("test"), k -> 1L);
-        Exception e = assertThrows(OpenSearchRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
+        Exception e = assertThrows(DensityRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
         String regex = "^rejected execution on primary shard:\\[index]\\[0] due to remote segments lagging behind "
             + "local segments.time_lag:[0-9]{2,3} ms dynamic_time_lag_threshold:95\\.0 ms$";
         Pattern pattern = Pattern.compile(regex);
@@ -125,7 +125,7 @@ public class RemoteStorePressureServiceTests extends OpenSearchTestCase {
         Map<String, Long> nameSizeMap = new HashMap<>();
         nameSizeMap.put("a", (long) (12 * avg));
         pressureTracker.updateLatestLocalFileNameLengthMap(nameSizeMap.keySet(), nameSizeMap::get);
-        e = assertThrows(OpenSearchRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
+        e = assertThrows(DensityRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
         assertTrue(e.getMessage().contains("due to remote segments lagging behind local segments"));
         assertTrue(e.getMessage().contains("bytes_lag:114 dynamic_bytes_lag_threshold:95.0"));
 
@@ -140,7 +140,7 @@ public class RemoteStorePressureServiceTests extends OpenSearchTestCase {
         pressureService.validateSegmentsUploadLag(shardId);
         pressureTracker.incrementTotalUploadsStarted();
         pressureTracker.incrementTotalUploadsFailed();
-        e = assertThrows(OpenSearchRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
+        e = assertThrows(DensityRejectedExecutionException.class, () -> pressureService.validateSegmentsUploadLag(shardId));
         assertTrue(e.getMessage().contains("due to remote segments lagging behind local segments"));
         assertTrue(e.getMessage().contains("failure_streak_count:6 min_consecutive_failure_threshold:5"));
         pressureTracker.incrementTotalUploadsStarted();

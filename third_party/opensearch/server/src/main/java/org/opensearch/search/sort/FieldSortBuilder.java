@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.IndexReader;
@@ -39,37 +39,37 @@ import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.index.PointValues;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.search.SortField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSortConfig;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.WithFieldName;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.SearchSortValuesAndFormats;
-import org.opensearch.search.builder.SearchSourceBuilder;
+import org.density.DensityParseException;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.DateUtils;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSortConfig;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.WithFieldName;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.SearchSortValuesAndFormats;
+import org.density.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -78,14 +78,14 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static org.opensearch.index.mapper.DateFieldMapper.Resolution.MILLISECONDS;
-import static org.opensearch.index.mapper.DateFieldMapper.Resolution.NANOSECONDS;
-import static org.opensearch.search.sort.NestedSortBuilder.NESTED_FIELD;
+import static org.density.index.mapper.DateFieldMapper.Resolution.MILLISECONDS;
+import static org.density.index.mapper.DateFieldMapper.Resolution.NANOSECONDS;
+import static org.density.search.sort.NestedSortBuilder.NESTED_FIELD;
 
 /**
  * A sort builder to sort based on a document field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> implements WithFieldName {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(FieldSortBuilder.class);
@@ -207,7 +207,7 @@ public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> implements W
 
     /**
      * Set the type to use in case the current field is not mapped in an index.
-     * Specifying a type tells OpenSearch what type the sort values should
+     * Specifying a type tells Density what type the sort values should
      * have, which is important for cross-index search, if there are sort fields
      * that exist on some indices only. If the unmapped type is {@code null}
      * then query execution will fail if one or more indices don't have a
@@ -332,7 +332,7 @@ public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> implements W
     /**
      * Forces the numeric type to use for the field. The query will fail if this option
      * is set on a field that is not mapped as a numeric in some indices.
-     * Specifying a numeric type tells OpenSearch what type the sort values should
+     * Specifying a numeric type tells Density what type the sort values should
      * have, which is important for cross-index search, if a field does not have
      * the same type on all indices.
      * Allowed values are <code>long</code>, <code>double</code>, <code>date</code> and <code>date_nanos</code>.
@@ -496,7 +496,7 @@ public class FieldSortBuilder extends SortBuilder<FieldSortBuilder> implements W
                 context
             );
             return relation == MappedFieldType.Relation.DISJOINT;
-        } catch (OpenSearchParseException exc) {
+        } catch (DensityParseException exc) {
             // can happen if the sort field is mapped differently in another search index
             return false;
         }

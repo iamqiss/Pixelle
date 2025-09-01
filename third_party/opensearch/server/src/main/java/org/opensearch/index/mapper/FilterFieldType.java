@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.index.IndexReader;
@@ -15,17 +15,17 @@ import org.apache.lucene.queries.spans.SpanMultiTermQueryWrapper;
 import org.apache.lucene.queries.spans.SpanQuery;
 import org.apache.lucene.search.MultiTermQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.query.IntervalMode;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.annotation.PublicApi;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.time.DateMathParser;
+import org.density.common.unit.Fuzziness;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.query.IntervalMode;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.ZoneId;

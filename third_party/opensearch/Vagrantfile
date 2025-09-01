@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-# The OpenSearch Contributors require contributions made to
+# The Density Contributors require contributions made to
 # this file be licensed under the Apache-2.0 license or a
 # compatible open source license.
 #
@@ -30,7 +30,7 @@
 # under the License.
 
 #
-# Modifications Copyright OpenSearch Contributors. See
+# Modifications Copyright Density Contributors. See
 # GitHub history for details.
 #
 
@@ -50,10 +50,10 @@ Vagrant.configure(2) do |config|
   end
 
   # Switch the default share for the project root from /vagrant to
-  # /opensearch because /vagrant is confusing when there is a project inside
-  # the opensearch project called vagrant....
+  # /density because /vagrant is confusing when there is a project inside
+  # the density project called vagrant....
   config.vm.synced_folder '.', '/vagrant', disabled: true
-  config.vm.synced_folder '.', '/opensearch'
+  config.vm.synced_folder '.', '/density'
   # TODO: make these syncs work for windows!!!
   config.vm.synced_folder "#{Dir.home}/.vagrant/gradle/caches/jars-3", "/root/.gradle/caches/jars-3",
       create: true,
@@ -387,8 +387,8 @@ def linux_common(config,
 
   # This prevents leftovers from previous tests using the
   # same VM from messing up the current test
-  config.vm.provision 'clean opensearch installs in tmp', run: 'always', type: 'shell', inline: <<-SHELL
-    rm -rf /tmp/opensearch*
+  config.vm.provision 'clean density installs in tmp', run: 'always', type: 'shell', inline: <<-SHELL
+    rm -rf /tmp/density*
   SHELL
 
   sh_set_prompt config, name
@@ -407,18 +407,18 @@ end
 # them by re-source-ing the standard prompt file.
 def sh_set_prompt(config, name)
   config.vm.provision 'set prompt', type: 'shell', inline: <<-SHELL
-      cat \<\<PROMPT > /etc/profile.d/opensearch_prompt.sh
+      cat \<\<PROMPT > /etc/profile.d/density_prompt.sh
 export PS1='#{name}:\\w$ '
 PROMPT
-      grep 'source /etc/profile.d/opensearch_prompt.sh' ~/.bashrc |
+      grep 'source /etc/profile.d/density_prompt.sh' ~/.bashrc |
         cat \<\<SOURCE_PROMPT >> ~/.bashrc
 # Replace the standard prompt with a consistent one
-source /etc/profile.d/opensearch_prompt.sh
+source /etc/profile.d/density_prompt.sh
 SOURCE_PROMPT
-      grep 'source /etc/profile.d/opensearch_prompt.sh' ~vagrant/.bashrc |
+      grep 'source /etc/profile.d/density_prompt.sh' ~vagrant/.bashrc |
         cat \<\<SOURCE_PROMPT >> ~vagrant/.bashrc
 # Replace the standard prompt with a consistent one
-source /etc/profile.d/opensearch_prompt.sh
+source /etc/profile.d/density_prompt.sh
 SOURCE_PROMPT
   SHELL
 end
@@ -481,12 +481,12 @@ def sh_install_deps(config,
     ensure rsync
     ensure expect
 
-    cat \<\<SUDOERS_VARS > /etc/sudoers.d/opensearch_vars
+    cat \<\<SUDOERS_VARS > /etc/sudoers.d/density_vars
 Defaults   env_keep += "JAVA_HOME"
 Defaults   env_keep += "SYSTEM_JAVA_HOME"
-Defaults   env_keep += "OPENSEARCH_JAVA_HOME"
+Defaults   env_keep += "DENSITY_JAVA_HOME"
 SUDOERS_VARS
-    chmod 0440 /etc/sudoers.d/opensearch_vars
+    chmod 0440 /etc/sudoers.d/density_vars
   SHELL
 end
 

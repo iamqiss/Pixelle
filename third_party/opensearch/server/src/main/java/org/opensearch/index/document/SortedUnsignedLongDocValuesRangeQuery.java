@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.document;
+package org.density.index.document;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.FieldInfo;
@@ -25,7 +25,7 @@ import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TwoPhaseIterator;
 import org.apache.lucene.search.Weight;
-import org.opensearch.common.Numbers;
+import org.density.common.Numbers;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -34,7 +34,7 @@ import java.util.Objects;
 /**
  * The {@link org.apache.lucene.document.SortedNumericDocValuesRangeQuery} implementation for unsigned long numeric data type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SortedUnsignedLongDocValuesRangeQuery extends Query {
     private final String field;

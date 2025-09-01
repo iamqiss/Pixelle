@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.term;
+package org.density.search.suggest.term;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.suggest.SortBy;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggest.Suggestion;
-import org.opensearch.search.suggest.Suggest.Suggestion.Entry.Option;
+import org.density.DensityException;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.suggest.SortBy;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggest.Suggestion;
+import org.density.search.suggest.Suggest.Suggestion.Entry.Option;
 
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * The suggestion responses corresponding with the suggestions in the request.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
 
@@ -80,7 +80,7 @@ public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
      * Same behaviour as comparators in suggest module, but for SuggestedWord
      * Highest score first, then highest freq first, then lowest term first
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Score implements Comparator<Suggestion.Entry.Option> {
 
@@ -99,7 +99,7 @@ public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
      * Same behaviour as comparators in suggest module, but for SuggestedWord
      * Highest freq first, then highest score first, then lowest term first
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Frequency implements Comparator<Suggestion.Entry.Option> {
 
@@ -144,7 +144,7 @@ public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
             case FREQUENCY:
                 return FREQUENCY;
             default:
-                throw new OpenSearchException("Could not resolve comparator for sort key: [" + sort + "]");
+                throw new DensityException("Could not resolve comparator for sort key: [" + sort + "]");
         }
     }
 
@@ -184,7 +184,7 @@ public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
     /**
      * Represents a part from the suggest text with suggested options.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Entry extends Suggest.Suggestion.Entry<TermSuggestion.Entry.Option> {
 
@@ -220,7 +220,7 @@ public class TermSuggestion extends Suggestion<TermSuggestion.Entry> {
         /**
          * Contains the suggested text with its document frequency and score.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Option extends Suggest.Suggestion.Entry.Option {
 

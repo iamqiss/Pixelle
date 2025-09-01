@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight;
+package org.density.arrow.flight;
 
 import org.apache.arrow.flight.CallOptions;
 import org.apache.arrow.flight.FlightClient;
@@ -17,18 +17,18 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.FieldVector;
 import org.apache.arrow.vector.IntVector;
 import org.apache.arrow.vector.VectorSchemaRoot;
-import org.opensearch.arrow.flight.bootstrap.FlightClientManager;
-import org.opensearch.arrow.flight.bootstrap.FlightService;
-import org.opensearch.arrow.flight.transport.FlightStreamPlugin;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.arrow.spi.StreamReader;
-import org.opensearch.arrow.spi.StreamTicket;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.arrow.flight.bootstrap.FlightClientManager;
+import org.density.arrow.flight.bootstrap.FlightService;
+import org.density.arrow.flight.transport.FlightStreamPlugin;
+import org.density.arrow.spi.StreamManager;
+import org.density.arrow.spi.StreamProducer;
+import org.density.arrow.spi.StreamReader;
+import org.density.arrow.spi.StreamTicket;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,12 +37,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.arrow.flight.bootstrap.FlightService.ARROW_FLIGHT_TRANSPORT_SETTING_KEY;
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS;
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
+import static org.density.arrow.flight.bootstrap.FlightService.ARROW_FLIGHT_TRANSPORT_SETTING_KEY;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 5)
-public class ArrowFlightServerIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 5)
+public class ArrowFlightServerIT extends DensityIntegTestCase {
 
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {

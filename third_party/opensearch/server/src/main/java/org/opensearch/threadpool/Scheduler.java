@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.OpenSearchAbortPolicy;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
+import org.density.ExceptionsHelper;
+import org.density.common.SuppressForbidden;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.DensityAbortPolicy;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.concurrency.DensityRejectedExecutionException;
 
 import java.util.concurrent.Delayed;
 import java.util.concurrent.Future;
@@ -55,7 +55,7 @@ import java.util.function.Consumer;
 /**
  * Scheduler that allows to schedule one-shot and periodic commands.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Scheduler {
 
@@ -70,8 +70,8 @@ public interface Scheduler {
     static ScheduledThreadPoolExecutor initScheduler(Settings settings) {
         final ScheduledThreadPoolExecutor scheduler = new SafeScheduledThreadPoolExecutor(
             1,
-            OpenSearchExecutors.daemonThreadFactory(settings, "scheduler"),
-            new OpenSearchAbortPolicy()
+            DensityExecutors.daemonThreadFactory(settings, "scheduler"),
+            new DensityAbortPolicy()
         );
         scheduler.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
         scheduler.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
@@ -116,7 +116,7 @@ public interface Scheduler {
      * @return a ScheduledFuture who's get will return when the task has been added to its target thread pool and throws an exception if
      *         the task is canceled before it was added to its target thread pool. Once the task has been added to its target thread pool
      *         the ScheduledFuture cannot interact with it.
-     * @throws OpenSearchRejectedExecutionException if the task cannot be scheduled for execution
+     * @throws DensityRejectedExecutionException if the task cannot be scheduled for execution
      */
     ScheduledCancellable schedule(Runnable command, TimeValue delay, String executor);
 
@@ -156,7 +156,7 @@ public interface Scheduler {
     /**
      * This interface represents an object whose execution may be cancelled during runtime.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface Cancellable {
@@ -176,7 +176,7 @@ public interface Scheduler {
     /**
      * A scheduled cancellable allow cancelling and reading the remaining delay of a scheduled task.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface ScheduledCancellable extends Delayed, Cancellable {}
@@ -264,7 +264,7 @@ public interface Scheduler {
             if (run) {
                 try {
                     scheduler.schedule(this, interval, executor);
-                } catch (final OpenSearchRejectedExecutionException e) {
+                } catch (final DensityRejectedExecutionException e) {
                     onRejection(e);
                 }
             }
@@ -282,17 +282,17 @@ public interface Scheduler {
      */
     class SafeScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
 
-        @SuppressForbidden(reason = "properly rethrowing errors, see OpenSearchExecutors.rethrowErrors")
+        @SuppressForbidden(reason = "properly rethrowing errors, see DensityExecutors.rethrowErrors")
         public SafeScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
             super(corePoolSize, threadFactory, handler);
         }
 
-        @SuppressForbidden(reason = "properly rethrowing errors, see OpenSearchExecutors.rethrowErrors")
+        @SuppressForbidden(reason = "properly rethrowing errors, see DensityExecutors.rethrowErrors")
         public SafeScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory) {
             super(corePoolSize, threadFactory);
         }
 
-        @SuppressForbidden(reason = "properly rethrowing errors, see OpenSearchExecutors.rethrowErrors")
+        @SuppressForbidden(reason = "properly rethrowing errors, see DensityExecutors.rethrowErrors")
         public SafeScheduledThreadPoolExecutor(int corePoolSize) {
             super(corePoolSize);
         }
@@ -305,7 +305,7 @@ public interface Scheduler {
             if (r instanceof RunnableFuture && ((RunnableFuture<?>) r).isDone()) {
                 // only check this if task is done, which it always is except for periodic tasks. Periodic tasks will hang on
                 // RunnableFuture.get()
-                ExceptionsHelper.reThrowIfNotNull(OpenSearchExecutors.rethrowErrors(r));
+                ExceptionsHelper.reThrowIfNotNull(DensityExecutors.rethrowErrors(r));
             }
         }
     }

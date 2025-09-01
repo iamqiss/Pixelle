@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadataBatch;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadata;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch.NodeStoreFilesMetadataBatch;
 
 import java.util.Map;
 
 /**
  * A factory class to create new responses of batch transport actions like
- * {@link TransportNodesListGatewayStartedShardsBatch} or {@link org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch}
+ * {@link TransportNodesListGatewayStartedShardsBatch} or {@link org.density.indices.store.TransportNodesListShardStoreMetadataBatch}
  *
  * @param <T> Node level response returned by batch transport actions.
  * @param <V> Shard level metadata returned by batch transport actions.

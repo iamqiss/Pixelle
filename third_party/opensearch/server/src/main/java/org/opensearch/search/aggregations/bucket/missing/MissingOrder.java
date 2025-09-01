@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.missing;
+package org.density.search.aggregations.bucket.missing;
 
-import org.opensearch.common.inject.Provider;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.common.inject.Provider;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * Composite Aggregation Missing bucket order.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum MissingOrder implements Writeable {
     /**

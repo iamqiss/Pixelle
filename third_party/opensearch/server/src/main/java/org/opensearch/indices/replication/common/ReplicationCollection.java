@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.replication.common;
+package org.density.indices.replication.common;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.concurrent.AutoCloseableRefCounted;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.concurrent.AutoCloseableRefCounted;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,7 +55,7 @@ import java.util.stream.Collectors;
  * no other thread will be able to find it. Last, the {@link ReplicationRef} inner class verifies that temporary files
  * and store will only be cleared once on going usage is finished.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationCollection<T extends ReplicationTarget> {
 
@@ -300,7 +300,7 @@ public class ReplicationCollection<T extends ReplicationTarget> {
      * causes {@link ReplicationTarget#decRef()} to be called. This makes sure that the underlying resources
      * will not be freed until {@link ReplicationRef#close()} is called.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ReplicationRef<T extends ReplicationTarget> extends AutoCloseableRefCounted<T> {
 

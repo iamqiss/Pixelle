@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.common.inject.Singleton;
-import org.opensearch.plugin.wlm.service.WorkloadGroupPersistenceService;
+import org.density.common.inject.AbstractModule;
+import org.density.common.inject.Singleton;
+import org.density.plugin.wlm.service.WorkloadGroupPersistenceService;
 
 /**
  * Guice Module to manage WorkloadManagement related objects

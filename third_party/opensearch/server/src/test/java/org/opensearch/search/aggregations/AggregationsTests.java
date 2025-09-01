@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,78 +26,78 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.aggregations.Aggregation.CommonFields;
-import org.opensearch.search.aggregations.bucket.adjacency.InternalAdjacencyMatrixTests;
-import org.opensearch.search.aggregations.bucket.composite.InternalCompositeTests;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilterTests;
-import org.opensearch.search.aggregations.bucket.filter.InternalFiltersTests;
-import org.opensearch.search.aggregations.bucket.global.InternalGlobalTests;
-import org.opensearch.search.aggregations.bucket.histogram.InternalAutoDateHistogramTests;
-import org.opensearch.search.aggregations.bucket.histogram.InternalDateHistogramTests;
-import org.opensearch.search.aggregations.bucket.histogram.InternalHistogramTests;
-import org.opensearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogramTests;
-import org.opensearch.search.aggregations.bucket.missing.InternalMissingTests;
-import org.opensearch.search.aggregations.bucket.nested.InternalNestedTests;
-import org.opensearch.search.aggregations.bucket.nested.InternalReverseNestedTests;
-import org.opensearch.search.aggregations.bucket.range.InternalBinaryRangeTests;
-import org.opensearch.search.aggregations.bucket.range.InternalDateRangeTests;
-import org.opensearch.search.aggregations.bucket.range.InternalGeoDistanceTests;
-import org.opensearch.search.aggregations.bucket.range.InternalRangeTests;
-import org.opensearch.search.aggregations.bucket.sampler.InternalSamplerTests;
-import org.opensearch.search.aggregations.bucket.terms.DoubleTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.InternalMultiTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.LongRareTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.LongTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.SignificantLongTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.SignificantStringTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.StringRareTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.StringTermsTests;
-import org.opensearch.search.aggregations.bucket.terms.UnsignedLongTermsTests;
-import org.opensearch.search.aggregations.metrics.InternalAvgTests;
-import org.opensearch.search.aggregations.metrics.InternalCardinalityTests;
-import org.opensearch.search.aggregations.metrics.InternalExtendedStatsTests;
-import org.opensearch.search.aggregations.metrics.InternalGeoCentroidTests;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentilesRanksTests;
-import org.opensearch.search.aggregations.metrics.InternalHDRPercentilesTests;
-import org.opensearch.search.aggregations.metrics.InternalMaxTests;
-import org.opensearch.search.aggregations.metrics.InternalMedianAbsoluteDeviationTests;
-import org.opensearch.search.aggregations.metrics.InternalMinTests;
-import org.opensearch.search.aggregations.metrics.InternalScriptedMetricTests;
-import org.opensearch.search.aggregations.metrics.InternalStatsBucketTests;
-import org.opensearch.search.aggregations.metrics.InternalStatsTests;
-import org.opensearch.search.aggregations.metrics.InternalSumTests;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentilesRanksTests;
-import org.opensearch.search.aggregations.metrics.InternalTDigestPercentilesTests;
-import org.opensearch.search.aggregations.metrics.InternalTopHitsTests;
-import org.opensearch.search.aggregations.metrics.InternalValueCountTests;
-import org.opensearch.search.aggregations.metrics.InternalWeightedAvgTests;
-import org.opensearch.search.aggregations.pipeline.InternalBucketMetricValueTests;
-import org.opensearch.search.aggregations.pipeline.InternalDerivativeTests;
-import org.opensearch.search.aggregations.pipeline.InternalExtendedStatsBucketTests;
-import org.opensearch.search.aggregations.pipeline.InternalPercentilesBucketTests;
-import org.opensearch.search.aggregations.pipeline.InternalSimpleValueTests;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.InternalMultiBucketAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentHelper;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.aggregations.Aggregation.CommonFields;
+import org.density.search.aggregations.bucket.adjacency.InternalAdjacencyMatrixTests;
+import org.density.search.aggregations.bucket.composite.InternalCompositeTests;
+import org.density.search.aggregations.bucket.filter.InternalFilterTests;
+import org.density.search.aggregations.bucket.filter.InternalFiltersTests;
+import org.density.search.aggregations.bucket.global.InternalGlobalTests;
+import org.density.search.aggregations.bucket.histogram.InternalAutoDateHistogramTests;
+import org.density.search.aggregations.bucket.histogram.InternalDateHistogramTests;
+import org.density.search.aggregations.bucket.histogram.InternalHistogramTests;
+import org.density.search.aggregations.bucket.histogram.InternalVariableWidthHistogramTests;
+import org.density.search.aggregations.bucket.missing.InternalMissingTests;
+import org.density.search.aggregations.bucket.nested.InternalNestedTests;
+import org.density.search.aggregations.bucket.nested.InternalReverseNestedTests;
+import org.density.search.aggregations.bucket.range.InternalBinaryRangeTests;
+import org.density.search.aggregations.bucket.range.InternalDateRangeTests;
+import org.density.search.aggregations.bucket.range.InternalGeoDistanceTests;
+import org.density.search.aggregations.bucket.range.InternalRangeTests;
+import org.density.search.aggregations.bucket.sampler.InternalSamplerTests;
+import org.density.search.aggregations.bucket.terms.DoubleTermsTests;
+import org.density.search.aggregations.bucket.terms.InternalMultiTermsTests;
+import org.density.search.aggregations.bucket.terms.LongRareTermsTests;
+import org.density.search.aggregations.bucket.terms.LongTermsTests;
+import org.density.search.aggregations.bucket.terms.SignificantLongTermsTests;
+import org.density.search.aggregations.bucket.terms.SignificantStringTermsTests;
+import org.density.search.aggregations.bucket.terms.StringRareTermsTests;
+import org.density.search.aggregations.bucket.terms.StringTermsTests;
+import org.density.search.aggregations.bucket.terms.UnsignedLongTermsTests;
+import org.density.search.aggregations.metrics.InternalAvgTests;
+import org.density.search.aggregations.metrics.InternalCardinalityTests;
+import org.density.search.aggregations.metrics.InternalExtendedStatsTests;
+import org.density.search.aggregations.metrics.InternalGeoCentroidTests;
+import org.density.search.aggregations.metrics.InternalHDRPercentilesRanksTests;
+import org.density.search.aggregations.metrics.InternalHDRPercentilesTests;
+import org.density.search.aggregations.metrics.InternalMaxTests;
+import org.density.search.aggregations.metrics.InternalMedianAbsoluteDeviationTests;
+import org.density.search.aggregations.metrics.InternalMinTests;
+import org.density.search.aggregations.metrics.InternalScriptedMetricTests;
+import org.density.search.aggregations.metrics.InternalStatsBucketTests;
+import org.density.search.aggregations.metrics.InternalStatsTests;
+import org.density.search.aggregations.metrics.InternalSumTests;
+import org.density.search.aggregations.metrics.InternalTDigestPercentilesRanksTests;
+import org.density.search.aggregations.metrics.InternalTDigestPercentilesTests;
+import org.density.search.aggregations.metrics.InternalTopHitsTests;
+import org.density.search.aggregations.metrics.InternalValueCountTests;
+import org.density.search.aggregations.metrics.InternalWeightedAvgTests;
+import org.density.search.aggregations.pipeline.InternalBucketMetricValueTests;
+import org.density.search.aggregations.pipeline.InternalDerivativeTests;
+import org.density.search.aggregations.pipeline.InternalExtendedStatsBucketTests;
+import org.density.search.aggregations.pipeline.InternalPercentilesBucketTests;
+import org.density.search.aggregations.pipeline.InternalSimpleValueTests;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.InternalMultiBucketAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 import org.junit.After;
 import org.junit.Before;
 
@@ -109,14 +109,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.XContentTestUtils.insertRandomFields;
 
 /**
  * This class tests that aggregations parsing works properly. It checks that we can parse
  * different aggregations and adds sub-aggregations where applicable.
  *
  */
-public class AggregationsTests extends OpenSearchTestCase {
+public class AggregationsTests extends DensityTestCase {
     private static final List<InternalAggregationTestCase<?>> aggsTests = List.of(
         new InternalCardinalityTests(),
         new InternalTDigestPercentilesTests(),
@@ -266,7 +266,7 @@ public class AggregationsTests extends OpenSearchTestCase {
             assertEquals(XContentParser.Token.START_OBJECT, parser.nextToken());
             Aggregations parsedAggregations = Aggregations.fromXContent(parser);
             BytesReference parsedBytes = XContentHelper.toXContent(parsedAggregations, mediaType, randomBoolean());
-            OpenSearchAssertions.assertToXContentEquivalent(originalBytes, parsedBytes, mediaType);
+            DensityAssertions.assertToXContentEquivalent(originalBytes, parsedBytes, mediaType);
         }
     }
 

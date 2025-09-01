@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardRelocatedException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.lease.Releasable;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.core.action.ActionListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardRelocatedException;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Execute a Runnable after acquiring the primary's operation permit.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RunUnderPrimaryPermit {
 

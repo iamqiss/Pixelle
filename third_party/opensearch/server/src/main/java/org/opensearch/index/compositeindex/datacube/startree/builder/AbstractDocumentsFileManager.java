@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,16 +15,16 @@ import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.RandomAccessInput;
 import org.apache.lucene.store.TrackingDirectoryWrapper;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
-import org.opensearch.index.compositeindex.datacube.startree.utils.CompensatedSumType;
-import org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeDocumentBitSetUtil;
-import org.opensearch.index.mapper.FieldValueConverter;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.compositeindex.datacube.startree.utils.CompensatedSumType;
+import org.density.index.compositeindex.datacube.startree.utils.StarTreeDocumentBitSetUtil;
+import org.density.index.mapper.FieldValueConverter;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -32,13 +32,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
 
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.LONG;
 
 /**
  * Abstract class for managing star tree file operations.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public abstract class AbstractDocumentsFileManager implements Closeable {

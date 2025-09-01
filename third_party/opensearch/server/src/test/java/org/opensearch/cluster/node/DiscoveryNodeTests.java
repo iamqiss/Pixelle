@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.test.NodeRoles;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.transport.TransportAddress;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.test.NodeRoles;
+import org.density.test.DensityTestCase;
 
 import java.net.InetAddress;
 import java.util.Collections;
@@ -55,15 +55,15 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.test.NodeRoles.nonRemoteClusterClientNode;
-import static org.opensearch.test.NodeRoles.nonWarmNode;
-import static org.opensearch.test.NodeRoles.remoteClusterClientNode;
+import static org.density.test.NodeRoles.nonRemoteClusterClientNode;
+import static org.density.test.NodeRoles.nonWarmNode;
+import static org.density.test.NodeRoles.remoteClusterClientNode;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
-public class DiscoveryNodeTests extends OpenSearchTestCase {
+public class DiscoveryNodeTests extends DensityTestCase {
 
     public void testRolesAreSorted() {
         final Set<DiscoveryNodeRole> roles = new HashSet<>(randomSubsetOf(DiscoveryNodeRole.BUILT_IN_ROLES));

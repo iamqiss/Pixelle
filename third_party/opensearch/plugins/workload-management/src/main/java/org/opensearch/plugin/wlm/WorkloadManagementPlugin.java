@@ -1,73 +1,73 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.plugin.wlm.action.CreateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.DeleteWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.GetWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.TransportCreateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.TransportDeleteWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.TransportGetWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.TransportUpdateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.UpdateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestCreateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestDeleteWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestGetWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rest.RestUpdateWorkloadGroupAction;
-import org.opensearch.plugin.wlm.rule.WorkloadGroupFeatureType;
-import org.opensearch.plugin.wlm.rule.WorkloadGroupFeatureValueValidator;
-import org.opensearch.plugin.wlm.rule.WorkloadGroupRuleRoutingService;
-import org.opensearch.plugin.wlm.rule.sync.RefreshBasedSyncMechanism;
-import org.opensearch.plugin.wlm.rule.sync.detect.RuleEventClassifier;
-import org.opensearch.plugin.wlm.service.WorkloadGroupPersistenceService;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.DiscoveryPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SystemIndexPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.rule.RuleEntityParser;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.RuleRoutingService;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.service.IndexStoredRulePersistenceService;
-import org.opensearch.rule.spi.RuleFrameworkExtension;
-import org.opensearch.rule.storage.AttributeValueStoreFactory;
-import org.opensearch.rule.storage.DefaultAttributeValueStore;
-import org.opensearch.rule.storage.IndexBasedRuleQueryMapper;
-import org.opensearch.rule.storage.XContentRuleParser;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.action.ActionRequest;
+import org.density.action.support.ActionFilter;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Module;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.discovery.SeedHostsProvider;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.plugin.wlm.action.CreateWorkloadGroupAction;
+import org.density.plugin.wlm.action.DeleteWorkloadGroupAction;
+import org.density.plugin.wlm.action.GetWorkloadGroupAction;
+import org.density.plugin.wlm.action.TransportCreateWorkloadGroupAction;
+import org.density.plugin.wlm.action.TransportDeleteWorkloadGroupAction;
+import org.density.plugin.wlm.action.TransportGetWorkloadGroupAction;
+import org.density.plugin.wlm.action.TransportUpdateWorkloadGroupAction;
+import org.density.plugin.wlm.action.UpdateWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestCreateWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestDeleteWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestGetWorkloadGroupAction;
+import org.density.plugin.wlm.rest.RestUpdateWorkloadGroupAction;
+import org.density.plugin.wlm.rule.WorkloadGroupFeatureType;
+import org.density.plugin.wlm.rule.WorkloadGroupFeatureValueValidator;
+import org.density.plugin.wlm.rule.WorkloadGroupRuleRoutingService;
+import org.density.plugin.wlm.rule.sync.RefreshBasedSyncMechanism;
+import org.density.plugin.wlm.rule.sync.detect.RuleEventClassifier;
+import org.density.plugin.wlm.service.WorkloadGroupPersistenceService;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.DiscoveryPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SystemIndexPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.rule.RuleEntityParser;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.RuleRoutingService;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.service.IndexStoredRulePersistenceService;
+import org.density.rule.spi.RuleFrameworkExtension;
+import org.density.rule.storage.AttributeValueStoreFactory;
+import org.density.rule.storage.DefaultAttributeValueStore;
+import org.density.rule.storage.IndexBasedRuleQueryMapper;
+import org.density.rule.storage.XContentRuleParser;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -75,7 +75,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static org.opensearch.rule.service.IndexStoredRulePersistenceService.MAX_WLM_RULES_SETTING;
+import static org.density.rule.service.IndexStoredRulePersistenceService.MAX_WLM_RULES_SETTING;
 
 /**
  * Plugin class for WorkloadManagement

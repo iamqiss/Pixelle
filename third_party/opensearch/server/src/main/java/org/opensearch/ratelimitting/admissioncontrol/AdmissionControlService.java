@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol;
+package org.density.ratelimitting.admissioncontrol;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.AdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.ratelimitting.admissioncontrol.controllers.AdmissionController;
+import org.density.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControlStats;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.opensearch.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController.CPU_BASED_ADMISSION_CONTROLLER;
-import static org.opensearch.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController.IO_BASED_ADMISSION_CONTROLLER;
+import static org.density.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController.CPU_BASED_ADMISSION_CONTROLLER;
+import static org.density.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController.IO_BASED_ADMISSION_CONTROLLER;
 
 /**
- * Admission control Service that bootstraps and manages all the Admission Controllers in OpenSearch.
+ * Admission control Service that bootstraps and manages all the Admission Controllers in Density.
  */
 public class AdmissionControlService {
     private final ThreadPool threadPool;

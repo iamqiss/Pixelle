@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.builder;
+package org.density.search.builder;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.DerivedField;
-import org.opensearch.index.mapper.DerivedFieldMapper;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.script.Script;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.PipelineAggregationBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.searchafter.SearchAfterBuilder;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.search.sort.ScoreSortBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentHelper;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.DerivedField;
+import org.density.index.mapper.DerivedFieldMapper;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.Rewriteable;
+import org.density.script.Script;
+import org.density.search.SearchExtBuilder;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.PipelineAggregationBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.searchafter.SearchAfterBuilder;
+import org.density.search.slice.SliceBuilder;
+import org.density.search.sort.ScoreSortBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,18 +83,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_ACCURATE;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
 
 /**
  * A search source builder allowing to easily build search source. Simple
  * construction using
- * {@link org.opensearch.search.builder.SearchSourceBuilder#searchSource()}.
+ * {@link org.density.search.builder.SearchSourceBuilder#searchSource()}.
  *
- * @see org.opensearch.action.search.SearchRequest#source(SearchSourceBuilder)
+ * @see org.density.action.search.SearchRequest#source(SearchSourceBuilder)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SearchSourceBuilder implements Writeable, ToXContentObject, Rewriteable<SearchSourceBuilder> {
@@ -399,7 +399,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     /**
      * Sets the search query for this request.
      *
-     * @see org.opensearch.index.query.QueryBuilders
+     * @see org.density.index.query.QueryBuilders
      */
     public SearchSourceBuilder query(QueryBuilder query) {
         this.queryBuilder = query;
@@ -482,7 +482,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with
+     * Should each {@link org.density.search.SearchHit} be returned with
      * an explanation of the hit (ranking).
      */
     public SearchSourceBuilder explain(Boolean explain) {
@@ -499,7 +499,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with a
+     * Should each {@link org.density.search.SearchHit} be returned with a
      * version associated with it.
      */
     public SearchSourceBuilder version(Boolean version) {
@@ -516,7 +516,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * Should each {@link org.opensearch.search.SearchHit} be returned with the
+     * Should each {@link org.density.search.SearchHit} be returned with the
      * sequence number and primary term of the last modification of the document.
      */
     public SearchSourceBuilder seqNoAndPrimaryTerm(Boolean seqNoAndPrimaryTerm) {
@@ -525,7 +525,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * Indicates whether {@link org.opensearch.search.SearchHit}s should be returned with the
+     * Indicates whether {@link org.density.search.SearchHit}s should be returned with the
      * sequence number and primary term of the last modification of the document.
      */
     public Boolean seqNoAndPrimaryTerm() {
@@ -1122,21 +1122,21 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * @return a search pipeline defined within the search source (see {@link org.opensearch.search.pipeline.SearchPipelineService})
+     * @return a search pipeline defined within the search source (see {@link org.density.search.pipeline.SearchPipelineService})
      */
     public Map<String, Object> searchPipelineSource() {
         return searchPipelineSource;
     }
 
     /**
-     * @return a search pipeline name defined within the search source (see {@link org.opensearch.search.pipeline.SearchPipelineService})
+     * @return a search pipeline name defined within the search source (see {@link org.density.search.pipeline.SearchPipelineService})
      */
     public String pipeline() {
         return searchPipeline;
     }
 
     /**
-     * Define a search pipeline to process this search request and/or its response. See {@link org.opensearch.search.pipeline.SearchPipelineService}.
+     * Define a search pipeline to process this search request and/or its response. See {@link org.density.search.pipeline.SearchPipelineService}.
      */
     public SearchSourceBuilder searchPipelineSource(Map<String, Object> searchPipelineSource) {
         this.searchPipelineSource = searchPipelineSource;
@@ -1144,7 +1144,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     }
 
     /**
-     * Define a search pipeline name to process this search request and/or its response. See {@link org.opensearch.search.pipeline.SearchPipelineService}.
+     * Define a search pipeline name to process this search request and/or its response. See {@link org.density.search.pipeline.SearchPipelineService}.
      */
     public SearchSourceBuilder pipeline(String searchPipeline) {
         this.searchPipeline = searchPipeline;
@@ -1692,7 +1692,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     /**
      * Boosts on an index
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class IndexBoost implements Writeable, ToXContentObject {
@@ -1794,7 +1794,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
     /**
      * Script field
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ScriptField implements Writeable, ToXContentFragment {
@@ -2016,7 +2016,7 @@ public final class SearchSourceBuilder implements Writeable, ToXContentObject, R
         try {
             return XContentHelper.toXContent(this, MediaTypeRegistry.JSON, params, true).utf8ToString();
         } catch (IOException | UnsupportedOperationException e) {
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 

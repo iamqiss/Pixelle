@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.http.HttpPipelinedRequest;
-import org.opensearch.http.HttpPipelinedResponse;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.http.HttpPipelinedRequest;
+import org.density.http.HttpPipelinedResponse;
+import org.density.http.HttpResponse;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 
 import java.nio.channels.ClosedChannelException;
@@ -69,7 +69,7 @@ import static org.hamcrest.core.Is.is;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_LENGTH;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
-public class Netty4HttpPipeliningHandlerTests extends OpenSearchTestCase {
+public class Netty4HttpPipeliningHandlerTests extends DensityTestCase {
 
     private final ExecutorService handlerService = Executors.newFixedThreadPool(randomIntBetween(4, 8));
     private final ExecutorService eventLoopService = Executors.newFixedThreadPool(1);
@@ -239,7 +239,7 @@ public class Netty4HttpPipeliningHandlerTests extends OpenSearchTestCase {
 
         @Override
         protected void channelRead0(final ChannelHandlerContext ctx, HttpPipelinedRequest pipelinedRequest) {
-            final org.opensearch.http.HttpRequest request = pipelinedRequest.getDelegateRequest();
+            final org.density.http.HttpRequest request = pipelinedRequest.getDelegateRequest();
             final QueryStringDecoder decoder = new QueryStringDecoder(request.uri());
 
             final String uri = decoder.path().replace("/", "");

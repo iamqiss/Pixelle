@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
 import com.sun.management.ThreadMXBean;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.ConcurrentMapLong;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageInfo;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceInfo;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.threadpool.RunnableTaskExecutionListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.action.search.SearchShardTask;
+import org.density.common.SuppressForbidden;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ConcurrentMapLong;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageInfo;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.core.tasks.resourcetracker.TaskResourceInfo;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.threadpool.RunnableTaskExecutionListener;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -46,7 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.core.tasks.resourcetracker.ResourceStatsType.WORKER_STATS;
+import static org.density.core.tasks.resourcetracker.ResourceStatsType.WORKER_STATS;
 
 /**
  * Service that helps track resource usage of tasks running on a node.

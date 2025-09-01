@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.unit;
+package org.density.core.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -48,7 +48,7 @@ import java.util.Objects;
 /**
  * A byte size value
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ByteSizeValue implements Writeable, Comparable<ByteSizeValue>, ToXContentFragment {
@@ -188,12 +188,12 @@ public class ByteSizeValue implements Writeable, Comparable<ByteSizeValue>, ToXC
         return Strings.format1Decimals(value, suffix);
     }
 
-    public static ByteSizeValue parseBytesSizeValue(String sValue, String settingName) throws OpenSearchParseException {
+    public static ByteSizeValue parseBytesSizeValue(String sValue, String settingName) throws DensityParseException {
         return parseBytesSizeValue(sValue, null, settingName);
     }
 
     public static ByteSizeValue parseBytesSizeValue(String sValue, ByteSizeValue defaultValue, String settingName)
-        throws OpenSearchParseException {
+        throws DensityParseException {
         settingName = Objects.requireNonNull(settingName);
         if (sValue == null) {
             return defaultValue;
@@ -229,7 +229,7 @@ public class ByteSizeValue implements Writeable, Comparable<ByteSizeValue>, ToXC
             return new ByteSizeValue(0, ByteSizeUnit.BYTES);
         } else {
             // Missing units:
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "failed to parse setting [{}] with value [{}] as a size in bytes: unit is missing or unrecognized",
                 settingName,
                 sValue
@@ -251,7 +251,7 @@ public class ByteSizeValue implements Writeable, Comparable<ByteSizeValue>, ToXC
             } catch (final NumberFormatException e) {
                 try {
                     Double.parseDouble(s);
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "Failed to parse bytes value [{}]. Fractional bytes values have been "
                             + "deprecated since Legacy 6.2. Use non-fractional bytes values instead: found for setting [{}]",
                         e,
@@ -259,11 +259,11 @@ public class ByteSizeValue implements Writeable, Comparable<ByteSizeValue>, ToXC
                         settingName
                     );
                 } catch (final NumberFormatException ignored) {
-                    throw new OpenSearchParseException("failed to parse [{}]", e, initialInput);
+                    throw new DensityParseException("failed to parse [{}]", e, initialInput);
                 }
             }
         } catch (IllegalArgumentException e) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "failed to parse setting [{}] with value [{}] as a size in bytes",
                 e,
                 settingName,

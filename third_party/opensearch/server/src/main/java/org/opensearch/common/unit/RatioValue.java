@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
+import org.density.DensityParseException;
 
 /**
  * Utility class to represent ratio and percentage values between 0 and 100
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RatioValue {
     private final double percent;
@@ -70,21 +70,21 @@ public class RatioValue {
             try {
                 final double percent = Double.parseDouble(percentAsString);
                 if (percent < 0 || percent > 100) {
-                    throw new OpenSearchParseException("Percentage should be in [0-100], got [{}]", percentAsString);
+                    throw new DensityParseException("Percentage should be in [0-100], got [{}]", percentAsString);
                 }
                 return new RatioValue(Math.abs(percent));
             } catch (NumberFormatException e) {
-                throw new OpenSearchParseException("Failed to parse [{}] as a double", e, percentAsString);
+                throw new DensityParseException("Failed to parse [{}] as a double", e, percentAsString);
             }
         } else {
             try {
                 double ratio = Double.parseDouble(sValue);
                 if (ratio < 0 || ratio > 1.0) {
-                    throw new OpenSearchParseException("Ratio should be in [0-1.0], got [{}]", ratio);
+                    throw new DensityParseException("Ratio should be in [0-1.0], got [{}]", ratio);
                 }
                 return new RatioValue(100.0 * Math.abs(ratio));
             } catch (NumberFormatException e) {
-                throw new OpenSearchParseException("Invalid ratio or percentage [{}]", sValue);
+                throw new DensityParseException("Invalid ratio or percentage [{}]", sValue);
             }
 
         }

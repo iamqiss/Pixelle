@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.bytes;
+package org.density.core.common.bytes;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
@@ -48,7 +48,7 @@ import java.util.Objects;
  * <p>
  * Note, {@link #toBytesRef()} will materialize all pages in this BytesReference.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CompositeBytesReference extends AbstractBytesReference {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.http.HttpTransportSettings;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.http.HttpTransportSettings;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
 
-import static org.opensearch.core.rest.RestStatus.REQUEST_URI_TOO_LONG;
+import static org.density.core.rest.RestStatus.REQUEST_URI_TOO_LONG;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ReactorNetty4BadRequestIT extends OpenSearchRestTestCase {
+public class ReactorNetty4BadRequestIT extends DensityRestTestCase {
 
     public void testBadRequest() throws IOException {
         final Response response = client().performRequest(new Request("GET", "/_nodes/settings"));

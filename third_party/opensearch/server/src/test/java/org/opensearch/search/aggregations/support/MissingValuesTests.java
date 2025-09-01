@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
@@ -39,13 +39,13 @@ import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.index.fielddata.AbstractSortedNumericDocValues;
-import org.opensearch.index.fielddata.AbstractSortedSetDocValues;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.index.fielddata.AbstractSortedNumericDocValues;
+import org.density.index.fielddata.AbstractSortedSetDocValues;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.LongUnaryOperator;
 
-public class MissingValuesTests extends OpenSearchTestCase {
+public class MissingValuesTests extends DensityTestCase {
 
     public void testMissingBytes() throws IOException {
         final int numDocs = TestUtil.nextInt(random(), 1, 100);

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.serializer;
+package org.density.common.cache.serializer;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.Randomness;
+import org.density.common.cache.ICacheKey;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class ICacheKeySerializerTests extends OpenSearchTestCase {
+public class ICacheKeySerializerTests extends DensityTestCase {
     // For these tests, we use BytesReference as K, since we already have a Serializer<BytesReference, byte[]> implementation
     public void testEquality() throws Exception {
         BytesReferenceSerializer keySer = new BytesReferenceSerializer();
@@ -45,7 +45,7 @@ public class ICacheKeySerializerTests extends OpenSearchTestCase {
         Random rand = Randomness.get();
         // The first thing the serializer reads is a VInt for the number of dimensions.
         // This is an invalid input for StreamInput.readVInt(), so we are guaranteed to have an exception
-        assertThrows(OpenSearchException.class, () -> serializer.deserialize(new byte[] { -1, -1, -1, -1, -1 }));
+        assertThrows(DensityException.class, () -> serializer.deserialize(new byte[] { -1, -1, -1, -1, -1 }));
     }
 
     public void testDimNumbers() throws Exception {

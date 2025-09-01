@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,37 +25,37 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ClusterStatePublisher.AckListener;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ClusterStatePublisher.AckListener;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.core.action.ActionListener;
+import org.density.node.Node;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import static org.opensearch.test.OpenSearchTestCase.randomInt;
+import static org.density.test.DensityTestCase.randomInt;
 import static org.apache.lucene.tests.util.LuceneTestCase.random;
 
 public class FakeThreadPoolClusterManagerService extends ClusterManagerService {
@@ -85,14 +85,14 @@ public class FakeThreadPoolClusterManagerService extends ClusterManagerService {
     }
 
     @Override
-    protected PrioritizedOpenSearchThreadPoolExecutor createThreadPoolExecutor() {
-        return new PrioritizedOpenSearchThreadPoolExecutor(
+    protected PrioritizedDensityThreadPoolExecutor createThreadPoolExecutor() {
+        return new PrioritizedDensityThreadPoolExecutor(
             name,
             1,
             1,
             1,
             TimeUnit.SECONDS,
-            OpenSearchExecutors.daemonThreadFactory(name),
+            DensityExecutors.daemonThreadFactory(name),
             null,
             null
         ) {

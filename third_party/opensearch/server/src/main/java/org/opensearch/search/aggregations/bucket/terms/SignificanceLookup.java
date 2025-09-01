@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.PostingsEnum;
@@ -42,26 +42,26 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.index.FilterableTermsEnum;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BytesRefHash;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.common.util.LongHash;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.index.FilterableTermsEnum;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BytesRefHash;
+import org.density.common.util.LongArray;
+import org.density.common.util.LongHash;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
 
 import java.io.IOException;
 
 /**
  * Looks up values used for {@link SignificanceHeuristic}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SignificanceLookup {
     /**

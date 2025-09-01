@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.document.LatLonPoint;
@@ -38,30 +38,30 @@ import org.apache.lucene.geo.GeoEncodingUtils;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.BitUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoUtils.EffectivePoint;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.geometry.utils.GeographyValidator;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.geometry.utils.WellKnownText;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoUtils.EffectivePoint;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Geometry;
+import org.density.geometry.Point;
+import org.density.geometry.Rectangle;
+import org.density.geometry.ShapeType;
+import org.density.geometry.utils.GeographyValidator;
+import org.density.geometry.utils.Geohash;
+import org.density.geometry.utils.WellKnownText;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.opensearch.index.mapper.AbstractPointGeometryFieldMapper.Names.IGNORE_Z_VALUE;
+import static org.density.index.mapper.AbstractPointGeometryFieldMapper.Names.IGNORE_Z_VALUE;
 
 /**
  * Core geo point
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoPoint implements ToXContentFragment {
 
@@ -126,7 +126,7 @@ public class GeoPoint implements ToXContentFragment {
     public GeoPoint resetFromCoordinates(String value, final boolean ignoreZValue) {
         String[] vals = value.split(",");
         if (vals.length > 3) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "failed to parse [{}], expected 2 or 3 coordinates " + "but found: [{}]",
                 value,
                 vals.length
@@ -137,12 +137,12 @@ public class GeoPoint implements ToXContentFragment {
         try {
             lat = Double.parseDouble(vals[0].trim());
         } catch (NumberFormatException ex) {
-            throw new OpenSearchParseException("latitude must be a number");
+            throw new DensityParseException("latitude must be a number");
         }
         try {
             lon = Double.parseDouble(vals[1].trim());
         } catch (NumberFormatException ex) {
-            throw new OpenSearchParseException("longitude must be a number");
+            throw new DensityParseException("longitude must be a number");
         }
         if (vals.length > 2) {
             GeoPoint.assertZValue(ignoreZValue, Double.parseDouble(vals[2].trim()));
@@ -155,10 +155,10 @@ public class GeoPoint implements ToXContentFragment {
         try {
             geometry = new WellKnownText(false, new GeographyValidator(ignoreZValue)).fromWKT(value);
         } catch (Exception e) {
-            throw new OpenSearchParseException("Invalid WKT format", e);
+            throw new DensityParseException("Invalid WKT format", e);
         }
         if (geometry.type() != ShapeType.POINT) {
-            throw new OpenSearchParseException("[geo_point] supports only POINT among WKT primitives, " + "but found " + geometry.type());
+            throw new DensityParseException("[geo_point] supports only POINT among WKT primitives, " + "but found " + geometry.type());
         }
         Point point = (Point) geometry;
         return reset(point.getY(), point.getX());
@@ -207,7 +207,7 @@ public class GeoPoint implements ToXContentFragment {
         try {
             hash = Geohash.mortonEncode(geohash);
         } catch (IllegalArgumentException ex) {
-            throw new OpenSearchParseException(ex.getMessage(), ex);
+            throw new DensityParseException(ex.getMessage(), ex);
         }
         return this.reset(Geohash.decodeLatitude(hash), Geohash.decodeLongitude(hash));
     }
@@ -290,7 +290,7 @@ public class GeoPoint implements ToXContentFragment {
 
     public static double assertZValue(final boolean ignoreZValue, double zValue) {
         if (ignoreZValue == false) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "Exception parsing coordinates: found Z value [{}] but [{}] " + "parameter is [{}]",
                 zValue,
                 IGNORE_Z_VALUE,

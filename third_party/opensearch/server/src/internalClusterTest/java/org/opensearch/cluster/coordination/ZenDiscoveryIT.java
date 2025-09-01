@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.Discovery;
-import org.opensearch.discovery.DiscoveryStats;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.TestCustomMetadata;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.Discovery;
+import org.density.discovery.DiscoveryStats;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.TestCustomMetadata;
+import org.density.transport.RemoteTransportException;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -58,9 +58,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest.Metric.DISCOVERY;
-import static org.opensearch.test.NodeRoles.clusterManagerOnlyNode;
-import static org.opensearch.test.NodeRoles.dataNode;
+import static org.density.action.admin.cluster.node.stats.NodesStatsRequest.Metric.DISCOVERY;
+import static org.density.test.NodeRoles.clusterManagerOnlyNode;
+import static org.density.test.NodeRoles.dataNode;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -68,8 +68,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, numClientNodes = 0)
-public class ZenDiscoveryIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, numClientNodes = 0)
+public class ZenDiscoveryIT extends DensityIntegTestCase {
 
     public void testNoShardRelocationsOccurWhenElectedClusterManagerNodeFails() throws Exception {
 

@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.Objects;
 /**
  * Remote Store based Shard snapshot metadata
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.9.0")
 public class RemoteStoreShardShallowCopySnapshot implements ToXContentFragment, IndexShardSnapshot {
@@ -265,7 +265,7 @@ public class RemoteStoreShardShallowCopySnapshot implements ToXContentFragment, 
                 } else if (PARSE_PATH_HASH_ALGORITHM.match(currentFieldName, parser.getDeprecationHandler())) {
                     pathHashAlgorithm = PathHashAlgorithm.fromCode(parser.intValue());
                 } else {
-                    throw new OpenSearchParseException("unknown parameter [{}]", currentFieldName);
+                    throw new DensityParseException("unknown parameter [{}]", currentFieldName);
                 }
             } else if (token == XContentParser.Token.START_ARRAY) {
                 if (PARSE_FILE_NAMES.match(currentFieldName, parser.getDeprecationHandler())) {

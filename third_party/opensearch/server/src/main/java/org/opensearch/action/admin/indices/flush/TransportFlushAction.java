@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.flush;
+package org.density.action.admin.indices.flush;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportBroadcastReplicationAction;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportBroadcastReplicationAction;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.index.shard.ShardId;
+import org.density.transport.TransportService;
 
 import java.util.List;
 
 /**
  * Flush ActionType.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportFlushAction extends TransportBroadcastReplicationAction<
     FlushRequest,

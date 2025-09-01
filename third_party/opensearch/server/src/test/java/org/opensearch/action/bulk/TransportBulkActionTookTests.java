@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.IndicesRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.AutoCreateIndex;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexingPressureService;
+import org.density.indices.SystemIndices;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -78,12 +78,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.LongSupplier;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class TransportBulkActionTookTests extends OpenSearchTestCase {
+public class TransportBulkActionTookTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
     private ClusterService clusterService;
@@ -104,7 +104,7 @@ public class TransportBulkActionTookTests extends OpenSearchTestCase {
         super.setUp();
         DiscoveryNode discoveryNode = new DiscoveryNode(
             "node",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             emptyMap(),
             DiscoveryNodeRole.BUILT_IN_ROLES,
             VersionUtils.randomCompatibleVersion(random(), Version.CURRENT)
@@ -213,7 +213,7 @@ public class TransportBulkActionTookTests extends OpenSearchTestCase {
     }
 
     private void runTestTook(boolean controlled) throws Exception {
-        String bulkAction = copyToStringFromClasspath("/org/opensearch/action/bulk/simple-bulk.json");
+        String bulkAction = copyToStringFromClasspath("/org/density/action/bulk/simple-bulk.json");
         // translate Windows line endings (\r\n) to standard ones (\n)
         if (Constants.WINDOWS) {
             bulkAction = Strings.replace(bulkAction, "\r\n", "\n");

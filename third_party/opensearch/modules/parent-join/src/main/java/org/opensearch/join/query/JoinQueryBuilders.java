@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.query;
+package org.density.join.query;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilder;
 
 public abstract class JoinQueryBuilders {
     /**

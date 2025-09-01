@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -53,13 +53,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.core.xcontent.XContentParser.Token.START_ARRAY;
-import static org.opensearch.core.xcontent.XContentParser.Token.START_OBJECT;
-import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_BOOLEAN;
-import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_EMBEDDED_OBJECT;
-import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_NULL;
-import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_NUMBER;
-import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_STRING;
+import static org.density.core.xcontent.XContentParser.Token.START_ARRAY;
+import static org.density.core.xcontent.XContentParser.Token.START_OBJECT;
+import static org.density.core.xcontent.XContentParser.Token.VALUE_BOOLEAN;
+import static org.density.core.xcontent.XContentParser.Token.VALUE_EMBEDDED_OBJECT;
+import static org.density.core.xcontent.XContentParser.Token.VALUE_NULL;
+import static org.density.core.xcontent.XContentParser.Token.VALUE_NUMBER;
+import static org.density.core.xcontent.XContentParser.Token.VALUE_STRING;
 
 /**
  * A declarative, stateless parser that turns XContent into setter calls. A single parser should be defined for each object being parsed,
@@ -84,7 +84,7 @@ import static org.opensearch.core.xcontent.XContentParser.Token.VALUE_STRING;
  * It's highly recommended to use the high level declare methods like {@link #declareString(BiConsumer, ParseField)} instead of
  * {@link #declareField} which can be used to implement exceptional parsing operations not covered by the high level methods.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ObjectParser<Value, Context> extends AbstractObjectParser<Value, Context>
@@ -393,7 +393,7 @@ public final class ObjectParser<Value, Context> extends AbstractObjectParser<Val
     /**
      * Main parser interface
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Parser<Value, Context> {
         void parse(XContentParser parser, Value value, Context context) throws IOException;
@@ -695,7 +695,7 @@ public final class ObjectParser<Value, Context> extends AbstractObjectParser<Val
     /**
      * Supported Value Types for Parsable Objects
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ValueType {
         STRING(VALUE_STRING),

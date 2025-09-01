@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.ingest.IngestStats;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.support.WriteRequest;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.ingest.IngestStats;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,14 +52,14 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest.Metric.INGEST;
+import static org.density.action.admin.cluster.node.stats.NodesStatsRequest.Metric.INGEST;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 // Ideally I like this test to live in the server module, but otherwise a large part of the ScriptProcessor
 // ends up being copied into this test.
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 0, numClientNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
-public class IngestRestartIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(numDataNodes = 0, numClientNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
+public class IngestRestartIT extends DensityIntegTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -200,12 +200,12 @@ public class IngestRestartIT extends OpenSearchIntegTestCase {
                 "pipeline with id ["
                     + pipelineIdWithScript
                     + "] could not be loaded, caused by "
-                    + "[OpenSearchParseException[Error updating pipeline with id ["
+                    + "[DensityParseException[Error updating pipeline with id ["
                     + pipelineIdWithScript
                     + "]]; "
-                    + "nested: OpenSearchException[java.lang.IllegalArgumentException: cannot execute [inline] scripts]; "
+                    + "nested: DensityException[java.lang.IllegalArgumentException: cannot execute [inline] scripts]; "
                     + "nested: IllegalArgumentException[cannot execute [inline] scripts];; "
-                    + "OpenSearchException[java.lang.IllegalArgumentException: cannot execute [inline] scripts]; "
+                    + "DensityException[java.lang.IllegalArgumentException: cannot execute [inline] scripts]; "
                     + "nested: IllegalArgumentException[cannot execute [inline] scripts];; java.lang.IllegalArgumentException: "
                     + "cannot execute [inline] scripts]"
             )

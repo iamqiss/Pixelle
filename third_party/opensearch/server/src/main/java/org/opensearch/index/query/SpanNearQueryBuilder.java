@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.queries.spans.SpanNearQuery;
 import org.apache.lucene.queries.spans.SpanQuery;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.Query;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,14 +53,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.index.query.SpanQueryBuilder.SpanQueryBuilderUtil.checkNoBoost;
+import static org.density.index.query.SpanQueryBuilder.SpanQueryBuilderUtil.checkNoBoost;
 
 /**
  * Matches spans which are near one another. One can specify slop, the maximum number
  * of intervening unmatched positions, as well as whether matches are required to be in-order.
  * The span near query maps to Lucene {@link SpanNearQuery}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SpanNearQueryBuilder extends AbstractQueryBuilder<SpanNearQueryBuilder> implements SpanQueryBuilder {
     public static final String NAME = "span_near";
@@ -250,7 +250,7 @@ public class SpanNearQueryBuilder extends AbstractQueryBuilder<SpanNearQueryBuil
         builder.setSlop(slop);
         /*
          * Lucene SpanNearQuery throws exceptions for certain use cases like adding gap to a
-         * unordered SpanNearQuery. Should OpenSearch have the same checks or wrap those thrown exceptions?
+         * unordered SpanNearQuery. Should Density have the same checks or wrap those thrown exceptions?
          */
         if (isGap) {
             int gap = ((SpanGapQueryBuilder) queryBuilder).width();
@@ -320,7 +320,7 @@ public class SpanNearQueryBuilder extends AbstractQueryBuilder<SpanNearQueryBuil
      * This QueryBuilder is only applicable as a clause in SpanGapQueryBuilder but
      * yet to enforce this restriction.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SpanGapQueryBuilder implements SpanQueryBuilder, WithFieldName {
         public static final String NAME = "span_gap";

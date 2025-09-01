@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.query.QueryShardContext;
+import org.density.ingest.TestTemplateService;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.search.SearchModule;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.lucene.BytesRefs.toBytesRef;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.common.lucene.BytesRefs.toBytesRef;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public abstract class AbstractSuggestionBuilderTestCase<SB extends SuggestionBuilder<SB>> extends OpenSearchTestCase {
+public abstract class AbstractSuggestionBuilderTestCase<SB extends SuggestionBuilder<SB>> extends DensityTestCase {
 
     private static final int NUMBER_OF_TESTBUILDERS = 20;
     protected static NamedWriteableRegistry namedWriteableRegistry;

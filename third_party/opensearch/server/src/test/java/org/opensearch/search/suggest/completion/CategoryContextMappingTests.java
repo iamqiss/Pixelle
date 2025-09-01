@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -41,37 +41,37 @@ import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.suggest.document.ContextSuggestField;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.CompletionFieldMapper.CompletionFieldType;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.search.suggest.completion.context.CategoryContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextBuilder;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.CompletionFieldMapper.CompletionFieldType;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.search.suggest.completion.context.CategoryContextMapping;
+import org.density.search.suggest.completion.context.ContextBuilder;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class CategoryContextMappingTests extends OpenSearchSingleNodeTestCase {
+public class CategoryContextMappingTests extends DensitySingleNodeTestCase {
 
     public void testIndexingWithNoContexts() throws Exception {
         String mapping = jsonBuilder().startObject()

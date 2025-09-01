@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.SuppressForbidden;
 
 import java.io.FilePermission;
 import java.io.IOException;
@@ -43,7 +43,7 @@ import java.security.Permissions;
 /**
  * Utility for File Permissions during bootstrap
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilePermissionUtils {
 

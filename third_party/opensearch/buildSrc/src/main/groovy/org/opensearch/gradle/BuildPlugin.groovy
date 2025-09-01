@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,18 +26,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle
+package org.density.gradle
 
 import groovy.transform.CompileStatic
 import org.apache.commons.io.IOUtils
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin
-import org.opensearch.gradle.precommit.PrecommitTasks
-import org.opensearch.gradle.test.ErrorReportingTestListener
-import org.opensearch.gradle.testclusters.OpenSearchCluster
-import org.opensearch.gradle.testclusters.TestClustersPlugin
-import org.opensearch.gradle.testclusters.TestDistribution
-import org.opensearch.gradle.util.GradleUtils
+import org.density.gradle.info.BuildParams
+import org.density.gradle.info.GlobalBuildInfoPlugin
+import org.density.gradle.precommit.PrecommitTasks
+import org.density.gradle.test.ErrorReportingTestListener
+import org.density.gradle.testclusters.DensityCluster
+import org.density.gradle.testclusters.TestClustersPlugin
+import org.density.gradle.testclusters.TestDistribution
+import org.density.gradle.util.GradleUtils
 import org.gradle.api.JavaVersion
 import org.gradle.api.*
 import org.gradle.api.artifacts.Configuration
@@ -51,8 +51,8 @@ import org.gradle.api.artifacts.repositories.IvyPatternRepositoryLayout
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.credentials.HttpHeaderCredentials
 import org.gradle.api.execution.TaskActionListener
-import org.opensearch.gradle.info.GlobalBuildInfoPlugin
-import org.opensearch.gradle.precommit.PrecommitTasks
+import org.density.gradle.info.GlobalBuildInfoPlugin
+import org.density.gradle.precommit.PrecommitTasks
 import org.gradle.api.GradleException
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Plugin
@@ -62,7 +62,7 @@ import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.api.tasks.bundling.Jar
 
 /**
- * Encapsulates build configuration for opensearch projects.
+ * Encapsulates build configuration for density projects.
  */
 @CompileStatic
 class BuildPlugin implements Plugin<Project> {
@@ -72,14 +72,14 @@ class BuildPlugin implements Plugin<Project> {
         // make sure the global build info plugin is applied to the root project
         project.rootProject.pluginManager.apply(GlobalBuildInfoPlugin)
 
-        if (project.pluginManager.hasPlugin('opensearch.standalone-rest-test')) {
-            throw new InvalidUserDataException('opensearch.standalone-test, '
-                    + 'opensearch.standalone-rest-test, and opensearch.build '
+        if (project.pluginManager.hasPlugin('density.standalone-rest-test')) {
+            throw new InvalidUserDataException('density.standalone-test, '
+                    + 'density.standalone-rest-test, and density.build '
                     + 'are mutually exclusive')
         }
-        project.pluginManager.apply('opensearch.java')
+        project.pluginManager.apply('density.java')
         configureLicenseAndNotice(project)
-        project.pluginManager.apply('opensearch.publish')
+        project.pluginManager.apply('density.publish')
         project.pluginManager.apply(DependenciesInfoPlugin)
         project.pluginManager.apply('jacoco')
 

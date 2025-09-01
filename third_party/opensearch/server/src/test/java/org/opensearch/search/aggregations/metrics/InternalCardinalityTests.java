@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BitMixer;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.search.aggregations.ParsedAggregation;
-import org.opensearch.test.InternalAggregationTestCase;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.Settings;
+import org.density.common.util.BitMixer;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.search.aggregations.ParsedAggregation;
+import org.density.test.InternalAggregationTestCase;
 import org.junit.After;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class InternalCardinalityTests extends InternalAggregationTestCase<Intern
         p = randomIntBetween(AbstractHyperLogLog.MIN_PRECISION, AbstractHyperLogLog.MAX_PRECISION);
     }
 
-    @After // we force @After to have it run before OpenSearchTestCase#after otherwise it fails
+    @After // we force @After to have it run before DensityTestCase#after otherwise it fails
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.Version;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.ConstantFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.get.GetRequest;
+import org.density.action.search.SearchRequest;
+import org.density.common.SetOnce;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.ConstantFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.indices.TermsLookup;
+import org.density.search.SearchHit;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.nio.CharBuffer;
@@ -84,7 +84,7 @@ import java.util.stream.IntStream;
 /**
  * A filter for a field based on several terms matching on any of them.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> implements ComplementAwareQueryBuilder, WithFieldName {
     public static final String NAME = "terms";
@@ -319,7 +319,7 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> i
      * Convert the list in a way that optimizes storage in the case that all
      * elements are either integers or {@link String}s/{@link BytesRef}/
      * {@link CharBuffer}s. This is useful to help garbage collections for
-     * use-cases that involve sending very large terms queries to OpenSearch.
+     * use-cases that involve sending very large terms queries to Density.
      * If the list does not only contain integers or {@link String}s, then a
      * list is returned where all {@link String}/{@link CharBuffer}s have been
      * replaced with {@link BytesRef}s.
@@ -601,7 +601,7 @@ public class TermsQueryBuilder extends AbstractQueryBuilder<TermsQueryBuilder> i
             client.admin()
                 .indices()
                 .getSettings(
-                    new org.opensearch.action.admin.indices.settings.get.GetSettingsRequest().indices(termsLookup.index()),
+                    new org.density.action.admin.indices.settings.get.GetSettingsRequest().indices(termsLookup.index()),
                     ActionListener.wrap(settingsResponse -> {
                         // Get index-specific settings, fall back to defaults if missing
                         Settings idxSettings = settingsResponse.getIndexToSettings().getOrDefault(termsLookup.index(), Settings.EMPTY);

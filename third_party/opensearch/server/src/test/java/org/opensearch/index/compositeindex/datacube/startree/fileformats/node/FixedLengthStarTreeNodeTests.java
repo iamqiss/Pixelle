@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.node;
+package org.density.index.compositeindex.datacube.startree.fileformats.node;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeTestUtils;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeFactory;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.startree.StarTreeTestUtils;
+import org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeFactory;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FixedLengthStarTreeNodeTests extends OpenSearchTestCase {
+public class FixedLengthStarTreeNodeTests extends DensityTestCase {
 
     private IndexOutput dataOut;
     private IndexInput dataIn;

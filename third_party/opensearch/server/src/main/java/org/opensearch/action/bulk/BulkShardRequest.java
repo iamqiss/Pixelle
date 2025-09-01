@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.action.support.replication.ReplicatedWriteRequest;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.action.support.replication.ReplicatedWriteRequest;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -48,7 +48,7 @@ import java.util.stream.Stream;
 /**
  * A bulk shard request targeting a specific shard ID
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BulkShardRequest extends ReplicatedWriteRequest<BulkShardRequest> implements Accountable {
 

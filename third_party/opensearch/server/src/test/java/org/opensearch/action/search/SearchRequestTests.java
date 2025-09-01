@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.AbstractSearchTestCase;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.rescore.QueryRescorerBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.IndicesOptions;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.ArrayUtils;
+import org.density.core.common.Strings;
+import org.density.core.tasks.TaskId;
+import org.density.geometry.LinearRing;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.rest.RestRequest;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.AbstractSearchTestCase;
+import org.density.search.Scroll;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.rescore.QueryRescorerBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.rest.FakeRestRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ import java.util.List;
 import java.util.function.IntConsumer;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.action.search.SearchType.DFS_QUERY_THEN_FETCH;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.action.search.SearchType.DFS_QUERY_THEN_FETCH;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 
@@ -279,7 +279,7 @@ public class SearchRequestTests extends AbstractSearchTestCase {
         );
         mutators.add(() -> mutation.preference(randomValueOtherThan(searchRequest.preference(), () -> randomAlphaOfLengthBetween(3, 10))));
         mutators.add(() -> mutation.routing(randomValueOtherThan(searchRequest.routing(), () -> randomAlphaOfLengthBetween(3, 10))));
-        mutators.add(() -> mutation.requestCache((randomValueOtherThan(searchRequest.requestCache(), OpenSearchTestCase::randomBoolean))));
+        mutators.add(() -> mutation.requestCache((randomValueOtherThan(searchRequest.requestCache(), DensityTestCase::randomBoolean))));
         mutators.add(
             () -> mutation.scroll(
                 randomValueOtherThan(searchRequest.scroll(), () -> new Scroll(new TimeValue(randomNonNegativeLong() % 100000)))

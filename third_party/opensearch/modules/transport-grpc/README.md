@@ -3,7 +3,7 @@
 An auxiliary transport which runs in parallel to the REST API.
 The `transport-grpc` module initializes a new client/server transport implementing a gRPC protocol on Netty4.
 
-**Note:** As a module, transport-grpc is included by default with all OpenSearch installations. However, it remains opt-in and must be explicitly enabled via configuration settings.
+**Note:** As a module, transport-grpc is included by default with all Density installations. However, it remains opt-in and must be explicitly enabled via configuration settings.
 
 ## GRPC Settings
 Enable this transport with:
@@ -71,10 +71,10 @@ setting 'grpc.netty.keepalive_timeout',                 '1s'
 ./gradlew :modules:transport-grpc:internalClusterTest
 ```
 
-### Running OpenSearch with gRPC Enabled
+### Running Density with gRPC Enabled
 
-To run OpenSearch with the gRPC transport enabled:
+To run Density with the gRPC transport enabled:
 
 ```bash
-./gradlew run -Dtests.opensearch.aux.transport.types="[transport-grpc]"
+./gradlew run -Dtests.density.aux.transport.types="[transport-grpc]"
 ```

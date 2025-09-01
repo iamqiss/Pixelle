@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 /**
  * Statistics over a set of values (either aggregated over field data or scripts)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ExtendedStats extends Stats {
 
@@ -121,7 +121,7 @@ public interface ExtendedStats extends Stats {
     /**
      * The bounds of the extended stats
      *
-     * @opensearch.internal
+     * @density.internal
      */
     enum Bounds {
         UPPER,

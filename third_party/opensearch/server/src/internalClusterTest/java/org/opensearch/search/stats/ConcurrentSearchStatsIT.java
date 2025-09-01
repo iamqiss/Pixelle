@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.stats;
+package org.density.search.stats;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsAction;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequestBuilder;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.stats.IndexStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.IndicesQueryCache;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchService;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsAction;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequestBuilder;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.stats.IndexStats;
+import org.density.action.admin.indices.stats.IndicesStatsRequestBuilder;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.indices.IndicesQueryCache;
+import org.density.indices.IndicesService;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchService;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,13 +37,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.index.query.QueryBuilders.scriptQuery;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_TARGET_MAX_SLICE_COUNT_SETTING;
+import static org.density.index.query.QueryBuilders.scriptQuery;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_TARGET_MAX_SLICE_COUNT_SETTING;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 1, numClientNodes = 0, supportsDedicatedMasters = false)
-public class ConcurrentSearchStatsIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 1, numClientNodes = 0, supportsDedicatedMasters = false)
+public class ConcurrentSearchStatsIT extends DensityIntegTestCase {
 
     private final int SEGMENT_SLICE_COUNT = 4;
 

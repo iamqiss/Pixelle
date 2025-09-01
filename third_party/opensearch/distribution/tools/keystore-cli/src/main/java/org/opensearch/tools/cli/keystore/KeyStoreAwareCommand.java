@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
 /**
- * An {@link EnvironmentAwareCommand} that needs to access the opensearch keystore, possibly
+ * An {@link EnvironmentAwareCommand} that needs to access the density keystore, possibly
  * decrypting it if it is password protected.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class KeyStoreAwareCommand extends EnvironmentAwareCommand {
 
@@ -75,7 +75,7 @@ public abstract class KeyStoreAwareCommand extends EnvironmentAwareCommand {
         final char[] passwordArray;
         if (withVerification) {
             passwordArray = terminal.readSecret(
-                "Enter new password for the opensearch keystore (empty for no password): ",
+                "Enter new password for the density keystore (empty for no password): ",
                 EnvironmentAwareCommand.MAX_PASSPHRASE_LENGTH
             );
             char[] passwordVerification = terminal.readSecret("Enter same password again: ", EnvironmentAwareCommand.MAX_PASSPHRASE_LENGTH);
@@ -84,7 +84,7 @@ public abstract class KeyStoreAwareCommand extends EnvironmentAwareCommand {
             }
             Arrays.fill(passwordVerification, '\u0000');
         } else {
-            passwordArray = terminal.readSecret("Enter password for the opensearch keystore : ");
+            passwordArray = terminal.readSecret("Enter password for the density keystore : ");
         }
         return new SecureString(passwordArray);
     }

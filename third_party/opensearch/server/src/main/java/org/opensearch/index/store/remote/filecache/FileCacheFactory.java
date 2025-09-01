@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.index.store.remote.utils.cache.SegmentedCache;
+import org.density.common.cache.RemovalReason;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.index.store.remote.utils.cache.SegmentedCache;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.opensearch.ExceptionsHelper.catchAsRuntimeException;
+import static org.density.ExceptionsHelper.catchAsRuntimeException;
 
 /**
  * File Cache (FC) is introduced to solve the problem that the local disk cannot hold
@@ -33,7 +33,7 @@ import static org.opensearch.ExceptionsHelper.catchAsRuntimeException;
  * items from cache tail and triggers a callback to clean up the file from disk. The
  * cleanup process also includes closing file’s descriptor.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileCacheFactory {
 

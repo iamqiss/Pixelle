@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
-import org.opensearch.search.profile.query.QueryProfileBreakdown;
+import org.density.search.profile.query.QueryProfileBreakdown;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * Base class for a profiling tree.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractInternalProfileTree<PB extends AbstractProfileBreakdown, E> {
 

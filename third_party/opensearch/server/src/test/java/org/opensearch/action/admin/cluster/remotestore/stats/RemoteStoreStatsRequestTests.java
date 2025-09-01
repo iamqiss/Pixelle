@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.remotestore.stats;
+package org.density.action.admin.cluster.remotestore.stats;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class RemoteStoreStatsRequestTests extends OpenSearchTestCase {
+public class RemoteStoreStatsRequestTests extends DensityTestCase {
 
     public void testAddIndexName() throws Exception {
         RemoteStoreStatsRequest request = new RemoteStoreStatsRequest();

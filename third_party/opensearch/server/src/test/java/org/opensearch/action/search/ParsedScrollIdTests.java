@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.test.DensityTestCase;
 
-public class ParsedScrollIdTests extends OpenSearchTestCase {
+public class ParsedScrollIdTests extends DensityTestCase {
     public void testHasLocalIndices() {
         final int nResults = randomIntBetween(1, 3);
         final SearchContextIdForNode[] searchContextIdForNodes = new SearchContextIdForNode[nResults];

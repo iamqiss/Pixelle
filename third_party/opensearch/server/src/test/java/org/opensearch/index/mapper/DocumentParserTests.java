@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.plugins.Plugin;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -55,8 +55,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.test.StreamsUtils.copyToBytesFromClasspath;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToBytesFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -1389,41 +1389,41 @@ public class DocumentParserTests extends MapperServiceTestCase {
     }
 
     public void testParseToJsonAndParse() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/simple/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/simple/test-mapping.json");
         MapperService mapperService = createMapperService(mapping(b -> {}));
         merge(MapperService.SINGLE_MAPPING_NAME, mapperService, mapping);
         String builtMapping = mapperService.documentMapper().mappingSource().string();
         // reparse it
         DocumentMapper builtDocMapper = createDocumentMapper(MapperService.SINGLE_MAPPING_NAME, builtMapping);
-        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/opensearch/index/mapper/simple/test1.json"));
+        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/density/index/mapper/simple/test1.json"));
         Document doc = builtDocMapper.parse(new SourceToParse("test", "1", json, MediaTypeRegistry.JSON)).rootDoc();
         assertThat(doc.getBinaryValue(builtDocMapper.idFieldMapper().name()), equalTo(Uid.encodeId("1")));
         assertThat(doc.get(builtDocMapper.mappers().getMapper("name.first").name()), equalTo("fred"));
     }
 
     public void testSimpleParser() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/simple/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/simple/test-mapping.json");
         DocumentMapper docMapper = createDocumentMapper(MapperService.SINGLE_MAPPING_NAME, mapping);
 
         assertThat((String) docMapper.meta().get("param1"), equalTo("value1"));
 
-        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/opensearch/index/mapper/simple/test1.json"));
+        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/density/index/mapper/simple/test1.json"));
         Document doc = docMapper.parse(new SourceToParse("test", "1", json, MediaTypeRegistry.JSON)).rootDoc();
         assertThat(doc.getBinaryValue(docMapper.idFieldMapper().name()), equalTo(Uid.encodeId("1")));
         assertThat(doc.get(docMapper.mappers().getMapper("name.first").name()), equalTo("fred"));
     }
 
     public void testSimpleParserNoTypeNoId() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/simple/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/simple/test-mapping.json");
         DocumentMapper docMapper = createDocumentMapper(MapperService.SINGLE_MAPPING_NAME, mapping);
-        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/opensearch/index/mapper/simple/test1-notype-noid.json"));
+        BytesReference json = new BytesArray(copyToBytesFromClasspath("/org/density/index/mapper/simple/test1-notype-noid.json"));
         Document doc = docMapper.parse(new SourceToParse("test", "1", json, MediaTypeRegistry.JSON)).rootDoc();
         assertThat(doc.getBinaryValue(docMapper.idFieldMapper().name()), equalTo(Uid.encodeId("1")));
         assertThat(doc.get(docMapper.mappers().getMapper("name.first").name()), equalTo("fred"));
     }
 
     public void testAttributes() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/simple/test-mapping.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/simple/test-mapping.json");
 
         DocumentMapper docMapper = createDocumentMapper(MapperService.SINGLE_MAPPING_NAME, mapping);
 

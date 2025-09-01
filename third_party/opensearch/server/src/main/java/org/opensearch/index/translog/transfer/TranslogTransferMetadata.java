@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.index.remote.RemoteStoreUtils;
+import org.density.Version;
+import org.density.common.SetOnce;
+import org.density.common.collect.Tuple;
+import org.density.index.remote.RemoteStoreUtils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -26,7 +26,7 @@ import java.util.Optional;
  * tranlog and generational checkpoint uploads to mark the latest generation and the translog/checkpoint files that are
  * still referenced by the last checkpoint.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogTransferMetadata {
 

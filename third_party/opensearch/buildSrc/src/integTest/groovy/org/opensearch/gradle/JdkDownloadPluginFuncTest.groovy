@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,13 +27,13 @@
  * under the License.
  */
 
-package org.opensearch.gradle
+package org.density.gradle
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
-import org.opensearch.gradle.transform.SymbolicLinkPreservingUntarTransform
-import org.opensearch.gradle.transform.UnzipTransform
-import org.opensearch.gradle.fixtures.WiremockFixture
+import org.density.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.transform.SymbolicLinkPreservingUntarTransform
+import org.density.gradle.transform.UnzipTransform
+import org.density.gradle.fixtures.WiremockFixture
 import spock.lang.Unroll
 
 import java.nio.file.Files
@@ -59,7 +59,7 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
         def mockedContent = filebytes(jdkVendor, platform)
         buildFile.text = """
             plugins {
-             id 'opensearch.jdk-download'
+             id 'density.jdk-download'
             }
 
             jdks {
@@ -114,11 +114,11 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
         }
         buildFile.text = """
             plugins {
-             id 'opensearch.jdk-download' apply false
+             id 'density.jdk-download' apply false
             }
 
             subprojects {
-                apply plugin: 'opensearch.jdk-download'
+                apply plugin: 'density.jdk-download'
 
                 jdks {
                   myJdk {
@@ -159,10 +159,10 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
         def mockedContent = filebytes(VENDOR_ADOPTOPENJDK, platform)
         buildFile.text = """
             plugins {
-             id 'opensearch.jdk-download'
+             id 'density.jdk-download'
             }
             apply plugin: 'base'
-            apply plugin: 'opensearch.jdk-download'
+            apply plugin: 'density.jdk-download'
 
             jdks {
               myJdk {

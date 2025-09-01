@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.forcemerge;
+package org.density.action.admin.indices.forcemerge;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractBroadcastResponseTestCase;
+import org.density.DensityException;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractBroadcastResponseTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +46,14 @@ public class ForceMergeResponseTests extends AbstractBroadcastResponseTestCase<F
         String indexName = randomAlphaOfLengthBetween(3, 10);
         int shardId = randomIntBetween(0, 10);
         List<DefaultShardOperationFailedException> exceptions = new ArrayList<>();
-        exceptions.add(new DefaultShardOperationFailedException(indexName, shardId, new OpenSearchException("boom")));
+        exceptions.add(new DefaultShardOperationFailedException(indexName, shardId, new DensityException("boom")));
         ForceMergeResponse response = createTestInstance(10, 3, 1, exceptions);
         assertEquals(
             "ForceMergeResponse[total_shards=10,successful_shards=3,failed_shards=1,failures=[["
                 + indexName
                 + "]["
                 + shardId
-                + "] failed, reason [OpenSearchException[boom]]]]",
+                + "] failed, reason [DensityException[boom]]]]",
             response.toString()
         );
     }

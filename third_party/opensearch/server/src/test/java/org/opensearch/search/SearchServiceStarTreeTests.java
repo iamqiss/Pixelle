@@ -1,71 +1,71 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.OrdinalDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.engine.Segment;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.StarTreeMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.opensearch.search.aggregations.startree.DateHistogramAggregatorTests;
-import org.opensearch.search.aggregations.startree.NumericTermsAggregatorTests;
-import org.opensearch.search.aggregations.startree.StarTreeFilterTests;
-import org.opensearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.startree.StarTreeQueryContext;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.OriginalIndices;
+import org.density.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Rounding;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.index.IndexService;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.OrdinalDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.engine.Segment;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.StarTreeMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.metrics.MedianAbsoluteDeviationAggregationBuilder;
+import org.density.search.aggregations.metrics.SumAggregationBuilder;
+import org.density.search.aggregations.startree.DateHistogramAggregatorTests;
+import org.density.search.aggregations.startree.NumericTermsAggregatorTests;
+import org.density.search.aggregations.startree.StarTreeFilterTests;
+import org.density.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.startree.StarTreeQueryContext;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -78,14 +78,14 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.count;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateHistogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.max;
-import static org.opensearch.search.aggregations.AggregationBuilders.medianAbsoluteDeviation;
-import static org.opensearch.search.aggregations.AggregationBuilders.min;
-import static org.opensearch.search.aggregations.AggregationBuilders.range;
-import static org.opensearch.search.aggregations.AggregationBuilders.sum;
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.aggregations.AggregationBuilders.count;
+import static org.density.search.aggregations.AggregationBuilders.dateHistogram;
+import static org.density.search.aggregations.AggregationBuilders.max;
+import static org.density.search.aggregations.AggregationBuilders.medianAbsoluteDeviation;
+import static org.density.search.aggregations.AggregationBuilders.min;
+import static org.density.search.aggregations.AggregationBuilders.range;
+import static org.density.search.aggregations.AggregationBuilders.sum;
+import static org.density.search.aggregations.AggregationBuilders.terms;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.Mockito.mock;
@@ -96,7 +96,7 @@ import static org.mockito.Mockito.when;
  * For valid resolvable (with star-tree) cases, StarTreeQueryContext is created and populated with the SearchContext
  * For non-resolvable (with star-tree) cases, StarTreeQueryContext is null
  */
-public class SearchServiceStarTreeTests extends OpenSearchSingleNodeTestCase {
+public class SearchServiceStarTreeTests extends DensitySingleNodeTestCase {
 
     private static final String FIELD_NAME = "status";
     private static final String TIMESTAMP_FIELD = "@timestamp";

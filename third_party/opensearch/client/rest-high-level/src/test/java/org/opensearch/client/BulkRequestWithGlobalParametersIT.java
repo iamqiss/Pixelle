@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.search.SearchHit;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.search.SearchHit;
 
 import java.io.IOException;
 import java.util.function.Function;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasIndex;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasProperty;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
+import static org.density.test.hamcrest.DensityAssertions.hasIndex;
+import static org.density.test.hamcrest.DensityAssertions.hasProperty;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyIterable;
@@ -53,7 +53,7 @@ import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class BulkRequestWithGlobalParametersIT extends OpenSearchRestHighLevelClientTestCase {
+public class BulkRequestWithGlobalParametersIT extends DensityRestHighLevelClientTestCase {
 
     public void testGlobalPipelineOnBulkRequest() throws IOException {
         createFieldAddingPipleine("xyz", "fieldNameXYZ", "valueXYZ");

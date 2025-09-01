@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.SetOnce;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SetOnce;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 
-public class TransportRequestDeduplicatorTests extends OpenSearchTestCase {
+public class TransportRequestDeduplicatorTests extends DensityTestCase {
 
     public void testRequestDeduplication() throws Exception {
         AtomicInteger successCount = new AtomicInteger();

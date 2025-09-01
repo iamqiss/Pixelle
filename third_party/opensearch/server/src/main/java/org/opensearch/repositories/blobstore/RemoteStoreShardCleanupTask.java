@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Set;
 
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentSet;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentSet;
 
 /**
  A Runnable wrapper to make sure that for a given shard only one cleanup task runs at a time.

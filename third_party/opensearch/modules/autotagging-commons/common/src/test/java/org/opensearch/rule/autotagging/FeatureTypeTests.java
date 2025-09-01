@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.autotagging;
+package org.density.rule.autotagging;
 
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.rule.autotagging.RuleTests.FEATURE_TYPE;
-import static org.opensearch.rule.autotagging.RuleTests.INVALID_ATTRIBUTE;
-import static org.opensearch.rule.autotagging.RuleTests.TEST_ATTR1_NAME;
-import static org.opensearch.rule.autotagging.RuleTests.TestAttribute.TEST_ATTRIBUTE_1;
+import static org.density.rule.autotagging.RuleTests.FEATURE_TYPE;
+import static org.density.rule.autotagging.RuleTests.INVALID_ATTRIBUTE;
+import static org.density.rule.autotagging.RuleTests.TEST_ATTR1_NAME;
+import static org.density.rule.autotagging.RuleTests.TestAttribute.TEST_ATTRIBUTE_1;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class FeatureTypeTests extends OpenSearchTestCase {
+public class FeatureTypeTests extends DensityTestCase {
     public void testIsValidAttribute() {
         assertTrue(FEATURE_TYPE.isValidAttribute(TEST_ATTRIBUTE_1));
         assertFalse(FEATURE_TYPE.isValidAttribute(mock(Attribute.class)));

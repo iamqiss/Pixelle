@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
-import org.opensearch.indices.store.ShardAttributes;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
+import org.density.indices.store.ShardAttributes;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShardBatchCacheTests extends OpenSearchAllocationTestCase {
+public class ShardBatchCacheTests extends DensityAllocationTestCase {
     private static final String BATCH_ID = "b1";
     private final DiscoveryNode node1 = newNode("node1");
     private final DiscoveryNode node2 = newNode("node2");
@@ -198,7 +198,7 @@ public class ShardBatchCacheTests extends OpenSearchAllocationTestCase {
             if (failedShardsCount-- > 0) {
                 shardData.put(
                     shard,
-                    new GatewayStartedShard("alloc-" + allocationId++, false, null, new OpenSearchRejectedExecutionException())
+                    new GatewayStartedShard("alloc-" + allocationId++, false, null, new DensityRejectedExecutionException())
                 );
             } else {
                 shardData.put(shard, new GatewayStartedShard("alloc-" + allocationId++, false, null, null));

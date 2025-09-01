@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.shingle.ShingleFilter;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.lucene.analysis.miscellaneous.DisableGraphAttribute;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.lucene.analysis.miscellaneous.DisableGraphAttribute;
 
 /**
  * Factory for shingle analyzer token filters
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShingleTokenFilterFactory extends AbstractTokenFilterFactory {
 
@@ -101,7 +101,7 @@ public class ShingleTokenFilterFactory extends AbstractTokenFilterFactory {
     /**
      * Factory for single token filter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Factory implements TokenFilterFactory {
         private final int maxShingleSize;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +40,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
  * A TaskListener that just logs the response at the info level. Used when we
  * need a listener but aren't returning the result to the user.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class LoggingTaskListener<Response> implements TaskListener<Response> {
     private static final Logger logger = LogManager.getLogger(LoggingTaskListener.class);

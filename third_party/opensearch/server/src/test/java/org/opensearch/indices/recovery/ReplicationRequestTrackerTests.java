@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.indices.replication.common.ReplicationRequestTracker;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.DensityException;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.indices.replication.common.ReplicationRequestTracker;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
-public class ReplicationRequestTrackerTests extends OpenSearchTestCase {
+public class ReplicationRequestTrackerTests extends DensityTestCase {
 
     private TestThreadPool threadPool;
 
@@ -82,7 +82,7 @@ public class ReplicationRequestTrackerTests extends OpenSearchTestCase {
                         // Ensure that we only return 1 future per sequence number
                         assertTrue(added);
                         if (rarely()) {
-                            listener.onFailure(new OpenSearchException(randomAlphaOfLength(10)));
+                            listener.onFailure(new DensityException(randomAlphaOfLength(10)));
                         } else {
                             listener.onResponse(null);
                         }

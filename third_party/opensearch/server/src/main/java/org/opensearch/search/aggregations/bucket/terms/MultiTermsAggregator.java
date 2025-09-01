@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalOrder;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.DeferableBucketAggregator;
-import org.opensearch.search.aggregations.bucket.LocalBucketCountThresholds;
-import org.opensearch.search.aggregations.support.AggregationPath;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.internal.SearchContext;
+import org.density.ExceptionsHelper;
+import org.density.common.CheckedSupplier;
+import org.density.common.Numbers;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalOrder;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.DeferableBucketAggregator;
+import org.density.search.aggregations.bucket.LocalBucketCountThresholds;
+import org.density.search.aggregations.support.AggregationPath;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -51,13 +51,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.search.aggregations.InternalOrder.isKeyOrder;
-import static org.opensearch.search.aggregations.bucket.terms.TermsAggregator.descendsFromNestedAggregator;
+import static org.density.search.aggregations.InternalOrder.isKeyOrder;
+import static org.density.search.aggregations.bucket.terms.TermsAggregator.descendsFromNestedAggregator;
 
 /**
  * An aggregator that aggregate with multi_terms.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiTermsAggregator extends DeferableBucketAggregator {
 
@@ -344,7 +344,7 @@ public class MultiTermsAggregator extends DeferableBucketAggregator {
     /**
      * Multi_Term ValuesSource, it is a collection of {@link InternalValuesSource}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class MultiTermsValuesSource implements Releasable {
         private final List<InternalValuesSource> valuesSources;
@@ -435,7 +435,7 @@ public class MultiTermsAggregator extends DeferableBucketAggregator {
     /**
      * Factory for construct {@link InternalValuesSource}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class InternalValuesSourceFactory {
         static InternalValuesSource bytesValuesSource(ValuesSource valuesSource, IncludeExclude.StringFilter includeExclude) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestCustomMetadata;
+import org.density.Version;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.gateway.GatewayService;
+import org.density.test.DensityTestCase;
+import org.density.test.TestCustomMetadata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests for the {@link ClusterChangedEvent} class.
  */
-public class ClusterChangedEventTests extends OpenSearchTestCase {
+public class ClusterChangedEventTests extends DensityTestCase {
 
     private static final ClusterName TEST_CLUSTER_NAME = new ClusterName("test");
     private static final String NODE_ID_PREFIX = "node_";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.maxmind.geoip2.model.AbstractResponse;
 
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.StreamsUtils;
+import org.density.common.network.InetAddresses;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.env.TestEnvironment;
+import org.density.ingest.Processor;
+import org.density.ingest.geoip.IngestGeoIpModulePlugin.GeoIpCache;
+import org.density.test.DensityTestCase;
+import org.density.test.StreamsUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,7 +53,7 @@ import java.util.Set;
 
 import static org.mockito.Mockito.mock;
 
-public class IngestGeoIpModulePluginTests extends OpenSearchTestCase {
+public class IngestGeoIpModulePluginTests extends DensityTestCase {
 
     public void testCachesAndEvictsResults() {
         GeoIpCache cache = new GeoIpCache(1);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lease.Releasables;
+import org.density.common.settings.Settings;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
 
-public class BinarySearcherTests extends OpenSearchTestCase {
+public class BinarySearcherTests extends DensityTestCase {
 
     private BigArrays randombigArrays() {
         return new MockBigArrays(new MockPageCacheRecycler(Settings.EMPTY), new NoneCircuitBreakerService());

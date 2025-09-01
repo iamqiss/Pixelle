@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -51,22 +51,22 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.analysis.MockLowerCaseFilter;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.CustomAnalyzer;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.LowercaseNormalizer;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.termvectors.TermVectorsService;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.CustomAnalyzer;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.LowercaseNormalizer;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.termvectors.TermVectorsService;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -76,7 +76,7 @@ import java.util.Map;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.index.mapper.KeywordFieldMapper.normalizeValue;
+import static org.density.index.mapper.KeywordFieldMapper.normalizeValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -252,7 +252,7 @@ public class KeywordFieldMapperTests extends MapperTestCase {
         IndexableField[] fields = doc.rootDoc().getFields("field");
         assertEquals(2, fields.length);
 
-        doc = mapper.parse(source(b -> b.field("field", "opensearch")));
+        doc = mapper.parse(source(b -> b.field("field", "density")));
         fields = doc.rootDoc().getFields("field");
         assertEquals(0, fields.length);
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,40 +40,40 @@ import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.index.SequentialStoredFieldsLeafReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.index.fieldvisitor.CustomFieldsVisitor;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.search.SearchContextSourcePrinter;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.fetch.FetchSubPhase.HitContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.fetch.subphase.InnerHitsPhase;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.search.profile.fetch.FetchProfileBreakdown;
-import org.opensearch.search.profile.fetch.FetchProfiler;
-import org.opensearch.search.profile.fetch.FetchTimingType;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.CheckedSupplier;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.index.SequentialStoredFieldsLeafReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.xcontent.MediaType;
+import org.density.index.fieldvisitor.CustomFieldsVisitor;
+import org.density.index.fieldvisitor.FieldsVisitor;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.search.SearchContextSourcePrinter;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.fetch.FetchSubPhase.HitContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.fetch.subphase.InnerHitsPhase;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
+import org.density.search.profile.Timer;
+import org.density.search.profile.fetch.FetchProfileBreakdown;
+import org.density.search.profile.fetch.FetchProfiler;
+import org.density.search.profile.fetch.FetchTimingType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ import static java.util.Collections.emptyMap;
  * Fetch phase of a search request, used to fetch the actual top matching documents to be returned to the client, identified
  * after reducing all the matches returned by the query phase
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class FetchPhase {

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.metrics.CompensatedSum;
+import org.density.test.DensityTestCase;
 
-public class StaticValueAggregatorTests extends OpenSearchTestCase {
+public class StaticValueAggregatorTests extends DensityTestCase {
 
     // tests the extreme case where normal sum will lose precision
     public void testKahanSummation() {

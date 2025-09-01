@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Copyright OpenSearch Contributors
+# Copyright Density Contributors
 # SPDX-License-Identifier: Apache-2.0
 #
-# The OpenSearch Contributors require contributions made to
+# The Density Contributors require contributions made to
 # this file be licensed under the Apache-2.0 license or a
 # compatible open source license.
 
@@ -13,7 +13,7 @@ function usage() {
     echo "Usage: $0 [args]"
     echo ""
     echo "Arguments:"
-    echo -e "-v VERSION\t[Required] OpenSearch version."
+    echo -e "-v VERSION\t[Required] Density version."
     echo -e "-q QUALIFIER\t[Optional] Version qualifier."
     echo -e "-s SNAPSHOT\t[Optional] Build a snapshot, default is 'false'."
     echo -e "-p PLATFORM\t[Optional] Platform, default is 'uname -s'."
@@ -63,14 +63,14 @@ while getopts ":h:v:q:s:o:p:a:d:" arg; do
 done
 
 if [ -z "$VERSION" ]; then
-    echo "Error: You must specify the OpenSearch version"
+    echo "Error: You must specify the Density version"
     usage
     exit 1
 fi
 
 [ -z "$OUTPUT" ] && OUTPUT=artifacts
 
-mkdir -p $OUTPUT/maven/org/opensearch
+mkdir -p $OUTPUT/maven/org/density
 
 # Build project and publish to maven local.
 ./gradlew publishToMavenLocal -Dbuild.snapshot=$SNAPSHOT -Dbuild.version_qualifier=$QUALIFIER
@@ -79,10 +79,10 @@ mkdir -p $OUTPUT/maven/org/opensearch
 ./gradlew publishNebulaPublicationToTestRepository -Dbuild.snapshot=$SNAPSHOT -Dbuild.version_qualifier=$QUALIFIER
 
 # Copy maven publications to be promoted
-cp -r ./build/local-test-repo/org/opensearch "${OUTPUT}"/maven/org
+cp -r ./build/local-test-repo/org/density "${OUTPUT}"/maven/org
 
 # Assemble distribution artifact
-# see https://github.com/opensearch-project/OpenSearch/blob/main/settings.gradle#L34 for other distribution targets
+# see https://github.com/density-project/Density/blob/main/settings.gradle#L34 for other distribution targets
 
 [ -z "$PLATFORM" ] && PLATFORM=$(uname -s | awk '{print tolower($0)}')
 [ -z "$ARCHITECTURE" ] && ARCHITECTURE=`uname -m`
@@ -137,13 +137,13 @@ case $PLATFORM-$DISTRIBUTION-$ARCHITECTURE in
         ;;
 esac
 
-echo "Building OpenSearch for $PLATFORM-$DISTRIBUTION-$ARCHITECTURE"
+echo "Building Density for $PLATFORM-$DISTRIBUTION-$ARCHITECTURE"
 
 ./gradlew :distribution:$TYPE:$TARGET:assemble -Dbuild.snapshot=$SNAPSHOT -Dbuild.version_qualifier=$QUALIFIER
 
 # Copy artifact to dist folder in bundle build output
 [[ "$SNAPSHOT" == "true" ]] && IDENTIFIER="-SNAPSHOT"
-ARTIFACT_BUILD_NAME=`ls distribution/$TYPE/$TARGET/build/distributions/ | grep "opensearch-min.*$SUFFIX.$EXT"`
+ARTIFACT_BUILD_NAME=`ls distribution/$TYPE/$TARGET/build/distributions/ | grep "density-min.*$SUFFIX.$EXT"`
 mkdir -p "${OUTPUT}/dist"
 cp distribution/$TYPE/$TARGET/build/distributions/$ARTIFACT_BUILD_NAME "${OUTPUT}"/dist/$ARTIFACT_BUILD_NAME
 

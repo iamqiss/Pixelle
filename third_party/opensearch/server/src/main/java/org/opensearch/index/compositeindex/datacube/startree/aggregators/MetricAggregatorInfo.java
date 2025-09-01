@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.mapper.FieldValueConverter;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.mapper.FieldValueConverter;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * Builds aggregation function and doc values field pair to support various aggregations
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class MetricAggregatorInfo implements Comparable<MetricAggregatorInfo> {
 

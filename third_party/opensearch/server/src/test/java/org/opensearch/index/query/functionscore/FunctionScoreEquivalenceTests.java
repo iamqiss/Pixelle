@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.MatchNoDocsQuery;
@@ -37,13 +37,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.tests.search.RandomApproximationQuery;
 import org.apache.lucene.tests.search.SearchEquivalenceTestBase;
-import org.opensearch.bootstrap.BootstrapForTesting;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
+import org.density.bootstrap.BootstrapForTesting;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
 
 public class FunctionScoreEquivalenceTests extends SearchEquivalenceTestBase {
     static {
         try {
-            Class.forName("org.opensearch.test.OpenSearchTestCase");
+            Class.forName("org.density.test.DensityTestCase");
         } catch (ClassNotFoundException e) {
             throw new AssertionError(e);
         }

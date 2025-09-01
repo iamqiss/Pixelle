@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
 /**
  * Base Exception for the gateway
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class GatewayException extends OpenSearchException {
+public class GatewayException extends DensityException {
 
     public GatewayException(StreamInput in) throws IOException {
         super(in);

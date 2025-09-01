@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskResponse;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.tasks.MockTaskManager;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.ResourceNotFoundException;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskResponse;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.plugins.Plugin;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.tasks.MockTaskManager;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.function.Function;
 /**
  * Base IT test class for Tasks ITs
  */
-abstract class AbstractTasksIT extends OpenSearchIntegTestCase {
+abstract class AbstractTasksIT extends DensityIntegTestCase {
 
     protected Map<Tuple<String, String>, RecordingTaskManagerListener> listeners = new HashMap<>();
 

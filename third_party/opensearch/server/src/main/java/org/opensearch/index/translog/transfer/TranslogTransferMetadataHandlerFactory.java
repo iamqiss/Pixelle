@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.common.io.IndexIOStreamHandler;
-import org.opensearch.common.io.IndexIOStreamHandlerFactory;
+import org.density.common.io.IndexIOStreamHandler;
+import org.density.common.io.IndexIOStreamHandlerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * {@link TranslogTransferMetadataHandlerFactory} is a factory class to create {@link TranslogTransferMetadataHandler}
  * instances based on the {@link TranslogTransferMetadata} version
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogTransferMetadataHandlerFactory implements IndexIOStreamHandlerFactory<TranslogTransferMetadata> {
 

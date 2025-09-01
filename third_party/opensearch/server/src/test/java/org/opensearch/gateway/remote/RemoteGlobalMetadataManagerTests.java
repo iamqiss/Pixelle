@@ -1,49 +1,49 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.DiffableStringMap;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.TemplatesMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.TestCapturingListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.model.RemoteCoordinationMetadata;
-import org.opensearch.gateway.remote.model.RemoteCustomMetadata;
-import org.opensearch.gateway.remote.model.RemoteGlobalMetadata;
-import org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings;
-import org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.gateway.remote.model.RemoteTemplatesMetadata;
-import org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.DiffableStringMap;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.TemplatesMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.TestCapturingListener;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.model.RemoteCoordinationMetadata;
+import org.density.gateway.remote.model.RemoteCustomMetadata;
+import org.density.gateway.remote.model.RemoteGlobalMetadata;
+import org.density.gateway.remote.model.RemoteHashesOfConsistentSettings;
+import org.density.gateway.remote.model.RemotePersistentSettingsMetadata;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.gateway.remote.model.RemoteTemplatesMetadata;
+import org.density.gateway.remote.model.RemoteTransientSettingsMetadata;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.indices.IndicesModule;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -56,37 +56,37 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.cluster.metadata.Metadata.isGlobalStateEquals;
-import static org.opensearch.common.blobstore.stream.write.WritePriority.URGENT;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata1;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata2;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata3;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata4;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata5;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.FORMAT_PARAMS;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_PATH_TOKEN;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.PATH_DELIMITER;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadataTests.getCoordinationMetadata;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadataTests.getCustomMetadata;
-import static org.opensearch.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteGlobalMetadataTests.getGlobalMetadata;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettingsTests.getHashesOfConsistentSettings;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadataTests.getSettings;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadataTests.getTemplatesMetadata;
-import static org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
+import static org.density.cluster.metadata.Metadata.isGlobalStateEquals;
+import static org.density.common.blobstore.stream.write.WritePriority.URGENT;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata1;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata2;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata3;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata4;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata5;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_PATH_TOKEN;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.FORMAT_PARAMS;
+import static org.density.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.RemoteClusterStateUtils.GLOBAL_METADATA_PATH_TOKEN;
+import static org.density.gateway.remote.RemoteClusterStateUtils.PATH_DELIMITER;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadataTests.getCoordinationMetadata;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.model.RemoteCustomMetadataTests.getCustomMetadata;
+import static org.density.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA;
+import static org.density.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteGlobalMetadataTests.getGlobalMetadata;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS_FORMAT;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettingsTests.getHashesOfConsistentSettings;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadataTests.getSettings;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadataTests.getTemplatesMetadata;
+import static org.density.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyIterable;
@@ -96,7 +96,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RemoteGlobalMetadataManagerTests extends OpenSearchTestCase {
+public class RemoteGlobalMetadataManagerTests extends DensityTestCase {
     private RemoteGlobalMetadataManager remoteGlobalMetadataManager;
     private ClusterSettings clusterSettings;
     private BlobStoreRepository blobStoreRepository;

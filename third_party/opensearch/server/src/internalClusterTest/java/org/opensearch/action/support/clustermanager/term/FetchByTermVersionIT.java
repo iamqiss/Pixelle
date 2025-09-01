@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.clustermanager.term;
+package org.density.action.support.clustermanager.term;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.cluster.ClusterName;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.mapper.MapperService;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,8 +32,8 @@ import java.util.stream.IntStream;
 import static org.hamcrest.Matchers.is;
 
 @SuppressWarnings("unchecked")
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class FetchByTermVersionIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class FetchByTermVersionIT extends DensityIntegTestCase {
 
     AtomicBoolean isTermVersionCheckEnabled = new AtomicBoolean();
 

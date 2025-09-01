@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.controllers;
+package org.density.ratelimitting.admissioncontrol.controllers;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Abstract class for Admission Controller in OpenSearch, which aims to provide resource based request admission control.
+ * Abstract class for Admission Controller in Density, which aims to provide resource based request admission control.
  * It provides methods for any tracking-object that can be incremented (such as memory size),
  * and admission control can be applied if configured limit has been reached
  */

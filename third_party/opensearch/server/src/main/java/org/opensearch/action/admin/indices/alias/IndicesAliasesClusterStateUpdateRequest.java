@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias;
+package org.density.action.admin.indices.alias;
 
-import org.opensearch.cluster.ack.ClusterStateUpdateRequest;
-import org.opensearch.cluster.metadata.AliasAction;
+import org.density.cluster.ack.ClusterStateUpdateRequest;
+import org.density.cluster.metadata.AliasAction;
 
 import java.util.List;
 
 /**
  * Cluster state update request that allows to add or remove aliases
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndicesAliasesClusterStateUpdateRequest extends ClusterStateUpdateRequest<IndicesAliasesClusterStateUpdateRequest> {
     private final List<AliasAction> actions;

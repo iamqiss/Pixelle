@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,32 +25,32 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.ReaderUtil;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.search.SearchHit;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 
 /**
  * Sub phase within the fetch phase used to fetch things *about* the documents like highlighting or matched queries.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface FetchSubPhase {
 
     /**
      * The hit context for the fetch subphase
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class HitContext {
         private final SearchHit hit;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.validate.query;
+package org.density.action.admin.indices.validate.query;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.AbstractBroadcastResponseTestCase;
+import org.density.DensityException;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.AbstractBroadcastResponseTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class ValidateQueryResponseTests extends AbstractBroadcastResponseTestCas
         }
         for (int i = 0; i < failedShards; i++) {
             QueryExplanation queryExplanation = QueryExplanationTests.createRandomQueryExplanation(false);
-            OpenSearchException exc = new OpenSearchException("some_error_" + randomInt());
+            DensityException exc = new DensityException("some_error_" + randomInt());
             shardFailures.add(new DefaultShardOperationFailedException(queryExplanation.getIndex(), queryExplanation.getShard(), exc));
             queryExplanations.add(queryExplanation);
         }

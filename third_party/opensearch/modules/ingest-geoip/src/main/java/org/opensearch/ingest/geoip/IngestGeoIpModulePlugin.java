@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.maxmind.db.NoCache;
 import com.maxmind.db.NodeCache;
@@ -38,17 +38,17 @@ import com.maxmind.db.Reader;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.AbstractResponse;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.cache.Cache;
-import org.opensearch.common.cache.CacheBuilder;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.ingest.Processor;
-import org.opensearch.plugins.IngestPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.common.Booleans;
+import org.density.common.SuppressForbidden;
+import org.density.common.cache.Cache;
+import org.density.common.cache.CacheBuilder;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.ingest.Processor;
+import org.density.plugins.IngestPlugin;
+import org.density.plugins.Plugin;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -125,7 +125,7 @@ public class IngestGeoIpModulePlugin extends Plugin implements IngestPlugin, Clo
     static Map<String, DatabaseReaderLazyLoader> loadDatabaseReaders(Path geoIpDirectory, Path geoIpConfigDirectory) throws IOException {
         assertDatabaseExistence(geoIpDirectory, true);
         assertDatabaseExistence(geoIpConfigDirectory, false);
-        final boolean loadDatabaseOnHeap = Booleans.parseBoolean(System.getProperty("opensearch.geoip.load_db_on_heap", "false"));
+        final boolean loadDatabaseOnHeap = Booleans.parseBoolean(System.getProperty("density.geoip.load_db_on_heap", "false"));
         final Map<String, DatabaseReaderLazyLoader> databaseReaders = new HashMap<>();
 
         // load the default databases

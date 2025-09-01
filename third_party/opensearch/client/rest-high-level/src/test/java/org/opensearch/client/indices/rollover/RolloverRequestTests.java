@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices.rollover;
+package org.density.client.indices.rollover;
 
-import org.opensearch.action.admin.indices.rollover.Condition;
-import org.opensearch.action.admin.indices.rollover.MaxAgeCondition;
-import org.opensearch.action.admin.indices.rollover.MaxDocsCondition;
-import org.opensearch.action.admin.indices.rollover.MaxSizeCondition;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.rollover.Condition;
+import org.density.action.admin.indices.rollover.MaxAgeCondition;
+import org.density.action.admin.indices.rollover.MaxDocsCondition;
+import org.density.action.admin.indices.rollover.MaxSizeCondition;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
-public class RolloverRequestTests extends OpenSearchTestCase {
+public class RolloverRequestTests extends DensityTestCase {
     public void testConstructorAndFieldAssignments() {
         // test constructor
         String alias = randomAlphaOfLength(5);

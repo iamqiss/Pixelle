@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.logging.DeprecationLogger;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ import java.util.function.Function;
 /**
  * Script for terms set query
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TermsSetQueryScript {
 
@@ -126,7 +126,7 @@ public abstract class TermsSetQueryScript {
     /**
      * A factory to construct {@link TermsSetQueryScript} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface LeafFactory {
         TermsSetQueryScript newInstance(LeafReaderContext ctx) throws IOException;
@@ -135,7 +135,7 @@ public abstract class TermsSetQueryScript {
     /**
      * A factory to construct stateful {@link TermsSetQueryScript} factories for a specific index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         LeafFactory newFactory(Map<String, Object> params, SearchLookup lookup);

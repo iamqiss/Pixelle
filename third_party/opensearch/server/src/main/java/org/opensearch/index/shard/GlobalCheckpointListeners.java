@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.core.Assertions;
+import org.density.core.index.shard.ShardId;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -54,21 +54,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Represents a collection of global checkpoint listeners. This collection can be added to, and all listeners present at the time of an
  * update will be notified together. All listeners will be notified when the shard is closed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GlobalCheckpointListeners implements Closeable {
 
     /**
      * A global checkpoint listener consisting of a callback that is notified when the global checkpoint is updated or the shard is closed.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface GlobalCheckpointListener {
@@ -82,7 +82,7 @@ public class GlobalCheckpointListeners implements Closeable {
 
         /**
          * Callback when the global checkpoint is updated or the shard is closed. If the shard is closed, the value of the global checkpoint
-         * will be set to {@link org.opensearch.index.seqno.SequenceNumbers#UNASSIGNED_SEQ_NO} and the exception will be non-null and an
+         * will be set to {@link org.density.index.seqno.SequenceNumbers#UNASSIGNED_SEQ_NO} and the exception will be non-null and an
          * instance of {@link IndexShardClosedException }. If the listener timed out waiting for notification then the exception will be
          * non-null and an instance of {@link TimeoutException}. If the global checkpoint is updated, the exception will be null.
          *

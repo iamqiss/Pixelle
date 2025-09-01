@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test.core.compress;
+package org.density.test.core.compress;
 
 import org.apache.lucene.tests.util.LineFileDocs;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.compress.Compressor;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
-public abstract class AbstractCompressorTestCase extends OpenSearchTestCase {
+public abstract class AbstractCompressorTestCase extends DensityTestCase {
 
     public void testRandom() throws IOException {
         Random r = random();

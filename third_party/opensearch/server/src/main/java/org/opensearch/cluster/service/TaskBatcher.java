@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.core.concurrency.DensityRejectedExecutionException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,27 +52,27 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Batching support for {@link PrioritizedOpenSearchThreadPoolExecutor}
+ * Batching support for {@link PrioritizedDensityThreadPoolExecutor}
  * Tasks that share the same batching key are batched (see {@link BatchedTask#batchingKey})
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TaskBatcher {
 
     private final Logger logger;
-    private final PrioritizedOpenSearchThreadPoolExecutor threadExecutor;
+    private final PrioritizedDensityThreadPoolExecutor threadExecutor;
     // package visible for tests
     final Map<Object, LinkedHashSet<BatchedTask>> tasksPerBatchingKey = new ConcurrentHashMap<>();
     final Map<Object, Map<Object, BatchedTask>> taskIdentityPerBatchingKey = new ConcurrentHashMap<>();
     private final TaskBatcherListener taskBatcherListener;
 
-    public TaskBatcher(Logger logger, PrioritizedOpenSearchThreadPoolExecutor threadExecutor, TaskBatcherListener taskBatcherListener) {
+    public TaskBatcher(Logger logger, PrioritizedDensityThreadPoolExecutor threadExecutor, TaskBatcherListener taskBatcherListener) {
         this.logger = logger;
         this.threadExecutor = threadExecutor;
         this.taskBatcherListener = taskBatcherListener;
     }
 
-    public void submitTasks(List<? extends BatchedTask> tasks, @Nullable TimeValue timeout) throws OpenSearchRejectedExecutionException {
+    public void submitTasks(List<? extends BatchedTask> tasks, @Nullable TimeValue timeout) throws DensityRejectedExecutionException {
         if (tasks.isEmpty()) {
             return;
         }

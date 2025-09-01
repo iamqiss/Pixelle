@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query.rewriters;
+package org.density.search.query.rewriters;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.PointValues;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.ComplementAwareQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.WithFieldName;
-import org.opensearch.search.query.QueryRewriter;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.ComplementAwareQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.WithFieldName;
+import org.density.search.query.QueryRewriter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import java.util.Map;
  * - TermsQueryBuilder (on numeric fields)
  * - MatchQueryBuilder (on numeric fields)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MustNotToShouldRewriter implements QueryRewriter {
 

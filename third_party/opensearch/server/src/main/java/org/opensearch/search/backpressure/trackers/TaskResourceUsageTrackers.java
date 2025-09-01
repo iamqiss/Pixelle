@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure.trackers;
+package org.density.search.backpressure.trackers;
 
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskCancellation;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskCancellation;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * TaskResourceUsageTrackers is used to hold all the {@link TaskResourceUsageTracker} objects.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TaskResourceUsageTrackers {
     private final EnumMap<TaskResourceUsageTrackerType, TaskResourceUsageTracker> all;
@@ -61,7 +61,7 @@ public class TaskResourceUsageTrackers {
 
     /**
      * TaskResourceUsageTracker is used to track completions and cancellations of search related tasks.
-     * @opensearch.internal
+     * @density.internal
      */
     public static abstract class TaskResourceUsageTracker {
         /**

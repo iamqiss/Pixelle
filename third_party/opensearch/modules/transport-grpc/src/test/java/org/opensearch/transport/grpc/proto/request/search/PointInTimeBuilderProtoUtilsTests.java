@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.protobufs.PointInTimeReference;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.protobufs.PointInTimeReference;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.TimeUnit;
 
-public class PointInTimeBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class PointInTimeBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithValidValues() {
         // Create a protobuf PointInTimeReference with valid values

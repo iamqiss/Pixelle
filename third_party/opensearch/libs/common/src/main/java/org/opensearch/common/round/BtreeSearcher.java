@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.round;
+package org.density.common.round;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 import jdk.incubator.vector.LongVector;
 import jdk.incubator.vector.Vector;
@@ -18,7 +18,7 @@ import jdk.incubator.vector.VectorSpecies;
 /**
  * It uses vectorized B-tree search to find the round-down point.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 class BtreeSearcher implements Roundable {

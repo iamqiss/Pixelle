@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.SizeValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.XRejectedExecutionHandler;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.gateway.remote.ClusterStateChecksum;
-import org.opensearch.node.Node;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.SizeValue;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.XRejectedExecutionHandler;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.gateway.remote.ClusterStateChecksum;
+import org.density.node.Node;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,9 +81,9 @@ import java.util.stream.Collectors;
 import static java.util.Collections.unmodifiableMap;
 
 /**
- * The OpenSearch threadpool class
+ * The Density threadpool class
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
@@ -93,7 +93,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
     /**
      * The threadpool names.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Names {
         public static final String SAME = "same";
@@ -133,7 +133,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
     /**
      * The threadpool type.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum ThreadPoolType {
@@ -212,7 +212,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
 
     private final CachedTimeThread cachedTimeThread;
 
-    static final ExecutorService DIRECT_EXECUTOR = OpenSearchExecutors.newDirectExecutorService();
+    static final ExecutorService DIRECT_EXECUTOR = DensityExecutors.newDirectExecutorService();
 
     private final ThreadContext threadContext;
 
@@ -249,7 +249,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
         assert Node.NODE_NAME_SETTING.exists(settings);
 
         final Map<String, ExecutorBuilder> builders = new HashMap<>();
-        final int allocatedProcessors = OpenSearchExecutors.allocatedProcessors(settings);
+        final int allocatedProcessors = DensityExecutors.allocatedProcessors(settings);
         final int halfProc = halfAllocatedProcessors(allocatedProcessors);
         final int halfProcMaxAt5 = halfAllocatedProcessorsMaxFive(allocatedProcessors);
         final int halfProcMaxAt10 = halfAllocatedProcessorsMaxTen(allocatedProcessors);
@@ -371,7 +371,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
         this.threadPoolInfo = new ThreadPoolInfo(infos);
         this.scheduler = Scheduler.initScheduler(settings);
         TimeValue estimatedTimeInterval = ESTIMATED_TIME_INTERVAL_SETTING.get(settings);
-        this.cachedTimeThread = new CachedTimeThread(OpenSearchExecutors.threadName(settings, "[timer]"), estimatedTimeInterval.millis());
+        this.cachedTimeThread = new CachedTimeThread(DensityExecutors.threadName(settings, "[timer]"), estimatedTimeInterval.millis());
         this.cachedTimeThread.start();
     }
 
@@ -454,8 +454,8 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
             }
             Settings tpGroup = entry.getValue();
             ExecutorHolder holder = executors.get(tpName);
-            assert holder.executor instanceof OpenSearchThreadPoolExecutor;
-            OpenSearchThreadPoolExecutor threadPoolExecutor = (OpenSearchThreadPoolExecutor) holder.executor;
+            assert holder.executor instanceof DensityThreadPoolExecutor;
+            DensityThreadPoolExecutor threadPoolExecutor = (DensityThreadPoolExecutor) holder.executor;
             if (holder.info.type == ThreadPoolType.SCALING) {
                 if (scalingThreadPoolKeys.containsAll(tpGroup.keySet()) == false) {
                     throw new IllegalArgumentException(
@@ -489,8 +489,8 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
             String tpName = entry.getKey();
             Settings tpGroup = entry.getValue();
             ExecutorHolder holder = executors.get(tpName);
-            assert holder.executor instanceof OpenSearchThreadPoolExecutor;
-            OpenSearchThreadPoolExecutor executor = (OpenSearchThreadPoolExecutor) holder.executor;
+            assert holder.executor instanceof DensityThreadPoolExecutor;
+            DensityThreadPoolExecutor executor = (DensityThreadPoolExecutor) holder.executor;
             if (holder.info.type == ThreadPoolType.SCALING) {
                 int max = tpGroup.getAsInt("max", executor.getMaximumPoolSize());
                 int core = tpGroup.getAsInt("core", executor.getCorePoolSize());
@@ -535,8 +535,8 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
             int largest = -1;
             long completed = -1;
             long waitTimeNanos = -1;
-            if (holder.executor() instanceof OpenSearchThreadPoolExecutor) {
-                OpenSearchThreadPoolExecutor threadPoolExecutor = (OpenSearchThreadPoolExecutor) holder.executor();
+            if (holder.executor() instanceof DensityThreadPoolExecutor) {
+                DensityThreadPoolExecutor threadPoolExecutor = (DensityThreadPoolExecutor) holder.executor();
                 threads = threadPoolExecutor.getPoolSize();
                 queue = threadPoolExecutor.getQueue().size();
                 active = threadPoolExecutor.getActiveCount();
@@ -595,7 +595,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
      * @return a ScheduledFuture who's get will return when the task is has been added to its target thread pool and throw an exception if
      *         the task is canceled before it was added to its target thread pool. Once the task has been added to its target thread pool
      *         the ScheduledFuture will cannot interact with it.
-     * @throws OpenSearchRejectedExecutionException if the task cannot be scheduled for execution
+     * @throws DensityRejectedExecutionException if the task cannot be scheduled for execution
      */
     @Override
     public ScheduledCancellable schedule(Runnable command, TimeValue delay, String executor) {
@@ -609,7 +609,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
     public void scheduleUnlessShuttingDown(TimeValue delay, String executor, Runnable command) {
         try {
             schedule(command, delay, executor);
-        } catch (OpenSearchRejectedExecutionException e) {
+        } catch (DensityRejectedExecutionException e) {
             if (e.isExecutorShutdown()) {
                 logger.debug(
                     new ParameterizedMessage(
@@ -767,7 +767,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
         public void run() {
             try {
                 executor.execute(runnable);
-            } catch (OpenSearchRejectedExecutionException e) {
+            } catch (DensityRejectedExecutionException e) {
                 if (e.isExecutorShutdown()) {
                     logger.debug(
                         new ParameterizedMessage(
@@ -869,7 +869,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
         public final Info info;
 
         ExecutorHolder(ExecutorService executor, Info info) {
-            assert executor instanceof OpenSearchThreadPoolExecutor || executor == DIRECT_EXECUTOR;
+            assert executor instanceof DensityThreadPoolExecutor || executor == DIRECT_EXECUTOR;
             this.executor = executor;
             this.info = info;
         }
@@ -882,7 +882,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
     /**
      * The thread pool information.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Info implements Writeable, ToXContentFragment {
@@ -931,7 +931,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
             out.writeString(name);
             if (type == ThreadPoolType.RESIZABLE && out.getVersion().before(Version.V_3_0_0)) {
                 // Opensearch on older version doesn't know about "resizable" thread pool. Convert RESIZABLE to FIXED
-                // to avoid serialization/de-serization issue between nodes with different OpenSearch version
+                // to avoid serialization/de-serization issue between nodes with different Density version
                 out.writeString(ThreadPoolType.FIXED.getType());
             } else {
                 out.writeString(type.getType());

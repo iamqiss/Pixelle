@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.util;
+package org.density.core.util;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.SuppressForbidden;
+import org.density.common.util.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,9 +46,9 @@ import java.nio.file.Path;
 import java.util.stream.StreamSupport;
 
 /**
- * OpenSearch utils to work with {@link java.nio.file.Path}
+ * Density utils to work with {@link java.nio.file.Path}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class FileSystemUtils {
 

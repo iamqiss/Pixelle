@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.document.DoubleDocValuesField;
 import org.apache.lucene.document.Field;
@@ -23,47 +23,47 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.cache.IndexCache;
-import org.opensearch.index.mapper.BooleanFieldMapper;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.MultiTermsValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.LeafDocLookup;
-import org.opensearch.test.TestSearchContext;
+import org.density.common.CheckedConsumer;
+import org.density.common.network.InetAddresses;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.IndexService;
+import org.density.index.cache.IndexCache;
+import org.density.index.mapper.BooleanFieldMapper;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.MultiTermsValuesSourceConfig;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.LeafDocLookup;
+import org.density.test.TestSearchContext;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.reindex.AbstractBulkByScrollRequestBuilder;
-import org.opensearch.index.reindex.BulkByScrollResponse;
-import org.opensearch.index.reindex.BulkByScrollTask;
-import org.opensearch.index.reindex.CancelTests;
-import org.opensearch.index.reindex.DeleteByQueryAction;
-import org.opensearch.index.reindex.DeleteByQueryRequestBuilder;
-import org.opensearch.index.reindex.ReindexAction;
-import org.opensearch.index.reindex.ReindexModulePlugin;
-import org.opensearch.index.reindex.ReindexRequestBuilder;
-import org.opensearch.index.reindex.RethrottleAction;
-import org.opensearch.index.reindex.RethrottleRequestBuilder;
-import org.opensearch.index.reindex.UpdateByQueryAction;
-import org.opensearch.index.reindex.UpdateByQueryRequestBuilder;
-import org.opensearch.index.shard.IndexingOperationListener;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.index.IndexModule;
+import org.density.index.engine.Engine;
+import org.density.index.query.QueryBuilders;
+import org.density.index.reindex.AbstractBulkByScrollRequestBuilder;
+import org.density.index.reindex.BulkByScrollResponse;
+import org.density.index.reindex.BulkByScrollTask;
+import org.density.index.reindex.CancelTests;
+import org.density.index.reindex.DeleteByQueryAction;
+import org.density.index.reindex.DeleteByQueryRequestBuilder;
+import org.density.index.reindex.ReindexAction;
+import org.density.index.reindex.ReindexModulePlugin;
+import org.density.index.reindex.ReindexRequestBuilder;
+import org.density.index.reindex.RethrottleAction;
+import org.density.index.reindex.RethrottleRequestBuilder;
+import org.density.index.reindex.UpdateByQueryAction;
+import org.density.index.reindex.UpdateByQueryRequestBuilder;
+import org.density.index.shard.IndexingOperationListener;
+import org.density.plugins.Plugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.sort.SortOrder;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 
@@ -72,10 +72,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ReindexDocumentationIT extends OpenSearchIntegTestCase {
+public class ReindexDocumentationIT extends DensityIntegTestCase {
 
     // Semaphore used to allow & block indexing operations during the test
     private static final Semaphore ALLOWED_OPERATIONS = new Semaphore(0);

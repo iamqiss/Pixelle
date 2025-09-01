@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.ordinals;
+package org.density.index.fielddata.ordinals;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.DocValues;
@@ -39,13 +39,13 @@ import org.apache.lucene.index.OrdinalMap;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.packed.PackedInts;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.LeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.plain.AbstractLeafOrdinalsFieldData;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.LeafOrdinalsFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.plain.AbstractLeafOrdinalsFieldData;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -56,7 +56,7 @@ import java.util.function.Function;
 /**
  * Utility class to build global ordinals.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum GlobalOrdinalsBuilder {
     ;

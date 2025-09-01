@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.common.Randomness;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OptionalMatchers;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.common.Randomness;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.OptionalMatchers;
 import org.hamcrest.Matchers;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class RequestValidatorsTests extends OpenSearchTestCase {
+public class RequestValidatorsTests extends DensityTestCase {
 
     private final RequestValidators.RequestValidator<PutMappingRequest> EMPTY = (request, state, indices) -> Optional.empty();
     private final RequestValidators.RequestValidator<PutMappingRequest> FAIL = (request, state, indices) -> Optional.of(

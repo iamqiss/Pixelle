@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.applicationtemplates;
+package org.density.cluster.applicationtemplates;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.bytes.BytesReference;
 
 /**
  * Encapsulates the information and content about a system template available within a repository.

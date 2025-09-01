@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.readonly;
+package org.density.action.admin.indices.readonly;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.clustermanager.ShardsAcknowledgedResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.action.support.clustermanager.ShardsAcknowledgedResponse;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,7 +55,7 @@ import static java.util.Collections.unmodifiableList;
 /**
  * Transport response to open an index.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AddIndexBlockResponse extends ShardsAcknowledgedResponse {
@@ -101,7 +101,7 @@ public class AddIndexBlockResponse extends ShardsAcknowledgedResponse {
     /**
      * Result for adding a block
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class AddBlockResult implements Writeable, ToXContentFragment {
@@ -175,7 +175,7 @@ public class AddIndexBlockResponse extends ShardsAcknowledgedResponse {
                 if (hasFailures()) {
                     if (exception != null) {
                         builder.startObject("exception");
-                        OpenSearchException.generateFailureXContent(builder, params, exception, true);
+                        DensityException.generateFailureXContent(builder, params, exception, true);
                         builder.endObject();
                     } else {
                         builder.startArray("failed_shards");
@@ -202,7 +202,7 @@ public class AddIndexBlockResponse extends ShardsAcknowledgedResponse {
     /**
      * Per shard result for adding a block
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class AddBlockShardResult implements Writeable, ToXContentFragment {
@@ -262,7 +262,7 @@ public class AddIndexBlockResponse extends ShardsAcknowledgedResponse {
         /**
          * Contains failure information
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public static class Failure extends DefaultShardOperationFailedException {

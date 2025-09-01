@@ -1,7 +1,7 @@
 {
   "delete":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/document-apis/delete-document/",
+      "url":"https://density.org/docs/latest/api-reference/document-apis/delete-document/",
       "description":"Removes a document from the index."
     },
     "stability":"stable",

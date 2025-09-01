@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.settings.put;
+package org.density.action.admin.indices.settings.put;
 
-import org.opensearch.cluster.ack.IndicesClusterStateUpdateRequest;
-import org.opensearch.common.settings.Settings;
+import org.density.cluster.ack.IndicesClusterStateUpdateRequest;
+import org.density.common.settings.Settings;
 
 /**
  * Cluster state update request that allows to update settings for some indices
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateSettingsClusterStateUpdateRequest extends IndicesClusterStateUpdateRequest<UpdateSettingsClusterStateUpdateRequest> {
 

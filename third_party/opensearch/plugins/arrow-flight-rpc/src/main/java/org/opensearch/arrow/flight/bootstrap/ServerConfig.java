@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.bootstrap;
+package org.density.arrow.flight.bootstrap;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.threadpool.ScalingExecutorBuilder;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.threadpool.ScalingExecutorBuilder;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -32,10 +32,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * Configuration class for OpenSearch Flight server settings.
+ * Configuration class for Density Flight server settings.
  * This class manages server-side configurations including port settings, Arrow memory settings,
  * thread pool configurations, and SSL/TLS settings.
- * @opensearch.internal
+ * @density.internal
  */
 public class ServerConfig {
     /**
@@ -117,7 +117,7 @@ public class ServerConfig {
      * Initializes the server configuration with the provided settings.
      * Sets system properties for Arrow memory management and configures thread pool settings.
      *
-     * @param settings The OpenSearch settings to initialize the server with
+     * @param settings The Density settings to initialize the server with
      */
     @SuppressForbidden(reason = "required for arrow allocator")
     @SuppressWarnings("removal")
@@ -192,8 +192,8 @@ public class ServerConfig {
     static EventLoopGroup createELG(String name, int eventLoopThreads) {
 
         return Epoll.isAvailable()
-            ? new EpollEventLoopGroup(eventLoopThreads, OpenSearchExecutors.daemonThreadFactory(name))
-            : new NioEventLoopGroup(eventLoopThreads, OpenSearchExecutors.daemonThreadFactory(name));
+            ? new EpollEventLoopGroup(eventLoopThreads, DensityExecutors.daemonThreadFactory(name))
+            : new NioEventLoopGroup(eventLoopThreads, DensityExecutors.daemonThreadFactory(name));
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.GenericSearchExtBuilder;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchHitsTests;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.aggregations.AggregationsTests;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.pipeline.ProcessorExecutionDetail;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.SearchProfileShardResultsTests;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.SuggestTests;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentHelper;
+import org.density.core.xcontent.XContentParser;
+import org.density.plugins.SearchPlugin;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.GenericSearchExtBuilder;
+import org.density.search.SearchExtBuilder;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchHitsTests;
+import org.density.search.SearchModule;
+import org.density.search.aggregations.AggregationsTests;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.pipeline.ProcessorExecutionDetail;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.SearchProfileShardResultsTests;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.SuggestTests;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -82,10 +82,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class SearchResponseTests extends OpenSearchTestCase {
+public class SearchResponseTests extends DensityTestCase {
 
     private static final NamedXContentRegistry xContentRegistry;
     static {
@@ -271,7 +271,7 @@ public class SearchResponseTests extends OpenSearchTestCase {
 
     /**
      * The "_shard/total/failures" section makes if impossible to directly compare xContent, because
-     * the failures in the parsed SearchResponse are wrapped in an extra OpenSearchException on the client side.
+     * the failures in the parsed SearchResponse are wrapped in an extra DensityException on the client side.
      * Because of this, in this special test case we compare the "top level" fields for equality
      * and the subsections xContent equivalence independently
      */
@@ -296,12 +296,12 @@ public class SearchResponseTests extends OpenSearchTestCase {
                 String originalMsg = originalFailure.getCause().getMessage();
                 assertEquals(
                     parsedFailure.getCause().getMessage(),
-                    "OpenSearch exception [type=parsing_exception, reason=" + originalMsg + "]"
+                    "Density exception [type=parsing_exception, reason=" + originalMsg + "]"
                 );
                 String nestedMsg = originalFailure.getCause().getCause().getMessage();
                 assertEquals(
                     parsedFailure.getCause().getCause().getMessage(),
-                    "OpenSearch exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
+                    "Density exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
                 );
             }
             assertEquals(XContentParser.Token.END_OBJECT, parser.currentToken());

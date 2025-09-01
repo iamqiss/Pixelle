@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.highlight.DefaultEncoder;
 import org.apache.lucene.search.highlight.Encoder;
 import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
-import org.opensearch.index.fieldvisitor.CustomFieldsVisitor;
-import org.opensearch.index.mapper.DerivedFieldValueFetcher;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.ValueFetcher;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.fetch.FetchSubPhase;
+import org.density.index.fieldvisitor.CustomFieldsVisitor;
+import org.density.index.mapper.DerivedFieldValueFetcher;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.ValueFetcher;
+import org.density.index.query.QueryShardContext;
+import org.density.search.fetch.FetchSubPhase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -50,7 +50,7 @@ import static java.util.Collections.singleton;
 /**
  * Utility class used during the highlight phase of the search request.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class HighlightUtils {
 
@@ -87,7 +87,7 @@ public final class HighlightUtils {
     /**
      * Encoders for the highlighters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Encoders {
         public static final Encoder DEFAULT = new DefaultEncoder();

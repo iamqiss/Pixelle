@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
@@ -23,7 +23,7 @@ import java.util.List;
  * Wraps MultiCollector and provide access to underlying collectors.
  * Please check out https://github.com/apache/lucene/pull/455.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiCollectorWrapper implements Collector {
     private final MultiCollector delegate;

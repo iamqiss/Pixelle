@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.Booleans;
+import org.density.common.annotation.PublicApi;
 
 import java.io.IOException;
 import java.util.Map;
@@ -43,7 +43,7 @@ import java.util.Map;
  * The output may or may not be a value object. Objects implementing {@link ToXContentObject} output a valid value
  * but those that don't may or may not require emitting a startObject and an endObject.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ToXContent {
@@ -51,7 +51,7 @@ public interface ToXContent {
     /**
      * Base parameters class
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     interface Params {
@@ -90,7 +90,7 @@ public interface ToXContent {
     /**
      * Mapped parameter base class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class MapParams implements Params {
 
@@ -128,7 +128,7 @@ public interface ToXContent {
     /**
      * Delegates mapped parameters to base Params class
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class DelegatingMapParams extends MapParams {
 

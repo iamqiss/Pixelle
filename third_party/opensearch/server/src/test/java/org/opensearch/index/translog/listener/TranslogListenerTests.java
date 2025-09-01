@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.listener;
+package org.density.index.translog.listener;
 
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TranslogListenerTests extends OpenSearchTestCase {
+public class TranslogListenerTests extends DensityTestCase {
 
     public void testCompositeTranslogEventListener() {
         AtomicInteger onTranslogSyncInvoked = new AtomicInteger();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.fs;
+package org.density.monitor.fs;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.tests.mockfile.FilterFileChannel;
 import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.telemetry.TestInMemoryMetricsRegistry;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.common.io.PathUtils;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.env.NodeEnvironment;
+import org.density.monitor.StatusInfo;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.telemetry.TestInMemoryMetricsRegistry;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -63,13 +63,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.monitor.StatusInfo.Status.HEALTHY;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.monitor.StatusInfo.Status.HEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class FsHealthServiceTests extends OpenSearchTestCase {
+public class FsHealthServiceTests extends DensityTestCase {
 
     private DeterministicTaskQueue deterministicTaskQueue;
     private TestInMemoryMetricsRegistry metricsRegistry;
@@ -148,7 +148,7 @@ public class FsHealthServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.monitor.fs:WARN", reason = "to ensure that we log on hung IO at WARN level")
+    @TestLogging(value = "org.density.monitor.fs:WARN", reason = "to ensure that we log on hung IO at WARN level")
     public void testLoggingOnHungIO() throws Exception {
         long slowLogThreshold = randomLongBetween(100, 200);
         final Settings settings = Settings.builder()

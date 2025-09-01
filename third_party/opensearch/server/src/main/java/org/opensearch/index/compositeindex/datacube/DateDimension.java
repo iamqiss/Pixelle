@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube;
+package org.density.index.compositeindex.datacube;
 
 import org.apache.lucene.index.DocValuesType;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.time.DateUtils;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.DateFieldMapper;
+import org.density.common.Rounding;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.time.DateUtils;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.DateFieldMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 /**
  * Date dimension class
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class DateDimension implements Dimension {

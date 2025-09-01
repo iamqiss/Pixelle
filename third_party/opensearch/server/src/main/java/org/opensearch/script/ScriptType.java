@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -46,7 +46,7 @@ import java.util.Locale;
  * It's also used to by {@link ScriptService} to determine whether or not a {@link Script} is
  * allowed to be executed based on both default and user-defined settings.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public enum ScriptType implements Writeable {
@@ -61,7 +61,7 @@ public enum ScriptType implements Writeable {
     INLINE(0, new ParseField("source", "inline")),
 
     /**
-     * STORED scripts are saved as part of the {@link org.opensearch.cluster.ClusterState}
+     * STORED scripts are saved as part of the {@link org.density.cluster.ClusterState}
      * based on user requests.  They will be cached when they are first used in a query.
      * They are turned off by default because most languages are insecure
      * (Groovy and others), but can be overridden by the specific {@link ScriptEngine}

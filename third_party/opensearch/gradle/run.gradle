@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,9 +27,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import org.opensearch.gradle.testclusters.RunTask
+import org.density.gradle.testclusters.RunTask
 
-apply plugin: 'opensearch.testclusters'
+apply plugin: 'density.testclusters'
 
 def numNodes = findProperty('numNodes') as Integer ?: 1
 def numZones = findProperty('numZones') as Integer ?: 1
@@ -58,7 +58,7 @@ testClusters {
 
 tasks.register("run", RunTask) {
   useCluster testClusters.runTask;
-  description = 'Runs opensearch in the foreground'
+  description = 'Runs density in the foreground'
   group = 'Verification'
 
   impliesSubProjects = true

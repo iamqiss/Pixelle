@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Priority;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.IndexMetaDataGenerations;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Priority;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.MapperService;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.store.Store;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.repositories.IndexId;
+import org.density.repositories.IndexMetaDataGenerations;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.ShardGenerations;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -63,7 +63,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.repositories.RepositoryData.EMPTY_REPO_GEN;
+import static org.density.repositories.RepositoryData.EMPTY_REPO_GEN;
 
 /** A dummy repository for testing which just needs restore overridden */
 public abstract class RestoreOnlyRepository extends AbstractLifecycleComponent implements Repository {

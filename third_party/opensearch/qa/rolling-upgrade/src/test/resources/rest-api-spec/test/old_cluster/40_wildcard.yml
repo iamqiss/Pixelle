@@ -22,7 +22,7 @@
         refresh: true
         body:
           - '{"index": {"_index": "test", "_id":1}}'
-          - '{"my_field": "org.opensearch.transport.NodeDisconnectedException: [node_s0][127.0.0.1:39953][disconnected] disconnected"}'
+          - '{"my_field": "org.density.transport.NodeDisconnectedException: [node_s0][127.0.0.1:39953][disconnected] disconnected"}'
           - '{"index": {"_index": "test", "_id":2}}'
           - '{"my_field": "[2024-06-08T06:31:37,443][INFO ][o.o.c.c.Coordinator      ] [node_s2] cluster-manager node [{node_s0}{Nj7FjR7hRP2lh_zur8KN_g}{OTGOoWmmSsWP_RQ3tIKJ9g}{127.0.0.1}{127.0.0.1:39953}{imr}{shard_indexing_pressure_enabled=true}] failed, restarting discovery"}'
           - '{"index": {"_index": "test", "_id":3}}'

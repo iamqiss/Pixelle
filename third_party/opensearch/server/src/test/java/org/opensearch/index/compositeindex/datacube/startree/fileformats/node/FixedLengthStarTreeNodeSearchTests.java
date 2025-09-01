@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.node;
+package org.density.index.compositeindex.datacube.startree.fileformats.node;
 
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -20,15 +20,15 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeFactory;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.startree.ArrayBasedCollector;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.provider.DimensionFilterMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.startree.fileformats.StarTreeWriter;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeFactory;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.startree.ArrayBasedCollector;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.provider.DimensionFilterMapper;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,11 +37,11 @@ import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FixedLengthStarTreeNodeSearchTests extends OpenSearchTestCase {
+public class FixedLengthStarTreeNodeSearchTests extends DensityTestCase {
 
     public void testExactMatch() {
         long[] randomSorted = random().longs(100, Long.MIN_VALUE, Long.MAX_VALUE).toArray();

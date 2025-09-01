@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.security.KeyPairGenerator;
@@ -61,7 +61,7 @@ final class TestUtils {
                     builder.field("project_id", "test");
                     builder.field("private_key_id", UUID.randomUUID().toString());
                     builder.field("private_key", "-----BEGIN PRIVATE KEY-----\n" + privateKey + "\n-----END PRIVATE KEY-----\n");
-                    builder.field("client_email", "opensearch@appspot.gserviceaccount.com");
+                    builder.field("client_email", "density@appspot.gserviceaccount.com");
                     builder.field("client_id", String.valueOf(Math.abs(random.nextLong())));
                 }
                 builder.endObject();

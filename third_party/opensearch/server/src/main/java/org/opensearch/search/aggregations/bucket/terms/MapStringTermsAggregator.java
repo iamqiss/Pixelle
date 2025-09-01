@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.InternalOrder;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.LocalBucketCountThresholds;
-import org.opensearch.search.aggregations.bucket.terms.SignificanceLookup.BackgroundFrequencyForBytes;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.LongArray;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.InternalOrder;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.LocalBucketCountThresholds;
+import org.density.search.aggregations.bucket.terms.SignificanceLookup.BackgroundFrequencyForBytes;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -64,13 +64,13 @@ import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.aggregations.InternalOrder.isKeyOrder;
+import static org.density.search.aggregations.InternalOrder.isKeyOrder;
 
 /**
  * An aggregator of string values that hashes the strings on the fly rather
  * than up front like the {@link GlobalOrdinalsStringTermsAggregator}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MapStringTermsAggregator extends AbstractStringTermsAggregator {
     private final CollectorSource collectorSource;
@@ -155,7 +155,7 @@ public class MapStringTermsAggregator extends AbstractStringTermsAggregator {
     /**
      * Abstaction on top of building collectors to fetch values.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface CollectorSource extends Releasable {
         boolean needsScores();
@@ -172,7 +172,7 @@ public class MapStringTermsAggregator extends AbstractStringTermsAggregator {
     /**
      * Consumer for the collector
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface CollectConsumer {
@@ -182,7 +182,7 @@ public class MapStringTermsAggregator extends AbstractStringTermsAggregator {
     /**
      * Fetch values from a {@link ValuesSource}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ValuesSourceCollectorSource implements CollectorSource {
         private final ValuesSource valuesSource;

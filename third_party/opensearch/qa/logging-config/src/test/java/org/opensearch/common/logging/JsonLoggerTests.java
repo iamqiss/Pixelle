@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configurator;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.env.Environment;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cli.UserException;
+import org.density.common.CheckedConsumer;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.env.Environment;
+import org.density.core.index.shard.ShardId;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -67,9 +67,9 @@ import static org.hamcrest.Matchers.not;
 
 /**
  * This test confirms JSON log structure is properly formatted and can be parsed.
- * It has to be in a <code>org.opensearch.common.logging</code> package to use <code>PrefixLogger</code>
+ * It has to be in a <code>org.density.common.logging</code> package to use <code>PrefixLogger</code>
  */
-public class JsonLoggerTests extends OpenSearchTestCase {
+public class JsonLoggerTests extends DensityTestCase {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
@@ -99,8 +99,8 @@ public class JsonLoggerTests extends OpenSearchTestCase {
             testLogger.deprecate("someKey", "deprecated message1");
 
             final Path path = PathUtils.get(
-                System.getProperty("opensearch.logs.base_path"),
-                System.getProperty("opensearch.logs.cluster_name") + "_deprecated.json"
+                System.getProperty("density.logs.base_path"),
+                System.getProperty("density.logs.cluster_name") + "_deprecated.json"
             );
 
             try (Stream<Map<String, String>> stream = JsonLogsStream.mapStreamFrom(path)) {
@@ -113,7 +113,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                             hasEntry("type", "deprecation"),
                             hasEntry("level", "DEPRECATION"),
                             hasEntry("component", "d.test"),
-                            hasEntry("cluster.name", "opensearch"),
+                            hasEntry("cluster.name", "density"),
                             hasEntry("node.name", "sample-name"),
                             hasEntry("message", "deprecated message1"),
                             hasEntry("x-opaque-id", "someId")
@@ -135,8 +135,8 @@ public class JsonLoggerTests extends OpenSearchTestCase {
         testLogger.info(new DeprecatedMessage("key", null, "deprecated message3"));
         testLogger.info("deprecated message4");
 
-        final Path path = PathUtils.get(System.getProperty("opensearch.logs.base_path"),
-            System.getProperty("opensearch.logs.cluster_name") + "_deprecated.json");
+        final Path path = PathUtils.get(System.getProperty("density.logs.base_path"),
+            System.getProperty("density.logs.cluster_name") + "_deprecated.json");
         try (Stream<Map<String, String>> stream = JsonLogsStream.mapStreamFrom(path)) {
             List<Map<String, String>> jsonLogs = stream
                 .collect(Collectors.toList());
@@ -146,7 +146,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                     hasEntry("type", "deprecation"),
                     hasEntry("level", "INFO"),
                     hasEntry("component", "test"),
-                    hasEntry("cluster.name", "opensearch"),
+                    hasEntry("cluster.name", "density"),
                     hasEntry("node.name", "sample-name"),
                     hasEntry("message", "deprecated message1"),
                     hasEntry("x-opaque-id", "someId")),
@@ -154,7 +154,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                     hasEntry("type", "deprecation"),
                     hasEntry("level", "INFO"),
                     hasEntry("component", "test"),
-                    hasEntry("cluster.name", "opensearch"),
+                    hasEntry("cluster.name", "density"),
                     hasEntry("node.name", "sample-name"),
                     hasEntry("message", "deprecated message2"),
                     not(hasKey("x-opaque-id"))
@@ -163,7 +163,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                     hasEntry("type", "deprecation"),
                     hasEntry("level", "INFO"),
                     hasEntry("component", "test"),
-                    hasEntry("cluster.name", "opensearch"),
+                    hasEntry("cluster.name", "density"),
                     hasEntry("node.name", "sample-name"),
                     hasEntry("message", "deprecated message4"),
                     not(hasKey("x-opaque-id"))
@@ -294,8 +294,8 @@ public class JsonLoggerTests extends OpenSearchTestCase {
             deprecationLogger.deprecate("key", "message1");
             assertWarnings("message1");
 
-            final Path path = PathUtils.get(System.getProperty("opensearch.logs.base_path"),
-                System.getProperty("opensearch.logs.cluster_name") + "_deprecated.json");
+            final Path path = PathUtils.get(System.getProperty("density.logs.base_path"),
+                System.getProperty("density.logs.cluster_name") + "_deprecated.json");
             try (Stream<Map<String, String>> stream = JsonLogsStream.mapStreamFrom(path)) {
                 List<Map<String, String>> jsonLogs = stream
                     .collect(Collectors.toList());
@@ -305,7 +305,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                         hasEntry("type", "deprecation"),
                         hasEntry("level", "DEPRECATION"),
                         hasEntry("component", "d.test"),
-                        hasEntry("cluster.name", "opensearch"),
+                        hasEntry("cluster.name", "density"),
                         hasEntry("node.name", "sample-name"),
                         hasEntry("message", "message1"),
                         hasEntry("x-opaque-id", "ID1"))
@@ -322,8 +322,8 @@ public class JsonLoggerTests extends OpenSearchTestCase {
             assertWarnings("message1");
 
             final Path path = PathUtils.get(
-                System.getProperty("opensearch.logs.base_path"),
-                System.getProperty("opensearch.logs.cluster_name") + "_deprecated.json"
+                System.getProperty("density.logs.base_path"),
+                System.getProperty("density.logs.cluster_name") + "_deprecated.json"
             );
             try (Stream<Map<String, String>> stream = JsonLogsStream.mapStreamFrom(path)) {
                 List<Map<String, String>> jsonLogs = stream.collect(Collectors.toList());
@@ -335,7 +335,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                             hasEntry("type", "deprecation"),
                             hasEntry("level", "DEPRECATION"),
                             hasEntry("component", "d.test"),
-                            hasEntry("cluster.name", "opensearch"),
+                            hasEntry("cluster.name", "density"),
                             hasEntry("node.name", "sample-name"),
                             hasEntry("message", "message1"),
                             hasEntry("x-opaque-id", "ID1")
@@ -344,7 +344,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
                             hasEntry("type", "deprecation"),
                             hasEntry("level", "DEPRECATION"),
                             hasEntry("component", "d.test"),
-                            hasEntry("cluster.name", "opensearch"),
+                            hasEntry("cluster.name", "density"),
                             hasEntry("node.name", "sample-name"),
                             hasEntry("message", "message1"),
                             hasEntry("x-opaque-id", "ID2")
@@ -362,7 +362,7 @@ public class JsonLoggerTests extends OpenSearchTestCase {
     }
 
     private Path clusterLogsPath() {
-        return PathUtils.get(System.getProperty("opensearch.logs.base_path"), System.getProperty("opensearch.logs.cluster_name") + ".log");
+        return PathUtils.get(System.getProperty("density.logs.base_path"), System.getProperty("density.logs.cluster_name") + ".log");
     }
 
     private void setupLogging(final String config) throws IOException, UserException {

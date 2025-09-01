@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class KeepTypesFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class KeepTypesFilterFactoryTests extends DensityTokenStreamTestCase {
 
     private static final String BASE_SETTING = "index.analysis.filter.keep_numbers";
 
@@ -63,7 +63,7 @@ public class KeepTypesFilterFactoryTests extends OpenSearchTokenStreamTestCase {
             );
         }
         Settings settings = settingsBuilder.build();
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             settings,
             new CommonAnalysisModulePlugin()
         );
@@ -83,7 +83,7 @@ public class KeepTypesFilterFactoryTests extends OpenSearchTokenStreamTestCase {
             .putList(BASE_SETTING + "." + KeepTypesFilterFactory.KEEP_TYPES_KEY, new String[] { "<NUM>", "<SOMETHINGELSE>" })
             .put(BASE_SETTING + "." + KeepTypesFilterFactory.KEEP_TYPES_MODE_KEY, KeepTypesFilterFactory.KeepTypesMode.EXCLUDE)
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             settings,
             new CommonAnalysisModulePlugin()
         );

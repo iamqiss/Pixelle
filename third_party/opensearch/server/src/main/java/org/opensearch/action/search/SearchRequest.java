@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.builder.PointInTimeBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ToXContent;
+import org.density.search.Scroll;
+import org.density.search.builder.PointInTimeBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -60,13 +60,13 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * A request to execute search against one or more indices (or all). Best created using
  * {@link Requests#searchRequest(String...)}.
  * <p>
- * Note, the search {@link #source(org.opensearch.search.builder.SearchSourceBuilder)}
+ * Note, the search {@link #source(org.density.search.builder.SearchSourceBuilder)}
  * is required. The search source is the different search options, including aggregations and such.
  * </p>
  *
@@ -74,7 +74,7 @@ import static org.opensearch.action.ValidateActions.addValidationError;
  * @see Client#search(SearchRequest)
  * @see SearchResponse
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchRequest extends ActionRequest implements IndicesRequest.Replaceable {
@@ -731,7 +731,7 @@ public class SearchRequest extends ActionRequest implements IndicesRequest.Repla
             sb.append("source[");
             try {
                 sb.append(source.toString(FORMAT_PARAMS));
-            } catch (final OpenSearchException ex) {
+            } catch (final DensityException ex) {
                 sb.append("<error: ").append(ex.getMessage()).append(">");
             }
             sb.append("]");

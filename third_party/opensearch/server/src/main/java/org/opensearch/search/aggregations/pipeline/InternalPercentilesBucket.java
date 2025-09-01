@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.InternalNumericMetricsAggregation;
-import org.opensearch.search.aggregations.metrics.Percentile;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.InternalNumericMetricsAggregation;
+import org.density.search.aggregations.metrics.Percentile;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ import java.util.Objects;
 /**
  * Implementation of percentiles pipeline
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalPercentilesBucket extends InternalNumericMetricsAggregation.MultiValue implements PercentilesBucket {
     private double[] percentiles;
@@ -204,7 +204,7 @@ public class InternalPercentilesBucket extends InternalNumericMetricsAggregation
     /**
      * Iterator for the percentiles agg
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Iter implements Iterator<Percentile> {
 

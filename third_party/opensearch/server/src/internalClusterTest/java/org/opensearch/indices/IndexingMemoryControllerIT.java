@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.common.settings.Settings;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.InternalEngine;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.shard.IndexShard;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class IndexingMemoryControllerIT extends OpenSearchSingleNodeTestCase {
+public class IndexingMemoryControllerIT extends DensitySingleNodeTestCase {
 
     @Override
     protected Settings nodeSettings() {

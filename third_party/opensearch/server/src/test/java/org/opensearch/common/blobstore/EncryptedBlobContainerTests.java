@@ -2,15 +2,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.crypto.CryptoHandler;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class EncryptedBlobContainerTests extends OpenSearchTestCase {
+public class EncryptedBlobContainerTests extends DensityTestCase {
 
     public void testBlobContainerReadBlobWithMetadata() throws IOException {
         BlobContainer blobContainer = mock(BlobContainer.class);

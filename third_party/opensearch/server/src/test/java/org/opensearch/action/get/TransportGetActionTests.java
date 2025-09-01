@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.Preference;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.Preference;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.common.UUIDs.randomBase64UUID;
+import static org.density.common.UUIDs.randomBase64UUID;
 
-public class TransportGetActionTests extends OpenSearchTestCase {
+public class TransportGetActionTests extends DensityTestCase {
 
     private static ClusterState clusterState(ReplicationType replicationType) {
         final Index index1 = new Index("index1", randomBase64UUID());

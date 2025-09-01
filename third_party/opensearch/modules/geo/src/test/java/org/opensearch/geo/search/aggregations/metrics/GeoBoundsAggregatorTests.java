@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.LatLonDocValuesField;
@@ -39,14 +39,14 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.tests.common.AggregationInspectionHelper;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.AggregatorTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.tests.common.AggregationInspectionHelper;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.AggregatorTestCase;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.remotestore;
+package org.density.node.remotestore;
 
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.node.Node;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.node.Node;
+import org.density.repositories.blobstore.BlobStoreRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 /**
  * This is an abstraction for validating and storing information specific to remote backed storage nodes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStoreNodeAttribute {
 

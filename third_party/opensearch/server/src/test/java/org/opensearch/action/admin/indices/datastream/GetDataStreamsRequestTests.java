@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
-import org.opensearch.action.admin.indices.datastream.GetDataStreamAction.Request;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.action.admin.indices.datastream.GetDataStreamAction.Request;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.IndexNotFoundException;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.util.List;
 
-import static org.opensearch.action.admin.indices.datastream.DeleteDataStreamRequestTests.getClusterStateWithDataStreams;
+import static org.density.action.admin.indices.datastream.DeleteDataStreamRequestTests.getClusterStateWithDataStreams;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 

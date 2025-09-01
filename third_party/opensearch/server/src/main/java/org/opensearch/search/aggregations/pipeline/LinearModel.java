@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -47,7 +47,7 @@ import java.util.Map;
  * Calculate a linearly weighted moving average, such that older values are
  * linearly less important.  "Time" is determined by position in collection
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LinearModel extends MovAvgModel {
     public static final String NAME = "linear";
@@ -116,7 +116,7 @@ public class LinearModel extends MovAvgModel {
     /**
      * Builder for the linear model
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class LinearModelBuilder implements MovAvgModelBuilder {
         @Override

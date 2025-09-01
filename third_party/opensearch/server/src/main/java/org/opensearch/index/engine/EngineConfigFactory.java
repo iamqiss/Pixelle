@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -18,25 +18,25 @@ import org.apache.lucene.search.QueryCachingPolicy;
 import org.apache.lucene.search.ReferenceManager;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.codec.CodecServiceConfig;
-import org.opensearch.index.codec.CodecServiceFactory;
-import org.opensearch.index.mapper.DocumentMapperForType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.index.translog.TranslogDeletionPolicyFactory;
-import org.opensearch.index.translog.TranslogFactory;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.codec.CodecServiceConfig;
+import org.density.index.codec.CodecServiceFactory;
+import org.density.index.mapper.DocumentMapperForType;
+import org.density.index.mapper.MapperService;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.store.Store;
+import org.density.index.translog.TranslogConfig;
+import org.density.index.translog.TranslogDeletionPolicyFactory;
+import org.density.index.translog.TranslogFactory;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.PluginsService;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -50,7 +50,7 @@ import java.util.function.Supplier;
 /**
  * A factory to create an EngineConfig based on custom plugin overrides
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class EngineConfigFactory {
     private final CodecServiceFactory codecServiceFactory;

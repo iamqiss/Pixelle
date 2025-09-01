@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.test.AbstractXContentTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ToXContent;
+import org.density.test.AbstractXContentTestCase;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
+import static org.density.common.unit.TimeValue.parseTimeValue;
 
 /**
  * Shared superclass for testing reindex and friends. In particular it makes sure to test the slice features.
@@ -59,7 +59,7 @@ public abstract class AbstractBulkByScrollRequestTestCase<R extends AbstractBulk
         original.setRetryBackoffInitialTime(parseTimeValue(randomPositiveTimeValue(), "retry_backoff_initial_time"));
         original.setMaxRetries(between(0, 1000));
         original.setRequestsPerSecond(
-            randomBoolean() ? Float.POSITIVE_INFINITY : randomValueOtherThanMany(r -> r < 0, OpenSearchTestCase::randomFloat)
+            randomBoolean() ? Float.POSITIVE_INFINITY : randomValueOtherThanMany(r -> r < 0, DensityTestCase::randomFloat)
         );
         if (randomBoolean()) {
             if (randomBoolean()) {

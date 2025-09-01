@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.CoordinationState.VoteCollection;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.CoordinationState.VoteCollection;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.common.transport.TransportAddress;
+import org.density.gateway.GatewayMetaState;
+import org.density.monitor.StatusInfo;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.util.HashSet;
 import java.util.List;
@@ -56,13 +56,13 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * Helper for cluster failure events
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterFormationFailureHelper {
     private static final Logger logger = LogManager.getLogger(ClusterFormationFailureHelper.class);
@@ -110,7 +110,7 @@ public class ClusterFormationFailureHelper {
     /**
      * A warning scheduler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class WarningScheduler {
 
@@ -151,7 +151,7 @@ public class ClusterFormationFailureHelper {
     /**
      * State of the cluster formation.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ClusterFormationState {
         private final Settings settings;

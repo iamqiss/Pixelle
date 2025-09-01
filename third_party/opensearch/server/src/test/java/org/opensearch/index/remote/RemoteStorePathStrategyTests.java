@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.index.remote.RemoteStoreEnums.DataCategory;
-import org.opensearch.index.remote.RemoteStoreEnums.DataType;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.blobstore.BlobPath;
+import org.density.index.remote.RemoteStoreEnums.DataCategory;
+import org.density.index.remote.RemoteStoreEnums.DataType;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.TRANSLOG;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
 
-public class RemoteStorePathStrategyTests extends OpenSearchTestCase {
+public class RemoteStorePathStrategyTests extends DensityTestCase {
 
     private static final BlobPath BASE_PATH = BlobPath.cleanPath().add("base-path");
     private static final String INDEX_UUID = "indexUUID";

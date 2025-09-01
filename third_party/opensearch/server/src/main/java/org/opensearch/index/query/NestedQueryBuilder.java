@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.ReaderUtil;
@@ -48,23 +48,23 @@ import org.apache.lucene.search.Weight;
 import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.search.join.ParentChildrenBlockJoinQuery;
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.MaxScoreCollector;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.search.NestedHelper;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.internal.SearchContext;
+import org.density.DensityException;
+import org.density.action.search.MaxScoreCollector;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.Queries;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.search.NestedHelper;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.search.SearchHit;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -72,13 +72,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
-import static org.opensearch.search.fetch.subphase.InnerHitsContext.intersect;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.fetch.subphase.InnerHitsContext.intersect;
 
 /**
  * Query builder for nested queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder> {
     public static final String NAME = "nested";
@@ -265,7 +265,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
 
     public static String scoreModeAsString(ScoreMode scoreMode) {
         if (scoreMode == ScoreMode.Total) {
-            // Lucene uses 'total' but 'sum' is more consistent with other opensearch APIs
+            // Lucene uses 'total' but 'sum' is more consistent with other density APIs
             return "sum";
         } else {
             return scoreMode.name().toLowerCase(Locale.ROOT);
@@ -294,7 +294,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
     @Override
     protected Query doToQuery(QueryShardContext context) throws IOException {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[joining] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }
@@ -338,7 +338,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
             innerQuery = Queries.filtered(innerQuery, nestedObjectMapper.nestedTypeFilter());
         }
 
-        return new OpenSearchToParentBlockJoinQuery(
+        return new DensityToParentBlockJoinQuery(
             innerQuery,
             parentFilter,
             scoreMode,
@@ -375,7 +375,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
     /**
      * Context builder for nested inner hits
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class NestedInnerHitContextBuilder extends InnerHitContextBuilder {
         private final String path;
@@ -436,7 +436,7 @@ public class NestedQueryBuilder extends AbstractQueryBuilder<NestedQueryBuilder>
     /**
      * Inner hits sub context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class NestedInnerHitSubContext extends InnerHitsContext.InnerHitSubContext {
 

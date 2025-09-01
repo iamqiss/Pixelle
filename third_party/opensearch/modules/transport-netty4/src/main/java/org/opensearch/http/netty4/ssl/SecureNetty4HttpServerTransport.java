@@ -18,35 +18,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4.ssl;
+package org.density.http.netty4.ssl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpHandlingSettings;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.netty4.Netty4HttpChannel;
-import org.opensearch.http.netty4.Netty4HttpServerTransport;
-import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
-import org.opensearch.plugins.TransportExceptionHandler;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.TransportAdapterProvider;
-import org.opensearch.transport.netty4.ssl.SslUtils;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpChannel;
+import org.density.http.HttpHandlingSettings;
+import org.density.http.HttpServerTransport;
+import org.density.http.netty4.Netty4HttpChannel;
+import org.density.http.netty4.Netty4HttpServerTransport;
+import org.density.plugins.SecureHttpTransportSettingsProvider;
+import org.density.plugins.TransportExceptionHandler;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.TransportAdapterProvider;
+import org.density.transport.netty4.ssl.SslUtils;
 
 import javax.net.ssl.SSLEngine;
 
@@ -64,7 +64,7 @@ import io.netty.handler.ssl.ApplicationProtocolNegotiationHandler;
 import io.netty.handler.ssl.SslHandler;
 
 /**
- * @see <a href="https://github.com/opensearch-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/opensearch/security/ssl/http/netty/SecuritySSLNettyHttpServerTransport.java">SecuritySSLNettyHttpServerTransport</a>
+ * @see <a href="https://github.com/density-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/density/security/ssl/http/netty/SecuritySSLNettyHttpServerTransport.java">SecuritySSLNettyHttpServerTransport</a>
  */
 public class SecureNetty4HttpServerTransport extends Netty4HttpServerTransport {
     public static final String REQUEST_HEADER_VERIFIER = SecureHttpTransportSettingsProvider.REQUEST_HEADER_VERIFIER;

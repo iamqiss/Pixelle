@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
@@ -38,8 +38,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.search.highlight.WeightedSpanTerm;
 import org.apache.lucene.search.highlight.WeightedSpanTermExtractor;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.index.search.DensityToParentBlockJoinQuery;
 
 import java.io.IOException;
 import java.util.Map;
@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * Internally used for custom scoring
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CustomQueryScorer extends QueryScorer {
 
@@ -103,8 +103,8 @@ public final class CustomQueryScorer extends QueryScorer {
                 return;
             } else if (query instanceof FunctionScoreQuery) {
                 super.extract(((FunctionScoreQuery) query).getSubQuery(), boost, terms);
-            } else if (query instanceof OpenSearchToParentBlockJoinQuery) {
-                super.extract(((OpenSearchToParentBlockJoinQuery) query).getChildQuery(), boost, terms);
+            } else if (query instanceof DensityToParentBlockJoinQuery) {
+                super.extract(((DensityToParentBlockJoinQuery) query).getChildQuery(), boost, terms);
             } else if (query instanceof IndexOrDocValuesQuery) {
                 super.extract(((IndexOrDocValuesQuery) query).getIndexQuery(), boost, terms);
             } else {

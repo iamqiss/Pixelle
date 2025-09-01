@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.index.ImpactsEnum;
 import org.apache.lucene.index.IndexReader;
@@ -51,7 +51,7 @@ import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.IOBooleanSupplier;
-import org.opensearch.common.Nullable;
+import org.density.common.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,14 +62,14 @@ import java.util.List;
  * cached leaf termEnums. It also allows to provide a filter to explicitly
  * compute frequencies only for docs that match the filter (heavier!).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FilterableTermsEnum extends TermsEnum {
 
     /**
      * Holds a terms enum, doc enum, and bitset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Holder {
         final TermsEnum termsEnum;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
+import org.density.common.collect.Tuple;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,14 +50,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.locationtech.spatial4j.exception.InvalidShapeException;
 
-import static org.opensearch.common.geo.GeoUtils.normalizeLat;
-import static org.opensearch.common.geo.GeoUtils.normalizeLon;
+import static org.density.common.geo.GeoUtils.normalizeLat;
+import static org.density.common.geo.GeoUtils.normalizeLon;
 import static org.apache.lucene.geo.GeoUtils.orient;
 
 /**
  * Splits polygons by datelines.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoPolygonDecomposer {
 

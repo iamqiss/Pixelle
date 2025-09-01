@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,79 +26,79 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkProcessor;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetItemResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.client.OpenSearchRestHighLevelClientTestCase;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.RethrottleRequest;
-import org.opensearch.client.core.GetSourceRequest;
-import org.opensearch.client.core.GetSourceResponse;
-import org.opensearch.client.core.MultiTermVectorsRequest;
-import org.opensearch.client.core.MultiTermVectorsResponse;
-import org.opensearch.client.core.TermVectorsRequest;
-import org.opensearch.client.core.TermVectorsResponse;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.CreateIndexResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.reindex.BulkByScrollResponse;
-import org.opensearch.index.reindex.DeleteByQueryRequest;
-import org.opensearch.index.reindex.ReindexRequest;
-import org.opensearch.index.reindex.RemoteInfo;
-import org.opensearch.index.reindex.ScrollableHitSource;
-import org.opensearch.index.reindex.UpdateByQueryRequest;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.DensityException;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.LatchedActionListener;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkProcessor;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetItemResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.client.DensityRestHighLevelClientTestCase;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.RestHighLevelClient;
+import org.density.client.RethrottleRequest;
+import org.density.client.core.GetSourceRequest;
+import org.density.client.core.GetSourceResponse;
+import org.density.client.core.MultiTermVectorsRequest;
+import org.density.client.core.MultiTermVectorsResponse;
+import org.density.client.core.TermVectorsRequest;
+import org.density.client.core.TermVectorsResponse;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.CreateIndexResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.index.get.GetResult;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.reindex.BulkByScrollResponse;
+import org.density.index.reindex.DeleteByQueryRequest;
+import org.density.index.reindex.ReindexRequest;
+import org.density.index.reindex.RemoteInfo;
+import org.density.index.reindex.ScrollableHitSource;
+import org.density.index.reindex.UpdateByQueryRequest;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.util.Collections;
 import java.util.Date;
@@ -119,7 +119,7 @@ import static org.hamcrest.Matchers.not;
  * Documentation for CRUD APIs in the high level java client.
  * Code wrapped in {@code tag} and {@code end} tags is included in the docs.
  */
-public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
+public class CRUDDocumentationIT extends DensityRestHighLevelClientTestCase {
 
     @SuppressWarnings("unused")
     public void testIndex() throws Exception {
@@ -130,7 +130,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             Map<String, Object> jsonMap = new HashMap<>();
             jsonMap.put("user", "foobar");
             jsonMap.put("postDate", new Date());
-            jsonMap.put("message", "trying out OpenSearch");
+            jsonMap.put("message", "trying out Density");
             IndexRequest indexRequest = new IndexRequest("posts")
                 .id("1").source(jsonMap); // <1>
             //end::index-request-map
@@ -144,7 +144,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             {
                 builder.field("user", "foobar");
                 builder.timeField("postDate", new Date());
-                builder.field("message", "trying out OpenSearch");
+                builder.field("message", "trying out Density");
             }
             builder.endObject();
             IndexRequest indexRequest = new IndexRequest("posts")
@@ -159,7 +159,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
                 .id("1")
                 .source("user", "foobar",
                     "postDate", new Date(),
-                    "message", "trying out OpenSearch"); // <1>
+                    "message", "trying out Density"); // <1>
             //end::index-request-shortcut
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
             assertEquals(DocWriteResponse.Result.UPDATED, indexResponse.getResult());
@@ -171,7 +171,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             String jsonString = "{" +
                     "\"user\":\"foobar\"," +
                     "\"postDate\":\"2013-01-30\"," +
-                    "\"message\":\"trying out OpenSearch\"" +
+                    "\"message\":\"trying out Density\"" +
                     "}";
             request.source(jsonString, MediaTypeRegistry.JSON); // <3>
             //end::index-request-string
@@ -237,7 +237,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
                 .setIfPrimaryTerm(20);
             try {
                 IndexResponse response = client.index(request, RequestOptions.DEFAULT);
-            } catch(OpenSearchException e) {
+            } catch(DensityException e) {
                 if (e.status() == RestStatus.CONFLICT) {
                     // <1>
                 }
@@ -252,7 +252,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
                 .opType(DocWriteRequest.OpType.CREATE);
             try {
                 IndexResponse response = client.index(request, RequestOptions.DEFAULT);
-            } catch(OpenSearchException e) {
+            } catch(DensityException e) {
                 if (e.status() == RestStatus.CONFLICT) {
                     // <1>
                 }
@@ -436,7 +436,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             try {
                 UpdateResponse updateResponse = client.update(
                         request, RequestOptions.DEFAULT);
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 if (e.status() == RestStatus.NOT_FOUND) {
                     // <1>
                 }
@@ -452,7 +452,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             try {
                 UpdateResponse updateResponse = client.update(
                         request, RequestOptions.DEFAULT);
-            } catch(OpenSearchException e) {
+            } catch(DensityException e) {
                 if (e.status() == RestStatus.CONFLICT) {
                     // <1>
                 }
@@ -648,7 +648,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
                 DeleteResponse deleteResponse = client.delete(
                     new DeleteRequest("posts", "1").setIfSeqNo(100).setIfPrimaryTerm(2),
                         RequestOptions.DEFAULT);
-            } catch (OpenSearchException exception) {
+            } catch (DensityException exception) {
                 if (exception.status() == RestStatus.CONFLICT) {
                     // <1>
                 }
@@ -1258,7 +1258,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals(200, response.getStatusLine().getStatusCode());
 
             IndexRequest indexRequest = new IndexRequest("posts").id("1")
-                .source("user", "foobar", "postDate", new Date(), "message", "trying out OpenSearch");
+                .source("user", "foobar", "postDate", new Date(), "message", "trying out Density");
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
             assertEquals(DocWriteResponse.Result.CREATED, indexResponse.getResult());
         }
@@ -1307,7 +1307,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             GetResponse getResponse = client.get(request, RequestOptions.DEFAULT);
             Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();
             assertEquals(2, sourceAsMap.size());
-            assertEquals("trying out OpenSearch", sourceAsMap.get("message"));
+            assertEquals("trying out Density", sourceAsMap.get("message"));
             assertTrue(sourceAsMap.containsKey("postDate"));
         }
         {
@@ -1332,7 +1332,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             GetResponse getResponse = client.get(request, RequestOptions.DEFAULT);
             String message = getResponse.getField("message").getValue(); // <2>
             //end::get-request-stored
-            assertEquals("trying out OpenSearch", message);
+            assertEquals("trying out Density", message);
             assertEquals(1, getResponse.getFields().size());
             assertNull(getResponse.getSourceInternal());
         }
@@ -1389,7 +1389,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             GetRequest request = new GetRequest("does_not_exist", "1");
             try {
                 GetResponse getResponse = client.get(request, RequestOptions.DEFAULT);
-            } catch (OpenSearchException e) {
+            } catch (DensityException e) {
                 if (e.status() == RestStatus.NOT_FOUND) {
                     // <1>
                 }
@@ -1401,7 +1401,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             try {
                 GetRequest request = new GetRequest("posts", "1").version(2);
                 GetResponse getResponse = client.get(request, RequestOptions.DEFAULT);
-            } catch (OpenSearchException exception) {
+            } catch (DensityException exception) {
                 if (exception.status() == RestStatus.CONFLICT) {
                     // <1>
                 }
@@ -1430,7 +1430,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals(200, response.getStatusLine().getStatusCode());
 
             IndexRequest indexRequest = new IndexRequest("posts").id("1")
-                .source("user", "foobar", "postDate", new Date(), "message", "trying out OpenSearch");
+                .source("user", "foobar", "postDate", new Date(), "message", "trying out Density");
             IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
             assertEquals(DocWriteResponse.Result.CREATED, indexResponse.getResult());
         }
@@ -1472,7 +1472,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
 
             Map<String, Object> expectSource = new HashMap<>();
             expectSource.put("user", "foobar");
-            expectSource.put("message", "trying out OpenSearch");
+            expectSource.put("message", "trying out Density");
             assertEquals(expectSource, source);
         }
         {
@@ -1581,13 +1581,13 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             // tag::bulk-processor-add
             IndexRequest one = new IndexRequest("posts").id("1")
                     .source(MediaTypeRegistry.JSON, "title",
-                            "In which order are my OpenSearch queries executed?");
+                            "In which order are my Density queries executed?");
             IndexRequest two = new IndexRequest("posts").id("2")
                     .source(MediaTypeRegistry.JSON, "title",
-                            "Current status and upcoming changes in OpenSearch");
+                            "Current status and upcoming changes in Density");
             IndexRequest three = new IndexRequest("posts").id("3")
                     .source(MediaTypeRegistry.JSON, "title",
-                            "The Future of Federated Search in OpenSearch");
+                            "The Future of Federated Search in Density");
 
             bulkProcessor.add(one);
             bulkProcessor.add(two);
@@ -1942,7 +1942,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             // tag::multi-get-indexnotfound
             assertNull(missingIndexItem.getResponse());                // <1>
             Exception e = missingIndexItem.getFailure().getFailure();  // <2>
-            OpenSearchException ee = (OpenSearchException) e;    // <3>
+            DensityException ee = (DensityException) e;    // <3>
             // TODO status is broken! fix in a followup
             // assertEquals(RestStatus.NOT_FOUND, ee.status());        // <4>
             assertThat(e.getMessage(),
@@ -2034,7 +2034,7 @@ public class CRUDDocumentationIT extends OpenSearchRestHighLevelClientTestCase {
             MultiGetItemResponse item = response.getResponses()[0];
             assertNull(item.getResponse());                          // <1>
             Exception e = item.getFailure().getFailure();            // <2>
-            OpenSearchException ee = (OpenSearchException) e;  // <3>
+            DensityException ee = (DensityException) e;  // <3>
             // TODO status is broken! fix in a followup
             // assertEquals(RestStatus.CONFLICT, ee.status());          // <4>
             assertThat(e.getMessage(),

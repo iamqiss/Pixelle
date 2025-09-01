@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.common.transport.PortsRange;
+import org.density.common.transport.PortsRange;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -61,7 +61,7 @@ import java.util.Objects;
  * {@code 127.0.0.1} and {@code ::1} respectively. No methods do reverse
  * lookups.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NetworkAddress {
     /** No instantiation */

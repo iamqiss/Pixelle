@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.SeedUtils;
@@ -38,61 +38,61 @@ import com.carrotsearch.randomizedtesting.SeedUtils;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.termvectors.MultiTermVectorsRequest;
-import org.opensearch.action.termvectors.MultiTermVectorsResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.IndexFieldDataService;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilderVisitor;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.node.InternalSettingsPreparer;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptService;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchModule;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.termvectors.MultiTermVectorsRequest;
+import org.density.action.termvectors.MultiTermVectorsResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.regex.Regex;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.BigArrays;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.IndexFieldDataService;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilderVisitor;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.IndicesModule;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.node.InternalSettingsPreparer;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.plugins.ScriptPlugin;
+import org.density.plugins.SearchPlugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptService;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.search.SearchModule;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -121,7 +121,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
-public abstract class AbstractBuilderTestCase extends OpenSearchTestCase {
+public abstract class AbstractBuilderTestCase extends DensityTestCase {
 
     public static final String TEXT_FIELD_NAME = "mapped_string";
     public static final String TEXT_ALIAS_FIELD_NAME = "mapped_string_alias";

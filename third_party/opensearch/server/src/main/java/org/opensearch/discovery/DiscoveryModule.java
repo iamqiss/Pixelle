@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.Coordinator;
-import org.opensearch.cluster.coordination.ElectionStrategy;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterApplier;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.plugins.DiscoveryPlugin;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.Coordinator;
+import org.density.cluster.coordination.ElectionStrategy;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterApplier;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.common.Randomness;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.gateway.GatewayMetaState;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.monitor.NodeHealthService;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.plugins.DiscoveryPlugin;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -75,12 +75,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.node.Node.NODE_NAME_SETTING;
 
 /**
  * A module for loading classes for node discovery.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DiscoveryModule {
     private static final Logger logger = LogManager.getLogger(DiscoveryModule.class);

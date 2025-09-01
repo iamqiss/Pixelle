@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.IndicesService;
+import org.density.test.DensityTestCase;
 
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.mock;
 
-public class SegmentReplicationStatsTrackerTests extends OpenSearchTestCase {
+public class SegmentReplicationStatsTrackerTests extends DensityTestCase {
 
     private IndicesService indicesService = mock(IndicesService.class);
 

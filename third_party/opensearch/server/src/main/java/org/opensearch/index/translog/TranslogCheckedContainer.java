@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.common.util.concurrent.ReleasableLock;
+import org.density.common.util.concurrent.ReleasableLock;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
@@ -18,7 +18,7 @@ import java.util.zip.Checksum;
 /**
  * TranslogCheckedContainer is used to store, update and retrieve checksums for translog files.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogCheckedContainer {
 

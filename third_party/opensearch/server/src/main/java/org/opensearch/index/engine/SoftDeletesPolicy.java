@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.Translog;
+import org.density.common.lease.Releasable;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.Translog;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -49,7 +49,7 @@ import java.util.function.Supplier;
 /**
  * A policy that controls how many soft-deleted documents should be retained for peer-recovery and querying history changes purpose.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class SoftDeletesPolicy {
     private final LongSupplier globalCheckpointSupplier;
@@ -79,7 +79,7 @@ final class SoftDeletesPolicy {
 
     /**
      * Updates the number of soft-deleted documents prior to the global checkpoint to be retained
-     * See {@link org.opensearch.index.IndexSettings#INDEX_SOFT_DELETES_RETENTION_OPERATIONS_SETTING}
+     * See {@link org.density.index.IndexSettings#INDEX_SOFT_DELETES_RETENTION_OPERATIONS_SETTING}
      */
     synchronized void setRetentionOperations(long retentionOperations) {
         this.retentionOperations = retentionOperations;

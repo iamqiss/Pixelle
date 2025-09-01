@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
 public class SegmentReplicationSuiteIT extends SegmentReplicationBaseIT {
 
     @Before
@@ -28,7 +28,7 @@ public class SegmentReplicationSuiteIT extends SegmentReplicationBaseIT {
     public Settings indexSettings() {
         final Settings.Builder builder = Settings.builder()
             .put(super.indexSettings())
-            // reset shard & replica count to random values set by OpenSearchIntegTestCase.
+            // reset shard & replica count to random values set by DensityIntegTestCase.
             .put(IndexMetadata.SETTING_NUMBER_OF_SHARDS, numberOfShards())
             .put(IndexMetadata.SETTING_NUMBER_OF_REPLICAS, numberOfReplicas())
             .put(IndexMetadata.SETTING_REPLICATION_TYPE, ReplicationType.SEGMENT);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.action.index;
+package org.density.cluster.action.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MetadataMappingService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.EmptyTransportResponseHandler;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MetadataMappingService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.inject.Inject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.EmptyTransportResponseHandler;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 
 /**
  * Transport action for refreshing the Node Mapping
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeMappingRefreshAction {
 
@@ -90,7 +90,7 @@ public class NodeMappingRefreshAction {
     /**
      * A handler for a node mapping refresh transport request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class NodeMappingRefreshTransportHandler implements TransportRequestHandler<NodeMappingRefreshRequest> {
 
@@ -104,7 +104,7 @@ public class NodeMappingRefreshAction {
     /**
      * Request to refresh node mapping.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeMappingRefreshRequest extends TransportRequest implements IndicesRequest {
 

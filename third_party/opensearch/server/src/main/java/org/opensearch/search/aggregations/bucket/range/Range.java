@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ import java.util.List;
  * A {@code range} aggregation. Defines multiple buckets, each associated with a pre-defined value range of a field,
  * and where the value of that fields in all documents in each bucket fall in the bucket's range.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Range extends MultiBucketsAggregation {
 

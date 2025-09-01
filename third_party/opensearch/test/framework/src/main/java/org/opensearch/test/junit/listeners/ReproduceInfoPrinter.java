@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.junit.listeners;
+package org.density.test.junit.listeners;
 
 import com.carrotsearch.randomizedtesting.ReproduceErrorMessageBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.core.common.Strings;
-import org.opensearch.fips.FipsMode;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.core.common.Strings;
+import org.density.fips.FipsMode;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
@@ -61,7 +61,7 @@ import static com.carrotsearch.randomizedtesting.SysGlobals.SYSPROP_TESTMETHOD;
  */
 public class ReproduceInfoPrinter extends RunListener {
 
-    protected final Logger logger = LogManager.getLogger(OpenSearchTestCase.class);
+    protected final Logger logger = LogManager.getLogger(DensityTestCase.class);
 
     @Override
     public void testStarted(Description description) throws Exception {
@@ -112,7 +112,7 @@ public class ReproduceInfoPrinter extends RunListener {
         gradleMessageBuilder.appendAllOpts(failure.getDescription());
 
         // Client yaml suite tests are a special case as they allow for additional parameters
-        if (OpenSearchClientYamlSuiteTestCase.class.isAssignableFrom(failure.getDescription().getTestClass())) {
+        if (DensityClientYamlSuiteTestCase.class.isAssignableFrom(failure.getDescription().getTestClass())) {
             gradleMessageBuilder.appendClientYamlSuiteProperties();
         }
 
@@ -172,10 +172,10 @@ public class ReproduceInfoPrinter extends RunListener {
         }
 
         private ReproduceErrorMessageBuilder appendESProperties() {
-            appendProperties("tests.opensearch.logger.level");
+            appendProperties("tests.density.logger.level");
             if (inVerifyPhase()) {
                 // these properties only make sense for integration tests
-                appendProperties(OpenSearchIntegTestCase.TESTS_ENABLE_MOCK_MODULES);
+                appendProperties(DensityIntegTestCase.TESTS_ENABLE_MOCK_MODULES);
             }
             appendProperties(
                 "tests.assertion.disabled",
@@ -202,8 +202,8 @@ public class ReproduceInfoPrinter extends RunListener {
 
         public ReproduceErrorMessageBuilder appendClientYamlSuiteProperties() {
             return appendProperties(
-                OpenSearchClientYamlSuiteTestCase.REST_TESTS_SUITE,
-                OpenSearchClientYamlSuiteTestCase.REST_TESTS_DENYLIST
+                DensityClientYamlSuiteTestCase.REST_TESTS_SUITE,
+                DensityClientYamlSuiteTestCase.REST_TESTS_DENYLIST
             );
         }
 

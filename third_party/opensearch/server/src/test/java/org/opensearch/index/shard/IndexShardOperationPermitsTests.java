@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.CheckedRunnable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -76,7 +76,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class IndexShardOperationPermitsTests extends OpenSearchTestCase {
+public class IndexShardOperationPermitsTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
 
@@ -93,17 +93,17 @@ public class IndexShardOperationPermitsTests extends OpenSearchTestCase {
                 .put("thread_pool." + ThreadPool.Names.WRITE + ".queue_size", writeThreadPoolQueueSize)
                 .build()
         );
-        assertThat(threadPool.executor(ThreadPool.Names.WRITE), instanceOf(OpenSearchThreadPoolExecutor.class));
+        assertThat(threadPool.executor(ThreadPool.Names.WRITE), instanceOf(DensityThreadPoolExecutor.class));
         assertThat(
-            ((OpenSearchThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getCorePoolSize(),
+            ((DensityThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getCorePoolSize(),
             equalTo(writeThreadPoolSize)
         );
         assertThat(
-            ((OpenSearchThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getMaximumPoolSize(),
+            ((DensityThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getMaximumPoolSize(),
             equalTo(writeThreadPoolSize)
         );
         assertThat(
-            ((OpenSearchThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getQueue().remainingCapacity(),
+            ((DensityThreadPoolExecutor) threadPool.executor(ThreadPool.Names.WRITE)).getQueue().remainingCapacity(),
             equalTo(writeThreadPoolQueueSize)
         );
     }
@@ -191,13 +191,13 @@ public class IndexShardOperationPermitsTests extends OpenSearchTestCase {
                 if (closeAfterBlocking) {
                     assertThat(
                         e.getCause(),
-                        either(instanceOf(DummyException.class)).or(instanceOf(OpenSearchRejectedExecutionException.class))
+                        either(instanceOf(DummyException.class)).or(instanceOf(DensityRejectedExecutionException.class))
                             .or(instanceOf(IndexShardClosedException.class))
                     );
                 } else {
                     assertThat(
                         e.getCause(),
-                        either(instanceOf(DummyException.class)).or(instanceOf(OpenSearchRejectedExecutionException.class))
+                        either(instanceOf(DummyException.class)).or(instanceOf(DensityRejectedExecutionException.class))
                     );
                 }
             }

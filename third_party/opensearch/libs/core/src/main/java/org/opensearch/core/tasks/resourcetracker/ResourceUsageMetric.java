@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.tasks.resourcetracker;
+package org.density.core.tasks.resourcetracker;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 /**
  * Information about resource usage
  *
- *  @opensearch.api
+ *  @density.api
  */
 @PublicApi(since = "2.1.0")
 public class ResourceUsageMetric {

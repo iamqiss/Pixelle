@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.info;
+package org.density.action.admin.cluster.node.info;
 
-import org.opensearch.Build;
-import org.opensearch.Version;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.http.HttpInfo;
-import org.opensearch.ingest.IngestInfo;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.os.OsInfo;
-import org.opensearch.monitor.process.ProcessInfo;
-import org.opensearch.search.aggregations.support.AggregationInfo;
-import org.opensearch.search.pipeline.SearchPipelineInfo;
-import org.opensearch.threadpool.ThreadPoolInfo;
-import org.opensearch.transport.TransportInfo;
+import org.density.Build;
+import org.density.Version;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.service.ReportingService;
+import org.density.http.HttpInfo;
+import org.density.ingest.IngestInfo;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.os.OsInfo;
+import org.density.monitor.process.ProcessInfo;
+import org.density.search.aggregations.support.AggregationInfo;
+import org.density.search.pipeline.SearchPipelineInfo;
+import org.density.threadpool.ThreadPoolInfo;
+import org.density.transport.TransportInfo;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ import java.util.Map;
 /**
  * Node information (static, does not change over time).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeInfo extends BaseNodeResponse {
 
@@ -148,7 +148,7 @@ public class NodeInfo extends BaseNodeResponse {
     }
 
     /**
-     * The current OpenSearch version
+     * The current Density version
      */
     public Version getVersion() {
         return version;

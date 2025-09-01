@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,36 +25,36 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.test.NodeRoles.onlyRole;
-import static org.opensearch.test.NodeRoles.removeRoles;
-import static org.opensearch.transport.RemoteClusterConnectionTests.startTransport;
+import static org.density.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.removeRoles;
+import static org.density.transport.RemoteClusterConnectionTests.startTransport;
 import static org.hamcrest.Matchers.equalTo;
 
-public class RemoteClusterClientTests extends OpenSearchTestCase {
+public class RemoteClusterClientTests extends DensityTestCase {
     private final ThreadPool threadPool = new TestThreadPool(getClass().getName());
 
     @Override
@@ -63,7 +63,7 @@ public class RemoteClusterClientTests extends OpenSearchTestCase {
         ThreadPool.terminate(threadPool, 10, TimeUnit.SECONDS);
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/12338")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/12338")
     public void testConnectAndExecuteRequest() throws Exception {
         Settings remoteSettings = Settings.builder().put(ClusterName.CLUSTER_NAME_SETTING.getKey(), "foo_bar_cluster").build();
         try (
@@ -110,7 +110,7 @@ public class RemoteClusterClientTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.transport.SniffConnectionStrategy:TRACE,org.opensearch.transport.ClusterConnectionManager:TRACE", reason = "debug intermittent test failure")
+    @TestLogging(value = "org.density.transport.SniffConnectionStrategy:TRACE,org.density.transport.ClusterConnectionManager:TRACE", reason = "debug intermittent test failure")
     public void testEnsureWeReconnect() throws Exception {
         Settings remoteSettings = Settings.builder().put(ClusterName.CLUSTER_NAME_SETTING.getKey(), "foo_bar_cluster").build();
         try (

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
 import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.BackgroundIndexer;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.io.PathUtils;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.BackgroundIndexer;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -59,10 +59,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class DiskDisruptionIT extends AbstractDisruptionTestCase {
 
     private static DisruptTranslogFileSystemProvider disruptTranslogFileSystemProvider;

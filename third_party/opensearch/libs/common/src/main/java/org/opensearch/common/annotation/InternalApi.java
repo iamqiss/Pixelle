@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.annotation;
+package org.density.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 
 /**
  * Internal APIs that have no compatibility guarantees and should be not used outside
- * of OpenSearch core components.
+ * of Density core components.
  *
- * @opensearch.api
+ * @density.api
  */
 @Documented
 @Target({

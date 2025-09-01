@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test.rest;
+package org.density.gradle.test.rest;
 
-import org.opensearch.gradle.VersionProperties;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.test.RestIntegTestTask;
-import org.opensearch.gradle.testclusters.OpenSearchCluster;
-import org.opensearch.gradle.testclusters.TestClustersPlugin;
+import org.density.gradle.VersionProperties;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.test.RestIntegTestTask;
+import org.density.gradle.testclusters.DensityCluster;
+import org.density.gradle.testclusters.TestClustersPlugin;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -51,10 +51,10 @@ public class RestTestUtil {
 
     private RestTestUtil() {}
 
-    static OpenSearchCluster createTestCluster(Project project, SourceSet sourceSet) {
+    static DensityCluster createTestCluster(Project project, SourceSet sourceSet) {
         // eagerly create the testCluster container so it is easily available for configuration
         @SuppressWarnings("unchecked")
-        NamedDomainObjectContainer<OpenSearchCluster> testClusters = (NamedDomainObjectContainer<OpenSearchCluster>) project.getExtensions()
+        NamedDomainObjectContainer<DensityCluster> testClusters = (NamedDomainObjectContainer<DensityCluster>) project.getExtensions()
             .getByName(TestClustersPlugin.EXTENSION_NAME);
         return testClusters.create(sourceSet.getName());
     }
@@ -71,7 +71,7 @@ public class RestTestUtil {
             testTask.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
             testTask.setClasspath(sourceSet.getRuntimeClasspath());
             // if this a module or plugin, it may have an associated zip file with it's contents, add that to the test cluster
-            project.getPluginManager().withPlugin("opensearch.opensearchplugin", plugin -> {
+            project.getPluginManager().withPlugin("density.densityplugin", plugin -> {
                 Zip bundle = (Zip) project.getTasks().getByName("bundlePlugin");
                 testTask.dependsOn(bundle);
                 if (project.getPath().contains("modules:")) {
@@ -93,8 +93,8 @@ public class RestTestUtil {
             project.getDependencies().add(sourceSet.getImplementationConfigurationName(), project.project(":test:framework"));
         } else {
             project.getDependencies()
-                .add(sourceSet.getImplementationConfigurationName(), "org.opensearch.test:framework:" + VersionProperties.getOpenSearch());
-            // The log4j-core is optional dependency of the org.opensearch.test:framework. needs explicit introduction
+                .add(sourceSet.getImplementationConfigurationName(), "org.density.test:framework:" + VersionProperties.getDensity());
+            // The log4j-core is optional dependency of the org.density.test:framework. needs explicit introduction
             project.getDependencies()
                 .add(
                     sourceSet.getImplementationConfigurationName(),

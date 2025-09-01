@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.Rounding.DateTimeUnit;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.common.Rounding.DateTimeUnit;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.test.AbstractWireSerializingTestCase;
 
 public class RoundingWireTests extends AbstractWireSerializingTestCase<Rounding> {
     @Override

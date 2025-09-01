@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.action.get.GetResponse;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Geometry;
+import org.density.geometry.Rectangle;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHits;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public abstract class GeoQueryTests extends OpenSearchSingleNodeTestCase {
+public abstract class GeoQueryTests extends DensitySingleNodeTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
         return Collections.singleton(TestGeoShapeFieldMapperPlugin.class);

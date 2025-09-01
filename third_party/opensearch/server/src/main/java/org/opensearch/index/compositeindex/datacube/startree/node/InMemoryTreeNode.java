@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.node;
+package org.density.index.compositeindex.datacube.startree.node;
 
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.ExperimentalApi;
+import org.density.common.SetOnce;
+import org.density.common.annotation.ExperimentalApi;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
 
 /**
  * Represents a node in a tree data structure, specifically designed for a star-tree implementation.
  * A star-tree node will represent both star and non-star nodes.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class InMemoryTreeNode {

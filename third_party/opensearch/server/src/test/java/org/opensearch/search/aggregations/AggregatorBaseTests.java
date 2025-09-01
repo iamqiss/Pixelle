@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.LeafReaderContext;
@@ -38,19 +38,19 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.IndexService;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AggregatorBaseTests extends OpenSearchSingleNodeTestCase {
+public class AggregatorBaseTests extends DensitySingleNodeTestCase {
 
     class BogusAggregator extends AggregatorBase {
         BogusAggregator(SearchContext searchContext, Aggregator parent) throws IOException {

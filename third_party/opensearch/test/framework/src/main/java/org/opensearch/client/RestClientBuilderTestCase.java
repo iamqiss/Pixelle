@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.Header;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * A test case with access to internals of a RestClient.
  */
-public abstract class RestClientBuilderTestCase extends OpenSearchTestCase {
+public abstract class RestClientBuilderTestCase extends DensityTestCase {
     /** Checks the given rest client has the provided default headers. */
     public void assertHeaders(RestClient client, Map<String, String> expectedHeaders) {
         expectedHeaders = new HashMap<>(expectedHeaders); // copy so we can remove as we check

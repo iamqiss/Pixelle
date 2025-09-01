@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices.rollover;
+package org.density.client.indices.rollover;
 
-import org.opensearch.action.admin.indices.rollover.Condition;
-import org.opensearch.action.admin.indices.rollover.MaxAgeCondition;
-import org.opensearch.action.admin.indices.rollover.MaxDocsCondition;
-import org.opensearch.action.admin.indices.rollover.MaxSizeCondition;
-import org.opensearch.client.TimedRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.admin.indices.rollover.Condition;
+import org.density.action.admin.indices.rollover.MaxAgeCondition;
+import org.density.action.admin.indices.rollover.MaxDocsCondition;
+import org.density.action.admin.indices.rollover.MaxSizeCondition;
+import org.density.client.TimedRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;

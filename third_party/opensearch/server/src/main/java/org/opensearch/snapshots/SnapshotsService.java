@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,86 +26,86 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
-import org.opensearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.SnapshotDeletionsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress.ShardSnapshotStatus;
-import org.opensearch.cluster.SnapshotsInProgress.ShardState;
-import org.opensearch.cluster.SnapshotsInProgress.State;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.ActionRunnable;
+import org.density.action.LatchedActionListener;
+import org.density.action.StepListener;
+import org.density.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.density.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.SnapshotDeletionsInProgress;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.SnapshotsInProgress.ShardSnapshotStatus;
+import org.density.cluster.SnapshotsInProgress.ShardState;
+import org.density.cluster.SnapshotsInProgress.State;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.indices.RemoteStoreSettings;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.ShardGenerations;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -135,24 +135,24 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.cluster.SnapshotsInProgress.completed;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_SNAPSHOT;
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_SNAPSHOT;
-import static org.opensearch.cluster.service.ClusterManagerTask.UPDATE_SNAPSHOT_STATE;
-import static org.opensearch.common.util.IndexUtils.filterIndices;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.SHARD_PATH_TYPE;
-import static org.opensearch.snapshots.SnapshotUtils.validateSnapshotsBackingAnyIndex;
+import static org.density.cluster.SnapshotsInProgress.completed;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_SNAPSHOT;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_SNAPSHOT;
+import static org.density.cluster.service.ClusterManagerTask.UPDATE_SNAPSHOT_STATE;
+import static org.density.common.util.IndexUtils.filterIndices;
+import static org.density.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.repositories.blobstore.BlobStoreRepository.REMOTE_STORE_INDEX_SHALLOW_COPY;
+import static org.density.repositories.blobstore.BlobStoreRepository.SHALLOW_SNAPSHOT_V2;
+import static org.density.repositories.blobstore.BlobStoreRepository.SHARD_PATH_TYPE;
+import static org.density.snapshots.SnapshotUtils.validateSnapshotsBackingAnyIndex;
 
 /**
  * Service responsible for creating snapshots. This service runs all the steps executed on the cluster-manager node during snapshot creation and
  * deletion.
- * See package level documentation of {@link org.opensearch.snapshots} for details.
+ * See package level documentation of {@link org.density.snapshots} for details.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SnapshotsService extends AbstractLifecycleComponent implements ClusterStateApplier {
 
@@ -2985,7 +2985,7 @@ public class SnapshotsService extends AbstractLifecycleComponent implements Clus
             // when the repository currently have the flag disabled and we try to delete the shallow snapshots taken prior to disabling
             // the flag. This can be improved by having the info whether there ever were any shallow snapshot present in this repository
             // or not in RepositoryData.
-            // SEE https://github.com/opensearch-project/OpenSearch/issues/8610
+            // SEE https://github.com/density-project/Density/issues/8610
             final boolean remoteStoreShallowCopyEnabled = REMOTE_STORE_INDEX_SHALLOW_COPY.get(repository.getMetadata().settings());
             if (remoteStoreShallowCopyEnabled) {
                 Map<SnapshotId, Long> snapshotsWithPinnedTimestamp = new ConcurrentHashMap<>();

@@ -1,60 +1,60 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.replication.TestReplicationSource;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.ForceSyncRequest;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.MergedSegmentCheckpoint;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.CopyState;
-import org.opensearch.indices.replication.common.ReplicationCollection;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.EmptyTransportResponseHandler;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexService;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.replication.TestReplicationSource;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.ForceSyncRequest;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.MergedSegmentCheckpoint;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.CopyState;
+import org.density.indices.replication.common.ReplicationCollection;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.CapturingTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.EmptyTransportResponseHandler;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -66,7 +66,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
+import static org.density.index.seqno.SequenceNumbers.NO_OPS_PERFORMED;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.atLeastOnce;
@@ -239,7 +239,7 @@ public class SegmentReplicationTargetServiceTests extends IndexShardTestCase {
 
     public void testReplicationFails() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        final OpenSearchException expectedError = new OpenSearchException("Fail");
+        final DensityException expectedError = new DensityException("Fail");
         SegmentReplicationSource source = new TestReplicationSource() {
 
             @Override
@@ -294,7 +294,7 @@ public class SegmentReplicationTargetServiceTests extends IndexShardTestCase {
         verify(spy, times(1)).updateVisibleCheckpoint(NO_OPS_PERFORMED, replicaShard);
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testShardAlreadyReplicating() throws InterruptedException {
         // in this case shard is already replicating and we receive an ahead checkpoint with same pterm.
         // ongoing replication is not cancelled and new one does not start.

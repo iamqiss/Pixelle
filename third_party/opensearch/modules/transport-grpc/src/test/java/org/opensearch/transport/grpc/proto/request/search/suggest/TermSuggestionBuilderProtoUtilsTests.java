@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search.suggest;
+package org.density.transport.grpc.proto.request.search.suggest;
 
-import org.opensearch.protobufs.SearchRequest;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.SearchRequest;
+import org.density.search.suggest.term.TermSuggestionBuilder;
+import org.density.test.DensityTestCase;
 
-public class TermSuggestionBuilderProtoUtilsTests extends OpenSearchTestCase {
+public class TermSuggestionBuilderProtoUtilsTests extends DensityTestCase {
 
     public void testResolveWithAlwaysMode() {
         // Call the method under test with ALWAYS mode

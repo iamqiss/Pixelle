@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.opensearch.common.Randomness;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.identity.tokens.BasicAuthToken;
-import org.opensearch.identity.tokens.OnBehalfOfClaims;
-import org.opensearch.identity.tokens.TokenManager;
+import org.density.common.Randomness;
+import org.density.identity.IdentityService;
+import org.density.identity.Subject;
+import org.density.identity.tokens.AuthToken;
+import org.density.identity.tokens.BasicAuthToken;
+import org.density.identity.tokens.OnBehalfOfClaims;
+import org.density.identity.tokens.TokenManager;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -48,7 +48,7 @@ class ShiroTokenManager implements TokenManager {
      * @param authenticationToken the token from which to translate
      * @return An optional of the shiro auth token for login
      */
-    public Optional<AuthenticationToken> translateAuthToken(org.opensearch.identity.tokens.AuthToken authenticationToken) {
+    public Optional<AuthenticationToken> translateAuthToken(org.density.identity.tokens.AuthToken authenticationToken) {
         if (authenticationToken instanceof BasicAuthToken) {
             final BasicAuthToken basicAuthToken = (BasicAuthToken) authenticationToken;
             return Optional.of(new UsernamePasswordToken(basicAuthToken.getUser(), basicAuthToken.getPassword()));

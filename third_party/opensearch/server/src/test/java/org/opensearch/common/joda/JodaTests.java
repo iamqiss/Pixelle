@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.time.DateFormatter;
+import org.density.test.DensityTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -42,7 +42,7 @@ import java.time.ZoneOffset;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-public class JodaTests extends OpenSearchTestCase {
+public class JodaTests extends DensityTestCase {
 
     public void testBasicTTimePattern() {
         DateFormatter formatter1 = Joda.forPattern("basic_t_time");

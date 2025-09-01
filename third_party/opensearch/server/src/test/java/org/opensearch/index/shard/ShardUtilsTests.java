@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.StringField;
@@ -38,14 +38,14 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.tests.store.BaseDirectoryWrapper;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ShardUtilsTests extends OpenSearchTestCase {
+public class ShardUtilsTests extends DensityTestCase {
 
     public void testExtractShardId() throws IOException {
         BaseDirectoryWrapper dir = newDirectory();
@@ -53,7 +53,7 @@ public class ShardUtilsTests extends OpenSearchTestCase {
         writer.commit();
         ShardId id = new ShardId("foo", "_na_", random().nextInt());
         try (DirectoryReader reader = DirectoryReader.open(writer)) {
-            OpenSearchDirectoryReader wrap = OpenSearchDirectoryReader.wrap(reader, id);
+            DensityDirectoryReader wrap = DensityDirectoryReader.wrap(reader, id);
             assertEquals(id, ShardUtils.extractShardId(wrap));
         }
         final int numDocs = 1 + random().nextInt(5);
@@ -67,7 +67,7 @@ public class ShardUtilsTests extends OpenSearchTestCase {
         }
 
         try (DirectoryReader reader = DirectoryReader.open(writer)) {
-            OpenSearchDirectoryReader wrap = OpenSearchDirectoryReader.wrap(reader, id);
+            DensityDirectoryReader wrap = DensityDirectoryReader.wrap(reader, id);
             assertEquals(id, ShardUtils.extractShardId(wrap));
             CompositeReaderContext context = wrap.getContext();
             for (LeafReaderContext leaf : context.leaves()) {

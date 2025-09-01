@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.codec.CodecServiceFactory;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogDeletionPolicyFactory;
+import org.density.index.IndexSettings;
+import org.density.index.codec.CodecService;
+import org.density.index.codec.CodecServiceFactory;
+import org.density.index.engine.EngineFactory;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogDeletionPolicyFactory;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -46,7 +46,7 @@ import java.util.function.Supplier;
 /**
  * A plugin that provides alternative engine implementations.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface EnginePlugin {
 

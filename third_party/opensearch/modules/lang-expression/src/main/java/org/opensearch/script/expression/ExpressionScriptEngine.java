@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.expression;
+package org.density.script.expression;
 
 import org.apache.lucene.expressions.Expression;
 import org.apache.lucene.expressions.SimpleBindings;
@@ -38,26 +38,26 @@ import org.apache.lucene.expressions.js.JavascriptCompiler;
 import org.apache.lucene.expressions.js.VariableContext;
 import org.apache.lucene.search.DoubleValuesSource;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.Nullable;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.script.BucketAggregationScript;
-import org.opensearch.script.BucketAggregationSelectorScript;
-import org.opensearch.script.ClassPermission;
-import org.opensearch.script.FieldScript;
-import org.opensearch.script.FilterScript;
-import org.opensearch.script.NumberSortScript;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptException;
-import org.opensearch.script.TermsSetQueryScript;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.SpecialPermission;
+import org.density.common.Nullable;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.script.AggregationScript;
+import org.density.script.BucketAggregationScript;
+import org.density.script.BucketAggregationSelectorScript;
+import org.density.script.ClassPermission;
+import org.density.script.FieldScript;
+import org.density.script.FilterScript;
+import org.density.script.NumberSortScript;
+import org.density.script.ScoreScript;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptException;
+import org.density.script.TermsSetQueryScript;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -74,7 +74,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * Provides the infrastructure for Lucene expressions as a scripting language for OpenSearch.
+ * Provides the infrastructure for Lucene expressions as a scripting language for Density.
  * <p>
  * Only contexts returning numeric types or {@link Object} are supported.
  */

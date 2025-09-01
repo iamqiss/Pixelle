@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.breaker;
+package org.density.core.common.breaker;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Locale;
 
@@ -40,7 +40,7 @@ import java.util.Locale;
  * Interface for an object that can be incremented, breaking after some
  * configured limit has been reached.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface CircuitBreaker {
@@ -76,7 +76,7 @@ public interface CircuitBreaker {
      * The type of breaker
      * can be {@link #MEMORY}, {@link #PARENT}, or {@link #NOOP}
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     enum Type {
@@ -110,7 +110,7 @@ public interface CircuitBreaker {
     /**
      * The breaker durability
      * can be {@link #TRANSIENT} or {@link #PERMANENT}
-     * @opensearch.internal
+     * @density.internal
      */
     enum Durability {
         /** The condition that tripped the circuit breaker fixes itself eventually. */

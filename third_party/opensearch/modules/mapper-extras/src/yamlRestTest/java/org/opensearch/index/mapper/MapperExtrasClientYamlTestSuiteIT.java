@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.carrotsearch.randomizedtesting.annotations.Name;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.test.rest.yaml.ClientYamlTestCandidate;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.test.rest.yaml.ClientYamlTestCandidate;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 
 /** Runs yaml rest tests */
-public class MapperExtrasClientYamlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
+public class MapperExtrasClientYamlTestSuiteIT extends DensityClientYamlSuiteTestCase {
 
     public MapperExtrasClientYamlTestSuiteIT(@Name("yaml") ClientYamlTestCandidate testCandidate) {
         super(testCandidate);
@@ -47,6 +47,6 @@ public class MapperExtrasClientYamlTestSuiteIT extends OpenSearchClientYamlSuite
 
     @ParametersFactory
     public static Iterable<Object[]> parameters() throws Exception {
-        return OpenSearchClientYamlSuiteTestCase.createParameters();
+        return DensityClientYamlSuiteTestCase.createParameters();
     }
 }

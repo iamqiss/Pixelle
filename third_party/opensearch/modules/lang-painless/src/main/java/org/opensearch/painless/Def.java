@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.symbol.FunctionTable;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.symbol.FunctionTable;
 
 import java.lang.invoke.CallSite;
 import java.lang.invoke.MethodHandle;
@@ -50,7 +50,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
+import static org.density.painless.lookup.PainlessLookupUtility.typeToCanonicalTypeName;
 
 /**
  * Support for dynamic type (def).

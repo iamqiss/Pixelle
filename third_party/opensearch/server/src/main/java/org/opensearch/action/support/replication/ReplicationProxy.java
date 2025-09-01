@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.action.support.replication.ReplicationOperation.ReplicaResponse;
-import org.opensearch.action.support.replication.ReplicationOperation.Replicas;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.support.replication.ReplicationOperation.ReplicaResponse;
+import org.density.action.support.replication.ReplicationOperation.Replicas;
+import org.density.cluster.routing.ShardRouting;
+import org.density.core.action.ActionListener;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  * Used for performing any replication operation on replicas. Depending on the implementation, the replication call
  * can fanout or stops here.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ReplicationProxy<ReplicaRequest extends ReplicationRequest<ReplicaRequest>> {
 

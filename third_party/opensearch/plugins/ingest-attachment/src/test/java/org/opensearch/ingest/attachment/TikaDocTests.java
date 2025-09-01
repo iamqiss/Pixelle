@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressFileSystems;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.tika.metadata.Metadata;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.PathUtils;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -53,11 +53,11 @@ import java.util.Map;
  * The checksums of these files are left empty, and we only validate that parsed content is not null.
  */
 @SuppressFileSystems("ExtrasFS") // don't try to parse extraN
-public class TikaDocTests extends OpenSearchTestCase {
+public class TikaDocTests extends DensityTestCase {
 
     /** some test files from the apache tika unit test suite with accompanying sha1 checksums */
-    static final String TIKA_FILES = "/org/opensearch/ingest/attachment/test/tika-files/";
-    static final String TIKA_CHECKSUMS = "/org/opensearch/ingest/attachment/test/.checksums";
+    static final String TIKA_FILES = "/org/density/ingest/attachment/test/tika-files/";
+    static final String TIKA_CHECKSUMS = "/org/density/ingest/attachment/test/.checksums";
 
     public void testParseSamples() throws Exception {
         String checksumJson = Files.readString(PathUtils.get(getClass().getResource(TIKA_CHECKSUMS).toURI()));

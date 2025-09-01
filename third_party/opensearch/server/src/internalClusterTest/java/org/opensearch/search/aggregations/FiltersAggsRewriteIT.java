@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.WrapperQueryBuilder;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.filter.FiltersAggregator;
-import org.opensearch.search.aggregations.bucket.filter.InternalFilters;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.WrapperQueryBuilder;
+import org.density.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.density.search.aggregations.bucket.filter.FiltersAggregator;
+import org.density.search.aggregations.bucket.filter.InternalFilters;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FiltersAggsRewriteIT extends OpenSearchSingleNodeTestCase {
+public class FiltersAggsRewriteIT extends DensitySingleNodeTestCase {
 
     public void testWrapperQueryIsRewritten() throws IOException {
         createIndexWithSimpleMappings("test", Settings.EMPTY, "title", "type=text");

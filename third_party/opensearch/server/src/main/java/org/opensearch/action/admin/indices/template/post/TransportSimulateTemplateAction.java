@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.template.post;
+package org.density.action.admin.indices.template.post;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeReadAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.AliasValidator;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeReadAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.AliasValidator;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.metadata.Template;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,14 +58,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.cluster.metadata.MetadataIndexTemplateService.findConflictingV1Templates;
-import static org.opensearch.cluster.metadata.MetadataIndexTemplateService.findConflictingV2Templates;
+import static org.density.cluster.metadata.MetadataIndexTemplateService.findConflictingV1Templates;
+import static org.density.cluster.metadata.MetadataIndexTemplateService.findConflictingV2Templates;
 
 /**
  * Handles simulating an index template either by name (looking it up in the
  * cluster state), or by a provided template configuration
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportSimulateTemplateAction extends TransportClusterManagerNodeReadAction<
     SimulateTemplateAction.Request,

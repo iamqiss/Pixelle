@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedObjectNotFoundException;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.NamedObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedFunction;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedObjectNotFoundException;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.NamedObjectParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,7 +67,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ObjectParserTests extends OpenSearchTestCase {
+public class ObjectParserTests extends DensityTestCase {
 
     public void testBasics() throws IOException {
         XContentParser parser = createParser(

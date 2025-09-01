@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene;
+package org.density.common.lucene;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.InfoStream;
-import org.opensearch.common.logging.Loggers;
+import org.density.common.logging.Loggers;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,7 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * An InfoStream (for Lucene's IndexWriter) that redirects
  *  messages to "lucene.iw.ifd" and "lucene.iw" Logger.trace.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class LoggerInfoStream extends InfoStream {
 

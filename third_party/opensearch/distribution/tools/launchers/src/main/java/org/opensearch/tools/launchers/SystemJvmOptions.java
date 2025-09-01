@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.launchers;
+package org.density.tools.launchers;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,12 +46,12 @@ final class SystemJvmOptions {
                  * Cache ttl in seconds for positive DNS lookups noting that this overrides the JDK security property
                  * networkaddress.cache.ttl; can be set to -1 to cache forever.
                  */
-                "-Dopensearch.networkaddress.cache.ttl=60",
+                "-Ddensity.networkaddress.cache.ttl=60",
                 /*
                  * Cache ttl in seconds for negative DNS lookups noting that this overrides the JDK security property
                  * networkaddress.cache.negative ttl; set to -1 to cache forever.
                  */
-                "-Dopensearch.networkaddress.cache.negative.ttl=10",
+                "-Ddensity.networkaddress.cache.negative.ttl=10",
                 // pre-touch JVM emory pages during initialization
                 "-XX:+AlwaysPreTouch",
                 // explicitly set the stack size

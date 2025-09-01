@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class GlobTests extends OpenSearchTestCase {
+public class GlobTests extends DensityTestCase {
 
     public void testGlobMatchForNull() {
         assertFalse(Glob.globMatch(null, "test"));

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,7 +26,7 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -47,4 +47,4 @@
  * <p>The classes in this package form an API for managing dangling indices, allowing them to be listed, imported or deleted.
  */
 
-package org.opensearch.action.admin.indices.dangling;
+package org.density.action.admin.indices.dangling;

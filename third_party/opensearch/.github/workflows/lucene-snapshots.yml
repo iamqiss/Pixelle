@@ -1,6 +1,6 @@
 # This workflow will check out, build, and publish snapshots of lucene.
 
-name: OpenSearch Lucene snapshots
+name: Density Lucene snapshots
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   publish-snapshots:
-    if: github.repository == 'opensearch-project/OpenSearch'
+    if: github.repository == 'density-project/Density'
     runs-on: ubuntu-latest
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:

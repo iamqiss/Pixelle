@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -56,15 +56,15 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
+import org.density.common.util.BigArrays;
+import org.density.index.fielddata.FieldData;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -74,9 +74,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.LONG;
-import static org.opensearch.index.mapper.NumberFieldMapper.NumberType.UNSIGNED_LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.DOUBLE;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.LONG;
+import static org.density.index.mapper.NumberFieldMapper.NumberType.UNSIGNED_LONG;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 

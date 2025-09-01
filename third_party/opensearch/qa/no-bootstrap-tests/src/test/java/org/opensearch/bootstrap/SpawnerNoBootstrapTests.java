@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.plugins.PluginTestUtil;
-import org.opensearch.plugins.Platforms;
+import org.density.Version;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.plugins.PluginTestUtil;
+import org.density.plugins.Platforms;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,9 +66,9 @@ import static org.hamcrest.Matchers.instanceOf;
 /**
  * Create a simple "daemon controller", put it in the right place and check that it runs.
  * <p>
- * Extends LuceneTestCase rather than OpenSearchTestCase as OpenSearchTestCase installs a system call filter, and
+ * Extends LuceneTestCase rather than DensityTestCase as DensityTestCase installs a system call filter, and
  * that prevents the Spawner class from doing its job. Also needs to run in a separate JVM to other
- * tests that extend OpenSearchTestCase for the same reason.
+ * tests that extend DensityTestCase for the same reason.
  */
 public class SpawnerNoBootstrapTests extends LuceneTestCase {
 
@@ -97,7 +97,7 @@ public class SpawnerNoBootstrapTests extends LuceneTestCase {
                 plugin,
                 "description", "a_plugin",
                 "version", Version.CURRENT.toString(),
-                "opensearch.version", Version.CURRENT.toString(),
+                "density.version", Version.CURRENT.toString(),
                 "name", "a_plugin",
                 "java.version", "1.8",
                 "classname", "APlugin",
@@ -140,7 +140,7 @@ public class SpawnerNoBootstrapTests extends LuceneTestCase {
             plugin,
             "description", "test_plugin",
             "version", Version.CURRENT.toString(),
-            "opensearch.version", Version.CURRENT.toString(),
+            "density.version", Version.CURRENT.toString(),
             "name", "test_plugin",
             "java.version", "1.8",
             "classname", "TestPlugin",
@@ -155,7 +155,7 @@ public class SpawnerNoBootstrapTests extends LuceneTestCase {
             otherPlugin,
             "description", "other_plugin",
             "version", Version.CURRENT.toString(),
-            "opensearch.version", Version.CURRENT.toString(),
+            "density.version", Version.CURRENT.toString(),
             "name", "other_plugin",
             "java.version", "1.8",
             "classname", "OtherPlugin",
@@ -198,7 +198,7 @@ public class SpawnerNoBootstrapTests extends LuceneTestCase {
                 plugin,
                 "description", "test_plugin",
                 "version", Version.CURRENT.toString(),
-                "opensearch.version", Version.CURRENT.toString(),
+                "density.version", Version.CURRENT.toString(),
                 "name", "test_plugin",
                 "java.version", "1.8",
                 "classname", "TestPlugin",

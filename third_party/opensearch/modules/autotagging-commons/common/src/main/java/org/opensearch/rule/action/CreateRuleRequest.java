@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.rule.autotagging.Rule;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.rule.autotagging.Rule;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
  *      "attribute_name": ["log*", "event*"],
  *      "feature_type": "poOiU851RwyLYvV5lbvv5w"
  * }'
- * @opensearch.experimental
+ * @density.experimental
  */
 public class CreateRuleRequest extends ActionRequest {
     private final Rule rule;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.geo;
+package org.density.search.geo;
 
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.index.query.GeoShapeQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.Point;
+import org.density.geometry.Rectangle;
+import org.density.index.query.GeoShapeQueryBuilder;
+import org.density.index.query.QueryBuilders;
 
 import static org.hamcrest.Matchers.containsString;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -53,7 +53,7 @@ import java.util.concurrent.TimeUnit;
  * This class is normally used to verify performance during proof-of-concepts
  * and in development, rather than as part of production applications.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class StopWatch {
 
@@ -239,7 +239,7 @@ public class StopWatch {
     /**
      * Inner class to hold data about one task executed within the stop watch.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TaskInfo {
 
@@ -270,7 +270,7 @@ public class StopWatch {
     /**
      * Stops the watch and auto calls close in try-with-resources usage
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface TimingHandle extends AutoCloseable {
         @Override

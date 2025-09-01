@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.grok.MatcherWatchdog;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.grok.MatcherWatchdog;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GrokProcessorFactoryTests extends OpenSearchTestCase {
+public class GrokProcessorFactoryTests extends DensityTestCase {
 
     public void testBuild() throws Exception {
         GrokProcessor.Factory factory = new GrokProcessor.Factory(Collections.emptyMap(), MatcherWatchdog.noop());
@@ -79,7 +79,7 @@ public class GrokProcessorFactoryTests extends OpenSearchTestCase {
         GrokProcessor.Factory factory = new GrokProcessor.Factory(Collections.emptyMap(), MatcherWatchdog.noop());
         Map<String, Object> config = new HashMap<>();
         config.put("patterns", Collections.singletonList("(?<foo>\\w+)"));
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[field] required property is missing"));
     }
 
@@ -87,7 +87,7 @@ public class GrokProcessorFactoryTests extends OpenSearchTestCase {
         GrokProcessor.Factory factory = new GrokProcessor.Factory(Collections.emptyMap(), MatcherWatchdog.noop());
         Map<String, Object> config = new HashMap<>();
         config.put("field", "foo");
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[patterns] required property is missing"));
     }
 
@@ -96,7 +96,7 @@ public class GrokProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("field", "foo");
         config.put("patterns", Collections.emptyList());
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[patterns] List of patterns must not be empty"));
     }
 
@@ -118,7 +118,7 @@ public class GrokProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("field", "_field");
         config.put("patterns", Collections.singletonList("["));
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(e.getMessage(), equalTo("[patterns] Invalid regex pattern found in: [[]. premature end of char-class"));
     }
 
@@ -128,7 +128,7 @@ public class GrokProcessorFactoryTests extends OpenSearchTestCase {
         config.put("field", "_field");
         config.put("patterns", Collections.singletonList("%{MY_PATTERN:name}!"));
         config.put("pattern_definitions", Collections.singletonMap("MY_PATTERN", "["));
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> factory.create(null, null, null, config));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> factory.create(null, null, null, config));
         assertThat(
             e.getMessage(),
             equalTo("[patterns] Invalid regex pattern found in: [%{MY_PATTERN:name}!]. premature end of char-class")

@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.object.HasToString.hasToString;
 import static org.mockito.Mockito.mock;
 
-public class RestClusterStatsActionTests extends OpenSearchTestCase {
+public class RestClusterStatsActionTests extends DensityTestCase {
 
     private RestClusterStatsAction action;
 

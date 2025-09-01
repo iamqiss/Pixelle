@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -24,26 +24,26 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.analysis.MockAnalyzer;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.Version;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.replication.TestReplicationSource;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.store.StoreTests;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
+import org.density.ExceptionsHelper;
+import org.density.DensityCorruptionException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.replication.TestReplicationSource;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.store.StoreTests;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
 import org.junit.Assert;
 
 import java.io.FileNotFoundException;
@@ -83,7 +83,7 @@ public class SegmentReplicationTargetTests extends IndexShardTestCase {
 
     private static final IndexSettings INDEX_SETTINGS = IndexSettingsModule.newIndexSettings(
         "index",
-        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT).build()
+        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT).build()
     );
 
     private SegmentInfos testSegmentInfos;
@@ -93,7 +93,7 @@ public class SegmentReplicationTargetTests extends IndexShardTestCase {
 
         super.setUp();
         Settings indexSettings = Settings.builder()
-            .put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT)
+            .put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT)
             .put(IndexMetadata.SETTING_REPLICATION_TYPE, ReplicationType.SEGMENT)
             .build();
 
@@ -428,7 +428,7 @@ public class SegmentReplicationTargetTests extends IndexShardTestCase {
                         .filter(ReplicationLuceneIndex.FileMetadata::fullyRecovered)
                         .count()
                 );
-                assertTrue(e instanceof OpenSearchCorruptionException);
+                assertTrue(e instanceof DensityCorruptionException);
                 assertTrue(e.getMessage().contains("has local copies of segments that differ from the primary"));
                 segrepTarget.fail(new ReplicationFailedException(e), false);
             }

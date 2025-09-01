@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.serializer;
+package org.density.common.cache.serializer;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.common.util.ByteArray;
+import org.density.test.DensityTestCase;
 
 import java.util.Random;
 
-public class BytesReferenceSerializerTests extends OpenSearchTestCase {
+public class BytesReferenceSerializerTests extends DensityTestCase {
     public void testEquality() throws Exception {
         BytesReferenceSerializer ser = new BytesReferenceSerializer();
         // Test that values are equal before and after serialization, for each implementation of BytesReference.

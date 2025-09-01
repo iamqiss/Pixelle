@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.ShardGenerations;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.common.Nullable;
+import org.density.core.index.shard.ShardId;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.ShardGenerations;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,10 +50,10 @@ import java.util.Set;
  * Holds information about currently in-flight shard level snapshot or clone operations on a per-shard level.
  * Concretely, this means information on which shards are actively being written to in the repository currently
  * as well as the latest written shard generation per shard in case there is a shard generation for a shard that has
- * been cleanly written out to the repository but not yet made part of the current {@link org.opensearch.repositories.RepositoryData}
+ * been cleanly written out to the repository but not yet made part of the current {@link org.density.repositories.RepositoryData}
  * through a snapshot finalization.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class InFlightShardSnapshotStates {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocRequest;
-import org.opensearch.action.RealtimeRequest;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocRequest;
+import org.density.action.RealtimeRequest;
+import org.density.action.ValidateActions;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * A request to get a document (its source) from an index based on its id. Best created using
@@ -65,7 +65,7 @@ import static org.opensearch.action.ValidateActions.addValidationError;
  * @see Requests#getRequest(String)
  * @see Client#get(GetRequest)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetRequest extends SingleShardRequest<GetRequest> implements RealtimeRequest, DocRequest {
@@ -250,7 +250,7 @@ public class GetRequest extends SingleShardRequest<GetRequest> implements Realti
     }
 
     /**
-     * Sets the versioning type. Defaults to {@link org.opensearch.index.VersionType#INTERNAL}.
+     * Sets the versioning type. Defaults to {@link org.density.index.VersionType#INTERNAL}.
      */
     public GetRequest versionType(VersionType versionType) {
         this.versionType = versionType;

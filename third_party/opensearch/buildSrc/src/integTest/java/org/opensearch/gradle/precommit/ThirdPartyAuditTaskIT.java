@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.test.GradleIntegrationTestCase;
+import org.density.gradle.test.GradleIntegrationTestCase;
 import org.gradle.testkit.runner.BuildResult;
 import org.junit.Before;
 
-import static org.opensearch.gradle.test.TestClasspathUtils.setupJarJdkClasspath;
+import static org.density.gradle.test.TestClasspathUtils.setupJarJdkClasspath;
 
 public class ThirdPartyAuditTaskIT extends GradleIntegrationTestCase {
 
@@ -48,14 +48,14 @@ public class ThirdPartyAuditTaskIT extends GradleIntegrationTestCase {
         setupJarJdkClasspath(getProjectDir("thirdPartyAudit"));
     }
 
-    public void testOpenSearchIgnored() {
+    public void testDensityIgnored() {
         BuildResult result = getGradleRunner("thirdPartyAudit").withArguments(
             ":clean",
             ":empty",
             "-s",
-            "-PcompileOnlyGroup=opensearch.gradle:broken-log4j",
+            "-PcompileOnlyGroup=density.gradle:broken-log4j",
             "-PcompileOnlyVersion=0.0.1",
-            "-PcompileGroup=opensearch.gradle:dummy-io",
+            "-PcompileGroup=density.gradle:dummy-io",
             "-PcompileVersion=0.0.1"
         ).build();
         assertTaskNoSource(result, ":empty");
@@ -135,14 +135,14 @@ public class ThirdPartyAuditTaskIT extends GradleIntegrationTestCase {
         assertNoDeprecationWarning(result);
     }
 
-    public void testOpenSearchIgnoredWithViolations() {
+    public void testDensityIgnoredWithViolations() {
         BuildResult result = getGradleRunner("thirdPartyAudit").withArguments(
             ":clean",
             ":absurd",
             "-s",
-            "-PcompileOnlyGroup=opensearch.gradle:broken-log4j",
+            "-PcompileOnlyGroup=density.gradle:broken-log4j",
             "-PcompileOnlyVersion=0.0.1",
-            "-PcompileGroup=opensearch.gradle:dummy-io",
+            "-PcompileGroup=density.gradle:dummy-io",
             "-PcompileVersion=0.0.1"
         ).build();
         assertTaskNoSource(result, ":absurd");

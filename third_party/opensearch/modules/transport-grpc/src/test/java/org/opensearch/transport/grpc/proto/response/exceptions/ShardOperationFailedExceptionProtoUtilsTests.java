@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions;
+package org.density.transport.grpc.proto.response.exceptions;
 
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.ObjectMap;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ShardOperationFailedExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class ShardOperationFailedExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testToProto() {
         // Create a mock ShardOperationFailedException

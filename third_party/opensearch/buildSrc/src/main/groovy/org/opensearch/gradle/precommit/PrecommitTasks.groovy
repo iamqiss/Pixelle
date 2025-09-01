@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,7 +26,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.precommit
+package org.density.gradle.precommit
 
 
 import org.gradle.api.Project

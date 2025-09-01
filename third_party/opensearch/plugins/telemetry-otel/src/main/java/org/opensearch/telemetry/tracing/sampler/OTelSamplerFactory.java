@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.sampler;
+package org.density.telemetry.tracing.sampler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.telemetry.OTelTelemetrySettings;
-import org.opensearch.telemetry.TelemetrySettings;
+import org.density.SpecialPermission;
+import org.density.common.settings.Settings;
+import org.density.telemetry.OTelTelemetrySettings;
+import org.density.telemetry.TelemetrySettings;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;

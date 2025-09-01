@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
+import org.density.client.AbstractResponseTestCase;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,17 +44,17 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GetMappingsResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse,
+    org.density.action.admin.indices.mapping.get.GetMappingsResponse,
     GetMappingsResponse> {
 
     @Override
-    protected org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.admin.indices.mapping.get.GetMappingsResponse createServerTestInstance(XContentType xContentType) {
         final Map<String, MappingMetadata> mappings = new HashMap<>();
         int numberOfIndexes = randomIntBetween(1, 5);
         for (int i = 0; i < numberOfIndexes; i++) {
             mappings.put("index-" + randomAlphaOfLength(5), randomMappingMetadata());
         }
-        return new org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse(mappings);
+        return new org.density.action.admin.indices.mapping.get.GetMappingsResponse(mappings);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GetMappingsResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse serverTestInstance,
+        org.density.action.admin.indices.mapping.get.GetMappingsResponse serverTestInstance,
         GetMappingsResponse clientInstance
     ) {
         assertEquals(serverTestInstance.getMappings(), clientInstance.mappings());

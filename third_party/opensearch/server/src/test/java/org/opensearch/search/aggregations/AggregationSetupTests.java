@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexService;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.TestSearchContext;
+import org.density.action.search.SearchShardTask;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexService;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.TestSearchContext;
 
 import java.io.IOException;
 
-public class AggregationSetupTests extends OpenSearchSingleNodeTestCase {
+public class AggregationSetupTests extends DensitySingleNodeTestCase {
     protected IndexService index;
 
     protected SearchContext context;

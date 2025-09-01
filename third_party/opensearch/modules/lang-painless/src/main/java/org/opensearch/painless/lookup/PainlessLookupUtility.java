@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.lookup;
+package org.density.painless.lookup;
 
-import org.opensearch.painless.spi.annotation.InjectConstantAnnotation;
+import org.density.painless.spi.annotation.InjectConstantAnnotation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -377,7 +377,7 @@ public final class PainlessLookupUtility {
 
     /**
      * Constructs an array of injectable constants for a specific {@link PainlessMethod}
-     * derived from an {@link org.opensearch.painless.spi.annotation.InjectConstantAnnotation}.
+     * derived from an {@link org.density.painless.spi.annotation.InjectConstantAnnotation}.
      */
     public static Object[] buildInjections(PainlessMethod painlessMethod, Map<String, Object> constants) {
         if (painlessMethod.annotations.containsKey(InjectConstantAnnotation.class) == false) {

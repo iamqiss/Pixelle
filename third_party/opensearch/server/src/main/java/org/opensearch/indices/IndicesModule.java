@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,68 +26,68 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.action.admin.indices.rollover.Condition;
-import org.opensearch.action.admin.indices.rollover.MaxAgeCondition;
-import org.opensearch.action.admin.indices.rollover.MaxDocsCondition;
-import org.opensearch.action.admin.indices.rollover.MaxSizeCondition;
-import org.opensearch.action.resync.TransportResyncReplicationAction;
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.mapper.BinaryFieldMapper;
-import org.opensearch.index.mapper.BooleanFieldMapper;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.ConstantKeywordFieldMapper;
-import org.opensearch.index.mapper.DataStreamFieldMapper;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DerivedFieldMapper;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.FieldAliasMapper;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.FlatObjectFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MatchOnlyTextFieldMapper;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.RangeType;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SemanticVersionFieldMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.StarTreeMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.index.mapper.WildcardFieldMapper;
-import org.opensearch.index.remote.RemoteStorePressureService;
-import org.opensearch.index.seqno.GlobalCheckpointSyncAction;
-import org.opensearch.index.seqno.RetentionLeaseBackgroundSyncAction;
-import org.opensearch.index.seqno.RetentionLeaseSyncAction;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.shard.PrimaryReplicaSyncer;
-import org.opensearch.indices.cluster.IndicesClusterStateService;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
-import org.opensearch.indices.store.IndicesStore;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadata;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch;
-import org.opensearch.plugins.MapperPlugin;
+import org.density.action.admin.indices.rollover.Condition;
+import org.density.action.admin.indices.rollover.MaxAgeCondition;
+import org.density.action.admin.indices.rollover.MaxDocsCondition;
+import org.density.action.admin.indices.rollover.MaxSizeCondition;
+import org.density.action.resync.TransportResyncReplicationAction;
+import org.density.common.inject.AbstractModule;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.mapper.BinaryFieldMapper;
+import org.density.index.mapper.BooleanFieldMapper;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.ConstantKeywordFieldMapper;
+import org.density.index.mapper.DataStreamFieldMapper;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DerivedFieldMapper;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.FieldAliasMapper;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.FlatObjectFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MatchOnlyTextFieldMapper;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.RangeType;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SemanticVersionFieldMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.StarTreeMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.index.mapper.WildcardFieldMapper;
+import org.density.index.remote.RemoteStorePressureService;
+import org.density.index.seqno.GlobalCheckpointSyncAction;
+import org.density.index.seqno.RetentionLeaseBackgroundSyncAction;
+import org.density.index.seqno.RetentionLeaseSyncAction;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.shard.PrimaryReplicaSyncer;
+import org.density.indices.cluster.IndicesClusterStateService;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.indices.store.IndicesStore;
+import org.density.indices.store.TransportNodesListShardStoreMetadata;
+import org.density.indices.store.TransportNodesListShardStoreMetadataBatch;
+import org.density.plugins.MapperPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,7 +102,7 @@ import java.util.function.Predicate;
 /**
  * Configures classes and services that are shared by indices on each node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndicesModule extends AbstractModule {
     private final List<Entry> namedWritables = new ArrayList<>();

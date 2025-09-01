@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -46,41 +46,41 @@ import org.apache.lucene.search.Weight;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MatchOnlyTextFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.TextSearchInfo;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.SourceFieldMatchQuery;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.lucene.queries.MinDocQuery;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.ScrollContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.profile.query.QueryProfileShardResult;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.test.TestSearchContext;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.search.SearchShardTask;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MatchOnlyTextFieldMapper;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.TextSearchInfo;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.SourceFieldMatchQuery;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.SearchOperationListener;
+import org.density.lucene.queries.MinDocQuery;
+import org.density.search.DocValueFormat;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.ScrollContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.profile.query.QueryProfileShardResult;
+import org.density.search.sort.SortAndFormats;
+import org.density.test.TestSearchContext;
+import org.density.threadpool.ThreadPool;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

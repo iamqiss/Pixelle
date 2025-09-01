@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.OriginalIndicesTests;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.routing.GroupShardsIteratorTests;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.OriginalIndices;
+import org.density.action.OriginalIndicesTests;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.routing.GroupShardsIteratorTests;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchShardTarget;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class SearchShardIteratorTests extends OpenSearchTestCase {
+public class SearchShardIteratorTests extends DensityTestCase {
 
     public void testShardId() {
         ShardId shardId = new ShardId(randomAlphaOfLengthBetween(5, 10), randomAlphaOfLength(10), randomInt());

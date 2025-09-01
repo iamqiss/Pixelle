@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.LongPoint;
@@ -43,23 +43,23 @@ import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.support.ValueType;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.support.ValueType;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.opensearch.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
+import static org.density.test.InternalAggregationTestCase.DEFAULT_MAX_BUCKETS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
@@ -191,7 +191,7 @@ public class NumericTermsAggregatorTests extends AggregatorTestCase {
                 // Case 1: PriorityQueue selection, when buckets > size && buckets <= 5*size (size=2, buckets=100)
                 TermsAggregationBuilder aggregationBuilder1 = new TermsAggregationBuilder("_name").field(LONG_FIELD).size(2);
                 aggregationBuilder1.userValueTypeHint(ValueType.NUMERIC);
-                aggregationBuilder1.order(org.opensearch.search.aggregations.BucketOrder.count(false)); // count desc
+                aggregationBuilder1.order(org.density.search.aggregations.BucketOrder.count(false)); // count desc
                 NumericTermsAggregator aggregator1 = createAggregatorWithCustomizableSearchContext(
                     new MatchAllDocsQuery(),
                     aggregationBuilder1,
@@ -211,7 +211,7 @@ public class NumericTermsAggregatorTests extends AggregatorTestCase {
                 // Case 2: QuickSelect selection, when buckets > size && buckets > 5*size (size=20, buckets=100)
                 TermsAggregationBuilder aggregationBuilder2 = new TermsAggregationBuilder("_name").field(LONG_FIELD).size(20);
                 aggregationBuilder2.userValueTypeHint(ValueType.NUMERIC);
-                aggregationBuilder2.order(org.opensearch.search.aggregations.BucketOrder.count(false)); // count desc
+                aggregationBuilder2.order(org.density.search.aggregations.BucketOrder.count(false)); // count desc
                 NumericTermsAggregator aggregator2 = createAggregatorWithCustomizableSearchContext(
                     new MatchAllDocsQuery(),
                     aggregationBuilder2,
@@ -231,7 +231,7 @@ public class NumericTermsAggregatorTests extends AggregatorTestCase {
                 // Case 3: Get All buckets when buckets <= size (size=110, buckets=100)
                 TermsAggregationBuilder aggregationBuilder3 = new TermsAggregationBuilder("_name").field(LONG_FIELD).size(110);
                 aggregationBuilder3.userValueTypeHint(ValueType.NUMERIC);
-                aggregationBuilder3.order(org.opensearch.search.aggregations.BucketOrder.count(false)); // count desc
+                aggregationBuilder3.order(org.density.search.aggregations.BucketOrder.count(false)); // count desc
                 NumericTermsAggregator aggregator3 = createAggregatorWithCustomizableSearchContext(
                     new MatchAllDocsQuery(),
                     aggregationBuilder3,

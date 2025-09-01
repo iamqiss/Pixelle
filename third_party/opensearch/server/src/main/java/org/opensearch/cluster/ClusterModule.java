@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,87 +26,87 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.action.index.NodeMappingRefreshAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.cluster.metadata.ComponentTemplateMetadata;
-import org.opensearch.cluster.metadata.ComposableIndexTemplateMetadata;
-import org.opensearch.cluster.metadata.DataStreamMetadata;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver.ExpressionResolver;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataDeleteIndexService;
-import org.opensearch.cluster.metadata.MetadataIndexAliasesService;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.metadata.MetadataMappingService;
-import org.opensearch.cluster.metadata.MetadataUpdateSettingsService;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.ViewMetadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.metadata.WorkloadGroupMetadata;
-import org.opensearch.cluster.routing.DelayedAllocationService;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.DiskThresholdDecider;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.FilterAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.NodeVersionAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RebalanceOnlyWhenActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RemoteStoreMigrationAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ResizeAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.RestoreInProgressAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SearchReplicaAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.SnapshotInProgressAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.TargetPoolAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.WarmDiskThresholdDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.AbstractModule;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.gateway.ShardsBatchGatewayAllocator;
-import org.opensearch.ingest.IngestMetadata;
-import org.opensearch.persistent.PersistentTasksCustomMetadata;
-import org.opensearch.persistent.PersistentTasksNodeService;
-import org.opensearch.plugins.ClusterPlugin;
-import org.opensearch.script.ScriptMetadata;
-import org.opensearch.search.pipeline.SearchPipelineMetadata;
-import org.opensearch.snapshots.SnapshotsInfoService;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskResultsService;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.action.index.NodeMappingRefreshAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.cluster.metadata.ComponentTemplateMetadata;
+import org.density.cluster.metadata.ComposableIndexTemplateMetadata;
+import org.density.cluster.metadata.DataStreamMetadata;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.IndexNameExpressionResolver.ExpressionResolver;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataDeleteIndexService;
+import org.density.cluster.metadata.MetadataIndexAliasesService;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.metadata.MetadataMappingService;
+import org.density.cluster.metadata.MetadataUpdateSettingsService;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.ViewMetadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.metadata.WorkloadGroupMetadata;
+import org.density.cluster.routing.DelayedAllocationService;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.ShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ClusterRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRebalanceAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ConcurrentRecoveriesAllocationDecider;
+import org.density.cluster.routing.allocation.decider.DiskThresholdDecider;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.FilterAllocationDecider;
+import org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
+import org.density.cluster.routing.allocation.decider.NodeLoadAwareAllocationDecider;
+import org.density.cluster.routing.allocation.decider.NodeVersionAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RebalanceOnlyWhenActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RemoteStoreMigrationAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ReplicaAfterPrimaryActiveAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ResizeAllocationDecider;
+import org.density.cluster.routing.allocation.decider.RestoreInProgressAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SearchReplicaAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.cluster.routing.allocation.decider.SnapshotInProgressAllocationDecider;
+import org.density.cluster.routing.allocation.decider.TargetPoolAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.cluster.routing.allocation.decider.WarmDiskThresholdDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.AbstractModule;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.set.Sets;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.GatewayAllocator;
+import org.density.gateway.ShardsBatchGatewayAllocator;
+import org.density.ingest.IngestMetadata;
+import org.density.persistent.PersistentTasksCustomMetadata;
+import org.density.persistent.PersistentTasksNodeService;
+import org.density.plugins.ClusterPlugin;
+import org.density.script.ScriptMetadata;
+import org.density.search.pipeline.SearchPipelineMetadata;
+import org.density.snapshots.SnapshotsInfoService;
+import org.density.tasks.Task;
+import org.density.tasks.TaskResultsService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -123,7 +123,7 @@ import java.util.function.Supplier;
 /**
  * Configures classes and services that affect the entire cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterModule extends AbstractModule {
 

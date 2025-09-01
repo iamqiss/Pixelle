@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.uid;
+package org.density.common.lucene.uid;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -43,17 +43,17 @@ import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.uid.VersionsAndSeqNoResolver.DocIdAndVersion;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.test.DensityTestCase;
 
 /**
  * test per-segment lookup of version-related data structures
  */
-public class VersionLookupTests extends OpenSearchTestCase {
+public class VersionLookupTests extends DensityTestCase {
 
     /**
      * test version lookup actually works

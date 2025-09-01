@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
 import de.thetaphi.forbiddenapis.cli.CliMain;
 
 import org.apache.commons.io.output.NullOutputStream;
-import org.opensearch.gradle.LoggedExec;
-import org.opensearch.gradle.OS;
-import org.opensearch.gradle.dependencies.CompileOnlyResolvePlugin;
-import org.opensearch.gradle.util.GradleUtils;
+import org.density.gradle.LoggedExec;
+import org.density.gradle.OS;
+import org.density.gradle.dependencies.CompileOnlyResolvePlugin;
+import org.density.gradle.util.GradleUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
@@ -94,7 +94,7 @@ public class ThirdPartyAuditTask extends DefaultTask {
         CliMain.EXIT_VIOLATION,
         CliMain.EXIT_UNSUPPORTED_JDK
     );
-    private static final String JDK_JAR_HELL_MAIN_CLASS = "org.opensearch.common.bootstrap.JdkJarHellCheck";
+    private static final String JDK_JAR_HELL_MAIN_CLASS = "org.density.common.bootstrap.JdkJarHellCheck";
 
     private Set<String> missingClassExcludes = new TreeSet<>();
 
@@ -220,7 +220,7 @@ public class ThirdPartyAuditTask extends DefaultTask {
         // These are SelfResolvingDependency, and some of them backed by file collections, like the Gradle API files,
         // or dependencies added as `files(...)`, we can't be sure if those are third party or not.
         // err on the side of scanning these to make sure we don't miss anything
-        Spec<Dependency> reallyThirdParty = dep -> dep.getGroup() != null && dep.getGroup().startsWith("org.opensearch") == false;
+        Spec<Dependency> reallyThirdParty = dep -> dep.getGroup() != null && dep.getGroup().startsWith("org.density") == false;
 
         Set<File> jars = GradleUtils.getFiles(project, getRuntimeConfiguration(), reallyThirdParty).getFiles();
         Set<File> compileOnlyConfiguration = GradleUtils.getFiles(
@@ -419,7 +419,7 @@ public class ThirdPartyAuditTask extends DefaultTask {
     }
 
     /**
-     * Execute java with JDK_JAR_HELL_MAIN_CLASS against provided jars with OpenSearch core in the classpath.
+     * Execute java with JDK_JAR_HELL_MAIN_CLASS against provided jars with Density core in the classpath.
      * @param jars to scan for jarHell violations.
      * @return standard out of jarHell process.
      */

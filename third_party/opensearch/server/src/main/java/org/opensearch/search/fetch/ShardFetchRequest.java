@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.ScoreDoc;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.search.RescoreDocIds;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportRequest;
+import org.density.action.search.SearchShardTask;
+import org.density.common.Nullable;
+import org.density.common.lucene.Lucene;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.search.RescoreDocIds;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.Task;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -55,7 +55,7 @@ import java.util.Map;
  * Shard level fetch base request. Holds all the info needed to execute a fetch.
  * Used with search scroll as the original request doesn't hold indices.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardFetchRequest extends TransportRequest {
 

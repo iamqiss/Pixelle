@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.node.ResponseCollectorService;
-import org.opensearch.search.slice.SliceBuilder;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.FeatureFlags;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexModule;
+import org.density.index.IndexNotFoundException;
+import org.density.node.ResponseCollectorService;
+import org.density.search.slice.SliceBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +65,7 @@ import java.util.stream.Collectors;
 /**
  * Routes cluster operations
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class OperationRouting {
@@ -303,7 +303,7 @@ public class OperationRouting {
                 // specified. In that case, the set of routable shards is considered the full universe of available
                 // shards for each index, when mapping shards to slices. If no routing parameter was specified,
                 // then ordinals and shard IDs are the same. This mimics the logic in
-                // org.opensearch.search.slice.SliceBuilder.toFilter.
+                // org.density.search.slice.SliceBuilder.toFilter.
                 for (int i = 0; i < indexIterators.size(); i++) {
                     if (slice.shardMatches(i, indexIterators.size())) {
                         allShardIterators.add(indexIterators.get(i));

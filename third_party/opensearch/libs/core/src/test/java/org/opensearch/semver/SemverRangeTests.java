@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.semver;
+package org.density.semver;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class SemverRangeTests extends OpenSearchTestCase {
+public class SemverRangeTests extends DensityTestCase {
 
     public void testRangeWithEqualsOperator() {
         SemverRange range = SemverRange.fromString("=1.2.3");

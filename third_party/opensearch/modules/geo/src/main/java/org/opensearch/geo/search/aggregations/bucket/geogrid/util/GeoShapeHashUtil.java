@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid.util;
+package org.density.geo.search.aggregations.bucket.geogrid.util;
 
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.utils.Geohash;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.geometry.Rectangle;
+import org.density.geometry.utils.Geohash;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Scorable;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.aggregations.support.values.ScriptBytesValues;
-import org.opensearch.search.aggregations.support.values.ScriptDoubleValues;
-import org.opensearch.search.aggregations.support.values.ScriptLongValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.script.AggregationScript;
+import org.density.search.aggregations.support.values.ScriptBytesValues;
+import org.density.search.aggregations.support.values.ScriptDoubleValues;
+import org.density.search.aggregations.support.values.ScriptLongValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ import java.util.Collections;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ScriptValuesTests extends OpenSearchTestCase {
+public class ScriptValuesTests extends DensityTestCase {
 
     private static class FakeAggregationScript extends AggregationScript {
 

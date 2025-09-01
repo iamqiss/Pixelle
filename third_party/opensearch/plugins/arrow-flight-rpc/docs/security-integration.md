@@ -1,14 +1,14 @@
 # Security Plugin Integration
 
-The Arrow Flight RPC plugin integrates with the OpenSearch Security plugin to provide secure streaming transport with TLS encryption.
+The Arrow Flight RPC plugin integrates with the Density Security plugin to provide secure streaming transport with TLS encryption.
 
 ## Configuration
 
-Add these settings to `opensearch.yml`:
+Add these settings to `density.yml`:
 
 ```yaml
 # Enable streaming transport
-opensearch.experimental.feature.transport.stream.enabled: true
+density.experimental.feature.transport.stream.enabled: true
 
 # Use secure Flight as default transport
 transport.stream.type.default: FLIGHT-SECURE
@@ -23,10 +23,10 @@ Install and configure the security plugin:
 
 ```bash
 # Install security plugin
-bin/opensearch-plugin install opensearch-security
+bin/density-plugin install density-security
 
 # Setup demo configuration
-plugins/opensearch-security/tools/install_demo_configuration.sh
+plugins/density-security/tools/install_demo_configuration.sh
 ```
 
 ## Role-Based Access Control

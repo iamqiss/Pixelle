@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.adjacency;
+package org.density.search.aggregations.bucket.adjacency;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.AggregatorFactory;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestSearchContext;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.AggregatorFactory;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensityTestCase;
+import org.density.test.TestSearchContext;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AdjacencyMatrixAggregationBuilderTests extends OpenSearchTestCase {
+public class AdjacencyMatrixAggregationBuilderTests extends DensityTestCase {
 
     public void testFilterSizeLimitation() throws Exception {
         // filter size grater than max size should throw an exception
@@ -102,7 +102,7 @@ public class AdjacencyMatrixAggregationBuilderTests extends OpenSearchTestCase {
         assertThat(factory instanceof AdjacencyMatrixAggregatorFactory, is(true));
         assertThat(factory.name(), equalTo("dummy"));
         assertWarnings(
-            "[index.max_adjacency_matrix_filters] setting was deprecated in OpenSearch and will be "
+            "[index.max_adjacency_matrix_filters] setting was deprecated in Density and will be "
                 + "removed in a future release! See the breaking changes documentation for the next major version."
         );
     }

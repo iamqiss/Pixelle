@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions;
+package org.density.transport.grpc.proto.response.exceptions;
 
-import org.opensearch.common.breaker.ResponseLimitBreachedException;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.breaker.ResponseLimitBreachedException;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.protobufs.ObjectMap;
+import org.density.test.DensityTestCase;
 
 import java.util.Map;
 
-public class ResponseLimitBreachedExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class ResponseLimitBreachedExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testMetadataToProto() {
         // Create a ResponseLimitBreachedException with specific values

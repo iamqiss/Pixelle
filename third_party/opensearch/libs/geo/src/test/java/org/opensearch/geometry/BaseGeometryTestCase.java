@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geometry;
+package org.density.geometry;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.geometry.utils.GeographyValidator;
-import org.opensearch.geometry.utils.WellKnownText;
-import org.opensearch.test.AbstractWireTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.geometry.utils.GeographyValidator;
+import org.density.geometry.utils.WellKnownText;
+import org.density.test.AbstractWireTestCase;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -62,7 +62,7 @@ abstract class BaseGeometryTestCase<T extends Geometry> extends AbstractWireTest
         try {
             return (T) wkt.fromWKT(text);
         } catch (ParseException e) {
-            throw new OpenSearchException(e);
+            throw new DensityException(e);
         }
     }
 
@@ -76,7 +76,7 @@ abstract class BaseGeometryTestCase<T extends Geometry> extends AbstractWireTest
             private Object verify(Geometry geometry, String expectedClass) {
                 assertFalse("Visitor should be called only once", called.getAndSet(true));
                 assertSame(geom, geometry);
-                assertEquals(geometry.getClass().getName(), "org.opensearch.geometry." + expectedClass);
+                assertEquals(geometry.getClass().getName(), "org.density.geometry." + expectedClass);
                 return "result";
             }
 

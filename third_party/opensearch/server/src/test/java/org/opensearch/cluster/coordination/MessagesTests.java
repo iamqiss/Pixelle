@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.util.set.Sets;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.EqualsHashCodeTestUtils.CopyFunction;
+import org.density.test.DensityTestCase;
 
 import java.util.Optional;
 
-public class MessagesTests extends OpenSearchTestCase {
+public class MessagesTests extends DensityTestCase {
 
     private DiscoveryNode createNode(String id) {
         return new DiscoveryNode(id, buildNewFakeTransportAddress(), Version.CURRENT);
@@ -84,7 +84,7 @@ public class MessagesTests extends OpenSearchTestCase {
                         return new Join(
                             join.getSourceNode(),
                             join.getTargetNode(),
-                            randomValueOtherThan(join.getTerm(), OpenSearchTestCase::randomNonNegativeLong),
+                            randomValueOtherThan(join.getTerm(), DensityTestCase::randomNonNegativeLong),
                             join.getLastAcceptedTerm(),
                             join.getLastAcceptedVersion()
                         );
@@ -94,7 +94,7 @@ public class MessagesTests extends OpenSearchTestCase {
                             join.getSourceNode(),
                             join.getTargetNode(),
                             join.getTerm(),
-                            randomValueOtherThan(join.getLastAcceptedTerm(), OpenSearchTestCase::randomNonNegativeLong),
+                            randomValueOtherThan(join.getLastAcceptedTerm(), DensityTestCase::randomNonNegativeLong),
                             join.getLastAcceptedVersion()
                         );
                     case 4:
@@ -104,7 +104,7 @@ public class MessagesTests extends OpenSearchTestCase {
                             join.getTargetNode(),
                             join.getTerm(),
                             join.getLastAcceptedTerm(),
-                            randomValueOtherThan(join.getLastAcceptedVersion(), OpenSearchTestCase::randomNonNegativeLong)
+                            randomValueOtherThan(join.getLastAcceptedVersion(), DensityTestCase::randomNonNegativeLong)
                         );
                     default:
                         throw new AssertionError();
@@ -133,14 +133,14 @@ public class MessagesTests extends OpenSearchTestCase {
                     case 0:
                         // change term
                         return new PublishResponse(
-                            randomValueOtherThan(publishResponse.getTerm(), OpenSearchTestCase::randomNonNegativeLong),
+                            randomValueOtherThan(publishResponse.getTerm(), DensityTestCase::randomNonNegativeLong),
                             publishResponse.getVersion()
                         );
                     case 1:
                         // change version
                         return new PublishResponse(
                             publishResponse.getTerm(),
-                            randomValueOtherThan(publishResponse.getVersion(), OpenSearchTestCase::randomNonNegativeLong)
+                            randomValueOtherThan(publishResponse.getVersion(), DensityTestCase::randomNonNegativeLong)
                         );
                     default:
                         throw new AssertionError();
@@ -213,7 +213,7 @@ public class MessagesTests extends OpenSearchTestCase {
                         // change term
                         return new StartJoinRequest(
                             startJoinRequest.getSourceNode(),
-                            randomValueOtherThan(startJoinRequest.getTerm(), OpenSearchTestCase::randomNonNegativeLong)
+                            randomValueOtherThan(startJoinRequest.getTerm(), DensityTestCase::randomNonNegativeLong)
                         );
                     default:
                         throw new AssertionError();
@@ -241,7 +241,7 @@ public class MessagesTests extends OpenSearchTestCase {
                         // change term
                         return new ApplyCommitRequest(
                             applyCommit.getSourceNode(),
-                            randomValueOtherThan(applyCommit.getTerm(), OpenSearchTestCase::randomNonNegativeLong),
+                            randomValueOtherThan(applyCommit.getTerm(), DensityTestCase::randomNonNegativeLong),
                             applyCommit.getVersion()
                         );
                     case 2:
@@ -249,7 +249,7 @@ public class MessagesTests extends OpenSearchTestCase {
                         return new ApplyCommitRequest(
                             applyCommit.getSourceNode(),
                             applyCommit.getTerm(),
-                            randomValueOtherThan(applyCommit.getVersion(), OpenSearchTestCase::randomNonNegativeLong)
+                            randomValueOtherThan(applyCommit.getVersion(), DensityTestCase::randomNonNegativeLong)
                         );
                     default:
                         throw new AssertionError();
@@ -285,7 +285,7 @@ public class MessagesTests extends OpenSearchTestCase {
                 } else if (randomBoolean()) {
                     return new JoinRequest(
                         joinRequest.getSourceNode(),
-                        randomValueOtherThan(joinRequest.getMinimumTerm(), OpenSearchTestCase::randomNonNegativeLong),
+                        randomValueOtherThan(joinRequest.getMinimumTerm(), DensityTestCase::randomNonNegativeLong),
                         joinRequest.getOptionalJoin()
                     );
                 } else {
@@ -374,7 +374,7 @@ public class MessagesTests extends OpenSearchTestCase {
                         return new PreVoteResponse(
                             preVoteResponse.getCurrentTerm(),
                             preVoteResponse.getLastAcceptedTerm(),
-                            randomValueOtherThan(preVoteResponse.getLastAcceptedVersion(), OpenSearchTestCase::randomNonNegativeLong)
+                            randomValueOtherThan(preVoteResponse.getLastAcceptedVersion(), DensityTestCase::randomNonNegativeLong)
                         );
                     default:
                         throw new AssertionError();

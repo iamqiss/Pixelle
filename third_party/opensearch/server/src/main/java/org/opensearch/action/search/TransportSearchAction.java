@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,84 +26,84 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsGroup;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsRequest;
-import org.opensearch.action.admin.cluster.shards.ClusterSearchShardsResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.TimeoutTaskCancellationUtility;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.ShardIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.pipeline.PipelinedRequest;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.profile.SearchProfileShardResults;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.listener.TraceableActionListener;
-import org.opensearch.telemetry.tracing.listener.TraceableSearchRequestOperationsListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OriginSettingClient;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.OriginalIndices;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsGroup;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsRequest;
+import org.density.action.admin.cluster.shards.ClusterSearchShardsResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.TimeoutTaskCancellationUtility;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.ShardIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.tasks.TaskId;
+import org.density.index.query.Rewriteable;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchService;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.SearchContext;
+import org.density.search.pipeline.PipelinedRequest;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.profile.SearchProfileShardResults;
+import org.density.search.slice.SliceBuilder;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.listener.TraceableActionListener;
+import org.density.telemetry.tracing.listener.TraceableSearchRequestOperationsListener;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.StreamTransportService;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.OriginSettingClient;
+import org.density.transport.client.node.NodeClient;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,15 +125,15 @@ import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
-import static org.opensearch.action.search.SearchType.DFS_QUERY_THEN_FETCH;
-import static org.opensearch.action.search.SearchType.QUERY_THEN_FETCH;
-import static org.opensearch.search.sort.FieldSortBuilder.hasPrimaryFieldSort;
+import static org.density.action.admin.cluster.node.tasks.get.GetTaskAction.TASKS_ORIGIN;
+import static org.density.action.search.SearchType.DFS_QUERY_THEN_FETCH;
+import static org.density.action.search.SearchType.QUERY_THEN_FETCH;
+import static org.density.search.sort.FieldSortBuilder.hasPrimaryFieldSort;
 
 /**
  * Perform search action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportSearchAction extends HandledTransportAction<SearchRequest, SearchResponse> {
 
@@ -275,7 +275,7 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
      * to moving backwards due to NTP and other such complexities, etc.). There are also issues with
      * using a relative clock for reporting real time. Thus, we simply separate these two uses.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SearchTimeProvider {
         private final long absoluteStartMillis;
@@ -329,7 +329,7 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
     /**
      * The single phase search action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface SinglePhaseSearchAction {
         void executeOnShardTarget(
@@ -1354,7 +1354,7 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
     /**
      * xcluster search listener
      *
-     * @opensearch.internal
+     * @density.internal
      */
     abstract static class CCSActionListener<Response, FinalResponse> implements ActionListener<Response> {
         private final String clusterAlias;

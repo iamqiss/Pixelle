@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkProcessor;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.client.core.GetSourceRequest;
-import org.opensearch.client.core.GetSourceResponse;
-import org.opensearch.client.core.MultiTermVectorsRequest;
-import org.opensearch.client.core.MultiTermVectorsResponse;
-import org.opensearch.client.core.TermVectorsRequest;
-import org.opensearch.client.core.TermVectorsResponse;
-import org.opensearch.client.indices.GetIndexRequest;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkProcessor;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.client.core.GetSourceRequest;
+import org.density.client.core.GetSourceResponse;
+import org.density.client.core.MultiTermVectorsRequest;
+import org.density.client.core.MultiTermVectorsResponse;
+import org.density.client.core.TermVectorsRequest;
+import org.density.client.core.TermVectorsResponse;
+import org.density.client.indices.GetIndexRequest;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.index.get.GetResult;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.fetch.subphase.FetchSourceContext;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -92,7 +92,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
+public class CrudIT extends DensityRestHighLevelClientTestCase {
 
     public void testDelete() throws IOException {
         {
@@ -130,19 +130,19 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
                 RequestOptions.DEFAULT
             );
             DeleteRequest deleteRequest = new DeleteRequest("index", docId).setIfSeqNo(2).setIfPrimaryTerm(2);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(deleteRequest, highLevelClient()::delete, highLevelClient()::deleteAsync)
             );
             assertEquals(RestStatus.CONFLICT, exception.status());
             assertEquals(
-                "OpenSearch exception [type=version_conflict_engine_exception, reason=["
+                "Density exception [type=version_conflict_engine_exception, reason=["
                     + docId
                     + "]: "
                     + "version conflict, required seqNo [2], primary term [2]. current document has seqNo [3] and primary term [1]]",
                 exception.getMessage()
             );
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         {
             // Testing version type
@@ -170,18 +170,18 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
                     .version(12),
                 RequestOptions.DEFAULT
             );
-            OpenSearchStatusException exception = expectThrows(OpenSearchStatusException.class, () -> {
+            DensityStatusException exception = expectThrows(DensityStatusException.class, () -> {
                 DeleteRequest deleteRequest = new DeleteRequest("index", docId).versionType(VersionType.EXTERNAL).version(10);
                 execute(deleteRequest, highLevelClient()::delete, highLevelClient()::deleteAsync);
             });
             assertEquals(RestStatus.CONFLICT, exception.status());
             assertEquals(
-                "OpenSearch exception [type=version_conflict_engine_exception, reason=["
+                "Density exception [type=version_conflict_engine_exception, reason=["
                     + docId
                     + "]: version conflict, current version [12] is higher or equal to the one provided [10]]",
                 exception.getMessage()
             );
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         {
             // Testing routing
@@ -298,13 +298,13 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
     public void testGet() throws IOException {
         {
             GetRequest getRequest = new GetRequest("index", "id");
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(getRequest, highLevelClient()::get, highLevelClient()::getAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
-            assertEquals("OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]", exception.getMessage());
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("Density exception [type=index_not_found_exception, reason=no such index [index]]", exception.getMessage());
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         IndexRequest index = new IndexRequest("index").id("id");
         String document = "{\"field1\":\"value1\",\"field2\":\"value2\"}";
@@ -313,18 +313,18 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
         highLevelClient().index(index, RequestOptions.DEFAULT);
         {
             GetRequest getRequest = new GetRequest("index", "id").version(2);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(getRequest, highLevelClient()::get, highLevelClient()::getAsync)
             );
             assertEquals(RestStatus.CONFLICT, exception.status());
             assertEquals(
-                "OpenSearch exception [type=version_conflict_engine_exception, "
+                "Density exception [type=version_conflict_engine_exception, "
                     + "reason=[id]: "
                     + "version conflict, current version [1] is different than the one provided [2]]",
                 exception.getMessage()
             );
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         {
             GetRequest getRequest = new GetRequest("index", "id");
@@ -392,7 +392,7 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals("id1", response.getResponses()[0].getFailure().getId());
             assertEquals("index", response.getResponses()[0].getFailure().getIndex());
             assertEquals(
-                "OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]",
+                "Density exception [type=index_not_found_exception, reason=no such index [index]]",
                 response.getResponses()[0].getFailure().getFailure().getMessage()
             );
 
@@ -401,7 +401,7 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals("id2", response.getResponses()[1].getId());
             assertEquals("index", response.getResponses()[1].getIndex());
             assertEquals(
-                "OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]",
+                "Density exception [type=index_not_found_exception, reason=no such index [index]]",
                 response.getResponses()[1].getFailure().getFailure().getMessage()
             );
         }
@@ -449,13 +449,13 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
     public void testGetSource() throws IOException {
         {
             GetSourceRequest getRequest = new GetSourceRequest("index", "id");
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(getRequest, highLevelClient()::getSource, highLevelClient()::getSourceAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
-            assertEquals("OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]", exception.getMessage());
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("Density exception [type=index_not_found_exception, reason=no such index [index]]", exception.getMessage());
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         IndexRequest index = new IndexRequest("index").id("id");
         String document = "{\"field1\":\"value1\",\"field2\":\"value2\"}";
@@ -472,13 +472,13 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
         }
         {
             GetSourceRequest getRequest = new GetSourceRequest("index", "does_not_exist");
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(getRequest, highLevelClient()::getSource, highLevelClient()::getSourceAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
             assertEquals(
-                "OpenSearch exception [type=resource_not_found_exception, " + "reason=Document not found [index]/[does_not_exist]]",
+                "Density exception [type=resource_not_found_exception, " + "reason=Document not found [index]/[does_not_exist]]",
                 exception.getMessage()
             );
         }
@@ -510,12 +510,12 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
         {
             GetSourceRequest getRequest = new GetSourceRequest("index", "id");
             getRequest.fetchSourceContext(new FetchSourceContext(false));
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(getRequest, highLevelClient()::getSource, highLevelClient()::getSourceAsync)
             );
             assertEquals(
-                "OpenSearch exception [type=action_request_validation_exception, "
+                "Density exception [type=action_request_validation_exception, "
                     + "reason=Validation Failed: 1: fetching source can not be disabled;]",
                 exception.getMessage()
             );
@@ -563,7 +563,7 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals("id", indexResponse.getId());
             assertEquals(2L, indexResponse.getVersion());
 
-            OpenSearchStatusException exception = expectThrows(OpenSearchStatusException.class, () -> {
+            DensityStatusException exception = expectThrows(DensityStatusException.class, () -> {
                 IndexRequest wrongRequest = new IndexRequest("index").id("id");
                 wrongRequest.source(XContentBuilder.builder(xContentType.xContent()).startObject().field("field", "test").endObject());
                 wrongRequest.setIfSeqNo(1L).setIfPrimaryTerm(5L);
@@ -572,14 +572,14 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             });
             assertEquals(RestStatus.CONFLICT, exception.status());
             assertEquals(
-                "OpenSearch exception [type=version_conflict_engine_exception, reason=[id]: "
+                "Density exception [type=version_conflict_engine_exception, reason=[id]: "
                     + "version conflict, required seqNo [1], primary term [5]. current document has seqNo [2] and primary term [1]]",
                 exception.getMessage()
             );
-            assertEquals("index", exception.getMetadata("opensearch.index").get(0));
+            assertEquals("index", exception.getMetadata("density.index").get(0));
         }
         {
-            OpenSearchStatusException exception = expectThrows(OpenSearchStatusException.class, () -> {
+            DensityStatusException exception = expectThrows(DensityStatusException.class, () -> {
                 IndexRequest indexRequest = new IndexRequest("index").id("missing_pipeline");
                 indexRequest.source(XContentBuilder.builder(xContentType.xContent()).startObject().field("field", "test").endObject());
                 indexRequest.setPipeline("missing");
@@ -589,12 +589,12 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
 
             assertEquals(RestStatus.BAD_REQUEST, exception.status());
             assertEquals(
-                "OpenSearch exception [type=illegal_argument_exception, " + "reason=pipeline with id [missing] does not exist]",
+                "Density exception [type=illegal_argument_exception, " + "reason=pipeline with id [missing] does not exist]",
                 exception.getMessage()
             );
         }
         {
-            OpenSearchStatusException exception = expectThrows(OpenSearchStatusException.class, () -> {
+            DensityStatusException exception = expectThrows(DensityStatusException.class, () -> {
                 IndexRequest indexRequest = new IndexRequest("index").id("missing_alias").setRequireAlias(true);
                 indexRequest.source(XContentBuilder.builder(xContentType.xContent()).startObject().field("field", "test").endObject());
 
@@ -603,7 +603,7 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
 
             assertEquals(RestStatus.NOT_FOUND, exception.status());
             assertEquals(
-                "OpenSearch exception [type=index_not_found_exception, reason=no such index [index]"
+                "Density exception [type=index_not_found_exception, reason=no such index [index]"
                     + " and [require_alias] request flag is [true] and [index] is not an alias]",
                 exception.getMessage()
             );
@@ -630,13 +630,13 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             assertEquals("index", indexResponse.getIndex());
             assertEquals("with_create_op_type", indexResponse.getId());
 
-            OpenSearchStatusException exception = expectThrows(OpenSearchStatusException.class, () -> {
+            DensityStatusException exception = expectThrows(DensityStatusException.class, () -> {
                 execute(indexRequest, highLevelClient()::index, highLevelClient()::indexAsync);
             });
 
             assertEquals(RestStatus.CONFLICT, exception.status());
             assertEquals(
-                "OpenSearch exception [type=version_conflict_engine_exception, reason=[with_create_op_type]: "
+                "Density exception [type=version_conflict_engine_exception, reason=[with_create_op_type]: "
                     + "version conflict, document already exists (current version [1])]",
                 exception.getMessage()
             );
@@ -648,13 +648,13 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             UpdateRequest updateRequest = new UpdateRequest("index", "does_not_exist");
             updateRequest.doc(singletonMap("field", "value"), randomFrom(XContentType.values()));
 
-            OpenSearchStatusException exception = expectThrows(
-                OpenSearchStatusException.class,
+            DensityStatusException exception = expectThrows(
+                DensityStatusException.class,
                 () -> execute(updateRequest, highLevelClient()::update, highLevelClient()::updateAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
             assertEquals(
-                "OpenSearch exception [type=document_missing_exception, reason=[does_not_exist]: document missing]",
+                "Density exception [type=document_missing_exception, reason=[does_not_exist]: document missing]",
                 exception.getMessage()
             );
         }
@@ -688,12 +688,12 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
                     updateRequest.setIfSeqNo(lastUpdateSeqNo + (randomBoolean() ? 0 : 1));
                     updateRequest.setIfPrimaryTerm(lastUpdatePrimaryTerm + 1);
                 }
-                OpenSearchStatusException exception = expectThrows(
-                    OpenSearchStatusException.class,
+                DensityStatusException exception = expectThrows(
+                    DensityStatusException.class,
                     () -> execute(updateRequest, highLevelClient()::update, highLevelClient()::updateAsync)
                 );
                 assertEquals(exception.toString(), RestStatus.CONFLICT, exception.status());
-                assertThat(exception.getMessage(), containsString("OpenSearch exception [type=version_conflict_engine_exception"));
+                assertThat(exception.getMessage(), containsString("Density exception [type=version_conflict_engine_exception"));
             }
             {
                 final UpdateRequest updateRequest = new UpdateRequest("index", "id");
@@ -827,14 +827,14 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
             );
         }
         {
-            OpenSearchException exception = expectThrows(OpenSearchException.class, () -> {
+            DensityException exception = expectThrows(DensityException.class, () -> {
                 UpdateRequest updateRequest = new UpdateRequest("index", "require_alias").setRequireAlias(true);
                 updateRequest.doc(new IndexRequest().source(Collections.singletonMap("field", "doc"), MediaTypeRegistry.JSON));
                 execute(updateRequest, highLevelClient()::update, highLevelClient()::updateAsync);
             });
             assertEquals(RestStatus.NOT_FOUND, exception.status());
             assertEquals(
-                "OpenSearch exception [type=index_not_found_exception, reason=no such index [index] and [require_alias] request flag is [true] and [index] is not an alias]",
+                "Density exception [type=index_not_found_exception, reason=no such index [index] and [require_alias] request flag is [true] and [index] is not an alias]",
                 exception.getMessage()
             );
         }
@@ -1182,8 +1182,8 @@ public class CrudIT extends OpenSearchRestHighLevelClientTestCase {
     public void testTermvectorsWithNonExistentIndex() {
         TermVectorsRequest request = new TermVectorsRequest("non-existent", "non-existent");
 
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(request, highLevelClient()::termvectors, highLevelClient()::termvectorsAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());

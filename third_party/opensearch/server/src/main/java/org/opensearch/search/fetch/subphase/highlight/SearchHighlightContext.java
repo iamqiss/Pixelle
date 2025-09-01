@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
+import org.density.common.annotation.PublicApi;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder.BoundaryScannerType;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -47,7 +47,7 @@ import java.util.Set;
 /**
  * Search context used during highlighting phase
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchHighlightContext {
@@ -84,7 +84,7 @@ public class SearchHighlightContext {
     /**
      * Field for the search highlight context
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Field {
@@ -110,7 +110,7 @@ public class SearchHighlightContext {
     /**
      * Field options for the search highlight context
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class FieldOptions {

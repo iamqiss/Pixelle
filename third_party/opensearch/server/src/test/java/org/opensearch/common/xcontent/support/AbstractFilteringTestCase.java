@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.support;
+package org.density.common.xcontent.support;
 
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedFunction;
+import org.density.common.util.set.Sets;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Set;
@@ -48,7 +48,7 @@ import static java.util.Collections.singleton;
 /**
  * Tests for {@link XContent} filtering.
  */
-public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
+public abstract class AbstractFilteringTestCase extends DensityTestCase {
 
     @FunctionalInterface
     protected interface Builder extends CheckedFunction<XContentBuilder, XContentBuilder, IOException> {}
@@ -63,7 +63,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
         .field("timestamp", 1428582942867L)
         .nullField("default")
         .startArray("tags")
-        .value("opensearch")
+        .value("density")
         .value("java")
         .endArray()
         .startArray("authors")
@@ -158,7 +158,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -289,7 +289,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -321,7 +321,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -392,7 +392,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
     public void testSimpleArrayInclusive() throws Exception {
         final Builder expected = builder -> builder.startObject()
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .endObject();
@@ -500,7 +500,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
         .field("timestamp", 1428582942867L)
         .nullField("default")
         .startArray("tags")
-        .value("opensearch")
+        .value("density")
         .value("java")
         .endArray()
         .startObject("properties")
@@ -583,7 +583,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -710,7 +710,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -817,7 +817,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -911,7 +911,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -1012,7 +1012,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
             .field("timestamp", 1428582942867L)
             .nullField("default")
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")
@@ -1194,7 +1194,7 @@ public abstract class AbstractFilteringTestCase extends OpenSearchTestCase {
 
         final Builder expected = builder -> builder.startObject()
             .startArray("tags")
-            .value("opensearch")
+            .value("density")
             .value("java")
             .endArray()
             .startArray("authors")

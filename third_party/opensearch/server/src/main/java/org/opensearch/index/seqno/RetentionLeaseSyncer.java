@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Objects;
 
 /**
  * Syncs retention leases
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "1.0.0")
 public class RetentionLeaseSyncer {
@@ -83,7 +83,7 @@ public class RetentionLeaseSyncer {
      * Represents an action that is invoked to sync retention leases to replica shards after a retention lease is added
      * or removed on the primary. The specified listener is invoked when the syncing completes with success or failure.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface SyncAction {
         void sync(
@@ -99,7 +99,7 @@ public class RetentionLeaseSyncer {
      * Represents an action that is invoked periodically to sync retention leases to replica shards after some retention
      * lease has been renewed or expired.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface BackgroundSyncAction {
         void backgroundSync(ShardId shardId, String primaryAllocationId, long primaryTerm, RetentionLeases retentionLeases);

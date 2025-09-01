@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cli;
+package org.density.cli;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
 
-import static org.opensearch.cli.Terminal.readLineToCharArray;
+import static org.density.cli.Terminal.readLineToCharArray;
 import static org.hamcrest.Matchers.equalTo;
 
-public class TerminalTests extends OpenSearchTestCase {
+public class TerminalTests extends DensityTestCase {
 
     public void testVerbosity() throws Exception {
         MockTerminal terminal = new MockTerminal();

@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.xcontent.ToXContent;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.xcontent.ToXContent;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ import java.io.IOException;
  * metadata (like header and footer) to the content. Hence, this format does not depend on {@code CodecUtil} from
  * Lucene library.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ConfigBlobStoreFormat<T extends ToXContent> extends BaseBlobStoreFormat<T> {
 

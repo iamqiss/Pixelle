@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.slice;
+package org.density.search.slice;
 
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.QueryVisitor;
@@ -40,7 +40,7 @@ import java.util.Objects;
 /**
  * An abstract {@link Query} that defines an hash function to partition the documents in multiple slices.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SliceQuery extends Query {
     private final String field;

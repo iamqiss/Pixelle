@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import org.apache.http.client.fluent.Request;
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Installation;
-import org.opensearch.packaging.util.Platforms;
-import org.opensearch.packaging.util.ServerUtils;
-import org.opensearch.packaging.util.Shell.Result;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Installation;
+import org.density.packaging.util.Platforms;
+import org.density.packaging.util.ServerUtils;
+import org.density.packaging.util.Shell.Result;
 import org.junit.BeforeClass;
 
 import java.nio.file.Files;
@@ -47,12 +47,12 @@ import java.util.List;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
-import static org.opensearch.packaging.util.Archives.installArchive;
-import static org.opensearch.packaging.util.Archives.verifyArchiveInstallation;
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.FileUtils.mv;
-import static org.opensearch.packaging.util.FileUtils.rm;
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.Archives.installArchive;
+import static org.density.packaging.util.Archives.verifyArchiveInstallation;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.FileUtils.mv;
+import static org.density.packaging.util.FileUtils.rm;
+import static org.density.packaging.util.ServerUtils.makeRequest;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -85,7 +85,7 @@ public class ArchiveTests extends PackagingTestCase {
     public void test30MissingBundledJdk() throws Exception {
         final Installation.Executables bin = installation.executables();
         sh.getEnv().remove("JAVA_HOME");
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
 
         final Path relocatedJdk = installation.bundledJdk.getParent().resolve("jdk.relocated");
 
@@ -93,8 +93,8 @@ public class ArchiveTests extends PackagingTestCase {
             if (distribution().hasJdk) {
                 mv(installation.bundledJdk, relocatedJdk);
             }
-            // ask for opensearch version to quickly exit if java is actually found (ie test failure)
-            final Result runResult = sh.runIgnoreExitCode(bin.opensearch.toString() + " -v");
+            // ask for density version to quickly exit if java is actually found (ie test failure)
+            final Result runResult = sh.runIgnoreExitCode(bin.density.toString() + " -v");
             assertThat(runResult.exitCode, is(1));
             assertThat(runResult.stderr, containsString("could not find java in bundled jdk"));
         } finally {
@@ -106,11 +106,11 @@ public class ArchiveTests extends PackagingTestCase {
 
     public void test31BadJavaHome() throws Exception {
         final Installation.Executables bin = installation.executables();
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
         sh.getEnv().put("JAVA_HOME", "doesnotexist");
 
-        // ask for opensearch version to quickly exit if java is actually found (ie test failure)
-        final Result runResult = sh.runIgnoreExitCode(bin.opensearch.toString() + " -V");
+        // ask for density version to quickly exit if java is actually found (ie test failure)
+        final Result runResult = sh.runIgnoreExitCode(bin.density.toString() + " -V");
         assertThat(runResult.exitCode, is(1));
         assertThat(runResult.stderr, containsString("could not find java in JAVA_HOME"));
 
@@ -118,12 +118,12 @@ public class ArchiveTests extends PackagingTestCase {
 
     public void test31BadOpensearchJavaHome() throws Exception {
         final Installation.Executables bin = installation.executables();
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "doesnotexist");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "doesnotexist");
 
-        // ask for opensearch version to quickly exit if java is actually found (ie test failure)
-        final Result runResult = sh.runIgnoreExitCode(bin.opensearch.toString() + " -V");
+        // ask for density version to quickly exit if java is actually found (ie test failure)
+        final Result runResult = sh.runIgnoreExitCode(bin.density.toString() + " -V");
         assertThat(runResult.exitCode, is(1));
-        assertThat(runResult.stderr, containsString("could not find java in OPENSEARCH_JAVA_HOME"));
+        assertThat(runResult.stderr, containsString("could not find java in DENSITY_JAVA_HOME"));
 
     }
 
@@ -132,13 +132,13 @@ public class ArchiveTests extends PackagingTestCase {
         assumeTrue("Only run this test when we know where the JDK is.", distribution().hasJdk);
 
         final Path relocatedJdk = installation.bundledJdk.getParent().resolve("a (special) path");
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
         sh.getEnv().put("JAVA_HOME", relocatedJdk.toString());
 
         try {
             mv(installation.bundledJdk, relocatedJdk);
-            // ask for opensearch version to avoid starting the app
-            final Result runResult = sh.run(bin.opensearch.toString() + " -V");
+            // ask for density version to avoid starting the app
+            final Result runResult = sh.run(bin.density.toString() + " -V");
             assertThat(runResult.stdout, startsWith("Version: "));
         } finally {
             mv(relocatedJdk, installation.bundledJdk);
@@ -147,14 +147,14 @@ public class ArchiveTests extends PackagingTestCase {
 
     public void test50StartAndStop() throws Exception {
         // cleanup from previous test
-        rm(installation.config("opensearch.keystore"));
+        rm(installation.config("density.keystore"));
 
         try {
-            startOpenSearch();
+            startDensity();
         } catch (Exception e) {
-            if (Files.exists(installation.home.resolve("opensearch.pid"))) {
-                String pid = FileUtils.slurp(installation.home.resolve("opensearch.pid")).trim();
-                logger.info("Dumping jstack of opensearch processb ({}) that failed to start", pid);
+            if (Files.exists(installation.home.resolve("density.pid"))) {
+                String pid = FileUtils.slurp(installation.home.resolve("density.pid")).trim();
+                logger.info("Dumping jstack of density processb ({}) that failed to start", pid);
                 sh.runIgnoreExitCode("jstack " + pid);
             }
             throw e;
@@ -162,13 +162,13 @@ public class ArchiveTests extends PackagingTestCase {
 
         List<Path> gcLogs = FileUtils.lsGlob(installation.logs, "gc.log*");
         assertThat(gcLogs, is(not(empty())));
-        ServerUtils.runOpenSearchTests();
+        ServerUtils.runDensityTests();
 
-        stopOpenSearch();
+        stopDensity();
     }
 
     public void test51JavaHomeOverride() throws Exception {
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
 
         Platforms.onLinux(() -> {
             String systemJavaHome1 = sh.run("echo $SYSTEM_JAVA_HOME").stdout.trim();
@@ -179,37 +179,37 @@ public class ArchiveTests extends PackagingTestCase {
             sh.getEnv().put("JAVA_HOME", systemJavaHome1);
         });
 
-        startOpenSearch();
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        startDensity();
+        ServerUtils.runDensityTests();
+        stopDensity();
 
         String systemJavaHome1 = sh.getEnv().get("JAVA_HOME");
-        assertThat(FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"), containsString(systemJavaHome1));
+        assertThat(FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"), containsString(systemJavaHome1));
     }
 
     public void test51OpensearchJavaHomeOverride() throws Exception {
         Platforms.onLinux(() -> {
             String systemJavaHome1 = sh.run("echo $SYSTEM_JAVA_HOME").stdout.trim();
-            sh.getEnv().put("OPENSEARCH_JAVA_HOME", systemJavaHome1);
+            sh.getEnv().put("DENSITY_JAVA_HOME", systemJavaHome1);
             sh.getEnv().put("JAVA_HOME", "doesnotexist");
         });
         Platforms.onWindows(() -> {
             final String systemJavaHome1 = sh.run("$Env:SYSTEM_JAVA_HOME").stdout.trim();
-            sh.getEnv().put("OPENSEARCH_JAVA_HOME", systemJavaHome1);
+            sh.getEnv().put("DENSITY_JAVA_HOME", systemJavaHome1);
             sh.getEnv().put("JAVA_HOME", "doesnotexist");
         });
 
-        startOpenSearch();
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        startDensity();
+        ServerUtils.runDensityTests();
+        stopDensity();
 
-        String systemJavaHome1 = sh.getEnv().get("OPENSEARCH_JAVA_HOME");
-        assertThat(FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"), containsString(systemJavaHome1));
+        String systemJavaHome1 = sh.getEnv().get("DENSITY_JAVA_HOME");
+        assertThat(FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"), containsString(systemJavaHome1));
     }
 
     public void test52JavaHomeBundledJdkRemoved() throws Exception {
         assumeThat(distribution().hasJdk, is(true));
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
 
         Path relocatedJdk = installation.bundledJdk.getParent().resolve("jdk.relocated");
         try {
@@ -223,12 +223,12 @@ public class ArchiveTests extends PackagingTestCase {
                 sh.getEnv().put("JAVA_HOME", systemJavaHome1);
             });
 
-            startOpenSearch();
-            ServerUtils.runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            ServerUtils.runDensityTests();
+            stopDensity();
 
             String systemJavaHome1 = sh.getEnv().get("JAVA_HOME");
-            assertThat(FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"), containsString(systemJavaHome1));
+            assertThat(FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"), containsString(systemJavaHome1));
         } finally {
             mv(relocatedJdk, installation.bundledJdk);
         }
@@ -242,28 +242,28 @@ public class ArchiveTests extends PackagingTestCase {
             mv(installation.bundledJdk, relocatedJdk);
             Platforms.onLinux(() -> {
                 String systemJavaHome1 = sh.run("echo $SYSTEM_JAVA_HOME").stdout.trim();
-                sh.getEnv().put("OPENSEARCH_JAVA_HOME", systemJavaHome1);
+                sh.getEnv().put("DENSITY_JAVA_HOME", systemJavaHome1);
                 sh.getEnv().put("JAVA_HOME", "doesnotexist");
             });
             Platforms.onWindows(() -> {
                 final String systemJavaHome1 = sh.run("$Env:SYSTEM_JAVA_HOME").stdout.trim();
-                sh.getEnv().put("OPENSEARCH_JAVA_HOME", systemJavaHome1);
+                sh.getEnv().put("DENSITY_JAVA_HOME", systemJavaHome1);
                 sh.getEnv().put("JAVA_HOME", "doesnotexist");
             });
 
-            startOpenSearch();
-            ServerUtils.runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            ServerUtils.runDensityTests();
+            stopDensity();
 
-            String systemJavaHome1 = sh.getEnv().get("OPENSEARCH_JAVA_HOME");
-            assertThat(FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "*.log.gz"), containsString(systemJavaHome1));
+            String systemJavaHome1 = sh.getEnv().get("DENSITY_JAVA_HOME");
+            assertThat(FileUtils.slurpAllLogs(installation.logs, "density.log", "*.log.gz"), containsString(systemJavaHome1));
         } finally {
             mv(relocatedJdk, installation.bundledJdk);
         }
     }
 
     public void test53JavaHomeWithSpecialCharacters() throws Exception {
-        sh.getEnv().remove("OPENSEARCH_JAVA_HOME");
+        sh.getEnv().remove("DENSITY_JAVA_HOME");
 
         Platforms.onWindows(() -> {
             String javaPath = "C:\\Program Files (x86)\\java";
@@ -274,11 +274,11 @@ public class ArchiveTests extends PackagingTestCase {
                 sh.getEnv().put("JAVA_HOME", "C:\\Program Files (x86)\\java");
 
                 // verify ES can start, stop and run plugin list
-                startOpenSearch();
+                startDensity();
 
-                stopOpenSearch();
+                stopDensity();
 
-                String pluginListCommand = installation.bin + "/opensearch-plugin list";
+                String pluginListCommand = installation.bin + "/density-plugin list";
                 Result result = sh.run(pluginListCommand);
                 assertThat(result.exitCode, equalTo(0));
 
@@ -299,11 +299,11 @@ public class ArchiveTests extends PackagingTestCase {
                 sh.getEnv().put("JAVA_HOME", testJavaHome);
 
                 // verify ES can start, stop and run plugin list
-                startOpenSearch();
+                startDensity();
 
-                stopOpenSearch();
+                stopDensity();
 
-                String pluginListCommand = installation.bin + "/opensearch-plugin list";
+                String pluginListCommand = installation.bin + "/density-plugin list";
                 Result result = sh.run(pluginListCommand);
                 assertThat(result.exitCode, equalTo(0));
             } finally {
@@ -315,14 +315,14 @@ public class ArchiveTests extends PackagingTestCase {
     public void test54ForceBundledJdkEmptyJavaHome() throws Exception {
         assumeThat(distribution().hasJdk, is(true));
         // cleanup from previous test
-        rm(installation.config("opensearch.keystore"));
+        rm(installation.config("density.keystore"));
 
-        sh.getEnv().put("OPENSEARCH_JAVA_HOME", "");
+        sh.getEnv().put("DENSITY_JAVA_HOME", "");
         sh.getEnv().put("JAVA_HOME", "");
 
-        startOpenSearch();
-        ServerUtils.runOpenSearchTests();
-        stopOpenSearch();
+        startDensity();
+        ServerUtils.runDensityTests();
+        stopDensity();
     }
 
     public void test70CustomPathConfAndJvmOptions() throws Exception {
@@ -331,15 +331,15 @@ public class ArchiveTests extends PackagingTestCase {
             final List<String> jvmOptions = List.of("-Xms512m", "-Xmx512m", "-Dlog4j2.disable.jmx=true");
             Files.write(tempConf.resolve("jvm.options"), jvmOptions, CREATE, APPEND);
 
-            sh.getEnv().put("OPENSEARCH_JAVA_OPTS", "-XX:-UseCompressedOops");
+            sh.getEnv().put("DENSITY_JAVA_OPTS", "-XX:-UseCompressedOops");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":536870912"));
             assertThat(nodesResponse, containsString("\"using_compressed_ordinary_object_pointers\":\"false\""));
 
-            stopOpenSearch();
+            stopDensity();
         });
     }
 
@@ -348,12 +348,12 @@ public class ArchiveTests extends PackagingTestCase {
         try {
             append(heapOptions, "-Xms512m\n-Xmx512m\n");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":536870912"));
 
-            stopOpenSearch();
+            stopDensity();
         } finally {
             rm(heapOptions);
         }
@@ -370,13 +370,13 @@ public class ArchiveTests extends PackagingTestCase {
             append(firstOptions, "-Xms384m\n-Xmx384m\n-XX:-UseCompressedOops\n");
             append(secondOptions, "-Xms512m\n-Xmx512m\n");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":536870912"));
             assertThat(nodesResponse, containsString("\"using_compressed_ordinary_object_pointers\":\"false\""));
 
-            stopOpenSearch();
+            stopDensity();
         } finally {
             rm(firstOptions);
             rm(secondOptions);
@@ -388,12 +388,12 @@ public class ArchiveTests extends PackagingTestCase {
         try {
             append(jvmOptionsIgnored, "-Xms512\n-Xmx512m\n");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":1073741824"));
 
-            stopOpenSearch();
+            stopDensity();
         } finally {
             rm(jvmOptionsIgnored);
         }
@@ -402,18 +402,18 @@ public class ArchiveTests extends PackagingTestCase {
     public void test80RelativePathConf() throws Exception {
 
         withCustomConfig(tempConf -> {
-            append(tempConf.resolve("opensearch.yml"), "node.name: relative");
+            append(tempConf.resolve("density.yml"), "node.name: relative");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"name\":\"relative\""));
 
-            stopOpenSearch();
+            stopDensity();
         });
     }
 
-    public void test91OpenSearchShardCliPackaging() throws Exception {
+    public void test91DensityShardCliPackaging() throws Exception {
         final Installation.Executables bin = installation.executables();
 
         Platforms.PlatformAction action = () -> {
@@ -422,7 +422,7 @@ public class ArchiveTests extends PackagingTestCase {
         };
     }
 
-    public void test92OpenSearchNodeCliPackaging() throws Exception {
+    public void test92DensityNodeCliPackaging() throws Exception {
         final Installation.Executables bin = installation.executables();
 
         Platforms.PlatformAction action = () -> {
@@ -431,14 +431,14 @@ public class ArchiveTests extends PackagingTestCase {
         };
     }
 
-    public void test93OpenSearchNodeCustomDataPathAndNotEsHomeWorkDir() throws Exception {
+    public void test93DensityNodeCustomDataPathAndNotEsHomeWorkDir() throws Exception {
         Path relativeDataPath = installation.data.relativize(installation.home);
-        append(installation.config("opensearch.yml"), "path.data: " + relativeDataPath);
+        append(installation.config("density.yml"), "path.data: " + relativeDataPath);
 
         sh.setWorkingDirectory(getRootTempDir());
 
-        startOpenSearch();
-        stopOpenSearch();
+        startDensity();
+        stopDensity();
 
         Result result = sh.run("echo y | " + installation.executables().nodeTool + " unsafe-bootstrap");
         assertThat(result.stdout, containsString("Master node was successfully bootstrapped"));

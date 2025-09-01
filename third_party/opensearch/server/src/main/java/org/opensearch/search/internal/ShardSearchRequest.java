@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
-import org.opensearch.Version;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.indices.AliasFilterParsingException;
-import org.opensearch.indices.InvalidAliasNameException;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.SearchSortValuesAndFormats;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportRequest;
+import org.density.Version;
+import org.density.action.IndicesRequest;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchType;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedFunction;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.indices.AliasFilterParsingException;
+import org.density.indices.InvalidAliasNameException;
+import org.density.search.Scroll;
+import org.density.search.SearchSortValuesAndFormats;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.tasks.Task;
+import org.density.transport.TransportRequest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -76,14 +76,14 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
+import static org.density.search.internal.SearchContext.TRACK_TOTAL_HITS_DISABLED;
 
 /**
  * Shard level request that represents a search.
  * It provides all the methods that the {@link SearchContext} needs.
  * Provides a cache key based on its content that can be used to cache shard level response.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ShardSearchRequest extends TransportRequest implements IndicesRequest {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.ParseContext;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.ParseContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ import java.util.function.Function;
  * <p>
  * Implementations have to define how contexts are parsed at query/index time
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ContextMapping<T extends ToXContent> implements ToXContentFragment {
 
@@ -69,7 +69,7 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     /**
      * Type of context mapping
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type {
         CATEGORY,
@@ -114,7 +114,7 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     /**
      * Parses a set of index-time contexts.
      */
-    public abstract Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, OpenSearchParseException;
+    public abstract Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, DensityParseException;
 
     /**
      * Retrieves a set of context from a <code>document</code> at index-time.
@@ -129,7 +129,7 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     /**
      * Parses query contexts for this mapper
      */
-    public final List<InternalQueryContext> parseQueryContext(XContentParser parser) throws IOException, OpenSearchParseException {
+    public final List<InternalQueryContext> parseQueryContext(XContentParser parser) throws IOException, DensityParseException {
         List<T> queryContexts = new ArrayList<>();
         Token token = parser.nextToken();
         if (token == Token.START_ARRAY) {
@@ -196,7 +196,7 @@ public abstract class ContextMapping<T extends ToXContent> implements ToXContent
     /**
      * The internal query context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class InternalQueryContext {
         public final String context;

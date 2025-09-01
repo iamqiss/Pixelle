@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.serialization;
+package org.density.cluster.serialization;
 
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.DiffableUtils.MapDiff;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.Diff;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.DiffableUtils.MapDiff;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class DiffableTests extends OpenSearchTestCase {
+public class DiffableTests extends DensityTestCase {
 
     public void testJKDMapDiff() throws IOException {
         new JdkMapDriver<TestDiffable>() {
@@ -137,7 +137,7 @@ public class DiffableTests extends OpenSearchTestCase {
         }
 
         /**
-         * whether we operate on {@link org.opensearch.cluster.Diffable} values
+         * whether we operate on {@link org.density.cluster.Diffable} values
          */
         protected abstract boolean diffableValues();
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,9 +38,9 @@ import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CharacterRunAutomaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.index.Index;
+import org.density.common.Nullable;
+import org.density.common.regex.Regex;
+import org.density.core.index.Index;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
  * node knows about. Methods for determining if an index should be a system index are also provided
  * to reduce the locations within the code that need to deal with {@link SystemIndexDescriptor}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SystemIndices {
     private static final Logger logger = LogManager.getLogger(SystemIndices.class);

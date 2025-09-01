@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import org.apache.hc.core5.http.ConnectionClosedException;
 import org.apache.hc.core5.http.HttpStatus;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.collect.Tuple;
+import org.density.common.io.Streams;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -71,7 +71,7 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 @SuppressForbidden(reason = "use a http server")
-public abstract class AbstractBlobContainerRetriesTestCase extends OpenSearchTestCase {
+public abstract class AbstractBlobContainerRetriesTestCase extends DensityTestCase {
 
     private static final long MAX_RANGE_VAL = Long.MAX_VALUE - 1;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.cache;
+package org.density.common.cache;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.concurrent.ReleasableLock;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.util.concurrent.ReleasableLock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,7 +83,7 @@ import java.util.function.ToLongBiFunction;
  * @param <K> The type of the keys
  * @param <V> The type of the values
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Cache<K, V> {
@@ -194,7 +194,7 @@ public class Cache<K, V> {
     /**
      * Entry in a cache
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Entry<K, V> {
         final K key;
@@ -220,7 +220,7 @@ public class Cache<K, V> {
      * @param <K> the type of the keys
      * @param <V> the type of the values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class CacheSegment<K, V> {
         // read/write lock protecting mutations to the segment
@@ -357,7 +357,7 @@ public class Cache<K, V> {
         /**
          * Segment statistics
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class SegmentStats {
             private final LongAdder hits = new LongAdder();
@@ -792,7 +792,7 @@ public class Cache<K, V> {
     /**
      * Cache statistics
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class CacheStats {

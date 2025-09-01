@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.streamingingestion.state;
+package org.density.action.admin.indices.streamingingestion.state;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.pagination.ShardPaginationStrategy;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.broadcast.node.TransportBroadcastByNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityException;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.pagination.ShardPaginationStrategy;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.broadcast.node.TransportBroadcastByNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.indices.IndicesService;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 /**
  * Transport action for retrieving ingestion state.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class TransportGetIngestionStateAction extends TransportBroadcastByNodeAction<
     GetIngestionStateRequest,
@@ -105,7 +105,7 @@ public class TransportGetIngestionStateAction extends TransportBroadcastByNodeAc
 
                 @Override
                 public void onFailure(Exception e) {
-                    listener.onFailure(new OpenSearchException("Failed to retrieve cluster state", e));
+                    listener.onFailure(new DensityException("Failed to retrieve cluster state", e));
                 }
             });
         } else {

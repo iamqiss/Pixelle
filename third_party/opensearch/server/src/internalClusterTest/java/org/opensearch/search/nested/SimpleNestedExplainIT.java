@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.nested;
+package org.density.search.nested;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.join.ScoreMode;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.nestedQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.nestedQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Creating a separate class with no parameterization to create and index documents in a single
  * test run and compare search responses across concurrent and non-concurrent search. For more details,
- * refer: https://github.com/opensearch-project/OpenSearch/issues/11413
+ * refer: https://github.com/density-project/Density/issues/11413
  */
-public class SimpleNestedExplainIT extends OpenSearchIntegTestCase {
+public class SimpleNestedExplainIT extends DensityIntegTestCase {
 
     @Override
     protected int numberOfShards() {
@@ -40,7 +40,7 @@ public class SimpleNestedExplainIT extends OpenSearchIntegTestCase {
      * here as call to indexRandomForMultipleSlices is made and compared with explain output for
      * non-concurrent search use-case. Separate test class is created to test explain for 1 slice
      * case in concurrent search, refer {@link SimpleExplainIT#testExplainWithSingleDoc}
-     * For more details, refer: https://github.com/opensearch-project/OpenSearch/issues/11413
+     * For more details, refer: https://github.com/density-project/Density/issues/11413
      * */
     public void testExplainMultipleDocs() throws Exception {
         assertAcked(

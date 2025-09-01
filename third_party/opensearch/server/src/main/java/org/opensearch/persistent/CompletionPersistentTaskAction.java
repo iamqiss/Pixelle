@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,41 +25,41 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.DensityClient;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * ActionType that is used by executor node to indicate that the persistent action finished or failed on the node and needs to be
  * removed from the cluster state in case of successful completion or restarted on some other node in case of failure.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompletionPersistentTaskAction extends ActionType<PersistentTaskResponse> {
 
@@ -73,7 +73,7 @@ public class CompletionPersistentTaskAction extends ActionType<PersistentTaskRes
     /**
      * The request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends ClusterManagerNodeRequest<Request> {
 
@@ -137,11 +137,11 @@ public class CompletionPersistentTaskAction extends ActionType<PersistentTaskRes
     /**
      * The request bulder.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RequestBuilder extends ClusterManagerNodeOperationRequestBuilder<Request, PersistentTaskResponse, RequestBuilder> {
 
-        protected RequestBuilder(OpenSearchClient client, CompletionPersistentTaskAction action) {
+        protected RequestBuilder(DensityClient client, CompletionPersistentTaskAction action) {
             super(client, action, new Request());
         }
     }
@@ -149,7 +149,7 @@ public class CompletionPersistentTaskAction extends ActionType<PersistentTaskRes
     /**
      * The transport action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TransportAction extends TransportClusterManagerNodeAction<Request, PersistentTaskResponse> {
 

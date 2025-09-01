@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -24,22 +24,22 @@ import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.mapper.KeywordFieldMapper.KeywordFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.lucene.Lucene;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.mapper.KeywordFieldMapper.KeywordFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -55,15 +55,15 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.FlatObjectFieldType.getKeywordFieldType;
-import static org.opensearch.index.mapper.KeywordFieldMapper.normalizeValue;
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.index.mapper.FlatObjectFieldMapper.FlatObjectFieldType.getKeywordFieldType;
+import static org.density.index.mapper.KeywordFieldMapper.normalizeValue;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 import static org.apache.lucene.search.MultiTermQuery.DOC_VALUES_REWRITE;
 
 /**
  * A field mapper for flat_objects.
  * This mapper accepts JSON object and treat as string fields in one index.
- * @opensearch.internal
+ * @density.internal
  */
 public final class FlatObjectFieldMapper extends DynamicKeyFieldMapper {
 
@@ -78,7 +78,7 @@ public final class FlatObjectFieldMapper extends DynamicKeyFieldMapper {
     /**
      * In flat_object field mapper, field type is similar to keyword field type
      * Cannot be tokenized, can OmitNorms, and can setIndexOption.
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final FieldType FIELD_TYPE = new FieldType();
@@ -103,7 +103,7 @@ public final class FlatObjectFieldMapper extends DynamicKeyFieldMapper {
 
     /**
      * The builder for the flat_object field mapper using default parameters
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends FieldMapper.Builder<Builder> {
 
@@ -149,7 +149,7 @@ public final class FlatObjectFieldMapper extends DynamicKeyFieldMapper {
 
     /**
      * flat_object fields type contains its own fieldType, one valueFieldType and one valueAndPathFieldType
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class FlatObjectFieldType extends StringFieldType {
 
@@ -414,7 +414,7 @@ public final class FlatObjectFieldMapper extends DynamicKeyFieldMapper {
         @Override
         public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper, QueryShardContext context) {
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[range] queries on [text] or [keyword] fields cannot be executed when '"
                         + ALLOW_EXPENSIVE_QUERIES.getKey()
                         + "' is set to false."

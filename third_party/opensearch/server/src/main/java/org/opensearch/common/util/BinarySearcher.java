@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 /**
  * Performs binary search on an arbitrary data structure.
@@ -44,7 +44,7 @@ package org.opensearch.common.util;
  * <p>
  * NOTE: this class is not thread safe
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BinarySearcher {
 

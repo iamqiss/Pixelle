@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
@@ -124,39 +124,39 @@ import org.apache.lucene.analysis.th.ThaiTokenizer;
 import org.apache.lucene.analysis.tr.ApostropheFilter;
 import org.apache.lucene.analysis.tr.TurkishAnalyzer;
 import org.apache.lucene.analysis.util.ElisionFilter;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.PreBuiltAnalyzerProviderFactory;
-import org.opensearch.index.analysis.PreConfiguredCharFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenizer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
-import org.opensearch.lucene.analysis.miscellaneous.DisableGraphAttribute;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.PreBuiltAnalyzerProviderFactory;
+import org.density.index.analysis.PreConfiguredCharFilter;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.PreConfiguredTokenizer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.lucene.analysis.miscellaneous.DisableGraphAttribute;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -169,7 +169,7 @@ import java.util.function.Supplier;
 import org.tartarus.snowball.ext.DutchStemmer;
 import org.tartarus.snowball.ext.FrenchStemmer;
 
-import static org.opensearch.plugins.AnalysisPlugin.requiresAnalysisSettings;
+import static org.density.plugins.AnalysisPlugin.requiresAnalysisSettings;
 
 public class CommonAnalysisModulePlugin extends Plugin implements AnalysisPlugin, ScriptPlugin {
 
@@ -443,7 +443,7 @@ public class CommonAnalysisModulePlugin extends Plugin implements AnalysisPlugin
         analyzers.add(
             new PreBuiltAnalyzerProviderFactory(
                 "pattern",
-                CachingStrategy.OPENSEARCH,
+                CachingStrategy.DENSITY,
                 () -> new PatternAnalyzer(Regex.compile("\\W+" /*PatternAnalyzer.NON_WORD_PATTERN*/, null), true, CharArraySet.EMPTY_SET)
             )
         );

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.spell.LevenshteinDistance;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.rest.action.admin.cluster.RestNodesUsageAction;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityParseException;
+import org.density.action.pagination.PageParams;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.common.CheckedConsumer;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.plugins.ActionPlugin;
+import org.density.rest.action.admin.cluster.RestNodesUsageAction;
+import org.density.tasks.Task;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
-import static org.opensearch.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
+import static org.density.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
+import static org.density.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
 
 /**
  * Base handler for REST requests.
@@ -77,7 +77,7 @@ import static org.opensearch.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
  * are copied, but a selected few. It is possible to control what headers are copied over by returning them in
  * {@link ActionPlugin#getRestHeaders()}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class BaseRestHandler implements RestHandler {
@@ -199,7 +199,7 @@ public abstract class BaseRestHandler implements RestHandler {
      * REST requests are handled by preparing a channel consumer that represents the execution of
      * the request against a channel.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -209,7 +209,7 @@ public abstract class BaseRestHandler implements RestHandler {
      * Streaming REST requests are handled by preparing a streaming channel consumer that represents the execution of
      * the request against a channel.
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     @FunctionalInterface
     @ExperimentalApi
@@ -264,7 +264,7 @@ public abstract class BaseRestHandler implements RestHandler {
         if (request.hasParam("master_timeout")) {
             logger.deprecate(logMsgKeyPrefix + "_master_timeout_parameter", MASTER_TIMEOUT_DEPRECATED_MESSAGE);
             if (request.hasParam("cluster_manager_timeout")) {
-                throw new OpenSearchParseException(DUPLICATE_PARAMETER_ERROR_MESSAGE);
+                throw new DensityParseException(DUPLICATE_PARAMETER_ERROR_MESSAGE);
             }
             mnr.clusterManagerNodeTimeout(request.paramAsTime("master_timeout", mnr.clusterManagerNodeTimeout()));
         }
@@ -273,7 +273,7 @@ public abstract class BaseRestHandler implements RestHandler {
     /**
      * A wrapper for the base handler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Wrapper extends BaseRestHandler {
 

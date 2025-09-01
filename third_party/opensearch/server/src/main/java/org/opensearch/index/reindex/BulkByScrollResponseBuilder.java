@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.bulk.BulkItemResponse.Failure;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.index.reindex.BulkByScrollTask.StatusBuilder;
-import org.opensearch.index.reindex.ScrollableHitSource.SearchFailure;
+import org.density.action.bulk.BulkItemResponse.Failure;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.ObjectParser;
+import org.density.index.reindex.BulkByScrollTask.StatusBuilder;
+import org.density.index.reindex.ScrollableHitSource.SearchFailure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Helps build a {@link BulkByScrollResponse}. Used by an instance of {@link ObjectParser} when parsing from XContent.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class BulkByScrollResponseBuilder extends StatusBuilder {
     private TimeValue took;

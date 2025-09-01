@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,12 +26,12 @@
  */
 
 /**
- * Infrastructure to run suites of tests written in YAML against a running OpenSearch cluster using OpenSearch's low level REST
- * client. The YAML tests are run by all official clients and serve as tests for both OpenSearch and the clients.
+ * Infrastructure to run suites of tests written in YAML against a running Density cluster using Density's low level REST
+ * client. The YAML tests are run by all official clients and serve as tests for both Density and the clients.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml;
+package org.density.test.rest.yaml;

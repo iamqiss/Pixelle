@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.term;
+package org.density.search.suggest.term;
 
 import org.apache.lucene.search.spell.DirectSpellChecker;
 import org.apache.lucene.search.spell.JaroWinklerDistance;
@@ -38,47 +38,47 @@ import org.apache.lucene.search.spell.LevenshteinDistance;
 import org.apache.lucene.search.spell.LuceneLevenshteinDistance;
 import org.apache.lucene.search.spell.NGramDistance;
 import org.apache.lucene.search.spell.StringDistance;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.DirectSpellcheckerSettings;
-import org.opensearch.search.suggest.SortBy;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.DensityParseException;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.DirectSpellcheckerSettings;
+import org.density.search.suggest.SortBy;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_ACCURACY;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_EDITS;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_INSPECTIONS;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_TERM_FREQ;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_DOC_FREQ;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_WORD_LENGTH;
-import static org.opensearch.search.suggest.DirectSpellcheckerSettings.DEFAULT_PREFIX_LENGTH;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.ACCURACY_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_EDITS_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_INSPECTIONS_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_TERM_FREQ_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.MIN_DOC_FREQ_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.MIN_WORD_LENGTH_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.PREFIX_LENGTH_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.SORT_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.STRING_DISTANCE_FIELD;
-import static org.opensearch.search.suggest.phrase.DirectCandidateGeneratorBuilder.SUGGESTMODE_FIELD;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_ACCURACY;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_EDITS;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_INSPECTIONS;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MAX_TERM_FREQ;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_DOC_FREQ;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_MIN_WORD_LENGTH;
+import static org.density.search.suggest.DirectSpellcheckerSettings.DEFAULT_PREFIX_LENGTH;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.ACCURACY_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_EDITS_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_INSPECTIONS_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.MAX_TERM_FREQ_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.MIN_DOC_FREQ_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.MIN_WORD_LENGTH_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.PREFIX_LENGTH_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.SORT_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.STRING_DISTANCE_FIELD;
+import static org.density.search.suggest.phrase.DirectCandidateGeneratorBuilder.SUGGESTMODE_FIELD;
 
 /**
  * Defines the actual suggest command. Each command uses the global options
  * unless defined in the suggestion itself. All options are the same as the
  * global options, but are only applicable for this suggestion.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuilder> {
 
@@ -452,7 +452,7 @@ public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuild
 
         // now we should have field name, check and copy fields over to the suggestion builder we return
         if (fieldname == null) {
-            throw new OpenSearchParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
+            throw new DensityParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
         }
         return new TermSuggestionBuilder(fieldname, tmpSuggestion);
     }
@@ -515,7 +515,7 @@ public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuild
     /**
      * An enum representing the valid suggest modes.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum SuggestMode implements Writeable {
         /** Only suggest terms in the suggest text that aren't in the index. This is the default. */
@@ -560,7 +560,7 @@ public class TermSuggestionBuilder extends SuggestionBuilder<TermSuggestionBuild
     /**
      * An enum representing the valid string edit distance algorithms for determining suggestions.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum StringDistanceImpl implements Writeable {
         /** This is the default and is based on <code>damerau_levenshtein</code>, but highly optimized

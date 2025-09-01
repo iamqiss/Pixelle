@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -33,21 +33,21 @@
  * <p>The principal public APIs in this package are:
  *
  * <dl>
- * <dt>{@link org.opensearch.common.inject.Inject}
+ * <dt>{@link org.density.common.inject.Inject}
  * <dd>The annotation you will use in your implementation classes to tell Guice
  *     where and how it should send in ("inject") the objects you depend on
  *     (your "dependencies").
  *
- * <dt>{@link org.opensearch.common.inject.Module}
+ * <dt>{@link org.density.common.inject.Module}
  * <dd>The interface you will implement in order to specify "bindings" --
  *     instructions for how Guice should handle injection -- for a particular
  *     set of interfaces.
  *
- * <dt>{@link org.opensearch.common.inject.Binder}
- * <dd>The object that Guice passes into your {@link org.opensearch.common.inject.Module}
+ * <dt>{@link org.density.common.inject.Binder}
+ * <dd>The object that Guice passes into your {@link org.density.common.inject.Module}
  *     to collect these bindings.
  *
- * <dt>{@link org.opensearch.common.inject.Provider}
+ * <dt>{@link org.density.common.inject.Provider}
  * <dd>The interface you will implement when you need to customize exactly how
  *     Guice creates instances for a particular binding.
  *
@@ -55,8 +55,8 @@
  *
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;

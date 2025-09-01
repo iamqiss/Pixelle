@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.customsettings;
+package org.density.example.customsettings;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.SecureSetting;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
+import org.density.DensityException;
+import org.density.common.settings.SecureSetting;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -100,7 +100,7 @@ public class ExampleCustomSettingsConfig {
      * @param environment The environment including paths to custom setting configuration files
      */
     public ExampleCustomSettingsConfig(final Environment environment) {
-        // OpenSearch config directory
+        // Density config directory
         final Path configDir = environment.configDir();
 
         // Resolve the plugin's custom settings file
@@ -112,7 +112,7 @@ public class ExampleCustomSettingsConfig {
             customSettings = Settings.builder().loadFromPath(customSettingsYamlFile).build();
             assert customSettings != null;
         } catch (IOException e) {
-            throw new OpenSearchException("Failed to load settings", e);
+            throw new DensityException("Failed to load settings", e);
         }
 
         this.simple = SIMPLE_SETTING.get(customSettings);

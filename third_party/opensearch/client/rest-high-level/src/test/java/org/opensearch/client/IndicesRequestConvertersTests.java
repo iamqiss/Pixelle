@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -38,47 +38,47 @@ import org.apache.hc.client5.http.classic.methods.HttpHead;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedRequest;
-import org.opensearch.client.indices.AnalyzeRequest;
-import org.opensearch.client.indices.CloseIndexRequest;
-import org.opensearch.client.indices.CreateDataStreamRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.DeleteAliasRequest;
-import org.opensearch.client.indices.DeleteDataStreamRequest;
-import org.opensearch.client.indices.GetDataStreamRequest;
-import org.opensearch.client.indices.GetFieldMappingsRequest;
-import org.opensearch.client.indices.GetIndexRequest;
-import org.opensearch.client.indices.GetIndexTemplatesRequest;
-import org.opensearch.client.indices.GetMappingsRequest;
-import org.opensearch.client.indices.IndexTemplatesExistRequest;
-import org.opensearch.client.indices.PutIndexTemplateRequest;
-import org.opensearch.client.indices.PutMappingRequest;
-import org.opensearch.client.indices.RandomCreateIndexGenerator;
-import org.opensearch.client.indices.ResizeRequest;
-import org.opensearch.client.indices.rollover.RolloverRequest;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.action.support.clustermanager.AcknowledgedRequest;
+import org.density.client.indices.AnalyzeRequest;
+import org.density.client.indices.CloseIndexRequest;
+import org.density.client.indices.CreateDataStreamRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.DeleteAliasRequest;
+import org.density.client.indices.DeleteDataStreamRequest;
+import org.density.client.indices.GetDataStreamRequest;
+import org.density.client.indices.GetFieldMappingsRequest;
+import org.density.client.indices.GetIndexRequest;
+import org.density.client.indices.GetIndexTemplatesRequest;
+import org.density.client.indices.GetMappingsRequest;
+import org.density.client.indices.IndexTemplatesExistRequest;
+import org.density.client.indices.PutIndexTemplateRequest;
+import org.density.client.indices.PutMappingRequest;
+import org.density.client.indices.RandomCreateIndexGenerator;
+import org.density.client.indices.ResizeRequest;
+import org.density.client.indices.rollover.RolloverRequest;
+import org.density.common.CheckedFunction;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -92,15 +92,15 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.opensearch.client.indices.RandomCreateIndexGenerator.randomAliases;
-import static org.opensearch.client.indices.RandomCreateIndexGenerator.randomMapping;
-import static org.opensearch.index.RandomCreateIndexGenerator.randomAlias;
-import static org.opensearch.index.RandomCreateIndexGenerator.randomIndexSettings;
-import static org.opensearch.index.alias.RandomAliasActionsGenerator.randomAliasAction;
+import static org.density.client.indices.RandomCreateIndexGenerator.randomAliases;
+import static org.density.client.indices.RandomCreateIndexGenerator.randomMapping;
+import static org.density.index.RandomCreateIndexGenerator.randomAlias;
+import static org.density.index.RandomCreateIndexGenerator.randomIndexSettings;
+import static org.density.index.alias.RandomAliasActionsGenerator.randomAliasAction;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class IndicesRequestConvertersTests extends OpenSearchTestCase {
+public class IndicesRequestConvertersTests extends DensityTestCase {
 
     public void testAnalyzeRequest() throws Exception {
         AnalyzeRequest indexAnalyzeRequest = AnalyzeRequest.withIndexAnalyzer("test_index", "test_analyzer", "Here is some text");
@@ -330,7 +330,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testGetSettings() throws IOException {
-        String[] indicesUnderTest = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indicesUnderTest = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
 
         GetSettingsRequest getSettingsRequest = new GetSettingsRequest().indices(indicesUnderTest);
 
@@ -344,10 +344,10 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
 
         RequestConvertersTests.setRandomLocal(getSettingsRequest::local, expectedParams);
 
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             // the request object will not have include_defaults present unless it is set to
             // true
-            getSettingsRequest.includeDefaults(OpenSearchTestCase.randomBoolean());
+            getSettingsRequest.includeDefaults(DensityTestCase.randomBoolean());
             if (getSettingsRequest.includeDefaults()) {
                 expectedParams.put("include_defaults", Boolean.toString(true));
             }
@@ -359,11 +359,11 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
         }
         endpoint.add("_settings");
 
-        if (OpenSearchTestCase.randomBoolean()) {
-            String[] names = OpenSearchTestCase.randomBoolean() ? null : new String[OpenSearchTestCase.randomIntBetween(0, 3)];
+        if (DensityTestCase.randomBoolean()) {
+            String[] names = DensityTestCase.randomBoolean() ? null : new String[DensityTestCase.randomIntBetween(0, 3)];
             if (names != null) {
                 for (int x = 0; x < names.length; x++) {
-                    names[x] = OpenSearchTestCase.randomAlphaOfLengthBetween(3, 10);
+                    names[x] = DensityTestCase.randomAlphaOfLengthBetween(3, 10);
                 }
             }
             getSettingsRequest.names(names);
@@ -381,7 +381,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testGetIndex() throws IOException {
-        String[] indicesUnderTest = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indicesUnderTest = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
 
         GetIndexRequest getIndexRequest = new GetIndexRequest(indicesUnderTest);
 
@@ -391,10 +391,10 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
         RequestConvertersTests.setRandomLocal(getIndexRequest::local, expectedParams);
         RequestConvertersTests.setRandomHumanReadable(getIndexRequest::humanReadable, expectedParams);
 
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             // the request object will not have include_defaults present unless it is set to
             // true
-            getIndexRequest.includeDefaults(OpenSearchTestCase.randomBoolean());
+            getIndexRequest.includeDefaults(DensityTestCase.randomBoolean());
             if (getIndexRequest.includeDefaults()) {
                 expectedParams.put("include_defaults", Boolean.toString(true));
             }
@@ -414,7 +414,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testDeleteIndexEmptyIndices() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : Strings.EMPTY_ARRAY;
+        String[] indices = DensityTestCase.randomBoolean() ? null : Strings.EMPTY_ARRAY;
         ActionRequestValidationException validationException = new DeleteIndexRequest(indices).validate();
         Assert.assertNotNull(validationException);
     }
@@ -439,7 +439,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testOpenIndexEmptyIndices() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : Strings.EMPTY_ARRAY;
+        String[] indices = DensityTestCase.randomBoolean() ? null : Strings.EMPTY_ARRAY;
         ActionRequestValidationException validationException = new OpenIndexRequest(indices).validate();
         Assert.assertNotNull(validationException);
     }
@@ -470,9 +470,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testRefresh() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         RefreshRequest refreshRequest;
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             refreshRequest = new RefreshRequest(indices);
         } else {
             refreshRequest = new RefreshRequest();
@@ -493,9 +493,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testFlush() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         FlushRequest flushRequest;
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             flushRequest = new FlushRequest(indices);
         } else {
             flushRequest = new FlushRequest();
@@ -503,12 +503,12 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
         }
         Map<String, String> expectedParams = new HashMap<>();
         RequestConvertersTests.setRandomIndicesOptions(flushRequest::indicesOptions, flushRequest::indicesOptions, expectedParams);
-        if (OpenSearchTestCase.randomBoolean()) {
-            flushRequest.force(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            flushRequest.force(DensityTestCase.randomBoolean());
         }
         expectedParams.put("force", Boolean.toString(flushRequest.force()));
-        if (OpenSearchTestCase.randomBoolean()) {
-            flushRequest.waitIfOngoing(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            flushRequest.waitIfOngoing(DensityTestCase.randomBoolean());
         }
         expectedParams.put("wait_if_ongoing", Boolean.toString(flushRequest.waitIfOngoing()));
 
@@ -525,9 +525,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testForceMerge() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         ForceMergeRequest forceMergeRequest;
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             forceMergeRequest = new ForceMergeRequest(indices);
         } else {
             forceMergeRequest = new ForceMergeRequest();
@@ -540,16 +540,16 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             forceMergeRequest::indicesOptions,
             expectedParams
         );
-        if (OpenSearchTestCase.randomBoolean()) {
-            forceMergeRequest.maxNumSegments(OpenSearchTestCase.randomInt());
+        if (DensityTestCase.randomBoolean()) {
+            forceMergeRequest.maxNumSegments(DensityTestCase.randomInt());
         }
         expectedParams.put("max_num_segments", Integer.toString(forceMergeRequest.maxNumSegments()));
-        if (OpenSearchTestCase.randomBoolean()) {
-            forceMergeRequest.onlyExpungeDeletes(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            forceMergeRequest.onlyExpungeDeletes(DensityTestCase.randomBoolean());
         }
         expectedParams.put("only_expunge_deletes", Boolean.toString(forceMergeRequest.onlyExpungeDeletes()));
-        if (OpenSearchTestCase.randomBoolean()) {
-            forceMergeRequest.flush(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            forceMergeRequest.flush(DensityTestCase.randomBoolean());
         }
         expectedParams.put("flush", Boolean.toString(forceMergeRequest.flush()));
 
@@ -566,9 +566,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testClearCache() {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         ClearIndicesCacheRequest clearIndicesCacheRequest;
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             clearIndicesCacheRequest = new ClearIndicesCacheRequest(indices);
         } else {
             clearIndicesCacheRequest = new ClearIndicesCacheRequest();
@@ -580,24 +580,24 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             clearIndicesCacheRequest::indicesOptions,
             expectedParams
         );
-        if (OpenSearchTestCase.randomBoolean()) {
-            clearIndicesCacheRequest.queryCache(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            clearIndicesCacheRequest.queryCache(DensityTestCase.randomBoolean());
         }
         expectedParams.put("query", Boolean.toString(clearIndicesCacheRequest.queryCache()));
-        if (OpenSearchTestCase.randomBoolean()) {
-            clearIndicesCacheRequest.fieldDataCache(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            clearIndicesCacheRequest.fieldDataCache(DensityTestCase.randomBoolean());
         }
         expectedParams.put("fielddata", Boolean.toString(clearIndicesCacheRequest.fieldDataCache()));
-        if (OpenSearchTestCase.randomBoolean()) {
-            clearIndicesCacheRequest.requestCache(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            clearIndicesCacheRequest.requestCache(DensityTestCase.randomBoolean());
         }
         expectedParams.put("request", Boolean.toString(clearIndicesCacheRequest.requestCache()));
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             clearIndicesCacheRequest.fields(RequestConvertersTests.randomIndicesNames(1, 5));
             expectedParams.put("fields", String.join(",", clearIndicesCacheRequest.fields()));
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            clearIndicesCacheRequest.fileCache(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            clearIndicesCacheRequest.fileCache(DensityTestCase.randomBoolean());
         }
         expectedParams.put("file", Boolean.toString(clearIndicesCacheRequest.fileCache()));
 
@@ -615,13 +615,13 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
 
     public void testExistsAlias() {
         GetAliasesRequest getAliasesRequest = new GetAliasesRequest();
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         getAliasesRequest.indices(indices);
         // the HEAD endpoint requires at least an alias or an index
         boolean hasIndices = indices != null && indices.length > 0;
         String[] aliases;
         if (hasIndices) {
-            aliases = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+            aliases = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         } else {
             aliases = RequestConvertersTests.randomIndicesNames(1, 5);
         }
@@ -692,11 +692,11 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             expectedParams
         );
 
-        if (OpenSearchTestCase.randomBoolean()) {
-            if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
+            if (DensityTestCase.randomBoolean()) {
                 resizeRequest.setSettings(randomIndexSettings());
             }
-            if (OpenSearchTestCase.randomBoolean()) {
+            if (DensityTestCase.randomBoolean()) {
                 int count = randomIntBetween(0, 2);
                 for (int i = 0; i < count; i++) {
                     resizeRequest.setAliases(singletonList(randomAlias()));
@@ -725,29 +725,29 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
 
     public void testRollover() throws IOException {
         RolloverRequest rolloverRequest = new RolloverRequest(
-            OpenSearchTestCase.randomAlphaOfLengthBetween(3, 10),
-            OpenSearchTestCase.randomBoolean() ? null : OpenSearchTestCase.randomAlphaOfLengthBetween(3, 10)
+            DensityTestCase.randomAlphaOfLengthBetween(3, 10),
+            DensityTestCase.randomBoolean() ? null : DensityTestCase.randomAlphaOfLengthBetween(3, 10)
         );
         Map<String, String> expectedParams = new HashMap<>();
         RequestConvertersTests.setRandomTimeout(rolloverRequest, AcknowledgedRequest.DEFAULT_ACK_TIMEOUT, expectedParams);
         RequestConvertersTests.setRandomClusterManagerTimeout(rolloverRequest, expectedParams);
-        if (OpenSearchTestCase.randomBoolean()) {
-            rolloverRequest.dryRun(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            rolloverRequest.dryRun(DensityTestCase.randomBoolean());
             if (rolloverRequest.isDryRun()) {
                 expectedParams.put("dry_run", "true");
             }
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            rolloverRequest.addMaxIndexAgeCondition(new TimeValue(OpenSearchTestCase.randomNonNegativeLong()));
+        if (DensityTestCase.randomBoolean()) {
+            rolloverRequest.addMaxIndexAgeCondition(new TimeValue(DensityTestCase.randomNonNegativeLong()));
         }
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             rolloverRequest.getCreateIndexRequest().mapping(randomMapping());
         }
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             randomAliases(rolloverRequest.getCreateIndexRequest());
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            rolloverRequest.getCreateIndexRequest().settings(org.opensearch.index.RandomCreateIndexGenerator.randomIndexSettings());
+        if (DensityTestCase.randomBoolean()) {
+            rolloverRequest.getCreateIndexRequest().settings(org.density.index.RandomCreateIndexGenerator.randomIndexSettings());
         }
         RequestConvertersTests.setRandomWaitForActiveShards(rolloverRequest.getCreateIndexRequest()::waitForActiveShards, expectedParams);
 
@@ -776,8 +776,8 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             expectedParams
         );
 
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
-        String[] aliases = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
+        String[] aliases = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
         getAliasesRequest.indices(indices);
         getAliasesRequest.aliases(aliases);
 
@@ -800,7 +800,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testIndexPutSettings() throws IOException {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 2);
         UpdateSettingsRequest updateSettingsRequest = new UpdateSettingsRequest(indices);
         Map<String, String> expectedParams = new HashMap<>();
         RequestConvertersTests.setRandomClusterManagerTimeout(updateSettingsRequest, expectedParams);
@@ -810,8 +810,8 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             updateSettingsRequest::indicesOptions,
             expectedParams
         );
-        if (OpenSearchTestCase.randomBoolean()) {
-            updateSettingsRequest.setPreserveExisting(OpenSearchTestCase.randomBoolean());
+        if (DensityTestCase.randomBoolean()) {
+            updateSettingsRequest.setPreserveExisting(DensityTestCase.randomBoolean());
             if (updateSettingsRequest.isPreserveExisting()) {
                 expectedParams.put("preserve_existing", "true");
             }
@@ -836,40 +836,40 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
         names.put("-#template", "-%23template");
         names.put("foo^bar", "foo%5Ebar");
 
-        PutIndexTemplateRequest putTemplateRequest = new PutIndexTemplateRequest(OpenSearchTestCase.randomFrom(names.keySet())).patterns(
-            Arrays.asList(OpenSearchTestCase.generateRandomStringArray(20, 100, false, false))
+        PutIndexTemplateRequest putTemplateRequest = new PutIndexTemplateRequest(DensityTestCase.randomFrom(names.keySet())).patterns(
+            Arrays.asList(DensityTestCase.generateRandomStringArray(20, 100, false, false))
         );
-        if (OpenSearchTestCase.randomBoolean()) {
-            putTemplateRequest.order(OpenSearchTestCase.randomInt());
+        if (DensityTestCase.randomBoolean()) {
+            putTemplateRequest.order(DensityTestCase.randomInt());
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            putTemplateRequest.version(OpenSearchTestCase.randomInt());
+        if (DensityTestCase.randomBoolean()) {
+            putTemplateRequest.version(DensityTestCase.randomInt());
         }
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             putTemplateRequest.settings(
-                Settings.builder().put("setting-" + OpenSearchTestCase.randomInt(), OpenSearchTestCase.randomTimeValue())
+                Settings.builder().put("setting-" + DensityTestCase.randomInt(), DensityTestCase.randomTimeValue())
             );
         }
         Map<String, String> expectedParams = new HashMap<>();
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             putTemplateRequest.mapping(
                 "{ \"properties\": { \"field-"
-                    + OpenSearchTestCase.randomInt()
+                    + DensityTestCase.randomInt()
                     + "\" : { \"type\" : \""
-                    + OpenSearchTestCase.randomFrom("text", "keyword")
+                    + DensityTestCase.randomFrom("text", "keyword")
                     + "\" }}}",
                 MediaTypeRegistry.JSON
             );
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            putTemplateRequest.alias(new Alias("alias-" + OpenSearchTestCase.randomInt()));
+        if (DensityTestCase.randomBoolean()) {
+            putTemplateRequest.alias(new Alias("alias-" + DensityTestCase.randomInt()));
         }
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             expectedParams.put("create", Boolean.TRUE.toString());
             putTemplateRequest.create(true);
         }
-        if (OpenSearchTestCase.randomBoolean()) {
-            String cause = OpenSearchTestCase.randomUnicodeOfCodepointLengthBetween(1, 50);
+        if (DensityTestCase.randomBoolean()) {
+            String cause = DensityTestCase.randomUnicodeOfCodepointLengthBetween(1, 50);
             putTemplateRequest.cause(cause);
             expectedParams.put("cause", cause);
         }
@@ -882,9 +882,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testValidateQuery() throws Exception {
-        String[] indices = OpenSearchTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
+        String[] indices = DensityTestCase.randomBoolean() ? null : RequestConvertersTests.randomIndicesNames(0, 5);
         ValidateQueryRequest validateQueryRequest;
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             validateQueryRequest = new ValidateQueryRequest(indices);
         } else {
             validateQueryRequest = new ValidateQueryRequest();
@@ -896,9 +896,9 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
             validateQueryRequest::indicesOptions,
             expectedParams
         );
-        validateQueryRequest.explain(OpenSearchTestCase.randomBoolean());
-        validateQueryRequest.rewrite(OpenSearchTestCase.randomBoolean());
-        validateQueryRequest.allShards(OpenSearchTestCase.randomBoolean());
+        validateQueryRequest.explain(DensityTestCase.randomBoolean());
+        validateQueryRequest.rewrite(DensityTestCase.randomBoolean());
+        validateQueryRequest.allShards(DensityTestCase.randomBoolean());
         expectedParams.put("explain", Boolean.toString(validateQueryRequest.explain()));
         expectedParams.put("rewrite", Boolean.toString(validateQueryRequest.rewrite()));
         expectedParams.put("all_shards", Boolean.toString(validateQueryRequest.allShards()));
@@ -921,7 +921,7 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
         encodes.put("template#1", "template%231");
         encodes.put("template-*", "template-*");
         encodes.put("foo^bar", "foo%5Ebar");
-        List<String> names = OpenSearchTestCase.randomSubsetOf(1, encodes.keySet());
+        List<String> names = DensityTestCase.randomSubsetOf(1, encodes.keySet());
         GetIndexTemplatesRequest getTemplatesRequest = new GetIndexTemplatesRequest(names);
         Map<String, String> expectedParams = new HashMap<>();
         RequestConvertersTests.setRandomClusterManagerTimeout(getTemplatesRequest::setClusterManagerNodeTimeout, expectedParams);
@@ -942,13 +942,13 @@ public class IndicesRequestConvertersTests extends OpenSearchTestCase {
     }
 
     public void testTemplatesExistRequest() {
-        final int numberOfNames = OpenSearchTestCase.usually() ? 1 : OpenSearchTestCase.randomIntBetween(2, 20);
+        final int numberOfNames = DensityTestCase.usually() ? 1 : DensityTestCase.randomIntBetween(2, 20);
         final List<String> names = Arrays.asList(
-            OpenSearchTestCase.randomArray(
+            DensityTestCase.randomArray(
                 numberOfNames,
                 numberOfNames,
                 String[]::new,
-                () -> OpenSearchTestCase.randomAlphaOfLengthBetween(1, 100)
+                () -> DensityTestCase.randomAlphaOfLengthBetween(1, 100)
             )
         );
         final Map<String, String> expectedParams = new HashMap<>();

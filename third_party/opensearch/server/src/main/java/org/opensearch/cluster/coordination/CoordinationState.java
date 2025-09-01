@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.gateway.remote.ClusterMetadataManifest;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -52,14 +52,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.cluster.coordination.Coordinator.ZEN1_BWC_TERM;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
+import static org.density.cluster.coordination.Coordinator.ZEN1_BWC_TERM;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
 
 /**
  * The core class of the cluster state coordination algorithm, directly implementing the
  * <a href="https://github.com/elastic/elasticsearch-formal-models/blob/master/ZenWithTerms/tla/ZenWithTerms.tla">formal model</a>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CoordinationState {
 
@@ -644,7 +644,7 @@ public class CoordinationState {
     /**
      * Pluggable persistence layer for {@link CoordinationState}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface PersistedState extends Closeable {
 
@@ -745,7 +745,7 @@ public class CoordinationState {
     /**
      * A collection of votes, used to calculate quorums. Optionally records the Joins as well.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class VoteCollection {
 

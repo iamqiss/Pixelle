@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.index.CorruptIndexException;
@@ -16,10 +16,10 @@ import org.apache.lucene.store.BufferedChecksumIndexInput;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -30,9 +30,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link org.opensearch.common.io.VersionedCodecStreamWrapper}.
+ * Unit tests for {@link org.density.common.io.VersionedCodecStreamWrapper}.
  */
-public class VersionedCodecStreamWrapperTests extends OpenSearchTestCase {
+public class VersionedCodecStreamWrapperTests extends DensityTestCase {
 
     private static final String CODEC = "dummycodec";
     private static final int VERSION = 1;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
 import com.fasterxml.jackson.dataformat.cbor.CBORConstants;
 import com.fasterxml.jackson.dataformat.smile.SmileConstants;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.cbor.CborXContent;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.smile.SmileXContent;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.cbor.CborXContent;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.smile.SmileXContent;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 /**
  * The content type of {@link XContent}.
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public enum XContentType implements MediaType {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * Exception that is thrown when creating lucene queries on the shard
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class QueryShardException extends OpenSearchException {
+public class QueryShardException extends DensityException {
 
     public QueryShardException(QueryShardContext context, String msg, Object... args) {
         this(context, msg, null, args);

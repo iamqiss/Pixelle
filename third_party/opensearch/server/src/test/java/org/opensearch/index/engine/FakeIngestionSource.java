@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.search.Query;
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

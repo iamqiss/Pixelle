@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,65 +25,65 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.SnapshotDeletionsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.SnapshotDeletionsInProgress;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.action.ActionFuture;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexModule;
+import org.density.index.store.RemoteBufferedOutputDirectory;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.node.NodeClosedException;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.ShardGenerations;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 import org.junit.After;
 
 import java.io.IOException;
@@ -105,16 +105,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-public abstract class AbstractSnapshotIntegTestCase extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public abstract class AbstractSnapshotIntegTestCase extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     protected final static String TEST_REMOTE_STORE_REPO_SUFFIX = "__rs";
     private static final String OLD_VERSION_SNAPSHOT_PREFIX = "old-version-snapshot-";
@@ -135,7 +135,7 @@ public abstract class AbstractSnapshotIntegTestCase extends ParameterizedStaticS
     }
 
     /*
-    Disabling MockFSIndexStore plugin as the MockFSDirectoryFactory wraps the FSDirectory over a OpenSearchMockDirectoryWrapper which extends FilterDirectory (whereas FSDirectory extends BaseDirectory)
+    Disabling MockFSIndexStore plugin as the MockFSDirectoryFactory wraps the FSDirectory over a DensityMockDirectoryWrapper which extends FilterDirectory (whereas FSDirectory extends BaseDirectory)
     As a result of this wrapping the local directory of Composite Directory does not satisfy the assertion that local directory must be of type FSDirectory
     */
     @Override

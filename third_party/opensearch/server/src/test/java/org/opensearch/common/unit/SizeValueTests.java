@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-public class SizeValueTests extends OpenSearchTestCase {
+public class SizeValueTests extends DensityTestCase {
     public void testThatConversionWorks() {
         SizeValue sizeValue = new SizeValue(1000);
         assertThat(sizeValue.kilo(), is(1L));
@@ -88,7 +88,7 @@ public class SizeValueTests extends OpenSearchTestCase {
 
     public void testCompareValue() {
         long firstRandom = randomNonNegativeLong();
-        long secondRandom = randomValueOtherThan(firstRandom, OpenSearchTestCase::randomNonNegativeLong);
+        long secondRandom = randomValueOtherThan(firstRandom, DensityTestCase::randomNonNegativeLong);
         SizeUnit unit = randomFrom(SizeUnit.values());
         SizeValue firstSizeValue = new SizeValue(firstRandom, unit);
         SizeValue secondSizeValue = new SizeValue(secondRandom, unit);

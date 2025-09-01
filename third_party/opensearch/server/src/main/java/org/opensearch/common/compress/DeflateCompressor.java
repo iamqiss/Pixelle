@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.compress;
+package org.density.common.compress;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.Compressor;
+import org.density.common.annotation.PublicApi;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lease.Releasable;
+import org.density.core.Assertions;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.Compressor;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -54,8 +54,8 @@ import java.util.zip.InflaterOutputStream;
 /**
  * {@link Compressor} implementation based on the DEFLATE compression algorithm.
  *
- * @opensearch.api - registered name requires BWC support
- * @opensearch.experimental - class methods might change
+ * @density.api - registered name requires BWC support
+ * @density.experimental - class methods might change
  */
 public class DeflateCompressor implements Compressor {
 
@@ -68,7 +68,7 @@ public class DeflateCompressor implements Compressor {
     /**
      * The name to register the compressor by
      *
-     * @opensearch.api - requires BWC support
+     * @density.api - requires BWC support
      */
     @PublicApi(since = "2.10.0")
     public static String NAME = "DEFLATE";

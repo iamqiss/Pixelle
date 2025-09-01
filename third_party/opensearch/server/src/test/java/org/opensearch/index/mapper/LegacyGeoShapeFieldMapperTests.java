@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.QuadPrefixTree;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Point;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
+import org.density.DensityException;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Point;
+import org.density.index.query.QueryShardContext;
+import org.density.plugins.Plugin;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -620,8 +620,8 @@ public class LegacyGeoShapeFieldMapperTests extends FieldMapperTestCase2<LegacyG
         assertThat(fieldMapper, instanceOf(LegacyGeoShapeFieldMapper.class));
         LegacyGeoShapeFieldMapper geoShapeFieldMapper = (LegacyGeoShapeFieldMapper) fieldMapper;
 
-        OpenSearchException e = expectThrows(
-            OpenSearchException.class,
+        DensityException e = expectThrows(
+            DensityException.class,
             () -> geoShapeFieldMapper.fieldType()
                 .geoShapeQuery(new Point(-10, 10), "location", SpatialStrategy.TERM, ShapeRelation.INTERSECTS, queryShardContext)
         );

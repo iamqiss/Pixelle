@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.lockmanager;
+package org.density.index.store.lockmanager;
 
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.store.RemoteBufferedOutputDirectory;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteStoreMetadataLockManagerTests extends OpenSearchTestCase {
+public class RemoteStoreMetadataLockManagerTests extends DensityTestCase {
     private RemoteBufferedOutputDirectory lockDirectory;
     private RemoteStoreMetadataLockManager remoteStoreMetadataLockManager;
     String testLockName = "testLock";

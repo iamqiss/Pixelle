@@ -1,7 +1,7 @@
 {
   "snapshot.delete":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/delete-snapshot/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/delete-snapshot/",
       "description":"Deletes a snapshot."
     },
     "stability":"stable",

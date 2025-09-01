@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.node.ResponseCollectorService;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.transport.Transport;
+import org.density.core.action.ActionListener;
+import org.density.node.ResponseCollectorService;
+import org.density.search.SearchPhaseResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.query.QuerySearchResult;
+import org.density.transport.Transport;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -47,7 +47,7 @@ import java.util.function.BiFunction;
  * result to get the piggybacked queue size and service time EWMA, adding those
  * values to the coordinating nodes' {@link ResponseCollectorService}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchExecutionStatsCollector implements ActionListener<SearchPhaseResult> {
 

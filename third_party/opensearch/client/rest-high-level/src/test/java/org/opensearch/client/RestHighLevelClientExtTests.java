@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.ParseField;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -50,9 +50,9 @@ import static org.mockito.Mockito.mock;
 
 /**
  * This test works against a {@link RestHighLevelClient} subclass that simulates how custom response sections returned by
- * OpenSearch plugins can be parsed using the high level client.
+ * Density plugins can be parsed using the high level client.
  */
-public class RestHighLevelClientExtTests extends OpenSearchTestCase {
+public class RestHighLevelClientExtTests extends DensityTestCase {
 
     private RestHighLevelClient restHighLevelClient;
 

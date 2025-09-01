@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.AbstractScopedSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.search.pipeline.SearchPipelineService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.AbstractScopedSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.translog.Translog;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.search.pipeline.SearchPipelineService;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -62,7 +62,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.object.HasToString.hasToString;
 
-public class IndexSettingsTests extends OpenSearchTestCase {
+public class IndexSettingsTests extends DensityTestCase {
 
     public void testRunListener() {
         Version version = VersionUtils.getPreviousVersion();
@@ -483,7 +483,7 @@ public class IndexSettingsTests extends OpenSearchTestCase {
             settings.getMaxAdjacencyMatrixFilters()
         );
         assertWarnings(
-            "[index.max_adjacency_matrix_filters] setting was deprecated in OpenSearch and will be removed in a "
+            "[index.max_adjacency_matrix_filters] setting was deprecated in Density and will be removed in a "
                 + "future release! See the breaking changes documentation for the next major version."
         );
     }

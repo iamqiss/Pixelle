@@ -1,7 +1,7 @@
 {
   "cluster.remote_info":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/remote-info/",
+      "url":"https://density.org/docs/latest/api-reference/remote-info/",
       "description":"Returns the information about configured remote clusters."
     },
     "stability":"stable",

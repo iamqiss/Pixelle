@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 
 import java.util.Random;
 
-import static org.opensearch.test.AbstractBuilderTestCase.TEXT_ALIAS_FIELD_NAME;
-import static org.opensearch.test.AbstractBuilderTestCase.TEXT_FIELD_NAME;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
+import static org.density.test.AbstractBuilderTestCase.TEXT_ALIAS_FIELD_NAME;
+import static org.density.test.AbstractBuilderTestCase.TEXT_FIELD_NAME;
+import static org.density.test.DensityTestCase.randomFrom;
 
 /**
  * Utility class for creating random QueryBuilders.

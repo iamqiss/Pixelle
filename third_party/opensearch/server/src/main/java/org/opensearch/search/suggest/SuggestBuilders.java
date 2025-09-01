@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
-import org.opensearch.search.suggest.completion.CompletionSuggestionBuilder;
-import org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder;
+import org.density.search.suggest.completion.CompletionSuggestionBuilder;
+import org.density.search.suggest.phrase.PhraseSuggestionBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder;
 
 /**
  * A static factory for building suggester lookup queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SuggestBuilders {
 
     /**
      * Creates a term suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.opensearch.search.suggest.term.TermSuggestionBuilder}
+     * @return a {@link org.density.search.suggest.term.TermSuggestionBuilder}
      * instance
      */
     public static TermSuggestionBuilder termSuggestion(String fieldname) {
@@ -56,7 +56,7 @@ public abstract class SuggestBuilders {
     /**
      * Creates a phrase suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.opensearch.search.suggest.phrase.PhraseSuggestionBuilder}
+     * @return a {@link org.density.search.suggest.phrase.PhraseSuggestionBuilder}
      * instance
      */
     public static PhraseSuggestionBuilder phraseSuggestion(String fieldname) {
@@ -66,7 +66,7 @@ public abstract class SuggestBuilders {
     /**
      * Creates a completion suggestion lookup query with the provided <code>field</code>
      *
-     * @return a {@link org.opensearch.search.suggest.completion.CompletionSuggestionBuilder}
+     * @return a {@link org.density.search.suggest.completion.CompletionSuggestionBuilder}
      * instance
      */
     public static CompletionSuggestionBuilder completionSuggestion(String fieldname) {

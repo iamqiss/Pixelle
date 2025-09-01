@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.deps.lucene;
+package org.density.deps.lucene;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -49,15 +49,15 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.lucene.search.vectorhighlight.CustomFieldQuery;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.Lucene;
+import org.density.lucene.search.vectorhighlight.CustomFieldQuery;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class VectorHighlighterTests extends OpenSearchTestCase {
+public class VectorHighlighterTests extends DensityTestCase {
     public void testVectorHighlighter() throws Exception {
         Directory dir = new ByteBuffersDirectory();
         IndexWriter indexWriter = new IndexWriter(dir, new IndexWriterConfig(Lucene.STANDARD_ANALYZER));

@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.nio;
+package org.density.transport.nio;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Mock implementation of StreamTransportResponse for testing streaming transport functionality.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class MockStreamTransportResponse<T extends TransportResponse> implements StreamTransportResponse<T> {
     private static final Logger logger = LogManager.getLogger(MockStreamTransportResponse.class);

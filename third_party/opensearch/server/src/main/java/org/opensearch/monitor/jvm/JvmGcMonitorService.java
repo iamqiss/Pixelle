@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.monitor.jvm.JvmStats.GarbageCollector;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.monitor.jvm.JvmStats.GarbageCollector;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -57,7 +57,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Service to monitor garbage collection
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JvmGcMonitorService extends AbstractLifecycleComponent {
     private static final Logger logger = LogManager.getLogger(JvmGcMonitorService.class);

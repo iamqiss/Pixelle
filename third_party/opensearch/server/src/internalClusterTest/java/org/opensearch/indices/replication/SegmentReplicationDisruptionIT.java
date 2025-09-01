@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.recovery.FileChunkRequest;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.shard.IndexShard;
+import org.density.indices.recovery.FileChunkRequest;
+import org.density.indices.recovery.RecoveryState;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 import org.junit.Before;
 
 import java.util.List;
@@ -27,13 +27,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * These tests simulate corruption cases during replication.  They are skipped on WindowsFS simulation where file renaming
  * can fail with an access denied IOException because deletion is not permitted.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 @LuceneTestCase.SuppressFileSystems("WindowsFS")
 public class SegmentReplicationDisruptionIT extends SegmentReplicationBaseIT {
     @Before

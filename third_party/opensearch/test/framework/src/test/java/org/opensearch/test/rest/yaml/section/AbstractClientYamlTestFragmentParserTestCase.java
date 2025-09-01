@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.section;
+package org.density.test.rest.yaml.section;
 
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 
 import static org.hamcrest.Matchers.nullValue;
@@ -42,7 +42,7 @@ import static org.hamcrest.Matchers.nullValue;
 /**
  * Superclass for tests that parse parts of the test suite.
  */
-public abstract class AbstractClientYamlTestFragmentParserTestCase extends OpenSearchTestCase {
+public abstract class AbstractClientYamlTestFragmentParserTestCase extends DensityTestCase {
     protected XContentParser parser;
 
     @Override

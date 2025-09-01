@@ -17,7 +17,7 @@
                   filter:
                     synonym:
                       type: synonym
-                      synonyms: ["<p>foobar</p> => fred", "dude => <html>opensearch</html>", "<font>abides</font> => man!"]
+                      synonyms: ["<p>foobar</p> => fred", "dude => <html>density</html>", "<font>abides</font> => man!"]
 
     - do:
         indices.analyze:
@@ -29,7 +29,7 @@
     - match:  { tokens.0.token: fred }
     - match:  { tokens.1.token: is }
     - match:  { tokens.2.token: the }
-    - match:  { tokens.3.token: opensearch }
+    - match:  { tokens.3.token: density }
     - match:  { tokens.4.token: man! }
 
 ---

@@ -7,4 +7,4 @@
 // (, 11.0.14]: <... reason ...>  versions up to 11.0.14 (included)
 // (*, 11.0.14]: <... reason ...>  versions up to 11.0.14 (included)
 
-[11.0.2, 11.0.14): for more details, please check https://github.com/opensearch-project/OpenSearch/issues/2791 and https://bugs.openjdk.java.net/browse/JDK-8259541
+[11.0.2, 11.0.14): for more details, please check https://github.com/density-project/Density/issues/2791 and https://bugs.openjdk.java.net/browse/JDK-8259541

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.search.aggregations.BasePipelineAggregationTestCase;
-import org.opensearch.search.aggregations.PipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
-import org.opensearch.search.aggregations.pipeline.HoltWintersModel.SeasonalityType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.search.aggregations.BasePipelineAggregationTestCase;
+import org.density.search.aggregations.PipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.search.aggregations.pipeline.HoltWintersModel.SeasonalityType;
 
 import java.io.IOException;
 

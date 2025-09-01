@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.filter.FilterAggregator;
-import org.opensearch.search.aggregations.bucket.range.RangeAggregator;
+import org.density.common.annotation.PublicApi;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.filter.FilterAggregator;
+import org.density.search.aggregations.bucket.range.RangeAggregator;
 
 import java.util.function.IntFunction;
 
@@ -43,7 +43,7 @@ import java.util.function.IntFunction;
  * Upper bound of how many {@code owningBucketOrds} that an {@link Aggregator}
  * will have to collect into.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class CardinalityUpperBound {
@@ -116,7 +116,7 @@ public abstract class CardinalityUpperBound {
     /**
      * Cardinality estimate with a known upper bound.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class KnownCardinalityUpperBound extends CardinalityUpperBound {
         private final int estimate;

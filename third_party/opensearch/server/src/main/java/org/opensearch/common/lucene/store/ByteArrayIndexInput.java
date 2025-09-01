@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.store;
+package org.density.common.lucene.store;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.RandomAccessInput;
@@ -41,7 +41,7 @@ import java.io.IOException;
 /**
  * Wraps array of bytes into IndexInput
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ByteArrayIndexInput extends IndexInput implements RandomAccessInput {
     private final byte[] bytes;

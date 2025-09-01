@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilderTests;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilderTests;
-import org.opensearch.search.rescore.QueryRescorerBuilderTests;
-import org.opensearch.search.suggest.SuggestBuilderTests;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.common.CheckedFunction;
+import org.density.common.settings.Settings;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.indices.IndicesModule;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilderTests;
+import org.density.search.fetch.subphase.highlight.HighlightBuilderTests;
+import org.density.search.rescore.QueryRescorerBuilderTests;
+import org.density.search.suggest.SuggestBuilderTests;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public abstract class AbstractSearchTestCase extends OpenSearchTestCase {
+public abstract class AbstractSearchTestCase extends DensityTestCase {
 
     protected NamedWriteableRegistry namedWriteableRegistry;
     private TestSearchExtPlugin searchExtPlugin;

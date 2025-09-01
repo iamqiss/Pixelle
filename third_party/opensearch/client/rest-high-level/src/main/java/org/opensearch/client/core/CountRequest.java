@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.opensearch.action.search.SearchRequest.DEFAULT_INDICES_OPTIONS;
+import static org.density.action.search.SearchRequest.DEFAULT_INDICES_OPTIONS;
 
 /**
  * Encapsulates a request to _count API against one, several or all indices.
@@ -164,7 +164,7 @@ public final class CountRequest extends ActionRequest implements IndicesRequest.
      * Returns the indices options used to resolve indices. They tell for instance whether a single index is accepted, whether an empty
      * array will be converted to _all, and how wildcards will be expanded if needed.
      *
-     * @see org.opensearch.action.support.IndicesOptions
+     * @see org.density.action.support.IndicesOptions
      */
     public CountRequest indicesOptions(IndicesOptions indicesOptions) {
         this.indicesOptions = Objects.requireNonNull(indicesOptions, "indicesOptions must not be null");

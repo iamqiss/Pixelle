@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
 import java.io.CharConversionException;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import java.io.Writer;
 /**
  * UTF8 Stream Writer.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class UTF8StreamWriter extends Writer {
 

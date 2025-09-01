@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.util;
+package org.density.transport.grpc.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.InputCoercionException;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.compress.NotXContentException;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.compress.NotXContentException;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.rest.RestStatus;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -29,10 +29,10 @@ import io.grpc.StatusRuntimeException;
  * Tests for GrpcErrorHandler utility.
  * Validates that exceptions are properly converted to appropriate gRPC StatusRuntimeException.
  */
-public class GrpcErrorHandlerTests extends OpenSearchTestCase {
+public class GrpcErrorHandlerTests extends DensityTestCase {
 
-    public void testOpenSearchExceptionConversion() {
-        OpenSearchException exception = new OpenSearchException("Test exception") {
+    public void testDensityExceptionConversion() {
+        DensityException exception = new DensityException("Test exception") {
             @Override
             public RestStatus status() {
                 return RestStatus.BAD_REQUEST;
@@ -79,14 +79,14 @@ public class GrpcErrorHandlerTests extends OpenSearchTestCase {
         assertTrue(result.getMessage().contains("at ")); // Stack trace indicator
     }
 
-    public void testOpenSearchRejectedExecutionExceptionConversion() {
-        OpenSearchRejectedExecutionException exception = new OpenSearchRejectedExecutionException("Thread pool full");
+    public void testDensityRejectedExecutionExceptionConversion() {
+        DensityRejectedExecutionException exception = new DensityRejectedExecutionException("Thread pool full");
 
         StatusRuntimeException result = GrpcErrorHandler.convertToGrpcError(exception);
 
         assertEquals(Status.RESOURCE_EXHAUSTED.getCode(), result.getStatus().getCode());
         assertTrue(result.getMessage().contains("Thread pool full"));
-        assertTrue(result.getMessage().contains("OpenSearchRejectedExecutionException"));
+        assertTrue(result.getMessage().contains("DensityRejectedExecutionException"));
         assertTrue(result.getMessage().contains("at ")); // Stack trace indicator
     }
 
@@ -167,8 +167,8 @@ public class GrpcErrorHandlerTests extends OpenSearchTestCase {
         assertTrue(result.getMessage().contains("at ")); // Stack trace indicator
     }
 
-    public void testOpenSearchExceptionWithNullMessage() {
-        OpenSearchException exception = new OpenSearchException((String) null) {
+    public void testDensityExceptionWithNullMessage() {
+        DensityException exception = new DensityException((String) null) {
             @Override
             public RestStatus status() {
                 return RestStatus.NOT_FOUND;
@@ -178,7 +178,7 @@ public class GrpcErrorHandlerTests extends OpenSearchTestCase {
         StatusRuntimeException result = GrpcErrorHandler.convertToGrpcError(exception);
 
         assertEquals(Status.NOT_FOUND.getCode(), result.getStatus().getCode());
-        assertTrue(result.getMessage().contains("OpenSearchException[null]"));
+        assertTrue(result.getMessage().contains("DensityException[null]"));
     }
 
     public void testCircuitBreakingExceptionInCleanMessage() {
@@ -195,7 +195,7 @@ public class GrpcErrorHandlerTests extends OpenSearchTestCase {
         SearchPhaseExecutionException exception = new SearchPhaseExecutionException(
             "query",
             "Search failed",
-            new org.opensearch.action.search.ShardSearchFailure[0]
+            new org.density.action.search.ShardSearchFailure[0]
         );
 
         StatusRuntimeException result = GrpcErrorHandler.convertToGrpcError(exception);

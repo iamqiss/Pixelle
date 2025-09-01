@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.action.bulk.BulkShardRequest;
-import org.opensearch.action.support.replication.ReplicatedWriteRequest;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.common.Strings;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.Transport;
+import org.density.action.bulk.BulkShardRequest;
+import org.density.action.support.replication.ReplicatedWriteRequest;
+import org.density.common.annotation.InternalApi;
+import org.density.common.collect.Tuple;
+import org.density.core.common.Strings;
+import org.density.http.HttpRequest;
+import org.density.rest.RestRequest;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.transport.TcpChannel;
+import org.density.transport.Transport;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Utility class, helps in creating the {@link SpanCreationContext} for span.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public final class SpanBuilder {

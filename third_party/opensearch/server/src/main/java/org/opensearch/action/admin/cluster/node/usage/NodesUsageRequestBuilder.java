@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.usage;
+package org.density.action.admin.cluster.node.usage;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.nodes.NodesOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.support.nodes.NodesOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
- * Transport builder for collecting OpenSearch telemetry
+ * Transport builder for collecting Density telemetry
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NodesUsageRequestBuilder extends NodesOperationRequestBuilder<
@@ -48,7 +48,7 @@ public class NodesUsageRequestBuilder extends NodesOperationRequestBuilder<
     NodesUsageResponse,
     NodesUsageRequestBuilder> {
 
-    public NodesUsageRequestBuilder(OpenSearchClient client, ActionType<NodesUsageResponse> action) {
+    public NodesUsageRequestBuilder(DensityClient client, ActionType<NodesUsageResponse> action) {
         super(client, action, new NodesUsageRequest());
     }
 

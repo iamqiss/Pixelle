@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.secure_sm.policy;
+package org.density.secure_sm.policy;
 
-import org.opensearch.secure_sm.policy.PropertyExpander.ExpandException;
+import org.density.secure_sm.policy.PropertyExpander.ExpandException;
 
 import java.io.BufferedReader;
 import java.io.File;

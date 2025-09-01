@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.protobufs.Hit;
-import org.opensearch.search.SearchSortValues;
-import org.opensearch.transport.grpc.proto.response.common.FieldValueProtoUtils;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.protobufs.Hit;
+import org.density.search.SearchSortValues;
+import org.density.transport.grpc.proto.response.common.FieldValueProtoUtils;
 
 /**
  * Utility class for converting SearchSortVaues objects to Protocol Buffers.

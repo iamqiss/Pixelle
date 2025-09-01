@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.core.action.ActionListener;
+import org.density.core.action.ActionListener;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -40,7 +40,7 @@ import java.util.concurrent.CountDownLatch;
  * An action listener that allows passing in a {@link CountDownLatch} that
  * will be counted down after onResponse or onFailure is called
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LatchedActionListener<T> implements ActionListener<T> {
 

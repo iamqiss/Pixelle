@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.FilteredTermsEnum;
 import org.apache.lucene.index.LeafReader;
@@ -43,31 +43,31 @@ import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.PagedBytes;
 import org.apache.lucene.util.packed.PackedInts;
 import org.apache.lucene.util.packed.PackedLongValues;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.LeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.RamAccountingTermsEnum;
-import org.opensearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.opensearch.index.fielddata.ordinals.Ordinals;
-import org.opensearch.index.fielddata.ordinals.OrdinalsBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.BucketedSort;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.util.BigArrays;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.LeafOrdinalsFieldData;
+import org.density.index.fielddata.RamAccountingTermsEnum;
+import org.density.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
+import org.density.index.fielddata.ordinals.Ordinals;
+import org.density.index.fielddata.ordinals.OrdinalsBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.BucketedSort;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 
 /**
  * Doc Values for paged bytes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PagedBytesIndexFieldData extends AbstractIndexOrdinalsFieldData {
 
@@ -77,7 +77,7 @@ public class PagedBytesIndexFieldData extends AbstractIndexOrdinalsFieldData {
     /**
      * Builder for paged bytes index field data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder implements IndexFieldData.Builder {
         private final String name;
@@ -288,7 +288,7 @@ public class PagedBytesIndexFieldData extends AbstractIndexOrdinalsFieldData {
     /**
      * A frequency filter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class FrequencyFilter extends FilteredTermsEnum {
         private final int minFreq;

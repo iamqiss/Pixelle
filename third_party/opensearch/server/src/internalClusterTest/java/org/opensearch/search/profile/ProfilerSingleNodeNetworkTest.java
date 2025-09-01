@@ -1,28 +1,28 @@
 /* SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
 import org.apache.lucene.tests.util.English;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.index.query.QueryBuilder;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.search.profile.query.RandomQueryGenerator.randomQueryBuilder;
+import static org.density.search.profile.query.RandomQueryGenerator.randomQueryBuilder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-public class ProfilerSingleNodeNetworkTest extends OpenSearchSingleNodeTestCase {
+public class ProfilerSingleNodeNetworkTest extends DensitySingleNodeTestCase {
 
     /**
      * This test checks to make sure in a single node cluster, the network time

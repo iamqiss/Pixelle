@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.iterable;
+package org.density.common.util.iterable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ import java.util.stream.StreamSupport;
 /**
  * Iterables.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Iterables {
 
@@ -55,7 +55,7 @@ public class Iterables {
     /**
      * Concatenated interable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ConcatenatedIterable<T> implements Iterable<T> {
         private final Iterable<T>[] inputs;
@@ -84,7 +84,7 @@ public class Iterables {
     /**
      * A flattened iterable
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FlattenedIterables<T> implements Iterable<T> {
         private final Iterable<? extends Iterable<T>> inputs;

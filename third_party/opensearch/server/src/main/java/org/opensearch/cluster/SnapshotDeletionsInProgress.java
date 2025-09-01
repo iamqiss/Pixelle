@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState.Custom;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.repositories.RepositoryOperation;
-import org.opensearch.snapshots.SnapshotId;
+import org.density.Version;
+import org.density.cluster.ClusterState.Custom;
+import org.density.common.UUIDs;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.repositories.RepositoryOperation;
+import org.density.snapshots.SnapshotId;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import java.util.Set;
 /**
  * A class that represents the snapshot deletions that are in progress in the cluster.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SnapshotDeletionsInProgress extends AbstractNamedDiffable<Custom> implements Custom {
 
@@ -217,7 +217,7 @@ public class SnapshotDeletionsInProgress extends AbstractNamedDiffable<Custom> i
     /**
      * A class representing a snapshot deletion request entry in the cluster state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Entry implements Writeable, RepositoryOperation {
         private final List<SnapshotId> snapshots;
@@ -356,7 +356,7 @@ public class SnapshotDeletionsInProgress extends AbstractNamedDiffable<Custom> i
     /**
      * State of the deletions.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum State implements Writeable {
 

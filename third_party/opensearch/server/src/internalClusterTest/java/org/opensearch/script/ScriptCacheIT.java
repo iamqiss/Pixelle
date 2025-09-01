@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.MockEngineFactoryPlugin;
-import org.opensearch.index.mapper.MockFieldFilterPlugin;
-import org.opensearch.node.NodeMocksPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.MockSearchService;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
-import org.opensearch.test.store.MockFSIndexStore;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.rest.RestStatus;
+import org.density.index.MockEngineFactoryPlugin;
+import org.density.index.mapper.MockFieldFilterPlugin;
+import org.density.node.NodeMocksPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.MockSearchService;
+import org.density.test.MockHttpTransport;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
+import org.density.test.store.MockFSIndexStore;
+import org.density.test.transport.MockTransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,10 +34,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
 import static org.apache.logging.log4j.core.util.Throwables.getRootCause;
 
-public class ScriptCacheIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class ScriptCacheIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public ScriptCacheIT(Settings settings) {
         super(settings);
     }
@@ -115,8 +115,8 @@ public class ScriptCacheIT extends ParameterizedStaticSettingsOpenSearchIntegTes
             () -> client().prepareUpdate("test", "1").setScript(script).execute().get()
         );
         Throwable rootCause = getRootCause(exception);
-        assertTrue(rootCause instanceof OpenSearchException);
-        assertEquals(RestStatus.TOO_MANY_REQUESTS, ((OpenSearchException) rootCause).status());
+        assertTrue(rootCause instanceof DensityException);
+        assertEquals(RestStatus.TOO_MANY_REQUESTS, ((DensityException) rootCause).status());
     }
 
     public static class CustomScriptPlugin extends MockScriptPlugin {

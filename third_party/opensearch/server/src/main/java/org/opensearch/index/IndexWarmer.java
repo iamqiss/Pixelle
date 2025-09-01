@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldDataService;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.unit.TimeValue;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldDataService;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,9 +56,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The main opensearch index warmer
+ * The main density index warmer
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IndexWarmer {
 
@@ -75,7 +75,7 @@ public final class IndexWarmer {
         this.listeners = Collections.unmodifiableList(list);
     }
 
-    void warm(OpenSearchDirectoryReader reader, IndexShard shard, IndexSettings settings) {
+    void warm(DensityDirectoryReader reader, IndexShard shard, IndexSettings settings) {
         if (shard.state() == IndexShardState.CLOSED) {
             return;
         }
@@ -112,7 +112,7 @@ public final class IndexWarmer {
     /**
      * A handle on the execution of  warm-up action.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface TerminationHandle {
@@ -126,19 +126,19 @@ public final class IndexWarmer {
     /**
      * Listener for the index warmer
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Listener {
         /** Queue tasks to warm-up the given segments and return handles that allow to wait for termination of the
          *  execution of those tasks. */
-        TerminationHandle warmReader(IndexShard indexShard, OpenSearchDirectoryReader reader);
+        TerminationHandle warmReader(IndexShard indexShard, DensityDirectoryReader reader);
     }
 
     /**
      * Warmer for field data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FieldDataWarmer implements IndexWarmer.Listener {
 
@@ -151,7 +151,7 @@ public final class IndexWarmer {
         }
 
         @Override
-        public TerminationHandle warmReader(final IndexShard indexShard, final OpenSearchDirectoryReader reader) {
+        public TerminationHandle warmReader(final IndexShard indexShard, final DensityDirectoryReader reader) {
             final MapperService mapperService = indexShard.mapperService();
             final Map<String, MappedFieldType> warmUpGlobalOrdinals = new HashMap<>();
             for (MappedFieldType fieldType : mapperService.fieldTypes()) {

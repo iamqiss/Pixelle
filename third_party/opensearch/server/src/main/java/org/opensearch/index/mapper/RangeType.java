@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.DoubleRange;
 import org.apache.lucene.document.Field;
@@ -45,14 +45,14 @@ import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.queries.BinaryDocValuesRangeQuery;
+import org.density.common.Nullable;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.network.InetAddresses;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.queries.BinaryDocValuesRangeQuery;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -69,7 +69,7 @@ import java.util.function.BiFunction;
 /**
  * Enum defining the type of range
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum RangeType {
     IP("ip_range", LengthType.FIXED_16) {
@@ -985,7 +985,7 @@ public enum RangeType {
     /**
      * Type of length
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum LengthType {
         FIXED_4 {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.SeedUtils;
@@ -40,92 +40,92 @@ import com.carrotsearch.randomizedtesting.generators.RandomStrings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
-import org.opensearch.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags.Flag;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.coordination.ClusterBootstrapService;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lifecycle.LifecycleListener;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.SecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.Settings.Builder;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.discovery.ClusterManagerNotDiscoveredException;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexingPressure;
-import org.opensearch.index.engine.DocIdSeqNoAndSource;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineTestCase;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.node.MockNode;
-import org.opensearch.node.Node;
-import org.opensearch.node.Node.DiscoverySettings;
-import org.opensearch.node.NodeService;
-import org.opensearch.node.NodeValidationException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.SearchService;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.TransportSettings;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.AddVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsAction;
+import org.density.action.admin.cluster.configuration.ClearVotingConfigExclusionsRequest;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.CommonStatsFlags.Flag;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.coordination.ClusterBootstrapService;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.cluster.routing.allocation.decider.ThrottlingAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Randomness;
+import org.density.common.lease.Releasables;
+import org.density.common.lifecycle.LifecycleListener;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.SecureSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.Settings.Builder;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.util.FileSystemUtils;
+import org.density.discovery.ClusterManagerNotDiscoveredException;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.http.HttpServerTransport;
+import org.density.index.IndexService;
+import org.density.index.IndexingPressure;
+import org.density.index.engine.DocIdSeqNoAndSource;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineTestCase;
+import org.density.index.engine.IngestionEngine;
+import org.density.index.engine.InternalEngine;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.indices.IndicesService;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.node.MockNode;
+import org.density.node.Node;
+import org.density.node.Node.DiscoverySettings;
+import org.density.node.NodeService;
+import org.density.node.NodeValidationException;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginInfo;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.search.SearchService;
+import org.density.tasks.TaskManager;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.TransportService;
+import org.density.transport.TransportSettings;
+import org.density.transport.client.Client;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -158,21 +158,21 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
-import static org.opensearch.discovery.DiscoveryModule.DISCOVERY_TYPE_SETTING;
-import static org.opensearch.discovery.DiscoveryModule.ZEN2_DISCOVERY_TYPE;
-import static org.opensearch.discovery.FileBasedSeedHostsProvider.UNICAST_HOSTS_FILE;
-import static org.opensearch.test.NodeRoles.dataOnlyNode;
-import static org.opensearch.test.NodeRoles.noRoles;
-import static org.opensearch.test.NodeRoles.onlyRole;
-import static org.opensearch.test.NodeRoles.onlyRoles;
-import static org.opensearch.test.NodeRoles.removeRoles;
-import static org.opensearch.test.NodeRoles.searchOnlyNode;
-import static org.opensearch.test.OpenSearchTestCase.assertBusy;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
+import static org.density.discovery.DiscoveryModule.DISCOVERY_TYPE_SETTING;
+import static org.density.discovery.DiscoveryModule.ZEN2_DISCOVERY_TYPE;
+import static org.density.discovery.FileBasedSeedHostsProvider.UNICAST_HOSTS_FILE;
+import static org.density.test.NodeRoles.dataOnlyNode;
+import static org.density.test.NodeRoles.noRoles;
+import static org.density.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.onlyRoles;
+import static org.density.test.NodeRoles.removeRoles;
+import static org.density.test.NodeRoles.searchOnlyNode;
+import static org.density.test.DensityTestCase.assertBusy;
+import static org.density.test.DensityTestCase.randomBoolean;
+import static org.density.test.DensityTestCase.randomFrom;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -193,8 +193,8 @@ import static org.junit.Assert.fail;
  * <p>
  * The Cluster is bound to a test lifecycle where tests must call {@link #beforeTest(java.util.Random)} and
  * {@link #afterTest()} to initialize and reset the cluster in order to be more reproducible. The term "more" relates
- * to the async nature of OpenSearch in combination with randomized testing. Once Threads and asynchronous calls
- * are involved reproducibility is very limited. This class should only be used through {@link OpenSearchIntegTestCase}.
+ * to the async nature of Density in combination with randomized testing. Once Threads and asynchronous calls
+ * are involved reproducibility is very limited. This class should only be used through {@link DensityIntegTestCase}.
  * </p>
  */
 public final class InternalTestCluster extends TestCluster {
@@ -407,11 +407,11 @@ public final class InternalTestCluster extends TestCluster {
         builder.put(Environment.PATH_REPO_SETTING.getKey(), baseDir.resolve("repos"));
         builder.put(TransportSettings.PORT.getKey(), 0);
         builder.put("http.port", 0);
-        if (Strings.hasLength(System.getProperty("tests.opensearch.logger.level"))) {
-            builder.put("logger.level", System.getProperty("tests.opensearch.logger.level"));
+        if (Strings.hasLength(System.getProperty("tests.density.logger.level"))) {
+            builder.put("logger.level", System.getProperty("tests.density.logger.level"));
         }
-        if (Strings.hasLength(System.getProperty("opensearch.logger.prefix"))) {
-            builder.put("logger.prefix", System.getProperty("opensearch.logger.prefix"));
+        if (Strings.hasLength(System.getProperty("density.logger.prefix"))) {
+            builder.put("logger.prefix", System.getProperty("density.logger.prefix"));
         }
         // Default the watermarks to absurdly low to prevent the tests
         // from failing on nodes without enough disk space
@@ -455,13 +455,13 @@ public final class InternalTestCluster extends TestCluster {
         // and fails shards when a cluster-manager abdicates, which breaks many tests.
         builder.put(NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_SETTING.getKey(), randomFrom(random, "write", "metadata_write"));
         defaultSettings = builder.build();
-        executor = OpenSearchExecutors.newScaling(
+        executor = DensityExecutors.newScaling(
             "internal_test_cluster_executor",
             0,
             Integer.MAX_VALUE,
             0,
             TimeUnit.SECONDS,
-            OpenSearchExecutors.daemonThreadFactory("test_" + clusterName),
+            DensityExecutors.daemonThreadFactory("test_" + clusterName),
             new ThreadContext(Settings.EMPTY)
         );
     }
@@ -534,7 +534,7 @@ public final class InternalTestCluster extends TestCluster {
         }
 
         builder.put(
-            OpenSearchExecutors.NODE_PROCESSORS_SETTING.getKey(),
+            DensityExecutors.NODE_PROCESSORS_SETTING.getKey(),
             1 + random.nextInt(Math.min(4, Runtime.getRuntime().availableProcessors()))
         );
         if (random.nextBoolean()) {
@@ -611,7 +611,7 @@ public final class InternalTestCluster extends TestCluster {
 
     public static String clusterName(String prefix, long clusterSeed) {
         StringBuilder builder = new StringBuilder(prefix);
-        builder.append("-TEST_WORKER_VM=[").append(OpenSearchTestCase.TEST_WORKER_VM_ID).append(']');
+        builder.append("-TEST_WORKER_VM=[").append(DensityTestCase.TEST_WORKER_VM_ID).append(']');
         builder.append("-CLUSTER_SEED=[").append(clusterSeed).append(']');
         // if multiple maven task run on a single host we better have an identifier that doesn't rely on input params
         builder.append("-HASH=[").append(SeedUtils.formatSeed(System.nanoTime())).append(']');
@@ -1758,7 +1758,7 @@ public final class InternalTestCluster extends TestCluster {
         ensureOpen();
         NodeAndClient nodeAndClient = getRandomNodeAndClient(nc -> filter.test(nc.node.settings()));
         if (nodeAndClient != null) {
-            if (nodePrefix.equals(OpenSearchIntegTestCase.SUITE_CLUSTER_NODE_PREFIX)
+            if (nodePrefix.equals(DensityIntegTestCase.SUITE_CLUSTER_NODE_PREFIX)
                 && nodeAndClient.nodeAndClientId() < sharedNodesSeeds.length
                 && nodeAndClient.isClusterManagerEligible()
                 && autoManageClusterManagerNodes

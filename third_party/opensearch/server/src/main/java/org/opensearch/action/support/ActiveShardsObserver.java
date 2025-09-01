@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.node.NodeClosedException;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -50,7 +50,7 @@ import java.util.function.Predicate;
  * This class provides primitives for waiting for a configured number of shards
  * to become active before sending a response on an {@link ActionListener}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ActiveShardsObserver {
 

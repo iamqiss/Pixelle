@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -27,8 +27,8 @@ import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.common.Randomness;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -43,7 +43,7 @@ import java.util.Set;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class BitmapIndexQueryTests extends OpenSearchTestCase {
+public class BitmapIndexQueryTests extends DensityTestCase {
     private Directory dir;
     private IndexWriter w;
     private DirectoryReader reader;

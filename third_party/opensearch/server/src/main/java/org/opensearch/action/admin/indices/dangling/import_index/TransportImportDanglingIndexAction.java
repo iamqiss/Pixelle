@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.import_index;
+package org.density.action.admin.indices.dangling.import_index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.indices.dangling.find.FindDanglingIndexAction;
-import org.opensearch.action.admin.indices.dangling.find.FindDanglingIndexRequest;
-import org.opensearch.action.admin.indices.dangling.find.FindDanglingIndexResponse;
-import org.opensearch.action.admin.indices.dangling.find.NodeFindDanglingIndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.gateway.LocalAllocateDangledIndices;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.indices.dangling.find.FindDanglingIndexAction;
+import org.density.action.admin.indices.dangling.find.FindDanglingIndexRequest;
+import org.density.action.admin.indices.dangling.find.FindDanglingIndexResponse;
+import org.density.action.admin.indices.dangling.find.NodeFindDanglingIndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.gateway.LocalAllocateDangledIndices;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -63,7 +63,7 @@ import static java.util.Collections.singletonList;
  * this class first checks that such a dangling index exists. It then calls {@link LocalAllocateDangledIndices}
  * to perform the actual allocation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportImportDanglingIndexAction extends HandledTransportAction<ImportDanglingIndexRequest, AcknowledgedResponse> {
     private static final Logger logger = LogManager.getLogger(TransportImportDanglingIndexAction.class);
@@ -137,7 +137,7 @@ public class TransportImportDanglingIndexAction extends HandledTransportAction<I
                             .stream()
                             .map(FailedNodeException::nodeId)
                             .collect(Collectors.joining(","));
-                        OpenSearchException e = new OpenSearchException("Failed to query nodes [" + nodeIds + "]");
+                        DensityException e = new DensityException("Failed to query nodes [" + nodeIds + "]");
 
                         for (FailedNodeException failure : response.failures()) {
                             logger.error("Failed to query node [" + failure.nodeId() + "]", failure);

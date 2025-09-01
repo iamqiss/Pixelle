@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.netty4;
+package org.density.http.netty4;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.net.NetUtils;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.AbstractHttpServerTransport;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpHandlingSettings;
-import org.opensearch.http.HttpReadTimeoutException;
-import org.opensearch.http.HttpServerChannel;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.NettyAllocator;
-import org.opensearch.transport.NettyByteBufSizer;
-import org.opensearch.transport.SharedGroupFactory;
-import org.opensearch.transport.netty4.Netty4Utils;
+import org.density.ExceptionsHelper;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.net.NetUtils;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.AbstractHttpServerTransport;
+import org.density.http.HttpChannel;
+import org.density.http.HttpHandlingSettings;
+import org.density.http.HttpReadTimeoutException;
+import org.density.http.HttpServerChannel;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.NettyAllocator;
+import org.density.transport.NettyByteBufSizer;
+import org.density.transport.SharedGroupFactory;
+import org.density.transport.netty4.Netty4Utils;
 
 import java.net.InetSocketAddress;
 import java.net.SocketOption;
@@ -109,20 +109,20 @@ import io.netty.util.AsciiString;
 import io.netty.util.AttributeKey;
 import io.netty.util.ReferenceCountUtil;
 
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_CHUNK_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_INITIAL_LINE_LENGTH;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_READ_TIMEOUT;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_ALIVE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_COUNT;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_IDLE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_INTERVAL;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_NO_DELAY;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_RECEIVE_BUFFER_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_REUSE_ADDRESS;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_TCP_SEND_BUFFER_SIZE;
-import static org.opensearch.http.HttpTransportSettings.SETTING_PIPELINING_MAX_EVENTS;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_CHUNK_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_CONTENT_LENGTH;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_INITIAL_LINE_LENGTH;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_READ_TIMEOUT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_ALIVE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_COUNT;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_IDLE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_KEEP_INTERVAL;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_NO_DELAY;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_RECEIVE_BUFFER_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_REUSE_ADDRESS;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_TCP_SEND_BUFFER_SIZE;
+import static org.density.http.HttpTransportSettings.SETTING_PIPELINING_MAX_EVENTS;
 
 /**
  * The HTTP transport implementations based on Netty 4.
@@ -137,7 +137,7 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
      *
      * By default we assume the Ethernet MTU (1500 bytes) but users can override it with a system property.
      */
-    private static final ByteSizeValue MTU = new ByteSizeValue(Long.parseLong(System.getProperty("opensearch.net.mtu", "1500")));
+    private static final ByteSizeValue MTU = new ByteSizeValue(Long.parseLong(System.getProperty("density.net.mtu", "1500")));
 
     private static final String SETTING_KEY_HTTP_NETTY_MAX_COMPOSITE_BUFFER_COMPONENTS = "http.netty.max_composite_buffer_components";
 
@@ -156,7 +156,7 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
              * io.netty.handler.codec.MessageAggregator#DEFAULT_MAX_COMPOSITEBUFFER_COMPONENTS). To determine a proper default capacity for
              * that buffer, we need to consider that the upper bound for the size of HTTP requests is determined by `maxContentLength`. The
              * number of buffers that are needed depend on how often Netty reads network packets which depends on the network type (MTU).
-             * We assume here that OpenSearch receives HTTP requests via an Ethernet connection which has a MTU of 1500 bytes.
+             * We assume here that Density receives HTTP requests via an Ethernet connection which has a MTU of 1500 bytes.
              *
              * Note that we are *not* pre-allocating any memory based on this setting but rather determine the CompositeByteBuf's capacity.
              * The tradeoff is between less (but larger) buffers that are contained in the CompositeByteBuf and more (but smaller) buffers.
@@ -218,7 +218,7 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
         Tracer tracer
     ) {
         super(settings, networkService, bigArrays, threadPool, xContentRegistry, dispatcher, clusterSettings, tracer);
-        Netty4Utils.setAvailableProcessors(OpenSearchExecutors.NODE_PROCESSORS_SETTING.get(settings));
+        Netty4Utils.setAvailableProcessors(DensityExecutors.NODE_PROCESSORS_SETTING.get(settings));
         NettyAllocator.logAllocatorDescriptionIfNeeded();
         this.sharedGroupFactory = sharedGroupFactory;
 
@@ -356,9 +356,9 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
         return new HttpChannelHandler(this, handlingSettings);
     }
 
-    public static final AttributeKey<Netty4HttpChannel> HTTP_CHANNEL_KEY = AttributeKey.newInstance("opensearch-http-channel");
+    public static final AttributeKey<Netty4HttpChannel> HTTP_CHANNEL_KEY = AttributeKey.newInstance("density-http-channel");
     protected static final AttributeKey<Netty4HttpServerChannel> HTTP_SERVER_CHANNEL_KEY = AttributeKey.newInstance(
-        "opensearch-http-server-channel"
+        "density-http-server-channel"
     );
 
     protected static class HttpChannelHandler extends ChannelInitializer<Channel> {
@@ -502,7 +502,7 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
 
         /**
          * Http2MultiplexHandler creates new pipeline, we are preserving the old one in case some handlers need to be
-         * access (like for example opensearch-security plugin which accesses SSL handlers).
+         * access (like for example density-security plugin which accesses SSL handlers).
          */
         private ChannelInitializer<Channel> createHttp2ChannelInitializer(ChannelPipeline inboundPipeline) {
             return new ChannelInitializer<Channel>() {

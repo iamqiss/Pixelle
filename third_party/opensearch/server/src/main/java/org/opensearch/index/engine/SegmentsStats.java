@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.ReplicationStats;
-import org.opensearch.index.codec.composite.composite912.Composite912DocValuesFormat;
-import org.opensearch.index.codec.fuzzy.FuzzyFilterPostingsFormat;
-import org.opensearch.index.remote.RemoteSegmentStats;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.ReplicationStats;
+import org.density.index.codec.composite.composite912.Composite912DocValuesFormat;
+import org.density.index.codec.fuzzy.FuzzyFilterPostingsFormat;
+import org.density.index.remote.RemoteSegmentStats;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * Tracker for segment stats
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SegmentsStats implements Writeable, ToXContentFragment {
@@ -114,7 +114,7 @@ public class SegmentsStats implements Writeable, ToXContentFragment {
     public SegmentsStats(StreamInput in) throws IOException {
         count = in.readVLong();
         // the following was removed in Lucene 9 (https://issues.apache.org/jira/browse/LUCENE-9387)
-        // retain for bwc only (todo: remove in OpenSearch 3)
+        // retain for bwc only (todo: remove in Density 3)
         if (in.getVersion().before(Version.V_2_0_0)) {
             in.readLong(); // estimated segment memory
             in.readLong(); // estimated terms memory
@@ -282,7 +282,7 @@ public class SegmentsStats implements Writeable, ToXContentFragment {
     /**
      * Fields for segment statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String SEGMENTS = "segments";
@@ -319,7 +319,7 @@ public class SegmentsStats implements Writeable, ToXContentFragment {
         out.writeVLong(count);
         if (out.getVersion().before(Version.V_2_0_0)) {
             // the following was removed in Lucene 9 (https://issues.apache.org/jira/browse/LUCENE-9387)
-            // retain the following for bwc only (todo: remove in OpenSearch 3)
+            // retain the following for bwc only (todo: remove in Density 3)
             out.writeLong(0L); // estimated memory
             out.writeLong(0L); // estimated terms memory
             out.writeLong(0L); // estimated stored fields memory
@@ -345,7 +345,7 @@ public class SegmentsStats implements Writeable, ToXContentFragment {
 
     /**
      * Used only for deprecating memory tracking in REST interface
-     * todo remove in OpenSearch 3.0
+     * todo remove in Density 3.0
      * @deprecated
      */
     @Deprecated

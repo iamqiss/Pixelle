@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.core.common.Strings;
+import org.density.action.pagination.PageToken;
+import org.density.common.time.DateFormatter;
+import org.density.core.common.Strings;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -49,7 +49,7 @@ import static java.util.Collections.emptyMap;
 /**
  * A table.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Table {
 
@@ -248,7 +248,7 @@ public class Table {
     /**
      * Cell in a table
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Cell {
         public final Object value;

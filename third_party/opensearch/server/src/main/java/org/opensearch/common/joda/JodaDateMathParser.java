@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.DateUtils;
+import org.density.DensityParseException;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.DateUtils;
 import org.joda.time.DateTimeZone;
 import org.joda.time.MutableDateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -51,7 +51,7 @@ import java.util.function.LongSupplier;
  * is appended to a datetime with the following syntax:
  * <code>||[+-/](\d+)?[yMwdhHms]</code>.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JodaDateMathParser implements DateMathParser {
 
@@ -74,7 +74,7 @@ public class JodaDateMathParser implements DateMathParser {
             try {
                 time = now.getAsLong();
             } catch (Exception e) {
-                throw new OpenSearchParseException("could not read the current timestamp", e);
+                throw new DensityParseException("could not read the current timestamp", e);
             }
             mathString = text.substring("now".length());
         } else {
@@ -89,7 +89,7 @@ public class JodaDateMathParser implements DateMathParser {
         return Instant.ofEpochMilli(parseMath(mathString, time, roundUp, timeZone));
     }
 
-    private long parseMath(String mathString, long time, boolean roundUp, DateTimeZone timeZone) throws OpenSearchParseException {
+    private long parseMath(String mathString, long time, boolean roundUp, DateTimeZone timeZone) throws DensityParseException {
         if (timeZone == null) {
             timeZone = DateTimeZone.UTC;
         }
@@ -108,12 +108,12 @@ public class JodaDateMathParser implements DateMathParser {
                 } else if (c == '-') {
                     sign = -1;
                 } else {
-                    throw new OpenSearchParseException("operator not supported for date math [{}]", mathString);
+                    throw new DensityParseException("operator not supported for date math [{}]", mathString);
                 }
             }
 
             if (i >= mathString.length()) {
-                throw new OpenSearchParseException("truncated date math [{}]", mathString);
+                throw new DensityParseException("truncated date math [{}]", mathString);
             }
 
             final int num;
@@ -125,13 +125,13 @@ public class JodaDateMathParser implements DateMathParser {
                     i++;
                 }
                 if (i >= mathString.length()) {
-                    throw new OpenSearchParseException("truncated date math [{}]", mathString);
+                    throw new DensityParseException("truncated date math [{}]", mathString);
                 }
                 num = Integer.parseInt(mathString.substring(numFrom, i));
             }
             if (round) {
                 if (num != 1) {
-                    throw new OpenSearchParseException("rounding `/` can only be used on single unit types [{}]", mathString);
+                    throw new DensityParseException("rounding `/` can only be used on single unit types [{}]", mathString);
                 }
             }
             char unit = mathString.charAt(i++);
@@ -188,7 +188,7 @@ public class JodaDateMathParser implements DateMathParser {
                     }
                     break;
                 default:
-                    throw new OpenSearchParseException("unit [{}] not supported for date math [{}]", unit, mathString);
+                    throw new DensityParseException("unit [{}] not supported for date math [{}]", unit, mathString);
             }
             if (propertyToRound != null) {
                 if (roundUp) {
@@ -227,7 +227,7 @@ public class JodaDateMathParser implements DateMathParser {
             }
             return date.getMillis();
         } catch (IllegalArgumentException e) {
-            throw new OpenSearchParseException("failed to parse date field [{}] with format [{}]", e, value, dateTimeFormatter.pattern());
+            throw new DensityParseException("failed to parse date field [{}] with format [{}]", e, value, dateTimeFormatter.pattern());
         }
     }
 

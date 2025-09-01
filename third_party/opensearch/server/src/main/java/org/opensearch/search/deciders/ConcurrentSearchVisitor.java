@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.deciders;
+package org.density.search.deciders;
 
 import org.apache.lucene.search.BooleanClause;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilderVisitor;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilderVisitor;
 
 import java.util.Objects;
 import java.util.Set;

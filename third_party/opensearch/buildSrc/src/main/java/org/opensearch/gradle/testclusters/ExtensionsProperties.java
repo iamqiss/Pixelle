@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 public class ExtensionsProperties {
     private String name;
@@ -14,7 +14,7 @@ public class ExtensionsProperties {
     private String hostAddress;
     private String port;
     private String version;
-    private String opensearchVersion;
+    private String densityVersion;
     private String minimumCompatibleVersion;
 
     public ExtensionsProperties(
@@ -23,7 +23,7 @@ public class ExtensionsProperties {
         String hostAddress,
         String port,
         String version,
-        String opensearchVersion,
+        String densityVersion,
         String minimumCompatibleVersion
     ) {
         this.name = name;
@@ -31,7 +31,7 @@ public class ExtensionsProperties {
         this.hostAddress = hostAddress;
         this.port = port;
         this.version = version;
-        this.opensearchVersion = opensearchVersion;
+        this.densityVersion = densityVersion;
         this.minimumCompatibleVersion = minimumCompatibleVersion;
     }
 
@@ -76,11 +76,11 @@ public class ExtensionsProperties {
     }
 
     public String getOpensearchVersion() {
-        return opensearchVersion;
+        return densityVersion;
     }
 
-    public void setOpensearchVersion(String opensearchVersion) {
-        this.opensearchVersion = opensearchVersion;
+    public void setOpensearchVersion(String densityVersion) {
+        this.densityVersion = densityVersion;
     }
 
     public String getMinimumCompatibleVersion() {

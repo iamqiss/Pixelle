@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.approximate;
+package org.density.search.approximate;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
@@ -32,17 +32,17 @@ import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.TotalHits.Relation;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -54,7 +54,7 @@ import java.util.function.Function;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ApproximatePointRangeQueryTests extends OpenSearchTestCase {
+public class ApproximatePointRangeQueryTests extends DensityTestCase {
 
     private final NumericType numericType;
 
@@ -672,7 +672,7 @@ public class ApproximatePointRangeQueryTests extends OpenSearchTestCase {
             1,
             numericType.format
         );
-        SearchContext mockContext = mock(org.opensearch.search.internal.SearchContext.class);
+        SearchContext mockContext = mock(org.density.search.internal.SearchContext.class);
         when(mockContext.trackTotalHitsUpTo()).thenReturn(SearchContext.TRACK_TOTAL_HITS_ACCURATE);
         assertFalse(query.canApproximate(mockContext));
         int trackTotalHitsUpTo = RandomNumbers.randomIntBetween(random(), 1000, 20000);

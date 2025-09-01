@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.shards;
+package org.density.cluster.shards;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
@@ -61,20 +61,20 @@ public class ShardCounts {
             dataNodes,
             lessThanOrEqualTo(90)
         );
-        int mainIndexReplicas = OpenSearchTestCase.between(0, dataNodes - 1);
-        int mainIndexShards = OpenSearchTestCase.between(1, 10);
+        int mainIndexReplicas = DensityTestCase.between(0, dataNodes - 1);
+        int mainIndexShards = DensityTestCase.between(1, 10);
         int totalShardsInIndex = (mainIndexReplicas + 1) * mainIndexShards;
         // Sometimes add some headroom to the limit to check that it works even if you're not already right up against the limit
-        int shardsPerNode = (int) Math.ceil((double) totalShardsInIndex / dataNodes) + OpenSearchTestCase.between(0, 10);
+        int shardsPerNode = (int) Math.ceil((double) totalShardsInIndex / dataNodes) + DensityTestCase.between(0, 10);
         int totalCap = shardsPerNode * dataNodes;
 
         int failingIndexShards;
         int failingIndexReplicas;
-        if (dataNodes > 1 && OpenSearchTestCase.frequently()) {
+        if (dataNodes > 1 && DensityTestCase.frequently()) {
             failingIndexShards = Math.max(1, totalCap - totalShardsInIndex);
-            failingIndexReplicas = OpenSearchTestCase.between(1, dataNodes - 1);
+            failingIndexReplicas = DensityTestCase.between(1, dataNodes - 1);
         } else {
-            failingIndexShards = totalCap - totalShardsInIndex + OpenSearchTestCase.between(1, 10);
+            failingIndexShards = totalCap - totalShardsInIndex + DensityTestCase.between(1, 10);
             failingIndexReplicas = 0;
         }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CharacterRunAutomaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.regex.Regex;
+import org.density.common.annotation.PublicApi;
+import org.density.common.regex.Regex;
 
 import java.util.Objects;
 
 /**
  * Describes a system index. Provides the information required to create and maintain the system index.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.16.0")
 public class SystemIndexDescriptor {

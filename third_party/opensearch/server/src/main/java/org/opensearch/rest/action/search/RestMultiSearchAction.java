@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.search;
+package org.density.rest.action.search;
 
-import org.opensearch.action.search.MultiSearchAction;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestCancellableNodeClient;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.MultiSearchAction;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestCancellableNodeClient;
+import org.density.rest.action.RestToXContentListener;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -63,13 +63,13 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
 
 /**
  * Transport action to perform a multi search
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestMultiSearchAction extends BaseRestHandler {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(RestMultiSearchAction.class);

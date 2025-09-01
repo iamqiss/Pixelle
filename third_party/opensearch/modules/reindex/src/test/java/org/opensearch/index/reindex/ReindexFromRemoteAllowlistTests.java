@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.test.DensityTestCase;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -44,13 +44,13 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
-import static org.opensearch.index.reindex.ReindexValidator.buildRemoteAllowlist;
-import static org.opensearch.index.reindex.ReindexValidator.checkRemoteAllowlist;
+import static org.density.index.reindex.ReindexValidator.buildRemoteAllowlist;
+import static org.density.index.reindex.ReindexValidator.checkRemoteAllowlist;
 
 /**
  * Tests the reindex-from-remote allowlist of remotes.
  */
-public class ReindexFromRemoteAllowlistTests extends OpenSearchTestCase {
+public class ReindexFromRemoteAllowlistTests extends DensityTestCase {
 
     private final BytesReference query = new BytesArray("{ \"foo\" : \"bar\" }");
 
@@ -157,7 +157,7 @@ public class ReindexFromRemoteAllowlistTests extends OpenSearchTestCase {
             "Refusing to start because allowlist "
                 + allowlist
                 + " accepts all addresses. "
-                + "This would allow users to reindex-from-remote any URL they like effectively having OpenSearch make HTTP GETs "
+                + "This would allow users to reindex-from-remote any URL they like effectively having Density make HTTP GETs "
                 + "for them.",
             e.getMessage()
         );

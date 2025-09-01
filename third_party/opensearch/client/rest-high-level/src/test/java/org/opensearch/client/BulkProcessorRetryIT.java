@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkProcessor;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkProcessor;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.index.IndexRequest;
+import org.density.common.unit.TimeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.transport.RemoteTransportException;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,7 +56,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class BulkProcessorRetryIT extends OpenSearchRestHighLevelClientTestCase {
+public class BulkProcessorRetryIT extends DensityRestHighLevelClientTestCase {
 
     private static final String INDEX_NAME = "index";
 

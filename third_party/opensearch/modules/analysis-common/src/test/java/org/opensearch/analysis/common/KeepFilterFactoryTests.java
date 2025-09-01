@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -47,11 +47,11 @@ import java.io.StringReader;
 
 import static org.hamcrest.Matchers.instanceOf;
 
-public class KeepFilterFactoryTests extends OpenSearchTokenStreamTestCase {
-    private static final String RESOURCE = "/org/opensearch/analysis/common/keep_analysis.json";
+public class KeepFilterFactoryTests extends DensityTokenStreamTestCase {
+    private static final String RESOURCE = "/org/density/analysis/common/keep_analysis.json";
 
     public void testLoadWithoutSettings() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
             createTempDir(),
             RESOURCE,
             new CommonAnalysisModulePlugin()
@@ -101,7 +101,7 @@ public class KeepFilterFactoryTests extends OpenSearchTokenStreamTestCase {
     }
 
     public void testCaseInsensitiveMapping() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
             createTempDir(),
             RESOURCE,
             new CommonAnalysisModulePlugin()
@@ -116,7 +116,7 @@ public class KeepFilterFactoryTests extends OpenSearchTokenStreamTestCase {
     }
 
     public void testCaseSensitiveMapping() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(
             createTempDir(),
             RESOURCE,
             new CommonAnalysisModulePlugin()

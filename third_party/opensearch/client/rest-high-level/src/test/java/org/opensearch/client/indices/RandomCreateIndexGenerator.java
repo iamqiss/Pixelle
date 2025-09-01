@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
-import static org.opensearch.index.RandomCreateIndexGenerator.randomAlias;
-import static org.opensearch.test.OpenSearchTestCase.randomIntBetween;
+import static org.density.index.RandomCreateIndexGenerator.randomAlias;
+import static org.density.test.DensityTestCase.randomIntBetween;
 
 public class RandomCreateIndexGenerator {
 
@@ -53,7 +53,7 @@ public class RandomCreateIndexGenerator {
             // Create a random server request, and copy its contents into the HLRC request.
             // Because client requests only accept typeless mappings, we must swap out the
             // mapping definition for one that does not contain types.
-            org.opensearch.action.admin.indices.create.CreateIndexRequest serverRequest = org.opensearch.index.RandomCreateIndexGenerator
+            org.density.action.admin.indices.create.CreateIndexRequest serverRequest = org.density.index.RandomCreateIndexGenerator
                 .randomCreateIndexRequest();
             return new CreateIndexRequest(serverRequest.index()).settings(serverRequest.settings())
                 .aliases(serverRequest.aliases())
@@ -69,7 +69,7 @@ public class RandomCreateIndexGenerator {
     public static XContentBuilder randomMapping() throws IOException {
         XContentBuilder builder = XContentFactory.jsonBuilder();
         builder.startObject();
-        org.opensearch.index.RandomCreateIndexGenerator.randomMappingFields(builder, true);
+        org.density.index.RandomCreateIndexGenerator.randomMappingFields(builder, true);
         builder.endObject();
         return builder;
     }

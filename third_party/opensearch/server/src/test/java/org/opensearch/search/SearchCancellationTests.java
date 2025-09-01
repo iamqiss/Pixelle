@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -48,13 +48,13 @@ import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.automaton.CompiledAutomaton;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -66,7 +66,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchCancellationTests extends OpenSearchTestCase {
+public class SearchCancellationTests extends DensityTestCase {
 
     private static final String STRING_FIELD_NAME = "foo";
     private static final String POINT_FIELD_NAME = "point";

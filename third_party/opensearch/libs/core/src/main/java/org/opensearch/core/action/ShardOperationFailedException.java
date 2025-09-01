@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.action;
+package org.density.core.action;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContentObject;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContentObject;
 
 import java.util.Objects;
 
 /**
  * An exception indicating that a failure occurred performing an operation on the shard.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ShardOperationFailedException implements Writeable, ToXContentObject {
 

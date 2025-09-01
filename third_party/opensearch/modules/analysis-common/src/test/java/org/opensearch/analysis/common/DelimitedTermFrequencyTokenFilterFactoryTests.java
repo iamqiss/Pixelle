@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.TermFrequencyAttribute;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.StringReader;
 
-public class DelimitedTermFrequencyTokenFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class DelimitedTermFrequencyTokenFilterFactoryTests extends DensityTokenStreamTestCase {
 
     public void testDefault() throws Exception {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             Settings.builder()
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .put("index.analysis.filter.my_delimited_term_freq.type", "delimited_term_freq")
@@ -36,7 +36,7 @@ public class DelimitedTermFrequencyTokenFilterFactoryTests extends OpenSearchTok
     }
 
     public void testDelimiter() throws Exception {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromSettings(
             Settings.builder()
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .put("index.analysis.filter.my_delimited_term_freq.type", "delimited_term_freq")
@@ -63,7 +63,7 @@ public class DelimitedTermFrequencyTokenFilterFactoryTests extends OpenSearchTok
         assertEquals("Setting [delimiter] must be a single, non-null character. [^^] was provided.", ex.getMessage());
     }
 
-    private void doTest(OpenSearchTestCase.TestAnalysis analysis, String source) throws Exception {
+    private void doTest(DensityTestCase.TestAnalysis analysis, String source) throws Exception {
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("my_delimited_term_freq");
         Tokenizer tokenizer = new WhitespaceTokenizer();
         tokenizer.setReader(new StringReader(source));

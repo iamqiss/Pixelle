@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.document.LatLonPoint;
@@ -38,32 +38,32 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.GeoPolygonDecomposer;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.GeoShapeUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.GeometryVisitor;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.geo.GeoPolygonDecomposer;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.GeoShapeUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.GeometryVisitor;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.geometry.ShapeType;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.MappedFieldType;
 
 import java.util.ArrayList;
 
 /**
  * Query processor for lucene 6 LatLonPoint queries
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class VectorGeoPointShapeQueryProcessor {
 
@@ -152,7 +152,7 @@ public class VectorGeoPointShapeQueryProcessor {
         }
 
         @Override
-        public Query visit(org.opensearch.geometry.Line line) {
+        public Query visit(org.density.geometry.Line line) {
             throw new QueryShardException(context, "Field [" + fieldName + "] does not support " + GeoShapeType.LINESTRING + " queries");
         }
 
@@ -191,7 +191,7 @@ public class VectorGeoPointShapeQueryProcessor {
 
         @Override
         public Query visit(MultiPolygon multiPolygon) {
-            ArrayList<org.opensearch.geometry.Polygon> collector = new ArrayList<>();
+            ArrayList<org.density.geometry.Polygon> collector = new ArrayList<>();
             GeoPolygonDecomposer.decomposeMultiPolygon(multiPolygon, true, collector);
             return visit(collector);
         }
@@ -204,7 +204,7 @@ public class VectorGeoPointShapeQueryProcessor {
 
         @Override
         public Query visit(Polygon polygon) {
-            ArrayList<org.opensearch.geometry.Polygon> collector = new ArrayList<>();
+            ArrayList<org.density.geometry.Polygon> collector = new ArrayList<>();
             GeoPolygonDecomposer.decomposePolygon(polygon, true, collector);
             return visit(collector);
         }

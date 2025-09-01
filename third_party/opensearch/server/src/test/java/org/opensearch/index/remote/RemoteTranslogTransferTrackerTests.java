@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
 
-public class RemoteTranslogTransferTrackerTests extends OpenSearchTestCase {
+public class RemoteTranslogTransferTrackerTests extends DensityTestCase {
     private ShardId shardId;
     private RemoteTranslogTransferTracker tracker;
 

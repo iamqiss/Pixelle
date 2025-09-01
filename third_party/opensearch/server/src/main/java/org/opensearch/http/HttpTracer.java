@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
+import org.density.common.Nullable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
 
 import java.util.List;
 
 /**
  * Http request trace logger. See {@link #maybeTraceRequest(RestRequest, Exception)} for details.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class HttpTracer {
 

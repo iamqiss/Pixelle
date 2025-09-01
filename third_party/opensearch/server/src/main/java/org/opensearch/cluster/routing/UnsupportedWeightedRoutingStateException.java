@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * Thrown when failing to update the routing weight due to an unsupported state. See {@link WeightedRoutingService} for more details.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class UnsupportedWeightedRoutingStateException extends OpenSearchException {
+public class UnsupportedWeightedRoutingStateException extends DensityException {
     public UnsupportedWeightedRoutingStateException(StreamInput in) throws IOException {
         super(in);
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterGetSettingsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.cluster.RemoteInfoRequest;
-import org.opensearch.client.cluster.RemoteInfoResponse;
-import org.opensearch.client.indices.ComponentTemplatesExistRequest;
-import org.opensearch.client.indices.DeleteComponentTemplateRequest;
-import org.opensearch.client.indices.GetComponentTemplatesRequest;
-import org.opensearch.client.indices.GetComponentTemplatesResponse;
-import org.opensearch.client.indices.PutComponentTemplateRequest;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
+import org.density.action.admin.cluster.health.ClusterHealthRequest;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterGetSettingsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.cluster.RemoteInfoRequest;
+import org.density.client.cluster.RemoteInfoResponse;
+import org.density.client.indices.ComponentTemplatesExistRequest;
+import org.density.client.indices.DeleteComponentTemplateRequest;
+import org.density.client.indices.GetComponentTemplatesRequest;
+import org.density.client.indices.GetComponentTemplatesResponse;
+import org.density.client.indices.PutComponentTemplateRequest;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.cluster.service.ClusterApplierService;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.common.Nullable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transports;
+import org.density.cluster.service.ClusterApplierService;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.common.Nullable;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transports;
 
 import java.util.Objects;
 import java.util.concurrent.CancellationException;
@@ -49,7 +49,7 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 /**
  * Base future class.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BaseFuture<V> implements Future<V> {
 
@@ -182,7 +182,7 @@ public abstract class BaseFuture<V> implements Future<V> {
         // call stack, so we rethrow it.
 
         // we want to notify the listeners we have with errors as well, as it breaks
-        // how we work in OpenSearch in terms of using assertions
+        // how we work in Density in terms of using assertions
         // if (throwable instanceof Error) {
         // throw (Error) throwable;
         // }

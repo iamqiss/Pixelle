@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ToXContentFragment;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ToXContentFragment;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * Base moving average model class
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MovAvgModel implements NamedWriteable, ToXContentFragment {
 
@@ -159,7 +159,7 @@ public abstract class MovAvgModel implements NamedWriteable, ToXContentFragment 
     /**
      * Abstract class which also provides some concrete parsing functionality.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class AbstractModelParser {
         /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class RoundingTests extends OpenSearchTestCase {
+public class RoundingTests extends DensityTestCase {
 
     public void testUTCTimeUnitRounding() {
         Rounding tzRounding = Rounding.builder(Rounding.DateTimeUnit.MONTH_OF_YEAR).build();
@@ -235,7 +235,7 @@ public class RoundingTests extends OpenSearchTestCase {
 
     /**
      * Randomized test on TimeUnitRounding. Test uses random
-     * {@link org.opensearch.common.Rounding.DateTimeUnit} and {@link ZoneId} and often (50% of the time)
+     * {@link org.density.common.Rounding.DateTimeUnit} and {@link ZoneId} and often (50% of the time)
      * chooses test dates that are exactly on or close to offset changes (e.g.
      * DST) in the chosen time zone.
      * <p>
@@ -1149,7 +1149,7 @@ public class RoundingTests extends OpenSearchTestCase {
     }
 
     /**
-     * perform a number on assertions and checks on {@link org.opensearch.common.Rounding.TimeUnitRounding} intervals
+     * perform a number on assertions and checks on {@link org.density.common.Rounding.TimeUnitRounding} intervals
      * @param rounded the expected low end of the rounding interval
      * @param unrounded a date in the interval to be checked for rounding
      * @param nextRoundingValue the expected upper end of the rounding interval

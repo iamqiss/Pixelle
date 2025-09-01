@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -45,65 +45,65 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.tests.store.BaseDirectoryWrapper;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.store.IndexOutputOutputStream;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.RecoveryEngineException;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardRelocatedException;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.RunUnderPrimaryPermit;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.test.CorruptionUtils;
-import org.opensearch.test.DummyShardLock;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.FixedExecutorBuilder;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.action.StepListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Numbers;
+import org.density.common.Randomness;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.store.IndexOutputOutputStream;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.RecoveryEngineException;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardRelocatedException;
+import org.density.index.shard.IndexShardState;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.translog.Translog;
+import org.density.indices.RunUnderPrimaryPermit;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.test.CorruptionUtils;
+import org.density.test.DummyShardLock;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.FixedExecutorBuilder;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -150,10 +150,10 @@ import static org.mockito.Mockito.when;
 /**
  * This covers test cases for {@link RecoverySourceHandler} and {@link LocalStorePeerRecoverySourceHandler}.
  */
-public class LocalStorePeerRecoverySourceHandlerTests extends OpenSearchTestCase {
+public class LocalStorePeerRecoverySourceHandlerTests extends DensityTestCase {
     private static final IndexSettings INDEX_SETTINGS = IndexSettingsModule.newIndexSettings(
         "index",
-        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.opensearch.Version.CURRENT).build()
+        Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, org.density.Version.CURRENT).build()
     );
     private final ShardId shardId = new ShardId(INDEX_SETTINGS.getIndex(), 1);
     private final ClusterSettings service = new ClusterSettings(Settings.EMPTY, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
@@ -761,7 +761,7 @@ public class LocalStorePeerRecoverySourceHandlerTests extends OpenSearchTestCase
         when(shard.seqNoStats()).thenReturn(mock(SeqNoStats.class));
         when(shard.segmentStats(anyBoolean(), anyBoolean())).thenReturn(mock(SegmentsStats.class));
         when(shard.isRelocatedPrimary()).thenReturn(false);
-        final org.opensearch.index.shard.ReplicationGroup replicationGroup = mock(org.opensearch.index.shard.ReplicationGroup.class);
+        final org.density.index.shard.ReplicationGroup replicationGroup = mock(org.density.index.shard.ReplicationGroup.class);
         final IndexShardRoutingTable routingTable = mock(IndexShardRoutingTable.class);
         when(routingTable.getByAllocationId(anyString())).thenReturn(null);
         when(shard.getReplicationGroup()).thenReturn(replicationGroup);
@@ -863,7 +863,7 @@ public class LocalStorePeerRecoverySourceHandlerTests extends OpenSearchTestCase
         when(shard.segmentStats(anyBoolean(), anyBoolean())).thenReturn(mock(SegmentsStats.class));
         when(shard.isRelocatedPrimary()).thenReturn(false);
         when(shard.getRetentionLeases()).thenReturn(mock(RetentionLeases.class));
-        final org.opensearch.index.shard.ReplicationGroup replicationGroup = mock(org.opensearch.index.shard.ReplicationGroup.class);
+        final org.density.index.shard.ReplicationGroup replicationGroup = mock(org.density.index.shard.ReplicationGroup.class);
         final IndexShardRoutingTable routingTable = mock(IndexShardRoutingTable.class);
         final ShardRouting shardRouting = mock(ShardRouting.class);
         when(shardRouting.initializing()).thenReturn(true);
@@ -1408,7 +1408,7 @@ public class LocalStorePeerRecoverySourceHandlerTests extends OpenSearchTestCase
         final byte[] source = "{}".getBytes(StandardCharsets.UTF_8);
         final Set<Long> seqNos = new HashSet<>();
         for (int i = 0; i < numOps; i++) {
-            final long seqNo = randomValueOtherThanMany(n -> seqNos.add(n) == false, OpenSearchTestCase::randomNonNegativeLong);
+            final long seqNo = randomValueOtherThanMany(n -> seqNos.add(n) == false, DensityTestCase::randomNonNegativeLong);
             final Translog.Operation op;
             if (randomBoolean()) {
                 op = new Translog.Index("id", seqNo, randomNonNegativeLong(), randomNonNegativeLong(), source, null, -1);

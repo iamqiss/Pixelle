@@ -3,7 +3,7 @@ plugins {
 }
 
 base {
-  group = 'org.opensearch'
+  group = 'org.density'
   version = '1.0.0-SNAPSHOT'
 }
 

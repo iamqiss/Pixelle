@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
-import org.opensearch.index.IngestionConsumerFactory;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.index.engine.NRTReplicationEngine;
+import org.density.index.IngestionConsumerFactory;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.IngestionEngine;
+import org.density.index.engine.NRTReplicationEngine;
 
 import java.util.Objects;
 

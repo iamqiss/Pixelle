@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication.common;
+package org.density.indices.replication.common;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import java.io.IOException;
  * 2. Replication event time: Total time taken by replica to sync after primary published the checkpoint
  *                     (excludes the time spent by primary for uploading the segments to remote store).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationLagTimer extends ReplicationTimer {
     private long creationTime;

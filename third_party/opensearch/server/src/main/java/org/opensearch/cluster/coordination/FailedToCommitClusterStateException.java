@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
 /**
  * Thrown when failing to publish a cluster state. See {@link ClusterStatePublisher} for more details.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class FailedToCommitClusterStateException extends OpenSearchException {
+public class FailedToCommitClusterStateException extends DensityException {
 
     public FailedToCommitClusterStateException(StreamInput in) throws IOException {
         super(in);

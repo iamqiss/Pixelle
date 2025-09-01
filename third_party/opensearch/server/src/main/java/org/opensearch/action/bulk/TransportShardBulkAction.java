@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,88 +26,88 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.MessageSupplier;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.replication.ReplicationMode;
-import org.opensearch.action.support.replication.ReplicationOperation;
-import org.opensearch.action.support.replication.ReplicationTask;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.action.support.replication.TransportWriteAction;
-import org.opensearch.action.update.UpdateHelper;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.action.index.MappingUpdatedAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.SegmentReplicationPressureService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.MapperException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.remote.RemoteStorePressureService;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.ActionRunnable;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ChannelActionListener;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.replication.ReplicationMode;
+import org.density.action.support.replication.ReplicationOperation;
+import org.density.action.support.replication.ReplicationTask;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.action.support.replication.TransportWriteAction;
+import org.density.action.update.UpdateHelper;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.action.index.MappingUpdatedAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.collect.Tuple;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.IndexingPressureService;
+import org.density.index.SegmentReplicationPressureService;
+import org.density.index.engine.Engine;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.MapperException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.remote.RemoteStorePressureService;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.node.NodeClosedException;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
+import org.density.transport.client.transport.NoNodeAvailableException;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -121,7 +121,7 @@ import java.util.function.LongSupplier;
 /**
  * Performs shard-level bulk (index, delete or update) operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportShardBulkAction extends TransportWriteAction<BulkShardRequest, BulkShardRequest, BulkShardResponse> {
 
@@ -225,7 +225,7 @@ public class TransportShardBulkAction extends TransportWriteAction<BulkShardRequ
      * aware that the primary has changed. This helps achieve the same. More details in java doc of
      * {@link TransportShardBulkAction#transportPrimaryTermValidationAction}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class PrimaryTermValidationReplicaAction extends AbstractRunnable implements ActionListener<Releasable> {
 
@@ -290,7 +290,7 @@ public class TransportShardBulkAction extends TransportWriteAction<BulkShardRequ
     /**
      * Primary term validation request sent to a specific allocation id
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static final class PrimaryTermValidationRequest extends TransportRequest {
 
@@ -362,10 +362,10 @@ public class TransportShardBulkAction extends TransportWriteAction<BulkShardRequ
     }
 
     /**
-     * This {@link org.opensearch.action.support.replication.TransportReplicationAction.ReplicasProxy} implementation is
+     * This {@link org.density.action.support.replication.TransportReplicationAction.ReplicasProxy} implementation is
      * used for primary term validation and is only relevant for TransportShardBulkAction replication action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private final class PrimaryTermValidationProxy extends WriteActionReplicasProxy {
 

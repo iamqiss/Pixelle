@@ -1,15 +1,15 @@
-package org.opensearch.lucene.util;
+package org.density.lucene.util;
 
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.Numbers;
+import org.density.common.Numbers;
 
 import java.util.Arrays;
 import java.util.HashSet;

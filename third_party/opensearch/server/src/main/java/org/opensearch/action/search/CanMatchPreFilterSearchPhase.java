@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchService.CanMatchResponse;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.MinAndMax;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.transport.Transport;
+import org.density.cluster.ClusterState;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.common.lease.Releasable;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchService.CanMatchResponse;
+import org.density.search.SearchShardTarget;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.MinAndMax;
+import org.density.search.sort.SortOrder;
+import org.density.telemetry.tracing.Tracer;
+import org.density.transport.Transport;
 
 import java.util.Comparator;
 import java.util.List;
@@ -69,7 +69,7 @@ import java.util.stream.Stream;
  * sort them according to the provided order. This can be useful for instance to ensure that shards that contain recent
  * data are executed first when sorting by descending timestamp.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class CanMatchPreFilterSearchPhase extends AbstractSearchAsyncAction<CanMatchResponse> {
 
@@ -212,7 +212,7 @@ final class CanMatchPreFilterSearchPhase extends AbstractSearchAsyncAction<CanMa
     /**
      * Inner class for determining if canMatch search phase results
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class CanMatchSearchPhaseResults extends SearchPhaseResults<CanMatchResponse> {
         private final FixedBitSet possibleMatches;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.client.tasks.CancelTasksRequest;
-import org.opensearch.client.tasks.CancelTasksResponse;
-import org.opensearch.client.tasks.GetTaskRequest;
-import org.opensearch.client.tasks.GetTaskResponse;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.client.tasks.CancelTasksRequest;
+import org.density.client.tasks.CancelTasksResponse;
+import org.density.client.tasks.GetTaskRequest;
+import org.density.client.tasks.GetTaskResponse;
+import org.density.core.action.ActionListener;
 
 import java.io.IOException;
 import java.util.Optional;

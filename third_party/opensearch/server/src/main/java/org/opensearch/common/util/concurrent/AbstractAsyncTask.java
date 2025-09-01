@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.Randomness;
+import org.density.common.unit.TimeValue;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.util.Objects;
@@ -46,7 +46,7 @@ import java.util.function.Supplier;
 /**
  * A base class for tasks that need to repeat.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractAsyncTask implements Runnable, Closeable {
 

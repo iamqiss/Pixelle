@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import joptsimple.internal.Strings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.plugins.MapperPlugin;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MappingTransformerRegistryTests extends OpenSearchTestCase {
+public class MappingTransformerRegistryTests extends DensityTestCase {
     @Mock
     private MapperPlugin mapperPlugin;
     @Mock

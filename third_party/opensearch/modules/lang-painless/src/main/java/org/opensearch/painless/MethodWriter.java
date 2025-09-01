@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.painless.lookup.PainlessCast;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.lookup.def;
+import org.density.painless.lookup.PainlessCast;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.lookup.def;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
@@ -50,59 +50,59 @@ import java.util.BitSet;
 import java.util.Deque;
 import java.util.List;
 
-import static org.opensearch.painless.WriterConstants.CHAR_TO_STRING;
-import static org.opensearch.painless.WriterConstants.DEF_BOOTSTRAP_HANDLE;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_BOOLEAN;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_BYTE_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_BYTE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_CHARACTER_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_CHARACTER_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_DOUBLE_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_DOUBLE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_FLOAT_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_FLOAT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_INTEGER_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_INTEGER_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_LONG_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_LONG_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_SHORT_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_B_SHORT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_BOOLEAN;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_BYTE_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_BYTE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_CHAR_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_CHAR_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_DOUBLE_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_DOUBLE_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_FLOAT_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_FLOAT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_INT_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_INT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_LONG_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_LONG_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_SHORT_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_P_SHORT_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_STRING_EXPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_TO_STRING_IMPLICIT;
-import static org.opensearch.painless.WriterConstants.DEF_UTIL_TYPE;
-import static org.opensearch.painless.WriterConstants.INDY_STRING_CONCAT_BOOTSTRAP_HANDLE;
-import static org.opensearch.painless.WriterConstants.LAMBDA_BOOTSTRAP_HANDLE;
-import static org.opensearch.painless.WriterConstants.MAX_INDY_STRING_CONCAT_ARGS;
-import static org.opensearch.painless.WriterConstants.PAINLESS_ERROR_TYPE;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_BOOLEAN;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_CHAR;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_DOUBLE;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_FLOAT;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_INT;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_LONG;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_OBJECT;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_APPEND_STRING;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_CONSTRUCTOR;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_TOSTRING;
-import static org.opensearch.painless.WriterConstants.STRINGBUILDER_TYPE;
-import static org.opensearch.painless.WriterConstants.STRING_TO_CHAR;
-import static org.opensearch.painless.WriterConstants.STRING_TYPE;
-import static org.opensearch.painless.WriterConstants.UTILITY_TYPE;
+import static org.density.painless.WriterConstants.CHAR_TO_STRING;
+import static org.density.painless.WriterConstants.DEF_BOOTSTRAP_HANDLE;
+import static org.density.painless.WriterConstants.DEF_TO_B_BOOLEAN;
+import static org.density.painless.WriterConstants.DEF_TO_B_BYTE_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_BYTE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_CHARACTER_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_CHARACTER_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_DOUBLE_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_DOUBLE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_FLOAT_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_FLOAT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_INTEGER_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_INTEGER_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_LONG_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_LONG_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_SHORT_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_B_SHORT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_BOOLEAN;
+import static org.density.painless.WriterConstants.DEF_TO_P_BYTE_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_BYTE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_CHAR_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_CHAR_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_DOUBLE_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_DOUBLE_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_FLOAT_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_FLOAT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_INT_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_INT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_LONG_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_LONG_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_SHORT_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_P_SHORT_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_STRING_EXPLICIT;
+import static org.density.painless.WriterConstants.DEF_TO_STRING_IMPLICIT;
+import static org.density.painless.WriterConstants.DEF_UTIL_TYPE;
+import static org.density.painless.WriterConstants.INDY_STRING_CONCAT_BOOTSTRAP_HANDLE;
+import static org.density.painless.WriterConstants.LAMBDA_BOOTSTRAP_HANDLE;
+import static org.density.painless.WriterConstants.MAX_INDY_STRING_CONCAT_ARGS;
+import static org.density.painless.WriterConstants.PAINLESS_ERROR_TYPE;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_BOOLEAN;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_CHAR;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_DOUBLE;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_FLOAT;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_INT;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_LONG;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_OBJECT;
+import static org.density.painless.WriterConstants.STRINGBUILDER_APPEND_STRING;
+import static org.density.painless.WriterConstants.STRINGBUILDER_CONSTRUCTOR;
+import static org.density.painless.WriterConstants.STRINGBUILDER_TOSTRING;
+import static org.density.painless.WriterConstants.STRINGBUILDER_TYPE;
+import static org.density.painless.WriterConstants.STRING_TO_CHAR;
+import static org.density.painless.WriterConstants.STRING_TYPE;
+import static org.density.painless.WriterConstants.UTILITY_TYPE;
 
 /**
  * Extension of {@link GeneratorAdapter} with some utility methods.

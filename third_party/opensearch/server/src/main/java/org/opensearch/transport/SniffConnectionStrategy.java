@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.admin.cluster.state.ClusterStateAction;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.StepListener;
+import org.density.action.admin.cluster.state.ClusterStateAction;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.Booleans;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -73,12 +73,12 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.intSetting;
 
 /**
  * Sniff for initial seed nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SniffConnectionStrategy extends RemoteConnectionStrategy {
 
@@ -96,8 +96,8 @@ public class SniffConnectionStrategy extends RemoteConnectionStrategy {
     );
 
     /**
-     * A proxy address for the remote cluster. By default this is not set, meaning that OpenSearch will connect directly to the nodes in
-     * the remote cluster using their publish addresses. If this setting is set to an IP address or hostname then OpenSearch will connect
+     * A proxy address for the remote cluster. By default this is not set, meaning that Density will connect directly to the nodes in
+     * the remote cluster using their publish addresses. If this setting is set to an IP address or hostname then Density will connect
      * to the nodes in the remote cluster using this address instead. Use of this setting is not recommended and it is deliberately
      * undocumented as it does not work well with all proxies.
      */
@@ -565,7 +565,7 @@ public class SniffConnectionStrategy extends RemoteConnectionStrategy {
     /**
      * Information about the sniff mode
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SniffModeInfo implements RemoteConnectionInfo.ModeInfo {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.validate.query;
+package org.density.action.admin.indices.validate.query;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.core.action.ActionListener;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TransportValidateQueryActionTests extends OpenSearchSingleNodeTestCase {
+public class TransportValidateQueryActionTests extends DensitySingleNodeTestCase {
 
     /*
      * This test covers a fallthrough bug that we had, where if the index we were validating against did not exist, we would invoke the

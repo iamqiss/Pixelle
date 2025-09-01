@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.reload;
+package org.density.action.admin.cluster.node.reload;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.Supplier;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.plugins.ReloadablePlugin;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.FailedNodeException;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.plugins.PluginsService;
+import org.density.plugins.ReloadablePlugin;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Transport action for reloading OpenSearch Secure Settings
+ * Transport action for reloading Density Secure Settings
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportNodesReloadSecureSettingsAction extends TransportNodesAction<
     NodesReloadSecureSettingsRequest,
@@ -126,7 +126,7 @@ public class TransportNodesReloadSecureSettingsAction extends TransportNodesActi
         if (request.hasPassword() && isNodeLocal(request) == false && isNodeTransportTLSEnabled() == false) {
             request.closePassword();
             listener.onFailure(
-                new OpenSearchException(
+                new DensityException(
                     "Secure settings cannot be updated cluster wide when TLS for the transport layer"
                         + " is not enabled. Enable TLS or use the API with a `_local` filter on each node."
                 )
@@ -186,7 +186,7 @@ public class TransportNodesReloadSecureSettingsAction extends TransportNodesActi
     /**
      * Inner Node Request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeRequest extends TransportRequest {
 

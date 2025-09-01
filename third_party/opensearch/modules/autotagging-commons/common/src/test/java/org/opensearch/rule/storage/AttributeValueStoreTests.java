@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.storage;
+package org.density.rule.storage;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttributeValueStoreTests extends OpenSearchTestCase {
+public class AttributeValueStoreTests extends DensityTestCase {
 
     AttributeValueStore<String, String> subjectUnderTest;
     final static String ALPHA_NUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

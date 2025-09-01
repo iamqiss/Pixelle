@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
+import org.density.Version;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -48,7 +48,7 @@ import java.util.Optional;
 /**
  * A transport channel allows to send a response to a request on the channel.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @PublicApi(since = "1.0.0")
 public interface TransportChannel {

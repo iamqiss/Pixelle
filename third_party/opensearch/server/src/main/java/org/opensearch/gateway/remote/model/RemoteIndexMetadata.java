@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.repositories.blobstore.ChecksumBlobStoreFormat;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.io.Streams;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.remote.BlobPathParameters;
+import org.density.core.compress.Compressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadata;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.repositories.blobstore.ChecksumBlobStoreFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.METADATA_NAME_PLAIN_FORMAT;
+import static org.density.gateway.remote.RemoteClusterStateUtils.METADATA_NAME_PLAIN_FORMAT;
 
 /**
  * Wrapper class for uploading/downloading {@link IndexMetadata} to/from remote blob store

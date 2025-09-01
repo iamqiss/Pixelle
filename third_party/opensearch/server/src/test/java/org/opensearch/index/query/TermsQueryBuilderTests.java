@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
@@ -48,20 +48,20 @@ import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.DensityException;
+import org.density.action.get.GetRequest;
+import org.density.action.get.GetResponse;
+import org.density.common.document.DocumentField;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResult;
+import org.density.indices.TermsLookup;
+import org.density.test.AbstractQueryTestCase;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 
@@ -80,7 +80,7 @@ import java.util.stream.Collectors;
 
 import org.roaringbitmap.RoaringBitmap;
 
-import static org.opensearch.index.query.BoolQueryBuilderTests.getIndexSearcher;
+import static org.density.index.query.BoolQueryBuilderTests.getIndexSearcher;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.instanceOf;
@@ -272,7 +272,7 @@ public class TermsQueryBuilderTests extends AbstractQueryTestCase<TermsQueryBuil
             builder.endObject();
             json = builder.toString();
         } catch (IOException ex) {
-            throw new OpenSearchException("boom", ex);
+            throw new DensityException("boom", ex);
         }
         Map<String, DocumentField> documentField = new HashMap<>();
         List<Object> nonNullTerms = new ArrayList<>();
@@ -330,7 +330,7 @@ public class TermsQueryBuilderTests extends AbstractQueryTestCase<TermsQueryBuil
     public void testFromJson() throws IOException {
         String json = "{\n"
             + "  \"terms\" : {\n"
-            + "    \"user\" : [ \"foobar\", \"opensearch\" ],\n"
+            + "    \"user\" : [ \"foobar\", \"density\" ],\n"
             + "    \"boost\" : 1.0\n"
             + "  }\n"
             + "}";

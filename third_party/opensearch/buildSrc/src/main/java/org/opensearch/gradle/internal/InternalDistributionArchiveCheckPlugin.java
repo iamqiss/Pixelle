@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.internal;
+package org.density.gradle.internal;
 
-import org.opensearch.gradle.VersionProperties;
+import org.density.gradle.VersionProperties;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-import static org.opensearch.gradle.util.Util.capitalize;
+import static org.density.gradle.util.Util.capitalize;
 
 public class InternalDistributionArchiveCheckPlugin implements Plugin<Project> {
 
@@ -107,13 +107,13 @@ public class InternalDistributionArchiveCheckPlugin implements Plugin<Project> {
                 @Override
                 public void execute(Task task) {
                     final List<String> noticeLines = Arrays.asList(
-                        "OpenSearch (https://opensearch.org/)",
-                        "Copyright OpenSearch Contributors"
+                        "Density (https://density.org/)",
+                        "Copyright Density Contributors"
                     );
                     final Path noticePath = checkExtraction.get()
                         .getDestinationDir()
                         .toPath()
-                        .resolve("opensearch-" + VersionProperties.getOpenSearch() + "/NOTICE.txt");
+                        .resolve("density-" + VersionProperties.getDensity() + "/NOTICE.txt");
                     assertLinesInFile(noticePath, noticeLines);
                 }
             });
@@ -133,7 +133,7 @@ public class InternalDistributionArchiveCheckPlugin implements Plugin<Project> {
                         final Path licensePath = checkExtraction.get()
                             .getDestinationDir()
                             .toPath()
-                            .resolve("opensearch-" + VersionProperties.getOpenSearch() + "/LICENSE.txt");
+                            .resolve("density-" + VersionProperties.getDensity() + "/LICENSE.txt");
                         assertLinesInFile(licensePath, licenseLines);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();

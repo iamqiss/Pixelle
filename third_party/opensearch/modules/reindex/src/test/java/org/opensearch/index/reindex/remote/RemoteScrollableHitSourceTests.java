@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex.remote;
+package org.density.index.reindex.remote;
 
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClientBuilder;
@@ -55,32 +55,32 @@ import org.apache.hc.core5.http.nio.HandlerFactory;
 import org.apache.hc.core5.http.protocol.HttpContext;
 import org.apache.hc.core5.io.CloseMode;
 import org.apache.hc.core5.reactor.IOReactorStatus;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.Version;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.http.HttpUriRequestProducer;
-import org.opensearch.client.nio.HeapBufferedAsyncResponseConsumer;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.index.reindex.RejectAwareActionListener;
-import org.opensearch.index.reindex.ScrollableHitSource;
-import org.opensearch.index.reindex.ScrollableHitSource.Response;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.LegacyESVersion;
+import org.density.DensityStatusException;
+import org.density.Version;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.search.SearchRequest;
+import org.density.client.ResponseException;
+import org.density.client.RestClient;
+import org.density.client.http.HttpUriRequestProducer;
+import org.density.client.nio.HeapBufferedAsyncResponseConsumer;
+import org.density.common.io.Streams;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.rest.RestStatus;
+import org.density.core.util.FileSystemUtils;
+import org.density.index.reindex.RejectAwareActionListener;
+import org.density.index.reindex.ScrollableHitSource;
+import org.density.index.reindex.ScrollableHitSource.Response;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -102,8 +102,8 @@ import java.util.stream.Stream;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueMinutes;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueMinutes;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
@@ -112,7 +112,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
+public class RemoteScrollableHitSourceTests extends DensityTestCase {
     private static final String FAKE_SCROLL_ID = "DnF1ZXJ5VGhlbkZldGNoBQAAAfakescroll";
     private int retries;
     private ThreadPool threadPool;
@@ -125,7 +125,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        final ExecutorService directExecutor = OpenSearchExecutors.newDirectExecutorService();
+        final ExecutorService directExecutor = DensityExecutors.newDirectExecutorService();
         threadPool = new TestThreadPool(getTestName()) {
             @Override
             public ExecutorService executor(String name) {
@@ -166,7 +166,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
         assertLookupRemoteVersion(LegacyESVersion.fromId(5000099), "main/5_0_0_alpha_3.json");
         // V_5_0_0 since we no longer consider qualifier in Version
         assertLookupRemoteVersion(LegacyESVersion.fromId(5000099), "main/with_unknown_fields.json");
-        assertLookupRemoteVersion(Version.fromId(1000099 ^ Version.MASK), "main/OpenSearch_1_0_0.json");
+        assertLookupRemoteVersion(Version.fromId(1000099 ^ Version.MASK), "main/Density_1_0_0.json");
     }
 
     private void assertLookupRemoteVersion(Version expected, String s) throws Exception {
@@ -241,7 +241,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
     }
 
     /**
-     * Versions of OpenSearch before 2.1.0 don't support sort:_doc and instead need to use search_type=scan. Scan doesn't return
+     * Versions of Density before 2.1.0 don't support sort:_doc and instead need to use search_type=scan. Scan doesn't return
      * documents the first iteration but reindex doesn't like that. So we jump start strait to the next iteration.
      */
     public void testScanJumpStart() throws Exception {
@@ -273,11 +273,11 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
             assertEquals("test", r.getFailures().get(0).getIndex());
             assertEquals((Integer) 0, r.getFailures().get(0).getShardId());
             assertEquals("87A7NvevQxSrEwMbtRCecg", r.getFailures().get(0).getNodeId());
-            assertThat(r.getFailures().get(0).getReason(), instanceOf(OpenSearchRejectedExecutionException.class));
+            assertThat(r.getFailures().get(0).getReason(), instanceOf(DensityRejectedExecutionException.class));
             assertEquals(
-                "rejected execution of org.opensearch.transport.TransportService$5@52d06af2 on "
-                    + "OpenSearchThreadPoolExecutor[search, queue capacity = 1000, org.opensearch.common.util.concurrent."
-                    + "OpenSearchThreadPoolExecutor@778ea553[Running, pool size = 7, active threads = 7, queued tasks = 1000, "
+                "rejected execution of org.density.transport.TransportService$5@52d06af2 on "
+                    + "DensityThreadPoolExecutor[search, queue capacity = 1000, org.density.common.util.concurrent."
+                    + "DensityThreadPoolExecutor@778ea553[Running, pool size = 7, active threads = 7, queued tasks = 1000, "
                     + "completed tasks = 4182]]",
                 r.getFailures().get(0).getReason().getMessage()
             );
@@ -406,7 +406,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
 
         // Successfully get the status without a body
         RestStatus status = randomFrom(RestStatus.values());
-        OpenSearchStatusException wrapped = RemoteScrollableHitSource.wrapExceptionToPreserveStatus(status.getStatus(), null, cause);
+        DensityStatusException wrapped = RemoteScrollableHitSource.wrapExceptionToPreserveStatus(status.getStatus(), null, cause);
         assertEquals(status, wrapped.status());
         assertEquals(cause, wrapped.getCause());
         assertEquals("No error body.", wrapped.getMessage());
@@ -516,13 +516,13 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
             (RejectAwareActionListener<Version> listener) -> sourceWithMockedRemoteCall(false, null, "main/0_20_5.json")
                 .lookupRemoteVersion(listener)
         );
-        assertEquals(e.getMessage(), "Response didn't include supported Content-Type, remote is likely not an OpenSearch instance");
+        assertEquals(e.getMessage(), "Response didn't include supported Content-Type, remote is likely not an Density instance");
     }
 
     public void testInvalidJsonThinksRemoteIsNotES() throws IOException {
         Exception e = expectThrows(RuntimeException.class, () -> sourceWithMockedRemoteCall("some_text.txt").start());
         assertEquals(
-            "Error parsing the response, remote is likely not an OpenSearch instance",
+            "Error parsing the response, remote is likely not an Density instance",
             e.getCause().getCause().getCause().getCause().getMessage()
         );
     }
@@ -531,7 +531,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
         // Use the response from a main action instead of a proper start response to generate a parse error
         Exception e = expectThrows(RuntimeException.class, () -> sourceWithMockedRemoteCall("main/2_3_3.json").start());
         assertEquals(
-            "Error parsing the response, remote is likely not an OpenSearch instance",
+            "Error parsing the response, remote is likely not an Density instance",
             e.getCause().getCause().getCause().getCause().getMessage()
         );
     }
@@ -788,7 +788,7 @@ public class RemoteScrollableHitSourceTests extends OpenSearchTestCase {
     }
 
     ResponseException withResponseCode(int statusCode, String errorMsg) throws IOException {
-        org.opensearch.client.Response mockResponse = Mockito.mock(org.opensearch.client.Response.class);
+        org.density.client.Response mockResponse = Mockito.mock(org.density.client.Response.class);
         Mockito.when(mockResponse.getEntity()).thenReturn(new StringEntity(errorMsg, ContentType.TEXT_PLAIN));
         Mockito.when(mockResponse.getStatusLine()).thenReturn(new StatusLine(new BasicClassicHttpResponse(statusCode, errorMsg)));
         Mockito.when(mockResponse.getRequestLine()).thenReturn(new RequestLine("GET", "/", new ProtocolVersion("https", 1, 1)));

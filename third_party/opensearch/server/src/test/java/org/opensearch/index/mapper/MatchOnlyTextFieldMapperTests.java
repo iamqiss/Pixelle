@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexOptions;
@@ -21,17 +21,17 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.tests.analysis.MockSynonymAnalyzer;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.MatchPhrasePrefixQueryBuilder;
-import org.opensearch.index.query.MatchPhraseQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.SourceFieldMatchQuery;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.search.MatchQuery;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.MatchPhrasePrefixQueryBuilder;
+import org.density.index.query.MatchPhraseQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.SourceFieldMatchQuery;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.search.MatchQuery;
 import org.junit.Before;
 
 import java.io.IOException;

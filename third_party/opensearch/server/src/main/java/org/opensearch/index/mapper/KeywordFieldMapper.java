@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -52,22 +52,22 @@ import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.compositeindex.datacube.DimensionType;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityProvider;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.unit.Fuzziness;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.compositeindex.datacube.DimensionType;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.SortedSetOrdinalsIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityProvider;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -79,12 +79,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 
 /**
  * A field mapper for keywords. This mapper accepts strings and indexes them as-is.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class KeywordFieldMapper extends ParametrizedFieldMapper {
 
@@ -93,7 +93,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * Default parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final FieldType FIELD_TYPE = new FieldType();
@@ -109,7 +109,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * The keyword field for the field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class KeywordField extends Field {
 
@@ -126,7 +126,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * The builder for the field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -305,7 +305,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for keyword fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class KeywordFieldType extends StringFieldType {
 
@@ -532,7 +532,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
             QueryShardContext context
         ) {
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[prefix] queries cannot be executed when '"
                         + ALLOW_EXPENSIVE_QUERIES.getKey()
                         + "' is set to false. For optimised prefix queries on text "
@@ -578,7 +578,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
             QueryShardContext context
         ) {
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[regexp] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to " + "false."
                 );
             }
@@ -614,7 +614,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
         @Override
         public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper, QueryShardContext context) {
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[range] queries on [text] or [keyword] fields cannot be executed when '"
                         + ALLOW_EXPENSIVE_QUERIES.getKey()
                         + "' is set to false."
@@ -670,7 +670,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
         ) {
             failIfNotIndexedAndNoDocValues();
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[fuzzy] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to " + "false."
                 );
             }
@@ -711,7 +711,7 @@ public final class KeywordFieldMapper extends ParametrizedFieldMapper {
             QueryShardContext context
         ) {
             if (context.allowExpensiveQueries() == false) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "[wildcard] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to " + "false."
                 );
             }

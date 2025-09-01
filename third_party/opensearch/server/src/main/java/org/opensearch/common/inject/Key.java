@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,16 +23,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.internal.Annotations;
-import org.opensearch.common.inject.internal.MoreTypes;
-import org.opensearch.common.inject.internal.ToStringBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.internal.Annotations;
+import org.density.common.inject.internal.MoreTypes;
+import org.density.common.inject.internal.ToStringBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -60,7 +60,7 @@ import java.util.Objects;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Key<T> {
@@ -330,7 +330,7 @@ public class Key<T> {
     /**
      * Strategy for annotations
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface AnnotationStrategy {
         Annotation getAnnotation();
@@ -423,7 +423,7 @@ public class Key<T> {
     /**
      * Strategy for an annotation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     // this class not test-covered
     static class AnnotationInstanceStrategy implements AnnotationStrategy {
@@ -478,7 +478,7 @@ public class Key<T> {
     /**
      * Type of annotation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AnnotationTypeStrategy implements AnnotationStrategy {
 

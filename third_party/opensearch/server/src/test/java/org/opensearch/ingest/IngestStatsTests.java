@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.MapBuilder;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.metrics.OperationStats;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -46,7 +46,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class IngestStatsTests extends OpenSearchTestCase {
+public class IngestStatsTests extends DensityTestCase {
 
     public void testSerialization() throws IOException {
         OperationStats totalStats = new OperationStats(50, 100, 200, 300);

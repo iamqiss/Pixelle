@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.mapper;
+package org.density.plugin.mapper;
 
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.fetch.subphase.highlight.AnnotatedTextHighlighter;
-import org.opensearch.search.fetch.subphase.highlight.Highlighter;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.search.fetch.subphase.highlight.AnnotatedTextHighlighter;
+import org.density.search.fetch.subphase.highlight.Highlighter;
 
 import java.util.Collections;
 import java.util.Map;

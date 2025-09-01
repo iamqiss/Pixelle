@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
@@ -21,12 +21,12 @@ import org.apache.lucene.search.MultiPhraseQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.SourceFieldMatchQuery;
+import org.density.Version;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.SourceFieldMatchQuery;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import java.util.function.Function;
 
 /**
  * A specialized type of TextFieldMapper which disables the positions and norms to save on storage and executes phrase queries, which requires
- * positional data, in a slightly less efficient manner using the {@link  org.opensearch.index.query.SourceFieldMatchQuery}.
+ * positional data, in a slightly less efficient manner using the {@link  org.density.index.query.SourceFieldMatchQuery}.
  */
 public class MatchOnlyTextFieldMapper extends TextFieldMapper {
 
@@ -215,7 +215,7 @@ public class MatchOnlyTextFieldMapper extends TextFieldMapper {
     /**
      * The specific field type for MatchOnlyTextFieldMapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class MatchOnlyTextFieldType extends TextFieldType {
         private final boolean indexPhrases = false;

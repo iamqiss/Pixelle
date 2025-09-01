@@ -1,7 +1,7 @@
 {
   "ingest.simulate":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/ingest-pipelines/simulate-ingest/",
+      "url":"https://density.org/docs/latest/ingest-pipelines/simulate-ingest/",
       "description":"Allows to simulate a pipeline with example documents."
     },
     "stability":"stable",

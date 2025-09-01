@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,12 +26,12 @@
  */
 
 /**
- * Infrastructure for testing REST. See {@link OpenSearchRestTestCase} for running tests against an OpenSearch cluster using the
+ * Infrastructure for testing REST. See {@link DensityRestTestCase} for running tests against an Density cluster using the
  * REST tests and the rest of the package for mocking utilities.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest;
+package org.density.test.rest;

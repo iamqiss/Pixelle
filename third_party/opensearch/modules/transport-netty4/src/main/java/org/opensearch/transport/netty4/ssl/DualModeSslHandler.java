@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
-package org.opensearch.transport.netty4.ssl;
+package org.density.transport.netty4.ssl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.transport.TcpTransport;
+import org.density.common.settings.Settings;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.transport.TcpTransport;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLException;
@@ -34,7 +34,7 @@ import io.netty.handler.ssl.SslHandler;
 /**
  * Modifies the current pipeline dynamically to enable TLS
  *
- * @see <a href="https://github.com/opensearch-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/opensearch/security/ssl/transport/DualModeSSLHandler.java">DualModeSSLHandler</a>
+ * @see <a href="https://github.com/density-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/density/security/ssl/transport/DualModeSSLHandler.java">DualModeSSLHandler</a>
  */
 public class DualModeSslHandler extends ByteToMessageDecoder {
 

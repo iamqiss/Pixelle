@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats;
-import org.opensearch.node.NodeResourceUsageStats;
+import org.density.Version;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats;
+import org.density.node.NodeResourceUsageStats;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -59,7 +59,7 @@ import java.util.Set;
  * <code>InternalClusterInfoService.shardIdentifierFromRouting(String)</code>
  * for the key used in the shardSizes map
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterInfo implements ToXContentFragment, Writeable {
@@ -336,7 +336,7 @@ public class ClusterInfo implements ToXContentFragment, Writeable {
     /**
      * Represents a data path on a node
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeAndPath implements Writeable {
         public final String nodeId;
@@ -375,7 +375,7 @@ public class ClusterInfo implements ToXContentFragment, Writeable {
     /**
      * Represents the total amount of "reserved" space on a particular data path, together with the set of shards considered.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ReservedSpace implements Writeable {
@@ -444,7 +444,7 @@ public class ClusterInfo implements ToXContentFragment, Writeable {
         /**
          * Builder for Reserved Space.
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class Builder {
             private long total;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.documentation;
+package org.density.client.documentation;
 
 import org.apache.hc.client5.http.auth.AuthScope;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
@@ -56,17 +56,17 @@ import org.apache.hc.core5.reactor.ssl.TlsDetails;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.Timeout;
-import org.opensearch.client.Cancellable;
-import org.opensearch.client.HttpAsyncResponseConsumerFactory;
-import org.opensearch.client.Node;
-import org.opensearch.client.NodeSelector;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseListener;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilder;
-import org.opensearch.client.RestClientBuilder.HttpClientConfigCallback;
+import org.density.client.Cancellable;
+import org.density.client.HttpAsyncResponseConsumerFactory;
+import org.density.client.Node;
+import org.density.client.NodeSelector;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseListener;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilder;
+import org.density.client.RestClientBuilder.HttpClientConfigCallback;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;

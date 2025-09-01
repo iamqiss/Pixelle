@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.bytes.CompositeBytesReference;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.io.Streams;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.lease.Releasables;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.bytes.CompositeBytesReference;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.compress.CompressorRegistry;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class TransportDecompressorTests extends OpenSearchTestCase {
+public class TransportDecompressorTests extends DensityTestCase {
 
     public void testSimpleCompression() throws IOException {
         try (BytesStreamOutput output = new BytesStreamOutput()) {

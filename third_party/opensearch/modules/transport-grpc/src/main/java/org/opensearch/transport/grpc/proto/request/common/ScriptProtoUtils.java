@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.InlineScript;
-import org.opensearch.protobufs.ScriptLanguage;
-import org.opensearch.protobufs.StoredScriptId;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.InlineScript;
+import org.density.protobufs.ScriptLanguage;
+import org.density.protobufs.StoredScriptId;
+import org.density.script.Script;
+import org.density.script.ScriptType;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.script.Script.CONTENT_TYPE_OPTION;
-import static org.opensearch.script.Script.DEFAULT_SCRIPT_LANG;
+import static org.density.script.Script.CONTENT_TYPE_OPTION;
+import static org.density.script.Script.DEFAULT_SCRIPT_LANG;
 
 /**
  * Utility class for converting SourceConfig Protocol Buffers to FetchSourceContext objects.
  * This class handles the conversion of Protocol Buffer representations to their
- * corresponding OpenSearch objects.
+ * corresponding Density objects.
  */
 public class ScriptProtoUtils {
 
@@ -35,13 +35,13 @@ public class ScriptProtoUtils {
 
     /**
      *
-     * Convenience method to call {@link ScriptProtoUtils#parseFromProtoRequest(org.opensearch.protobufs.Script, String)}
+     * Convenience method to call {@link ScriptProtoUtils#parseFromProtoRequest(org.density.protobufs.Script, String)}
      * Similar to {@link Script#parse(XContentParser)}
      *
      * @param script
      * @return
      */
-    public static Script parseFromProtoRequest(org.opensearch.protobufs.Script script) {
+    public static Script parseFromProtoRequest(org.density.protobufs.Script script) {
         return parseFromProtoRequest(script, DEFAULT_SCRIPT_LANG);
     }
 
@@ -53,7 +53,7 @@ public class ScriptProtoUtils {
      * @param defaultLang the default script language to use if not specified
      * @return the converted Script object
      */
-    private static Script parseFromProtoRequest(org.opensearch.protobufs.Script script, String defaultLang) {
+    private static Script parseFromProtoRequest(org.density.protobufs.Script script, String defaultLang) {
         Objects.requireNonNull(defaultLang);
 
         if (script.hasInlineScript()) {

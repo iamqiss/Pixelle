@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import java.util.function.Supplier;
 
@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  * a {@link Supplier} idempotent or for performance reasons if always returning
  * the same instance is acceptable.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CachedSupplier<T> implements Supplier<T> {
 

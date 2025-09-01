@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.search.MultiSearchResponse;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -167,7 +167,7 @@ public class MultiSearchTemplateResponse extends ActionResponse implements Itera
         for (Item item : items) {
             if (item.isFailure()) {
                 builder.startObject();
-                OpenSearchException.generateFailureXContent(builder, params, item.getFailure(), true);
+                DensityException.generateFailureXContent(builder, params, item.getFailure(), true);
                 builder.field(Fields.STATUS, ExceptionsHelper.status(item.getFailure()).getStatus());
                 builder.endObject();
             } else {
@@ -187,10 +187,10 @@ public class MultiSearchTemplateResponse extends ActionResponse implements Itera
     public static MultiSearchTemplateResponse fromXContext(XContentParser parser) {
         // The MultiSearchTemplateResponse is identical to the multi search response so we reuse the parsing logic in multi search response
         MultiSearchResponse mSearchResponse = MultiSearchResponse.fromXContext(parser);
-        org.opensearch.action.search.MultiSearchResponse.Item[] responses = mSearchResponse.getResponses();
+        org.density.action.search.MultiSearchResponse.Item[] responses = mSearchResponse.getResponses();
         Item[] templateResponses = new Item[responses.length];
         int i = 0;
-        for (org.opensearch.action.search.MultiSearchResponse.Item item : responses) {
+        for (org.density.action.search.MultiSearchResponse.Item item : responses) {
             SearchTemplateResponse stResponse = null;
             if (item.getResponse() != null) {
                 stResponse = new SearchTemplateResponse();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.usage;
+package org.density.usage;
 
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.search.aggregations.support.AggregationUsageService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.search.aggregations.support.AggregationUsageService;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.search.aggregations.support.AggregationUsageService.OTHER_SUBTYPE;
+import static org.density.search.aggregations.support.AggregationUsageService.OTHER_SUBTYPE;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UsageServiceTests extends OpenSearchTestCase {
+public class UsageServiceTests extends DensityTestCase {
 
     /**
-     * Test that we can not add a null reference to a {@link org.opensearch.rest.RestHandler} to the {@link UsageService}.
+     * Test that we can not add a null reference to a {@link org.density.rest.RestHandler} to the {@link UsageService}.
      */
     public void testHandlerCanNotBeNull() {
         final UsageService service = new UsageService();
@@ -58,7 +58,7 @@ public class UsageServiceTests extends OpenSearchTestCase {
     }
 
     /**
-     * Test that we can not add an instance of a {@link org.opensearch.rest.RestHandler} with no name to the {@link UsageService}.
+     * Test that we can not add an instance of a {@link org.density.rest.RestHandler} with no name to the {@link UsageService}.
      */
     public void testAHandlerWithNoName() {
         final UsageService service = new UsageService();
@@ -66,12 +66,12 @@ public class UsageServiceTests extends OpenSearchTestCase {
         final IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> service.addRestHandler(horse));
         assertThat(
             e.getMessage(),
-            equalTo("handler of type [org.opensearch.usage.UsageServiceTests$MockRestHandler] does not have a name")
+            equalTo("handler of type [org.density.usage.UsageServiceTests$MockRestHandler] does not have a name")
         );
     }
 
     /**
-     * Test that we can add the same instance of a {@link org.opensearch.rest.RestHandler} to the {@link UsageService} multiple times.
+     * Test that we can add the same instance of a {@link org.density.rest.RestHandler} to the {@link UsageService} multiple times.
      */
     public void testHandlerWithConflictingNamesButSameInstance() {
         final UsageService service = new UsageService();
@@ -83,7 +83,7 @@ public class UsageServiceTests extends OpenSearchTestCase {
     }
 
     /**
-     * Test that we can not add different instances of {@link org.opensearch.rest.RestHandler} with the same name to the
+     * Test that we can not add different instances of {@link org.density.rest.RestHandler} with the same name to the
      * {@link UsageService}.
      */
     public void testHandlersWithConflictingNamesButDifferentInstances() {
@@ -96,7 +96,7 @@ public class UsageServiceTests extends OpenSearchTestCase {
         final String expected = String.format(
             Locale.ROOT,
             "handler of type [%s] conflicts with handler of type [%1$s] as they both have the same name [%s]",
-            "org.opensearch.usage.UsageServiceTests$MockRestHandler",
+            "org.density.usage.UsageServiceTests$MockRestHandler",
             name
         );
         assertThat(e.getMessage(), equalTo(expected));

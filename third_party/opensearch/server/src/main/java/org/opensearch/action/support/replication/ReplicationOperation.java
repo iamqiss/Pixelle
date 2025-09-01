@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,39 +25,39 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.RetryableAction;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.action.support.replication.ReplicationProxyRequest.Builder;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.UnavailableShardsException;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.RetryableAction;
+import org.density.action.support.TransportActions;
+import org.density.action.support.replication.ReplicationProxyRequest.Builder;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.ReplicationGroup;
+import org.density.node.NodeClosedException;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ import java.util.function.LongSupplier;
 /**
  * Operation for a replication request
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationOperation<
     Request extends ReplicationRequest<Request>,
@@ -327,7 +327,7 @@ public class ReplicationOperation<
             public boolean shouldRetry(Exception e) {
                 final Throwable cause = ExceptionsHelper.unwrapCause(e);
                 return cause instanceof CircuitBreakingException
-                    || cause instanceof OpenSearchRejectedExecutionException
+                    || cause instanceof DensityRejectedExecutionException
                     || cause instanceof ConnectTransportException;
             }
         };
@@ -604,9 +604,9 @@ public class ReplicationOperation<
     /**
      * Thrown if there are any errors retrying on primary
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static class RetryOnPrimaryException extends OpenSearchException {
+    public static class RetryOnPrimaryException extends DensityException {
         RetryOnPrimaryException(ShardId shardId, String msg) {
             this(shardId, msg, null);
         }
@@ -624,7 +624,7 @@ public class ReplicationOperation<
     /**
      * The result of the primary.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface PrimaryResult<RequestT extends ReplicationRequest<RequestT>> {
 

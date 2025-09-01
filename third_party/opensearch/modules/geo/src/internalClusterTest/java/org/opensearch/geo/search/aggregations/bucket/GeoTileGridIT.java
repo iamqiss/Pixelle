@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.bucket;
+package org.density.geo.search.aggregations.bucket;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.common.GeoBoundsHelper;
-import org.opensearch.geo.tests.common.AggregationBuilders;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.common.settings.Settings;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
+import org.density.geo.search.aggregations.common.GeoBoundsHelper;
+import org.density.geo.tests.common.AggregationBuilders;
+import org.density.geometry.Geometry;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.util.HashSet;
@@ -29,10 +29,10 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class GeoTileGridIT extends AbstractGeoBucketAggregationIntegTest {
 
     private static final int GEOPOINT_MAX_PRECISION = 17;

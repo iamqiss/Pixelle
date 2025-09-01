@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.extensions.DiscoveryExtensionNode;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.tokens.OnBehalfOfClaims;
-import org.opensearch.identity.tokens.TokenManager;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.BytesRestResponse;
-import org.opensearch.rest.NamedRoute;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.extensions.DiscoveryExtensionNode;
+import org.density.extensions.ExtensionsManager;
+import org.density.http.HttpRequest;
+import org.density.identity.IdentityService;
+import org.density.identity.Subject;
+import org.density.identity.tokens.OnBehalfOfClaims;
+import org.density.identity.tokens.TokenManager;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.BytesRestResponse;
+import org.density.rest.NamedRoute;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -54,7 +54,7 @@ import static java.util.Collections.unmodifiableList;
 /**
  * An action that forwards REST requests to an extension
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class RestSendToExtensionAction extends BaseRestHandler {
@@ -76,7 +76,7 @@ public class RestSendToExtensionAction extends BaseRestHandler {
      * Instantiates this object using a {@link RegisterRestActionsRequest} to populate the routes.
      *
      * @param restActionsRequest A request encapsulating a list of Strings with the API methods and paths.
-     * @param transportService The OpenSearch transport service
+     * @param transportService The Density transport service
      * @param discoveryExtensionNode The extension node to which to send actions
      */
     public RestSendToExtensionAction(
@@ -256,7 +256,7 @@ public class RestSendToExtensionAction extends BaseRestHandler {
                 discoveryExtensionNode,
                 ExtensionsManager.REQUEST_REST_EXECUTE_ON_EXTENSION_ACTION,
                 // DO NOT INCLUDE HEADERS WITH SECURITY OR PRIVACY INFORMATION
-                // SEE https://github.com/opensearch-project/OpenSearch/issues/4429
+                // SEE https://github.com/density-project/Density/issues/4429
                 new ExtensionRestRequest(
                     method,
                     uri,

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cloud.gce.network;
+package org.density.cloud.gce.network;
 
-import org.opensearch.cloud.gce.GceMetadataService;
-import org.opensearch.cloud.gce.util.Access;
-import org.opensearch.common.network.NetworkService.CustomNameResolver;
-import org.opensearch.core.common.Strings;
+import org.density.cloud.gce.GceMetadataService;
+import org.density.cloud.gce.util.Access;
+import org.density.common.network.NetworkService.CustomNameResolver;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.net.InetAddress;

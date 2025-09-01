@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards.routing.weighted.delete;
+package org.density.action.admin.cluster.shards.routing.weighted.delete;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * Request to delete weights for weighted round-robin shard routing policy.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class ClusterDeleteWeightedRoutingRequest extends ClusterManagerNodeRequest<ClusterDeleteWeightedRoutingRequest> {
@@ -87,13 +87,13 @@ public class ClusterDeleteWeightedRoutingRequest extends ClusterManagerNodeReque
     public ClusterDeleteWeightedRoutingRequest source(Map<String, String> source) {
         try {
             if (source.isEmpty()) {
-                throw new OpenSearchParseException(("Empty request body"));
+                throw new DensityParseException(("Empty request body"));
             }
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.map(source);
             setRequestBody(BytesReference.bytes(builder), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
         return this;
     }
@@ -117,7 +117,7 @@ public class ClusterDeleteWeightedRoutingRequest extends ClusterManagerNodeReque
                     if (fieldName != null && fieldName.equals(WeightedRoutingMetadata.VERSION)) {
                         versionAttr = parser.currentName();
                     } else {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse delete weighted routing request body [{}], unknown type",
                             fieldName
                         );
@@ -127,7 +127,7 @@ public class ClusterDeleteWeightedRoutingRequest extends ClusterManagerNodeReque
                         this.version = Long.parseLong(parser.text());
                     }
                 } else {
-                    throw new OpenSearchParseException("failed to parse delete weighted routing request body");
+                    throw new DensityParseException("failed to parse delete weighted routing request body");
                 }
             }
         } catch (IOException e) {

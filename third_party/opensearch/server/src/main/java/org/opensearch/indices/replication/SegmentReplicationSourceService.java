@@ -1,48 +1,48 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.action.support.ChannelActionListener;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexEventListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.MultiChunkTransfer;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RetryableTransportClient;
-import org.opensearch.indices.replication.common.ReplicationTimer;
-import org.opensearch.indices.replication.common.SegmentReplicationTransportRequest;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ChannelActionListener;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexEventListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.MultiChunkTransfer;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RetryableTransportClient;
+import org.density.indices.replication.common.ReplicationTimer;
+import org.density.indices.replication.common.SegmentReplicationTransportRequest;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -55,7 +55,7 @@ import java.util.function.Supplier;
  * Service class that handles segment replication requests from replica shards.
  * Typically, the "source" is a primary shard. This code executes on the source node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SegmentReplicationSourceService extends AbstractLifecycleComponent implements ClusterStateListener, IndexEventListener {
 
@@ -67,7 +67,7 @@ public class SegmentReplicationSourceService extends AbstractLifecycleComponent 
     /**
      * Internal actions used by the segment replication source service on the primary shard
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Actions {
 

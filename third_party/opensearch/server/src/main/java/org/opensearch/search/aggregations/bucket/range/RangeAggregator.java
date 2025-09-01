@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,53 +25,53 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.ObjectParser.ValueType;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.codec.composite.CompositeIndexFieldInfo;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.NonCollectingAggregator;
-import org.opensearch.search.aggregations.StarTreeBucketCollector;
-import org.opensearch.search.aggregations.StarTreePreComputeCollector;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
-import org.opensearch.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
-import org.opensearch.search.aggregations.bucket.filterrewrite.RangeAggregatorBridge;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.StarTreeQueryHelper;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.MatchAllFilter;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.ObjectParser.ValueType;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.codec.composite.CompositeIndexFieldInfo;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.NonCollectingAggregator;
+import org.density.search.aggregations.StarTreeBucketCollector;
+import org.density.search.aggregations.StarTreePreComputeCollector;
+import org.density.search.aggregations.bucket.BucketsAggregator;
+import org.density.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
+import org.density.search.aggregations.bucket.filterrewrite.RangeAggregatorBridge;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.StarTreeQueryHelper;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.MatchAllFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,14 +81,14 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
-import static org.opensearch.search.aggregations.bucket.filterrewrite.AggregatorBridge.segmentMatchAll;
-import static org.opensearch.search.startree.StarTreeQueryHelper.getSupportedStarTree;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.search.aggregations.bucket.filterrewrite.AggregatorBridge.segmentMatchAll;
+import static org.density.search.startree.StarTreeQueryHelper.getSupportedStarTree;
 
 /**
  * Aggregate all docs that match given ranges.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RangeAggregator extends BucketsAggregator implements StarTreePreComputeCollector {
 
@@ -99,7 +99,7 @@ public class RangeAggregator extends BucketsAggregator implements StarTreePreCom
     /**
      * Range for the range aggregator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Range implements Writeable, ToXContentObject {
         public static final ParseField KEY_FIELD = new ParseField("key");
@@ -477,10 +477,10 @@ public class RangeAggregator extends BucketsAggregator implements StarTreePreCom
     @Override
     public InternalAggregation buildEmptyAggregation() {
         InternalAggregations subAggs = buildEmptySubAggregations();
-        List<org.opensearch.search.aggregations.bucket.range.Range.Bucket> buckets = new ArrayList<>(ranges.length);
+        List<org.density.search.aggregations.bucket.range.Range.Bucket> buckets = new ArrayList<>(ranges.length);
         for (int i = 0; i < ranges.length; i++) {
             Range range = ranges[i];
-            org.opensearch.search.aggregations.bucket.range.Range.Bucket bucket = rangeFactory.createBucket(
+            org.density.search.aggregations.bucket.range.Range.Bucket bucket = rangeFactory.createBucket(
                 range.key,
                 range.from,
                 range.to,
@@ -555,7 +555,7 @@ public class RangeAggregator extends BucketsAggregator implements StarTreePreCom
     /**
      * Unmapped range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Unmapped<R extends RangeAggregator.Range> extends NonCollectingAggregator {
 
@@ -586,7 +586,7 @@ public class RangeAggregator extends BucketsAggregator implements StarTreePreCom
         @Override
         public InternalAggregation buildEmptyAggregation() {
             InternalAggregations subAggs = buildEmptySubAggregations();
-            List<org.opensearch.search.aggregations.bucket.range.Range.Bucket> buckets = new ArrayList<>(ranges.length);
+            List<org.density.search.aggregations.bucket.range.Range.Bucket> buckets = new ArrayList<>(ranges.length);
             for (Range range : ranges) {
                 buckets.add(factory.createBucket(range.key, range.from, range.to, 0, subAggs, keyed, format));
             }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
-import org.opensearch.core.Assertions;
+import org.density.core.Assertions;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -41,10 +41,10 @@ import java.util.Map;
 /**
  * The Contents of this file were originally moved from {@link Version}.
  * <p>
- * This class keeps all the supported OpenSearch predecessor versions for
+ * This class keeps all the supported Density predecessor versions for
  * backward compatibility purpose.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LegacyESVersion extends Version {
 
@@ -137,7 +137,7 @@ public class LegacyESVersion extends Version {
 
     /**
      * Returns true iff this version is an alpha version
-     * Note: This has been introduced in version 5 of the OpenSearch predecessor. Previous versions will never
+     * Note: This has been introduced in version 5 of the Density predecessor. Previous versions will never
      * have an alpha version.
      */
     @Override
@@ -211,7 +211,7 @@ public class LegacyESVersion extends Version {
     }
 
     /**
-     * this is used to ensure the version id for new versions of OpenSearch are always less than the predecessor versions
+     * this is used to ensure the version id for new versions of Density are always less than the predecessor versions
      */
     protected int maskId(final int id) {
         return id;

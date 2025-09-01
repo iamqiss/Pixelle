@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.crypto;
+package org.density.crypto;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.metadata.CryptoMetadata;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.MasterKeyProvider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.CryptoKeyProviderPlugin;
-import org.opensearch.plugins.CryptoPlugin;
+import org.density.cluster.metadata.CryptoMetadata;
+import org.density.common.SetOnce;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.MasterKeyProvider;
+import org.density.common.settings.Settings;
+import org.density.plugins.CryptoKeyProviderPlugin;
+import org.density.plugins.CryptoPlugin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * During node bootstrap, installed key provider extensions responsible for generating data keys are loaded.
  * Crypto factories against the respective KP plugins are cached. A crypto factory is used to register crypto
- * handler against an {@link org.opensearch.common.blobstore.EncryptedBlobStore}
+ * handler against an {@link org.density.common.blobstore.EncryptedBlobStore}
  */
 public class CryptoHandlerRegistry {
     private static final Logger logger = LogManager.getLogger(CryptoHandlerRegistry.class);
@@ -104,7 +104,7 @@ public class CryptoHandlerRegistry {
      *
      * @param keyProviderType The unique provider type for which the factory is to be fetched.
      * @return The crypto factory used to create {@link CryptoHandler}
-     *         instances in a {@link org.opensearch.common.blobstore.EncryptedBlobStore}.
+     *         instances in a {@link org.density.common.blobstore.EncryptedBlobStore}.
      * @throws IllegalStateException If the crypto registry is not yet loaded.
      */
     public CryptoKeyProviderPlugin getCryptoKeyProviderPlugin(String keyProviderType) {

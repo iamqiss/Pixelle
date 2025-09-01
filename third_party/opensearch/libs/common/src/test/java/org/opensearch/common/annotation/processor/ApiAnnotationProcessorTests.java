@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.annotation.processor;
+package org.density.common.annotation.processor;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.annotation.InternalApi;
+import org.density.test.DensityTestCase;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
 import javax.tools.Diagnostic;
 
-import static org.opensearch.common.annotation.processor.CompilerSupport.HasDiagnostic.matching;
+import static org.density.common.annotation.processor.CompilerSupport.HasDiagnostic.matching;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.instanceOf;
 
 @SuppressForbidden(reason = "TemporaryFolder does not support Path-based APIs")
 @SuppressWarnings("deprecation")
-public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements CompilerSupport {
+public class ApiAnnotationProcessorTests extends DensityTestCase implements CompilerSupport {
     @Rule
     public final TemporaryFolder folder = new TemporaryFolder();
 
@@ -42,8 +42,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodArgumentNotAnnotated)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodArgumentNotAnnotated)"
                     )
                 )
             )
@@ -67,8 +67,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedGenerics)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedGenerics)"
                     )
                 )
             )
@@ -92,8 +92,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotatedException is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodThrowsNotAnnotated)"
+                        "The element org.density.common.annotation.processor.NotAnnotatedException is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodThrowsNotAnnotated)"
                     )
                 )
             )
@@ -113,8 +113,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotatedPackagePrivate is part of the public APIs but does not have public or protected visibility "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedPackagePrivate)"
+                        "The element org.density.common.annotation.processor.NotAnnotatedPackagePrivate is part of the public APIs but does not have public or protected visibility "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedPackagePrivate)"
                     )
                 )
             )
@@ -126,8 +126,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotatedPackagePrivate is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedPackagePrivate)"
+                        "The element org.density.common.annotation.processor.NotAnnotatedPackagePrivate is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodArgumentNotAnnotatedPackagePrivate)"
                     )
                 )
             )
@@ -147,8 +147,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.AnnotatedPackagePrivate is part of the public APIs but does not have public or protected visibility "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodArgumentAnnotatedPackagePrivate)"
+                        "The element org.density.common.annotation.processor.AnnotatedPackagePrivate is part of the public APIs but does not have public or protected visibility "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodArgumentAnnotatedPackagePrivate)"
                     )
                 )
             )
@@ -168,7 +168,7 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element method() is part of the public APIs but is marked as @InternalApi (referenced by org.opensearch.common.annotation.processor.PublicApiWithInternalApiMethod)"
+                        "The element method() is part of the public APIs but is marked as @InternalApi (referenced by org.density.common.annotation.processor.PublicApiWithInternalApiMethod)"
                     )
                 )
             )
@@ -232,8 +232,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnNotAnnotated)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnNotAnnotated)"
                     )
                 )
             )
@@ -257,8 +257,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnNotAnnotatedGenerics)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnNotAnnotatedGenerics)"
                     )
                 )
             )
@@ -282,8 +282,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnNotAnnotatedArray)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnNotAnnotatedArray)"
                     )
                 )
             )
@@ -307,8 +307,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnNotAnnotatedBoundedGenerics)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnNotAnnotatedBoundedGenerics)"
                     )
                 )
             )
@@ -333,8 +333,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotatedAnnotation is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnNotAnnotatedAnnotation)"
+                        "The element org.density.common.annotation.processor.NotAnnotatedAnnotation is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnNotAnnotatedAnnotation)"
                     )
                 )
             )
@@ -404,7 +404,7 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.PublicApiPackagePrivate is part of the public APIs but does not have public or protected visibility"
+                        "The element org.density.common.annotation.processor.PublicApiPackagePrivate is part of the public APIs but does not have public or protected visibility"
                     )
                 )
             )
@@ -428,8 +428,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodGenericsArgumentNotAnnotated)"
+                        "The element org.density.common.annotation.processor.NotAnnotated is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodGenericsArgumentNotAnnotated)"
                     )
                 )
             )
@@ -477,7 +477,7 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The type org.acme.PublicApiAnnotated is not residing in org.opensearch.* package and should not be annotated as OpenSearch APIs."
+                        "The type org.acme.PublicApiAnnotated is not residing in org.density.* package and should not be annotated as Density APIs."
                     )
                 )
             )
@@ -502,8 +502,8 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The element org.opensearch.common.annotation.processor.NotAnnotatedAnnotation is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
-                            + "(referenced by org.opensearch.common.annotation.processor.PublicApiMethodReturnAnnotatedGenerics)"
+                        "The element org.density.common.annotation.processor.NotAnnotatedAnnotation is part of the public APIs but is not marked as @PublicApi, @ExperimentalApi or @DeprecatedApi "
+                            + "(referenced by org.density.common.annotation.processor.PublicApiMethodReturnAnnotatedGenerics)"
                     )
                 )
             )
@@ -553,7 +553,7 @@ public class ApiAnnotationProcessorTests extends OpenSearchTestCase implements C
                 matching(
                     Diagnostic.Kind.ERROR,
                     containsString(
-                        "The type org.opensearch.common.annotation.processor.PublicApiAnnotatedUnparseable has @PublicApi annotation with unparseable OpenSearch version: 2.x"
+                        "The type org.density.common.annotation.processor.PublicApiAnnotatedUnparseable has @PublicApi annotation with unparseable Density version: 2.x"
                     )
                 )
             )

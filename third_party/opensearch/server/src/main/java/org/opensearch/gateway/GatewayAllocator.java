@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadata;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasables;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.store.TransportNodesListShardStoreMetadata;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,7 +68,7 @@ import java.util.stream.StreamSupport;
 /**
  * Allocator for the gateway
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GatewayAllocator implements ExistingShardsAllocator {
 

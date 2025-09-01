@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.test.GradleUnitTestCase;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -64,8 +64,8 @@ public class VersionTests extends GradleUnitTestCase {
     }
 
     public void testCompareWithStringVersions() {
-        // 1.10.2 is now rebased to OpenSearch version; so this needs to report
-        assertTrue("OpenSearch 1.10.20 is not interpreted as after Legacy 6.0.0", Version.fromString("1.10.20").after("6.0.0"));
+        // 1.10.2 is now rebased to Density version; so this needs to report
+        assertTrue("Density 1.10.20 is not interpreted as after Legacy 6.0.0", Version.fromString("1.10.20").after("6.0.0"));
         assertTrue(
             "7.0.0-alpha1 should be equal to 7.0.0-alpha1",
             Version.fromString("7.0.0-alpha1").equals(Version.fromString("7.0.0-alpha1"))

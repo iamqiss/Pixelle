@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.coordination.ClusterStatePublisher;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.node.Node;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.coordination.ClusterStatePublisher;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.node.Node;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Map;
 

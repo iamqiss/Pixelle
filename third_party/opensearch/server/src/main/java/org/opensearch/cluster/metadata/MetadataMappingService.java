@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingClusterStateUpdateRequest;
-import org.opensearch.cluster.AckedClusterStateTaskListener;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.compositeindex.CompositeIndexValidator;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.indices.IndicesService;
+import org.density.action.admin.indices.mapping.put.PutMappingClusterStateUpdateRequest;
+import org.density.cluster.AckedClusterStateTaskListener;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.inject.Inject;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.index.IndexService;
+import org.density.index.compositeindex.CompositeIndexValidator;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.indices.IndicesService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,13 +67,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_MAPPING;
-import static org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
+import static org.density.cluster.service.ClusterManagerTask.PUT_MAPPING;
+import static org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.NO_LONGER_ASSIGNED;
 
 /**
  * Service responsible for submitting mapping changes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataMappingService {
 

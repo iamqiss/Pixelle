@@ -1,45 +1,45 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionModule;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.admin.cluster.health.ClusterHealthAction;
-import org.opensearch.action.admin.cluster.health.TransportClusterHealthAction;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.extensions.DiscoveryExtensionNode;
-import org.opensearch.extensions.ExtensionsManager;
-import org.opensearch.extensions.action.ExtensionAction;
-import org.opensearch.extensions.action.ExtensionTransportAction;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.rest.NamedRoute;
-import org.opensearch.rest.RestHandler.Route;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.nio.MockNioTransport;
-import org.opensearch.usage.UsageService;
+import org.density.Version;
+import org.density.action.ActionModule;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.admin.cluster.health.ClusterHealthAction;
+import org.density.action.admin.cluster.health.TransportClusterHealthAction;
+import org.density.action.support.ActionFilters;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.extensions.DiscoveryExtensionNode;
+import org.density.extensions.ExtensionsManager;
+import org.density.extensions.action.ExtensionAction;
+import org.density.extensions.action.ExtensionTransportAction;
+import org.density.identity.IdentityService;
+import org.density.rest.NamedRoute;
+import org.density.rest.RestHandler.Route;
+import org.density.rest.RestRequest.Method;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.nio.MockNioTransport;
+import org.density.usage.UsageService;
 import org.junit.After;
 import org.junit.Before;
 
@@ -59,7 +59,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static org.mockito.Mockito.mock;
 
-public class RestSendToExtensionActionTests extends OpenSearchTestCase {
+public class RestSendToExtensionActionTests extends DensityTestCase {
 
     private TransportService transportService;
     private MockNioTransport transport;
@@ -216,11 +216,11 @@ public class RestSendToExtensionActionTests extends OpenSearchTestCase {
         RegisterRestActionsRequest registerRestActionRequest = new RegisterRestActionsRequest(
             "uniqueid1",
             List.of(
-                "GET /foo foo cluster:admin/opensearch/abc/foo",
-                "PUT /bar bar cluster:admin/opensearch/jkl/bar,cluster:admin/opendistro/mno/bar*",
-                "POST /baz baz cluster:admin/opensearch/xyz/baz"
+                "GET /foo foo cluster:admin/density/abc/foo",
+                "PUT /bar bar cluster:admin/density/jkl/bar,cluster:admin/opendistro/mno/bar*",
+                "POST /baz baz cluster:admin/density/xyz/baz"
             ),
-            List.of("GET /deprecated/foo foo_deprecated cluster:admin/opensearch/abc/foo_deprecated", "It's deprecated!")
+            List.of("GET /deprecated/foo foo_deprecated cluster:admin/density/abc/foo_deprecated", "It's deprecated!")
         );
         RestSendToExtensionAction restSendToExtensionAction = new RestSendToExtensionAction(
             registerRestActionRequest,
@@ -236,17 +236,17 @@ public class RestSendToExtensionActionTests extends OpenSearchTestCase {
         NamedRoute nr1 = new NamedRoute.Builder().method(Method.GET)
             .path(uriPrefix + "/foo")
             .uniqueName("foo")
-            .legacyActionNames(Set.of("cluster:admin/opensearch/abc/foo"))
+            .legacyActionNames(Set.of("cluster:admin/density/abc/foo"))
             .build();
         NamedRoute nr2 = new NamedRoute.Builder().method(Method.PUT)
             .path(uriPrefix + "/bar")
             .uniqueName("bar")
-            .legacyActionNames(Set.of("cluster:admin/opensearch/jkl/bar", "cluster:admin/opendistro/mno/bar*"))
+            .legacyActionNames(Set.of("cluster:admin/density/jkl/bar", "cluster:admin/opendistro/mno/bar*"))
             .build();
         NamedRoute nr3 = new NamedRoute.Builder().method(Method.POST)
             .path(uriPrefix + "/baz")
             .uniqueName("baz")
-            .legacyActionNames(Set.of("cluster:admin/opensearch/xyz/baz"))
+            .legacyActionNames(Set.of("cluster:admin/density/xyz/baz"))
             .build();
 
         expected.add(nr1);
@@ -310,7 +310,7 @@ public class RestSendToExtensionActionTests extends OpenSearchTestCase {
     public void testRestSendToExtensionMultipleNamedRoutesWithSameLegacyActionName() throws Exception {
         RegisterRestActionsRequest registerRestActionRequest = new RegisterRestActionsRequest(
             "uniqueid1",
-            List.of("GET /foo foo cluster:admin/opensearch/abc/foo", "PUT /bar bar cluster:admin/opensearch/abc/foo"),
+            List.of("GET /foo foo cluster:admin/density/abc/foo", "PUT /bar bar cluster:admin/density/abc/foo"),
             List.of()
         );
         expectThrows(

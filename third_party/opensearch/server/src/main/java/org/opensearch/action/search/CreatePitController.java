@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.Transport;
+import org.density.DensityException;
+import org.density.action.StepListener;
+import org.density.action.support.GroupedActionListener;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.tasks.Task;
+import org.density.transport.Transport;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
 
 /**
  * Controller for creating PIT reader context
@@ -210,7 +210,7 @@ public class CreatePitController {
                         )
                     );
                     groupedActionListener.onFailure(
-                        new OpenSearchException(
+                        new DensityException(
                             "Create pit update phase for PIT ID ["
                                 + searchResponse.pointInTimeId()
                                 + "] failed because node["
@@ -244,7 +244,7 @@ public class CreatePitController {
                         e
                     );
                     groupedActionListener.onFailure(
-                        new OpenSearchException(
+                        new DensityException(
                             "Create pit update phase for PIT ID [" + searchResponse.pointInTimeId() + "] failed on node[" + node + "]",
                             e
                         )

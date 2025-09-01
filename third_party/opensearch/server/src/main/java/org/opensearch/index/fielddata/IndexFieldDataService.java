@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.util.Accountable;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.indices.fielddata.cache.IndicesFieldDataCache;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.indices.fielddata.cache.IndicesFieldDataCache;
+import org.density.search.lookup.SearchLookup;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -58,7 +58,7 @@ import java.util.function.Supplier;
 /**
  * Service for field data (cacheing, etc)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class IndexFieldDataService extends AbstractIndexComponent implements Closeable {
     public static final String FIELDDATA_CACHE_VALUE_NODE = "node";
@@ -169,7 +169,7 @@ public class IndexFieldDataService extends AbstractIndexComponent implements Clo
     }
 
     /**
-     * Sets a {@link org.opensearch.index.fielddata.IndexFieldDataCache.Listener} passed to each {@link IndexFieldData}
+     * Sets a {@link org.density.index.fielddata.IndexFieldDataCache.Listener} passed to each {@link IndexFieldData}
      * creation to capture onCache and onRemoval events. Setting a listener on this method will override any previously
      * set listeners.
      * @throws IllegalStateException if the listener is set more than once

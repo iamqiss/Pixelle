@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.wlm.WlmMode;
-import org.opensearch.wlm.WorkloadManagementSettings;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.wlm.WlmMode;
+import org.density.wlm.WorkloadManagementSettings;
 
 /**
  * Central provider for maintaining and supplying the current values of wlm cluster settings.
@@ -23,7 +23,7 @@ public class WlmClusterSettingValuesProvider {
 
     /**
      * Constructor for WlmClusterSettingValuesProvider
-     * @param settings OpenSearch settings
+     * @param settings Density settings
      * @param clusterSettings Cluster settings to register update listener
      */
     public WlmClusterSettingValuesProvider(Settings settings, ClusterSettings clusterSettings) {

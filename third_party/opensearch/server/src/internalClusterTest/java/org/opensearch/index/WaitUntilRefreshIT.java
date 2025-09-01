@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.update.UpdateResponse;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Requests;
 import org.junit.Before;
 
 import java.util.Collection;
@@ -60,15 +60,15 @@ import java.util.function.Function;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertNoSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 
 /**
  * Tests that requests with RefreshPolicy.WAIT_UNTIL will be visible when they return.
  */
-public class WaitUntilRefreshIT extends OpenSearchIntegTestCase {
+public class WaitUntilRefreshIT extends DensityIntegTestCase {
 
     @Override
     public Settings indexSettings() {

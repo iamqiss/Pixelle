@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ import java.io.IOException;
  * Manages versioning and checksum for a stream of content.
  * @param <T> Type of content to be read/written
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class VersionedCodecStreamWrapper<T> {
     private static final Logger logger = LogManager.getLogger(VersionedCodecStreamWrapper.class);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore.fs;
+package org.density.common.blobstore.fs;
 
 import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
 import org.apache.lucene.tests.mockfile.FilterSeekableByteChannel;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.io.PathUtilsForTesting;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.io.PathUtils;
+import org.density.common.io.PathUtilsForTesting;
+import org.density.common.io.Streams;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -72,7 +72,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
 @LuceneTestCase.SuppressFileSystems("*") // we do our own mocking
-public class FsBlobContainerTests extends OpenSearchTestCase {
+public class FsBlobContainerTests extends DensityTestCase {
 
     final AtomicLong totalBytesRead = new AtomicLong(0);
     FileSystem fileSystem = null;
@@ -81,7 +81,7 @@ public class FsBlobContainerTests extends OpenSearchTestCase {
     public void setupMockFileSystems() {
         FileSystemProvider fileSystemProvider = new MockFileSystemProvider(PathUtils.getDefaultFileSystem(), totalBytesRead::addAndGet);
         fileSystem = fileSystemProvider.getFileSystem(null);
-        PathUtilsForTesting.installMock(fileSystem); // restored by restoreFileSystem in OpenSearchTestCase
+        PathUtilsForTesting.installMock(fileSystem); // restored by restoreFileSystem in DensityTestCase
     }
 
     @After

@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -29,12 +29,12 @@
  */
 
 configure(subprojects.findAll { it.parent.path == project.path }) {
-  group = 'org.opensearch.plugin' // for modules which publish client jars
-  apply plugin: 'opensearch.testclusters'
-  apply plugin: 'opensearch.opensearchplugin'
+  group = 'org.density.plugin' // for modules which publish client jars
+  apply plugin: 'density.testclusters'
+  apply plugin: 'density.densityplugin'
   
-  opensearchplugin {
-    // for local OpenSearch plugins, the name of the plugin is the same as the directory
+  densityplugin {
+    // for local Density plugins, the name of the plugin is the same as the directory
     name = project.name
   }
 

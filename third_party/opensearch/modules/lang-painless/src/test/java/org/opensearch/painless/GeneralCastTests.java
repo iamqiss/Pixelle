@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 /** Tests for explicit casts */
 public class GeneralCastTests extends ScriptTestCase {
@@ -306,18 +306,18 @@ public class GeneralCastTests extends ScriptTestCase {
         assertEquals(1, exec("def y = 2.0; y.compareTo(1);"));
         assertEquals(1, exec("int x = 1; def y = 2.0; y.compareTo(x);"));
         assertEquals(-1, exec("Integer x = Integer.valueOf(3); def y = 2.0; y.compareTo(x);"));
-        assertEquals(2, exec("def f = new org.opensearch.painless.FeatureTestObject(); f.i = (byte)2; f.i"));
+        assertEquals(2, exec("def f = new org.density.painless.FeatureTestObject(); f.i = (byte)2; f.i"));
         assertEquals(
             4.0,
             exec(
-                "def x = new org.opensearch.painless.FeatureTestObject(); "
+                "def x = new org.density.painless.FeatureTestObject(); "
                     + "Byte i = Byte.valueOf(3); "
                     + "byte j = 1;"
                     + "Short s = Short.valueOf(-2);"
                     + "x.mixedAdd(j, i, (char)2, s)"
             )
         );
-        assertNull(exec("def f = new org.opensearch.painless.FeatureTestObject(); f.i = null; f.i"));
+        assertNull(exec("def f = new org.density.painless.FeatureTestObject(); f.i = null; f.i"));
         expectScriptThrows(ClassCastException.class, () -> exec("def x = 2.0; def y = 1; y.compareTo(x);"));
         expectScriptThrows(ClassCastException.class, () -> exec("float f = 1.0f; def y = 1; y.compareTo(f);"));
     }

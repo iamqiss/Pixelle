@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.store.remote.filecache.AggregateFileCacheStats.FileCacheStatsType;
 
 import java.io.IOException;
 
-import static org.opensearch.index.store.remote.filecache.AggregateFileCacheStats.calculatePercentage;
+import static org.density.index.store.remote.filecache.AggregateFileCacheStats.calculatePercentage;
 
 /**
  * Statistics for the file cache system that tracks memory usage and performance metrics.
@@ -28,10 +28,10 @@ import static org.opensearch.index.store.remote.filecache.AggregateFileCacheStat
  * - Memory usage: active and used bytes.
  * - Cache performance: hit counts and eviction counts.
  * - Utilization: active percentage of total used memory.
- * The statistics are exposed as part of {@link AggregateFileCacheStats} and via {@link org.opensearch.action.admin.cluster.node.stats.NodeStats}
+ * The statistics are exposed as part of {@link AggregateFileCacheStats} and via {@link org.density.action.admin.cluster.node.stats.NodeStats}
  * to provide visibility into cache behavior and performance.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.7.0")
 public class FileCacheStats implements Writeable, ToXContentFragment {

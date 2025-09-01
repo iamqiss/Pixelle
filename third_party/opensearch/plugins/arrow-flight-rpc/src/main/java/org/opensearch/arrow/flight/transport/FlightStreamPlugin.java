@@ -1,62 +1,62 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.api.flightinfo.FlightServerInfoAction;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoAction;
-import org.opensearch.arrow.flight.api.flightinfo.TransportNodesFlightInfoAction;
-import org.opensearch.arrow.flight.bootstrap.FlightService;
-import org.opensearch.arrow.flight.bootstrap.ServerComponents;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.arrow.flight.bootstrap.tls.DefaultSslContextProvider;
-import org.opensearch.arrow.flight.bootstrap.tls.SslContextProvider;
-import org.opensearch.arrow.flight.stats.FlightStatsAction;
-import org.opensearch.arrow.flight.stats.FlightStatsCollector;
-import org.opensearch.arrow.flight.stats.FlightStatsRestHandler;
-import org.opensearch.arrow.flight.stats.TransportFlightStatsAction;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.ClusterPlugin;
-import org.opensearch.plugins.ExtensiblePlugin;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.plugins.StreamManagerPlugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.script.ScriptService;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ExecutorBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.Version;
+import org.density.arrow.flight.api.flightinfo.FlightServerInfoAction;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoAction;
+import org.density.arrow.flight.api.flightinfo.TransportNodesFlightInfoAction;
+import org.density.arrow.flight.bootstrap.FlightService;
+import org.density.arrow.flight.bootstrap.ServerComponents;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.arrow.flight.bootstrap.tls.DefaultSslContextProvider;
+import org.density.arrow.flight.bootstrap.tls.SslContextProvider;
+import org.density.arrow.flight.stats.FlightStatsAction;
+import org.density.arrow.flight.stats.FlightStatsCollector;
+import org.density.arrow.flight.stats.FlightStatsRestHandler;
+import org.density.arrow.flight.stats.TransportFlightStatsAction;
+import org.density.arrow.spi.StreamManager;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.util.FeatureFlags;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.ClusterPlugin;
+import org.density.plugins.ExtensiblePlugin;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.plugins.StreamManagerPlugin;
+import org.density.repositories.RepositoriesService;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.script.ScriptService;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ExecutorBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.Transport;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

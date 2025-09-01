@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.pipeline.PipelineProcessingContext;
-import org.opensearch.search.pipeline.common.helpers.ContextUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.pipeline.PipelineProcessingContext;
+import org.density.search.pipeline.common.helpers.ContextUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OversampleRequestProcessorTests extends OpenSearchTestCase {
+public class OversampleRequestProcessorTests extends DensityTestCase {
 
     public void testEmptySource() {
         OversampleRequestProcessor.Factory factory = new OversampleRequestProcessor.Factory();

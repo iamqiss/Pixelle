@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.template.post;
+package org.density.action.admin.indices.template.post;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.action.admin.indices.template.put.PutComposableIndexTemplateAction;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.ValidateActions;
+import org.density.action.admin.indices.template.put.PutComposableIndexTemplateAction;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadRequest;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -48,7 +48,7 @@ import java.util.Objects;
  * An action for simulating the complete composed settings of the specified
  * index template name, or index template configuration
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SimulateTemplateAction extends ActionType<SimulateIndexTemplateResponse> {
 
@@ -62,7 +62,7 @@ public class SimulateTemplateAction extends ActionType<SimulateIndexTemplateResp
     /**
      * Request for simulating a template action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Request extends ClusterManagerNodeReadRequest<Request> {
 

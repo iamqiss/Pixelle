@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.pagination;
+package org.density.action.pagination;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.test.DensityTestCase;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -29,13 +29,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
-import static org.opensearch.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
-import static org.opensearch.action.pagination.PaginationStrategy.INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
+import static org.density.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
+import static org.density.action.pagination.PageParams.PARAM_DESC_SORT_VALUE;
+import static org.density.action.pagination.PaginationStrategy.INCORRECT_TAINTED_NEXT_TOKEN_ERROR_MESSAGE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
 import static com.carrotsearch.randomizedtesting.RandomizedTest.getRandom;
 
-public class ShardPaginationStrategyTests extends OpenSearchTestCase {
+public class ShardPaginationStrategyTests extends DensityTestCase {
 
     private static final String TEST_INDEX_PREFIX = "test-index-";
     private static final int DEFAULT_NUMBER_OF_SHARDS = 5;
@@ -403,23 +403,23 @@ public class ShardPaginationStrategyTests extends OpenSearchTestCase {
     }
 
     public void testIndexStrategyPageTokenWithWronglyEncryptedRequestToken() {
-        assertThrows(OpenSearchParseException.class, () -> new ShardPaginationStrategy.ShardStrategyToken("3%4%5"));
+        assertThrows(DensityParseException.class, () -> new ShardPaginationStrategy.ShardStrategyToken("3%4%5"));
     }
 
     public void testIndexStrategyPageTokenWithIncorrectNumberOfElementsInRequestedToken() {
         assertThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> new ShardPaginationStrategy.ShardStrategyToken(PaginationStrategy.encryptStringToken("1|1725361543"))
         );
         assertThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> new ShardPaginationStrategy.ShardStrategyToken(PaginationStrategy.encryptStringToken("1|1725361543|index|12345"))
         );
     }
 
     public void testIndexStrategyPageTokenWithInvalidValuesInRequestedToken() {
         assertThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> new ShardPaginationStrategy.ShardStrategyToken(PaginationStrategy.encryptStringToken("-1725361543|1725361543|index"))
         );
     }

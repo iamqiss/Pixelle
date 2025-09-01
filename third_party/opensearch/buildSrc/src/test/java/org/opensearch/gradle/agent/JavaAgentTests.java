@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gradle.agent;
+package org.density.gradle.agent;
 
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.test.GradleUnitTestCase;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.tasks.Copy;
@@ -37,7 +37,7 @@ public class JavaAgentTests extends GradleUnitTestCase {
     }
 
     /**
-     * This test is used to verify that adding the 'opensearch.java-agent' to the project
+     * This test is used to verify that adding the 'density.java-agent' to the project
      * creates the necessary agent configuration and tasks. This is basically
      * a behavioral test of the {@link JavaAgent#apply(Project)} method.
      */

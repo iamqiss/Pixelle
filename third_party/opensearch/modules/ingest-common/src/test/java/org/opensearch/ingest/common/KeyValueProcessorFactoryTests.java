@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.common.util.set.Sets;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -48,7 +48,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class KeyValueProcessorFactoryTests extends OpenSearchTestCase {
+public class KeyValueProcessorFactoryTests extends DensityTestCase {
 
     private KeyValueProcessor.Factory factory;
 
@@ -97,8 +97,8 @@ public class KeyValueProcessorFactoryTests extends OpenSearchTestCase {
     public void testCreateWithMissingField() {
         Map<String, Object> config = new HashMap<>();
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(null, processorTag, null, config)
         );
         assertThat(exception.getMessage(), equalTo("[field] required property is missing"));
@@ -108,8 +108,8 @@ public class KeyValueProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("field", "field1");
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(null, processorTag, null, config)
         );
         assertThat(exception.getMessage(), equalTo("[field_split] required property is missing"));
@@ -120,8 +120,8 @@ public class KeyValueProcessorFactoryTests extends OpenSearchTestCase {
         config.put("field", "field1");
         config.put("field_split", "&");
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(null, processorTag, null, config)
         );
         assertThat(exception.getMessage(), equalTo("[value_split] required property is missing"));

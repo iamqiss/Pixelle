@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,56 +26,56 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.action.shard;
+package org.density.cluster.action.shard;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterManagerNodeChangePredicate;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.StaleShard;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.tasks.Task;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.EmptyTransportResponseHandler;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestDeduplicator;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterManagerNodeChangePredicate;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.StaleShard;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.transport.TransportResponse;
+import org.density.node.NodeClosedException;
+import org.density.tasks.Task;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.EmptyTransportResponseHandler;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestDeduplicator;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ import java.util.function.Supplier;
 /**
  * Registers transport actions that react to shard state changes, such as shard started or shard failed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardStateAction {
 
@@ -213,7 +213,7 @@ public class ShardStateAction {
                             exp instanceof RemoteTransportException
                                 ? (Exception) (exp.getCause() instanceof Exception
                                     ? exp.getCause()
-                                    : new OpenSearchException(exp.getCause()))
+                                    : new DensityException(exp.getCause()))
                                 : exp
                         );
                     }
@@ -336,7 +336,7 @@ public class ShardStateAction {
     /**
      * A transport handler for a shard failed action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ShardFailedTransportHandler implements TransportRequestHandler<FailedShardEntry> {
         private final ClusterService clusterService;
@@ -424,7 +424,7 @@ public class ShardStateAction {
     /**
      * Executor if shard fails cluster state task.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ShardFailedClusterStateTaskExecutor implements ClusterStateTaskExecutor<FailedShardEntry> {
         private final AllocationService allocationService;
@@ -565,7 +565,7 @@ public class ShardStateAction {
     /**
      * Entry for a failed shard.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FailedShardEntry extends TransportRequest {
         final ShardId shardId;
@@ -676,7 +676,7 @@ public class ShardStateAction {
     /**
      * Handler for a shard started action.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ShardStartedTransportHandler implements TransportRequestHandler<StartedShardEntry> {
         private final ClusterService clusterService;
@@ -710,7 +710,7 @@ public class ShardStateAction {
     /**
      * Executor for when shard starts cluster state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ShardStartedClusterStateTaskExecutor
         implements
@@ -840,7 +840,7 @@ public class ShardStateAction {
     /**
      * try for started shard.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class StartedShardEntry extends TransportRequest {
         final ShardId shardId;
@@ -888,9 +888,9 @@ public class ShardStateAction {
     /**
      * Error thrown when a shard is no longer primary.
      *
-     * @opensearch.internal
+     * @density.internal
      */
-    public static class NoLongerPrimaryShardException extends OpenSearchException {
+    public static class NoLongerPrimaryShardException extends DensityException {
 
         public NoLongerPrimaryShardException(ShardId shardId, String msg) {
             super(msg);

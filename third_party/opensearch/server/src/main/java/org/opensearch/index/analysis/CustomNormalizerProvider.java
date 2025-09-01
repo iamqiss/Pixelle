@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.Map;
  * contrary to analyzers, it does not support tokenizers and only supports a
  * subset of char and token filters.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CustomNormalizerProvider extends AbstractIndexAnalyzerProvider<CustomAnalyzer> {
 

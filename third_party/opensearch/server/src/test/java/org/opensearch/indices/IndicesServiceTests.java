@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,67 +25,67 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.admin.indices.stats.IndexShardStats;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader.DelegatingCacheHelper;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.ShardLockObtainFailedException;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.gateway.LocalAllocateDangledIndices;
-import org.opensearch.gateway.MetaStateService;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.EngineFactory;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.shard.IllegalIndexShardStateException;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.similarity.NonNegativeScoresSimilarity;
-import org.opensearch.indices.IndicesService.ShardDeletionCheckResult;
-import org.opensearch.plugins.EnginePlugin;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.TestSearchContext;
-import org.opensearch.test.hamcrest.RegexMatcher;
+import org.density.Version;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.admin.indices.stats.IndexShardStats;
+import org.density.action.search.SearchType;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.lucene.index.DensityDirectoryReader.DelegatingCacheHelper;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.env.NodeEnvironment;
+import org.density.env.ShardLockObtainFailedException;
+import org.density.gateway.GatewayMetaState;
+import org.density.gateway.LocalAllocateDangledIndices;
+import org.density.gateway.MetaStateService;
+import org.density.index.IndexModule;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.EngineFactory;
+import org.density.index.engine.InternalEngine;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.shard.IllegalIndexShardStateException;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.ShardPath;
+import org.density.index.similarity.NonNegativeScoresSimilarity;
+import org.density.indices.IndicesService.ShardDeletionCheckResult;
+import org.density.plugins.EnginePlugin;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.TestSearchContext;
+import org.density.test.hamcrest.RegexMatcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,9 +99,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
@@ -110,7 +110,7 @@ import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class IndicesServiceTests extends OpenSearchSingleNodeTestCase {
+public class IndicesServiceTests extends DensitySingleNodeTestCase {
 
     public IndicesService getIndicesService() {
         return getInstanceFromNode(IndicesService.class);

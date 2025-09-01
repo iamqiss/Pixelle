@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.node;
+package org.density.index.compositeindex.datacube.startree.fileformats.node;
 
 import org.apache.lucene.store.RandomAccessInput;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNode;
-import org.opensearch.index.compositeindex.datacube.startree.node.StarTreeNodeType;
-import org.opensearch.search.startree.StarTreeNodeCollector;
-import org.opensearch.search.startree.filter.provider.DimensionFilterMapper;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.StarTreeNodeType;
+import org.density.search.startree.StarTreeNodeCollector;
+import org.density.search.startree.filter.provider.DimensionFilterMapper;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -36,7 +36,7 @@ import java.util.Iterator;
  * The class uses specific byte offsets for each field in the serialized format,
  * enabling direct access to node properties without parsing the entire node structure.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class FixedLengthStarTreeNode implements StarTreeNode {
 

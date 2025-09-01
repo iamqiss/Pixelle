@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks.get;
+package org.density.action.admin.cluster.node.tasks.get;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.TaskId;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for the request to retrieve the list of tasks running on the specified nodes
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetTaskRequestBuilder extends ActionRequestBuilder<GetTaskRequest, GetTaskResponse> {
-    public GetTaskRequestBuilder(OpenSearchClient client, GetTaskAction action) {
+    public GetTaskRequestBuilder(DensityClient client, GetTaskAction action) {
         super(client, action, new GetTaskRequest());
     }
 

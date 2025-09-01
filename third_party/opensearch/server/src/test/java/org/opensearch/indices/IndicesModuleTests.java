@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.index.mapper.DataStreamFieldMapper;
-import org.opensearch.index.mapper.DocCountFieldMapper;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.index.mapper.IndexFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.mapper.DataStreamFieldMapper;
+import org.density.index.mapper.DocCountFieldMapper;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.index.mapper.IndexFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.MapperPlugin;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ import java.util.function.Predicate;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class IndicesModuleTests extends OpenSearchTestCase {
+public class IndicesModuleTests extends DensityTestCase {
 
     private static class FakeMapperParser implements Mapper.TypeParser {
         @Override

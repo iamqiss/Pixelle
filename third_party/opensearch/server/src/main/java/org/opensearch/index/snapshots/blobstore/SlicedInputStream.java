@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +45,7 @@ import java.util.Objects;
  * if a new slice is required. Each slice is closed once it's been fully consumed or if
  * close is called before.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SlicedInputStream extends InputStream {
     private int slice = 0;

@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.util;
+package org.density.core.util;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class ConfigurationUtilsTests extends OpenSearchTestCase {
+public class ConfigurationUtilsTests extends DensityTestCase {
     private Map<String, Object> config;
 
     @Before
@@ -40,7 +40,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
         assertThat(val1, equalTo("none"));
         try {
             ConfigurationUtils.readStringProperty(config, "foo1", null);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[foo1] required property is missing"));
         }
     }
@@ -56,7 +56,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadStringPropertyInvalidType() {
         try {
             ConfigurationUtils.readStringProperty(config, "arr");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a string, but of type [java.util.Arrays$ArrayList]"));
         }
     }
@@ -74,7 +74,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadBooleanPropertyInvalidType() {
         try {
             ConfigurationUtils.readBooleanProperty(config, "arr", true);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a boolean, but of type [java.util.Arrays$ArrayList]"));
         }
     }
@@ -100,12 +100,12 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
         assertThat(val, equalTo(1));
         try {
             ConfigurationUtils.readIntProperty(config, "foo", 2);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[foo] property cannot be converted to an int [bar]"));
         }
         try {
             ConfigurationUtils.readIntProperty(config, "foo1", 2);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("required property is missing"));
         }
     }
@@ -115,12 +115,12 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
         assertThat(val, equalTo(1.0));
         try {
             ConfigurationUtils.readDoubleProperty(config, "foo");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[foo] property cannot be converted to a double [bar]"));
         }
         try {
             ConfigurationUtils.readDoubleProperty(config, "foo1");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[foo1] required property is missing"));
         }
     }
@@ -128,7 +128,7 @@ public class ConfigurationUtilsTests extends OpenSearchTestCase {
     public void testReadStringOrIntPropertyInvalidType() {
         try {
             ConfigurationUtils.readStringOrIntProperty(config, "arr", null);
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), equalTo("[arr] property isn't a string or int, but of type [java.util.Arrays$ArrayList]"));
         }
     }

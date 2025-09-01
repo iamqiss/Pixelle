@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.lookup;
+package org.density.search.lookup;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -49,7 +49,7 @@ import java.util.function.Supplier;
 /**
  * Orchestrator class for search phase lookups
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchLookup {

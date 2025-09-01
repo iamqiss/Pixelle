@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.store.smb;
+package org.density.plugin.store.smb;
 
-import org.opensearch.index.store.smbmmapfs.SmbMmapFsDirectoryFactory;
-import org.opensearch.index.store.smbniofs.SmbNIOFsDirectoryFactory;
-import org.opensearch.plugins.IndexStorePlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.index.store.smbmmapfs.SmbMmapFsDirectoryFactory;
+import org.density.index.store.smbniofs.SmbNIOFsDirectoryFactory;
+import org.density.plugins.IndexStorePlugin;
+import org.density.plugins.Plugin;
 
 import java.util.Collections;
 import java.util.HashMap;

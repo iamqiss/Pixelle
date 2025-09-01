@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
-import org.opensearch.action.search.DeleteSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineRequest;
-import org.opensearch.action.search.GetSearchPipelineResponse;
-import org.opensearch.action.search.PutSearchPipelineRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.search.DeleteSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineRequest;
+import org.density.action.search.GetSearchPipelineResponse;
+import org.density.action.search.PutSearchPipelineRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 
-public class SearchPipelineClientIT extends OpenSearchRestHighLevelClientTestCase {
+public class SearchPipelineClientIT extends DensityRestHighLevelClientTestCase {
 
     public void testPutPipeline() throws IOException {
         String id = "some_pipeline_id";

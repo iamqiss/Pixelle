@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -22,15 +22,15 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.mapper.DerivedFieldSupportedTypes;
-import org.opensearch.index.mapper.DerivedFieldValueFetcher;
-import org.opensearch.script.DerivedFieldScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.lucene.Lucene;
+import org.density.index.mapper.DerivedFieldSupportedTypes;
+import org.density.index.mapper.DerivedFieldValueFetcher;
+import org.density.script.DerivedFieldScript;
+import org.density.script.Script;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.function.Function;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DerivedFieldQueryTests extends OpenSearchTestCase {
+public class DerivedFieldQueryTests extends DensityTestCase {
 
     private static final String[][] raw_requests = new String[][] {
         { "40.135.0.0 GET /images/hm_bg.jpg HTTP/1.0", "200", "40.135.0.0" },

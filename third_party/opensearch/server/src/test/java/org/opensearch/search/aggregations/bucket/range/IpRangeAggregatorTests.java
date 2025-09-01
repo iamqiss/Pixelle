@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.InetAddressPoint;
@@ -40,12 +40,12 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.index.mapper.IpFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.AggregatorTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.network.NetworkAddress;
+import org.density.index.mapper.IpFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.AggregatorTestCase;
 
 import java.net.InetAddress;
 import java.util.Arrays;

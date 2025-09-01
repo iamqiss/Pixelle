@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.transport.client.Client;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.indices.IndicesService;
+import org.density.script.ScriptService;
+import org.density.threadpool.Scheduler;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +56,7 @@ import java.util.function.LongSupplier;
  * <p>
  * Processors may get called concurrently and thus need to be thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Processor {
 
@@ -170,7 +170,7 @@ public interface Processor {
 
     /**
      * Infrastructure class that holds services that can be used by processor factories to create processor instances
-     * and that gets passed around to all {@link org.opensearch.plugins.IngestPlugin}s.
+     * and that gets passed around to all {@link org.density.plugins.IngestPlugin}s.
      */
     class Parameters {
 
@@ -190,7 +190,7 @@ public interface Processor {
         public final AnalysisRegistry analysisRegistry;
 
         /**
-         * Allows processors to read headers set by {@link org.opensearch.action.support.ActionFilter}
+         * Allows processors to read headers set by {@link org.density.action.support.ActionFilter}
          * instances that have run prior to in ingest.
          */
         public final ThreadContext threadContext;

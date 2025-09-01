@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryVerificationException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.util.FileSystemUtils;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryVerificationException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(minNumDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(minNumDataNodes = 2)
 public class RepositoriesIT extends AbstractSnapshotIntegTestCase {
     public void testRepositoryCreation() throws Exception {
         Client client = client();
@@ -240,7 +240,7 @@ public class RepositoriesIT extends AbstractSnapshotIntegTestCase {
             .put("location", randomRepoPath())
             .put("compress", randomBoolean())
             .put("chunk_size", randomIntBetween(5, 100), ByteSizeUnit.BYTES);
-        PutRepositoryRequestBuilder requestBuilder = OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+        PutRepositoryRequestBuilder requestBuilder = DensityIntegTestCase.putRepositoryRequestBuilder(
             client().admin().cluster(),
             "test-repo-1",
             "fs",
@@ -280,7 +280,7 @@ public class RepositoriesIT extends AbstractSnapshotIntegTestCase {
         Settings readonlySettings = Settings.builder().put(settings).put("readonly", true).build();
         logger.info("-->  creating repository that cannot write any files - should fail");
         assertRequestBuilderThrows(
-            OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+            DensityIntegTestCase.putRepositoryRequestBuilder(
                 client.admin().cluster(),
                 "test-repo-1",
                 "mock",
@@ -294,7 +294,7 @@ public class RepositoriesIT extends AbstractSnapshotIntegTestCase {
 
         logger.info("-->  creating read-only repository that cannot read any files - should fail");
         assertRequestBuilderThrows(
-            OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+            DensityIntegTestCase.putRepositoryRequestBuilder(
                 client.admin().cluster(),
                 "test-repo-2",
                 "mock",
@@ -307,13 +307,13 @@ public class RepositoriesIT extends AbstractSnapshotIntegTestCase {
         );
 
         logger.info("-->  creating repository that cannot write any files, but suppress verification - should be acked");
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), "test-repo-1", "mock", false, Settings.builder().put(settings));
+        DensityIntegTestCase.putRepository(client.admin().cluster(), "test-repo-1", "mock", false, Settings.builder().put(settings));
 
         logger.info("-->  verifying repository");
         assertRequestBuilderThrows(client.admin().cluster().prepareVerifyRepository("test-repo-1"), RepositoryVerificationException.class);
 
         logger.info("-->  creating read-only repository that cannot read any files, but suppress verification - should be acked");
-        OpenSearchIntegTestCase.putRepository(
+        DensityIntegTestCase.putRepository(
             client.admin().cluster(),
             "test-repo-2",
             "mock",

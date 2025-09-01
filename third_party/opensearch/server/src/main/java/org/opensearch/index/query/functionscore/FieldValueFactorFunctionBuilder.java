@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.common.lucene.search.function.FieldValueFactorFunction;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -53,7 +53,7 @@ import java.util.Objects;
  * Builder to construct {@code field_value_factor} functions for a function
  * score query.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FieldValueFactorFunctionBuilder extends ScoreFunctionBuilder<FieldValueFactorFunctionBuilder> {
     public static final String NAME = "field_value_factor";
@@ -169,7 +169,7 @@ public class FieldValueFactorFunctionBuilder extends ScoreFunctionBuilder<FieldV
         IndexNumericFieldData fieldData = null;
         if (fieldType == null) {
             if (missing == null) {
-                throw new OpenSearchException("Unable to find a field mapper for field [" + field + "]. No 'missing' value defined.");
+                throw new DensityException("Unable to find a field mapper for field [" + field + "]. No 'missing' value defined.");
             }
         } else {
             fieldData = context.getForField(fieldType);

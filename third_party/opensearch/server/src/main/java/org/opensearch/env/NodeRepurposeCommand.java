@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.OpenSearchNodeCommand;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.gateway.PersistedClusterStateService;
+import org.density.DensityException;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.DensityNodeCommand;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.gateway.MetadataStateFormat;
+import org.density.gateway.PersistedClusterStateService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -57,18 +57,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.env.NodeEnvironment.CACHE_FOLDER;
-import static org.opensearch.env.NodeEnvironment.INDICES_FOLDER;
+import static org.density.env.NodeEnvironment.CACHE_FOLDER;
+import static org.density.env.NodeEnvironment.INDICES_FOLDER;
 
 /**
  * Command to repurpose a node
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class NodeRepurposeCommand extends OpenSearchNodeCommand {
+public class NodeRepurposeCommand extends DensityNodeCommand {
 
-    static final String ABORTED_BY_USER_MSG = OpenSearchNodeCommand.ABORTED_BY_USER_MSG;
-    static final String FAILED_TO_OBTAIN_NODE_LOCK_MSG = OpenSearchNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG;
+    static final String ABORTED_BY_USER_MSG = DensityNodeCommand.ABORTED_BY_USER_MSG;
+    static final String FAILED_TO_OBTAIN_NODE_LOCK_MSG = DensityNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG;
     static final String NO_CLEANUP = "Node has node.data=true and node.warm=true -> no clean up necessary";
     static final String NO_DATA_TO_CLEAN_UP_FOUND = "No data to clean-up found";
     static final String NO_SHARD_DATA_TO_CLEAN_UP_FOUND = "No shard data to clean-up found";
@@ -337,7 +337,7 @@ public class NodeRepurposeCommand extends OpenSearchNodeCommand {
         try {
             IOUtils.rm(path);
         } catch (IOException e) {
-            throw new OpenSearchException("Unable to clean up path: " + path + ": " + e.getMessage());
+            throw new DensityException("Unable to clean up path: " + path + ": " + e.getMessage());
         }
     }
 

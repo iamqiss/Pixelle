@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.benchmark;
+package org.density.client.benchmark;
 
-import org.opensearch.client.benchmark.metrics.SampleRecorder;
+import org.density.client.benchmark.metrics.SampleRecorder;
 
 public interface BenchmarkTask {
     void setUp(SampleRecorder sampleRecorder) throws Exception;

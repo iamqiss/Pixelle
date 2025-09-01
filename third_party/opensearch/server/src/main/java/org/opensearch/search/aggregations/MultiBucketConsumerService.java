@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.aggregations.bucket.BucketsAggregator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.aggregations.bucket.BucketsAggregator;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.LongAdder;
@@ -53,7 +53,7 @@ import java.util.function.IntConsumer;
  * in {@link Aggregator#buildAggregations} and {@link InternalAggregation#reduce}.
  * The limit can be set by changing the `search.max_buckets` cluster setting and defaults to 65535.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiBucketConsumerService {
     public static final int DEFAULT_MAX_BUCKETS = 65535;
@@ -82,7 +82,7 @@ public class MultiBucketConsumerService {
     /**
      * Thrown when there are too many buckets
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TooManyBucketsException extends AggregationExecutionException {
         private final int maxBuckets;
@@ -124,7 +124,7 @@ public class MultiBucketConsumerService {
      * It is used by aggregators to limit the number of bucket creation during
      * {@link Aggregator#buildAggregations} and {@link InternalAggregation#reduce}.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class MultiBucketConsumer implements IntConsumer {
@@ -181,7 +181,7 @@ public class MultiBucketConsumerService {
             callCount.increment();
             // tripping the circuit breaker for other threads in case of concurrent search
             // if the circuit breaker has tripped for one of the threads already, more info
-            // can be found on: https://github.com/opensearch-project/OpenSearch/issues/7785
+            // can be found on: https://github.com/density-project/Density/issues/7785
             if (circuitBreakerTripped) {
                 throw new CircuitBreakingException(
                     "Circuit breaker for this consumer has already been tripped by previous invocations. "

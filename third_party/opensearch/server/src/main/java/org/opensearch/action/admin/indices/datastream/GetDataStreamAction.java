@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,45 +25,45 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadRequest;
-import org.opensearch.action.support.clustermanager.TransportClusterManagerNodeReadAction;
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.health.ClusterStateHealth;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.MetadataIndexTemplateService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.IndicesRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadRequest;
+import org.density.action.support.clustermanager.TransportClusterManagerNodeReadAction;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.health.ClusterStateHealth;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.MetadataIndexTemplateService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
 /**
  * Transport action for getting a datastream
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetDataStreamAction extends ActionType<GetDataStreamAction.Response> {
@@ -92,7 +92,7 @@ public class GetDataStreamAction extends ActionType<GetDataStreamAction.Response
     /**
      * Request for getting data streams
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Request extends ClusterManagerNodeReadRequest<Request> implements IndicesRequest.Replaceable {
@@ -159,7 +159,7 @@ public class GetDataStreamAction extends ActionType<GetDataStreamAction.Response
     /**
      * Response for getting data streams
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Response extends ActionResponse implements ToXContentObject {
@@ -168,7 +168,7 @@ public class GetDataStreamAction extends ActionType<GetDataStreamAction.Response
         /**
          * Data streams information
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public static class DataStreamInfo extends AbstractDiffable<DataStreamInfo> implements ToXContentObject {
@@ -290,7 +290,7 @@ public class GetDataStreamAction extends ActionType<GetDataStreamAction.Response
     /**
      * Transport Action for getting data streams
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TransportAction extends TransportClusterManagerNodeReadAction<Request, Response> {
 

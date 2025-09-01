@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.TemplatesMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTableIncrementalDiff;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.remote.ClusterStateDiffManifest;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.TemplatesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTableIncrementalDiff;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.remote.ClusterStateDiffManifest;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,16 +41,16 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.Version.CURRENT;
-import static org.opensearch.cluster.ClusterState.EMPTY_STATE;
-import static org.opensearch.core.common.transport.TransportAddress.META_ADDRESS;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V3;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V4;
-import static org.opensearch.gateway.remote.RemoteClusterStateServiceTests.generateClusterStateWithOneIndex;
-import static org.opensearch.gateway.remote.RemoteClusterStateServiceTests.nodesWithLocalNodeClusterManager;
-import static org.opensearch.gateway.remote.model.RemoteClusterBlocksTests.randomClusterBlocks;
+import static org.density.Version.CURRENT;
+import static org.density.cluster.ClusterState.EMPTY_STATE;
+import static org.density.core.common.transport.TransportAddress.META_ADDRESS;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V3;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V4;
+import static org.density.gateway.remote.RemoteClusterStateServiceTests.generateClusterStateWithOneIndex;
+import static org.density.gateway.remote.RemoteClusterStateServiceTests.nodesWithLocalNodeClusterManager;
+import static org.density.gateway.remote.model.RemoteClusterBlocksTests.randomClusterBlocks;
 
-public class ClusterStateDiffManifestTests extends OpenSearchTestCase {
+public class ClusterStateDiffManifestTests extends DensityTestCase {
 
     public void testClusterStateDiffManifest() {
         ClusterState initialState = ClusterState.builder(EMPTY_STATE)

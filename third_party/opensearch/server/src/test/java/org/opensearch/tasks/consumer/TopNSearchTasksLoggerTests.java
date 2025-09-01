@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks.consumer;
+package org.density.tasks.consumer;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LogEvent;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.logging.MockAppender;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.resourcetracker.ResourceStats;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.search.SearchShardTask;
+import org.density.common.logging.Loggers;
+import org.density.common.logging.MockAppender;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.resourcetracker.ResourceStats;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.tasks.Task;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.util.Collections;
 
-import static org.opensearch.tasks.consumer.TopNSearchTasksLogger.LOG_TOP_QUERIES_FREQUENCY_SETTING;
-import static org.opensearch.tasks.consumer.TopNSearchTasksLogger.LOG_TOP_QUERIES_SIZE_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.tasks.consumer.TopNSearchTasksLogger.LOG_TOP_QUERIES_FREQUENCY_SETTING;
+import static org.density.tasks.consumer.TopNSearchTasksLogger.LOG_TOP_QUERIES_SIZE_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-public class TopNSearchTasksLoggerTests extends OpenSearchSingleNodeTestCase {
+public class TopNSearchTasksLoggerTests extends DensitySingleNodeTestCase {
     static MockAppender appender;
     static Logger searchLogger = LogManager.getLogger(TopNSearchTasksLogger.TASK_DETAILS_LOG_PREFIX + ".search");
 

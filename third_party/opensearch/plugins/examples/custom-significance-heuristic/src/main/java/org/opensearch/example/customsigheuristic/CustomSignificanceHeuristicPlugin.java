@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.customsigheuristic;
+package org.density.example.customsigheuristic;
 
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.customsuggester;
+package org.density.example.customsuggester;
 
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggester;
+import org.density.core.common.text.Text;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggester;
 
 import java.io.IOException;
 import java.util.Locale;

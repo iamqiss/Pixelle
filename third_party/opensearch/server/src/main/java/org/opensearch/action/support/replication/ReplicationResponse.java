@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionResponse;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * Base class for write action responses.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ReplicationResponse extends ActionResponse {
@@ -90,7 +90,7 @@ public class ReplicationResponse extends ActionResponse {
     /**
      * Holds shard information
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ShardInfo implements Writeable, ToXContentObject {
@@ -238,7 +238,7 @@ public class ReplicationResponse extends ActionResponse {
         /**
          * Holds failure information
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public static class Failure extends ShardOperationFailedException implements ToXContentObject {
@@ -308,7 +308,7 @@ public class ReplicationResponse extends ActionResponse {
                 builder.field(_NODE, nodeId);
                 builder.field(REASON);
                 builder.startObject();
-                OpenSearchException.generateThrowableXContent(builder, params, cause);
+                DensityException.generateThrowableXContent(builder, params, cause);
                 builder.endObject();
                 builder.field(STATUS, status);
                 builder.field(PRIMARY, primary);
@@ -324,7 +324,7 @@ public class ReplicationResponse extends ActionResponse {
                 int shardId = -1;
                 boolean primary = false;
                 RestStatus status = null;
-                OpenSearchException reason = null;
+                DensityException reason = null;
 
                 String currentFieldName = null;
                 while ((token = parser.nextToken()) != XContentParser.Token.END_OBJECT) {
@@ -344,7 +344,7 @@ public class ReplicationResponse extends ActionResponse {
                         }
                     } else if (token == XContentParser.Token.START_OBJECT) {
                         if (REASON.equals(currentFieldName)) {
-                            reason = OpenSearchException.fromXContent(parser);
+                            reason = DensityException.fromXContent(parser);
                         } else {
                             parser.skipChildren(); // skip potential inner objects for forward compatibility
                         }

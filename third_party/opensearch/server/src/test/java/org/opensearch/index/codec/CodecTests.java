@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.codec;
+package org.density.index.codec;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.codecs.Codec;
@@ -43,30 +43,30 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.SegmentReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.util.LuceneTestCase.SuppressCodecs;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.codec.composite.composite101.Composite101Codec;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.codec.composite.composite101.Composite101Codec;
+import org.density.index.engine.EngineConfig;
+import org.density.index.mapper.MapperService;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.plugins.MapperPlugin;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.index.engine.EngineConfig.INDEX_CODEC_COMPRESSION_LEVEL_SETTING;
+import static org.density.index.engine.EngineConfig.INDEX_CODEC_COMPRESSION_LEVEL_SETTING;
 import static org.hamcrest.Matchers.instanceOf;
 
 @SuppressCodecs("*") // we test against default codec so never get a random one here!
-public class CodecTests extends OpenSearchTestCase {
+public class CodecTests extends DensityTestCase {
 
     public void testResolveDefaultCodecs() throws Exception {
         CodecService codecService = createCodecService(false);

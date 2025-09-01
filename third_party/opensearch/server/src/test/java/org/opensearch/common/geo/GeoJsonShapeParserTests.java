@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.index.mapper.LegacyGeoShapeFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.hamcrest.OpenSearchGeoAssertions;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Line;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.index.mapper.LegacyGeoShapeFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.test.VersionUtils;
+import org.density.test.hamcrest.DensityGeoAssertions;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -75,7 +75,7 @@ import org.locationtech.spatial4j.shape.Shape;
 import org.locationtech.spatial4j.shape.ShapeCollection;
 import org.locationtech.spatial4j.shape.jts.JtsPoint;
 
-import static org.opensearch.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
+import static org.density.common.geo.builders.ShapeBuilder.SPATIAL_CONTEXT;
 
 /**
  * Tests for {@code GeoJSONShapeParser}
@@ -94,7 +94,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         Point expected = GEOMETRY_FACTORY.createPoint(new Coordinate(100.0, 0.0));
         assertGeometryEquals(new JtsPoint(expected, SPATIAL_CONTEXT), pointGeoJson, true);
-        assertGeometryEquals(new org.opensearch.geometry.Point(100d, 0d), pointGeoJson, false);
+        assertGeometryEquals(new org.density.geometry.Point(100d, 0d), pointGeoJson, false);
     }
 
     @Override
@@ -121,12 +121,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(lineGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertLineString(shape, true);
+            DensityGeoAssertions.assertLineString(shape, true);
         }
 
         try (XContentParser parser = createParser(lineGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertLineString(parse(parser), false);
+            DensityGeoAssertions.assertLineString(parse(parser), false);
         }
     }
 
@@ -207,7 +207,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         XContentParser parser = createParser(pointGeoJson);
         parser.nextToken();
-        OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+        DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
         assertNull(parser.nextToken());
 
         // multi dimension linestring
@@ -231,7 +231,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         parser = createParser(lineGeoJson);
         parser.nextToken();
-        OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+        DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
         assertNull(parser.nextToken());
     }
 
@@ -254,7 +254,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         Rectangle expected = SPATIAL_CONTEXT.makeRectangle(-50, 50, -30, 30);
         assertGeometryEquals(expected, multilinesGeoJson, true);
-        assertGeometryEquals(new org.opensearch.geometry.Rectangle(-50, 50, 30, -30), multilinesGeoJson, false);
+        assertGeometryEquals(new org.density.geometry.Rectangle(-50, 50, 30, -30), multilinesGeoJson, false);
 
         // test #2: envelope that spans dateline
         multilinesGeoJson = XContentFactory.jsonBuilder()
@@ -274,7 +274,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         expected = SPATIAL_CONTEXT.makeRectangle(50, -50, -30, 30);
         assertGeometryEquals(expected, multilinesGeoJson, true);
-        assertGeometryEquals(new org.opensearch.geometry.Rectangle(50, -50, 30, -30), multilinesGeoJson, false);
+        assertGeometryEquals(new org.density.geometry.Rectangle(50, -50, 30, -30), multilinesGeoJson, false);
 
         // test #3: "envelope" (actually a triangle) with invalid number of coordinates (TopRight, BottomLeft, BottomRight)
         multilinesGeoJson = XContentFactory.jsonBuilder()
@@ -297,7 +297,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(multilinesGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -310,7 +310,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(multilinesGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -357,8 +357,8 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         Polygon expected = GEOMETRY_FACTORY.createPolygon(shell, null);
         assertGeometryEquals(jtsGeom(expected), polygonGeoJson, true);
 
-        org.opensearch.geometry.Polygon p = new org.opensearch.geometry.Polygon(
-            new org.opensearch.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d })
+        org.density.geometry.Polygon p = new org.density.geometry.Polygon(
+            new org.density.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d })
         );
         assertGeometryEquals(p, polygonGeoJson, false);
     }
@@ -422,11 +422,11 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .build(mockBuilderContext));
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertEquals(jtsGeom(expected), ShapeParser.parse(parser, mapperBuilder).buildS4J());
+            DensityGeoAssertions.assertEquals(jtsGeom(expected), ShapeParser.parse(parser, mapperBuilder).buildS4J());
         }
 
-        org.opensearch.geometry.Polygon p = new org.opensearch.geometry.Polygon(
-            new org.opensearch.geometry.LinearRing(
+        org.density.geometry.Polygon p = new org.density.geometry.Polygon(
+            new org.density.geometry.LinearRing(
                 Arrays.stream(coordinates).mapToDouble(i -> i.x).toArray(),
                 Arrays.stream(coordinates).mapToDouble(i -> i.y).toArray()
             )
@@ -469,7 +469,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -488,7 +488,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(invalidPoint1)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -501,7 +501,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(invalidPoint2)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -518,7 +518,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(invalidMultipoint1)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -531,7 +531,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(invalidMultipoint2)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -546,7 +546,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .endObject();
         try (XContentParser parser = createParser(invalidMultipoint3)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -631,7 +631,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, multiPolygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, InvalidShapeException.class);
+            DensityGeoAssertions.assertValidException(parser, InvalidShapeException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -719,7 +719,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, multiPolygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -763,12 +763,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 2: ccw poly crossing dateline
@@ -809,12 +809,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
 
         // test 3: cw poly not crossing dateline
@@ -855,12 +855,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 4: cw poly crossing dateline
@@ -901,12 +901,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
     }
 
@@ -967,12 +967,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 2: ccw poly crossing dateline
@@ -1031,12 +1031,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
 
         // test 3: cw poly not crossing dateline
@@ -1095,12 +1095,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 4: cw poly crossing dateline
@@ -1159,12 +1159,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
     }
 
@@ -1193,7 +1193,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             .toString();
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1214,7 +1214,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1233,7 +1233,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1254,7 +1254,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, IllegalArgumentException.class);
+            DensityGeoAssertions.assertValidException(parser, IllegalArgumentException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1271,7 +1271,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, IllegalArgumentException.class);
+            DensityGeoAssertions.assertValidException(parser, IllegalArgumentException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1286,7 +1286,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -1305,7 +1305,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, invalidPoly)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -1383,12 +1383,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         Polygon expected = GEOMETRY_FACTORY.createPolygon(shell, holes);
         assertGeometryEquals(jtsGeom(expected), polygonGeoJson, true);
 
-        org.opensearch.geometry.LinearRing hole = new org.opensearch.geometry.LinearRing(
+        org.density.geometry.LinearRing hole = new org.density.geometry.LinearRing(
             new double[] { 100.8d, 100.8d, 100.2d, 100.2d, 100.8d },
             new double[] { 0.8d, 0.2d, 0.2d, 0.8d, 0.8d }
         );
-        org.opensearch.geometry.Polygon p = new org.opensearch.geometry.Polygon(
-            new org.opensearch.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d }),
+        org.density.geometry.Polygon p = new org.density.geometry.Polygon(
+            new org.density.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d }),
             Collections.singletonList(hole)
         );
         assertGeometryEquals(p, polygonGeoJson, false);
@@ -1436,7 +1436,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(JsonXContent.jsonXContent, polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, InvalidShapeException.class);
+            DensityGeoAssertions.assertValidException(parser, InvalidShapeException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -1461,7 +1461,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         assertGeometryEquals(expected, multiPointGeoJson, true);
 
         assertGeometryEquals(
-            new MultiPoint(Arrays.asList(new org.opensearch.geometry.Point(100, 0), new org.opensearch.geometry.Point(101, 1))),
+            new MultiPoint(Arrays.asList(new org.density.geometry.Point(100, 0), new org.density.geometry.Point(101, 1))),
             multiPointGeoJson,
             false
         );
@@ -1580,21 +1580,21 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         assertGeometryEquals(expected, multiPolygonGeoJson, true);
 
-        org.opensearch.geometry.LinearRing hole = new org.opensearch.geometry.LinearRing(
+        org.density.geometry.LinearRing hole = new org.density.geometry.LinearRing(
             new double[] { 100.8d, 100.8d, 100.2d, 100.2d, 100.8d },
             new double[] { 0.8d, 0.2d, 0.2d, 0.8d, 0.8d }
         );
 
-        org.opensearch.geometry.MultiPolygon polygons = new org.opensearch.geometry.MultiPolygon(
+        org.density.geometry.MultiPolygon polygons = new org.density.geometry.MultiPolygon(
             Arrays.asList(
-                new org.opensearch.geometry.Polygon(
-                    new org.opensearch.geometry.LinearRing(
+                new org.density.geometry.Polygon(
+                    new org.density.geometry.LinearRing(
                         new double[] { 103d, 103d, 102d, 102d, 103d },
                         new double[] { 2d, 3d, 3d, 2d, 2d }
                     )
                 ),
-                new org.opensearch.geometry.Polygon(
-                    new org.opensearch.geometry.LinearRing(
+                new org.density.geometry.Polygon(
+                    new org.density.geometry.LinearRing(
                         new double[] { 101d, 101d, 100d, 100d, 101d },
                         new double[] { 0d, 1d, 1d, 0d, 0d }
                     ),
@@ -1682,13 +1682,13 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         assertGeometryEquals(jtsGeom(withHoles), multiPolygonGeoJson, true);
 
-        org.opensearch.geometry.LinearRing luceneHole = new org.opensearch.geometry.LinearRing(
+        org.density.geometry.LinearRing luceneHole = new org.density.geometry.LinearRing(
             new double[] { 100.8d, 100.8d, 100.2d, 100.2d, 100.8d },
             new double[] { 0.8d, 0.2d, 0.2d, 0.8d, 0.8d }
         );
 
-        org.opensearch.geometry.Polygon lucenePolygons = (new org.opensearch.geometry.Polygon(
-            new org.opensearch.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d }),
+        org.density.geometry.Polygon lucenePolygons = (new org.density.geometry.Polygon(
+            new org.density.geometry.LinearRing(new double[] { 100d, 101d, 101d, 100d, 100d }, new double[] { 0d, 0d, 1d, 1d, 0d }),
             Collections.singletonList(luceneHole)
         ));
         assertGeometryEquals(lucenePolygons, multiPolygonGeoJson, false);
@@ -1789,17 +1789,17 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         GeometryCollection<Geometry> geometryExpected = new GeometryCollection<>(
             Arrays.asList(
                 new Line(new double[] { 100d, 101d }, new double[] { 0d, 1d }),
-                new org.opensearch.geometry.Point(102d, 2d),
-                new org.opensearch.geometry.MultiPolygon(
+                new org.density.geometry.Point(102d, 2d),
+                new org.density.geometry.MultiPolygon(
                     Arrays.asList(
-                        new org.opensearch.geometry.Polygon(
-                            new org.opensearch.geometry.LinearRing(
+                        new org.density.geometry.Polygon(
+                            new org.density.geometry.LinearRing(
                                 new double[] { 180d, 180d, 176d, 172d, 176d, 180d },
                                 new double[] { -12.142857142857142d, 12.142857142857142d, 15d, 0d, -15d, -12.142857142857142d }
                             )
                         ),
-                        new org.opensearch.geometry.Polygon(
-                            new org.opensearch.geometry.LinearRing(
+                        new org.density.geometry.Polygon(
+                            new org.density.geometry.LinearRing(
                                 new double[] { -180d, -180d, -177d, -177d, -180d },
                                 new double[] { 12.142857142857142d, -12.142857142857142d, -10d, 10d, 12.142857142857142d }
                             )
@@ -1840,7 +1840,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         Point expected = GEOMETRY_FACTORY.createPoint(new Coordinate(100.0, 0.0));
         assertGeometryEquals(new JtsPoint(expected, SPATIAL_CONTEXT), pointGeoJson, true);
 
-        org.opensearch.geometry.Point expectedPt = new org.opensearch.geometry.Point(100, 0);
+        org.density.geometry.Point expectedPt = new org.density.geometry.Point(100, 0);
         assertGeometryEquals(expectedPt, pointGeoJson, false);
     }
 
@@ -1901,12 +1901,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 2: valid ccw (right handed system) poly not crossing dateline (with 'ccw' field)
@@ -1965,12 +1965,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 3: valid ccw (right handed system) poly not crossing dateline (with 'counterclockwise' field)
@@ -2029,12 +2029,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertPolygon(shape, true);
+            DensityGeoAssertions.assertPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertPolygon(parse(parser), false);
+            DensityGeoAssertions.assertPolygon(parse(parser), false);
         }
 
         // test 4: valid cw (left handed system) poly crossing dateline (with 'left' field)
@@ -2093,12 +2093,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
 
         // test 5: valid cw multipoly (left handed system) poly crossing dateline (with 'cw' field)
@@ -2157,12 +2157,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
 
         // test 6: valid cw multipoly (left handed system) poly crossing dateline (with 'clockwise' field)
@@ -2221,12 +2221,12 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
             Shape shape = ShapeParser.parse(parser).buildS4J();
-            OpenSearchGeoAssertions.assertMultiPolygon(shape, true);
+            DensityGeoAssertions.assertMultiPolygon(shape, true);
         }
 
         try (XContentParser parser = createParser(polygonGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertMultiPolygon(parse(parser), false);
+            DensityGeoAssertions.assertMultiPolygon(parse(parser), false);
         }
     }
 
@@ -2242,7 +2242,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(tooLittlePointGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
 
@@ -2257,7 +2257,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
 
         try (XContentParser parser = createParser(emptyPointGeoJson)) {
             parser.nextToken();
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertNull(parser.nextToken());
         }
     }
@@ -2289,7 +2289,7 @@ public class GeoJsonShapeParserTests extends BaseGeoParsingTestCase {
             parser.nextToken(); // foo
             parser.nextToken(); // start object
             parser.nextToken(); // start object
-            OpenSearchGeoAssertions.assertValidException(parser, OpenSearchParseException.class);
+            DensityGeoAssertions.assertValidException(parser, DensityParseException.class);
             assertEquals(XContentParser.Token.END_OBJECT, parser.nextToken()); // end of the document
             assertNull(parser.nextToken()); // no more elements afterwards
         }

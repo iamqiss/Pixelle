@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeSettingsClusterStateUpdateRequest;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.admin.indices.settings.put.UpdateSettingsClusterStateUpdateRequest;
+import org.density.action.admin.indices.upgrade.post.UpgradeSettingsClusterStateUpdateRequest;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.ValidationException;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.regex.Regex;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.index.IndexSettings;
+import org.density.indices.IndicesService;
+import org.density.indices.ShardLimitValidator;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,23 +74,23 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.action.support.ContextPreservingActionListener.wrapPreservingContext;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateOverlap;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateRefreshIntervalSettings;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateTranslogDurabilitySettings;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.validateTranslogFlushIntervalSettingsForCompositeIndex;
-import static org.opensearch.cluster.metadata.MetadataIndexTemplateService.findComponentTemplate;
-import static org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
-import static org.opensearch.cluster.service.ClusterManagerTask.UPDATE_SETTINGS;
-import static org.opensearch.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
-import static org.opensearch.index.IndexSettings.same;
+import static org.density.action.support.ContextPreservingActionListener.wrapPreservingContext;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateOverlap;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateRefreshIntervalSettings;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateTranslogDurabilitySettings;
+import static org.density.cluster.metadata.MetadataCreateIndexService.validateTranslogFlushIntervalSettingsForCompositeIndex;
+import static org.density.cluster.metadata.MetadataIndexTemplateService.findComponentTemplate;
+import static org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
+import static org.density.cluster.service.ClusterManagerTask.UPDATE_SETTINGS;
+import static org.density.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
+import static org.density.index.IndexSettings.same;
 
 /**
  * Service responsible for submitting update index settings requests
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataUpdateSettingsService {
     private static final Logger logger = LogManager.getLogger(MetadataUpdateSettingsService.class);
@@ -453,7 +453,7 @@ public class MetadataUpdateSettingsService {
                             indicesService.verifyIndexMetadata(updatedMetadata, updatedMetadata);
                         }
                     } catch (IOException ex) {
-                        throw ExceptionsHelper.convertToOpenSearchException(ex);
+                        throw ExceptionsHelper.convertToDensityException(ex);
                     }
                     return updatedState;
                 }

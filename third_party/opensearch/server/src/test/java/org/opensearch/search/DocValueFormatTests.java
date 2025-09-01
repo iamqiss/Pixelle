@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.document.InetAddressPoint;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.mapper.DateFieldMapper.Resolution;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.network.InetAddresses;
+import org.density.common.time.DateFormatter;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.mapper.DateFieldMapper.Resolution;
+import org.density.test.DensityTestCase;
 
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.search.aggregations.bucket.GeoTileUtils.longEncode;
+import static org.density.search.aggregations.bucket.GeoTileUtils.longEncode;
 
-public class DocValueFormatTests extends OpenSearchTestCase {
+public class DocValueFormatTests extends DensityTestCase {
 
     public void testSerialization() throws Exception {
         List<Entry> entries = new ArrayList<>();

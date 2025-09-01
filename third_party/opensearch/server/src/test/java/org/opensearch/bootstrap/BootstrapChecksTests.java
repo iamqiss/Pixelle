@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.cluster.coordination.ClusterBootstrapService;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.SettingsBasedSeedHostsProvider;
-import org.opensearch.env.Environment;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.node.NodeRoleSettings;
-import org.opensearch.node.NodeValidationException;
-import org.opensearch.test.AbstractBootstrapCheckTestCase;
+import org.density.cluster.coordination.ClusterBootstrapService;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.CheckedConsumer;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Settings;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.SettingsBasedSeedHostsProvider;
+import org.density.env.Environment;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.node.NodeRoleSettings;
+import org.density.node.NodeValidationException;
+import org.density.test.AbstractBootstrapCheckTestCase;
 import org.hamcrest.Matcher;
 
 import java.lang.Runtime.Version;
@@ -63,7 +63,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import static org.opensearch.discovery.DiscoveryModule.ZEN2_DISCOVERY_TYPE;
+import static org.density.discovery.DiscoveryModule.ZEN2_DISCOVERY_TYPE;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -309,7 +309,7 @@ public class BootstrapChecksTests extends AbstractBootstrapCheckTestCase {
                     NodeValidationException.class,
                     () -> BootstrapChecks.check(bootstrapContext, true, Collections.singletonList(check))
                 );
-                assertThat(e.getMessage(), containsString("memory locking requested for opensearch process but memory is not locked"));
+                assertThat(e.getMessage(), containsString("memory locking requested for density process but memory is not locked"));
             } else {
                 // nothing should happen
                 BootstrapChecks.check(bootstrapContext, true, Collections.singletonList(check));
@@ -769,7 +769,7 @@ public class BootstrapChecksTests extends AbstractBootstrapCheckTestCase {
             e.getMessage(),
             containsString(
                 "The current JVM version 11.0.13+8 is not recommended for use: "
-                    + "for more details, please check https://github.com/opensearch-project/OpenSearch/issues/2791 and https://bugs.openjdk.java.net/browse/JDK-8259541"
+                    + "for more details, please check https://github.com/density-project/Density/issues/2791 and https://bugs.openjdk.java.net/browse/JDK-8259541"
             )
         );
 

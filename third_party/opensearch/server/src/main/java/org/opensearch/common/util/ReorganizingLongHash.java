@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.Numbers;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
+import org.density.common.Numbers;
+import org.density.common.annotation.InternalApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
 
 /**
  * Specialized hash table implementation that maps a (primitive) long to long.
@@ -25,7 +25,7 @@ import org.opensearch.common.lease.Releasables;
  * <p>
  * This class is not thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public class ReorganizingLongHash implements Releasable {
@@ -125,7 +125,7 @@ public class ReorganizingLongHash implements Releasable {
         } finally {
             if (table == null || keys == null) {
                 // it's important to close the arrays initialized above to prevent memory leak
-                // refer: https://github.com/opensearch-project/OpenSearch/issues/10154
+                // refer: https://github.com/density-project/Density/issues/10154
                 Releasables.closeWhileHandlingException(table, keys);
             }
         }

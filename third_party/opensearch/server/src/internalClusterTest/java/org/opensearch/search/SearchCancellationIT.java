@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.search.MultiSearchAction;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchScrollAction;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.lookup.LeafFieldsLookup;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.TransportException;
+import org.density.ExceptionsHelper;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.search.MultiSearchAction;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchScrollAction;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.WriteRequest;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.lookup.LeafFieldsLookup;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.TransportException;
 import org.junit.After;
 
 import java.util.ArrayList;
@@ -77,20 +77,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import static org.opensearch.action.search.TransportSearchAction.SEARCH_CANCEL_AFTER_TIME_INTERVAL_SETTING_KEY;
-import static org.opensearch.index.query.QueryBuilders.scriptQuery;
-import static org.opensearch.search.SearchCancellationIT.ScriptedBlockPlugin.SCRIPT_NAME;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchService.NO_TIMEOUT;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.action.search.TransportSearchAction.SEARCH_CANCEL_AFTER_TIME_INTERVAL_SETTING_KEY;
+import static org.density.index.query.QueryBuilders.scriptQuery;
+import static org.density.search.SearchCancellationIT.ScriptedBlockPlugin.SCRIPT_NAME;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.NO_TIMEOUT;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE)
-public class SearchCancellationIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE)
+public class SearchCancellationIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     private TimeValue requestCancellationTimeout = TimeValue.timeValueSeconds(1);
     private TimeValue clusterCancellationTimeout = TimeValue.timeValueMillis(1500);

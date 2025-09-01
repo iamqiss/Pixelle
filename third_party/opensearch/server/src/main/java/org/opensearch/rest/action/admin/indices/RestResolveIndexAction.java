@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.resolve.ResolveIndexAction;
+import org.density.action.support.IndicesOptions;
+import org.density.core.common.Strings;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * Transport action to resolve index
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestResolveIndexAction extends BaseRestHandler {
 

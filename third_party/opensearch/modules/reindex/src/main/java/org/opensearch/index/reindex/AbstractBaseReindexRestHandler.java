@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.tasks.LoggingTaskListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.ActiveShardCount;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.tasks.LoggingTaskListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.HashMap;

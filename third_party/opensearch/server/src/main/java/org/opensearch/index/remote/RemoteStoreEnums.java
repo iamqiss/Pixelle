@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.hash.FNV1a;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.remote.RemoteStorePathStrategy.PathInput;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.hash.FNV1a;
+import org.density.core.common.Strings;
+import org.density.index.remote.RemoteStorePathStrategy.PathInput;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -23,16 +23,16 @@ import java.util.Objects;
 import java.util.Set;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.DATA;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.METADATA;
-import static org.opensearch.index.remote.RemoteStoreUtils.longToCompositeBase64AndBinaryEncoding;
-import static org.opensearch.index.remote.RemoteStoreUtils.longToUrlBase64;
+import static org.density.index.remote.RemoteStoreEnums.DataType.DATA;
+import static org.density.index.remote.RemoteStoreEnums.DataType.METADATA;
+import static org.density.index.remote.RemoteStoreUtils.longToCompositeBase64AndBinaryEncoding;
+import static org.density.index.remote.RemoteStoreUtils.longToUrlBase64;
 
 /**
  * This class contains the different enums related to remote store like data categories and types, path types
  * and hashing algorithm.
  *
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public class RemoteStoreEnums {
@@ -85,8 +85,8 @@ public class RemoteStoreEnums {
     }
 
     /**
-     * Enumerates the types of remote store paths resolution techniques supported by OpenSearch.
-     * For more information, see <a href="https://github.com/opensearch-project/OpenSearch/issues/12567">Github issue #12567</a>.
+     * Enumerates the types of remote store paths resolution techniques supported by Density.
+     * For more information, see <a href="https://github.com/density-project/Density/issues/12567">Github issue #12567</a>.
      */
     @PublicApi(since = "2.14.0")
     @ExperimentalApi

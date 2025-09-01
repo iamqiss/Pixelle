@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ import java.io.IOException;
  * because it has a self referential type parameter of its own. So use this
  * instead.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BasicReplicationRequest extends ReplicationRequest<BasicReplicationRequest> {
     /**

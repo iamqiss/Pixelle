@@ -1,52 +1,52 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol;
+package org.density.ratelimitting.admissioncontrol;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.node.resource.tracker.ResourceTrackerSettings;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
-import org.opensearch.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.node.resource.tracker.ResourceTrackerSettings;
+import org.density.ratelimitting.admissioncontrol.controllers.CpuBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.controllers.IoBasedAdmissionController;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlMode;
+import org.density.ratelimitting.admissioncontrol.stats.AdmissionControllerStats;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.After;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.CPU_BASED_ADMISSION_CONTROLLER_TRANSPORT_LAYER_MODE;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.INDEXING_CPU_USAGE_LIMIT;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.SEARCH_CPU_USAGE_LIMIT;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.INDEXING_IO_USAGE_LIMIT;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.IO_BASED_ADMISSION_CONTROLLER_TRANSPORT_LAYER_MODE;
-import static org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.SEARCH_IO_USAGE_LIMIT;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.ratelimitting.admissioncontrol.AdmissionControlSettings.ADMISSION_CONTROL_TRANSPORT_LAYER_MODE;
+import static org.density.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.CPU_BASED_ADMISSION_CONTROLLER_TRANSPORT_LAYER_MODE;
+import static org.density.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.INDEXING_CPU_USAGE_LIMIT;
+import static org.density.ratelimitting.admissioncontrol.settings.CpuBasedAdmissionControllerSettings.SEARCH_CPU_USAGE_LIMIT;
+import static org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.INDEXING_IO_USAGE_LIMIT;
+import static org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.IO_BASED_ADMISSION_CONTROLLER_TRANSPORT_LAYER_MODE;
+import static org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings.SEARCH_IO_USAGE_LIMIT;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.is;
 
 /**
  * Single node integration tests for admission control
  */
-public class AdmissionControlSingleNodeTests extends OpenSearchSingleNodeTestCase {
+public class AdmissionControlSingleNodeTests extends DensitySingleNodeTestCase {
 
     public static final String INDEX_NAME = "test_index";
 
@@ -120,7 +120,7 @@ public class AdmissionControlSingleNodeTests extends OpenSearchSingleNodeTestCas
         try {
             client().search(searchRequest).actionGet();
         } catch (Exception e) {
-            assertTrue(((SearchPhaseExecutionException) e).getDetailedMessage().contains("OpenSearchRejectedExecutionException"));
+            assertTrue(((SearchPhaseExecutionException) e).getDetailedMessage().contains("DensityRejectedExecutionException"));
         }
         acStats = this.getAdmissionControlStats(admissionControlService);
         assertEquals(
@@ -183,7 +183,7 @@ public class AdmissionControlSingleNodeTests extends OpenSearchSingleNodeTestCas
         try {
             client().search(searchRequest).actionGet();
         } catch (Exception e) {
-            assertTrue(((SearchPhaseExecutionException) e).getDetailedMessage().contains("OpenSearchRejectedExecutionException"));
+            assertTrue(((SearchPhaseExecutionException) e).getDetailedMessage().contains("DensityRejectedExecutionException"));
         }
         acStats = this.getAdmissionControlStats(admissionControlService);
         assertEquals(

@@ -20,6 +20,6 @@
 # This file contains an allowlist for the ingest scripts
 
 class java.lang.String {
-  String org.opensearch.painless.api.Augmentation sha1()
-  String org.opensearch.painless.api.Augmentation sha256()
+  String org.density.painless.api.Augmentation sha1()
+  String org.density.painless.api.Augmentation sha256()
 }

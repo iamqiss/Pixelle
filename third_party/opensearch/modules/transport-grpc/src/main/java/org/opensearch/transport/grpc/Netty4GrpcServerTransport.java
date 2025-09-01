@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc;
+package org.density.transport.grpc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.BindTransportException;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.transport.PortsRange;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.transport.AuxTransport;
+import org.density.transport.BindTransportException;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -47,10 +47,10 @@ import io.grpc.protobuf.services.HealthStatusManager;
 import io.grpc.protobuf.services.ProtoReflectionService;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.settings.Setting.intSetting;
-import static org.opensearch.common.settings.Setting.listSetting;
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
-import static org.opensearch.transport.Transport.resolveTransportPublishPort;
+import static org.density.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.listSetting;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
+import static org.density.transport.Transport.resolveTransportPublishPort;
 
 /**
  * Netty4 gRPC server implemented as a LifecycleComponent.
@@ -113,7 +113,7 @@ public class Netty4GrpcServerTransport extends AuxTransport {
      */
     public static final Setting<Integer> SETTING_GRPC_WORKER_COUNT = new Setting<>(
         "grpc.netty.worker_count",
-        (s) -> Integer.toString(OpenSearchExecutors.allocatedProcessors(s)),
+        (s) -> Integer.toString(DensityExecutors.allocatedProcessors(s)),
         (s) -> Setting.parseInt(s, 1, "grpc.netty.worker_count"),
         Setting.Property.NodeScope
     );

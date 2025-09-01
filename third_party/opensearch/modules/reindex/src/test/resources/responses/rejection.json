@@ -12,7 +12,7 @@
       "node" : "87A7NvevQxSrEwMbtRCecg",
       "reason" : {
         "type" : "rejected_execution_exception",
-        "reason" : "rejected execution of org.opensearch.transport.TransportService$5@52d06af2 on OpenSearchThreadPoolExecutor[search, queue capacity = 1000, org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor@778ea553[Running, pool size = 7, active threads = 7, queued tasks = 1000, completed tasks = 4182]]"
+        "reason" : "rejected execution of org.density.transport.TransportService$5@52d06af2 on DensityThreadPoolExecutor[search, queue capacity = 1000, org.density.common.util.concurrent.DensityThreadPoolExecutor@778ea553[Running, pool size = 7, active threads = 7, queued tasks = 1000, completed tasks = 4182]]"
       }
     } ]
   },

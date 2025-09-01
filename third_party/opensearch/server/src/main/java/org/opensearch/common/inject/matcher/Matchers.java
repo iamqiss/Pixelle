@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.matcher;
+package org.density.common.inject.matcher;
 
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.SuppressForbidden;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
@@ -43,7 +43,7 @@ import java.util.Objects;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Matchers {
     private Matchers() {}
@@ -60,7 +60,7 @@ public class Matchers {
     /**
      * Matches ANY
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Any extends AbstractMatcher<Object> {
         @Override
@@ -88,7 +88,7 @@ public class Matchers {
     /**
      * A NOT Matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Not<T> extends AbstractMatcher<T> {
         final Matcher<? super T> delegate;
@@ -136,7 +136,7 @@ public class Matchers {
     /**
      * An annotated with type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class AnnotatedWithType extends AbstractMatcher<AnnotatedElement> {
         private final Class<? extends Annotation> annotationType;
@@ -178,7 +178,7 @@ public class Matchers {
     /**
      * An annotated With matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class AnnotatedWith extends AbstractMatcher<AnnotatedElement> {
         private final Annotation annotation;
@@ -221,7 +221,7 @@ public class Matchers {
     /**
      * A subclass matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class SubclassesOf extends AbstractMatcher<Class> {
         private final Class<?> superclass;
@@ -261,7 +261,7 @@ public class Matchers {
     /**
      * ONLY matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Only extends AbstractMatcher<Object> {
         private final Object value;
@@ -301,7 +301,7 @@ public class Matchers {
     /**
      * Identical matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class IdenticalTo extends AbstractMatcher<Object> {
         private final Object value;
@@ -342,7 +342,7 @@ public class Matchers {
     /**
      * In Package matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class InPackage extends AbstractMatcher<Class> {
         private final transient Package targetPackage;
@@ -393,7 +393,7 @@ public class Matchers {
     /**
      * In Subpackage matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class InSubpackage extends AbstractMatcher<Class> {
         private final String targetPackageName;
@@ -434,7 +434,7 @@ public class Matchers {
     /**
      * Returns matcher
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Returns extends AbstractMatcher<Method> {
         private final Matcher<? super Class<?>> returnType;

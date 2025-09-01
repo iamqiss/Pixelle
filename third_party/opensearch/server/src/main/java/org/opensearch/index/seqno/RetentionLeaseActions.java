@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.action.support.single.shard.TransportSingleShardAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.action.support.single.shard.TransportSingleShardAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasable;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -65,7 +65,7 @@ import java.util.Objects;
  * {@link TransportSingleShardAction#asyncShardOperation(SingleShardRequest, ShardId, ActionListener)} to handle the case when acquiring
  * permits goes asynchronous because acquiring permits is blocked
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RetentionLeaseActions {
 
@@ -74,7 +74,7 @@ public class RetentionLeaseActions {
     /**
      * Base class for transport retention lease actions
      *
-     * @opensearch.internal
+     * @density.internal
      */
     abstract static class TransportRetentionLeaseAction<T extends Request<T>> extends TransportSingleShardAction<T, Response> {
 
@@ -142,7 +142,7 @@ public class RetentionLeaseActions {
     /**
      * Add retention lease action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Add extends ActionType<Response> {
 
@@ -156,7 +156,7 @@ public class RetentionLeaseActions {
         /**
          * Internal transport action
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class TransportAction extends TransportRetentionLeaseAction<AddRequest> {
 
@@ -202,7 +202,7 @@ public class RetentionLeaseActions {
     /**
      * Renew the retention lease
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Renew extends ActionType<Response> {
 
@@ -216,7 +216,7 @@ public class RetentionLeaseActions {
         /**
          * Internal transport action for renew
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class TransportAction extends TransportRetentionLeaseAction<RenewRequest> {
 
@@ -253,7 +253,7 @@ public class RetentionLeaseActions {
     /**
      * Remove retention lease action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Remove extends ActionType<Response> {
 
@@ -267,7 +267,7 @@ public class RetentionLeaseActions {
         /**
          * Internal transport action for remove
          *
-         * @opensearch.internal
+         * @density.internal
          */
         public static class TransportAction extends TransportRetentionLeaseAction<RemoveRequest> {
 
@@ -303,7 +303,7 @@ public class RetentionLeaseActions {
     /**
      * Base request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class Request<T extends SingleShardRequest<T>> extends SingleShardRequest<T> {
 
@@ -348,7 +348,7 @@ public class RetentionLeaseActions {
     /**
      * Base add or renew request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class AddOrRenewRequest<T extends SingleShardRequest<T>> extends Request<T> {
 
@@ -391,7 +391,7 @@ public class RetentionLeaseActions {
     /**
      * Add retention lease request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class AddRequest extends AddOrRenewRequest<AddRequest> {
 
@@ -408,7 +408,7 @@ public class RetentionLeaseActions {
     /**
      * Renew Request action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RenewRequest extends AddOrRenewRequest<RenewRequest> {
 
@@ -425,7 +425,7 @@ public class RetentionLeaseActions {
     /**
      * Remove request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class RemoveRequest extends Request<RemoveRequest> {
 
@@ -442,7 +442,7 @@ public class RetentionLeaseActions {
     /**
      * The response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Response extends ActionResponse {
 

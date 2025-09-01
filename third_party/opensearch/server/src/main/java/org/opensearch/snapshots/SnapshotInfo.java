@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.repositories.IndexId;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.ParseField;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.repositories.IndexId;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -65,7 +65,7 @@ import java.util.stream.Collectors;
 /**
  * Information about a snapshot
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SnapshotInfo implements Comparable<SnapshotInfo>, ToXContent, Writeable {
@@ -109,7 +109,7 @@ public final class SnapshotInfo implements Comparable<SnapshotInfo>, ToXContent,
     /**
      * Builds snapshot information
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class SnapshotInfoBuilder {
         private String snapshotName = null;
@@ -605,10 +605,10 @@ public final class SnapshotInfo implements Comparable<SnapshotInfo>, ToXContent,
     }
 
     /**
-     * Returns the version of opensearch that the snapshot was created with.  Will only
+     * Returns the version of density that the snapshot was created with.  Will only
      * return {@code null} if {@link #state()} returns {@code null} or {@link SnapshotState#INCOMPATIBLE}.
      *
-     * @return version of opensearch that the snapshot was created with
+     * @return version of density that the snapshot was created with
      */
     @Nullable
     public Version version() {

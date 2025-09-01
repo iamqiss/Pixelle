@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.fs;
+package org.density.repositories.fs;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.compress.ZstdCompressor;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.blobstore.BlobStoreTestUtil;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.compress.ZstdCompressor;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.blobstore.BlobStoreTestUtil;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.Path;
 import java.util.Locale;
 
-public class ReloadableFsRepositoryTests extends OpenSearchTestCase {
+public class ReloadableFsRepositoryTests extends DensityTestCase {
     ReloadableFsRepository repository;
     RepositoryMetadata metadata;
     Settings settings;

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportException;
+import org.density.Version;
+import org.density.action.FailedNodeException;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.Set;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 
-public class GetAllPitNodesResponseTests extends OpenSearchTestCase {
+public class GetAllPitNodesResponseTests extends DensityTestCase {
     protected void assertEqualInstances(GetAllPitNodesResponse expected, GetAllPitNodesResponse actual) {
         assertNotSame(expected, actual);
         Set<ListPitInfo> expectedPitInfos = new HashSet<>(expected.getPitInfos());

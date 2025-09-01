@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.painlessallowlist;
+package org.density.example.painlessallowlist;
 
-import org.opensearch.plugins.Plugin;
+import org.density.plugins.Plugin;
 
 /**
  * A class extending {@link Plugin} intended as a signpost. Does nothing, since allowlists are extended through SPI.

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.remote;
+package org.density.action.admin.cluster.remote;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport builder for remote monitoring
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RemoteInfoRequestBuilder extends ActionRequestBuilder<RemoteInfoRequest, RemoteInfoResponse> {
 
-    public RemoteInfoRequestBuilder(OpenSearchClient client, RemoteInfoAction action) {
+    public RemoteInfoRequestBuilder(DensityClient client, RemoteInfoAction action) {
         super(client, action, new RemoteInfoRequest());
     }
 }

@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.shards.routing.weighted.put.ClusterPutWeightedRoutingResponse;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.onlyRole;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class AwarenessAttributeDecommissionRestIT extends HttpSmokeTestCase{
 
     public void testRestStatusForDecommissioningFailedException() {

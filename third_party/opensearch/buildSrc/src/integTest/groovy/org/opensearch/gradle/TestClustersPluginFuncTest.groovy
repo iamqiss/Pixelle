@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,12 +27,12 @@
  * under the License.
  */
 
-package org.opensearch.gradle
+package org.density.gradle
 
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.fixtures.AbstractGradleFuncTest
 import spock.lang.IgnoreIf
 
-import static org.opensearch.gradle.fixtures.DistributionDownloadFixture.withMockedDistributionDownload
+import static org.density.gradle.fixtures.DistributionDownloadFixture.withMockedDistributionDownload
 
 /**
  * We do not have coverage for the test cluster startup on windows yet.
@@ -43,9 +43,9 @@ class TestClustersPluginFuncTest extends AbstractGradleFuncTest {
 
     def setup() {
         buildFile << """
-            import org.opensearch.gradle.testclusters.DefaultTestClustersTask
+            import org.density.gradle.testclusters.DefaultTestClustersTask
             plugins {
-                id 'opensearch.testclusters'
+                id 'density.testclusters'
             }
 
             class SomeClusterAwareTask extends DefaultTestClustersTask {
@@ -76,9 +76,9 @@ class TestClustersPluginFuncTest extends AbstractGradleFuncTest {
         }
 
         then:
-        result.output.contains("opensearch-keystore script executed!")
-        assertOpenSearchStdoutContains("myCluster", "Starting OpenSearch process")
-        assertOpenSearchStdoutContains("myCluster", "Stopping node")
+        result.output.contains("density-keystore script executed!")
+        assertDensityStdoutContains("myCluster", "Starting Density process")
+        assertDensityStdoutContains("myCluster", "Stopping node")
         assertNoCustomDistro('myCluster')
     }
 
@@ -103,15 +103,15 @@ class TestClustersPluginFuncTest extends AbstractGradleFuncTest {
         }
 
         then:
-        result.output.contains("opensearch-keystore script executed!")
-        assertOpenSearchStdoutContains("myCluster", "Starting OpenSearch process")
-        assertOpenSearchStdoutContains("myCluster", "Stopping node")
+        result.output.contains("density-keystore script executed!")
+        assertDensityStdoutContains("myCluster", "Starting Density process")
+        assertDensityStdoutContains("myCluster", "Stopping node")
         assertCustomDistro('myCluster')
     }
 
-    boolean assertOpenSearchStdoutContains(String testCluster, String expectedOutput) {
+    boolean assertDensityStdoutContains(String testCluster, String expectedOutput) {
         assert new File(testProjectDir.root,
-                "build/testclusters/${testCluster}-0/logs/opensearch.stdout.log").text.contains(expectedOutput)
+                "build/testclusters/${testCluster}-0/logs/density.stdout.log").text.contains(expectedOutput)
         true
     }
 

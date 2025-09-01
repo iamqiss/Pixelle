@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.utils;
+package org.density.index.compositeindex.datacube.startree.utils;
 
 import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.index.DocValuesSkipIndexType;
@@ -16,8 +16,8 @@ import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.test.DensityTestCase;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
 
-public class SequentialDocValuesIteratorTests extends OpenSearchTestCase {
+public class SequentialDocValuesIteratorTests extends DensityTestCase {
 
     private static FieldInfo mockFieldInfo;
 

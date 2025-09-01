@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * Primarily used in {@link SemanticVersionFieldMapper} for mapping and sorting purposes.
  *
  * @see <a href="https://semver.org/">Semantic Versioning 2.0.0</a>
- * @see <a href="https://github.com/opensearch-project/OpenSearch/issues/16814">OpenSearch github issue</a>
+ * @see <a href="https://github.com/density-project/Density/issues/16814">Density github issue</a>
  */
 public class SemanticVersion implements Comparable<SemanticVersion> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
 /**
- * OpenSearch supports sorting by array or multi-valued fields. The SortMode option controls what array value is picked
+ * Density supports sorting by array or multi-valued fields. The SortMode option controls what array value is picked
  * for sorting the document it belongs to. The mode option can have the following values:
  * <ul>
  * <li>min - Pick the lowest value.</li>
@@ -51,7 +51,7 @@ import java.util.Objects;
  * <li>median - Use the median of all values as sort value. Only applicable for number based array fields.</li>
  * </ul>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum SortMode implements Writeable {
     /** pick the lowest value **/

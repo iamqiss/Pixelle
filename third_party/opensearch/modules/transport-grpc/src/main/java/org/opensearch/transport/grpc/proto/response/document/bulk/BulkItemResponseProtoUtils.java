@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.response.document.bulk;
+package org.density.transport.grpc.proto.response.document.bulk;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.protobufs.ErrorCause;
-import org.opensearch.protobufs.Item;
-import org.opensearch.protobufs.NullValue;
-import org.opensearch.protobufs.ResponseItem;
-import org.opensearch.transport.grpc.proto.response.document.common.DocWriteResponseProtoUtils;
-import org.opensearch.transport.grpc.proto.response.document.get.GetResultProtoUtils;
-import org.opensearch.transport.grpc.proto.response.exceptions.opensearchexception.OpenSearchExceptionProtoUtils;
-import org.opensearch.transport.grpc.util.RestToGrpcStatusConverter;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.update.UpdateResponse;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.get.GetResult;
+import org.density.protobufs.ErrorCause;
+import org.density.protobufs.Item;
+import org.density.protobufs.NullValue;
+import org.density.protobufs.ResponseItem;
+import org.density.transport.grpc.proto.response.document.common.DocWriteResponseProtoUtils;
+import org.density.transport.grpc.proto.response.document.get.GetResultProtoUtils;
+import org.density.transport.grpc.proto.response.exceptions.densityexception.DensityExceptionProtoUtils;
+import org.density.transport.grpc.util.RestToGrpcStatusConverter;
 
 import java.io.IOException;
 
@@ -68,7 +68,7 @@ public class BulkItemResponseProtoUtils {
             int grpcStatusCode = RestToGrpcStatusConverter.getGrpcStatusCode(failure.getStatus());
             responseItemBuilder.setStatus(grpcStatusCode);
 
-            ErrorCause errorCause = OpenSearchExceptionProtoUtils.generateThrowableProto(failure.getCause());
+            ErrorCause errorCause = DensityExceptionProtoUtils.generateThrowableProto(failure.getCause());
 
             responseItemBuilder.setError(errorCause);
         }

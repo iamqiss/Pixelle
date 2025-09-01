@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.InputCoercionException;
@@ -51,31 +51,31 @@ import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.compositeindex.datacube.DimensionType;
-import org.opensearch.index.document.SortedUnsignedLongDocValuesRangeQuery;
-import org.opensearch.index.document.SortedUnsignedLongDocValuesSetQuery;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData.NumericType;
-import org.opensearch.index.fielddata.plain.SortedNumericIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.query.BitmapDocValuesQuery;
-import org.opensearch.search.query.BitmapIndexQuery;
+import org.density.common.Explicit;
+import org.density.common.Numbers;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.compositeindex.datacube.DimensionType;
+import org.density.index.document.SortedUnsignedLongDocValuesRangeQuery;
+import org.density.index.document.SortedUnsignedLongDocValuesSetQuery;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexNumericFieldData.NumericType;
+import org.density.index.fielddata.plain.SortedNumericIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.query.BitmapDocValuesQuery;
+import org.density.search.query.BitmapIndexQuery;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -97,7 +97,7 @@ import org.roaringbitmap.RoaringBitmap;
 /**
  * A {@link FieldMapper} for numeric types: byte, short, int, long, float, double and unsigned long.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NumberFieldMapper extends ParametrizedFieldMapper {
 
@@ -112,7 +112,7 @@ public class NumberFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for the number field mappers
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -259,7 +259,7 @@ public class NumberFieldMapper extends ParametrizedFieldMapper {
     /**
      * Type of number
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum NumberType implements NumericPointEncoder, FieldValueConverter {
         HALF_FLOAT("half_float", NumericType.HALF_FLOAT) {
@@ -1895,7 +1895,7 @@ public class NumberFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for numeric fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NumberFieldType extends SimpleMappedFieldType implements NumericPointEncoder, FieldValueConverter {
 

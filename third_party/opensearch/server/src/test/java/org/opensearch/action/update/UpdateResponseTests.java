@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.index.IndexResponseTests;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.get.GetResultTests;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.RandomObjects;
+import org.density.action.DocWriteResponse;
+import org.density.action.index.IndexResponseTests;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.common.collect.Tuple;
+import org.density.common.document.DocumentField;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResult;
+import org.density.index.get.GetResultTests;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.DensityTestCase;
+import org.density.test.RandomObjects;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -57,15 +57,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.opensearch.action.DocWriteResponse.Result.DELETED;
-import static org.opensearch.action.DocWriteResponse.Result.NOT_FOUND;
-import static org.opensearch.action.DocWriteResponse.Result.UPDATED;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.action.DocWriteResponse.Result.DELETED;
+import static org.density.action.DocWriteResponse.Result.NOT_FOUND;
+import static org.density.action.DocWriteResponse.Result.UPDATED;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_UUID_NA_VALUE;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class UpdateResponseTests extends OpenSearchTestCase {
+public class UpdateResponseTests extends DensityTestCase {
 
     public void testToXContent() throws IOException {
         {

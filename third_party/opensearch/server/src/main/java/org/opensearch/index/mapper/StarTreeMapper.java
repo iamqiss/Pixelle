@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.DimensionFactory;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.DimensionFactory;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 /**
  * A field mapper for star tree fields
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class StarTreeMapper extends ParametrizedFieldMapper {
@@ -63,7 +63,7 @@ public class StarTreeMapper extends ParametrizedFieldMapper {
     /**
      * Builder for the star tree field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
         private ObjectMapper.Builder objbuilder;
@@ -513,7 +513,7 @@ public class StarTreeMapper extends ParametrizedFieldMapper {
     /**
      * Concrete parse for star tree type
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser implements Mapper.TypeParser {
 
@@ -572,7 +572,7 @@ public class StarTreeMapper extends ParametrizedFieldMapper {
     /**
      * Star tree mapped field type containing dimensions, metrics, star tree specs
      *
-     * @opensearch.experimental
+     * @density.experimental
      */
     @ExperimentalApi
     public static final class StarTreeFieldType extends CompositeDataCubeFieldType {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.DensityException;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -45,7 +45,7 @@ import java.nio.file.StandardOpenOption;
  * Process ID file abstraction that writes the current pid into a file and optionally
  * removes it on system exit.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PidFile {
 
@@ -126,7 +126,7 @@ public final class PidFile {
                 try {
                     Files.deleteIfExists(path);
                 } catch (IOException e) {
-                    throw new OpenSearchException("Failed to delete pid file " + path, e);
+                    throw new DensityException("Failed to delete pid file " + path, e);
                 }
             }
         });

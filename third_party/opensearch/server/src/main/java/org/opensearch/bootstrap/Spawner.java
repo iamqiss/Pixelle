@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.Platforms;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.plugins.PluginsService;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.plugins.Platforms;
+import org.density.plugins.PluginInfo;
+import org.density.plugins.PluginsService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -52,7 +52,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Spawns native module controller processes if present. Will only work prior to a system call filter being installed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class Spawner implements Closeable {
 

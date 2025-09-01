@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.process;
+package org.density.monitor.process;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.bootstrap.BootstrapInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.bootstrap.BootstrapInfo;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.monitor.jvm.JvmInfo.jvmInfo;
+import static org.density.monitor.jvm.JvmInfo.jvmInfo;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class ProcessProbeTests extends OpenSearchTestCase {
+public class ProcessProbeTests extends DensityTestCase {
     private final ProcessProbe probe = ProcessProbe.getInstance();
 
     public void testProcessInfo() {

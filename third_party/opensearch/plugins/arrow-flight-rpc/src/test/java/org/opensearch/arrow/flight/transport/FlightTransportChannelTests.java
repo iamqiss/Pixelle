@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to\n * this file be licensed under the Apache-2.0 license or a
+ * The Density Contributors require contributions made to\n * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
-import org.opensearch.Version;
-import org.opensearch.arrow.flight.stats.FlightStatsCollector;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
+import org.density.Version;
+import org.density.arrow.flight.stats.FlightStatsCollector;
+import org.density.common.lease.Releasable;
+import org.density.core.transport.TransportResponse;
+import org.density.test.DensityTestCase;
+import org.density.transport.TcpChannel;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class FlightTransportChannelTests extends OpenSearchTestCase {
+public class FlightTransportChannelTests extends DensityTestCase {
 
     private FlightOutboundHandler mockOutboundHandler;
     private TcpChannel mockTcpChannel;

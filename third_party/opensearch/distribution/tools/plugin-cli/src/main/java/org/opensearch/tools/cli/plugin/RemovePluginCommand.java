@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.cli.EnvironmentAwareCommand;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.plugins.PluginsService;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.cli.EnvironmentAwareCommand;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.plugins.PluginsService;
 
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -53,10 +53,10 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cli.Terminal.Verbosity.VERBOSE;
+import static org.density.cli.Terminal.Verbosity.VERBOSE;
 
 /**
- * A command for the plugin CLI to remove a plugin from OpenSearch.
+ * A command for the plugin CLI to remove a plugin from Density.
  */
 class RemovePluginCommand extends EnvironmentAwareCommand {
 
@@ -68,7 +68,7 @@ class RemovePluginCommand extends EnvironmentAwareCommand {
     private final OptionSpec<String> arguments;
 
     RemovePluginCommand() {
-        super("removes a plugin from OpenSearch");
+        super("removes a plugin from Density");
         this.purgeOption = parser.acceptsAll(Arrays.asList("p", "purge"), "Purge plugin configuration files");
         this.arguments = parser.nonOptions("plugin name");
     }
@@ -131,7 +131,7 @@ class RemovePluginCommand extends EnvironmentAwareCommand {
             || (!Files.exists(pluginDir) && Files.exists(pluginConfigDir) && !purge)) {
             final String message = String.format(
                 Locale.ROOT,
-                "plugin [%s] not found; run 'opensearch-plugin list' to get list of installed plugins",
+                "plugin [%s] not found; run 'density-plugin list' to get list of installed plugins",
                 pluginName
             );
             throw new UserException(ExitCodes.CONFIG, message);

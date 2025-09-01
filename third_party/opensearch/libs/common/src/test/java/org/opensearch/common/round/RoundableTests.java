@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.round;
+package org.density.common.round;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class RoundableTests extends OpenSearchTestCase {
+public class RoundableTests extends DensityTestCase {
 
     public void testRoundingEmptyArray() {
         Throwable throwable = assertThrows(IllegalArgumentException.class, () -> RoundableFactory.create(new long[0], 0));
@@ -31,7 +31,7 @@ public class RoundableTests extends OpenSearchTestCase {
         long[] values = randomArrayOfSortedValues(size);
         Roundable roundable = RoundableFactory.create(values, size);
 
-        boolean useBtreeSearcher = "forced".equalsIgnoreCase(System.getProperty("opensearch.experimental.feature.simd.rounding.enabled"));
+        boolean useBtreeSearcher = "forced".equalsIgnoreCase(System.getProperty("density.experimental.feature.simd.rounding.enabled"));
         assertEquals(useBtreeSearcher ? "BtreeSearcher" : "BinarySearcher", roundable.getClass().getSimpleName());
         assertRounding(roundable, values, size);
     }

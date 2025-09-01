@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,38 +25,38 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
 import org.apache.lucene.util.Accountable;
 import org.apache.lucene.util.UnicodeUtil;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.VersionType;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.update.UpdateRequest;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.VersionType;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Generic interface to group ActionRequest, which perform writes to a single document
- * Action requests implementing this can be part of {@link org.opensearch.action.bulk.BulkRequest}
+ * Action requests implementing this can be part of {@link org.density.action.bulk.BulkRequest}
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accountable {
@@ -117,7 +117,7 @@ public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accounta
      * sequence number. Must be used in combination with {@link #setIfPrimaryTerm(long)}
      *
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     T setIfSeqNo(long seqNo);
 
@@ -126,14 +126,14 @@ public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accounta
      * primary term. Must be used in combination with {@link #setIfSeqNo(long)}
      *
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     T setIfPrimaryTerm(long term);
 
     /**
      * If set, only perform this request if the document was last modification was assigned this sequence number.
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     long ifSeqNo();
 
@@ -141,7 +141,7 @@ public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accounta
      * If set, only perform this request if the document was last modification was assigned this primary term.
      * <p>
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     long ifPrimaryTerm();
 
@@ -160,7 +160,7 @@ public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accounta
     /**
      * Requested operation type to perform on the document
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     enum OpType {
@@ -224,7 +224,7 @@ public interface DocWriteRequest<T> extends IndicesRequest, DocRequest, Accounta
     /**
      * Read a document write (index/delete/update) request
      *
-     * @param shardId shard id of the request. {@code null} when reading as part of a {@link org.opensearch.action.bulk.BulkRequest}
+     * @param shardId shard id of the request. {@code null} when reading as part of a {@link org.density.action.bulk.BulkRequest}
      *                that does not have a unique shard id
      */
     static DocWriteRequest<?> readDocumentRequest(@Nullable ShardId shardId, StreamInput in) throws IOException {

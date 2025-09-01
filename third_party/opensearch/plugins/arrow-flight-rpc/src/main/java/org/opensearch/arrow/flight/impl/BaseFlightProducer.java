@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.BackpressureStrategy;
 import org.apache.arrow.flight.CallStatus;
@@ -23,9 +23,9 @@ import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.arrow.flight.bootstrap.FlightClientManager;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.arrow.spi.StreamTicket;
+import org.density.arrow.flight.bootstrap.FlightClientManager;
+import org.density.arrow.spi.StreamProducer;
+import org.density.arrow.spi.StreamTicket;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * BaseFlightProducer extends NoOpFlightProducer to provide stream management functionality
- * for Arrow Flight in OpenSearch. This class handles data streaming based on tickets,
+ * for Arrow Flight in Density. This class handles data streaming based on tickets,
  * manages backpressure, and coordinates between stream providers and server stream listeners.
  * It runs on the gRPC transport thread.
  * <p>

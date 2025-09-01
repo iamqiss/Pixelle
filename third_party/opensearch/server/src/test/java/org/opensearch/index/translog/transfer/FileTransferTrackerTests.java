@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 
-public class FileTransferTrackerTests extends OpenSearchTestCase {
+public class FileTransferTrackerTests extends DensityTestCase {
 
     protected final ShardId shardId = new ShardId("index", "_na_", 1);
     FileTransferTracker fileTransferTracker;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.watcher;
+package org.density.watcher;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.io.IOUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS")
-public class FileWatcherTests extends OpenSearchTestCase {
+public class FileWatcherTests extends DensityTestCase {
     private class RecordingChangeListener implements FileChangesListener {
         private Path rootDir;
 

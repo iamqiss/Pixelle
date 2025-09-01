@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.TemplateScript;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.TemplateScript;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,12 +45,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.script.Script.DEFAULT_TEMPLATE_LANG;
+import static org.density.script.Script.DEFAULT_TEMPLATE_LANG;
 
 /**
  * Holds a value. If the value is requested a copy is made and optionally template snippets are resolved too.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ValueSource {
 
@@ -104,7 +104,7 @@ public interface ValueSource {
     /**
      * A map value source.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class MapValue implements ValueSource {
 
@@ -142,7 +142,7 @@ public interface ValueSource {
     /**
      * A list value source.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ListValue implements ValueSource {
 
@@ -180,7 +180,7 @@ public interface ValueSource {
     /**
      * An object value source.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ObjectValue implements ValueSource {
 
@@ -213,7 +213,7 @@ public interface ValueSource {
     /**
      * A byte value source.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ByteValue implements ValueSource {
 
@@ -247,7 +247,7 @@ public interface ValueSource {
     /**
      * A templated value.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class TemplatedValue implements ValueSource {
 

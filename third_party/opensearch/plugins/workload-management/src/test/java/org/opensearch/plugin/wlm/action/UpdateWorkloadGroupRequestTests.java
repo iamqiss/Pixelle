@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
-import org.opensearch.wlm.ResourceType;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.MutableWorkloadGroupFragment.ResiliencyMode;
+import org.density.wlm.ResourceType;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
 
-public class UpdateWorkloadGroupRequestTests extends OpenSearchTestCase {
+public class UpdateWorkloadGroupRequestTests extends DensityTestCase {
 
     /**
      * Test case to verify the serialization and deserialization of UpdateWorkloadGroupRequest.

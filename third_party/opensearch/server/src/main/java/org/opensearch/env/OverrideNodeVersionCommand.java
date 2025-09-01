@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.coordination.OpenSearchNodeCommand;
-import org.opensearch.gateway.PersistedClusterStateService;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cli.Terminal;
+import org.density.cluster.coordination.DensityNodeCommand;
+import org.density.gateway.PersistedClusterStateService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -46,13 +46,13 @@ import java.util.Arrays;
 /**
  * Command to override a node version
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class OverrideNodeVersionCommand extends OpenSearchNodeCommand {
+public class OverrideNodeVersionCommand extends DensityNodeCommand {
     private static final String TOO_NEW_MESSAGE = DELIMITER
         + "\n"
-        + "This data path was last written by OpenSearch version [V_NEW] and may no\n"
-        + "longer be compatible with OpenSearch version [V_CUR]. This tool will bypass\n"
+        + "This data path was last written by Density version [V_NEW] and may no\n"
+        + "longer be compatible with Density version [V_CUR]. This tool will bypass\n"
         + "this compatibility check, allowing a version [V_CUR] node to start on this data\n"
         + "path, but a version [V_CUR] node may not be able to read this data or may read\n"
         + "it incorrectly leading to data loss.\n"
@@ -65,14 +65,14 @@ public class OverrideNodeVersionCommand extends OpenSearchNodeCommand {
 
     private static final String TOO_OLD_MESSAGE = DELIMITER
         + "\n"
-        + "This data path was last written by OpenSearch version [V_OLD] which may be\n"
-        + "too old to be readable by OpenSearch version [V_CUR].  This tool will bypass\n"
+        + "This data path was last written by Density version [V_OLD] which may be\n"
+        + "too old to be readable by Density version [V_CUR].  This tool will bypass\n"
         + "this compatibility check, allowing a version [V_CUR] node to start on this data\n"
         + "path, but this version [V_CUR] node may not be able to read this data or may\n"
         + "read it incorrectly leading to data loss.\n"
         + "\n"
         + "You should not use this tool. Instead, upgrade this data path from [V_OLD] to\n"
-        + "[V_CUR] using one or more intermediate versions of OpenSearch.\n"
+        + "[V_CUR] using one or more intermediate versions of Density.\n"
         + "\n"
         + "Do you want to proceed?\n";
 
@@ -93,12 +93,12 @@ public class OverrideNodeVersionCommand extends OpenSearchNodeCommand {
         final Path[] nodePaths = Arrays.stream(toNodePaths(dataPaths)).map(p -> p.path).toArray(Path[]::new);
         final NodeMetadata nodeMetadata = PersistedClusterStateService.nodeMetadata(nodePaths);
         if (nodeMetadata == null) {
-            throw new OpenSearchException(NO_METADATA_MESSAGE);
+            throw new DensityException(NO_METADATA_MESSAGE);
         }
 
         try {
             nodeMetadata.upgradeToCurrentVersion();
-            throw new OpenSearchException(
+            throw new DensityException(
                 "found ["
                     + nodeMetadata
                     + "] which is compatible with current version ["

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import java.util.Map;
 
 /**
  * A script used in significant terms heuristic scoring.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class SignificantTermsHeuristicScoreScript {
 
@@ -50,7 +50,7 @@ public abstract class SignificantTermsHeuristicScoreScript {
     /**
      * Factory for a significant terms heuristic score script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         SignificantTermsHeuristicScoreScript newInstance();

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.internal-cluster-test'
 
-opensearchplugin {
-  description = 'Plugin for identity features in OpenSearch.'
-  classname = 'org.opensearch.identity.shiro.ShiroIdentityPlugin'
+densityplugin {
+  description = 'Plugin for identity features in Density.'
+  classname = 'org.density.identity.shiro.ShiroIdentityPlugin'
   name = project.name
   licenseFile = rootProject.file('licenses/APACHE-LICENSE-2.0.txt')
   noticeFile = rootProject.file('NOTICE.txt')
@@ -41,11 +41,11 @@ dependencies {
  * other if we allow them to set the number of available processors as it's set-once in Netty.
  */
 test {
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 internalClusterTest {
-  systemProperty 'opensearch.set.netty.runtime.available.processors', 'false'
+  systemProperty 'density.set.netty.runtime.available.processors', 'false'
 }
 
 thirdPartyAudit.ignoreMissingClasses(

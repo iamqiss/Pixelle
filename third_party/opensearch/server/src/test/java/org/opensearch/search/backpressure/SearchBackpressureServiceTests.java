@@ -1,47 +1,47 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure;
+package org.density.search.backpressure;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.backpressure.settings.SearchBackpressureMode;
-import org.opensearch.search.backpressure.settings.SearchBackpressureSettings;
-import org.opensearch.search.backpressure.settings.SearchShardTaskSettings;
-import org.opensearch.search.backpressure.settings.SearchTaskSettings;
-import org.opensearch.search.backpressure.stats.SearchBackpressureStats;
-import org.opensearch.search.backpressure.stats.SearchShardTaskStats;
-import org.opensearch.search.backpressure.stats.SearchTaskStats;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackerType;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskCancellation;
-import org.opensearch.tasks.TaskCancellationService;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.ResourceType;
-import org.opensearch.wlm.WorkloadGroupService;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.Version;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchTask;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.backpressure.settings.SearchBackpressureMode;
+import org.density.search.backpressure.settings.SearchBackpressureSettings;
+import org.density.search.backpressure.settings.SearchShardTaskSettings;
+import org.density.search.backpressure.settings.SearchTaskSettings;
+import org.density.search.backpressure.stats.SearchBackpressureStats;
+import org.density.search.backpressure.stats.SearchShardTaskStats;
+import org.density.search.backpressure.stats.SearchTaskStats;
+import org.density.search.backpressure.trackers.NodeDuressTrackers;
+import org.density.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackerType;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskCancellation;
+import org.density.tasks.TaskCancellationService;
+import org.density.tasks.TaskManager;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.ResourceType;
+import org.density.wlm.WorkloadGroupService;
+import org.density.wlm.WorkloadGroupTask;
 import org.junit.After;
 import org.junit.Before;
 
@@ -59,9 +59,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.search.backpressure.SearchBackpressureTestHelpers.createMockTaskWithResourceStats;
-import static org.opensearch.wlm.ResourceType.CPU;
-import static org.opensearch.wlm.ResourceType.MEMORY;
+import static org.density.search.backpressure.SearchBackpressureTestHelpers.createMockTaskWithResourceStats;
+import static org.density.wlm.ResourceType.CPU;
+import static org.density.wlm.ResourceType.MEMORY;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.any;
@@ -74,7 +74,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SearchBackpressureServiceTests extends OpenSearchTestCase {
+public class SearchBackpressureServiceTests extends DensityTestCase {
     final BooleanSupplier resourceCacheExpiryChecker = () -> true;
     MockTransportService transportService;
     TaskManager taskManager;

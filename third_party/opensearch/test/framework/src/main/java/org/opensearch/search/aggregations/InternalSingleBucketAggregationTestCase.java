@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.search.aggregations.bucket.InternalSingleBucketAggregation;
-import org.opensearch.search.aggregations.bucket.ParsedSingleBucketAggregation;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.InternalMin;
-import org.opensearch.test.InternalAggregationTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.search.aggregations.bucket.InternalSingleBucketAggregation;
+import org.density.search.aggregations.bucket.ParsedSingleBucketAggregation;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.InternalMin;
+import org.density.test.InternalAggregationTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ import java.util.function.Supplier;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
 public abstract class InternalSingleBucketAggregationTestCase<T extends InternalSingleBucketAggregation> extends
     InternalAggregationTestCase<T> {

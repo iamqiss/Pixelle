@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.AsyncShardFetch.FetchResult;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper.NodeGatewayStartedShard;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.AsyncShardFetch.FetchResult;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.GatewayStartedShard;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper.NodeGatewayStartedShard;
+import org.density.gateway.TransportNodesListGatewayStartedShardsBatch.NodeGatewayStartedShardsBatch;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * PrimaryShardBatchAllocator is similar to {@link org.opensearch.gateway.PrimaryShardAllocator} only difference is
+ * PrimaryShardBatchAllocator is similar to {@link org.density.gateway.PrimaryShardAllocator} only difference is
  * that it can allocate multiple unassigned primary shards wherein PrimaryShardAllocator can only allocate single
  * unassigned shard.
  * The primary shard batch allocator allocates multiple unassigned primary shards to nodes that hold
@@ -40,11 +40,11 @@ import java.util.Set;
  * executes the allocation deciders to chose a copy to assign the primary shard to.
  * <p>
  * Note that the PrimaryShardBatchAllocator does *not* allocate primaries on index creation
- * (see {@link org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator}),
+ * (see {@link org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator}),
  * nor does it allocate primaries when a primary shard failed and there is a valid replica
  * copy that can immediately be promoted to primary, as this takes place in {@link RoutingNodes#failShard}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PrimaryShardBatchAllocator extends PrimaryShardAllocator {
 

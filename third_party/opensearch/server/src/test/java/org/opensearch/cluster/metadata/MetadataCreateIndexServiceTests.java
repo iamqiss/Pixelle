@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,83 +26,83 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.EmptyClusterInfoService;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.routing.allocation.AwarenessReplicaBalance;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.AwarenessAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndexCreationException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.InvalidAliasNameException;
-import org.opensearch.indices.InvalidIndexContextException;
-import org.opensearch.indices.InvalidIndexNameException;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.indices.SystemIndexDescriptor;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.EmptySnapshotsInfoService;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.gateway.TestGatewayAllocator;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.ResourceAlreadyExistsException;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotRequest;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.create.CreateIndexClusterStateUpdateRequest;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.EmptyClusterInfoService;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.routing.allocation.AwarenessReplicaBalance;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.AwarenessAllocationDecider;
+import org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.ValidationException;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.FeatureFlags;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.index.Index;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.env.Environment;
+import org.density.index.IndexModule;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexSettings;
+import org.density.index.engine.EngineConfig;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.translog.Translog;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndexCreationException;
+import org.density.indices.IndicesService;
+import org.density.indices.InvalidAliasNameException;
+import org.density.indices.InvalidIndexContextException;
+import org.density.indices.InvalidIndexNameException;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.ShardLimitValidator;
+import org.density.indices.SystemIndexDescriptor;
+import org.density.indices.SystemIndices;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.EmptySnapshotsInfoService;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.test.gateway.TestGatewayAllocator;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -136,47 +136,47 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_ROUTING_SHARDS_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_BLOCK;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_REPLICATION_TYPE_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_SEGMENT_STORE_REPOSITORY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REMOTE_TRANSLOG_STORE_REPOSITORY;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.aggregateIndexSettings;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.buildIndexMetadata;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.clusterStateCreateIndex;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.getIndexNumberOfRoutingShards;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.parseV1Mappings;
-import static org.opensearch.cluster.metadata.MetadataCreateIndexService.resolveAndValidateAliases;
-import static org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
-import static org.opensearch.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
-import static org.opensearch.common.util.FeatureFlags.REMOTE_STORE_MIGRATION_EXPERIMENTAL;
-import static org.opensearch.index.IndexModule.INDEX_STORE_TYPE_SETTING;
-import static org.opensearch.index.IndexSettings.INDEX_MERGE_POLICY;
-import static org.opensearch.index.IndexSettings.INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.index.IndexSettings.INDEX_REMOTE_TRANSLOG_BUFFER_INTERVAL_SETTING;
-import static org.opensearch.index.IndexSettings.INDEX_SOFT_DELETES_SETTING;
-import static org.opensearch.index.IndexSettings.INDEX_TRANSLOG_DURABILITY_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_INDEX_RESTRICT_REPLICATION_TYPE_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_MINIMUM_INDEX_REFRESH_INTERVAL_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_REMOTE_INDEX_RESTRICT_ASYNC_DURABILITY_SETTING;
-import static org.opensearch.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
-import static org.opensearch.indices.ShardLimitValidatorTests.createTestShardLimitService;
-import static org.opensearch.node.Node.NODE_ATTRIBUTES;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreTranslogRepo;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_ROUTING_SHARDS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_READ_ONLY_BLOCK;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_REPLICATION_TYPE_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_READ_ONLY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_SEGMENT_STORE_REPOSITORY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_STORE_ENABLED;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REMOTE_TRANSLOG_STORE_REPOSITORY;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_REPLICATION_TYPE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.MetadataCreateIndexService.aggregateIndexSettings;
+import static org.density.cluster.metadata.MetadataCreateIndexService.buildIndexMetadata;
+import static org.density.cluster.metadata.MetadataCreateIndexService.clusterStateCreateIndex;
+import static org.density.cluster.metadata.MetadataCreateIndexService.getIndexNumberOfRoutingShards;
+import static org.density.cluster.metadata.MetadataCreateIndexService.parseV1Mappings;
+import static org.density.cluster.metadata.MetadataCreateIndexService.resolveAndValidateAliases;
+import static org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider.INDEX_TOTAL_PRIMARY_SHARDS_PER_NODE_SETTING;
+import static org.density.common.util.FeatureFlags.APPLICATION_BASED_CONFIGURATION_TEMPLATES;
+import static org.density.common.util.FeatureFlags.REMOTE_STORE_MIGRATION_EXPERIMENTAL;
+import static org.density.index.IndexModule.INDEX_STORE_TYPE_SETTING;
+import static org.density.index.IndexSettings.INDEX_MERGE_POLICY;
+import static org.density.index.IndexSettings.INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.index.IndexSettings.INDEX_REMOTE_TRANSLOG_BUFFER_INTERVAL_SETTING;
+import static org.density.index.IndexSettings.INDEX_SOFT_DELETES_SETTING;
+import static org.density.index.IndexSettings.INDEX_TRANSLOG_DURABILITY_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_DEFAULT_INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_INDEX_RESTRICT_REPLICATION_TYPE_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_MINIMUM_INDEX_REFRESH_INTERVAL_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_REMOTE_INDEX_RESTRICT_ASYNC_DURABILITY_SETTING;
+import static org.density.indices.IndicesService.CLUSTER_REPLICATION_TYPE_SETTING;
+import static org.density.indices.ShardLimitValidatorTests.createTestShardLimitService;
+import static org.density.node.Node.NODE_ATTRIBUTES;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_SEGMENT_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_TRANSLOG_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.getRemoteStoreTranslogRepo;
+import static org.density.node.remotestore.RemoteStoreNodeService.MIGRATION_DIRECTION_SETTING;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
@@ -189,7 +189,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
+public class MetadataCreateIndexServiceTests extends DensityTestCase {
 
     private AliasValidator aliasValidator;
     private CreateIndexClusterStateUpdateRequest request;
@@ -266,7 +266,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         routingTableBuilder.addAsNew(metadata.index(name));
 
         RoutingTable routingTable = routingTableBuilder.build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .routingTable(routingTable)
             .blocks(ClusterBlocks.builder().addBlocks(indexMetadata))
@@ -387,7 +387,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         RoutingTable routingTable = service.reroute(clusterState, "reroute").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
         // now we start the shard
-        routingTable = OpenSearchAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
+        routingTable = DensityAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
         int targetShards;
         do {
@@ -489,7 +489,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         RoutingTable routingTable = service.reroute(clusterState, "reroute").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
         // now we start the shard
-        routingTable = OpenSearchAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
+        routingTable = DensityAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
 
         MetadataCreateIndexService.validateSplitIndex(
@@ -553,7 +553,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         RoutingTable routingTable = service.reroute(clusterState, "reroute").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
         // now we start the shard
-        routingTable = OpenSearchAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
+        routingTable = DensityAllocationTestCase.startInitializingShardsAndReroute(service, clusterState, "source").routingTable();
         clusterState = ClusterState.builder(clusterState).routingTable(routingTable).build();
 
         MetadataCreateIndexService.validateCloneIndex(clusterState, "source", "target", targetSettings);
@@ -689,7 +689,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         final ClusterState routingTableClusterState = ClusterState.builder(initialClusterState).routingTable(initialRoutingTable).build();
 
         // now we start the shard
-        final RoutingTable routingTable = OpenSearchAllocationTestCase.startInitializingShardsAndReroute(
+        final RoutingTable routingTable = DensityAllocationTestCase.startInitializingShardsAndReroute(
             service,
             routingTableClusterState,
             indexName
@@ -742,7 +742,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
             validateIndexName(
                 checkerService,
                 "index?name",
-                "must not contain the following characters " + org.opensearch.core.common.Strings.INVALID_FILENAME_CHARS
+                "must not contain the following characters " + org.density.core.common.Strings.INVALID_FILENAME_CHARS
             );
 
             validateIndexName(checkerService, "index#name", "must not contain '#'");
@@ -876,7 +876,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         final Map<String, IndexTemplateMetadata> templatesBuilder = new HashMap<>();
         templatesBuilder.put("template_1", templateMetadata);
         Metadata metadata = new Metadata.Builder().templates(templatesBuilder).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         request.settings(Settings.builder().put("request_setting", "value2").build());
@@ -1221,7 +1221,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         Metadata metadata = Metadata.builder()
             .transientSettings(Settings.builder().put(Metadata.DEFAULT_REPLICA_COUNT_SETTING.getKey(), 1).build())
             .build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
 
@@ -1344,7 +1344,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         Metadata metadata = Metadata.builder()
             .transientSettings(Settings.builder().put(Metadata.DEFAULT_REPLICA_COUNT_SETTING.getKey(), 1).build())
             .build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         ThreadPool threadPool = new TestThreadPool(getTestName());
@@ -1781,7 +1781,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         Metadata metadata = Metadata.builder()
             .transientSettings(Settings.builder().put(Metadata.DEFAULT_REPLICA_COUNT_SETTING.getKey(), 1).build())
             .build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         ClusterSettings clusterSettings = new ClusterSettings(settings, ClusterSettings.BUILT_IN_CLUSTER_SETTINGS);
@@ -1973,7 +1973,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
     }
 
     public void testIndexLifecycleNameSetting() {
-        // see: https://github.com/opensearch-project/OpenSearch/issues/1019
+        // see: https://github.com/density-project/Density/issues/1019
         final Settings ilnSetting = Settings.builder().put("index.lifecycle.name", "dummy").build();
         withTemporaryClusterService(((clusterService, threadPool) -> {
             MetadataCreateIndexService checkerService = new MetadataCreateIndexService(
@@ -2240,7 +2240,7 @@ public class MetadataCreateIndexServiceTests extends OpenSearchTestCase {
         Metadata metadata = new Metadata.Builder().persistentSettings(
             Settings.builder().put("cluster.default_number_of_replicas", clusterDefaultReplicaNumber).build()
         ).build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .build();
         Settings settings = Settings.builder().put(CLUSTER_REMOTE_INDEX_RESTRICT_ASYNC_DURABILITY_SETTING.getKey(), true).build();

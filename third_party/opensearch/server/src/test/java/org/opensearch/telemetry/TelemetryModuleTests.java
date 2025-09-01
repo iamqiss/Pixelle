@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry;
+package org.density.telemetry;
 
-import org.opensearch.plugins.TelemetryPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.plugins.TelemetryPlugin;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TelemetryModuleTests extends OpenSearchTestCase {
+public class TelemetryModuleTests extends DensityTestCase {
 
     public void testGetTelemetrySuccess() {
         TelemetryPlugin telemetryPlugin = mock(TelemetryPlugin.class);

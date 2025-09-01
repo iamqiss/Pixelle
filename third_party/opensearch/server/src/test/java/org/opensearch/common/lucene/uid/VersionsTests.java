@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.uid;
+package org.density.common.lucene.uid;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -39,25 +39,25 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.SeqNoFieldMapper;
-import org.opensearch.index.mapper.VersionFieldMapper;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.core.index.shard.ShardId;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.SeqNoFieldMapper;
+import org.density.index.mapper.VersionFieldMapper;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.common.lucene.uid.VersionsAndSeqNoResolver.loadDocIdAndVersion;
+import static org.density.common.lucene.uid.VersionsAndSeqNoResolver.loadDocIdAndVersion;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class VersionsTests extends OpenSearchTestCase {
+public class VersionsTests extends DensityTestCase {
 
     public static DirectoryReader reopen(DirectoryReader reader) throws IOException {
         return reopen(reader, true);
@@ -76,7 +76,7 @@ public class VersionsTests extends OpenSearchTestCase {
     public void testVersions() throws Exception {
         Directory dir = newDirectory();
         IndexWriter writer = new IndexWriter(dir, new IndexWriterConfig(Lucene.STANDARD_ANALYZER));
-        DirectoryReader directoryReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        DirectoryReader directoryReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         assertThat(loadDocIdAndVersion(directoryReader, new Term(IdFieldMapper.NAME, "1"), randomBoolean()), nullValue());
 
         Document doc = new Document();
@@ -140,7 +140,7 @@ public class VersionsTests extends OpenSearchTestCase {
         docs.add(doc);
 
         writer.updateDocuments(new Term(IdFieldMapper.NAME, "1"), docs);
-        DirectoryReader directoryReader = OpenSearchDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
+        DirectoryReader directoryReader = DensityDirectoryReader.wrap(DirectoryReader.open(writer), new ShardId("foo", "_na_", 1));
         assertThat(loadDocIdAndVersion(directoryReader, new Term(IdFieldMapper.NAME, "1"), randomBoolean()).version, equalTo(5L));
 
         version.setLongValue(6L);
@@ -201,7 +201,7 @@ public class VersionsTests extends OpenSearchTestCase {
         assertEquals(87, loadDocIdAndVersion(reader, new Term(IdFieldMapper.NAME, "6"), randomBoolean()).version);
         assertEquals(size + 1, VersionsAndSeqNoResolver.lookupStates.size());
         // now wrap the reader
-        DirectoryReader wrapped = OpenSearchDirectoryReader.wrap(reader, new ShardId("bogus", "_na_", 5));
+        DirectoryReader wrapped = DensityDirectoryReader.wrap(reader, new ShardId("bogus", "_na_", 5));
         assertEquals(87, loadDocIdAndVersion(wrapped, new Term(IdFieldMapper.NAME, "6"), randomBoolean()).version);
         // same size map: core cache key is shared
         assertEquals(size + 1, VersionsAndSeqNoResolver.lookupStates.size());

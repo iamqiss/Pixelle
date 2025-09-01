@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.search.lookup.LeafDocLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.script.MockScriptPlugin;
+import org.density.search.lookup.LeafDocLookup;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +110,7 @@ public class MetricAggScriptPlugin extends MockScriptPlugin {
     protected Map<String, Function<Map<String, Object>, Object>> nonDeterministicPluginScripts() {
         Map<String, Function<Map<String, Object>, Object>> scripts = new HashMap<>();
 
-        scripts.put("Math.random()", vars -> OpenSearchTestCase.randomDouble());
+        scripts.put("Math.random()", vars -> DensityTestCase.randomDouble());
 
         return scripts;
     }

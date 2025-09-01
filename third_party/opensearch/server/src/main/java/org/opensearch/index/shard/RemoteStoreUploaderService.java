@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -14,12 +14,12 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.UploadListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.store.CompositeDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
+import org.density.action.support.GroupedActionListener;
+import org.density.common.logging.Loggers;
+import org.density.common.util.UploadListener;
+import org.density.core.action.ActionListener;
+import org.density.index.store.CompositeDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectory;
 
 import java.util.Collection;
 import java.util.Map;

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.xcontent.spi;
+package org.density.common.xcontent.spi;
 
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.spi.MediaTypeProvider;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.spi.MediaTypeProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Media Type implementations provided by xcontent library
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class XContentProvider implements MediaTypeProvider {
     /** Returns the concrete {@link MediaType} provided by the xcontent library */

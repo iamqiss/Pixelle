@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilderTests;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchModule;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.highlight.HighlightBuilderTests;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortBuilders;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -67,12 +67,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class InnerHitBuilderTests extends OpenSearchTestCase {
+public class InnerHitBuilderTests extends DensityTestCase {
 
     private static final int NUMBER_OF_TESTBUILDERS = 20;
     private static NamedWriteableRegistry namedWriteableRegistry;
@@ -113,7 +113,7 @@ public class InnerHitBuilderTests extends OpenSearchTestCase {
      * This is necessary to ensure because we use the serialized BytesReference
      * of this builder as part of the cacheKey in
      * {@link ShardSearchRequest} (via
-     * {@link SearchSourceBuilder#collapse(org.opensearch.search.collapse.CollapseBuilder)})
+     * {@link SearchSourceBuilder#collapse(org.density.search.collapse.CollapseBuilder)})
      */
     public void testSerializationOrder() throws Exception {
         for (int runs = 0; runs < NUMBER_OF_TESTBUILDERS; runs++) {
@@ -327,7 +327,7 @@ public class InnerHitBuilderTests extends OpenSearchTestCase {
     }
 
     private static InnerHitBuilder serializedCopy(InnerHitBuilder original) throws IOException {
-        return OpenSearchTestCase.copyWriteable(original, namedWriteableRegistry, InnerHitBuilder::new);
+        return DensityTestCase.copyWriteable(original, namedWriteableRegistry, InnerHitBuilder::new);
     }
 
     public void testSetDocValueFormat() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.symbol;
+package org.density.painless.symbol;
 
-import org.opensearch.painless.FunctionRef;
-import org.opensearch.painless.ir.IRNode;
-import org.opensearch.painless.lookup.PainlessCast;
-import org.opensearch.painless.lookup.PainlessClassBinding;
-import org.opensearch.painless.lookup.PainlessConstructor;
-import org.opensearch.painless.lookup.PainlessField;
-import org.opensearch.painless.lookup.PainlessInstanceBinding;
-import org.opensearch.painless.lookup.PainlessLookupUtility;
-import org.opensearch.painless.lookup.PainlessMethod;
-import org.opensearch.painless.symbol.Decorator.Condition;
-import org.opensearch.painless.symbol.Decorator.Decoration;
-import org.opensearch.painless.symbol.FunctionTable.LocalFunction;
-import org.opensearch.painless.symbol.SemanticScope.Variable;
+import org.density.painless.FunctionRef;
+import org.density.painless.ir.IRNode;
+import org.density.painless.lookup.PainlessCast;
+import org.density.painless.lookup.PainlessClassBinding;
+import org.density.painless.lookup.PainlessConstructor;
+import org.density.painless.lookup.PainlessField;
+import org.density.painless.lookup.PainlessInstanceBinding;
+import org.density.painless.lookup.PainlessLookupUtility;
+import org.density.painless.lookup.PainlessMethod;
+import org.density.painless.symbol.Decorator.Condition;
+import org.density.painless.symbol.Decorator.Decoration;
+import org.density.painless.symbol.FunctionTable.LocalFunction;
+import org.density.painless.symbol.SemanticScope.Variable;
 
 import java.util.ArrayList;
 import java.util.Collections;

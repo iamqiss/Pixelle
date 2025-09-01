@@ -2,6 +2,6 @@
 
 set -e -o pipefail
 
-OPENSEARCH_MAIN_CLASS=org.opensearch.index.shard.ShardToolCli \
-  "`dirname "$0"`"/opensearch-cli \
+DENSITY_MAIN_CLASS=org.density.index.shard.ShardToolCli \
+  "`dirname "$0"`"/density-cli \
   "$@"

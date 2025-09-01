@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.enums;
+package org.density.ratelimitting.admissioncontrol.enums;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class AdmissionControlModeTests extends OpenSearchTestCase {
+public class AdmissionControlModeTests extends DensityTestCase {
 
     public void testValidActionType() {
         assertEquals(AdmissionControlMode.DISABLED.getMode(), "disabled");

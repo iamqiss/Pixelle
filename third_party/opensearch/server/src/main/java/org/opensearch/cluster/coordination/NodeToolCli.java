@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.cli.MultiCommand;
-import org.opensearch.cli.Terminal;
-import org.opensearch.common.cli.CommandLoggingConfigurator;
-import org.opensearch.env.NodeRepurposeCommand;
-import org.opensearch.env.OverrideNodeVersionCommand;
+import org.density.cli.MultiCommand;
+import org.density.cli.Terminal;
+import org.density.common.cli.CommandLoggingConfigurator;
+import org.density.env.NodeRepurposeCommand;
+import org.density.env.OverrideNodeVersionCommand;
 
 // NodeToolCli does not extend LoggingAwareCommand, because LoggingAwareCommand performs logging initialization
 // after LoggingAwareCommand instance is constructed.
@@ -48,7 +48,7 @@ import org.opensearch.env.OverrideNodeVersionCommand;
 /**
  * Command Line Interface tool for Nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NodeToolCli extends MultiCommand {
 

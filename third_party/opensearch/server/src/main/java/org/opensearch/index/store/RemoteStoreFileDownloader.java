@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.Loggers;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutionException;
  * instance to a local {@link Directory} instance in parallel depending on thread
  * pool size and recovery settings.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.11.0")
 public final class RemoteStoreFileDownloader {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.cluster.coordination.DeterministicTaskQueue;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityTimeoutException;
+import org.density.cluster.coordination.DeterministicTaskQueue;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-public class ListenerTimeoutsTests extends OpenSearchTestCase {
+public class ListenerTimeoutsTests extends DensityTestCase {
 
     private final TimeValue timeout = TimeValue.timeValueMillis(10);
     private final String generic = ThreadPool.Names.GENERIC;
@@ -75,7 +75,7 @@ public class ListenerTimeoutsTests extends OpenSearchTestCase {
         wrapped.onFailure(new IOException("incorrect exception"));
 
         assertFalse(success.get());
-        assertThat(exception.get(), instanceOf(OpenSearchTimeoutException.class));
+        assertThat(exception.get(), instanceOf(DensityTimeoutException.class));
     }
 
     public void testFinishNormallyBeforeTimeout() {

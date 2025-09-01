@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.javaagent;
+package org.density.javaagent;
 
 import org.junit.Test;
 
@@ -119,8 +119,8 @@ public class StackCallerProtectionDomainExtractorTests {
     }
 
     @Test
-    public void testStackTruncationWithOpenSearchAccessController() {
-        org.opensearch.secure_sm.AccessController.doPrivileged(() -> {
+    public void testStackTruncationWithDensityAccessController() {
+        org.density.secure_sm.AccessController.doPrivileged(() -> {
             StackCallerProtectionDomainChainExtractor extractor = StackCallerProtectionDomainChainExtractor.INSTANCE;
             Set<ProtectionDomain> protectionDomains = (Set<ProtectionDomain>) extractor.apply(captureStackFrames().stream());
             assertEquals(1, protectionDomains.size());
@@ -150,8 +150,8 @@ public class StackCallerProtectionDomainExtractorTests {
     }
 
     @Test
-    public void testStackTruncationWithOpenSearchAccessControllerUsingSupplier() {
-        org.opensearch.secure_sm.AccessController.doPrivileged((Supplier<Void>) () -> {
+    public void testStackTruncationWithDensityAccessControllerUsingSupplier() {
+        org.density.secure_sm.AccessController.doPrivileged((Supplier<Void>) () -> {
             StackCallerProtectionDomainChainExtractor extractor = StackCallerProtectionDomainChainExtractor.INSTANCE;
             Set<ProtectionDomain> protectionDomains = (Set<ProtectionDomain>) extractor.apply(captureStackFrames().stream());
             assertEquals(1, protectionDomains.size());
@@ -182,8 +182,8 @@ public class StackCallerProtectionDomainExtractorTests {
     }
 
     @Test
-    public void testStackTruncationWithOpenSearchAccessControllerUsingCallable() throws Exception {
-        org.opensearch.secure_sm.AccessController.doPrivilegedChecked(() -> {
+    public void testStackTruncationWithDensityAccessControllerUsingCallable() throws Exception {
+        org.density.secure_sm.AccessController.doPrivilegedChecked(() -> {
             StackCallerProtectionDomainChainExtractor extractor = StackCallerProtectionDomainChainExtractor.INSTANCE;
             Set<ProtectionDomain> protectionDomains = (Set<ProtectionDomain>) extractor.apply(captureStackFrames().stream());
             assertEquals(1, protectionDomains.size());
@@ -216,13 +216,13 @@ public class StackCallerProtectionDomainExtractorTests {
     @Test
     public void testAccessControllerUsingCallableThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            org.opensearch.secure_sm.AccessController.doPrivilegedChecked(() -> { throw new IllegalArgumentException("Test exception"); });
+            org.density.secure_sm.AccessController.doPrivilegedChecked(() -> { throw new IllegalArgumentException("Test exception"); });
         });
     }
 
     @Test
-    public void testStackTruncationWithOpenSearchAccessControllerUsingCheckedRunnable() throws IllegalArgumentException {
-        org.opensearch.secure_sm.AccessController.doPrivilegedChecked(() -> {
+    public void testStackTruncationWithDensityAccessControllerUsingCheckedRunnable() throws IllegalArgumentException {
+        org.density.secure_sm.AccessController.doPrivilegedChecked(() -> {
             StackCallerProtectionDomainChainExtractor extractor = StackCallerProtectionDomainChainExtractor.INSTANCE;
             Set<ProtectionDomain> protectionDomains = (Set<ProtectionDomain>) extractor.apply(captureStackFrames().stream());
             assertEquals(1, protectionDomains.size());
@@ -254,7 +254,7 @@ public class StackCallerProtectionDomainExtractorTests {
     @Test
     public void testAccessControllerUsingCheckedRunnableThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            org.opensearch.secure_sm.AccessController.doPrivilegedChecked(() -> { throw new IllegalArgumentException("Test exception"); });
+            org.density.secure_sm.AccessController.doPrivilegedChecked(() -> { throw new IllegalArgumentException("Test exception"); });
         });
     }
 }

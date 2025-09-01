@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.fetch.ScrollQueryFetchSearchResult;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.transport.Transport;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.action.ActionListener;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.fetch.ScrollQueryFetchSearchResult;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.transport.Transport;
 
 import java.util.function.BiFunction;
 
 /**
  * Async action for a search scroll query then fetch
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class SearchScrollQueryAndFetchAsyncAction extends SearchScrollAsyncAction<ScrollQueryFetchSearchResult> {
 

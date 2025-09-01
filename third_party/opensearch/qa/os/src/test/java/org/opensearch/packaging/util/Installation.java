@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Represents an installation of OpenSearch
+ * Represents an installation of Density
  */
 public class Installation {
 
     // in the future we'll run as a role user on Windows
-    public static final String ARCHIVE_OWNER = Platforms.WINDOWS ? System.getenv("username") : "opensearch";
+    public static final String ARCHIVE_OWNER = Platforms.WINDOWS ? System.getenv("username") : "density";
 
     private final Shell sh;
     public final Distribution distribution;
@@ -102,25 +102,25 @@ public class Installation {
     public static Installation ofPackage(Shell sh, Distribution distribution) {
 
         final Path envFile = (distribution.packaging == Distribution.Packaging.RPM)
-            ? Paths.get("/etc/sysconfig/opensearch")
-            : Paths.get("/etc/default/opensearch");
+            ? Paths.get("/etc/sysconfig/density")
+            : Paths.get("/etc/default/density");
 
         return new Installation(
             sh,
             distribution,
-            Paths.get("/usr/share/opensearch"),
-            Paths.get("/etc/opensearch"),
-            Paths.get("/var/lib/opensearch"),
-            Paths.get("/var/log/opensearch"),
-            Paths.get("/usr/share/opensearch/plugins"),
-            Paths.get("/usr/share/opensearch/modules"),
-            Paths.get("/var/run/opensearch"),
+            Paths.get("/usr/share/density"),
+            Paths.get("/etc/density"),
+            Paths.get("/var/lib/density"),
+            Paths.get("/var/log/density"),
+            Paths.get("/usr/share/density/plugins"),
+            Paths.get("/usr/share/density/modules"),
+            Paths.get("/var/run/density"),
             envFile
         );
     }
 
     public static Installation ofContainer(Shell sh, Distribution distribution) {
-        String root = "/usr/share/opensearch";
+        String root = "/usr/share/density";
         return new Installation(
             sh,
             distribution,
@@ -201,10 +201,10 @@ public class Installation {
 
     public class Executables {
 
-        public final Executable opensearch = new Executable("opensearch");
-        public final Executable pluginTool = new Executable("opensearch-plugin");
-        public final Executable keystoreTool = new Executable("opensearch-keystore");
-        public final Executable shardTool = new Executable("opensearch-shard");
-        public final Executable nodeTool = new Executable("opensearch-node");
+        public final Executable density = new Executable("density");
+        public final Executable pluginTool = new Executable("density-plugin");
+        public final Executable keystoreTool = new Executable("density-keystore");
+        public final Executable shardTool = new Executable("density-shard");
+        public final Executable nodeTool = new Executable("density-node");
     }
 }

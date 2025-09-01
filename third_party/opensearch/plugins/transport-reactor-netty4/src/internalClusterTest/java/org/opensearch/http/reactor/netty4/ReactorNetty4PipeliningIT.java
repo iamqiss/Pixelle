@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http.reactor.netty4;
+package org.density.http.reactor.netty4;
 
-import org.opensearch.OpenSearchReactorNetty4IntegTestCase;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.DensityReactorNetty4IntegTestCase;
+import org.density.core.common.transport.TransportAddress;
+import org.density.http.HttpServerTransport;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @ClusterScope(scope = Scope.TEST, supportsDedicatedMasters = false, numDataNodes = 1)
-public class ReactorNetty4PipeliningIT extends OpenSearchReactorNetty4IntegTestCase {
+public class ReactorNetty4PipeliningIT extends DensityReactorNetty4IntegTestCase {
 
     @Override
     protected boolean addMockHttpTransport() {

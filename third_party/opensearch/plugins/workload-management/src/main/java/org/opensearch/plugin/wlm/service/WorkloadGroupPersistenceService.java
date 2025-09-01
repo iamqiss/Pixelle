@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.service;
+package org.density.plugin.wlm.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler.ThrottlingKey;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.plugin.wlm.action.CreateWorkloadGroupResponse;
-import org.opensearch.plugin.wlm.action.DeleteWorkloadGroupRequest;
-import org.opensearch.plugin.wlm.action.UpdateWorkloadGroupRequest;
-import org.opensearch.plugin.wlm.action.UpdateWorkloadGroupResponse;
-import org.opensearch.wlm.MutableWorkloadGroupFragment;
-import org.opensearch.wlm.ResourceType;
+import org.density.ResourceNotFoundException;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterManagerTaskThrottler.ThrottlingKey;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.plugin.wlm.action.CreateWorkloadGroupResponse;
+import org.density.plugin.wlm.action.DeleteWorkloadGroupRequest;
+import org.density.plugin.wlm.action.UpdateWorkloadGroupRequest;
+import org.density.plugin.wlm.action.UpdateWorkloadGroupResponse;
+import org.density.wlm.MutableWorkloadGroupFragment;
+import org.density.wlm.ResourceType;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -40,10 +40,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.WorkloadGroup.updateExistingWorkloadGroup;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_QUERY_GROUP;
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_QUERY_GROUP;
-import static org.opensearch.cluster.service.ClusterManagerTask.UPDATE_QUERY_GROUP;
+import static org.density.cluster.metadata.WorkloadGroup.updateExistingWorkloadGroup;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_QUERY_GROUP;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_QUERY_GROUP;
+import static org.density.cluster.service.ClusterManagerTask.UPDATE_QUERY_GROUP;
 
 /**
  * This class defines the functions for WorkloadGroup persistence

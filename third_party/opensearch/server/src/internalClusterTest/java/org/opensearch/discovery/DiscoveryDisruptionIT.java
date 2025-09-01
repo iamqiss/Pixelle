@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.coordination.JoinHelper;
-import org.opensearch.cluster.coordination.PersistedStateRegistry;
-import org.opensearch.cluster.coordination.PublicationTransportHandler;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.fs.ReloadableFsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.disruption.SlowClusterStateProcessing;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.coordination.JoinHelper;
+import org.density.cluster.coordination.PersistedStateRegistry;
+import org.density.cluster.coordination.PublicationTransportHandler;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Randomness;
+import org.density.common.settings.Settings;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.fs.ReloadableFsRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.disruption.SlowClusterStateProcessing;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.Transport;
+import org.density.transport.TransportService;
 import org.junit.Assert;
 
 import java.util.Arrays;
@@ -65,13 +65,13 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
-import static org.opensearch.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_REPLICAS_SETTING;
+import static org.density.cluster.metadata.IndexMetadata.INDEX_NUMBER_OF_SHARDS_SETTING;
 
 /**
  * Tests for discovery during disruptions.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class DiscoveryDisruptionIT extends AbstractDisruptionTestCase {
 
     /**

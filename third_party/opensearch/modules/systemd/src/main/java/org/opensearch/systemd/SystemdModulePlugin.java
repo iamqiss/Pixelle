@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.systemd;
+package org.density.systemd;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.plugins.ClusterPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.script.ScriptService;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.watcher.ResourceWatcherService;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.plugins.ClusterPlugin;
+import org.density.plugins.Plugin;
+import org.density.repositories.RepositoriesService;
+import org.density.script.ScriptService;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.watcher.ResourceWatcherService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -67,17 +67,17 @@ public class SystemdModulePlugin extends Plugin implements ClusterPlugin {
 
     @SuppressWarnings("unused")
     public SystemdModulePlugin() {
-        this(System.getenv("OPENSEARCH_SD_NOTIFY"));
+        this(System.getenv("DENSITY_SD_NOTIFY"));
     }
 
     SystemdModulePlugin(final String esSDNotify) {
-        logger.trace("OPENSEARCH_SD_NOTIFY is set to [{}]", esSDNotify);
+        logger.trace("DENSITY_SD_NOTIFY is set to [{}]", esSDNotify);
         if (esSDNotify == null) {
             enabled = false;
             return;
         }
         if (Boolean.TRUE.toString().equals(esSDNotify) == false && Boolean.FALSE.toString().equals(esSDNotify) == false) {
-            throw new RuntimeException("OPENSEARCH_SD_NOTIFY set to unexpected value [" + esSDNotify + "]");
+            throw new RuntimeException("DENSITY_SD_NOTIFY set to unexpected value [" + esSDNotify + "]");
         }
         enabled = Boolean.TRUE.toString().equals(esSDNotify);
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.DensityParseException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.util.Objects;
 
-import static org.opensearch.core.common.unit.ByteSizeValue.parseBytesSizeValue;
+import static org.density.core.common.unit.ByteSizeValue.parseBytesSizeValue;
 
 /**
  * Utility methods to get memory sizes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum MemorySizeValue {
     ;
@@ -59,11 +59,11 @@ public enum MemorySizeValue {
             try {
                 final double percent = Double.parseDouble(percentAsString);
                 if (percent < 0 || percent > 100) {
-                    throw new OpenSearchParseException("percentage should be in [0-100], got [{}]", percentAsString);
+                    throw new DensityParseException("percentage should be in [0-100], got [{}]", percentAsString);
                 }
                 return new ByteSizeValue((long) ((percent / 100) * JvmInfo.jvmInfo().getMem().getHeapMax().getBytes()), ByteSizeUnit.BYTES);
             } catch (NumberFormatException e) {
-                throw new OpenSearchParseException("failed to parse [{}] as a double", e, percentAsString);
+                throw new DensityParseException("failed to parse [{}] as a double", e, percentAsString);
             }
         } else {
             return parseBytesSizeValue(sValue, settingName);

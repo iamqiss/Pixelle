@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,23 +23,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.internal.BindingImpl;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.InternalContext;
-import org.opensearch.common.inject.internal.InternalFactory;
-import org.opensearch.common.inject.internal.Scoping;
-import org.opensearch.common.inject.internal.ToStringBuilder;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.ConstructorBinding;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.InjectionPoint;
+import org.density.common.inject.internal.BindingImpl;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.InternalContext;
+import org.density.common.inject.internal.InternalFactory;
+import org.density.common.inject.internal.Scoping;
+import org.density.common.inject.internal.ToStringBuilder;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.ConstructorBinding;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.InjectionPoint;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -47,7 +47,7 @@ import java.util.Set;
 /**
  * Constructor binding implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ConstructorBindingImpl<T> extends BindingImpl<T> implements ConstructorBinding<T> {
 
@@ -123,7 +123,7 @@ class ConstructorBindingImpl<T> extends BindingImpl<T> implements ConstructorBin
     /**
      * Factory to build a binding object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Factory<T> implements InternalFactory<T> {
         private ConstructorInjector<T> constructorInjector;

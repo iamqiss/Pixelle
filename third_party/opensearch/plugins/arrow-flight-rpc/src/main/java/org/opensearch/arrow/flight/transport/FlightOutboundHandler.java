@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -9,29 +9,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.FlightRuntimeException;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ProtocolOutboundHandler;
-import org.opensearch.transport.StatsTracker;
-import org.opensearch.transport.TcpChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportMessageListener;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.nativeprotocol.NativeOutboundMessage;
-import org.opensearch.transport.stream.StreamException;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.transport.TransportResponse;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ProtocolOutboundHandler;
+import org.density.transport.StatsTracker;
+import org.density.transport.TcpChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportMessageListener;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.nativeprotocol.NativeOutboundMessage;
+import org.density.transport.stream.StreamException;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -40,7 +40,7 @@ import java.util.Set;
 /**
  * Outbound handler for Arrow Flight streaming responses.
  * It must invoke messageListener and relay any exception back to the caller and not supress them
- * @opensearch.internal
+ * @density.internal
  */
 class FlightOutboundHandler extends ProtocolOutboundHandler {
     private volatile TransportMessageListener messageListener = TransportMessageListener.NOOP_LISTENER;

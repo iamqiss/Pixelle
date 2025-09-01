@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.set.Sets;
+import org.density.common.collect.Tuple;
+import org.density.common.util.set.Sets;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -43,15 +43,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.test.AbstractQueryTestCase.alterateQueries;
+import static org.density.test.AbstractQueryTestCase.alterateQueries;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.notNullValue;
 
 /**
- * Various test for {@link org.opensearch.test.AbstractQueryTestCase}
+ * Various test for {@link org.density.test.AbstractQueryTestCase}
  */
-public class AbstractQueryTestCaseTests extends OpenSearchTestCase {
+public class AbstractQueryTestCaseTests extends DensityTestCase {
 
     public void testAlterateQueries() throws IOException {
         List<Tuple<String, Boolean>> alterations = alterateQueries(singleton("{\"field\": \"value\"}"), null);

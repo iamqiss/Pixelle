@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.watcher;
+package org.density.watcher;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -50,12 +50,12 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * Generic resource watcher service
  * <p>
- * Other opensearch services can register their resource watchers with this service using {@link #add(ResourceWatcher)}
- * method. This service will call {@link org.opensearch.watcher.ResourceWatcher#checkAndNotify()} method of all
+ * Other density services can register their resource watchers with this service using {@link #add(ResourceWatcher)}
+ * method. This service will call {@link org.density.watcher.ResourceWatcher#checkAndNotify()} method of all
  * registered watcher periodically. The frequency of checks can be specified using {@code resource.reload.interval} setting, which
  * defaults to {@code 60s}. The service can be disabled by setting {@code resource.reload.enabled} setting to {@code false}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ResourceWatcherService implements Closeable {
@@ -64,7 +64,7 @@ public class ResourceWatcherService implements Closeable {
     /**
      * Frequency level to watch.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Frequency {

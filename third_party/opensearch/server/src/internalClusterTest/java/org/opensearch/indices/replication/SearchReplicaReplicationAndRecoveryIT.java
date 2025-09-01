@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.SegmentReplicationPerGroupStats;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.indices.recovery.RecoveryRequest;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.common.settings.Settings;
+import org.density.index.SegmentReplicationPerGroupStats;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 import org.junit.After;
 
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
-import static org.opensearch.cluster.routing.RecoverySource.Type.EMPTY_STORE;
-import static org.opensearch.cluster.routing.RecoverySource.Type.EXISTING_STORE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
+import static org.density.cluster.routing.RecoverySource.Type.EMPTY_STORE;
+import static org.density.cluster.routing.RecoverySource.Type.EXISTING_STORE;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class SearchReplicaReplicationAndRecoveryIT extends SegmentReplicationBaseIT {
 
     private static final String REPOSITORY_NAME = "test-remote-store-repo";

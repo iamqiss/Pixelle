@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.opensearch.cluster.metadata.DataStream.TimestampField;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.cluster.metadata.DataStream.TimestampField;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Field mapper for a datastream field
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DataStreamFieldMapper extends MetadataFieldMapper {
 
@@ -35,7 +35,7 @@ public class DataStreamFieldMapper extends MetadataFieldMapper {
     /**
      * Default parameters
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Defaults {
         public static final boolean ENABLED = false;
@@ -45,7 +45,7 @@ public class DataStreamFieldMapper extends MetadataFieldMapper {
     /**
      * Builder for the field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Builder extends MetadataFieldMapper.Builder {
         final Parameter<Boolean> enabledParam = Parameter.boolParam("enabled", false, mapper -> toType(mapper).enabled, Defaults.ENABLED);
@@ -76,7 +76,7 @@ public class DataStreamFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for data stream field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class DataStreamFieldType extends MappedFieldType {
         public static final DataStreamFieldType INSTANCE = new DataStreamFieldType();

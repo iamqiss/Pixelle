@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,7 +27,7 @@
  * under the License.
  */
 
-package org.opensearch.gradle.fixtures
+package org.density.gradle.fixtures
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
@@ -102,15 +102,15 @@ abstract class AbstractGradleFuncTest extends Specification {
 
     File internalBuild(File buildScript = buildFile) {
         buildScript << """plugins {
-          id 'opensearch.global-build-info'
+          id 'density.global-build-info'
         }
-        import org.opensearch.gradle.Architecture
-        import org.opensearch.gradle.info.BuildParams
+        import org.density.gradle.Architecture
+        import org.density.gradle.info.BuildParams
 
         BuildParams.init { it.setIsInternal(true) }
 
-        import org.opensearch.gradle.BwcVersions
-        import org.opensearch.gradle.Version
+        import org.density.gradle.BwcVersions
+        import org.density.gradle.Version
 
         Version currentVersion = Version.fromString("9.0.0")
         BwcVersions versions = new BwcVersions(new TreeSet<>(
@@ -124,7 +124,7 @@ abstract class AbstractGradleFuncTest extends Specification {
     void setupLocalGitRepo() {
         //TODO: cleanup
         execute("git init")
-        execute('git config user.email "build-tool@opensearch.org"')
+        execute('git config user.email "build-tool@density.org"')
         execute('git config user.name "Build tool"')
         execute("git add .")
         execute('git commit -m "Initial"')

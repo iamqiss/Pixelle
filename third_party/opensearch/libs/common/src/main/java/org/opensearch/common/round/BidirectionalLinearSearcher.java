@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.round;
+package org.density.common.round;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 /**
  * It uses linear search on a sorted array of pre-computed round-down points.
@@ -20,7 +20,7 @@ import org.opensearch.common.annotation.InternalApi;
  * at either side of the array. This is helpful for time-series data where velocity increases over time, so more
  * documents are likely to find a greater timestamp which is likely to be present on the right end of the array.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 class BidirectionalLinearSearcher implements Roundable {

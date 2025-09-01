@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.document.LatLonPoint;
 import org.apache.lucene.search.IndexOrDocValuesQuery;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.geo.RandomShapeGenerator;
-import org.opensearch.test.geo.RandomShapeGenerator.ShapeType;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.core.common.ParsingException;
+import org.density.index.mapper.MappedFieldType;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.geo.RandomShapeGenerator;
+import org.density.test.geo.RandomShapeGenerator.ShapeType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.spatial4j.shape.jts.JtsGeometry;
 
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -155,11 +155,11 @@ public class GeoPolygonQueryBuilderTests extends AbstractQueryTestCase<GeoPolygo
 
     public void testParsingAndToQueryParsingExceptions() throws IOException {
         String[] brokenFiles = new String[] {
-            "/org/opensearch/index/query/geo_polygon_exception_1.json",
-            "/org/opensearch/index/query/geo_polygon_exception_2.json",
-            "/org/opensearch/index/query/geo_polygon_exception_3.json",
-            "/org/opensearch/index/query/geo_polygon_exception_4.json",
-            "/org/opensearch/index/query/geo_polygon_exception_5.json" };
+            "/org/density/index/query/geo_polygon_exception_1.json",
+            "/org/density/index/query/geo_polygon_exception_2.json",
+            "/org/density/index/query/geo_polygon_exception_3.json",
+            "/org/density/index/query/geo_polygon_exception_4.json",
+            "/org/density/index/query/geo_polygon_exception_5.json" };
         for (String brokenFile : brokenFiles) {
             String query = copyToStringFromClasspath(brokenFile);
             expectThrows(ParsingException.class, () -> parseQuery(query));

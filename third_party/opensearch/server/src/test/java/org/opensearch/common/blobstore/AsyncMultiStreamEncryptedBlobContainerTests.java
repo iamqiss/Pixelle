@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore;
+package org.density.common.blobstore;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.blobstore.stream.read.ReadContext;
-import org.opensearch.common.blobstore.stream.read.listener.ListenerTestUtils;
-import org.opensearch.common.crypto.CryptoHandler;
-import org.opensearch.common.crypto.DecryptedRangedStreamProvider;
-import org.opensearch.common.io.InputStreamContainer;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.blobstore.stream.read.ReadContext;
+import org.density.common.blobstore.stream.read.listener.ListenerTestUtils;
+import org.density.common.crypto.CryptoHandler;
+import org.density.common.crypto.DecryptedRangedStreamProvider;
+import org.density.common.io.InputStreamContainer;
+import org.density.core.action.ActionListener;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AsyncMultiStreamEncryptedBlobContainerTests extends OpenSearchTestCase {
+public class AsyncMultiStreamEncryptedBlobContainerTests extends DensityTestCase {
 
     // Tests the happy path scenario for decrypting a read context
     @SuppressWarnings("unchecked")

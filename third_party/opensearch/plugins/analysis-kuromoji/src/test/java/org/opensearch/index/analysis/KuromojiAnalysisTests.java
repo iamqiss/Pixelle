@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -39,13 +39,13 @@ import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.apache.lucene.analysis.ja.JapaneseCompletionAnalyzer;
 import org.apache.lucene.analysis.ja.JapaneseTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.env.Environment;
-import org.opensearch.plugin.analysis.kuromoji.AnalysisKuromojiPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.env.Environment;
+import org.density.plugin.analysis.kuromoji.AnalysisKuromojiPlugin;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.assertTokenStreamContents;
 
-public class KuromojiAnalysisTests extends OpenSearchTestCase {
+public class KuromojiAnalysisTests extends DensityTestCase {
     public void testDefaultsKuromojiAnalysis() throws IOException {
         TestAnalysis analysis = createTestAnalysis();
 
@@ -296,7 +296,7 @@ public class KuromojiAnalysisTests extends OpenSearchTestCase {
         Files.createDirectory(config);
         Files.copy(empty_dict, config.resolve("empty_user_dict.txt"));
         Files.copy(dict, config.resolve("user_dict.txt"));
-        String json = "/org/opensearch/index/analysis/kuromoji_analysis.json";
+        String json = "/org/density/index/analysis/kuromoji_analysis.json";
 
         Settings settings = Settings.builder()
             .loadFromStream(json, KuromojiAnalysisTests.class.getResourceAsStream(json), false)

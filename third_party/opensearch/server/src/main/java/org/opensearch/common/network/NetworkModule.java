@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,49 +26,49 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.action.support.replication.ReplicationTask;
-import org.opensearch.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.AllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.CancelAllocationCommand;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.index.shard.PrimaryReplicaSyncer.ResyncTask;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.SecureAuxTransportSettingsProvider;
-import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
-import org.opensearch.plugins.SecureSettingsFactory;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.tasks.RawTaskStatus;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
+import org.density.action.support.replication.ReplicationTask;
+import org.density.cluster.routing.allocation.command.AllocateEmptyPrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateReplicaAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocateStalePrimaryAllocationCommand;
+import org.density.cluster.routing.allocation.command.AllocationCommand;
+import org.density.cluster.routing.allocation.command.CancelAllocationCommand;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.CheckedFunction;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.http.HttpServerTransport;
+import org.density.index.shard.PrimaryReplicaSyncer.ResyncTask;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.SecureAuxTransportSettingsProvider;
+import org.density.plugins.SecureHttpTransportSettingsProvider;
+import org.density.plugins.SecureSettingsFactory;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.tasks.RawTaskStatus;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,13 +82,13 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_SETTING;
 
 /**
  * A module to handle registering and binding all network related classes.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NetworkModule {
 

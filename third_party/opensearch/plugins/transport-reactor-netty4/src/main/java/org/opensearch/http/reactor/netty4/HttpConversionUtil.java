@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http.reactor.netty4;
+package org.density.http.reactor.netty4;
 
-import org.opensearch.rest.RestRequest;
+import org.density.rest.RestRequest;
 
 import io.netty.handler.codec.http.HttpMethod;
 

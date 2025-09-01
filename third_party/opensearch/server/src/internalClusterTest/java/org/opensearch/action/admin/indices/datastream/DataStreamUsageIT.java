@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.admin.indices.datastream.DataStreamsStatsAction.DataStreamStats;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
+import org.density.action.DocWriteRequest;
+import org.density.action.admin.indices.datastream.DataStreamsStatsAction.DataStreamStats;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.cluster.metadata.DataStream;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
 
 import java.util.Arrays;
 import java.util.List;

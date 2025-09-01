@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.reactor.netty4;
+package org.density.transport.reactor.netty4;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.concurrent.CompletableContext;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.ExceptionsHelper;
+import org.density.common.Booleans;
+import org.density.common.concurrent.CompletableContext;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -47,7 +47,7 @@ public final class Netty4Utils {
      */
     public static void setAvailableProcessors(final int availableProcessors) {
         // we set this to false in tests to avoid tests that randomly set processors from stepping on each other
-        final boolean set = Booleans.parseBoolean(System.getProperty("opensearch.set.netty.runtime.available.processors", "true"));
+        final boolean set = Booleans.parseBoolean(System.getProperty("density.set.netty.runtime.available.processors", "true"));
         if (!set) {
             return;
         }

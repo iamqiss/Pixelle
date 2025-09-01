@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.spi.AllowlistInstanceBinding;
-import org.opensearch.painless.spi.AllowlistLoader;
-import org.opensearch.script.ScriptContext;
+import org.density.common.settings.Settings;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.spi.AllowlistInstanceBinding;
+import org.density.painless.spi.AllowlistLoader;
+import org.density.script.ScriptContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -52,7 +52,7 @@ public class BindingsTests extends ScriptTestCase {
     public static void beforeClass() {
         Map<ScriptContext<?>, List<Allowlist>> contexts = newDefaultContexts();
         List<Allowlist> allowlists = new ArrayList<>(Allowlist.BASE_ALLOWLISTS);
-        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.opensearch.painless.test"));
+        allowlists.add(AllowlistLoader.loadFromResourceFiles(Allowlist.class, "org.density.painless.test"));
 
         InstanceBindingTestClass instanceBindingTestClass = new InstanceBindingTestClass(1);
         AllowlistInstanceBinding getter = new AllowlistInstanceBinding(

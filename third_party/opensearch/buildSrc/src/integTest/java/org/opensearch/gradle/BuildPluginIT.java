@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.opensearch.gradle.test.GradleIntegrationTestCase;
+import org.density.gradle.test.GradleIntegrationTestCase;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.Rule;
@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import static org.opensearch.gradle.test.TestClasspathUtils.setupJarJdkClasspath;
+import static org.density.gradle.test.TestClasspathUtils.setupJarJdkClasspath;
 
 public class BuildPluginIT extends GradleIntegrationTestCase {
 
@@ -58,25 +58,25 @@ public class BuildPluginIT extends GradleIntegrationTestCase {
     public TemporaryFolder tmpDir = new TemporaryFolder();
 
     public void testPluginCanBeApplied() {
-        BuildResult result = getGradleRunner("opensearch.build").withArguments("hello", "-s").build();
+        BuildResult result = getGradleRunner("density.build").withArguments("hello", "-s").build();
         assertTaskSuccessful(result, ":hello");
         assertOutputContains("build plugin can be applied");
     }
 
     public void testCheckTask() {
-        setupJarJdkClasspath(getProjectDir("opensearch.build"));
-        BuildResult result = getGradleRunner("opensearch.build").withArguments("check", "assemble", "-s").build();
+        setupJarJdkClasspath(getProjectDir("density.build"));
+        BuildResult result = getGradleRunner("density.build").withArguments("check", "assemble", "-s").build();
         assertTaskSuccessful(result, ":check");
     }
 
     public void testInsecureMavenRepository() throws IOException {
-        final String name = "opensearch-maven";
-        final String url = "http://s3.amazonaws.com/artifacts.opensearch.org/maven";
+        final String name = "density-maven";
+        final String url = "http://s3.amazonaws.com/artifacts.density.org/maven";
         // add an insecure maven repository to the build.gradle
         final List<String> lines = Arrays.asList(
             "repositories {",
             "  maven {",
-            "    name \"opensearch-maven\"",
+            "    name \"density-maven\"",
             "    url \"" + url + "\"\n",
             "  }",
             "}"
@@ -85,13 +85,13 @@ public class BuildPluginIT extends GradleIntegrationTestCase {
     }
 
     public void testInsecureIvyRepository() throws IOException {
-        final String name = "opensearch-ivy";
-        final String url = "http://s3.amazonaws.com/artifacts.opensearch.org/ivy";
+        final String name = "density-ivy";
+        final String url = "http://s3.amazonaws.com/artifacts.density.org/ivy";
         // add an insecure ivy repository to the build.gradle
         final List<String> lines = Arrays.asList(
             "repositories {",
             "  ivy {",
-            "    name \"opensearch-ivy\"",
+            "    name \"density-ivy\"",
             "    url \"" + url + "\"\n",
             "  }",
             "}"
@@ -100,7 +100,7 @@ public class BuildPluginIT extends GradleIntegrationTestCase {
     }
 
     private void runInsecureArtifactRepositoryTest(final String name, final String url, final List<String> lines) throws IOException {
-        final File projectDir = getProjectDir("opensearch.build");
+        final File projectDir = getProjectDir("density.build");
         final Path projectDirPath = projectDir.toPath();
         FileUtils.copyDirectory(projectDir, tmpDir.getRoot(), file -> {
             final Path relativePath = projectDirPath.relativize(file.toPath());
@@ -126,13 +126,13 @@ public class BuildPluginIT extends GradleIntegrationTestCase {
     }
 
     public void testLicenseAndNotice() throws IOException {
-        BuildResult result = getGradleRunner("opensearch.build").withArguments("clean", "assemble").build();
+        BuildResult result = getGradleRunner("density.build").withArguments("clean", "assemble").build();
 
         assertTaskSuccessful(result, ":assemble");
 
-        assertBuildFileExists(result, "opensearch.build", "distributions/opensearch.build.jar");
+        assertBuildFileExists(result, "density.build", "distributions/density.build.jar");
 
-        try (ZipFile zipFile = new ZipFile(new File(getBuildDir("opensearch.build"), "distributions/opensearch.build.jar"))) {
+        try (ZipFile zipFile = new ZipFile(new File(getBuildDir("density.build"), "distributions/density.build.jar"))) {
             ZipEntry licenseEntry = zipFile.getEntry("META-INF/LICENSE.txt");
             ZipEntry noticeEntry = zipFile.getEntry("META-INF/NOTICE.txt");
             assertNotNull("Jar does not have META-INF/LICENSE.txt", licenseEntry);

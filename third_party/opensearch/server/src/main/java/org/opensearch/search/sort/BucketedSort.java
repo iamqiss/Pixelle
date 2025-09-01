@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.ScorerAware;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitArray;
-import org.opensearch.common.util.DoubleArray;
-import org.opensearch.common.util.FloatArray;
-import org.opensearch.common.util.IntArray;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.core.common.util.BigArray;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.ScorerAware;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitArray;
+import org.density.common.util.DoubleArray;
+import org.density.common.util.FloatArray;
+import org.density.common.util.IntArray;
+import org.density.common.util.LongArray;
+import org.density.core.common.util.BigArray;
+import org.density.search.DocValueFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,14 +95,14 @@ import static java.util.Collections.emptyList;
  * of allocations and to play well with our paged arrays.
  * </p>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class BucketedSort implements Releasable {
     /**
      * Callbacks for storing extra data along with competitive sorts.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface ExtraData {
@@ -124,7 +124,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Loader for extra data
          *
-         * @opensearch.api
+         * @density.api
          */
         @FunctionalInterface
         @PublicApi(since = "1.0.0")
@@ -198,7 +198,7 @@ public abstract class BucketedSort implements Releasable {
      * Used with {@link BucketedSort#getValues(long, ResultBuilder)} to
      * build results from the sorting operation.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -414,7 +414,7 @@ public abstract class BucketedSort implements Releasable {
     /**
      * Performs the actual collection against a {@linkplain LeafReaderContext}.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract class Leaf implements ScorerAware {
@@ -553,7 +553,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Leaf for doubles
          *
-         * @opensearch.internal
+         * @density.internal
          */
         protected abstract class Leaf extends BucketedSort.Leaf {
             protected Leaf(LeafReaderContext ctx) {
@@ -651,7 +651,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Leaf for floats
          *
-         * @opensearch.internal
+         * @density.internal
          */
         protected abstract class Leaf extends BucketedSort.Leaf {
             protected Leaf(LeafReaderContext ctx) {
@@ -735,7 +735,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Leaf for bucketed sort
          *
-         * @opensearch.internal
+         * @density.internal
          */
         protected abstract class Leaf extends BucketedSort.Leaf {
             protected Leaf(LeafReaderContext ctx) {
@@ -822,7 +822,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Leaf for bucketed sort
          *
-         * @opensearch.internal
+         * @density.internal
          */
         protected abstract class Leaf extends BucketedSort.Leaf {
             protected Leaf(LeafReaderContext ctx) {
@@ -909,7 +909,7 @@ public abstract class BucketedSort implements Releasable {
         /**
          * Leaf for bucketed sort
          *
-         * @opensearch.internal
+         * @density.internal
          */
         protected abstract class Leaf extends BucketedSort.Leaf {
             protected Leaf(LeafReaderContext ctx) {

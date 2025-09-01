@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.NodeDisconnectedException;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportConnectionListener;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportRequestOptions.Type;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.NodeDisconnectedException;
+import org.density.transport.Transport;
+import org.density.transport.TransportConnectionListener;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportRequestOptions.Type;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -70,7 +70,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * The LeaderChecker is responsible for allowing followers to check that the currently elected leader is still connected and healthy. We are
@@ -78,7 +78,7 @@ import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
  * temporarily stand down on occasion, e.g. if it needs to move to a higher term. On deciding that the leader has failed a follower will
  * become a candidate and attempt to become a leader itself.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LeaderChecker {
 
@@ -247,7 +247,7 @@ public class LeaderChecker {
     /**
      * A check scheduler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class CheckScheduler implements Releasable {
 
@@ -327,7 +327,7 @@ public class LeaderChecker {
                                 exp
                             );
                             leaderFailed(
-                                new OpenSearchException("node [" + leader + "] failed [" + failureCount + "] consecutive checks", exp)
+                                new DensityException("node [" + leader + "] failed [" + failureCount + "] consecutive checks", exp)
                             );
                             return;
                         }
@@ -398,7 +398,7 @@ public class LeaderChecker {
     /**
      * A leader check request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class LeaderCheckRequest extends TransportRequest {
 

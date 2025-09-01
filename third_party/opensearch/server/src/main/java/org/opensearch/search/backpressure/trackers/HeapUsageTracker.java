@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure.trackers;
+package org.density.search.backpressure.trackers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.util.MovingAverage;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskCancellation;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.util.MovingAverage;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.monitor.jvm.JvmStats;
+import org.density.search.backpressure.trackers.TaskResourceUsageTrackers.TaskResourceUsageTracker;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskCancellation;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,13 +30,13 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 
-import static org.opensearch.search.backpressure.trackers.TaskResourceUsageTrackerType.HEAP_USAGE_TRACKER;
+import static org.density.search.backpressure.trackers.TaskResourceUsageTrackerType.HEAP_USAGE_TRACKER;
 
 /**
  * HeapUsageTracker evaluates if the task has consumed too much heap than allowed.
  * It also compares the task's heap usage against a historical moving average of previously completed tasks.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HeapUsageTracker extends TaskResourceUsageTracker {
     private static final Logger logger = LogManager.getLogger(HeapUsageTracker.class);

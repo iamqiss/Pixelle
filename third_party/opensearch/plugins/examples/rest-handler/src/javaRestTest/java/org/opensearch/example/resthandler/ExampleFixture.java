@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.resthandler;
+package org.density.example.resthandler;
 
-import org.opensearch.test.fixture.AbstractHttpFixture;
+import org.density.test.fixture.AbstractHttpFixture;
 
 import java.io.IOException;
 import java.util.Objects;

@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.cache.stats.DefaultCacheStatsHolder;
+import org.density.common.cache.stats.DefaultCacheStatsHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class TieredSpilloverCacheStatsHolder extends DefaultCacheStatsHolder {
     /** The name for the tier dimension. */
     public static final String TIER_DIMENSION_NAME = "tier";
 
-    /** Dimension value for on-heap cache, like OpenSearchOnHeapCache.*/
+    /** Dimension value for on-heap cache, like DensityOnHeapCache.*/
     public static final String TIER_DIMENSION_VALUE_ON_HEAP = "on_heap";
 
     /** Dimension value for on-disk cache, like EhcacheDiskCache. */

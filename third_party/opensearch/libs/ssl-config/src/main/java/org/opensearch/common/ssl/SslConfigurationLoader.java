@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.ssl;
+package org.density.common.ssl;
 
 import javax.crypto.Cipher;
 import javax.net.ssl.KeyManagerFactory;
@@ -46,29 +46,29 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.ssl.KeyStoreUtil.inferKeyStoreType;
-import static org.opensearch.common.ssl.SslConfiguration.ORDERED_PROTOCOL_ALGORITHM_MAP;
-import static org.opensearch.common.ssl.SslConfigurationKeys.CERTIFICATE;
-import static org.opensearch.common.ssl.SslConfigurationKeys.CERTIFICATE_AUTHORITIES;
-import static org.opensearch.common.ssl.SslConfigurationKeys.CIPHERS;
-import static org.opensearch.common.ssl.SslConfigurationKeys.CLIENT_AUTH;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEY;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_ALGORITHM;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_LEGACY_KEY_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_LEGACY_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_PATH;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_SECURE_KEY_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_SECURE_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEYSTORE_TYPE;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEY_LEGACY_PASSPHRASE;
-import static org.opensearch.common.ssl.SslConfigurationKeys.KEY_SECURE_PASSPHRASE;
-import static org.opensearch.common.ssl.SslConfigurationKeys.PROTOCOLS;
-import static org.opensearch.common.ssl.SslConfigurationKeys.TRUSTSTORE_ALGORITHM;
-import static org.opensearch.common.ssl.SslConfigurationKeys.TRUSTSTORE_LEGACY_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.TRUSTSTORE_PATH;
-import static org.opensearch.common.ssl.SslConfigurationKeys.TRUSTSTORE_SECURE_PASSWORD;
-import static org.opensearch.common.ssl.SslConfigurationKeys.TRUSTSTORE_TYPE;
-import static org.opensearch.common.ssl.SslConfigurationKeys.VERIFICATION_MODE;
+import static org.density.common.ssl.KeyStoreUtil.inferKeyStoreType;
+import static org.density.common.ssl.SslConfiguration.ORDERED_PROTOCOL_ALGORITHM_MAP;
+import static org.density.common.ssl.SslConfigurationKeys.CERTIFICATE;
+import static org.density.common.ssl.SslConfigurationKeys.CERTIFICATE_AUTHORITIES;
+import static org.density.common.ssl.SslConfigurationKeys.CIPHERS;
+import static org.density.common.ssl.SslConfigurationKeys.CLIENT_AUTH;
+import static org.density.common.ssl.SslConfigurationKeys.KEY;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_ALGORITHM;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_LEGACY_KEY_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_LEGACY_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_PATH;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_SECURE_KEY_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_SECURE_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.KEYSTORE_TYPE;
+import static org.density.common.ssl.SslConfigurationKeys.KEY_LEGACY_PASSPHRASE;
+import static org.density.common.ssl.SslConfigurationKeys.KEY_SECURE_PASSPHRASE;
+import static org.density.common.ssl.SslConfigurationKeys.PROTOCOLS;
+import static org.density.common.ssl.SslConfigurationKeys.TRUSTSTORE_ALGORITHM;
+import static org.density.common.ssl.SslConfigurationKeys.TRUSTSTORE_LEGACY_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.TRUSTSTORE_PATH;
+import static org.density.common.ssl.SslConfigurationKeys.TRUSTSTORE_SECURE_PASSWORD;
+import static org.density.common.ssl.SslConfigurationKeys.TRUSTSTORE_TYPE;
+import static org.density.common.ssl.SslConfigurationKeys.VERIFICATION_MODE;
 
 /**
  * Loads {@link SslConfiguration} from settings.
@@ -208,7 +208,7 @@ public abstract class SslConfigurationLoader {
     /**
      * Resolve all necessary configuration settings, and load a {@link SslConfiguration}.
      *
-     * @param basePath The base path to use for any settings that represent file paths. Typically points to the OpenSearch
+     * @param basePath The base path to use for any settings that represent file paths. Typically points to the Density
      *                 configuration directory.
      * @throws SslConfigException For any problems with the configuration, or with loading the required SSL classes.
      */

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
@@ -39,8 +39,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.Weight;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.Timer;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.Timer;
 
 import java.io.IOException;
 
@@ -49,7 +49,7 @@ import java.io.IOException;
  * {@link Scorer} and then return a {@link Scorer} that is wrapped in
  * order to compute timings as well.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ProfileWeight extends Weight {
 

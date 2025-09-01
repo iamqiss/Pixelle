@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 /**
  * MovingAverage is used to calculate the moving average of last 'n' observations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MovingAverage {
     private final int windowSize;

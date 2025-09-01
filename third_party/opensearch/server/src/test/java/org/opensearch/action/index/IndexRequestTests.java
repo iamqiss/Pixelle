@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.index;
+package org.density.action.index;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.VersionType;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -59,7 +59,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class IndexRequestTests extends OpenSearchTestCase {
+public class IndexRequestTests extends DensityTestCase {
     public void testIndexRequestOpTypeFromString() throws Exception {
         String create = "create";
         String index = "index";

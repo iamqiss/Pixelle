@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import java.util.Collection;
 import java.util.Map;
@@ -43,7 +43,7 @@ import java.util.function.Function;
  * is applied to the existing value when one exists for the
  * corresponding key.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DynamicMap implements Map<String, Object> {
 

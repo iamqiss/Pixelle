@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.testclusters;
+package org.density.gradle.testclusters;
 
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -45,15 +45,15 @@ public abstract class TestClustersRegistry implements BuildService<BuildServiceP
     private static final Logger logger = Logging.getLogger(TestClustersRegistry.class);
     private static final String TESTCLUSTERS_INSPECT_FAILURE = "testclusters.inspect.failure";
     private final Boolean allowClusterToSurvive = Boolean.valueOf(System.getProperty(TESTCLUSTERS_INSPECT_FAILURE, "false"));
-    private final Map<OpenSearchCluster, Integer> claimsInventory = new HashMap<>();
-    private final Set<OpenSearchCluster> runningClusters = new HashSet<>();
+    private final Map<DensityCluster, Integer> claimsInventory = new HashMap<>();
+    private final Set<DensityCluster> runningClusters = new HashSet<>();
 
-    public void claimCluster(OpenSearchCluster cluster) {
+    public void claimCluster(DensityCluster cluster) {
         cluster.freeze();
         claimsInventory.put(cluster, claimsInventory.getOrDefault(cluster, 0) + 1);
     }
 
-    public void maybeStartCluster(OpenSearchCluster cluster) {
+    public void maybeStartCluster(DensityCluster cluster) {
         if (runningClusters.contains(cluster)) {
             return;
         }
@@ -61,7 +61,7 @@ public abstract class TestClustersRegistry implements BuildService<BuildServiceP
         cluster.start();
     }
 
-    public void stopCluster(OpenSearchCluster cluster, boolean taskFailed) {
+    public void stopCluster(DensityCluster cluster, boolean taskFailed) {
         if (taskFailed) {
             // If the task fails, and other tasks use this cluster, the other task will likely never be
             // executed at all, so we will never be called again to un-claim and terminate it.

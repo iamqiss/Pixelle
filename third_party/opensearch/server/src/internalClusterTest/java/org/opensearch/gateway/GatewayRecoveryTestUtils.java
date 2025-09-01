@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.indices.store.ShardAttributes;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.index.shard.ShardPath;
+import org.density.indices.store.ShardAttributes;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.test.OpenSearchIntegTestCase.client;
-import static org.opensearch.test.OpenSearchIntegTestCase.internalCluster;
-import static org.opensearch.test.OpenSearchIntegTestCase.resolveIndex;
+import static org.density.test.DensityIntegTestCase.client;
+import static org.density.test.DensityIntegTestCase.internalCluster;
+import static org.density.test.DensityIntegTestCase.resolveIndex;
 
 public class GatewayRecoveryTestUtils {
 

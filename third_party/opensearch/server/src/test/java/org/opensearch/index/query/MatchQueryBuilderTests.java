@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -58,19 +58,19 @@ import org.apache.lucene.tests.analysis.CannedBinaryTokenStream;
 import org.apache.lucene.tests.analysis.MockSynonymAnalyzer;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.graph.GraphTokenStreamFiniteStrings;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.lucene.search.MultiPhrasePrefixQuery;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.index.search.MatchQuery.Type;
-import org.opensearch.index.search.MatchQuery.ZeroTermsQuery;
-import org.opensearch.lucene.queries.ExtendedCommonTermsQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.lucene.search.MultiPhrasePrefixQuery;
+import org.density.common.lucene.search.Queries;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.ParsingException;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.search.MatchQuery;
+import org.density.index.search.MatchQuery.Type;
+import org.density.index.search.MatchQuery.ZeroTermsQuery;
+import org.density.lucene.queries.ExtendedCommonTermsQuery;
+import org.density.test.AbstractQueryTestCase;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -81,7 +81,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.index.query.BoolQueryBuilderTests.getIndexSearcher;
+import static org.density.index.query.BoolQueryBuilderTests.getIndexSearcher;
 import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.containsString;

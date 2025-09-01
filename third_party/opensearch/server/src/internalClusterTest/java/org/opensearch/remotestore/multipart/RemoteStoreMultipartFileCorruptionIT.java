@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore.multipart;
+package org.density.remotestore.multipart;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.remotestore.multipart.mocks.MockFsRepositoryPlugin;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.Plugin;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.remotestore.multipart.mocks.MockFsRepositoryPlugin;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

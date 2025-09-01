@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.XContentTestUtils;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.common.io.Streams;
+import org.density.common.settings.Settings;
+import org.density.indices.IndicesService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.InternalTestCluster;
+import org.density.test.XContentTestUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,12 +51,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.cluster.metadata.IndexGraveyard.SETTING_MAX_TOMBSTONES;
-import static org.opensearch.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
-import static org.opensearch.indices.IndicesService.WRITE_DANGLING_INDICES_INFO_SETTING;
-import static org.opensearch.core.rest.RestStatus.ACCEPTED;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.test.XContentTestUtils.createJsonMapView;
+import static org.density.cluster.metadata.IndexGraveyard.SETTING_MAX_TOMBSTONES;
+import static org.density.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
+import static org.density.indices.IndicesService.WRITE_DANGLING_INDICES_INFO_SETTING;
+import static org.density.core.rest.RestStatus.ACCEPTED;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.test.XContentTestUtils.createJsonMapView;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -70,9 +70,9 @@ import static org.hamcrest.Matchers.is;
  * implementation, and they cannot be REST tests today since they need to
  * restart nodes. Really, though, this test should live elsewhere.
  *
- * @see org.opensearch.action.admin.indices.dangling
+ * @see org.density.action.admin.indices.dangling
  */
-@ClusterScope(numDataNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST, autoManageMasterNodes = false)
+@ClusterScope(numDataNodes = 0, scope = DensityIntegTestCase.Scope.TEST, autoManageMasterNodes = false)
 public class DanglingIndicesRestIT extends HttpSmokeTestCase {
     private static final String INDEX_NAME = "test-idx-1";
     private static final String OTHER_INDEX_NAME = INDEX_NAME + "-other";

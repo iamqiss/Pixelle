@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.core.util;
+package org.density.core.util;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefArray;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.Counter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Tests for the {@link BytesRefUtils} class
  */
-public class BytesRefUtilsTests extends OpenSearchTestCase {
+public class BytesRefUtilsTests extends DensityTestCase {
     public void testSortAndDedupByteRefArray() {
         SortedSet<BytesRef> set = new TreeSet<>();
         final int numValues = scaledRandomIntBetween(0, 10000);

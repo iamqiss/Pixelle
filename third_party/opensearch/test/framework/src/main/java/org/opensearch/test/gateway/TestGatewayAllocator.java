@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.gateway;
+package org.density.test.gateway;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.allocation.FailedShard;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.AsyncShardFetch;
-import org.opensearch.gateway.GatewayAllocator;
-import org.opensearch.gateway.PrimaryShardAllocator;
-import org.opensearch.gateway.ReplicaShardAllocator;
-import org.opensearch.gateway.TransportNodesGatewayStartedShardHelper;
-import org.opensearch.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.store.TransportNodesListShardStoreMetadata.NodeStoreFilesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.allocation.FailedShard;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.AsyncShardFetch;
+import org.density.gateway.GatewayAllocator;
+import org.density.gateway.PrimaryShardAllocator;
+import org.density.gateway.ReplicaShardAllocator;
+import org.density.gateway.TransportNodesGatewayStartedShardHelper;
+import org.density.gateway.TransportNodesListGatewayStartedShards.NodeGatewayStartedShards;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.store.TransportNodesListShardStoreMetadata.NodeStoreFilesMetadata;
 
 import java.util.Collections;
 import java.util.HashMap;

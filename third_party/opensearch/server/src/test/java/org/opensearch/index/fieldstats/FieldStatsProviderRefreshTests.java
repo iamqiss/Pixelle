@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fieldstats;
+package org.density.index.fieldstats;
 
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.IndicesRequestCache;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 
-public class FieldStatsProviderRefreshTests extends OpenSearchSingleNodeTestCase {
+public class FieldStatsProviderRefreshTests extends DensitySingleNodeTestCase {
 
     public void testQueryRewriteOnRefresh() throws Exception {
         assertAcked(

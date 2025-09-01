@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -44,11 +44,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.collect;
+package org.density.common.collect;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -61,7 +61,7 @@ import java.util.Queue;
  *
  * @param <T> The type of elements in the queue.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class EvictingQueue<T> implements Queue<T> {
     private final int maximumSize;

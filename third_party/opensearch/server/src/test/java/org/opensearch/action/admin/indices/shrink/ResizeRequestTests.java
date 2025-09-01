@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.shrink;
+package org.density.action.admin.indices.shrink;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestTests;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.RandomCreateIndexGenerator;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexRequestTests;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.RandomCreateIndexGenerator;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.core.xcontent.ToXContent.EMPTY_PARAMS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.core.xcontent.ToXContent.EMPTY_PARAMS;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasToString;
 
-public class ResizeRequestTests extends OpenSearchTestCase {
+public class ResizeRequestTests extends DensityTestCase {
 
     public void testCopySettingsValidation() {
         runTestCopySettingsValidation(false, r -> {
@@ -125,7 +125,7 @@ public class ResizeRequestTests extends OpenSearchTestCase {
         assertEquals(resizeRequest.getTargetIndexRequest().settings(), parsedResizeRequest.getTargetIndexRequest().settings());
 
         BytesReference finalBytes = toShuffledXContent(parsedResizeRequest, xContentType, EMPTY_PARAMS, humanReadable);
-        OpenSearchAssertions.assertToXContentEquivalent(originalBytes, finalBytes, xContentType);
+        DensityAssertions.assertToXContentEquivalent(originalBytes, finalBytes, xContentType);
     }
 
     public void testTargetIndexSettingsValidation() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.ingest.PutPipelineRequest;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.NodeRoles;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.StreamsUtils;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.action.ingest.PutPipelineRequest;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.ingest.IngestService;
+import org.density.plugins.Plugin;
+import org.density.test.NodeRoles;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.StreamsUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -59,11 +59,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.test.NodeRoles.nonIngestNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.NodeRoles.nonIngestNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GeoIpProcessorNonIngestNodeIT extends OpenSearchIntegTestCase {
+public class GeoIpProcessorNonIngestNodeIT extends DensityIntegTestCase {
 
     public static class IngestGeoIpSettingsPlugin extends Plugin {
 

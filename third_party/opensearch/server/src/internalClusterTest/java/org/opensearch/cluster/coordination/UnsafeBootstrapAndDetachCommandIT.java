@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.gateway.GatewayMetaState;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.node.Node.DiscoverySettings;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.cli.MockTerminal;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.TestEnvironment;
+import org.density.gateway.GatewayMetaState;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.indices.IndicesService;
+import org.density.node.Node.DiscoverySettings;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,22 +56,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.indices.recovery.RecoverySettings.INDICES_RECOVERY_MAX_BYTES_PER_SEC_SETTING;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+public class UnsafeBootstrapAndDetachCommandIT extends DensityIntegTestCase {
 
     private MockTerminal executeCommand(
-        OpenSearchNodeCommand command,
+        DensityNodeCommand command,
         Environment environment,
         int nodeOrdinal,
         boolean abort,
@@ -103,7 +103,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         try {
             command.execute(terminal, options, environment);
         } finally {
-            assertThat(terminal.getOutput(), containsString(OpenSearchNodeCommand.STOP_WARNING_MSG));
+            assertThat(terminal.getOutput(), containsString(DensityNodeCommand.STOP_WARNING_MSG));
         }
 
         return terminal;
@@ -138,7 +138,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
     }
 
     private void expectThrows(ThrowingRunnable runnable, String message) {
-        OpenSearchException ex = expectThrows(OpenSearchException.class, runnable);
+        DensityException ex = expectThrows(DensityException.class, runnable);
         assertThat(ex.getMessage(), containsString(message));
     }
 
@@ -193,19 +193,19 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
 
     public void testBootstrapNoDataFolder() {
         final Environment environment = TestEnvironment.newEnvironment(internalCluster().getDefaultSettings());
-        expectThrows(() -> unsafeBootstrap(environment), OpenSearchNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
+        expectThrows(() -> unsafeBootstrap(environment), DensityNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
     }
 
     public void testDetachNoDataFolder() {
         final Environment environment = TestEnvironment.newEnvironment(internalCluster().getDefaultSettings());
-        expectThrows(() -> detachCluster(environment), OpenSearchNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
+        expectThrows(() -> detachCluster(environment), DensityNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
     }
 
     public void testBootstrapNodeLocked() throws IOException {
         Settings envSettings = buildEnvSettings(Settings.EMPTY);
         Environment environment = TestEnvironment.newEnvironment(envSettings);
         try (NodeEnvironment ignored = new NodeEnvironment(envSettings, environment)) {
-            expectThrows(() -> unsafeBootstrap(environment), OpenSearchNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG);
+            expectThrows(() -> unsafeBootstrap(environment), DensityNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG);
         }
     }
 
@@ -213,14 +213,14 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         Settings envSettings = buildEnvSettings(Settings.EMPTY);
         Environment environment = TestEnvironment.newEnvironment(envSettings);
         try (NodeEnvironment ignored = new NodeEnvironment(envSettings, environment)) {
-            expectThrows(() -> detachCluster(environment), OpenSearchNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG);
+            expectThrows(() -> detachCluster(environment), DensityNodeCommand.FAILED_TO_OBTAIN_NODE_LOCK_MSG);
         }
     }
 
     public void testBootstrapNoNodeMetadata() {
         Settings envSettings = buildEnvSettings(Settings.EMPTY);
         Environment environment = TestEnvironment.newEnvironment(envSettings);
-        expectThrows(() -> unsafeBootstrap(environment), OpenSearchNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
+        expectThrows(() -> unsafeBootstrap(environment), DensityNodeCommand.NO_NODE_FOLDER_FOUND_MSG);
     }
 
     public void testBootstrapNotBootstrappedCluster() throws Exception {
@@ -256,7 +256,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         );
         PersistedClusterStateService.deleteAll(nodeEnvironment.nodeDataPaths());
 
-        expectThrows(() -> unsafeBootstrap(environment), OpenSearchNodeCommand.NO_NODE_METADATA_FOUND_MSG);
+        expectThrows(() -> unsafeBootstrap(environment), DensityNodeCommand.NO_NODE_METADATA_FOUND_MSG);
     }
 
     public void testDetachNoClusterState() throws IOException {
@@ -271,7 +271,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         );
         PersistedClusterStateService.deleteAll(nodeEnvironment.nodeDataPaths());
 
-        expectThrows(() -> detachCluster(environment), OpenSearchNodeCommand.NO_NODE_METADATA_FOUND_MSG);
+        expectThrows(() -> detachCluster(environment), DensityNodeCommand.NO_NODE_METADATA_FOUND_MSG);
     }
 
     public void testBootstrapAbortedByUser() throws IOException {
@@ -284,7 +284,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         Environment environment = TestEnvironment.newEnvironment(
             Settings.builder().put(internalCluster().getDefaultSettings()).put(dataPathSettings).build()
         );
-        expectThrows(() -> unsafeBootstrap(environment, true, null), OpenSearchNodeCommand.ABORTED_BY_USER_MSG);
+        expectThrows(() -> unsafeBootstrap(environment, true, null), DensityNodeCommand.ABORTED_BY_USER_MSG);
     }
 
     public void testDetachAbortedByUser() throws IOException {
@@ -297,7 +297,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
         Environment environment = TestEnvironment.newEnvironment(
             Settings.builder().put(internalCluster().getDefaultSettings()).put(dataPathSettings).build()
         );
-        expectThrows(() -> detachCluster(environment, true), OpenSearchNodeCommand.ABORTED_BY_USER_MSG);
+        expectThrows(() -> detachCluster(environment, true), DensityNodeCommand.ABORTED_BY_USER_MSG);
     }
 
     public void test3ClusterManagerNodes2Failed() throws Exception {
@@ -369,7 +369,7 @@ public class UnsafeBootstrapAndDetachCommandIT extends OpenSearchIntegTestCase {
 
         logger.info("--> unsafely-bootstrap 1st cluster-manager-eligible node");
         MockTerminal terminal = unsafeBootstrap(environmentClusterManager1, false, true);
-        Metadata metadata = OpenSearchNodeCommand.createPersistedClusterStateService(Settings.EMPTY, nodeEnvironment.nodeDataPaths())
+        Metadata metadata = DensityNodeCommand.createPersistedClusterStateService(Settings.EMPTY, nodeEnvironment.nodeDataPaths())
             .loadBestOnDiskState().metadata;
         assertThat(
             terminal.getOutput(),

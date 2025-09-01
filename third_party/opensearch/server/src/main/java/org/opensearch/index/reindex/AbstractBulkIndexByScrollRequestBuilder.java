@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.script.Script;
+import org.density.transport.client.DensityClient;
 
 /**
  * Base builder class for bulk index by scrolls
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractBulkIndexByScrollRequestBuilder<
     Request extends AbstractBulkIndexByScrollRequest<Request>,
     Self extends AbstractBulkIndexByScrollRequestBuilder<Request, Self>> extends AbstractBulkByScrollRequestBuilder<Request, Self> {
 
     protected AbstractBulkIndexByScrollRequestBuilder(
-        OpenSearchClient client,
+        DensityClient client,
         ActionType<BulkByScrollResponse> action,
         SearchRequestBuilder search,
         Request request

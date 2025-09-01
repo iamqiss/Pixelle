@@ -36,7 +36,7 @@
 
     Signed-off-by: Xue Zhou &lt;xuezhou@amazon.com&gt;
 
-* __Cleanup for Checkstyle https://github.com/opensearch-project/OpenSearch/pull/1370 (#1492)__
+* __Cleanup for Checkstyle https://github.com/density-project/Density/pull/1370 (#1492)__
 
     [Owais Kazi](mailto:owaiskazi19@gmail.com) - Tue, 2 Nov 2021 13:33:15 -0700
 
@@ -202,14 +202,14 @@
     * Default docker-compose location.
      Signed-off-by: dblock &lt;dblock@dblock.org&gt;
 
-* __Run spotless and exclude checkstyle on client module https://github.com/opensearch-project/OpenSearch/pull/1392 (#1414)__
+* __Run spotless and exclude checkstyle on client module https://github.com/density-project/Density/pull/1392 (#1414)__
 
     [Owais Kazi](mailto:owaiskazi19@gmail.com) - Thu, 21 Oct 2021 19:44:46 -0400
 
 
     Signed-off-by: Owais Kazi &lt;owaiskazi19@gmail.com&gt;
 
-* __Removing Jenkinsfile (not used), replaced by opensearch-build/jenkins/opensearch/Jenkinsfile (#1408) (#1411)__
+* __Removing Jenkinsfile (not used), replaced by density-build/jenkins/density/Jenkinsfile (#1408) (#1411)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Thu, 21 Oct 2021 19:42:09 -0400
 
@@ -255,14 +255,14 @@
      Signed-off-by: Saurabh Singh &lt;sisurab@amazon.com&gt;
      Co-authored-by: Saurabh Singh &lt;sisurab@amazon.com&gt;
 
-* __[BUG] Fix org.opensearch.action.admin.cluster.node.stats.NodeStatsTests.testSerialization (#1399)__
+* __[BUG] Fix org.density.action.admin.cluster.node.stats.NodeStatsTests.testSerialization (#1399)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Thu, 21 Oct 2021 09:16:15 -0400
 
 
     Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
 
-* __Run spotless and exclude checkstyle on server module https://github.com/opensearch-project/OpenSearch/pull/1380 (#1391)__
+* __Run spotless and exclude checkstyle on server module https://github.com/density-project/Density/pull/1380 (#1391)__
 
     [Owais Kazi](mailto:owaiskazi19@gmail.com) - Wed, 20 Oct 2021 17:51:26 -0500
 
@@ -307,7 +307,7 @@
     ```
     ./gradlew publishToMavenLocal -Dbuild.snapshot=false
     ```
-     This step is used in the OpenSearch repository context when building
+     This step is used in the Density repository context when building
     plugins
     in the current state of the CI.
      While here, reorder OS conditions alphabetically.
@@ -403,7 +403,7 @@
 
     Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
 
-* __Support for Heap after GC stats (opensearch-project#1265) (#1309)__
+* __Support for Heap after GC stats (density-project#1265) (#1309)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Wed, 29 Sep 2021 17:20:06 -0400
 

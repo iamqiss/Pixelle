@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
 
 /**
  * Defines behavior for comparing {@link Bucket#getKey() bucket keys} to imposes a total ordering
@@ -40,7 +40,7 @@ import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
  * @param <T> {@link Bucket} of the same type that also implements {@link KeyComparable}.
  * @see BucketOrder#key(boolean)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface KeyComparable<T extends Bucket & KeyComparable<T>> {
 

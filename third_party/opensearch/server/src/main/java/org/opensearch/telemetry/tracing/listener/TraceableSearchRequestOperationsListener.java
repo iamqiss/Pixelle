@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.listener;
+package org.density.telemetry.tracing.listener;
 
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchRequestContext;
-import org.opensearch.action.search.SearchRequestOperationsListener;
-import org.opensearch.telemetry.tracing.AttributeNames;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanContext;
-import org.opensearch.telemetry.tracing.Tracer;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchRequestContext;
+import org.density.action.search.SearchRequestOperationsListener;
+import org.density.telemetry.tracing.AttributeNames;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanContext;
+import org.density.telemetry.tracing.Tracer;
 
 /**
  * SearchRequestOperationsListener subscriber for search request tracing
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TraceableSearchRequestOperationsListener extends SearchRequestOperationsListener {
     private final Tracer tracer;

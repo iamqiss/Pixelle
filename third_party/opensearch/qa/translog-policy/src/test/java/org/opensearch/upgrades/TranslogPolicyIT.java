@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.upgrades;
+package org.density.upgrades;
 
-import org.opensearch.LegacyESVersion;
-import org.opensearch.client.Request;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.common.Strings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.index.IndexSettings;
+import org.density.LegacyESVersion;
+import org.density.client.Request;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.common.Strings;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.index.IndexSettings;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class TranslogPolicyIT extends AbstractFullClusterRestartTestCase {
         type = "_doc";
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/pull/2225")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/pull/2225")
     public void testEmptyIndex() throws Exception {
         if (TEST_STEP == TestStep.STEP1_OLD_CLUSTER) {
             final Settings.Builder settings = Settings.builder()
@@ -114,7 +114,7 @@ public class TranslogPolicyIT extends AbstractFullClusterRestartTestCase {
         assertTotalHits(0, entityAsMap(client().performRequest(new Request("GET", "/" + index + "/_search"))));
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/pull/2225")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/pull/2225")
     public void testRecoverReplica() throws Exception {
         int numDocs = 100;
         if (TEST_STEP == TestStep.STEP1_OLD_CLUSTER) {

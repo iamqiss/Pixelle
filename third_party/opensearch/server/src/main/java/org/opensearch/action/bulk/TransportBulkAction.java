@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,74 +26,74 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.SparseFixedBitSet;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.admin.indices.create.AutoCreateAction;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.ingest.IngestActionForwarder;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.AutoCreateIndex;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.update.TransportUpdateAction;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateObserver;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.IndexAbstraction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexingStats.Stats.DocStatusStats;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanBuilder;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.listener.TraceableActionListener;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.ExceptionsHelper;
+import org.density.DensityParseException;
+import org.density.ResourceAlreadyExistsException;
+import org.density.Version;
+import org.density.action.ActionRunnable;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.RoutingMissingException;
+import org.density.action.admin.indices.create.AutoCreateAction;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.ingest.IngestActionForwarder;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.AutoCreateIndex;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.update.TransportUpdateAction;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateObserver;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.IndexAbstraction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.ValidationException;
+import org.density.common.inject.Inject;
+import org.density.common.lease.Releasable;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.Assertions;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexingPressureService;
+import org.density.index.VersionType;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexingStats.Stats.DocStatusStats;
+import org.density.indices.IndexClosedException;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.ingest.IngestService;
+import org.density.node.NodeClosedException;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanBuilder;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.listener.TraceableActionListener;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,15 +113,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.cluster.metadata.IndexNameExpressionResolver.EXCLUDED_DATA_STREAMS_KEY;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.cluster.metadata.IndexNameExpressionResolver.EXCLUDED_DATA_STREAMS_KEY;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Groups bulk request items by shard, optionally creating non-existent indices and
  * delegates to {@link TransportShardBulkAction} for shard-level bulk execution
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportBulkAction extends HandledTransportAction<BulkRequest, BulkResponse> {
 
@@ -212,7 +212,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
 
     /**
      * Retrieves the {@link IndexRequest} from the provided {@link DocWriteRequest} for index or upsert actions.  Upserts are
-     * modeled as {@link IndexRequest} inside the {@link UpdateRequest}. Ignores {@link org.opensearch.action.delete.DeleteRequest}'s
+     * modeled as {@link IndexRequest} inside the {@link UpdateRequest}. Ignores {@link org.density.action.delete.DeleteRequest}'s
      *
      * @param docWriteRequest The request to find the {@link IndexRequest}
      * @return the found {@link IndexRequest} or {@code null} if one can not be found.
@@ -414,7 +414,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
                         // This is to preserve backwards compatibility where default and final pipelines are NOT resolved
                         // and NOT executed on the partial doc passed in from the user request.
                         // TODO : In the future we want to add configurability to do resolve all pipelines for the doc request
-                        // See https://github.com/opensearch-project/OpenSearch/issues/17742
+                        // See https://github.com/density-project/Density/issues/17742
                         indexRequestHasPipeline |= ingestService.resolveSystemIngestPipeline(actionRequest, docRequest, metadata);
                     }
                 }
@@ -556,7 +556,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
      * retries on retryable cluster blocks, resolves item requests,
      * constructs shard bulk requests and delegates execution to shard bulk action
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private final class BulkOperation extends ActionRunnable<BulkResponse> {
         private final Task task;
@@ -660,7 +660,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
                         .shardId();
                     List<BulkItemRequest> shardRequests = requestsByShard.computeIfAbsent(shardId, shard -> new ArrayList<>());
                     shardRequests.add(new BulkItemRequest(i, docWriteRequest));
-                } catch (OpenSearchParseException | IllegalArgumentException | RoutingMissingException e) {
+                } catch (DensityParseException | IllegalArgumentException | RoutingMissingException e) {
                     BulkItemResponse.Failure failure = new BulkItemResponse.Failure(concreteIndex.getName(), docWriteRequest.id(), e);
                     BulkItemResponse bulkItemResponse = new BulkItemResponse(i, docWriteRequest.opType(), failure);
                     responses.set(i, bulkItemResponse);
@@ -922,7 +922,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
     /**
      * Concrete indices
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ConcreteIndices {
         private final ClusterState state;
@@ -1036,7 +1036,7 @@ public class TransportBulkAction extends HandledTransportAction<BulkRequest, Bul
      * in order to map the failed and succeeded action requests back to their original slots in the order of the
      * original bulk request.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class BulkRequestModifier implements Iterator<DocWriteRequest<?>> {
 

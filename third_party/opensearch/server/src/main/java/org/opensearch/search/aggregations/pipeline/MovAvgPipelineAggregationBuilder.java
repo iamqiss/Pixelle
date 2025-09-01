@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.xcontent.ParseFieldRegistry;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.xcontent.ParseFieldRegistry;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -50,14 +50,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.BUCKETS_PATH;
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.FORMAT;
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.GAP_POLICY;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.BUCKETS_PATH;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.FORMAT;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.GAP_POLICY;
 
 /**
  * Aggregation Builder for moving_avg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MovAvgPipelineAggregationBuilder extends AbstractPipelineAggregationBuilder<MovAvgPipelineAggregationBuilder> {
     public static final String NAME = "moving_avg";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.BaseFuture;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.node.Node;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.Scheduler.ReschedulingRunnable;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.DensityException;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.BaseFuture;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.node.Node;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.Scheduler.ReschedulingRunnable;
+import org.density.threadpool.ThreadPool.Names;
 import org.junit.After;
 import org.junit.Before;
 
@@ -63,7 +63,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 /**
  * Unit tests for the scheduling of tasks with a fixed delay
  */
-public class ScheduleWithFixedDelayTests extends OpenSearchTestCase {
+public class ScheduleWithFixedDelayTests extends DensityTestCase {
 
     private ThreadPool threadPool;
 
@@ -128,13 +128,13 @@ public class ScheduleWithFixedDelayTests extends OpenSearchTestCase {
         final CountDownLatch latch = new CountDownLatch(scaledRandomIntBetween(2, 16));
         final Runnable countingRunnable = () -> {
             if (rarely()) {
-                throw new OpenSearchException("sometimes we throw before counting down");
+                throw new DensityException("sometimes we throw before counting down");
             }
 
             latch.countDown();
 
             if (randomBoolean()) {
-                throw new OpenSearchException("this shouldn't cause the test to fail!");
+                throw new DensityException("this shouldn't cause the test to fail!");
             }
         };
 
@@ -272,7 +272,7 @@ public class ScheduleWithFixedDelayTests extends OpenSearchTestCase {
             @Override
             public ScheduledCancellable schedule(Runnable command, TimeValue delay, String executor) {
                 if (command instanceof ReschedulingRunnable) {
-                    ((ReschedulingRunnable) command).onRejection(new OpenSearchRejectedExecutionException());
+                    ((ReschedulingRunnable) command).onRejection(new DensityRejectedExecutionException());
                 } else {
                     fail("this should only be called with a rescheduling runnable in this test");
                 }

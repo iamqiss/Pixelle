@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.common.Nullable;
+import org.density.common.Randomness;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.core.Assertions;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.isMigratingToRemoteStore;
+import static org.density.node.remotestore.RemoteStoreNodeService.isMigratingToRemoteStore;
 
 /**
  * {@link RoutingNodes} represents a copy the routing information contained in the {@link ClusterState cluster state}.
@@ -81,7 +81,7 @@ import static org.opensearch.node.remotestore.RemoteStoreNodeService.isMigrating
  * <li> {@link #failShard} fails/cancels an assigned shard.
  * </ul>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RoutingNodes implements Iterable<RoutingNode> {
@@ -411,8 +411,8 @@ public class RoutingNodes implements Iterable<RoutingNode> {
      * Returns one active replica shard for the given shard id or <code>null</code> if
      * no active replica is found.
      * <p>
-     * Since replicas could possibly be on nodes with an older version of OpenSearch than
-     * the primary is, this will return replicas on the highest version of OpenSearch when document
+     * Since replicas could possibly be on nodes with an older version of Density than
+     * the primary is, this will return replicas on the highest version of Density when document
      * replication is enabled.
      */
     public ShardRouting activeReplicaWithHighestVersion(ShardId shardId) {
@@ -437,8 +437,8 @@ public class RoutingNodes implements Iterable<RoutingNode> {
      * Returns one active replica shard for the given shard id or <code>null</code> if
      * no active replica is found.
      * <p>
-     * Since replicas could possibly be on nodes with a higher version of OpenSearch than
-     * the primary is, this will return replicas on the oldest version of OpenSearch when segment
+     * Since replicas could possibly be on nodes with a higher version of Density than
+     * the primary is, this will return replicas on the oldest version of Density when segment
      * replication is enabled to allow for replica to read segments from primary.
      *
      */
@@ -988,7 +988,7 @@ public class RoutingNodes implements Iterable<RoutingNode> {
     /**
      * Unassigned shard list.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class UnassignedShards implements Iterable<ShardRouting> {
@@ -1090,7 +1090,7 @@ public class RoutingNodes implements Iterable<RoutingNode> {
         /**
          * An unassigned iterator.
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public class UnassignedIterator implements Iterator<ShardRouting>, ExistingShardsAllocator.UnassignedAllocationHandler {
@@ -1521,7 +1521,7 @@ public class RoutingNodes implements Iterable<RoutingNode> {
     /**
      * A collection of recoveries.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class Recoveries {
         private static final Recoveries EMPTY = new Recoveries();

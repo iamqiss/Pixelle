@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.allocation.allocator;
+package org.density.cluster.routing.allocation.allocator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.IntroSorter;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.ShardMovementStrategy;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.UnassignedInfo.AllocationStatus;
-import org.opensearch.cluster.routing.allocation.AllocateUnassignedDecision;
-import org.opensearch.cluster.routing.allocation.AllocationConstraints;
-import org.opensearch.cluster.routing.allocation.ConstraintTypes;
-import org.opensearch.cluster.routing.allocation.MoveDecision;
-import org.opensearch.cluster.routing.allocation.RebalanceConstraints;
-import org.opensearch.cluster.routing.allocation.RebalanceParameter;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.ShardAllocationDecision;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.ShardMovementStrategy;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.UnassignedInfo.AllocationStatus;
+import org.density.cluster.routing.allocation.AllocateUnassignedDecision;
+import org.density.cluster.routing.allocation.AllocationConstraints;
+import org.density.cluster.routing.allocation.ConstraintTypes;
+import org.density.cluster.routing.allocation.MoveDecision;
+import org.density.cluster.routing.allocation.RebalanceConstraints;
+import org.density.cluster.routing.allocation.RebalanceParameter;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.ShardAllocationDecision;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,11 +66,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.cluster.action.shard.ShardStateAction.FOLLOW_UP_REROUTE_PRIORITY_SETTING;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_REBALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
-import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_SHARD_PER_NODE_BREACH_CONSTRAINT_ID;
+import static org.density.cluster.action.shard.ShardStateAction.FOLLOW_UP_REROUTE_PRIORITY_SETTING;
+import static org.density.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.CLUSTER_PRIMARY_SHARD_REBALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.INDEX_PRIMARY_SHARD_BALANCE_CONSTRAINT_ID;
+import static org.density.cluster.routing.allocation.ConstraintTypes.INDEX_SHARD_PER_NODE_BREACH_CONSTRAINT_ID;
 
 /**
  * The {@link BalancedShardsAllocator} re-balances the nodes allocations
@@ -79,7 +79,7 @@ import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_SH
  * <ul><li><code>cluster.routing.allocation.balance.shard</code> - The <b>shard balance</b> defines the weight factor
  * for shards allocated on a {@link RoutingNode}</li>
  * <li><code>cluster.routing.allocation.balance.index</code> - The <b>index balance</b> defines a factor to the number
- * of {@link org.opensearch.cluster.routing.ShardRouting}s per index allocated on a specific node</li>
+ * of {@link org.density.cluster.routing.ShardRouting}s per index allocated on a specific node</li>
  * <li><code>cluster.routing.allocation.balance.threshold</code> - A <b>threshold</b> to set the minimal optimization
  * value of operations that should be performed</li>
  * <li><code>cluster.routing.allocation.balance.prefer_primary</code> - Defines whether primary shard balance is desired</li>
@@ -88,7 +88,7 @@ import static org.opensearch.cluster.routing.allocation.ConstraintTypes.INDEX_SH
  * These parameters are combined in a {@link WeightFunction} that allows calculation of node weights which
  * are used to re-balance shards based on global as well as per-index factors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BalancedShardsAllocator implements ShardsAllocator {
 
@@ -601,7 +601,7 @@ public class BalancedShardsAllocator implements ShardsAllocator {
     /**
      * A model node.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ModelNode implements Iterable<ModelIndex> {
         private final Map<String, ModelIndex> indices = new HashMap<>();
@@ -703,7 +703,7 @@ public class BalancedShardsAllocator implements ShardsAllocator {
      *  A {@link Balancer} used by the {@link BalancedShardsAllocator} to perform allocation operations
      * @deprecated As of 2.4.0, replaced by {@link LocalShardsBalancer}
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @Deprecated
     public static class Balancer extends LocalShardsBalancer {
@@ -722,7 +722,7 @@ public class BalancedShardsAllocator implements ShardsAllocator {
     /**
      * A model index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class ModelIndex implements Iterable<ShardRouting> {
         private final String id;
@@ -792,7 +792,7 @@ public class BalancedShardsAllocator implements ShardsAllocator {
     /**
      * A node sorter.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class NodeSorter extends IntroSorter {
 

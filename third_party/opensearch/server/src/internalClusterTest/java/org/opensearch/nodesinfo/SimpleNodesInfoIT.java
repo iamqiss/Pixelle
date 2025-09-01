@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.nodesinfo;
+package org.density.nodesinfo;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.monitor.os.OsInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.monitor.os.OsInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
 
 import java.util.List;
 
-import static org.opensearch.action.admin.cluster.node.info.NodesInfoRequest.Metric.INDICES;
-import static org.opensearch.transport.client.Requests.nodesInfoRequest;
+import static org.density.action.admin.cluster.node.info.NodesInfoRequest.Metric.INDICES;
+import static org.density.transport.client.Requests.nodesInfoRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class SimpleNodesInfoIT extends OpenSearchIntegTestCase {
+public class SimpleNodesInfoIT extends DensityIntegTestCase {
 
     public void testNodesInfos() throws Exception {
         List<String> nodesIds = internalCluster().startNodes(2);
@@ -129,8 +129,8 @@ public class SimpleNodesInfoIT extends OpenSearchIntegTestCase {
 
     public void testAllocatedProcessors() throws Exception {
         List<String> nodesIds = internalCluster().startNodes(
-            Settings.builder().put(OpenSearchExecutors.NODE_PROCESSORS_SETTING.getKey(), 3).build(),
-            Settings.builder().put(OpenSearchExecutors.NODE_PROCESSORS_SETTING.getKey(), 6).build()
+            Settings.builder().put(DensityExecutors.NODE_PROCESSORS_SETTING.getKey(), 3).build(),
+            Settings.builder().put(DensityExecutors.NODE_PROCESSORS_SETTING.getKey(), 6).build()
         );
 
         final String node_1 = nodesIds.get(0);

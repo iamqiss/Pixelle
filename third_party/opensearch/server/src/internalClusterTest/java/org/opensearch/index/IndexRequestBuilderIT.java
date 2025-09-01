@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class IndexRequestBuilderIT extends OpenSearchIntegTestCase {
+public class IndexRequestBuilderIT extends DensityIntegTestCase {
     public void testSetSource() throws InterruptedException, ExecutionException {
         createIndex("test");
         Map<String, Object> map = new HashMap<>();
@@ -62,7 +62,7 @@ public class IndexRequestBuilderIT extends OpenSearchIntegTestCase {
             client().prepareIndex("test").setSource(map) };
         indexRandom(true, builders);
         SearchResponse searchResponse = client().prepareSearch("test").setQuery(QueryBuilders.termQuery("test_field", "foobar")).get();
-        OpenSearchAssertions.assertHitCount(searchResponse, builders.length);
+        DensityAssertions.assertHitCount(searchResponse, builders.length);
     }
 
     public void testOddNumberOfSourceObjects() {

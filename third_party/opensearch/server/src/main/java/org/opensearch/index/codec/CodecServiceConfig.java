@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec;
+package org.density.index.codec;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.Nullable;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.Nullable;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
 
 import java.util.Objects;
 
 /**
  * The configuration parameters necessary for the {@link CodecService} instance construction.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CodecServiceConfig {
     private final IndexSettings indexSettings;

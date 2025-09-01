@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.autoforcemerge;
+package org.density.index.autoforcemerge;
 
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.node.resource.tracker.AverageCpuUsageTracker;
-import org.opensearch.node.resource.tracker.AverageMemoryUsageTracker;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.unit.TimeValue;
+import org.density.node.resource.tracker.AverageCpuUsageTracker;
+import org.density.node.resource.tracker.AverageMemoryUsageTracker;
+import org.density.threadpool.ThreadPool;
 
 /**
  * Provider for creating resource usage trackers used in auto force merge operations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ResourceTrackerProvider {
 
@@ -40,7 +40,7 @@ public class ResourceTrackerProvider {
      * Container for resource usage trackers used in auto force merge operations.
      * Provides access to CPU and JVM memory usage trackers with different time windows.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ResourceTrackers {
         public final AverageCpuUsageTracker cpuOneMinute;

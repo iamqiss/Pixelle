@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.TemplateScript;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.common.metrics.OperationStats;
+import org.density.script.ScriptService;
+import org.density.script.TemplateScript;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PipelineProcessorTests extends OpenSearchTestCase {
+public class PipelineProcessorTests extends DensityTestCase {
 
     public void testExecutesPipeline() throws Exception {
         String pipelineId = "pipeline";
@@ -127,9 +127,9 @@ public class PipelineProcessorTests extends OpenSearchTestCase {
         when(ingestService.getPipeline(outerPipelineId)).thenReturn(outer);
         when(ingestService.getPipeline(innerPipelineId)).thenReturn(inner);
         outerConfig.put("name", innerPipelineId);
-        OpenSearchException[] e = new OpenSearchException[1];
+        DensityException[] e = new DensityException[1];
         factory.create(Collections.emptyMap(), null, null, outerConfig)
-            .execute(testIngestDocument, (result, e1) -> e[0] = (OpenSearchException) e1);
+            .execute(testIngestDocument, (result, e1) -> e[0] = (DensityException) e1);
         assertEquals("Cycle detected for pipeline: inner", e[0].getRootCause().getMessage());
     }
 

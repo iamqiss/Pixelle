@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.Randomness;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.Random;
 import java.util.UUID;
 
-public class IRCKeyWriteableSerializerTests extends OpenSearchSingleNodeTestCase {
+public class IRCKeyWriteableSerializerTests extends DensitySingleNodeTestCase {
 
     public void testSerializer() throws Exception {
         IndexService indexService = createIndex("test");

@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.gateway.WriteStateException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.shard.ShardStateMetadata;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.AllocationId;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.gateway.WriteStateException;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.shard.ShardStateMetadata;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
@@ -36,12 +36,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import static org.opensearch.index.IndexModule.IS_WARM_INDEX_SETTING;
-import static org.opensearch.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
-import static org.opensearch.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
+import static org.density.index.IndexModule.IS_WARM_INDEX_SETTING;
+import static org.density.index.store.remote.directory.RemoteSnapshotDirectoryFactory.LOCAL_STORE_LOCATION;
+import static org.density.index.store.remote.utils.FileTypeUtils.INDICES_FOLDER_IDENTIFIER;
 import static org.hamcrest.Matchers.equalTo;
 
-public class FileCacheCleanerTests extends OpenSearchTestCase {
+public class FileCacheCleanerTests extends DensityTestCase {
     private static final ShardId SHARD_0 = new ShardId("index", "uuid-0", 0);
     private static final ShardId SHARD_1 = new ShardId("index", "uuid-1", 0);
     private static final Settings SETTINGS = Settings.builder()

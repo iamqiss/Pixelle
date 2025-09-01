@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -19,14 +19,14 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NoMergePolicy;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.search.internal.IndexReaderUtils.getLeaves;
+import static org.density.search.internal.IndexReaderUtils.getLeaves;
 
-public class MaxTargetSliceSupplierTests extends OpenSearchTestCase {
+public class MaxTargetSliceSupplierTests extends DensityTestCase {
 
     public void testSliceCountGreaterThanLeafCount() throws Exception {
         int expectedSliceCount = 2;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.get.GetRequest;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.index.IndexResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
@@ -51,11 +51,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntToLongFunction;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoSearchHits;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SearchIdleIT extends OpenSearchSingleNodeTestCase {
+public class SearchIdleIT extends DensitySingleNodeTestCase {
 
     public void testAutomaticRefreshSearch() throws InterruptedException {
         runTestAutomaticRefresh(numDocs -> client().prepareSearch("test").get().getHits().getTotalHits().value());

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Test logs appender that provides functionality to extract specific logs/exception messages and wait for it to show up
- * @opensearch.internal
+ * @density.internal
  */
 public class TestLogsAppender extends AbstractAppender {
     private final List<String> capturedLogs = new ArrayList<>();

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.analysis.phone;
+package org.density.analysis.phone;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
+import org.density.common.io.Streams;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
 
 import java.io.IOException;
 import java.util.HashSet;

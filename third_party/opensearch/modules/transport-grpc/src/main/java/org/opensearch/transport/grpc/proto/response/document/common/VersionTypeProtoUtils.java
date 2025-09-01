@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.document.common;
+package org.density.transport.grpc.proto.response.document.common;
 
-import org.opensearch.index.VersionType;
+import org.density.index.VersionType;
 
 /**
- * Utility class for converting VersionType Protocol Buffers to OpenSearch VersionType objects.
+ * Utility class for converting VersionType Protocol Buffers to Density VersionType objects.
  * This class handles the conversion of Protocol Buffer version type representations to their
- * corresponding OpenSearch version type enumerations.
+ * corresponding Density version type enumerations.
  */
 public class VersionTypeProtoUtils {
 
@@ -22,13 +22,13 @@ public class VersionTypeProtoUtils {
     }
 
     /**
-     * Converts a Protocol Buffer VersionType to its corresponding OpenSearch VersionType.
+     * Converts a Protocol Buffer VersionType to its corresponding Density VersionType.
      * Similar to {@link VersionType#fromString(String)}.
      *
      * @param versionType The Protocol Buffer VersionType to convert
-     * @return The corresponding OpenSearch VersionType
+     * @return The corresponding Density VersionType
      */
-    public static VersionType fromProto(org.opensearch.protobufs.VersionType versionType) {
+    public static VersionType fromProto(org.density.protobufs.VersionType versionType) {
         switch (versionType) {
             case VERSION_TYPE_EXTERNAL:
                 return VersionType.EXTERNAL;

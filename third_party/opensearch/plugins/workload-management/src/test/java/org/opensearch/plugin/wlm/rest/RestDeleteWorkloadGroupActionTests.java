@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rest;
+package org.density.plugin.wlm.rest;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.plugin.wlm.WlmClusterSettingValuesProvider;
-import org.opensearch.plugin.wlm.WorkloadManagementTestUtils;
-import org.opensearch.plugin.wlm.action.DeleteWorkloadGroupAction;
-import org.opensearch.plugin.wlm.action.DeleteWorkloadGroupRequest;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.CheckedConsumer;
+import org.density.common.unit.TimeValue;
+import org.density.plugin.wlm.WlmClusterSettingValuesProvider;
+import org.density.plugin.wlm.WorkloadManagementTestUtils;
+import org.density.plugin.wlm.action.DeleteWorkloadGroupAction;
+import org.density.plugin.wlm.action.DeleteWorkloadGroupRequest;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.List;
 
 import org.mockito.ArgumentCaptor;
 
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
-import static org.opensearch.rest.RestRequest.Method.DELETE;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.NAME_ONE;
+import static org.density.rest.RestRequest.Method.DELETE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class RestDeleteWorkloadGroupActionTests extends OpenSearchTestCase {
+public class RestDeleteWorkloadGroupActionTests extends DensityTestCase {
     /**
      * Test case to validate the construction for RestDeleteWorkloadGroupAction
      */

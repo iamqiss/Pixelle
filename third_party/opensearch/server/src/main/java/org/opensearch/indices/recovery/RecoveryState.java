@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationState;
-import org.opensearch.indices.replication.common.ReplicationTimer;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.shard.IndexShard;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationState;
+import org.density.indices.replication.common.ReplicationTimer;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -55,7 +55,7 @@ import java.util.Locale;
 /**
  * Keeps track of state related to shard recovery.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RecoveryState implements ReplicationState, ToXContentFragment, Writeable {
@@ -63,7 +63,7 @@ public class RecoveryState implements ReplicationState, ToXContentFragment, Writ
     /**
      * The stage of the recovery state
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Stage {
@@ -340,7 +340,7 @@ public class RecoveryState implements ReplicationState, ToXContentFragment, Writ
     /**
      * Fields used in the recovery state
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String ID = "id";
@@ -373,7 +373,7 @@ public class RecoveryState implements ReplicationState, ToXContentFragment, Writ
     /**
      * Verifys the lucene index
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class VerifyIndex extends ReplicationTimer implements ToXContentFragment, Writeable {
@@ -416,7 +416,7 @@ public class RecoveryState implements ReplicationState, ToXContentFragment, Writ
     /**
      * The translog
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Translog extends ReplicationTimer implements ToXContentFragment, Writeable {

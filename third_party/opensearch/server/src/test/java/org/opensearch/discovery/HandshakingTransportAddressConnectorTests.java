@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransport;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.TransportService.HandshakeResponse;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.transport.TransportAddress;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransport;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
+import org.density.transport.TransportService.HandshakeResponse;
 import org.junit.After;
 import org.junit.Before;
 
@@ -64,14 +64,14 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING;
-import static org.opensearch.discovery.HandshakingTransportAddressConnector.PROBE_HANDSHAKE_TIMEOUT_SETTING;
-import static org.opensearch.node.Node.NODE_NAME_SETTING;
+import static org.density.cluster.ClusterName.CLUSTER_NAME_SETTING;
+import static org.density.discovery.HandshakingTransportAddressConnector.PROBE_HANDSHAKE_TIMEOUT_SETTING;
+import static org.density.node.Node.NODE_NAME_SETTING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.oneOf;
 
-public class HandshakingTransportAddressConnectorTests extends OpenSearchTestCase {
+public class HandshakingTransportAddressConnectorTests extends DensityTestCase {
 
     private DiscoveryNode remoteNode;
     private TransportAddress discoveryAddress;
@@ -164,14 +164,14 @@ public class HandshakingTransportAddressConnectorTests extends OpenSearchTestCas
         assertEquals(remoteNode, receivedNode.get());
     }
 
-    @TestLogging(reason = "ensure logging happens", value = "org.opensearch.discovery.HandshakingTransportAddressConnector:INFO")
+    @TestLogging(reason = "ensure logging happens", value = "org.density.discovery.HandshakingTransportAddressConnector:INFO")
     public void testLogsFullConnectionFailureAfterSuccessfulHandshake() throws Exception {
 
         remoteNode = new DiscoveryNode("remote-node", buildNewFakeTransportAddress(), Version.CURRENT);
         remoteClusterName = "local-cluster";
         discoveryAddress = buildNewFakeTransportAddress();
 
-        fullConnectionFailure = new ConnectTransportException(remoteNode, "simulated", new OpenSearchException("root cause"));
+        fullConnectionFailure = new ConnectTransportException(remoteNode, "simulated", new DensityException("root cause"));
 
         FailureListener failureListener = new FailureListener();
 

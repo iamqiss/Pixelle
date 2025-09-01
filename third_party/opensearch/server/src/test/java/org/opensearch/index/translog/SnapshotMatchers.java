@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.translog;
+package org.density.index.translog;
 
-import org.opensearch.OpenSearchException;
+import org.density.DensityException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -98,7 +98,7 @@ public final class SnapshotMatchers {
                     count++;
                 }
             } catch (IOException ex) {
-                throw new OpenSearchException("failed to advance snapshot", ex);
+                throw new DensityException("failed to advance snapshot", ex);
             }
             return size == count;
         }
@@ -145,7 +145,7 @@ public final class SnapshotMatchers {
                 }
                 return true;
             } catch (IOException ex) {
-                throw new OpenSearchException("failed to read snapshot content", ex);
+                throw new DensityException("failed to read snapshot content", ex);
             }
         }
 
@@ -181,7 +181,7 @@ public final class SnapshotMatchers {
                 notExpectedOps = actualOps.stream().filter(o -> expectedOps.contains(o) == false).collect(Collectors.toList());
                 return notFoundOps.isEmpty() && notExpectedOps.isEmpty();
             } catch (IOException ex) {
-                throw new OpenSearchException("failed to read snapshot content", ex);
+                throw new DensityException("failed to read snapshot content", ex);
             }
         }
 
@@ -229,7 +229,7 @@ public final class SnapshotMatchers {
                 }
                 return notFoundSeqNo.isEmpty();
             } catch (IOException ex) {
-                throw new OpenSearchException("failed to read snapshot content", ex);
+                throw new DensityException("failed to read snapshot content", ex);
             }
         }
 

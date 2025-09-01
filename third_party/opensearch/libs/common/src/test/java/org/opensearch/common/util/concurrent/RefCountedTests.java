@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.concurrent.OneWayGate;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.concurrent.OneWayGate;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ import java.util.concurrent.CountDownLatch;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class RefCountedTests extends OpenSearchTestCase {
+public class RefCountedTests extends DensityTestCase {
     public void testRefCount() throws IOException {
         MyRefCounted counted = new MyRefCounted();
 

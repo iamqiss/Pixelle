@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.DoublePoint;
@@ -53,55 +53,55 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.DocumentMapperParser;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.BoostingQueryBuilder;
-import org.opensearch.index.query.ConstantScoreQueryBuilder;
-import org.opensearch.index.query.DisMaxQueryBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.index.query.ScriptQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.opensearch.index.query.functionscore.RandomScoreFunctionBuilder;
-import org.opensearch.index.query.functionscore.ScriptScoreFunctionBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.join.ParentJoinModulePlugin;
-import org.opensearch.join.query.HasChildQueryBuilder;
-import org.opensearch.join.query.HasParentQueryBuilder;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.Version;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.hash.MurmurHash3;
+import org.density.common.network.InetAddresses;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.DocumentMapperParser;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.BoostingQueryBuilder;
+import org.density.index.query.ConstantScoreQueryBuilder;
+import org.density.index.query.DisMaxQueryBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.Rewriteable;
+import org.density.index.query.ScriptQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.index.query.functionscore.RandomScoreFunctionBuilder;
+import org.density.index.query.functionscore.ScriptScoreFunctionBuilder;
+import org.density.indices.TermsLookup;
+import org.density.join.ParentJoinModulePlugin;
+import org.density.join.query.HasChildQueryBuilder;
+import org.density.join.query.HasParentQueryBuilder;
+import org.density.plugins.Plugin;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
@@ -118,24 +118,24 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchPhraseQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.prefixQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.QueryBuilders.termsLookupQuery;
-import static org.opensearch.index.query.QueryBuilders.wildcardQuery;
-import static org.opensearch.percolator.PercolatorFieldMapper.EXTRACTION_COMPLETE;
-import static org.opensearch.percolator.PercolatorFieldMapper.EXTRACTION_FAILED;
-import static org.opensearch.percolator.PercolatorFieldMapper.EXTRACTION_PARTIAL;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchPhraseQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.prefixQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.termsLookupQuery;
+import static org.density.index.query.QueryBuilders.wildcardQuery;
+import static org.density.percolator.PercolatorFieldMapper.EXTRACTION_COMPLETE;
+import static org.density.percolator.PercolatorFieldMapper.EXTRACTION_FAILED;
+import static org.density.percolator.PercolatorFieldMapper.EXTRACTION_PARTIAL;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class PercolatorFieldMapperTests extends OpenSearchSingleNodeTestCase {
+public class PercolatorFieldMapperTests extends DensitySingleNodeTestCase {
 
     private String fieldName;
     private IndexService indexService;

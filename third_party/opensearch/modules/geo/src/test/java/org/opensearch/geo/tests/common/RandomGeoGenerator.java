@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.tests.common;
+package org.density.geo.tests.common;
 
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.geo.GeometryTestUtils;
-import org.opensearch.geometry.Rectangle;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.geo.GeometryTestUtils;
+import org.density.geometry.Rectangle;
 
 import java.util.Random;
 

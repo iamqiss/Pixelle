@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.fs;
+package org.density.monitor.fs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeEnvironment.NodePath;
-import org.opensearch.index.store.remote.filecache.FileCache;
+import org.density.common.SuppressForbidden;
+import org.density.common.collect.Tuple;
+import org.density.common.io.PathUtils;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeEnvironment.NodePath;
+import org.density.index.store.remote.filecache.FileCache;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -56,7 +56,7 @@ import java.util.Set;
 /**
  * FileSystem probe
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FsProbe {
 

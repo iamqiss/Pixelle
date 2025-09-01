@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowBasePlugin;
 import com.github.jengelman.gradle.plugins.shadow.ShadowExtension;
 import groovy.util.Node;
 import groovy.util.NodeList;
 
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.precommit.PomValidationPrecommitPlugin;
-import org.opensearch.gradle.util.Util;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.precommit.PomValidationPrecommitPlugin;
+import org.density.gradle.util.Util;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -61,7 +61,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.concurrent.Callable;
 
-import static org.opensearch.gradle.util.GradleUtils.maybeConfigure;
+import static org.density.gradle.util.GradleUtils.maybeConfigure;
 
 public class PublishPlugin implements Plugin<Project> {
 
@@ -139,7 +139,7 @@ public class PublishPlugin implements Plugin<Project> {
                 project.afterEvaluate(p -> publication.setArtifactId(getArchivesBaseName(project)));
 
                 // publish sources and javadoc for Java projects.
-                if (project.getPluginManager().hasPlugin("opensearch.java")) {
+                if (project.getPluginManager().hasPlugin("density.java")) {
                     publication.artifact(project.getTasks().getByName("sourcesJar"));
                     publication.artifact(project.getTasks().getByName("javadocJar"));
                 }
@@ -203,7 +203,7 @@ public class PublishPlugin implements Plugin<Project> {
 
     /** Adds a javadocJar task to generate a jar containing javadocs. */
     private static void configureJavadocJar(Project project) {
-        project.getPlugins().withId("opensearch.java", p -> {
+        project.getPlugins().withId("density.java", p -> {
             TaskProvider<Jar> javadocJarTask = project.getTasks().register("javadocJar", Jar.class);
             javadocJarTask.configure(jar -> {
                 jar.getArchiveClassifier().set("javadoc");
@@ -216,7 +216,7 @@ public class PublishPlugin implements Plugin<Project> {
     }
 
     static void configureSourcesJar(Project project) {
-        project.getPlugins().withId("opensearch.java", p -> {
+        project.getPlugins().withId("density.java", p -> {
             TaskProvider<Jar> sourcesJarTask = project.getTasks().register("sourcesJar", Jar.class);
             sourcesJarTask.configure(jar -> {
                 jar.getArchiveClassifier().set("sources");

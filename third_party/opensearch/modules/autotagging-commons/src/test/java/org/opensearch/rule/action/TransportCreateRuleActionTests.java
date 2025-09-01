@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.rule.RulePersistenceServiceRegistry;
-import org.opensearch.rule.RuleRoutingService;
-import org.opensearch.rule.RuleRoutingServiceRegistry;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.service.IndexStoredRulePersistenceService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.core.action.ActionListener;
+import org.density.rule.RulePersistenceServiceRegistry;
+import org.density.rule.RuleRoutingService;
+import org.density.rule.RuleRoutingServiceRegistry;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.service.IndexStoredRulePersistenceService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.concurrent.ExecutorService;
 
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-public class TransportCreateRuleActionTests extends OpenSearchTestCase {
+public class TransportCreateRuleActionTests extends DensityTestCase {
     private TransportService transportService;
     private ThreadPool threadPool;
     private ActionFilters actionFilters;

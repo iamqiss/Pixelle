@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.FilterDirectoryReader;
@@ -37,85 +37,85 @@ import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.ClearScrollRequest;
-import org.opensearch.action.search.DeletePitResponse;
-import org.opensearch.action.search.PitSearchContextIdForNode;
-import org.opensearch.action.search.SearchContextIdForNode;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.search.UpdatePitContextRequest;
-import org.opensearch.action.search.UpdatePitContextResponse;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.MatchNoneQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.settings.InternalOrPrivateSettingsPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchRequest;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.MinAndMax;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.action.OriginalIndices;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.ClearScrollRequest;
+import org.density.action.search.DeletePitResponse;
+import org.density.action.search.PitSearchContextIdForNode;
+import org.density.action.search.SearchContextIdForNode;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchType;
+import org.density.action.search.UpdatePitContextRequest;
+import org.density.action.search.UpdatePitContextResponse;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.WriteRequest;
+import org.density.cluster.service.ClusterService;
+import org.density.common.UUIDs;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexModule;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.MatchNoneQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.search.stats.SearchStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.SearchOperationListener;
+import org.density.indices.IndicesService;
+import org.density.indices.settings.InternalOrPrivateSettingsPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.script.MockScriptEngine;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.aggregations.bucket.global.GlobalAggregationBuilder;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.ShardFetchRequest;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.MinAndMax;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -134,11 +134,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static java.util.Collections.singletonList;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.DELETED;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.indices.cluster.IndicesClusterStateService.AllocatedIndices.IndexRemovalReason.DELETED;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -147,7 +147,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
+public class SearchServiceTests extends DensitySingleNodeTestCase {
 
     @Override
     protected boolean resetNodeAfterTest() {
@@ -214,18 +214,18 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 @Override
                 public void onFetchPhase(SearchContext context, long tookInNanos) {
                     if ("throttled_threadpool_index".equals(context.indexShard().shardId().getIndex().getName())) {
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search_throttled]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search_throttled]"));
                     } else {
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search]"));
                     }
                 }
 
                 @Override
                 public void onQueryPhase(SearchContext context, long tookInNanos) {
                     if ("throttled_threadpool_index".equals(context.indexShard().shardId().getIndex().getName())) {
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search_throttled]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search_throttled]"));
                     } else {
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search]"));
                     }
                 }
             });
@@ -641,7 +641,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 .prepareUpdateSettings()
                 .setTransientSettings(Settings.builder().put(SearchService.CLUSTER_ALLOW_DERIVED_FIELD_SETTING.getKey(), false))
                 .get();
-            assertThrows(OpenSearchException.class, () -> service.createContext(reader, request, null, randomBoolean()));
+            assertThrows(DensityException.class, () -> service.createContext(reader, request, null, randomBoolean()));
 
             // dynamically enabled using cluster setting, assert derived field resolved fine
             client().admin()
@@ -659,7 +659,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 .setSettings(Settings.builder().put(IndexSettings.ALLOW_DERIVED_FIELDS.getKey(), false))
                 .get();
 
-            assertThrows(OpenSearchException.class, () -> service.createContext(reader, request, null, randomBoolean()));
+            assertThrows(DensityException.class, () -> service.createContext(reader, request, null, randomBoolean()));
 
             // dynamically enabled using index setting, assert derived field resolved fine
             client().admin()
@@ -800,8 +800,8 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
         }
 
         final ShardScrollRequestTest request = new ShardScrollRequestTest(indexShard.shardId());
-        OpenSearchRejectedExecutionException ex = expectThrows(
-            OpenSearchRejectedExecutionException.class,
+        DensityRejectedExecutionException ex = expectThrows(
+            DensityRejectedExecutionException.class,
             () -> service.createAndPutReaderContext(
                 request,
                 indexService,
@@ -846,7 +846,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                                 reader,
                                 true
                             );
-                        } catch (OpenSearchRejectedExecutionException e) {
+                        } catch (DensityRejectedExecutionException e) {
                             assertThat(
                                 e.getMessage(),
                                 equalTo(
@@ -864,7 +864,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                     throw new AssertionError(e);
                 }
             });
-            threads[i].setName("opensearch[node_s_0][search]");
+            threads[i].setName("density[node_s_0][search]");
             threads[i].start();
         }
         for (Thread thread : threads) {
@@ -1212,7 +1212,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 .setSettings(Settings.builder().put(IndexSettings.INDEX_SEARCH_THROTTLED.getKey(), false))
                 .get()
         );
-        assertEquals("can not update private setting [index.search.throttled]; this setting is managed by OpenSearch", se.getMessage());
+        assertEquals("can not update private setting [index.search.throttled]; this setting is managed by Density", se.getMessage());
         assertFalse(service.getIndicesService().indexServiceSafe(index).getIndexSettings().isSearchThrottled());
         SearchRequest searchRequest = new SearchRequest().allowPartialSearchResults(false);
         ShardSearchRequest req = new ShardSearchRequest(
@@ -1908,7 +1908,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 public void onResponse(SearchPhaseResult result) {
                     try {
                         assertNotSame(Thread.currentThread(), currentThread);
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search]"));
                         assertThat(result, instanceOf(QuerySearchResult.class));
                         assertFalse(result.queryResult().isNull());
                         assertNotNull(result.queryResult().topDocs());
@@ -1938,7 +1938,7 @@ public class SearchServiceTests extends OpenSearchSingleNodeTestCase {
                 public void onResponse(SearchPhaseResult result) {
                     try {
                         assertNotSame(Thread.currentThread(), currentThread);
-                        assertThat(Thread.currentThread().getName(), startsWith("opensearch[node_s_0][search]"));
+                        assertThat(Thread.currentThread().getName(), startsWith("density[node_s_0][search]"));
                         assertThat(result, instanceOf(QuerySearchResult.class));
                         assertFalse(result.queryResult().isNull());
                         assertNotNull(result.queryResult().topDocs());

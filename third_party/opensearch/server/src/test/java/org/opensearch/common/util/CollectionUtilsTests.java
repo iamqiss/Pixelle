@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.util.CollectionUtils;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,10 +46,10 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.core.common.util.CollectionUtils.eagerPartition;
+import static org.density.core.common.util.CollectionUtils.eagerPartition;
 import static org.hamcrest.Matchers.containsString;
 
-public class CollectionUtilsTests extends OpenSearchTestCase {
+public class CollectionUtilsTests extends DensityTestCase {
     public void testRotateEmpty() {
         assertTrue(CollectionUtils.rotate(Collections.emptyList(), randomInt()).isEmpty());
     }

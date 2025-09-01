@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
@@ -39,45 +39,45 @@ import org.apache.lucene.index.IndexFormatTooNewException;
 import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.store.RateLimiter;
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.ThreadedActionListener;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.StopWatch;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.FutureUtils;
-import org.opensearch.common.util.concurrent.ListenableFuture;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.engine.RecoveryEngineException;
-import org.opensearch.index.seqno.ReplicationTracker;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.RetentionLeaseNotFoundException;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.RunUnderPrimaryPermit;
-import org.opensearch.indices.replication.SegmentFileTransferHandler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transports;
+import org.density.action.ActionRunnable;
+import org.density.action.StepListener;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.ThreadedActionListener;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.CheckedRunnable;
+import org.density.common.SetOnce;
+import org.density.common.StopWatch;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.logging.Loggers;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.FutureUtils;
+import org.density.common.util.concurrent.ListenableFuture;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.engine.RecoveryEngineException;
+import org.density.index.seqno.ReplicationTracker;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.RetentionLeaseNotFoundException;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.IndexShardState;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.translog.Translog;
+import org.density.indices.RunUnderPrimaryPermit;
+import org.density.indices.replication.SegmentFileTransferHandler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transports;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -107,7 +107,7 @@ import java.util.stream.StreamSupport;
  * originating from this nodes to throttle the number bytes send during file transfer. The transaction log
  * phase bypasses the rate limiter entirely.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class RecoverySourceHandler {
 
@@ -162,7 +162,7 @@ public abstract class RecoverySourceHandler {
     }
 
     public void addListener(ActionListener<RecoveryResponse> listener) {
-        future.addListener(listener, OpenSearchExecutors.newDirectExecutorService());
+        future.addListener(listener, DensityExecutors.newDirectExecutorService());
     }
 
     /**
@@ -353,7 +353,7 @@ public abstract class RecoverySourceHandler {
     /**
      * A send file result
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SendFileResult {
         final List<String> phase1FileNames;
@@ -747,7 +747,7 @@ public abstract class RecoverySourceHandler {
     /**
      * An operation chunk request
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class OperationChunkRequest implements MultiChunkTransfer.ChunkRequest {
         final List<Translog.Operation> operations;
@@ -921,7 +921,7 @@ public abstract class RecoverySourceHandler {
     /**
      * A result for a send snapshot
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class SendSnapshotResult {
         final long targetLocalCheckpoint;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.env.Environment;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.snapshots.mockstore.MockRepository;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.NodeConfigurationSource;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.transport.nio.MockNioTransportPlugin;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.env.Environment;
+import org.density.repositories.RepositoryException;
+import org.density.snapshots.mockstore.MockRepository;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockHttpTransport;
+import org.density.test.NodeConfigurationSource;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.transport.nio.MockNioTransportPlugin;
 import org.junit.After;
 import org.junit.Before;
 
@@ -52,7 +52,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 
 public class MultiClusterRepoAccessIT extends AbstractSnapshotIntegTestCase {
@@ -89,7 +89,7 @@ public class MultiClusterRepoAccessIT extends AbstractSnapshotIntegTestCase {
             0,
             "leader",
             Arrays.asList(
-                OpenSearchIntegTestCase.TestSeedPlugin.class,
+                DensityIntegTestCase.TestSeedPlugin.class,
                 MockHttpTransport.TestPlugin.class,
                 MockTransportService.TestPlugin.class,
                 MockNioTransportPlugin.class,
@@ -115,7 +115,7 @@ public class MultiClusterRepoAccessIT extends AbstractSnapshotIntegTestCase {
 
         secondCluster.startClusterManagerOnlyNode();
         secondCluster.startDataOnlyNode();
-        OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+        DensityIntegTestCase.putRepositoryRequestBuilder(
             secondCluster.client().admin().cluster(),
             repoNameOnSecondCluster,
             "fs",

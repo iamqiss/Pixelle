@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,7 @@ import static java.util.Collections.singletonMap;
 /**
  * These tests run the Painless scripts used in the context docs against
  * slightly modified data designed around unit tests rather than a fully-
- * running OpenSearch server.
+ * running Density server.
  */
 public class ContextExampleTests extends ScriptTestCase {
 

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Manager for the EarlyTerminatingCollector
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class EarlyTerminatingCollectorManager<C extends Collector>
     implements

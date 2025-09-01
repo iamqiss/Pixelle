@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch;
+package org.density.search.fetch;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.fetch.subphase.InnerHitsContext.InnerHitSubContext;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.search.rescore.RescoreContext;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.search.SearchExtBuilder;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.fetch.subphase.InnerHitsContext.InnerHitSubContext;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
+import org.density.search.rescore.RescoreContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +58,7 @@ import java.util.List;
 /**
  * Encapsulates state required to execute fetch phases
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FetchContext {
 

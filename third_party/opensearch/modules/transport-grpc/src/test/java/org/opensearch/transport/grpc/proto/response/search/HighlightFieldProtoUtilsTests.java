@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
-import org.opensearch.core.common.text.Text;
-import org.opensearch.protobufs.StringArray;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.text.Text;
+import org.density.protobufs.StringArray;
+import org.density.test.DensityTestCase;
 
-public class HighlightFieldProtoUtilsTests extends OpenSearchTestCase {
+public class HighlightFieldProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithEmptyFragments() {
         Text[] emptyFragments = new Text[0];

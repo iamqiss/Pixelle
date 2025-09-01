@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.search.Query;
-import org.opensearch.Version;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.common.Explicit;
+import org.density.common.logging.DeprecationLogger;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -49,7 +49,7 @@ import java.util.List;
  * A mapper that indexes the field names of a document under <code>_field_names</code>. This mapper is typically useful in order
  * to have fast <code>exists</code> and <code>missing</code> queries/filters.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FieldNamesFieldMapper extends MetadataFieldMapper {
 
@@ -67,7 +67,7 @@ public class FieldNamesFieldMapper extends MetadataFieldMapper {
     /**
      * Parameter defaults
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final String NAME = FieldNamesFieldMapper.NAME;
@@ -95,7 +95,7 @@ public class FieldNamesFieldMapper extends MetadataFieldMapper {
     /**
      * Builder for the FieldNames field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Builder extends MetadataFieldMapper.Builder {
 
@@ -135,7 +135,7 @@ public class FieldNamesFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for FieldNames field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class FieldNamesFieldType extends TermBasedFieldType {
 

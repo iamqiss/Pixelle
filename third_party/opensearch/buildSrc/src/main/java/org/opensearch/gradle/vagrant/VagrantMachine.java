@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.vagrant;
+package org.density.gradle.vagrant;
 
 import org.apache.commons.io.output.TeeOutputStream;
-import org.opensearch.gradle.LoggedExec;
-import org.opensearch.gradle.LoggingOutputStream;
-import org.opensearch.gradle.ReaperService;
-import org.opensearch.gradle.util.Util;
+import org.density.gradle.LoggedExec;
+import org.density.gradle.LoggingOutputStream;
+import org.density.gradle.ReaperService;
+import org.density.gradle.util.Util;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.internal.logging.progress.ProgressLogger;
@@ -154,13 +154,13 @@ public class VagrantMachine {
         }
     }
 
-    // convert the given path from an opensearch repo path to a VM path
+    // convert the given path from an density repo path to a VM path
     public static String convertLinuxPath(Project project, String path) {
-        return "/opensearch/" + project.getRootDir().toPath().relativize(Paths.get(path));
+        return "/density/" + project.getRootDir().toPath().relativize(Paths.get(path));
     }
 
     public static String convertWindowsPath(Project project, String path) {
-        return "C:\\opensearch\\" + project.getRootDir().toPath().relativize(Paths.get(path)).toString().replace('/', '\\');
+        return "C:\\density\\" + project.getRootDir().toPath().relativize(Paths.get(path)).toString().replace('/', '\\');
     }
 
     public static class VagrantExecSpec {

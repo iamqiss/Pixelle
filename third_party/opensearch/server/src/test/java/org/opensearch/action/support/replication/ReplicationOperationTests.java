@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,56 +25,56 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.Version;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.ReplicationResponse.ShardInfo;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.IndexShardNotStartedException;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.IndexShardTestUtils;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.node.NodeClosedException;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.SendRequestTransportException;
+import org.density.Version;
+import org.density.action.UnavailableShardsException;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.ReplicationResponse.ShardInfo;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.IndexShardNotStartedException;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.IndexShardTestUtils;
+import org.density.index.shard.ReplicationGroup;
+import org.density.node.NodeClosedException;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.SendRequestTransportException;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -92,18 +92,18 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
-import static org.opensearch.action.support.replication.ReplicationOperation.RetryOnPrimaryException;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
-import static org.opensearch.cluster.routing.TestShardRouting.newShardRouting;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
+import static org.density.action.support.replication.ReplicationOperation.RetryOnPrimaryException;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SEARCH_REPLICAS;
+import static org.density.cluster.routing.TestShardRouting.newShardRouting;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ReplicationOperationTests extends OpenSearchTestCase {
+public class ReplicationOperationTests extends DensityTestCase {
 
     private ThreadPool threadPool;
 
@@ -581,7 +581,7 @@ public class ReplicationOperationTests extends OpenSearchTestCase {
                 if (randomBoolean()) {
                     cause = new CircuitBreakingException("broken", CircuitBreaker.Durability.PERMANENT);
                 } else {
-                    cause = new OpenSearchRejectedExecutionException("rejected");
+                    cause = new DensityRejectedExecutionException("rejected");
                 }
                 exception = new RemoteTransportException("remote", cause);
             } else {
@@ -960,7 +960,7 @@ public class ReplicationOperationTests extends OpenSearchTestCase {
         // add a search only replica
         DiscoveryNode node = new DiscoveryNode(
             "nodeForSearchShard",
-            OpenSearchTestCase.buildNewFakeTransportAddress(),
+            DensityTestCase.buildNewFakeTransportAddress(),
             Collections.emptyMap(),
             new HashSet<>(DiscoveryNodeRole.BUILT_IN_ROLES),
             Version.CURRENT

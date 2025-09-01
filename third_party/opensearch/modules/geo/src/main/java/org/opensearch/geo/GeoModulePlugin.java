@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo;
+package org.density.geo;
 
-import org.opensearch.geo.search.aggregations.bucket.composite.GeoTileGridValuesSourceBuilder;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoHashGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGrid;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.metrics.GeoBounds;
-import org.opensearch.geo.search.aggregations.metrics.GeoBoundsAggregationBuilder;
-import org.opensearch.geo.search.aggregations.metrics.InternalGeoBounds;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregation;
+import org.density.geo.search.aggregations.bucket.composite.GeoTileGridValuesSourceBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoHashGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoHashGridAggregationBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGrid;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
+import org.density.geo.search.aggregations.metrics.GeoBounds;
+import org.density.geo.search.aggregations.metrics.GeoBoundsAggregationBuilder;
+import org.density.geo.search.aggregations.metrics.InternalGeoBounds;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.bucket.composite.CompositeAggregation;
 
 import java.util.Collections;
 import java.util.List;

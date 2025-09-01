@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,32 +25,32 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.tasks;
+package org.density.client.tasks;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * client side counterpart of server side
- * {@link org.opensearch.action.TaskOperationFailure}
+ * {@link org.density.action.TaskOperationFailure}
  */
 public class TaskOperationFailure {
 
     private final String nodeId;
     private final long taskId;
-    private final OpenSearchException reason;
+    private final DensityException reason;
     private final String status;
 
-    public TaskOperationFailure(String nodeId, long taskId, String status, OpenSearchException reason) {
+    public TaskOperationFailure(String nodeId, long taskId, String status, DensityException reason) {
         this.nodeId = nodeId;
         this.taskId = taskId;
         this.status = status;
@@ -65,7 +65,7 @@ public class TaskOperationFailure {
         return taskId;
     }
 
-    public OpenSearchException getReason() {
+    public DensityException getReason() {
         return reason;
     }
 
@@ -117,7 +117,7 @@ public class TaskOperationFailure {
             String nodeId = (String) constructorObjects[i++];
             long taskId = (long) constructorObjects[i++];
             String status = (String) constructorObjects[i++];
-            OpenSearchException reason = (OpenSearchException) constructorObjects[i];
+            DensityException reason = (DensityException) constructorObjects[i];
             return new TaskOperationFailure(nodeId, taskId, status, reason);
         }
     );
@@ -126,6 +126,6 @@ public class TaskOperationFailure {
         PARSER.declareString(constructorArg(), new ParseField("node_id"));
         PARSER.declareLong(constructorArg(), new ParseField("task_id"));
         PARSER.declareString(constructorArg(), new ParseField("status"));
-        PARSER.declareObject(constructorArg(), (parser, c) -> OpenSearchException.fromXContent(parser), new ParseField("reason"));
+        PARSER.declareObject(constructorArg(), (parser, c) -> DensityException.fromXContent(parser), new ParseField("reason"));
     }
 }

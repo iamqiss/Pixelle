@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.functionscore;
+package org.density.search.functionscore;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.Functions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.ScriptPlugin;
-import org.opensearch.script.ExplainableScoreScript;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.Functions;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.plugins.Plugin;
+import org.density.plugins.ScriptPlugin;
+import org.density.script.ExplainableScoreScript;
+import org.density.script.ScoreScript;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,19 +70,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 @ClusterScope(scope = Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 1)
-public class ExplainableScriptIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class ExplainableScriptIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public ExplainableScriptIT(Settings staticSettings) {
         super(staticSettings);
@@ -188,7 +188,7 @@ public class ExplainableScriptIT extends ParameterizedStaticSettingsOpenSearchIn
                 )
         ).actionGet();
 
-        OpenSearchAssertions.assertNoFailures(response);
+        DensityAssertions.assertNoFailures(response);
         SearchHits hits = response.getHits();
         assertThat(hits.getTotalHits().value(), equalTo(20L));
         int idCounter = 19;
@@ -235,7 +235,7 @@ public class ExplainableScriptIT extends ParameterizedStaticSettingsOpenSearchIn
                 )
         ).actionGet();
 
-        OpenSearchAssertions.assertNoFailures(response);
+        DensityAssertions.assertNoFailures(response);
         SearchHits hits = response.getHits();
         assertThat(hits.getTotalHits().value(), equalTo(1L));
         assertThat(hits.getHits()[0].getId(), equalTo("1"));

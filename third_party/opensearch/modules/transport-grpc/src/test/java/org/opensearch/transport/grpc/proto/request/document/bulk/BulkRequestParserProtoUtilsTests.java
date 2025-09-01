@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.document.bulk;
+package org.density.transport.grpc.proto.request.document.bulk;
 
 import com.google.protobuf.ByteString;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.protobufs.BulkRequest;
-import org.opensearch.protobufs.BulkRequestBody;
-import org.opensearch.protobufs.CreateOperation;
-import org.opensearch.protobufs.DeleteOperation;
-import org.opensearch.protobufs.IndexOperation;
-import org.opensearch.protobufs.OpType;
-import org.opensearch.protobufs.UpdateOperation;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.common.lucene.uid.Versions;
+import org.density.index.VersionType;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.protobufs.BulkRequest;
+import org.density.protobufs.BulkRequestBody;
+import org.density.protobufs.CreateOperation;
+import org.density.protobufs.DeleteOperation;
+import org.density.protobufs.IndexOperation;
+import org.density.protobufs.OpType;
+import org.density.protobufs.UpdateOperation;
+import org.density.test.DensityTestCase;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
 
-public class BulkRequestParserProtoUtilsTests extends OpenSearchTestCase {
+public class BulkRequestParserProtoUtilsTests extends DensityTestCase {
 
     public void testBuildCreateRequest() {
         // Create a CreateOperation

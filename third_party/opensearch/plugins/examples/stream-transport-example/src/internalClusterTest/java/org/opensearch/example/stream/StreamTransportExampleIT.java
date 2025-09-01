@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.example.stream;
+package org.density.example.stream;
 
-import org.opensearch.arrow.flight.transport.FlightStreamPlugin;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.StreamTransportResponseHandler;
-import org.opensearch.transport.StreamTransportService;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.arrow.flight.transport.FlightStreamPlugin;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.StreamTransportResponseHandler;
+import org.density.transport.StreamTransportService;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
+import static org.density.common.util.FeatureFlags.STREAM_TRANSPORT;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, minNumDataNodes = 2, maxNumDataNodes = 2)
-public class StreamTransportExampleIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, minNumDataNodes = 2, maxNumDataNodes = 2)
+public class StreamTransportExampleIT extends DensityIntegTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();

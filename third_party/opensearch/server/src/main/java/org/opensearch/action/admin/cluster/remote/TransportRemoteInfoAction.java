@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.remote;
+package org.density.action.admin.cluster.remote;
 
-import org.opensearch.action.search.SearchTransportService;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.TransportService;
+import org.density.action.search.SearchTransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.tasks.Task;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.TransportService;
 
 import static java.util.stream.Collectors.toList;
 
 /**
  * Transport action for remote monitoring
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TransportRemoteInfoAction extends HandledTransportAction<RemoteInfoRequest, RemoteInfoResponse> {
 

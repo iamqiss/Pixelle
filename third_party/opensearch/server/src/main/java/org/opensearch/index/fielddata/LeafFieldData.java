@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.util.Accountable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.index.mapper.DocValueFetcher;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.index.mapper.DocValueFetcher;
+import org.density.search.DocValueFormat;
 
 import java.io.IOException;
 
 /**
  * The thread safe {@link org.apache.lucene.index.LeafReader} level cache of the data.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface LeafFieldData extends Accountable, Releasable {

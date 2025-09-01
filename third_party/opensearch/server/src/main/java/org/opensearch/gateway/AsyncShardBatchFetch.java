@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.support.nodes.BaseNodeResponse;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.indices.store.ShardAttributes;
+import org.density.action.support.nodes.BaseNodeResponse;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.logging.Loggers;
+import org.density.core.index.shard.ShardId;
+import org.density.indices.store.ShardAttributes;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -30,12 +30,12 @@ import reactor.util.annotation.NonNull;
  * part using the base class {@link AsyncShardFetch}. Other functionalities needed for a batch are only written here.
  * This separation also takes care of the extra generic type V which is only needed for batch
  * transport actions like {@link TransportNodesListGatewayStartedShardsBatch} and
- * {@link org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch}.
+ * {@link org.density.indices.store.TransportNodesListShardStoreMetadataBatch}.
  *
  * @param <T> Response type of the transport action.
  * @param <V> Data type of shard level response.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AsyncShardBatchFetch<T extends BaseNodeResponse, V> extends AsyncShardFetch<T> {
 
@@ -94,7 +94,7 @@ public abstract class AsyncShardBatchFetch<T extends BaseNodeResponse, V> extend
     /**
      * Cache implementation of transport actions returning batch of shards related data in the response.
      * Store node level responses of transport actions like {@link TransportNodesListGatewayStartedShardsBatch} or
-     * {@link org.opensearch.indices.store.TransportNodesListShardStoreMetadataBatch} with memory efficient caching
+     * {@link org.density.indices.store.TransportNodesListShardStoreMetadataBatch} with memory efficient caching
      * approach. This cache class is not thread safe, all of its methods are being called from
      * {@link AsyncShardFetch} class which has synchronized blocks present to handle multiple threads.
      *

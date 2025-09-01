@@ -26,7 +26,7 @@ teardown:
       indices.delete:
         index: test_1
 
-# related issue: https://github.com/opensearch-project/OpenSearch/issues/5035
+# related issue: https://github.com/density-project/Density/issues/5035
 ---
 "Test search_as_you_type data type supports multi-fields":
   - skip:

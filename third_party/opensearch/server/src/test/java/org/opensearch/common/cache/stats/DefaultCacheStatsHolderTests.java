@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.cache.stats;
+package org.density.common.cache.stats;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.metrics.CounterMetric;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
-public class DefaultCacheStatsHolderTests extends OpenSearchTestCase {
+public class DefaultCacheStatsHolderTests extends DensityTestCase {
     private final String storeName = "dummy_store";
 
     public void testAddAndGet() throws Exception {

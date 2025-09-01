@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.ExceptionsHelper;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.index.query.QueryBuilders;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -52,8 +52,8 @@ import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, numDataNodes = 2)
-public class RejectionActionIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, numDataNodes = 2)
+public class RejectionActionIT extends DensityIntegTestCase {
 
     @Override
     protected Settings nodeSettings(int nodeOrdinal) {
@@ -115,7 +115,7 @@ public class RejectionActionIT extends OpenSearchIntegTestCase {
                             anyOf(containsString("cancelled"), containsString("rejected"))
                         );
                     }
-                } else if ((unwrap instanceof OpenSearchRejectedExecutionException) == false) {
+                } else if ((unwrap instanceof DensityRejectedExecutionException) == false) {
                     throw new AssertionError("unexpected failure", (Throwable) response);
                 }
             }

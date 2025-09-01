@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class FilterFieldTypeTest extends OpenSearchTestCase {
+public class FilterFieldTypeTest extends DensityTestCase {
 
     private static final class MethodSignature {
         private final String name;

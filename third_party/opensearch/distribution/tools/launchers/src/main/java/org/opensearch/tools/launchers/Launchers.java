@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.launchers;
+package org.density.tools.launchers;
 
-import org.opensearch.tools.java_version_checker.SuppressForbidden;
+import org.density.tools.java_version_checker.SuppressForbidden;
 
 import java.io.IOException;
 import java.nio.file.Files;

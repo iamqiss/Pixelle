@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.PrefixQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.query.WildcardQueryBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.AbstractBuilderTestCase;
+import org.density.DensityParseException;
+import org.density.action.search.SearchRequest;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.PrefixQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.query.WildcardQueryBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.AbstractBuilderTestCase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -275,8 +275,8 @@ public class HierarchicalRoutingSearchProcessorTests extends AbstractBuilderTest
         // Test missing path_field
         Map<String, Object> config1 = new HashMap<>();
         config1.put("anchor_depth", 2);
-        OpenSearchParseException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(Collections.emptyMap(), "test", null, false, config1, null)
         );
         assertThat(exception.getMessage(), containsString("path_field"));
@@ -286,7 +286,7 @@ public class HierarchicalRoutingSearchProcessorTests extends AbstractBuilderTest
         config2.put("path_field", "path");
         config2.put("anchor_depth", 0);
         exception = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> factory.create(Collections.emptyMap(), "test", null, false, config2, null)
         );
         assertThat(exception.getMessage(), containsString("must be greater than 0"));
@@ -296,7 +296,7 @@ public class HierarchicalRoutingSearchProcessorTests extends AbstractBuilderTest
         config3.put("path_field", "path");
         config3.put("path_separator", "");
         exception = expectThrows(
-            OpenSearchParseException.class,
+            DensityParseException.class,
             () -> factory.create(Collections.emptyMap(), "test", null, false, config3, null)
         );
         assertThat(exception.getMessage(), containsString("cannot be null or empty"));
@@ -323,12 +323,12 @@ public class HierarchicalRoutingSearchProcessorTests extends AbstractBuilderTest
     private String computeExpectedRouting(String anchor, String separator) {
         // This mirrors the logic in HierarchicalRoutingSearchProcessor
         byte[] anchorBytes = anchor.getBytes(java.nio.charset.StandardCharsets.UTF_8);
-        long hash = org.opensearch.common.hash.MurmurHash3.hash128(
+        long hash = org.density.common.hash.MurmurHash3.hash128(
             anchorBytes,
             0,
             anchorBytes.length,
             0,
-            new org.opensearch.common.hash.MurmurHash3.Hash128()
+            new org.density.common.hash.MurmurHash3.Hash128()
         ).h1;
         return String.valueOf(Math.abs(hash));
     }

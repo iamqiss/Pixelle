@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.cache;
+package org.density.index.cache;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.cache.query.QueryCache;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.io.IOUtils;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.cache.query.QueryCache;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -45,7 +45,7 @@ import java.io.IOException;
 /**
  * Wrapping class for the index cache
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexCache extends AbstractIndexComponent implements Closeable {

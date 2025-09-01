@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.fielddata.AbstractSortedSetDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.range.BinaryRangeAggregator.SortedBinaryRangeLeafCollector;
-import org.opensearch.search.aggregations.bucket.range.BinaryRangeAggregator.SortedSetRangeLeafCollector;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.fielddata.AbstractSortedSetDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.range.BinaryRangeAggregator.SortedBinaryRangeLeafCollector;
+import org.density.search.aggregations.bucket.range.BinaryRangeAggregator.SortedSetRangeLeafCollector;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BinaryRangeAggregatorTests extends OpenSearchTestCase {
+public class BinaryRangeAggregatorTests extends DensityTestCase {
 
     private static class FakeSortedSetDocValues extends AbstractSortedSetDocValues {
 

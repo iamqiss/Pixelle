@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
@@ -39,11 +39,11 @@ import org.apache.hadoop.fs.AbstractFileSystem;
 import org.apache.hadoop.fs.FileContext;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.UnsupportedFileSystemException;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.core.common.bytes.BytesArray;
+import org.density.test.DensityTestCase;
 
 import javax.security.auth.Subject;
 
@@ -57,12 +57,12 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.Collections;
 
-import static org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase.randomBytes;
-import static org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase.readBlobFully;
-import static org.opensearch.repositories.blobstore.OpenSearchBlobStoreRepositoryIntegTestCase.writeBlob;
+import static org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase.randomBytes;
+import static org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase.readBlobFully;
+import static org.density.repositories.blobstore.DensityBlobStoreRepositoryIntegTestCase.writeBlob;
 
 @ThreadLeakFilters(filters = { HdfsClientThreadLeakFilter.class })
-public class HdfsBlobStoreContainerTests extends OpenSearchTestCase {
+public class HdfsBlobStoreContainerTests extends DensityTestCase {
 
     @SuppressWarnings("removal")
     private FileContext createTestContext() {

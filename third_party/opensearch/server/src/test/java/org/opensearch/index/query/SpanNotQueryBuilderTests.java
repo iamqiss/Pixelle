@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.queries.spans.SpanNotQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.index.query.QueryBuilders.spanNearQuery;
-import static org.opensearch.index.query.QueryBuilders.spanTermQuery;
+import static org.density.index.query.QueryBuilders.spanNearQuery;
+import static org.density.index.query.QueryBuilders.spanTermQuery;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;

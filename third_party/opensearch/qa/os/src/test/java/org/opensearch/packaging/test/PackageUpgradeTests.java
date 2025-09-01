@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
-import org.opensearch.packaging.util.Distribution;
-import org.opensearch.packaging.util.Packages;
+import org.density.packaging.util.Distribution;
+import org.density.packaging.util.Packages;
 
 import java.nio.file.Paths;
 
-import static org.opensearch.packaging.util.Packages.assertInstalled;
-import static org.opensearch.packaging.util.Packages.installPackage;
-import static org.opensearch.packaging.util.Packages.verifyPackageInstallation;
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.Packages.assertInstalled;
+import static org.density.packaging.util.Packages.installPackage;
+import static org.density.packaging.util.Packages.verifyPackageInstallation;
+import static org.density.packaging.util.ServerUtils.makeRequest;
 import static org.hamcrest.Matchers.containsString;
 
 public class PackageUpgradeTests extends PackagingTestCase {
@@ -66,7 +66,7 @@ public class PackageUpgradeTests extends PackagingTestCase {
     }
 
     public void test12SetupBwcVersion() throws Exception {
-        startOpenSearch();
+        startDensity();
 
         // create indexes explicitly with 0 replicas so when restarting we can reach green state
         makeRequest(
@@ -81,7 +81,7 @@ public class PackageUpgradeTests extends PackagingTestCase {
         // add some docs
         makeRequest(
             Request.Post("http://localhost:9200/library/_doc/1?refresh=true&pretty")
-                .bodyString("{ \"title\": \"OpenSearch\"}", ContentType.APPLICATION_JSON)
+                .bodyString("{ \"title\": \"Density\"}", ContentType.APPLICATION_JSON)
         );
         makeRequest(
             Request.Post("http://localhost:9200/library/_doc/2?refresh=true&pretty")
@@ -94,7 +94,7 @@ public class PackageUpgradeTests extends PackagingTestCase {
 
         assertDocsExist();
 
-        stopOpenSearch();
+        stopDensity();
     }
 
     public void test20InstallUpgradedVersion() throws Exception {
@@ -114,7 +114,7 @@ public class PackageUpgradeTests extends PackagingTestCase {
 
     private void assertDocsExist() throws Exception {
         String response1 = makeRequest(Request.Get("http://localhost:9200/library/_doc/1?pretty"));
-        assertThat(response1, containsString("OpenSearch"));
+        assertThat(response1, containsString("Density"));
         String response2 = makeRequest(Request.Get("http://localhost:9200/library/_doc/2?pretty"));
         assertThat(response2, containsString("World"));
         String response3 = makeRequest(Request.Get("http://localhost:9200/library2/_doc/1?pretty"));

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
 import com.google.api.gax.paging.Page;
 import com.google.cloud.BatchResult;
@@ -45,18 +45,18 @@ import com.google.cloud.storage.StorageException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.io.Streams;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.ExceptionsHelper;
+import org.density.common.SuppressForbidden;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.collect.MapBuilder;
+import org.density.common.io.Streams;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -89,7 +89,7 @@ class GoogleCloudStorageBlobStore implements BlobStore {
     public static final int LARGE_BLOB_THRESHOLD_BYTE_SIZE;
 
     static {
-        final String key = "opensearch.repository_gcs.large_blob_threshold_byte_size";
+        final String key = "density.repository_gcs.large_blob_threshold_byte_size";
         final String largeBlobThresholdByteSizeProperty = System.getProperty(key);
         if (largeBlobThresholdByteSizeProperty == null) {
             LARGE_BLOB_THRESHOLD_BYTE_SIZE = Math.toIntExact(new ByteSizeValue(5, ByteSizeUnit.MB).getBytes());
@@ -295,7 +295,7 @@ class GoogleCloudStorageBlobStore implements BlobStore {
                  * It is not enough to wrap the call to Streams#copy, we have to wrap the privileged calls too; this is because Streams#copy
                  * is in the stacktrace and is not granted the permissions needed to close and write the channel.
                  */
-                org.opensearch.common.util.io.Streams.copy(inputStream, Channels.newOutputStream(new WritableByteChannel() {
+                org.density.common.util.io.Streams.copy(inputStream, Channels.newOutputStream(new WritableByteChannel() {
 
                     @SuppressForbidden(reason = "channel is based on a socket")
                     @Override

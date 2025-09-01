@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.tiering;
+package org.density.action.admin.indices.tiering;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.index.Index;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.index.Index;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Validation result for tiering
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 
 @ExperimentalApi

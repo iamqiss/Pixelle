@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.util.HashMap;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class RestClearIndicesCacheActionTests extends OpenSearchTestCase {
+public class RestClearIndicesCacheActionTests extends DensityTestCase {
 
     public void testRequestCacheSet() throws Exception {
         final HashMap<String, String> params = new HashMap<>();

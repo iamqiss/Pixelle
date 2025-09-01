@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.client.AbstractResponseTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.is;
 
 public class AcknowledgedResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.support.clustermanager.AcknowledgedResponse,
+    org.density.action.support.clustermanager.AcknowledgedResponse,
     AcknowledgedResponse> {
 
     @Override
-    protected org.opensearch.action.support.clustermanager.AcknowledgedResponse createServerTestInstance(XContentType xContentType) {
-        return new org.opensearch.action.support.clustermanager.AcknowledgedResponse(randomBoolean());
+    protected org.density.action.support.clustermanager.AcknowledgedResponse createServerTestInstance(XContentType xContentType) {
+        return new org.density.action.support.clustermanager.AcknowledgedResponse(randomBoolean());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class AcknowledgedResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.support.clustermanager.AcknowledgedResponse serverTestInstance,
+        org.density.action.support.clustermanager.AcknowledgedResponse serverTestInstance,
         AcknowledgedResponse clientInstance
     ) {
         assertThat(clientInstance.isAcknowledged(), is(serverTestInstance.isAcknowledged()));

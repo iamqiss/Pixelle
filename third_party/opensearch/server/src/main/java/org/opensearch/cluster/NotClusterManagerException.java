@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
@@ -41,9 +41,9 @@ import java.io.IOException;
  * currently acting as a cluster-manager or when a cluster state update task is to be executed
  * on a node that is no longer cluster-manager.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class NotClusterManagerException extends OpenSearchException {
+public class NotClusterManagerException extends DensityException {
 
     public NotClusterManagerException(String msg) {
         super(msg);

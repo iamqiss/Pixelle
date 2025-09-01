@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.blobstore.MeteredBlobStoreRepository;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.blobstore.MeteredBlobStoreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +53,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.repositories.azure.AzureStorageService.MAX_CHUNK_SIZE;
-import static org.opensearch.repositories.azure.AzureStorageService.MIN_CHUNK_SIZE;
+import static org.density.repositories.azure.AzureStorageService.MAX_CHUNK_SIZE;
+import static org.density.repositories.azure.AzureStorageService.MIN_CHUNK_SIZE;
 
 /**
  * Azure file system implementation of the BlobStoreRepository
  * <p>
  * Azure file system repository supports the following settings:
  * <dl>
- * <dt>{@code container}</dt><dd>Azure container name. Defaults to opensearch-snapshots</dd>
+ * <dt>{@code container}</dt><dd>Azure container name. Defaults to density-snapshots</dd>
  * <dt>{@code base_path}</dt><dd>Specifies the path within bucket to repository data. Defaults to root directory.</dd>
  * <dt>{@code chunk_size}</dt><dd>Large file can be divided into chunks. This parameter specifies the chunk size. Defaults to 64mb.</dd>
  * <dt>{@code compress}</dt><dd>If set to true metadata files will be stored compressed. Defaults to false.</dd>
@@ -84,7 +84,7 @@ public class AzureRepository extends MeteredBlobStoreRepository {
         public static final Setting<String> CLIENT_NAME = new Setting<>("client", ACCOUNT_SETTING, Function.identity());
         public static final Setting<String> CONTAINER_SETTING = new Setting<>(
             "container",
-            "opensearch-snapshots",
+            "density-snapshots",
             Function.identity(),
             Property.NodeScope
         );

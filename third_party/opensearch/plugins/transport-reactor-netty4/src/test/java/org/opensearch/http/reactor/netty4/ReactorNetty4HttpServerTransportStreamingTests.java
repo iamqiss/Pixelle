@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http.reactor.netty4;
+package org.density.http.reactor.netty4;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentHttpChunk;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.rest.RestChannel;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.rest.StreamingRestChannel;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.node.NodeClient;
-import org.opensearch.transport.reactor.SharedGroupFactory;
+import org.density.common.lease.Releasable;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentHttpChunk;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.http.HttpServerTransport;
+import org.density.rest.RestChannel;
+import org.density.rest.RestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.rest.StreamingRestChannel;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.node.NodeClient;
+import org.density.transport.reactor.SharedGroupFactory;
 import org.junit.After;
 import org.junit.Before;
 
@@ -64,7 +64,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests for the {@link ReactorNetty4HttpServerTransport} class with streaming support.
  */
-public class ReactorNetty4HttpServerTransportStreamingTests extends OpenSearchTestCase {
+public class ReactorNetty4HttpServerTransportStreamingTests extends DensityTestCase {
     private static final Function<String, ToXContent> XCONTENT_CONVERTER = (str) -> new ToXContent() {
         @Override
         public XContentBuilder toXContent(XContentBuilder builder, ToXContent.Params params) throws IOException {

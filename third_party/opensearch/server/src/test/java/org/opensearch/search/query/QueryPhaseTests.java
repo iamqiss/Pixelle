@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -86,31 +86,31 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.search.OpenSearchToParentBlockJoinQuery;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.index.shard.SearchOperationListener;
-import org.opensearch.lucene.queries.MinDocQuery;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.ScrollContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.test.TestSearchContext;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.search.SearchShardTask;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.index.search.DensityToParentBlockJoinQuery;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.index.shard.SearchOperationListener;
+import org.density.lucene.queries.MinDocQuery;
+import org.density.search.DocValueFormat;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.ScrollContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortAndFormats;
+import org.density.test.TestSearchContext;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.search.query.TopDocsCollectorContext.hasInfMaxScore;
+import static org.density.search.query.TopDocsCollectorContext.hasInfMaxScore;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
@@ -884,15 +884,15 @@ public class QueryPhaseTests extends IndexShardTestCase {
 
     public void testMaxScoreQueryVisitor() {
         BitSetProducer producer = context -> new FixedBitSet(1);
-        Query query = new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested");
+        Query query = new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested");
         assertTrue(hasInfMaxScore(query));
 
-        query = new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.None, "nested");
+        query = new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.None, "nested");
         assertFalse(hasInfMaxScore(query));
 
         for (Occur occur : Occur.values()) {
             query = new BooleanQuery.Builder().add(
-                new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
+                new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
                 occur
             ).build();
             if (occur == Occur.MUST) {
@@ -903,7 +903,7 @@ public class QueryPhaseTests extends IndexShardTestCase {
 
             query = new BooleanQuery.Builder().add(
                 new BooleanQuery.Builder().add(
-                    new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
+                    new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
                     occur
                 ).build(),
                 occur
@@ -916,7 +916,7 @@ public class QueryPhaseTests extends IndexShardTestCase {
 
             query = new BooleanQuery.Builder().add(
                 new BooleanQuery.Builder().add(
-                    new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
+                    new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"),
                     occur
                 ).build(),
                 Occur.FILTER
@@ -925,7 +925,7 @@ public class QueryPhaseTests extends IndexShardTestCase {
 
             query = new BooleanQuery.Builder().add(
                 new BooleanQuery.Builder().add(new SpanTermQuery(new Term("field", "foo")), occur)
-                    .add(new OpenSearchToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"), occur)
+                    .add(new DensityToParentBlockJoinQuery(new MatchAllDocsQuery(), producer, ScoreMode.Avg, "nested"), occur)
                     .build(),
                 occur
             ).build();

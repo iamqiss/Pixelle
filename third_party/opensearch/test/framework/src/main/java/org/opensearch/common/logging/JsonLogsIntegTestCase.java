@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.test.rest.DensityRestTestCase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,10 +57,10 @@ import static org.hamcrest.Matchers.not;
  * <code>node.name</code>, <code>cluster.name</code>, <code>node.id</code>, <code>cluster.uuid</code>
  * should not change across all log lines
  * <p>
- * Note that this won't pass for nodes in clusters that don't have the node name defined in opensearch.yml <strong>and</strong> start
+ * Note that this won't pass for nodes in clusters that don't have the node name defined in density.yml <strong>and</strong> start
  * with DEBUG or TRACE level logging. Those nodes log a few lines before the node.name is set by <code>LogConfigurator.setNodeName</code>.
  */
-public abstract class JsonLogsIntegTestCase extends OpenSearchRestTestCase {
+public abstract class JsonLogsIntegTestCase extends DensityRestTestCase {
     /**
      * Number of lines in the log file to check for the <code>node.name</code>, <code>node.id</code> or <code>cluster.uuid</code>. We don't
      * just check the entire log file because it could be quite long

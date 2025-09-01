@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,14 +23,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.inject.Scope;
+import org.density.common.annotation.PublicApi;
+import org.density.common.inject.Scope;
 
 import java.lang.annotation.Annotation;
 
@@ -41,7 +41,7 @@ import java.lang.annotation.Annotation;
  *            {@code return null} if no return type is needed.
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface BindingScopingVisitor<V> {
@@ -59,7 +59,7 @@ public interface BindingScopingVisitor<V> {
 
     /**
      * Visit a scope annotation. This scope strategy is found only on module bindings. The instance
-     * that implements this scope is registered by {@link org.opensearch.common.inject.Binder#bindScope(Class,
+     * that implements this scope is registered by {@link org.density.common.inject.Binder#bindScope(Class,
      * Scope) Binder.bindScope()}.
      */
     V visitScopeAnnotation(Class<? extends Annotation> scopeAnnotation);

@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.services;
+package org.density.transport.grpc.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.protobufs.services.DocumentServiceGrpc;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.grpc.listeners.BulkRequestActionListener;
-import org.opensearch.transport.grpc.proto.request.document.bulk.BulkRequestProtoUtils;
-import org.opensearch.transport.grpc.util.GrpcErrorHandler;
+import org.density.protobufs.services.DocumentServiceGrpc;
+import org.density.transport.client.Client;
+import org.density.transport.grpc.listeners.BulkRequestActionListener;
+import org.density.transport.grpc.proto.request.document.bulk.BulkRequestProtoUtils;
+import org.density.transport.grpc.util.GrpcErrorHandler;
 
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -42,9 +42,9 @@ public class DocumentServiceImpl extends DocumentServiceGrpc.DocumentServiceImpl
      * @param responseObserver The observer to send the response back to the client
      */
     @Override
-    public void bulk(org.opensearch.protobufs.BulkRequest request, StreamObserver<org.opensearch.protobufs.BulkResponse> responseObserver) {
+    public void bulk(org.density.protobufs.BulkRequest request, StreamObserver<org.density.protobufs.BulkResponse> responseObserver) {
         try {
-            org.opensearch.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
+            org.density.action.bulk.BulkRequest bulkRequest = BulkRequestProtoUtils.prepareRequest(request);
             BulkRequestActionListener listener = new BulkRequestActionListener(responseObserver);
             client.bulk(bulkRequest, listener);
         } catch (RuntimeException e) {

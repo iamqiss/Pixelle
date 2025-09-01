@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.clone;
+package org.density.action.admin.cluster.snapshots.clone;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for cloning a snapshot
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class CloneSnapshotRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -51,12 +51,12 @@ public class CloneSnapshotRequestBuilder extends ClusterManagerNodeOperationRequ
     AcknowledgedResponse,
     CloneSnapshotRequestBuilder> {
 
-    protected CloneSnapshotRequestBuilder(OpenSearchClient client, ActionType<AcknowledgedResponse> action, CloneSnapshotRequest request) {
+    protected CloneSnapshotRequestBuilder(DensityClient client, ActionType<AcknowledgedResponse> action, CloneSnapshotRequest request) {
         super(client, action, request);
     }
 
     public CloneSnapshotRequestBuilder(
-        OpenSearchClient client,
+        DensityClient client,
         ActionType<AcknowledgedResponse> action,
         String repository,
         String source,

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.rest.RestStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,9 +46,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * OpenSearch REST response
+ * Density REST response
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class RestResponse {
@@ -71,7 +71,7 @@ public abstract class RestResponse {
      */
     public abstract RestStatus status();
 
-    public void copyHeaders(OpenSearchException ex) {
+    public void copyHeaders(DensityException ex) {
         Set<String> headerKeySet = ex.getHeaderKeys();
         if (customHeaders == null) {
             customHeaders = new HashMap<>(headerKeySet.size());

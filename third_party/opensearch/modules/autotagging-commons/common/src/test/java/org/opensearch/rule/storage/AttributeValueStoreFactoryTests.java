@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.storage;
+package org.density.rule.storage;
 
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.utils.RuleTestUtils.MockRuleAttributes;
-import org.opensearch.rule.utils.RuleTestUtils.MockRuleFeatureType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.utils.RuleTestUtils.MockRuleAttributes;
+import org.density.rule.utils.RuleTestUtils.MockRuleFeatureType;
+import org.density.test.DensityTestCase;
 
-public class AttributeValueStoreFactoryTests extends OpenSearchTestCase {
+public class AttributeValueStoreFactoryTests extends DensityTestCase {
     AttributeValueStoreFactory sut;
 
     @Override

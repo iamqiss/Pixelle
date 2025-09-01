@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.indices.replication.SegmentReplicationSourceService.Actions.GET_CHECKPOINT_INFO;
-import static org.opensearch.indices.replication.SegmentReplicationSourceService.Actions.GET_MERGED_SEGMENT_FILES;
-import static org.opensearch.indices.replication.SegmentReplicationSourceService.Actions.GET_SEGMENT_FILES;
+import static org.density.indices.replication.SegmentReplicationSourceService.Actions.GET_CHECKPOINT_INFO;
+import static org.density.indices.replication.SegmentReplicationSourceService.Actions.GET_MERGED_SEGMENT_FILES;
+import static org.density.indices.replication.SegmentReplicationSourceService.Actions.GET_SEGMENT_FILES;
 
 /**
  * Implementation of a {@link SegmentReplicationSource} where the source is a primary node.
  * This code executes on the target node.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PrimaryShardReplicationSource implements SegmentReplicationSource {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.ScoreDoc;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import java.util.Map;
 /**
  * Gets the inner hits of a document during search
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class InnerHitsPhase implements FetchSubPhase {
 

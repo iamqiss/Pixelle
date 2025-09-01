@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,16 +31,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.cluster.DiffableUtils.NonDiffableValueSerializer.getAbstractInstance;
-import static org.opensearch.cluster.DiffableUtils.getStringKeySerializer;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V2;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V3;
+import static org.density.cluster.DiffableUtils.NonDiffableValueSerializer.getAbstractInstance;
+import static org.density.cluster.DiffableUtils.getStringKeySerializer;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V2;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V3;
 
 /**
  * Manifest of diff between two cluster states
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ClusterStateDiffManifest implements ToXContentFragment, Writeable {
     private static final String FROM_STATE_UUID_FIELD = "from_state_uuid";
@@ -579,7 +579,7 @@ public class ClusterStateDiffManifest implements ToXContentFragment, Writeable {
     /**
      * Builder for ClusterStateDiffManifest
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private String fromStateUUID;

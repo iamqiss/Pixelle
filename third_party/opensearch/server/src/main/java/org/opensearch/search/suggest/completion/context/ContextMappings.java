@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
 import org.apache.lucene.search.suggest.document.CompletionQuery;
 import org.apache.lucene.search.suggest.document.ContextQuery;
 import org.apache.lucene.search.suggest.document.ContextSuggestField;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.DocumentMapperParser;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.search.suggest.completion.context.ContextMapping.Type;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.DocumentMapperParser;
+import org.density.index.mapper.ParseContext;
+import org.density.search.suggest.completion.context.ContextMapping.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,15 +58,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.suggest.completion.context.ContextMapping.FIELD_NAME;
-import static org.opensearch.search.suggest.completion.context.ContextMapping.FIELD_TYPE;
+import static org.density.search.suggest.completion.context.ContextMapping.FIELD_NAME;
+import static org.density.search.suggest.completion.context.ContextMapping.FIELD_TYPE;
 
 /**
  * ContextMappings indexes context-enabled suggestion fields
  * and creates context queries for defined {@link ContextMapping}s
  * for a {@link CompletionFieldMapper}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> {
 
@@ -109,7 +109,7 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
 
     /**
      * Adds a context-enabled field for all the defined mappings to <code>document</code>
-     * see {@link org.opensearch.search.suggest.completion.context.ContextMappings.TypedContextField}
+     * see {@link org.density.search.suggest.completion.context.ContextMappings.TypedContextField}
      */
     public void addField(ParseContext.Document document, String name, String input, int weight, Map<String, Set<String>> contexts) {
         document.add(new TypedContextField(name, input, weight, contexts, document));
@@ -210,7 +210,7 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
     /**
      * Maps an output context list to a map of context mapping names and their values
      * <p>
-     * see {@link org.opensearch.search.suggest.completion.context.ContextMappings.TypedContextField}
+     * see {@link org.density.search.suggest.completion.context.ContextMappings.TypedContextField}
      * @return a map of context names and their values
      *
      */
@@ -238,7 +238,7 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
      *  [{"name": .., "type": .., ..}, {..}]
      *
      */
-    public static ContextMappings load(Object configuration, Version indexVersionCreated) throws OpenSearchParseException {
+    public static ContextMappings load(Object configuration, Version indexVersionCreated) throws DensityParseException {
         final List<ContextMapping<?>> contextMappings;
         if (configuration instanceof List) {
             contextMappings = new ArrayList<>();
@@ -247,12 +247,12 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
                 contextMappings.add(load((Map<String, Object>) contextConfig, indexVersionCreated));
             }
             if (contextMappings.size() == 0) {
-                throw new OpenSearchParseException("expected at least one context mapping");
+                throw new DensityParseException("expected at least one context mapping");
             }
         } else if (configuration instanceof Map) {
             contextMappings = Collections.singletonList(load(((Map<String, Object>) configuration), indexVersionCreated));
         } else {
-            throw new OpenSearchParseException("expected a list or an entry of context mapping");
+            throw new DensityParseException("expected a list or an entry of context mapping");
         }
         return new ContextMappings(contextMappings);
     }
@@ -269,7 +269,7 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
                 contextMapping = GeoContextMapping.load(name, contextConfig);
                 break;
             default:
-                throw new OpenSearchParseException("unknown context type[" + type + "]");
+                throw new DensityParseException("unknown context type[" + type + "]");
         }
         DocumentMapperParser.checkNoRemainingFields(name, contextConfig, indexVersionCreated);
         return contextMapping;
@@ -278,7 +278,7 @@ public class ContextMappings implements ToXContent, Iterable<ContextMapping<?>> 
     private static String extractRequiredValue(Map<String, Object> contextConfig, String paramName) {
         final Object paramValue = contextConfig.get(paramName);
         if (paramValue == null) {
-            throw new OpenSearchParseException("missing [" + paramName + "] in context mapping");
+            throw new DensityParseException("missing [" + paramName + "] in context mapping");
         }
         contextConfig.remove(paramName);
         return paramValue.toString();

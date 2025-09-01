@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.bulk.TransportShardBulkActionTests.FakeDeleteResult;
-import org.opensearch.action.bulk.TransportShardBulkActionTests.FakeIndexResult;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.core.index.AppendOnlyIndexOperationRetryException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.action.DocWriteRequest;
+import org.density.action.bulk.TransportShardBulkActionTests.FakeDeleteResult;
+import org.density.action.bulk.TransportShardBulkActionTests.FakeIndexResult;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.WriteRequest;
+import org.density.action.update.UpdateRequest;
+import org.density.core.index.AppendOnlyIndexOperationRetryException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.shard.IndexShard;
+import org.density.index.translog.Translog;
+import org.density.test.DensityTestCase;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
+public class BulkPrimaryExecutionContextTests extends DensityTestCase {
 
     public void testAbortedSkipped() {
         BulkShardRequest shardRequest = generateRandomRequest();
@@ -61,7 +61,7 @@ public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
         ArrayList<DocWriteRequest<?>> nonAbortedRequests = new ArrayList<>();
         for (BulkItemRequest request : shardRequest.items()) {
             if (randomBoolean()) {
-                request.abort("index", new OpenSearchException("bla"));
+                request.abort("index", new DensityException("bla"));
             } else {
                 nonAbortedRequests.add(request.request());
             }
@@ -73,7 +73,7 @@ public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
             visitedRequests.add(context.getCurrent());
             context.setRequestToExecute(context.getCurrent());
             // using failures prevents caring about types
-            context.markOperationAsExecuted(new Engine.IndexResult(new OpenSearchException("bla"), 1));
+            context.markOperationAsExecuted(new Engine.IndexResult(new DensityException("bla"), 1));
             context.markAsCompleted(context.getExecutionResult());
         }
 
@@ -163,7 +163,7 @@ public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
                 case CREATE:
                     context.setRequestToExecute(current);
                     if (failure) {
-                        result = new Engine.IndexResult(new OpenSearchException("bla"), 1);
+                        result = new Engine.IndexResult(new DensityException("bla"), 1);
                     } else {
                         result = new FakeIndexResult(1, 1, randomLongBetween(0, 200), randomBoolean(), location);
                     }
@@ -171,7 +171,7 @@ public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
                 case UPDATE:
                     context.setRequestToExecute(new IndexRequest(current.index()).id(current.id()));
                     if (failure) {
-                        result = new Engine.IndexResult(new OpenSearchException("bla"), 1, 1, 1);
+                        result = new Engine.IndexResult(new DensityException("bla"), 1, 1, 1);
                     } else {
                         result = new FakeIndexResult(1, 1, randomLongBetween(0, 200), randomBoolean(), location);
                     }
@@ -179,7 +179,7 @@ public class BulkPrimaryExecutionContextTests extends OpenSearchTestCase {
                 case DELETE:
                     context.setRequestToExecute(current);
                     if (failure) {
-                        result = new Engine.DeleteResult(new OpenSearchException("bla"), 1, 1);
+                        result = new Engine.DeleteResult(new DensityException("bla"), 1, 1);
                     } else {
                         result = new FakeDeleteResult(1, 1, randomLongBetween(0, 200), randomBoolean(), location);
                     }

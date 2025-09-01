@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ import java.io.IOException;
  * A specific type of {@link SettingsException} indicating failure to load a class
  * based on a settings value.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NoClassSettingsException extends SettingsException {
 

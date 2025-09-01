@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.action.admin.indices.dangling.DanglingIndexInfo;
-import org.opensearch.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
-import org.opensearch.action.admin.indices.dangling.import_index.ImportDanglingIndexRequest;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
-import org.opensearch.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
-import org.opensearch.action.admin.indices.dangling.list.NodeListDanglingIndicesResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.action.admin.indices.dangling.DanglingIndexInfo;
+import org.density.action.admin.indices.dangling.delete.DeleteDanglingIndexRequest;
+import org.density.action.admin.indices.dangling.import_index.ImportDanglingIndexRequest;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesRequest;
+import org.density.action.admin.indices.dangling.list.ListDanglingIndicesResponse;
+import org.density.action.admin.indices.dangling.list.NodeListDanglingIndicesResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.rest.RestStatus;
+import org.density.indices.IndicesService;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.cluster.metadata.IndexGraveyard.SETTING_MAX_TOMBSTONES;
-import static org.opensearch.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexGraveyard.SETTING_MAX_TOMBSTONES;
+import static org.density.gateway.DanglingIndicesState.AUTO_IMPORT_DANGLING_INDICES_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -69,10 +69,10 @@ import static org.hamcrest.Matchers.notNullValue;
  * <p>See also <code>DanglingIndicesRestIT</code> in the <code>qa:smoke-test-http</code>
  * project.
  *
- * @see org.opensearch.action.admin.indices.dangling
+ * @see org.density.action.admin.indices.dangling
  */
-@ClusterScope(numDataNodes = 0, scope = OpenSearchIntegTestCase.Scope.TEST)
-public class DanglingIndicesIT extends OpenSearchIntegTestCase {
+@ClusterScope(numDataNodes = 0, scope = DensityIntegTestCase.Scope.TEST)
+public class DanglingIndicesIT extends DensityIntegTestCase {
     private static final String INDEX_NAME = "test-idx-1";
     private static final String OTHER_INDEX_NAME = INDEX_NAME + "-other";
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
-import org.opensearch.Version;
-import org.opensearch.bootstrap.BootstrapContext;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
+import org.density.Version;
+import org.density.bootstrap.BootstrapContext;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
 
 import java.nio.file.Path;
 
-public abstract class AbstractBootstrapCheckTestCase extends OpenSearchTestCase {
+public abstract class AbstractBootstrapCheckTestCase extends DensityTestCase {
     protected final BootstrapContext emptyContext;
 
     public AbstractBootstrapCheckTestCase() {

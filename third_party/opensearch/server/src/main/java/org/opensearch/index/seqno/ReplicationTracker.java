@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.WriteStateException;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.SegmentReplicationShardStats;
-import org.opensearch.index.engine.SafeCommitInfo;
-import org.opensearch.index.shard.AbstractIndexShardComponent;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.SegmentReplicationLagTimer;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.SuppressForbidden;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.WriteStateException;
+import org.density.index.IndexSettings;
+import org.density.index.SegmentReplicationShardStats;
+import org.density.index.engine.SafeCommitInfo;
+import org.density.index.shard.AbstractIndexShardComponent;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.ReplicationGroup;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.SegmentReplicationLagTimer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -99,7 +99,7 @@ import java.util.stream.StreamSupport;
  * <p>
  * The global checkpoint is maintained by the primary shard and is replicated to all the replicas (via {@link GlobalCheckpointSyncAction}).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationTracker extends AbstractIndexShardComponent implements LongSupplier {
 
@@ -686,7 +686,7 @@ public class ReplicationTracker extends AbstractIndexShardComponent implements L
     /**
     * The state of the lucene checkpoint
     *
-    * @opensearch.api
+    * @density.api
     */
     @PublicApi(since = "1.0.0")
     public static class CheckpointState implements Writeable {
@@ -1965,7 +1965,7 @@ public class ReplicationTracker extends AbstractIndexShardComponent implements L
      * Represents the sequence number component of the primary context. This is the knowledge on the primary of the in-sync and initializing
      * shards and their local checkpoints.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class PrimaryContext implements Writeable {

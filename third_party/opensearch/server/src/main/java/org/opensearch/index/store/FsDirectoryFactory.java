@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -43,13 +43,13 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.store.NativeFSLockFactory;
 import org.apache.lucene.store.SimpleFSLockFactory;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.plugins.IndexStorePlugin;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.util.io.IOUtils;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.plugins.IndexStorePlugin;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,7 +61,7 @@ import java.util.function.BiPredicate;
 /**
  * Factory for a filesystem directory
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FsDirectoryFactory implements IndexStorePlugin.DirectoryFactory {
 
@@ -148,7 +148,7 @@ public class FsDirectoryFactory implements IndexStorePlugin.DirectoryFactory {
     /**
      * A hybrid directory implementation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class HybridDirectory extends NIOFSDirectory {
         private final MMapDirectory delegate;

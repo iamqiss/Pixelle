@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
+import org.density.Version;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -46,7 +46,7 @@ import java.util.function.Consumer;
 /**
  * Decodes inbound data off the wire
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InboundDecoder implements Releasable {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.support.ContextPreservingActionListener;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.ActionRunnable;
+import org.density.action.support.ContextPreservingActionListener;
+import org.density.common.collect.Tuple;
+import org.density.core.action.ActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit;
  * been performed, a request to add a listener will simply result in execution of the listener
  * on the calling thread.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ListenableFuture<V> extends BaseFuture<V> implements ActionListener<V> {
 
@@ -79,7 +79,7 @@ public final class ListenableFuture<V> extends BaseFuture<V> implements ActionLi
     public void addListener(ActionListener<V> listener, ExecutorService executor, ThreadContext threadContext) {
         if (done) {
             // run the callback directly, we don't hold the lock and don't need to fork!
-            notifyListener(listener, OpenSearchExecutors.newDirectExecutorService());
+            notifyListener(listener, DensityExecutors.newDirectExecutorService());
         } else {
             final boolean run;
             // check done under lock since it could have been modified and protect modifications
@@ -101,7 +101,7 @@ public final class ListenableFuture<V> extends BaseFuture<V> implements ActionLi
 
             if (run) {
                 // run the callback directly, we don't hold the lock and don't need to fork!
-                notifyListener(listener, OpenSearchExecutors.newDirectExecutorService());
+                notifyListener(listener, DensityExecutors.newDirectExecutorService());
             }
         }
     }

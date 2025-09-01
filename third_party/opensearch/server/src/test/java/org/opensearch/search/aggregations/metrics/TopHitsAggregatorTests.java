@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.document.Document;
@@ -52,26 +52,26 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.bucket.terms.Terms;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
-import org.opensearch.search.sort.SortOrder;
+import org.density.core.common.text.Text;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.Uid;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.bucket.terms.Terms;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 
-import static org.opensearch.search.aggregations.AggregationBuilders.terms;
-import static org.opensearch.search.aggregations.AggregationBuilders.topHits;
+import static org.density.search.aggregations.AggregationBuilders.terms;
+import static org.density.search.aggregations.AggregationBuilders.topHits;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.http.HttpRequest;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.telemetry.tracing.attributes.Attributes;
-import org.opensearch.telemetry.tracing.noop.NoopSpan;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.network.NetworkAddress;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.rest.RestStatus;
+import org.density.http.HttpRequest;
+import org.density.http.HttpResponse;
+import org.density.rest.RestRequest;
+import org.density.telemetry.tracing.attributes.Attributes;
+import org.density.telemetry.tracing.noop.NoopSpan;
+import org.density.test.DensityTestCase;
+import org.density.transport.Transport;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class SpanBuilderTests extends OpenSearchTestCase {
+public class SpanBuilderTests extends DensityTestCase {
 
     public String uri;
 

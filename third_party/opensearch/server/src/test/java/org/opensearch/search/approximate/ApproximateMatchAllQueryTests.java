@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.approximate;
+package org.density.search.approximate;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestSearchContext;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityTestCase;
+import org.density.test.TestSearchContext;
 
 import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ApproximateMatchAllQueryTests extends OpenSearchTestCase {
+public class ApproximateMatchAllQueryTests extends DensityTestCase {
 
     public void testCanApproximate() throws IOException {
         ApproximateMatchAllQuery approximateMatchAllQuery = new ApproximateMatchAllQuery();

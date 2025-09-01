@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.threadpool;
+package org.density.threadpool;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.OpenSearchThreadPoolExecutor;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.DensityThreadPoolExecutor;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -50,7 +50,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase {
+public class UpdateThreadPoolSettingsTests extends DensityThreadPoolTestCase {
 
     public void testCorrectThreadPoolTypePermittedInSettings() throws InterruptedException {
         String threadPoolName = randomThreadPoolName();
@@ -76,7 +76,7 @@ public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase 
     }
 
     public void testWriteThreadPoolsMaxSize() throws InterruptedException {
-        final int maxSize = 1 + OpenSearchExecutors.allocatedProcessors(Settings.EMPTY);
+        final int maxSize = 1 + DensityExecutors.allocatedProcessors(Settings.EMPTY);
         final int tooBig = randomIntBetween(1 + maxSize, Integer.MAX_VALUE);
 
         // try to create a too big thread pool
@@ -104,7 +104,7 @@ public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase 
 
     private static int getExpectedThreadPoolSize(Settings settings, String name, int size) {
         if (name.equals(ThreadPool.Names.WRITE) || name.equals(Names.SYSTEM_WRITE)) {
-            return Math.min(size, OpenSearchExecutors.allocatedProcessors(settings));
+            return Math.min(size, DensityExecutors.allocatedProcessors(settings));
         } else {
             return size;
         }
@@ -121,17 +121,17 @@ public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase 
                 .put("thread_pool." + threadPoolName + ".size", expectedSize)
                 .build();
             threadPool = new ThreadPool(nodeSettings);
-            assertThat(threadPool.executor(threadPoolName), instanceOf(OpenSearchThreadPoolExecutor.class));
+            assertThat(threadPool.executor(threadPoolName), instanceOf(DensityThreadPoolExecutor.class));
 
             assertEquals(info(threadPool, threadPoolName).getThreadPoolType(), ThreadPool.ThreadPoolType.FIXED);
-            assertThat(threadPool.executor(threadPoolName), instanceOf(OpenSearchThreadPoolExecutor.class));
-            assertThat(((OpenSearchThreadPoolExecutor) threadPool.executor(threadPoolName)).getCorePoolSize(), equalTo(expectedSize));
-            assertThat(((OpenSearchThreadPoolExecutor) threadPool.executor(threadPoolName)).getMaximumPoolSize(), equalTo(expectedSize));
+            assertThat(threadPool.executor(threadPoolName), instanceOf(DensityThreadPoolExecutor.class));
+            assertThat(((DensityThreadPoolExecutor) threadPool.executor(threadPoolName)).getCorePoolSize(), equalTo(expectedSize));
+            assertThat(((DensityThreadPoolExecutor) threadPool.executor(threadPoolName)).getMaximumPoolSize(), equalTo(expectedSize));
             assertThat(info(threadPool, threadPoolName).getMin(), equalTo(expectedSize));
             assertThat(info(threadPool, threadPoolName).getMax(), equalTo(expectedSize));
             // keep alive does not apply to fixed thread pools
             assertThat(
-                ((OpenSearchThreadPoolExecutor) threadPool.executor(threadPoolName)).getKeepAliveTime(TimeUnit.MINUTES),
+                ((DensityThreadPoolExecutor) threadPool.executor(threadPoolName)).getKeepAliveTime(TimeUnit.MINUTES),
                 equalTo(0L)
             );
         } finally {
@@ -158,7 +158,7 @@ public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase 
             final long expectedKeepAlive = "generic".equals(threadPoolName) ? 30 : 300;
             assertThat(info(threadPool, threadPoolName).getKeepAlive().seconds(), equalTo(expectedKeepAlive));
             assertEquals(info(threadPool, threadPoolName).getThreadPoolType(), ThreadPool.ThreadPoolType.SCALING);
-            assertThat(threadPool.executor(threadPoolName), instanceOf(OpenSearchThreadPoolExecutor.class));
+            assertThat(threadPool.executor(threadPoolName), instanceOf(DensityThreadPoolExecutor.class));
         } finally {
             terminateThreadPoolIfNeeded(threadPool);
         }
@@ -208,7 +208,7 @@ public class UpdateThreadPoolSettingsTests extends OpenSearchThreadPoolTestCase 
             final ScalingExecutorBuilder scaling = new ScalingExecutorBuilder(
                 "my_pool1",
                 1,
-                OpenSearchExecutors.allocatedProcessors(Settings.EMPTY),
+                DensityExecutors.allocatedProcessors(Settings.EMPTY),
                 TimeValue.timeValueMinutes(1)
             );
 

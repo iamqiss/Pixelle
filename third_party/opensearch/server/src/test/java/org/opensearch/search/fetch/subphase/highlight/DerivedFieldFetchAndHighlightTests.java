@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -16,41 +16,41 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DefaultDerivedFieldResolver;
-import org.opensearch.index.mapper.DerivedField;
-import org.opensearch.index.mapper.DerivedFieldResolverFactory;
-import org.opensearch.index.mapper.DerivedFieldSupportedTypes;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SourceToParse;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptModule;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
-import org.opensearch.search.fetch.subphase.FieldAndFormat;
-import org.opensearch.search.fetch.subphase.FieldFetcher;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.document.DocumentField;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DefaultDerivedFieldResolver;
+import org.density.index.mapper.DerivedField;
+import org.density.index.mapper.DerivedFieldResolverFactory;
+import org.density.index.mapper.DerivedFieldSupportedTypes;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SourceToParse;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptModule;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
+import org.density.search.fetch.subphase.FieldAndFormat;
+import org.density.search.fetch.subphase.FieldFetcher;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -63,7 +63,7 @@ import static java.util.Collections.singletonMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DerivedFieldFetchAndHighlightTests extends OpenSearchSingleNodeTestCase {
+public class DerivedFieldFetchAndHighlightTests extends DensitySingleNodeTestCase {
     private static String DERIVED_FIELD_SCRIPT_1 = "derived_field_script_1";
     private static String DERIVED_FIELD_SCRIPT_2 = "derived_field_script_2";
     private static String DERIVED_FIELD_SCRIPT_3 = "derived_field_script_3";

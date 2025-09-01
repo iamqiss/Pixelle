@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.list;
+package org.density.action.admin.indices.dangling.list;
 
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.indices.dangling.DanglingIndexInfo;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.nodes.TransportNodesAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.gateway.DanglingIndicesState;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.indices.dangling.DanglingIndexInfo;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.nodes.TransportNodesAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.gateway.DanglingIndicesState;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import java.util.List;
  * Implements the listing of all dangling indices. All nodes in the cluster are queried, and
  * their answers aggregated. Finding dangling indices is performed in {@link DanglingIndicesState}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportListDanglingIndicesAction extends TransportNodesAction<
     ListDanglingIndicesRequest,

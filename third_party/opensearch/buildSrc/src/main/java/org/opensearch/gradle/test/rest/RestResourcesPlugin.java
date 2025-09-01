@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test.rest;
+package org.density.gradle.test.rest;
 
-import org.opensearch.gradle.VersionProperties;
-import org.opensearch.gradle.info.BuildParams;
+import org.density.gradle.VersionProperties;
+import org.density.gradle.info.BuildParams;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -92,7 +92,7 @@ public class RestResourcesPlugin implements Plugin<Project> {
             });
             testConfig.withDependencies(s -> s.add(restTestdependency));
         } else {
-            Dependency dependency = project.getDependencies().create("org.opensearch:rest-api-spec:" + VersionProperties.getOpenSearch());
+            Dependency dependency = project.getDependencies().create("org.density:rest-api-spec:" + VersionProperties.getDensity());
             testConfig.withDependencies(s -> s.add(dependency));
         }
 
@@ -117,7 +117,7 @@ public class RestResourcesPlugin implements Plugin<Project> {
             });
             specConfig.withDependencies(s -> s.add(restSpecDependency));
         } else {
-            Dependency dependency = project.getDependencies().create("org.opensearch:rest-api-spec:" + VersionProperties.getOpenSearch());
+            Dependency dependency = project.getDependencies().create("org.density:rest-api-spec:" + VersionProperties.getDensity());
             specConfig.withDependencies(s -> s.add(dependency));
         }
 

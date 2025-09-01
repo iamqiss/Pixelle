@@ -1,78 +1,78 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.Version;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.DiffableStringMap;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.TemplatesMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.cluster.routing.remote.InternalRemoteRoutingTableService;
-import org.opensearch.cluster.routing.remote.NoopRemoteRoutingTableService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.CheckedRunnable;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.remote.AbstractClusterMetadataWriteableBlobEntity;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
-import org.opensearch.gateway.remote.model.RemoteClusterMetadataManifest;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata;
-import org.opensearch.index.remote.RemoteIndexPathUploader;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.indices.DefaultRemoteStoreSettings;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.repositories.FilterRepository;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.RepositoryMissingException;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.blobstore.ChecksumWritableBlobStoreFormat;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.DiffableStringMap;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.TemplatesMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.cluster.routing.remote.InternalRemoteRoutingTableService;
+import org.density.cluster.routing.remote.NoopRemoteRoutingTableService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.CheckedRunnable;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.common.network.NetworkModule;
+import org.density.common.remote.AbstractClusterMetadataWriteableBlobEntity;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.compress.Compressor;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
+import org.density.gateway.remote.model.RemoteClusterMetadataManifest;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.gateway.remote.model.RemotePersistentSettingsMetadata;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.gateway.remote.model.RemoteTransientSettingsMetadata;
+import org.density.index.remote.RemoteIndexPathUploader;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.indices.DefaultRemoteStoreSettings;
+import org.density.indices.IndicesModule;
+import org.density.repositories.FilterRepository;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.RepositoryMissingException;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.blobstore.ChecksumWritableBlobStoreFormat;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -106,51 +106,51 @@ import org.mockito.Mockito;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V1;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V2;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTE;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata1;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata2;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata3;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom1;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom2;
-import static org.opensearch.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom3;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.FORMAT_PARAMS;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.getFormattedIndexFileName;
-import static org.opensearch.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_DEFAULT;
-import static org.opensearch.gateway.remote.model.RemoteClusterBlocks.CLUSTER_BLOCKS_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteClusterBlocksTests.randomClusterBlocks;
-import static org.opensearch.gateway.remote.model.RemoteClusterStateCustoms.CLUSTER_STATE_CUSTOM;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.readFrom;
-import static org.opensearch.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES;
-import static org.opensearch.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteDiscoveryNodesTests.getDiscoveryNodes;
-import static org.opensearch.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettingsTests.getHashesOfConsistentSettings;
-import static org.opensearch.gateway.remote.model.RemoteIndexMetadata.INDEX;
-import static org.opensearch.gateway.remote.model.RemoteIndexMetadata.INDEX_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTINGS_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA_FORMAT;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadataTests.getTemplatesMetadata;
-import static org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V1;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V2;
+import static org.density.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTE;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata1;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata2;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.CustomMetadata3;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom1;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom2;
+import static org.density.gateway.remote.RemoteClusterStateTestUtils.TestClusterStateCustom3;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.FORMAT_PARAMS;
+import static org.density.gateway.remote.RemoteClusterStateUtils.getFormattedIndexFileName;
+import static org.density.gateway.remote.RemoteGlobalMetadataManager.GLOBAL_METADATA_UPLOAD_TIMEOUT_DEFAULT;
+import static org.density.gateway.remote.model.RemoteClusterBlocks.CLUSTER_BLOCKS_FORMAT;
+import static org.density.gateway.remote.model.RemoteClusterBlocksTests.randomClusterBlocks;
+import static org.density.gateway.remote.model.RemoteClusterStateCustoms.CLUSTER_STATE_CUSTOM;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.readFrom;
+import static org.density.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES;
+import static org.density.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES_FORMAT;
+import static org.density.gateway.remote.model.RemoteDiscoveryNodesTests.getDiscoveryNodes;
+import static org.density.gateway.remote.model.RemoteGlobalMetadata.GLOBAL_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS_FORMAT;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettingsTests.getHashesOfConsistentSettings;
+import static org.density.gateway.remote.model.RemoteIndexMetadata.INDEX;
+import static org.density.gateway.remote.model.RemoteIndexMetadata.INDEX_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTINGS_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA_FORMAT;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadataTests.getTemplatesMetadata;
+import static org.density.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -174,7 +174,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
+public class RemoteClusterStateServiceTests extends DensityTestCase {
 
     private RemoteClusterStateService remoteClusterStateService;
     private ClusterService clusterService;
@@ -2292,7 +2292,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID("state-uuid")
             .clusterUUID("cluster-uuid")
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .codecVersion(ClusterMetadataManifest.CODEC_V0)
             .build();
@@ -2329,7 +2329,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
                 new ClusterMetadataManifest.UploadedMetadataAttribute(IndexGraveyard.TYPE, "mock-custom-" + IndexGraveyard.TYPE + "-file")
             )
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .routingTableVersion(1)
             .indicesRouting(List.of())
@@ -2376,7 +2376,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
                 new ClusterMetadataManifest.UploadedMetadataAttribute(IndexGraveyard.TYPE, "mock-custom-" + IndexGraveyard.TYPE + "-file")
             )
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .routingTableVersion(1)
             .indicesRouting(List.of())
@@ -2398,7 +2398,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .clusterUUID("cluster-uuid")
             .codecVersion(CODEC_V2)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .build();
 
@@ -2430,7 +2430,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID("state-uuid")
             .clusterUUID("cluster-uuid")
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .codecVersion(CODEC_V2)
             .previousClusterUUID("prev-cluster-uuid")
             .build();
@@ -2464,7 +2464,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID("state-uuid")
             .clusterUUID("cluster-uuid")
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .codecVersion(CODEC_V2)
             .previousClusterUUID("prev-cluster-uuid")
             .build();
@@ -2511,7 +2511,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
                 new ClusterMetadataManifest.UploadedMetadataAttribute(IndexGraveyard.TYPE, "mock-custom-" + IndexGraveyard.TYPE + "-file")
             )
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .routingTableVersion(1)
             .indicesRouting(List.of())
@@ -2553,7 +2553,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .codecVersion(CODEC_V1)
             .globalMetadataFileName(globalIndexMetadataName)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .build();
 
@@ -2600,7 +2600,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID("state-uuid")
             .clusterUUID("cluster-uuid")
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID("prev-cluster-uuid")
             .codecVersion(CODEC_V2)
             .build();
@@ -3934,7 +3934,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID(stateUUID)
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(previousClusterUUID)
             .committed(true)
             .clusterUUIDCommitted(isUUIDCommitted)
@@ -3961,7 +3961,7 @@ public class RemoteClusterStateServiceTests extends OpenSearchTestCase {
             .stateUUID(stateUUID)
             .clusterUUID(clusterUUID)
             .nodeId("nodeA")
-            .opensearchVersion(VersionUtils.randomOpenSearchVersion(random()))
+            .densityVersion(VersionUtils.randomDensityVersion(random()))
             .previousClusterUUID(previousClusterUUID)
             .committed(true)
             .clusterUUIDCommitted(isUUIDCommitted)

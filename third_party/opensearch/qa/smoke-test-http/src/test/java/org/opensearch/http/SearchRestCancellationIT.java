@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,45 +25,45 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.search.MultiSearchAction;
-import org.opensearch.action.search.MultiSearchRequest;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.client.Cancellable;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseListener;
-import org.opensearch.common.SetOnce;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.lookup.LeafFieldsLookup;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.tasks.TaskManager;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.search.MultiSearchAction;
+import org.density.action.search.MultiSearchRequest;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.WriteRequest;
+import org.density.client.Cancellable;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseListener;
+import org.density.common.SetOnce;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.lookup.LeafFieldsLookup;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.core.tasks.TaskId;
+import org.density.tasks.TaskInfo;
+import org.density.tasks.TaskManager;
+import org.density.transport.TransportService;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -80,8 +80,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
-import static org.opensearch.index.query.QueryBuilders.scriptQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.index.query.QueryBuilders.scriptQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
 

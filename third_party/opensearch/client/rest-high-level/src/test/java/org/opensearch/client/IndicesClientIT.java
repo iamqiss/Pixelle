@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,105 +26,105 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchStatusException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeResponse;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryResponse;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.broadcast.BroadcastResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.client.indices.AnalyzeRequest;
-import org.opensearch.client.indices.AnalyzeResponse;
-import org.opensearch.client.indices.CloseIndexRequest;
-import org.opensearch.client.indices.CloseIndexResponse;
-import org.opensearch.client.indices.ComposableIndexTemplateExistRequest;
-import org.opensearch.client.indices.CreateDataStreamRequest;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.CreateIndexResponse;
-import org.opensearch.client.indices.DataStream;
-import org.opensearch.client.indices.DataStreamsStatsRequest;
-import org.opensearch.client.indices.DataStreamsStatsResponse;
-import org.opensearch.client.indices.DataStreamsStatsResponse.DataStreamStats;
-import org.opensearch.client.indices.DeleteAliasRequest;
-import org.opensearch.client.indices.DeleteComposableIndexTemplateRequest;
-import org.opensearch.client.indices.DeleteDataStreamRequest;
-import org.opensearch.client.indices.GetComposableIndexTemplateRequest;
-import org.opensearch.client.indices.GetComposableIndexTemplatesResponse;
-import org.opensearch.client.indices.GetDataStreamRequest;
-import org.opensearch.client.indices.GetDataStreamResponse;
-import org.opensearch.client.indices.GetFieldMappingsRequest;
-import org.opensearch.client.indices.GetFieldMappingsResponse;
-import org.opensearch.client.indices.GetIndexRequest;
-import org.opensearch.client.indices.GetIndexResponse;
-import org.opensearch.client.indices.GetIndexTemplatesRequest;
-import org.opensearch.client.indices.GetIndexTemplatesResponse;
-import org.opensearch.client.indices.GetMappingsRequest;
-import org.opensearch.client.indices.GetMappingsResponse;
-import org.opensearch.client.indices.IndexTemplateMetadata;
-import org.opensearch.client.indices.IndexTemplatesExistRequest;
-import org.opensearch.client.indices.PutComposableIndexTemplateRequest;
-import org.opensearch.client.indices.PutIndexTemplateRequest;
-import org.opensearch.client.indices.PutMappingRequest;
-import org.opensearch.client.indices.SimulateIndexTemplateRequest;
-import org.opensearch.client.indices.SimulateIndexTemplateResponse;
-import org.opensearch.client.indices.rollover.RolloverRequest;
-import org.opensearch.client.indices.rollover.RolloverResponse;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
+import org.density.DensityException;
+import org.density.DensityStatusException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.open.OpenIndexResponse;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.shrink.ResizeRequest;
+import org.density.action.admin.indices.shrink.ResizeResponse;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryResponse;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.broadcast.BroadcastResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.client.indices.AnalyzeRequest;
+import org.density.client.indices.AnalyzeResponse;
+import org.density.client.indices.CloseIndexRequest;
+import org.density.client.indices.CloseIndexResponse;
+import org.density.client.indices.ComposableIndexTemplateExistRequest;
+import org.density.client.indices.CreateDataStreamRequest;
+import org.density.client.indices.CreateIndexRequest;
+import org.density.client.indices.CreateIndexResponse;
+import org.density.client.indices.DataStream;
+import org.density.client.indices.DataStreamsStatsRequest;
+import org.density.client.indices.DataStreamsStatsResponse;
+import org.density.client.indices.DataStreamsStatsResponse.DataStreamStats;
+import org.density.client.indices.DeleteAliasRequest;
+import org.density.client.indices.DeleteComposableIndexTemplateRequest;
+import org.density.client.indices.DeleteDataStreamRequest;
+import org.density.client.indices.GetComposableIndexTemplateRequest;
+import org.density.client.indices.GetComposableIndexTemplatesResponse;
+import org.density.client.indices.GetDataStreamRequest;
+import org.density.client.indices.GetDataStreamResponse;
+import org.density.client.indices.GetFieldMappingsRequest;
+import org.density.client.indices.GetFieldMappingsResponse;
+import org.density.client.indices.GetIndexRequest;
+import org.density.client.indices.GetIndexResponse;
+import org.density.client.indices.GetIndexTemplatesRequest;
+import org.density.client.indices.GetIndexTemplatesResponse;
+import org.density.client.indices.GetMappingsRequest;
+import org.density.client.indices.GetMappingsResponse;
+import org.density.client.indices.IndexTemplateMetadata;
+import org.density.client.indices.IndexTemplatesExistRequest;
+import org.density.client.indices.PutComposableIndexTemplateRequest;
+import org.density.client.indices.PutIndexTemplateRequest;
+import org.density.client.indices.PutMappingRequest;
+import org.density.client.indices.SimulateIndexTemplateRequest;
+import org.density.client.indices.SimulateIndexTemplateResponse;
+import org.density.client.indices.rollover.RolloverRequest;
+import org.density.client.indices.rollover.RolloverResponse;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Template;
+import org.density.common.ValidationException;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -134,11 +134,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.xcontent.support.XContentMapValues.extractRawValues;
-import static org.opensearch.common.xcontent.support.XContentMapValues.extractValue;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.xcontent.support.XContentMapValues.extractRawValues;
+import static org.density.common.xcontent.support.XContentMapValues.extractValue;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.contains;
@@ -155,7 +155,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
-public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
+public class IndicesClientIT extends DensityRestHighLevelClientTestCase {
 
     public void testIndicesExists() throws IOException {
         // Index present
@@ -269,8 +269,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             settings.put(SETTING_CREATION_DATE, -1);
             createIndexRequest.settings(settings);
 
-            OpenSearchStatusException exception = expectThrows(
-                OpenSearchStatusException.class,
+            DensityStatusException exception = expectThrows(
+                DensityStatusException.class,
                 () -> execute(createIndexRequest, highLevelClient().indices()::create, highLevelClient().indices()::createAsync)
             );
             assertTrue(exception.getMessage().contains("private index setting [index.creation_date] can not be set explicitly"));
@@ -325,8 +325,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertFalse(indexExists(nonExistentIndex));
 
         GetSettingsRequest getSettingsRequest = new GetSettingsRequest().indices(nonExistentIndex);
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(getSettingsRequest, highLevelClient().indices()::getSettings, highLevelClient().indices()::getSettingsAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -475,8 +475,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertFalse(indexExists(nonExistentIndex));
 
         GetIndexRequest getIndexRequest = new GetIndexRequest(nonExistentIndex);
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(getIndexRequest, highLevelClient().indices()::get, highLevelClient().indices()::getAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -602,8 +602,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
 
             DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(nonExistentIndex);
 
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(deleteIndexRequest, highLevelClient().indices()::delete, highLevelClient().indices()::deleteAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -683,8 +683,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
 
         IndicesAliasesRequest nonExistentIndexRequest = new IndicesAliasesRequest();
         nonExistentIndexRequest.addAliasAction(new AliasActions(AliasActions.Type.ADD).index(nonExistentIndex).alias(alias));
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(
                 nonExistentIndexRequest,
                 highLevelClient().indices()::updateAliases,
@@ -694,25 +694,25 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(exception.status(), equalTo(RestStatus.NOT_FOUND));
         assertThat(
             exception.getMessage(),
-            equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+            equalTo("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
         );
-        assertThat(exception.getMetadata("opensearch.index"), hasItem(nonExistentIndex));
+        assertThat(exception.getMetadata("density.index"), hasItem(nonExistentIndex));
 
         createIndex(index, Settings.EMPTY);
         IndicesAliasesRequest mixedRequest = new IndicesAliasesRequest();
         mixedRequest.addAliasAction(new AliasActions(AliasActions.Type.ADD).indices(index).aliases(alias));
         mixedRequest.addAliasAction(new AliasActions(AliasActions.Type.REMOVE).indices(nonExistentIndex).alias(alias));
         exception = expectThrows(
-            OpenSearchStatusException.class,
+            DensityStatusException.class,
             () -> execute(mixedRequest, highLevelClient().indices()::updateAliases, highLevelClient().indices()::updateAliasesAsync)
         );
         assertThat(exception.status(), equalTo(RestStatus.NOT_FOUND));
         assertThat(
             exception.getMessage(),
-            equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+            equalTo("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
         );
-        assertThat(exception.getMetadata("opensearch.index"), hasItem(nonExistentIndex));
-        assertThat(exception.getMetadata("opensearch.index"), not(hasItem(index)));
+        assertThat(exception.getMetadata("density.index"), hasItem(nonExistentIndex));
+        assertThat(exception.getMetadata("density.index"), not(hasItem(index)));
         assertThat(aliasExists(index, alias), equalTo(false));
         assertThat(aliasExists(alias), equalTo(false));
 
@@ -720,16 +720,16 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         removeIndexRequest.addAliasAction(new AliasActions(AliasActions.Type.ADD).index(nonExistentIndex).alias(alias));
         removeIndexRequest.addAliasAction(new AliasActions(AliasActions.Type.REMOVE_INDEX).indices(nonExistentIndex));
         exception = expectThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> execute(removeIndexRequest, highLevelClient().indices()::updateAliases, highLevelClient().indices()::updateAliasesAsync)
         );
         assertThat(exception.status(), equalTo(RestStatus.NOT_FOUND));
         assertThat(
             exception.getMessage(),
-            equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+            equalTo("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
         );
-        assertThat(exception.getMetadata("opensearch.index"), hasItem(nonExistentIndex));
-        assertThat(exception.getMetadata("opensearch.index"), not(hasItem(index)));
+        assertThat(exception.getMetadata("density.index"), hasItem(nonExistentIndex));
+        assertThat(exception.getMetadata("density.index"), not(hasItem(index)));
         assertThat(aliasExists(index, alias), equalTo(false));
         assertThat(aliasExists(alias), equalTo(false));
     }
@@ -762,8 +762,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertFalse(indexExists(nonExistentIndex));
 
         OpenIndexRequest openIndexRequest = new OpenIndexRequest(nonExistentIndex);
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(openIndexRequest, highLevelClient().indices()::open, highLevelClient().indices()::openAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -779,8 +779,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
 
         OpenIndexRequest strictOpenIndexRequest = new OpenIndexRequest(nonExistentIndex);
         strictOpenIndexRequest.indicesOptions(IndicesOptions.strictExpandOpen());
-        OpenSearchException strictException = expectThrows(
-            OpenSearchException.class,
+        DensityException strictException = expectThrows(
+            DensityException.class,
             () -> execute(openIndexRequest, highLevelClient().indices()::open, highLevelClient().indices()::openAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, strictException.status());
@@ -822,8 +822,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertFalse(indexExists(nonExistentIndex));
 
         CloseIndexRequest closeIndexRequest = new CloseIndexRequest(nonExistentIndex);
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(closeIndexRequest, highLevelClient().indices()::close, highLevelClient().indices()::closeAsync)
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -832,8 +832,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
     public void testCloseEmptyOrNullIndex() {
         String[] indices = randomBoolean() ? Strings.EMPTY_ARRAY : null;
         CloseIndexRequest closeIndexRequest = new CloseIndexRequest(indices);
-        org.opensearch.client.ValidationException exception = expectThrows(
-            org.opensearch.client.ValidationException.class,
+        org.density.client.ValidationException exception = expectThrows(
+            org.density.client.ValidationException.class,
             () -> execute(closeIndexRequest, highLevelClient().indices()::close, highLevelClient().indices()::closeAsync)
         );
         assertThat(exception.validationErrors().get(0), equalTo("index is missing"));
@@ -859,8 +859,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             String nonExistentIndex = "non_existent_index";
             assertFalse(indexExists(nonExistentIndex));
             RefreshRequest refreshRequest = new RefreshRequest(nonExistentIndex);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(refreshRequest, highLevelClient().indices()::refresh, highLevelClient().indices()::refreshAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -887,8 +887,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             String nonExistentIndex = "non_existent_index";
             assertFalse(indexExists(nonExistentIndex));
             FlushRequest flushRequest = new FlushRequest(nonExistentIndex);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(flushRequest, highLevelClient().indices()::flush, highLevelClient().indices()::flushAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -915,8 +915,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             String nonExistentIndex = "non_existent_index";
             assertFalse(indexExists(nonExistentIndex));
             ClearIndicesCacheRequest clearCacheRequest = new ClearIndicesCacheRequest(nonExistentIndex);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(clearCacheRequest, highLevelClient().indices()::clearCache, highLevelClient().indices()::clearCacheAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -945,8 +945,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             String nonExistentIndex = "non_existent_index";
             assertFalse(indexExists(nonExistentIndex));
             ForceMergeRequest forceMergeRequest = new ForceMergeRequest(nonExistentIndex);
-            OpenSearchException exception = expectThrows(
-                OpenSearchException.class,
+            DensityException exception = expectThrows(
+                DensityException.class,
                 () -> execute(forceMergeRequest, highLevelClient().indices()::forcemerge, highLevelClient().indices()::forcemergeAsync)
             );
             assertEquals(RestStatus.NOT_FOUND, exception.status());
@@ -989,7 +989,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             .putNull("index.routing.allocation.require._name")
             .build();
         resizeRequest.setTargetIndex(
-            new org.opensearch.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
+            new org.density.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
         );
         ResizeResponse resizeResponse = execute(
             resizeRequest,
@@ -1023,7 +1023,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         resizeRequest.setResizeType(ResizeType.SPLIT);
         Settings targetSettings = Settings.builder().put("index.number_of_shards", 4).put("index.number_of_replicas", 0).build();
         resizeRequest.setTargetIndex(
-            new org.opensearch.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
+            new org.density.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
         );
         ResizeResponse resizeResponse = execute(resizeRequest, highLevelClient().indices()::split, highLevelClient().indices()::splitAsync);
         assertTrue(resizeResponse.isAcknowledged());
@@ -1053,7 +1053,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         resizeRequest.setResizeType(ResizeType.CLONE);
         Settings targetSettings = Settings.builder().put("index.number_of_shards", 2).put("index.number_of_replicas", 0).build();
         resizeRequest.setTargetIndex(
-            new org.opensearch.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
+            new org.density.action.admin.indices.create.CreateIndexRequest("target").settings(targetSettings).alias(new Alias("alias"))
         );
         ResizeResponse resizeResponse = execute(resizeRequest, highLevelClient().indices()::clone, highLevelClient().indices()::cloneAsync);
         assertTrue(resizeResponse.isAcknowledged());
@@ -1294,7 +1294,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             assertThat(getAliasesResponse.status(), equalTo(RestStatus.NOT_FOUND));
             assertThat(
                 getAliasesResponse.getException().getMessage(),
-                equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]")
+                equalTo("Density exception [type=index_not_found_exception, reason=no such index [index]]")
             );
         }
         {
@@ -1322,7 +1322,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             assertThat(getAliasesResponse.getError(), nullValue());
             assertThat(
                 getAliasesResponse.getException().getMessage(),
-                equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+                equalTo("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
             );
         }
         {
@@ -1336,7 +1336,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             assertThat(getAliasesResponse.status(), equalTo(RestStatus.NOT_FOUND));
             assertThat(
                 getAliasesResponse.getException().getMessage(),
-                equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
+                equalTo("Density exception [type=index_not_found_exception, reason=no such index [non_existent_index]]")
             );
         }
         {
@@ -1424,14 +1424,14 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(staticSetting.getDefault(Settings.EMPTY), not(staticSettingValue));
         UpdateSettingsRequest staticSettingRequest = new UpdateSettingsRequest(index);
         staticSettingRequest.settings(Settings.builder().put(staticSettingKey, staticSettingValue).build());
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(staticSettingRequest, highLevelClient().indices()::putSettings, highLevelClient().indices()::putSettingsAsync)
         );
         assertThat(
             exception.getMessage(),
             startsWith(
-                "OpenSearch exception [type=illegal_argument_exception, "
+                "Density exception [type=illegal_argument_exception, "
                     + "reason=Can't update non dynamic settings [[index.shard.check_on_startup]] for open indices [[index/"
             )
         );
@@ -1450,7 +1450,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         UpdateSettingsRequest unmodifiableSettingRequest = new UpdateSettingsRequest(index);
         unmodifiableSettingRequest.settings(Settings.builder().put(unmodifiableSettingKey, unmodifiableSettingValue).build());
         exception = expectThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> execute(
                 unmodifiableSettingRequest,
                 highLevelClient().indices()::putSettings,
@@ -1460,13 +1460,13 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(
             exception.getMessage(),
             startsWith(
-                "OpenSearch exception [type=illegal_argument_exception, "
+                "Density exception [type=illegal_argument_exception, "
                     + "reason=Can't update non dynamic settings [[index.number_of_shards]] for open indices [[index/"
             )
         );
         closeIndex(index);
         exception = expectThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> execute(
                 unmodifiableSettingRequest,
                 highLevelClient().indices()::putSettings,
@@ -1476,7 +1476,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(
             exception.getMessage(),
             startsWith(
-                "OpenSearch exception [type=settings_exception, " + "reason=final index setting [index.number_of_shards], not updateable"
+                "Density exception [type=settings_exception, " + "reason=final index setting [index.number_of_shards], not updateable"
             )
         );
     }
@@ -1489,8 +1489,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         int value = 10;
         indexUpdateSettingsRequest.settings(Settings.builder().put(setting, value).build());
 
-        OpenSearchException exception = expectThrows(
-            OpenSearchException.class,
+        DensityException exception = expectThrows(
+            DensityException.class,
             () -> execute(
                 indexUpdateSettingsRequest,
                 highLevelClient().indices()::putSettings,
@@ -1498,11 +1498,11 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             )
         );
         assertEquals(RestStatus.NOT_FOUND, exception.status());
-        assertThat(exception.getMessage(), equalTo("OpenSearch exception [type=index_not_found_exception, reason=no such index [index]]"));
+        assertThat(exception.getMessage(), equalTo("Density exception [type=index_not_found_exception, reason=no such index [index]]"));
 
         createIndex(index, Settings.EMPTY);
         exception = expectThrows(
-            OpenSearchException.class,
+            DensityException.class,
             () -> execute(
                 indexUpdateSettingsRequest,
                 highLevelClient().indices()::putSettings,
@@ -1513,7 +1513,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(
             exception.getMessage(),
             equalTo(
-                "OpenSearch exception [type=settings_exception, "
+                "Density exception [type=settings_exception, "
                     + "reason=unknown setting [index.no_idea_what_you_are_talking_about] please check that any required plugins are installed, "
                     + "or check the breaking changes documentation for removed settings]"
             )
@@ -1602,8 +1602,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
             .alias(new Alias("alias-1").indexRouting("abc"))
             .alias(new Alias("{index}-write").searchRouting("xyz"));
 
-        OpenSearchStatusException badMappingError = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException badMappingError = expectThrows(
+            DensityStatusException.class,
             () -> execute(putTemplateRequest, highLevelClient().indices()::putTemplate, highLevelClient().indices()::putTemplateAsync)
         );
         assertThat(
@@ -1627,8 +1627,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         PutIndexTemplateRequest goodTemplate = new PutIndexTemplateRequest("t2").patterns(Arrays.asList("qa-*", "prod-*"));
         assertTrue(execute(goodTemplate, client.indices()::putTemplate, client.indices()::putTemplateAsync).isAcknowledged());
         goodTemplate.create(true);
-        OpenSearchException alreadyExistsError = expectThrows(
-            OpenSearchException.class,
+        DensityException alreadyExistsError = expectThrows(
+            DensityException.class,
             () -> execute(goodTemplate, client.indices()::putTemplate, client.indices()::putTemplateAsync)
         );
         assertThat(
@@ -1641,8 +1641,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         // Rejected due to unknown settings
         PutIndexTemplateRequest unknownSettingTemplate = new PutIndexTemplateRequest("t3").patterns(Collections.singletonList("any"))
             .settings(Settings.builder().put("this-setting-does-not-exist", 100));
-        OpenSearchStatusException unknownSettingError = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException unknownSettingError = expectThrows(
+            DensityStatusException.class,
             () -> execute(unknownSettingTemplate, client.indices()::putTemplate, client.indices()::putTemplateAsync)
         );
         assertThat(unknownSettingError.getDetailedMessage(), containsString("unknown setting [index.this-setting-does-not-exist]"));
@@ -1770,7 +1770,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         );
         assertThat(
             expectThrows(
-                OpenSearchException.class,
+                DensityException.class,
                 () -> execute(
                     new GetIndexTemplatesRequest("template-1"),
                     client.indices()::getIndexTemplate,
@@ -1781,7 +1781,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         );
         assertThat(
             expectThrows(
-                OpenSearchException.class,
+                DensityException.class,
                 () -> execute(
                     new DeleteIndexTemplateRequest("template-1"),
                     client.indices()::deleteTemplate,
@@ -1810,7 +1810,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         );
         assertThat(
             expectThrows(
-                OpenSearchException.class,
+                DensityException.class,
                 () -> execute(
                     new GetIndexTemplatesRequest("template-*"),
                     client.indices()::getIndexTemplate,
@@ -1886,7 +1886,7 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         assertThat(aliasExists(index, alias2), equalTo(true));
 
         DeleteAliasRequest request = new DeleteAliasRequest(index, alias);
-        org.opensearch.client.core.AcknowledgedResponse aliasDeleteResponse = execute(
+        org.density.client.core.AcknowledgedResponse aliasDeleteResponse = execute(
             request,
             highLevelClient().indices()::deleteAlias,
             highLevelClient().indices()::deleteAliasAsync
@@ -1983,8 +1983,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
 
         getDataStreamRequest = new GetDataStreamRequest(dataStreamName);
         GetDataStreamRequest finalGetDataStreamRequest = getDataStreamRequest;
-        OpenSearchStatusException e = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException e = expectThrows(
+            DensityStatusException.class,
             () -> execute(finalGetDataStreamRequest, indices::getDataStream, indices::getDataStreamAsync)
         );
         assertThat(e.status(), equalTo(RestStatus.NOT_FOUND));
@@ -2045,8 +2045,8 @@ public class IndicesClientIT extends OpenSearchRestHighLevelClientTestCase {
         );
         assertThat(response.isAcknowledged(), equalTo(true));
 
-        OpenSearchStatusException statusException = expectThrows(
-            OpenSearchStatusException.class,
+        DensityStatusException statusException = expectThrows(
+            DensityStatusException.class,
             () -> execute(
                 getComposableIndexTemplateRequest,
                 highLevelClient().indices()::getIndexTemplate,

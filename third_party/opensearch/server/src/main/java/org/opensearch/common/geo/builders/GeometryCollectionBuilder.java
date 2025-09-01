@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.XShapeCollection;
-import org.opensearch.common.geo.parsers.GeoWKTParser;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
+import org.density.DensityException;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.XShapeCollection;
+import org.density.common.geo.parsers.GeoWKTParser;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import org.locationtech.spatial4j.shape.Shape;
 /**
  * Builds a geometry collection
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeometryCollectionBuilder extends ShapeBuilder<Shape, GeometryCollection<Geometry>, GeometryCollectionBuilder> {
 
@@ -134,7 +134,7 @@ public class GeometryCollectionBuilder extends ShapeBuilder<Shape, GeometryColle
 
     public ShapeBuilder getShapeAt(int i) {
         if (i >= this.shapes.size() || i < 0) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "GeometryCollection contains " + this.shapes.size() + " shapes. + " + "No shape found at index " + i
             );
         }

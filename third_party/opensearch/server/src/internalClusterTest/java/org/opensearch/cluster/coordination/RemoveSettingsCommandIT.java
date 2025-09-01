@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.cluster.routing.allocation.DiskThresholdSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.cli.MockTerminal;
+import org.density.cli.UserException;
+import org.density.cluster.routing.allocation.DiskThresholdSettings;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.test.DensityIntegTestCase;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
-public class RemoveSettingsCommandIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, autoManageMasterNodes = false)
+public class RemoveSettingsCommandIT extends DensityIntegTestCase {
 
     public void testRemoveSettingsAbortedByUser() throws Exception {
         internalCluster().setBootstrapClusterManagerNodeIndex(0);
@@ -73,7 +73,7 @@ public class RemoveSettingsCommandIT extends OpenSearchIntegTestCase {
                 true,
                 new String[] { DiskThresholdSettings.CLUSTER_ROUTING_ALLOCATION_DISK_THRESHOLD_ENABLED_SETTING.getKey() }
             ),
-            OpenSearchNodeCommand.ABORTED_BY_USER_MSG
+            DensityNodeCommand.ABORTED_BY_USER_MSG
         );
     }
 
@@ -154,7 +154,7 @@ public class RemoveSettingsCommandIT extends OpenSearchIntegTestCase {
         );
     }
 
-    private MockTerminal executeCommand(OpenSearchNodeCommand command, Environment environment, boolean abort, String... args)
+    private MockTerminal executeCommand(DensityNodeCommand command, Environment environment, boolean abort, String... args)
         throws Exception {
         final MockTerminal terminal = new MockTerminal();
         final OptionSet options = command.getParser().parse(args);
@@ -171,7 +171,7 @@ public class RemoveSettingsCommandIT extends OpenSearchIntegTestCase {
         try {
             command.execute(terminal, options, environment);
         } finally {
-            assertThat(terminal.getOutput(), containsString(OpenSearchNodeCommand.STOP_WARNING_MSG));
+            assertThat(terminal.getOutput(), containsString(DensityNodeCommand.STOP_WARNING_MSG));
         }
 
         return terminal;
@@ -185,7 +185,7 @@ public class RemoveSettingsCommandIT extends OpenSearchIntegTestCase {
     }
 
     private void expectThrows(ThrowingRunnable runnable, String message) {
-        OpenSearchException ex = expectThrows(OpenSearchException.class, runnable);
+        DensityException ex = expectThrows(DensityException.class, runnable);
         assertThat(ex.getMessage(), containsString(message));
     }
 }

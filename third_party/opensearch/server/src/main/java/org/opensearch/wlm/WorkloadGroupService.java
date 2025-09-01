@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.monitor.jvm.JvmStats;
-import org.opensearch.monitor.process.ProcessProbe;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers;
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskResourceTrackingService;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService;
-import org.opensearch.wlm.stats.WorkloadGroupState;
-import org.opensearch.wlm.stats.WorkloadGroupStats;
-import org.opensearch.wlm.stats.WorkloadGroupStats.WorkloadGroupStatsHolder;
+import org.density.ResourceNotFoundException;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.monitor.jvm.JvmStats;
+import org.density.monitor.process.ProcessProbe;
+import org.density.search.backpressure.trackers.NodeDuressTrackers;
+import org.density.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
+import org.density.tasks.Task;
+import org.density.tasks.TaskResourceTrackingService;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.cancellation.WorkloadGroupTaskCancellationService;
+import org.density.wlm.stats.WorkloadGroupState;
+import org.density.wlm.stats.WorkloadGroupStats;
+import org.density.wlm.stats.WorkloadGroupStats.WorkloadGroupStatsHolder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,11 +38,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.wlm.tracker.WorkloadGroupResourceUsageTrackerService.TRACKED_RESOURCES;
+import static org.density.wlm.tracker.WorkloadGroupResourceUsageTrackerService.TRACKED_RESOURCES;
 
 /**
  * As of now this is a stub and main implementation PR will be raised soon.Coming PR will collate these changes with core WorkloadGroupService changes
- * @opensearch.experimental
+ * @density.experimental
  */
 public class WorkloadGroupService extends AbstractLifecycleComponent
     implements
@@ -305,7 +305,7 @@ public class WorkloadGroupService extends AbstractLifecycleComponent
             }
             if (reject) {
                 workloadGroupState.totalRejections.inc();
-                throw new OpenSearchRejectedExecutionException(
+                throw new DensityRejectedExecutionException(
                     "WorkloadGroup " + workloadGroupId + " is already contended. " + reason.toString()
                 );
             }

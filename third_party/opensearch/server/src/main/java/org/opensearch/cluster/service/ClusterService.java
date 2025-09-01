@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.LocalNodeClusterManagerListener;
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.StreamNodeConnectionsService;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.LocalNodeClusterManagerListener;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.StreamNodeConnectionsService;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.OperationRouting;
+import org.density.cluster.routing.RerouteService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.index.IndexingPressureService;
+import org.density.node.Node;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Collections;
 import java.util.Map;
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * Main Cluster Service
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterService extends AbstractLifecycleComponent {
@@ -71,7 +71,7 @@ public class ClusterService extends AbstractLifecycleComponent {
 
     private final ClusterApplierService clusterApplierService;
 
-    public static final org.opensearch.common.settings.Setting.AffixSetting<String> USER_DEFINED_METADATA = Setting.prefixKeySetting(
+    public static final org.density.common.settings.Setting.AffixSetting<String> USER_DEFINED_METADATA = Setting.prefixKeySetting(
         "cluster.metadata.",
         (key) -> Setting.simpleString(key, Property.Dynamic, Property.NodeScope)
     );
@@ -258,7 +258,7 @@ public class ClusterService extends AbstractLifecycleComponent {
     /**
      * Getter and Setter for IndexingPressureService, This method exposes IndexingPressureService stats to other plugins for usage.
      * Although Indexing Pressure instances can be accessed via Node and NodeService class but none of them are
-     * present in the createComponents signature of Plugin interface currently. {@link org.opensearch.plugins.Plugin#createComponents}
+     * present in the createComponents signature of Plugin interface currently. {@link org.density.plugins.Plugin#createComponents}
      * Going forward, IndexingPressureService will have required constructs for exposing listeners/interfaces for plugin development.(#478)
      */
     public void setIndexingPressureService(IndexingPressureService indexingPressureService) {

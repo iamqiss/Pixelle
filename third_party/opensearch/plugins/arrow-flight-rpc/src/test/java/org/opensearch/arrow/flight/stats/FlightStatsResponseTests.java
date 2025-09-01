@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.stats;
+package org.density.arrow.flight.stats;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.ClusterName;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
 
-public class FlightStatsResponseTests extends OpenSearchTestCase {
+public class FlightStatsResponseTests extends DensityTestCase {
 
     public void testBasicFunctionality() throws IOException {
         ClusterName clusterName = new ClusterName("test-cluster");
@@ -32,7 +32,7 @@ public class FlightStatsResponseTests extends OpenSearchTestCase {
             new TransportAddress(InetAddress.getLoopbackAddress(), 9300),
             Collections.emptyMap(),
             Collections.emptySet(),
-            org.opensearch.Version.CURRENT
+            org.density.Version.CURRENT
         );
         FlightNodeStats nodeStats = new FlightNodeStats(node, new FlightMetrics());
 
@@ -53,7 +53,7 @@ public class FlightStatsResponseTests extends OpenSearchTestCase {
             new TransportAddress(InetAddress.getLoopbackAddress(), 9300),
             Collections.emptyMap(),
             Collections.emptySet(),
-            org.opensearch.Version.CURRENT
+            org.density.Version.CURRENT
         );
         FlightNodeStats nodeStats = new FlightNodeStats(node, new FlightMetrics());
         FlightStatsResponse response = new FlightStatsResponse(clusterName, List.of(nodeStats), Collections.emptyList());

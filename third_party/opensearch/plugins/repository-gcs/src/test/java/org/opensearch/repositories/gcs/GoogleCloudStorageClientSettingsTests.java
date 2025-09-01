@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
 import com.google.api.services.storage.StorageScopes;
 import com.google.auth.oauth2.ServiceAccountCredentials;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -56,16 +56,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.APPLICATION_NAME_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.CONNECT_TIMEOUT_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.CREDENTIALS_FILE_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.ENDPOINT_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.PROJECT_ID_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.READ_TIMEOUT_SETTING;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.getClientSettings;
-import static org.opensearch.repositories.gcs.GoogleCloudStorageClientSettings.loadCredential;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.APPLICATION_NAME_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.CONNECT_TIMEOUT_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.CREDENTIALS_FILE_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.ENDPOINT_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.PROJECT_ID_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.READ_TIMEOUT_SETTING;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.getClientSettings;
+import static org.density.repositories.gcs.GoogleCloudStorageClientSettings.loadCredential;
 
-public class GoogleCloudStorageClientSettingsTests extends OpenSearchTestCase {
+public class GoogleCloudStorageClientSettingsTests extends DensityTestCase {
 
     public void testLoadWithEmptySettings() {
         final Map<String, GoogleCloudStorageClientSettings> clientsSettings = GoogleCloudStorageClientSettings.load(Settings.EMPTY);
@@ -288,10 +288,10 @@ public class GoogleCloudStorageClientSettingsTests extends OpenSearchTestCase {
         String endpoint;
         if (randomBoolean()) {
             endpoint = randomFrom(
-                "http://www.opensearch.org",
+                "http://www.density.org",
                 "http://metadata.google.com:88/oauth",
                 "https://www.googleapis.com",
-                "https://www.opensearch.org:443",
+                "https://www.density.org:443",
                 "http://localhost:8443",
                 "https://www.googleapis.com/oauth/token"
             );

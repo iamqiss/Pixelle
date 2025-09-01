@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import org.apache.http.client.fluent.Request;
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Platforms;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Platforms;
 import org.junit.Before;
 
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.ServerUtils.makeRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assume.assumeFalse;
 
@@ -57,7 +57,7 @@ public class ConfigurationTests extends PackagingTestCase {
         String hostnameKey = Platforms.WINDOWS ? "COMPUTERNAME" : "HOSTNAME";
         sh.getEnv().put(hostnameKey, "mytesthost");
         withCustomConfig(confPath -> {
-            FileUtils.append(confPath.resolve("opensearch.yml"), "node.name: ${HOSTNAME}");
+            FileUtils.append(confPath.resolve("density.yml"), "node.name: ${HOSTNAME}");
             if (distribution.isPackage()) {
                 append(installation.envFile, "HOSTNAME=mytesthost");
             }

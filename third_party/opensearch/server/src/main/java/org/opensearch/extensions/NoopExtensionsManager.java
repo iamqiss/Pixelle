@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
-import org.opensearch.action.ActionModule;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.extensions.action.ExtensionActionRequest;
-import org.opensearch.extensions.action.ExtensionActionResponse;
-import org.opensearch.extensions.action.RemoteExtensionActionResponse;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.ActionModule;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsModule;
+import org.density.extensions.action.ExtensionActionRequest;
+import org.density.extensions.action.ExtensionActionResponse;
+import org.density.extensions.action.RemoteExtensionActionResponse;
+import org.density.identity.IdentityService;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Noop class for ExtensionsManager
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NoopExtensionsManager extends ExtensionsManager {
 

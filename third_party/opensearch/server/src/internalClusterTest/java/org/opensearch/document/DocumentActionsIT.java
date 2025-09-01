@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.document;
+package org.density.document;
 
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
 
 import java.io.IOException;
 
-import static org.opensearch.action.DocWriteRequest.OpType;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.transport.client.Requests.clearIndicesCacheRequest;
-import static org.opensearch.transport.client.Requests.getRequest;
-import static org.opensearch.transport.client.Requests.indexRequest;
-import static org.opensearch.transport.client.Requests.refreshRequest;
+import static org.density.action.DocWriteRequest.OpType;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.transport.client.Requests.clearIndicesCacheRequest;
+import static org.density.transport.client.Requests.getRequest;
+import static org.density.transport.client.Requests.indexRequest;
+import static org.density.transport.client.Requests.refreshRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
 /**
  * Integration test for document action like index, bulk, and get. It has a very long history: it was in the second commit of Elasticsearch.
  */
-public class DocumentActionsIT extends OpenSearchIntegTestCase {
+public class DocumentActionsIT extends DensityIntegTestCase {
     protected void createIndex() {
-        OpenSearchAssertions.assertAcked(prepareCreate(getConcreteIndexName()).setMapping("name", "type=keyword,store=true"));
+        DensityAssertions.assertAcked(prepareCreate(getConcreteIndexName()).setMapping("name", "type=keyword,store=true"));
     }
 
     protected String getConcreteIndexName() {

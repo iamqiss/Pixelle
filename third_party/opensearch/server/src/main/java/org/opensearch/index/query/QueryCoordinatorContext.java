@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.search.pipeline.PipelinedRequest;
-import org.opensearch.transport.client.Client;
+import org.density.action.IndicesRequest;
+import org.density.common.annotation.InternalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.search.pipeline.PipelinedRequest;
+import org.density.transport.client.Client;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import java.util.function.BiConsumer;
 
 /**
  * The QueryCoordinatorContext class implements the QueryRewriteContext interface and provides
- * additional functionality for coordinating query rewriting in OpenSearch.
+ * additional functionality for coordinating query rewriting in Density.
  *
  * This class acts as a wrapper around a QueryRewriteContext instance and a PipelinedRequest,
  * allowing access to both rewrite context methods and pass over search request information.

@@ -1,14 +1,14 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index.reindex.spi;
+package org.density.index.reindex.spi;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.reindex.BulkByScrollResponse;
-import org.opensearch.index.reindex.ReindexModulePlugin;
-import org.opensearch.index.reindex.ReindexRequest;
+import org.density.core.action.ActionListener;
+import org.density.index.reindex.BulkByScrollResponse;
+import org.density.index.reindex.ReindexModulePlugin;
+import org.density.index.reindex.ReindexRequest;
 
 /**
  * This interface provides an extension point for {@link ReindexModulePlugin}.

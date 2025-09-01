@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,26 +23,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
-import org.opensearch.common.inject.Binding;
-import org.opensearch.common.inject.Injector;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.spi.BindingScopingVisitor;
-import org.opensearch.common.inject.spi.ElementVisitor;
-import org.opensearch.common.inject.spi.InstanceBinding;
+import org.density.common.inject.Binding;
+import org.density.common.inject.Injector;
+import org.density.common.inject.Key;
+import org.density.common.inject.Provider;
+import org.density.common.inject.spi.BindingScopingVisitor;
+import org.density.common.inject.spi.ElementVisitor;
+import org.density.common.inject.spi.InstanceBinding;
 
 /**
  * A binding implementation
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BindingImpl<T> implements Binding<T> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,34 +23,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.binder;
+package org.density.common.inject.binder;
 
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.lang.annotation.Annotation;
 
 /**
- * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+ * See the EDSL examples at {@link org.density.common.inject.Binder}.
  *
  * @author jessewilson@google.com (Jesse Wilson)
  * @since 2.0
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface AnnotatedElementBuilder {
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     void annotatedWith(Class<? extends Annotation> annotationType);
 
     /**
-     * See the EDSL examples at {@link org.opensearch.common.inject.Binder}.
+     * See the EDSL examples at {@link org.density.common.inject.Binder}.
      */
     void annotatedWith(Annotation annotation);
 }

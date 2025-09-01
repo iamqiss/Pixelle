@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
-import org.opensearch.action.admin.cluster.snapshots.status.SnapshotStatus;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStage;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexShardStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotIndexStatus;
+import org.density.action.admin.cluster.snapshots.status.SnapshotStatus;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.indices.RemoteStoreSettings;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.threadpool.ThreadPool;
 import org.junit.Before;
 
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
-import static org.opensearch.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
+import static org.density.snapshots.SnapshotsService.MAX_SHARDS_ALLOWED_IN_STATUS_API;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteIndexSnapshotStatusApiIT extends AbstractSnapshotIntegTestCase {
 
     protected Path absolutePath;

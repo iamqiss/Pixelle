@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Table;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestActionListener;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Table;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestActionListener;
+import org.density.rest.action.RestResponseListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,12 +56,12 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _cat API action to list shard allocations
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestAllocationAction extends AbstractCatAction {
 
@@ -120,8 +120,8 @@ public class RestAllocationAction extends AbstractCatAction {
         final Table table = new Table();
         table.startHeaders();
         table.addCell("shards", "alias:s;text-align:right;desc:number of shards on node");
-        table.addCell("disk.indices", "alias:di,diskIndices;text-align:right;desc:disk used by OpenSearch indices");
-        table.addCell("disk.used", "alias:du,diskUsed;text-align:right;desc:disk used (total, not just OpenSearch)");
+        table.addCell("disk.indices", "alias:di,diskIndices;text-align:right;desc:disk used by Density indices");
+        table.addCell("disk.used", "alias:du,diskUsed;text-align:right;desc:disk used (total, not just Density)");
         table.addCell("disk.avail", "alias:da,diskAvail;text-align:right;desc:disk available");
         table.addCell("disk.total", "alias:dt,diskTotal;text-align:right;desc:total capacity of all volumes");
         table.addCell("disk.percent", "alias:dp,diskPercent;text-align:right;desc:percent disk used");

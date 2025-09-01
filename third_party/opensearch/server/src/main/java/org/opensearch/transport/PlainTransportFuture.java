@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.common.util.concurrent.BaseFuture;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
+import org.density.DensityException;
+import org.density.DensityTimeoutException;
+import org.density.common.util.concurrent.BaseFuture;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -46,7 +46,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * Future for transporting data
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PlainTransportFuture<V extends TransportResponse> extends BaseFuture<V>
     implements
@@ -67,8 +67,8 @@ public class PlainTransportFuture<V extends TransportResponse> extends BaseFutur
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Future got interrupted", e);
         } catch (ExecutionException e) {
-            if (e.getCause() instanceof OpenSearchException) {
-                throw (OpenSearchException) e.getCause();
+            if (e.getCause() instanceof DensityException) {
+                throw (DensityException) e.getCause();
             } else {
                 throw new TransportException("Failed execution", e);
             }
@@ -80,12 +80,12 @@ public class PlainTransportFuture<V extends TransportResponse> extends BaseFutur
         try {
             return get(timeout, unit);
         } catch (TimeoutException e) {
-            throw new OpenSearchTimeoutException(e);
+            throw new DensityTimeoutException(e);
         } catch (InterruptedException e) {
             throw new IllegalStateException("Future got interrupted", e);
         } catch (ExecutionException e) {
-            if (e.getCause() instanceof OpenSearchException) {
-                throw (OpenSearchException) e.getCause();
+            if (e.getCause() instanceof DensityException) {
+                throw (DensityException) e.getCause();
             } else {
                 throw new TransportException("Failed execution", e);
             }

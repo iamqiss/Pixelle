@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.util.Accountable;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.LeafFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.ScriptDocValues.Strings;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.LeafFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.ScriptDocValues.Strings;
+import org.density.index.fielddata.SortedBinaryDocValues;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -49,7 +49,7 @@ import java.util.Collections;
 /**
  * {@link LeafFieldData} impl on top of Lucene's binary doc values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BinaryDVLeafFieldData implements LeafFieldData {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SourceLookup;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /** Base test case for subclasses of MappedFieldType */
-public abstract class FieldTypeTestCase extends OpenSearchTestCase {
+public abstract class FieldTypeTestCase extends DensityTestCase {
 
     public static final QueryShardContext MOCK_QSC = createMockQueryShardContext(true, false);
     public static final QueryShardContext MOCK_QSC_DISALLOW_EXPENSIVE = createMockQueryShardContext(false, false);

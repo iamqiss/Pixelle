@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.support.AggregationPath;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.support.AggregationPath;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -45,7 +45,7 @@ import java.util.Objects;
 /**
  * Base aggregation to aggregate all docs into a single numeric metric
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class InternalNumericMetricsAggregation extends InternalAggregation {
 
@@ -56,7 +56,7 @@ public abstract class InternalNumericMetricsAggregation extends InternalAggregat
     /**
      * A single numeric metric value
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class SingleValue extends InternalNumericMetricsAggregation implements NumericMetricsAggregation.SingleValue {
         protected SingleValue(String name, Map<String, Object> metadata) {
@@ -104,7 +104,7 @@ public abstract class InternalNumericMetricsAggregation extends InternalAggregat
     /**
      * Multe numeric metric values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class MultiValue extends InternalNumericMetricsAggregation implements NumericMetricsAggregation.MultiValue {
         protected MultiValue(String name, Map<String, Object> metadata) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.IndexTemplateMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.MetadataIndexUpgradeService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.MetadataUpgrader;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.TestCustomMetadata;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.IndexTemplateMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.MetadataIndexUpgradeService;
+import org.density.common.settings.Settings;
+import org.density.plugins.MetadataUpgrader;
+import org.density.test.DensityTestCase;
+import org.density.test.TestCustomMetadata;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,7 +51,7 @@ import java.util.Objects;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class GatewayMetaStateTests extends OpenSearchTestCase {
+public class GatewayMetaStateTests extends DensityTestCase {
 
     public void testUpdateTemplateMetadataOnUpgrade() {
         Metadata metadata = randomMetadata();

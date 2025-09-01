@@ -1,7 +1,7 @@
 {
   "cat.shards":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/cat/cat-shards/",
+      "url":"https://density.org/docs/latest/api-reference/cat/cat-shards/",
       "description":"Provides a detailed view of shard allocation on nodes."
     },
     "stability":"stable",

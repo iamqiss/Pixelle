@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
 import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.QuadPrefixTree;
 import org.apache.lucene.util.SloppyMath;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.MapXContentParser;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentSubParser;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.GeoPointValues;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.SortingNumericDoubleValues;
+import org.density.DensityParseException;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.MapXContentParser;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentSubParser;
+import org.density.geometry.ShapeType;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.GeoPointValues;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.SortingNumericDoubleValues;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import java.util.HashMap;
 /**
  * Useful geo utilities
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoUtils {
     private static final String ERR_MSG_INVALID_TOKEN = "token [{}] not allowed";
@@ -375,11 +375,11 @@ public class GeoUtils {
      * @param parser {@link XContentParser} to parse the value from
      * @return new {@link GeoPoint} parsed from the parse
      */
-    public static GeoPoint parseGeoPoint(XContentParser parser) throws IOException, OpenSearchParseException {
+    public static GeoPoint parseGeoPoint(XContentParser parser) throws IOException, DensityParseException {
         return parseGeoPoint(parser, new GeoPoint());
     }
 
-    public static GeoPoint parseGeoPoint(XContentParser parser, GeoPoint point) throws IOException, OpenSearchParseException {
+    public static GeoPoint parseGeoPoint(XContentParser parser, GeoPoint point) throws IOException, DensityParseException {
         return parseGeoPoint(parser, point, false);
     }
 
@@ -392,7 +392,7 @@ public class GeoUtils {
      * <p>
      * Array: two or more elements, the first element is longitude, the second is latitude, the rest is ignored if ignoreZValue is true
      */
-    public static GeoPoint parseGeoPoint(Object value, final boolean ignoreZValue) throws OpenSearchParseException {
+    public static GeoPoint parseGeoPoint(Object value, final boolean ignoreZValue) throws DensityParseException {
         return parseGeoPoint(value, new GeoPoint(), ignoreZValue);
     }
 
@@ -405,7 +405,7 @@ public class GeoUtils {
      * <p>
      * Array: two or more elements, the first element is longitude, the second is latitude, the rest is ignored if ignoreZValue is true
      */
-    public static GeoPoint parseGeoPoint(Object value, GeoPoint point, final boolean ignoreZValue) throws OpenSearchParseException {
+    public static GeoPoint parseGeoPoint(Object value, GeoPoint point, final boolean ignoreZValue) throws DensityParseException {
         try (
             XContentParser parser = new MapXContentParser(
                 NamedXContentRegistry.EMPTY,
@@ -419,14 +419,14 @@ public class GeoUtils {
             parser.nextToken(); // field value
             return parseGeoPoint(parser, point, ignoreZValue);
         } catch (IOException ex) {
-            throw new OpenSearchParseException("error parsing geopoint", ex);
+            throw new DensityParseException("error parsing geopoint", ex);
         }
     }
 
     /**
      * Represents the point of the geohash cell that should be used as the value of geohash
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum EffectivePoint {
         TOP_LEFT,
@@ -440,7 +440,7 @@ public class GeoUtils {
      * the left bottom corner of the geohash cell is used as the geopoint coordinates.GeoBoundingBoxQueryBuilder.java
      */
     public static GeoPoint parseGeoPoint(XContentParser parser, GeoPoint point, final boolean ignoreZValue) throws IOException,
-        OpenSearchParseException {
+        DensityParseException {
         return parseGeoPoint(parser, point, ignoreZValue, EffectivePoint.BOTTOM_LEFT);
     }
 
@@ -468,7 +468,7 @@ public class GeoUtils {
         final GeoPoint point,
         final boolean ignoreZValue,
         final EffectivePoint effectivePoint
-    ) throws IOException, OpenSearchParseException {
+    ) throws IOException, DensityParseException {
         switch (parser.currentToken()) {
             case START_OBJECT:
                 parseGeoPointObject(parser, point, ignoreZValue, effectivePoint);
@@ -481,7 +481,7 @@ public class GeoUtils {
                 point.resetFromString(val, ignoreZValue, effectivePoint);
                 break;
             default:
-                throw new OpenSearchParseException("geo_point expected");
+                throw new DensityParseException("geo_point expected");
         }
         return point;
     }
@@ -494,7 +494,7 @@ public class GeoUtils {
     ) throws IOException {
         try (XContentSubParser subParser = new XContentSubParser(parser)) {
             if (subParser.nextToken() != XContentParser.Token.FIELD_NAME) {
-                throw new OpenSearchParseException(ERR_MSG_INVALID_TOKEN, subParser.currentToken());
+                throw new DensityParseException(ERR_MSG_INVALID_TOKEN, subParser.currentToken());
             }
 
             String field = subParser.currentName();
@@ -505,11 +505,11 @@ public class GeoUtils {
             } else if (GEOJSON_TYPE.equals(field) || GEOJSON_COORDS.equals(field)) {
                 parseGeoJsonFields(subParser, point, ignoreZValue);
             } else {
-                throw new OpenSearchParseException(ERR_MSG_INVALID_FIELDS);
+                throw new DensityParseException(ERR_MSG_INVALID_FIELDS);
             }
 
             if (subParser.nextToken() != XContentParser.Token.END_OBJECT) {
-                throw new OpenSearchParseException(ERR_MSG_INVALID_FIELDS);
+                throw new DensityParseException(ERR_MSG_INVALID_FIELDS);
             }
 
             return point;
@@ -529,7 +529,7 @@ public class GeoUtils {
 
             String field = parser.currentName();
             if (LONGITUDE.equals(field) == false && LATITUDE.equals(field) == false) {
-                throw new OpenSearchParseException(ERR_MSG_INVALID_FIELDS);
+                throw new DensityParseException(ERR_MSG_INVALID_FIELDS);
             }
             switch (parser.nextToken()) {
                 case VALUE_NUMBER:
@@ -537,19 +537,19 @@ public class GeoUtils {
                     try {
                         data.put(field, parser.doubleValue(true));
                     } catch (NumberFormatException e) {
-                        throw new OpenSearchParseException("[{}] and [{}] must be valid double values", e, LONGITUDE, LATITUDE);
+                        throw new DensityParseException("[{}] and [{}] must be valid double values", e, LONGITUDE, LATITUDE);
                     }
                     break;
                 default:
-                    throw new OpenSearchParseException("{} must be a number", field);
+                    throw new DensityParseException("{} must be a number", field);
             }
         }
 
         if (data.get(LONGITUDE) == null) {
-            throw new OpenSearchParseException("field [{}] missing", LONGITUDE);
+            throw new DensityParseException("field [{}] missing", LONGITUDE);
         }
         if (data.get(LATITUDE) == null) {
-            throw new OpenSearchParseException("field [{}] missing", LATITUDE);
+            throw new DensityParseException("field [{}] missing", LATITUDE);
         }
 
         return point.reset(data.get(LATITUDE), data.get(LONGITUDE));
@@ -561,15 +561,15 @@ public class GeoUtils {
         final GeoUtils.EffectivePoint effectivePoint
     ) throws IOException {
         if (parser.currentToken() != XContentParser.Token.FIELD_NAME) {
-            throw new OpenSearchParseException(ERR_MSG_INVALID_TOKEN, parser.currentToken());
+            throw new DensityParseException(ERR_MSG_INVALID_TOKEN, parser.currentToken());
         }
 
         if (GEOHASH.equals(parser.currentName()) == false) {
-            throw new OpenSearchParseException(ERR_MSG_INVALID_FIELDS);
+            throw new DensityParseException(ERR_MSG_INVALID_FIELDS);
         }
 
         if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-            throw new OpenSearchParseException("{} must be a string", GEOHASH);
+            throw new DensityParseException("{} must be a string", GEOHASH);
         }
 
         return point.parseGeoHash(parser.text(), effectivePoint);
@@ -586,31 +586,31 @@ public class GeoUtils {
 
             if (parser.currentToken() != XContentParser.Token.FIELD_NAME) {
                 if (hasTypePoint == false) {
-                    throw new OpenSearchParseException("field [{}] missing", GEOJSON_TYPE);
+                    throw new DensityParseException("field [{}] missing", GEOJSON_TYPE);
                 }
                 if (hasCoordinates == false) {
-                    throw new OpenSearchParseException("field [{}] missing", GEOJSON_COORDS);
+                    throw new DensityParseException("field [{}] missing", GEOJSON_COORDS);
                 }
             }
 
             if (GEOJSON_TYPE.equals(parser.currentName())) {
                 if (parser.nextToken() != XContentParser.Token.VALUE_STRING) {
-                    throw new OpenSearchParseException("{} must be a string", GEOJSON_TYPE);
+                    throw new DensityParseException("{} must be a string", GEOJSON_TYPE);
                 }
 
                 // To be consistent with geo_shape parsing, ignore case here as well.
                 if (ShapeType.POINT.name().equalsIgnoreCase(parser.text()) == false) {
-                    throw new OpenSearchParseException("{} must be Point", GEOJSON_TYPE);
+                    throw new DensityParseException("{} must be Point", GEOJSON_TYPE);
                 }
                 hasTypePoint = true;
             } else if (GEOJSON_COORDS.equals(parser.currentName())) {
                 if (parser.nextToken() != XContentParser.Token.START_ARRAY) {
-                    throw new OpenSearchParseException("{} must be an array", GEOJSON_COORDS);
+                    throw new DensityParseException("{} must be an array", GEOJSON_COORDS);
                 }
                 parseGeoPointArray(parser, point, ignoreZValue);
                 hasCoordinates = true;
             } else {
-                throw new OpenSearchParseException(ERR_MSG_INVALID_FIELDS);
+                throw new DensityParseException(ERR_MSG_INVALID_FIELDS);
             }
         }
 
@@ -626,7 +626,7 @@ public class GeoUtils {
             int element = 0;
             while (subParser.nextToken() != XContentParser.Token.END_ARRAY) {
                 if (parser.currentToken() != XContentParser.Token.VALUE_NUMBER) {
-                    throw new OpenSearchParseException("numeric value expected");
+                    throw new DensityParseException("numeric value expected");
                 }
                 element++;
                 if (element == 1) {
@@ -636,12 +636,12 @@ public class GeoUtils {
                 } else if (element == 3) {
                     GeoPoint.assertZValue(ignoreZValue, parser.doubleValue());
                 } else {
-                    throw new OpenSearchParseException("[geo_point] field type does not accept more than 3 values");
+                    throw new DensityParseException("[geo_point] field type does not accept more than 3 values");
                 }
             }
 
             if (element < 2) {
-                throw new OpenSearchParseException("[geo_point] field type should have at least two dimensions");
+                throw new DensityParseException("[geo_point] field type should have at least two dimensions");
             }
             return point.reset(y, x);
         }
@@ -672,7 +672,7 @@ public class GeoUtils {
      * @param parser {@link XContentParser} to parse the value from
      * @return int representing precision
      */
-    public static int parsePrecision(XContentParser parser) throws IOException, OpenSearchParseException {
+    public static int parsePrecision(XContentParser parser) throws IOException, DensityParseException {
         XContentParser.Token token = parser.currentToken();
         if (token.equals(XContentParser.Token.VALUE_NUMBER)) {
             return XContentMapValues.nodeIntegerValue(parser.intValue());
@@ -695,7 +695,7 @@ public class GeoUtils {
     }
 
     /**
-     * Checks that the precision is within range supported by opensearch - between 1 and 12
+     * Checks that the precision is within range supported by density - between 1 and 12
      * <p>
      * Returns the precision value if it is in the range and throws an IllegalArgumentException if it
      * is outside the range.

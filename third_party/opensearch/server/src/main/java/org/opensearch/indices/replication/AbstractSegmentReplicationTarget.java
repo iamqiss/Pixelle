@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.OpenSearchCorruptionException;
-import org.opensearch.action.StepListener;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.MultiFileWriter;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.indices.replication.common.ReplicationTarget;
+import org.density.DensityCorruptionException;
+import org.density.action.StepListener;
+import org.density.common.util.CancellableThreads;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.MultiFileWriter;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.indices.replication.common.ReplicationTarget;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 /**
  * Abstract base class for segment replication.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractSegmentReplicationTarget extends ReplicationTarget {
 
@@ -164,7 +164,7 @@ public abstract class AbstractSegmentReplicationTarget extends ReplicationTarget
         checkpointInfoListener.whenComplete(checkpointInfo -> {
             ReplicationCheckpoint getMetadataCheckpoint = checkpointInfo.getCheckpoint();
             if (indexShard.indexSettings().isSegRepLocalEnabled() && checkpoint.isAheadOf(getMetadataCheckpoint)) {
-                // Fixes https://github.com/opensearch-project/OpenSearch/issues/18490
+                // Fixes https://github.com/density-project/Density/issues/18490
                 listener.onFailure(
                     new ReplicationFailedException(
                         "Rejecting stale metadata checkpoint ["
@@ -243,7 +243,7 @@ public abstract class AbstractSegmentReplicationTarget extends ReplicationTarget
          * IllegalStateException to fail the shard
          */
         if (diff.different.isEmpty() == false) {
-            throw new OpenSearchCorruptionException(
+            throw new DensityCorruptionException(
                 new ParameterizedMessage(
                     "Shard {} has local copies of segments that differ from the primary {}",
                     indexShard.shardId(),

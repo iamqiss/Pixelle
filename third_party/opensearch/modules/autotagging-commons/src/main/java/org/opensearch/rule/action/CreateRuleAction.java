@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Action type for creating a Rule
- * @opensearch.experimental
+ * @density.experimental
  */
 public class CreateRuleAction extends ActionType<CreateRuleResponse> {
 
@@ -24,7 +24,7 @@ public class CreateRuleAction extends ActionType<CreateRuleResponse> {
     /**
      * Name for CreateRuleAction
      */
-    public static final String NAME = "cluster:admin/opensearch/rule/_create";
+    public static final String NAME = "cluster:admin/density/rule/_create";
 
     /**
      * Default constructor

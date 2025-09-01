@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.settings.Settings;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.settings.Settings;
 
 import java.util.Optional;
 
 /**
  * A factory for creating the instance of the {@link SecureTransportSettingsProvider}, taking into account current settings.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface SecureSettingsFactory {

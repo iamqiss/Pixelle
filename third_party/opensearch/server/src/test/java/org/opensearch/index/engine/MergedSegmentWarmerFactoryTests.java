@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.IndexWriter;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
+import org.density.index.shard.IndexShard;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportService;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MergedSegmentWarmerFactoryTests extends OpenSearchTestCase {
+public class MergedSegmentWarmerFactoryTests extends DensityTestCase {
 
     private TransportService transportService;
     private RecoverySettings recoverySettings;

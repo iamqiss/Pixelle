@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.hash;
+package org.density.common.hash;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -17,7 +17,7 @@ import java.util.Random;
 /**
  * Base class for testing the quality of hash functions.
  */
-public abstract class HashFunctionTestCase extends OpenSearchTestCase {
+public abstract class HashFunctionTestCase extends DensityTestCase {
     private static final int[] INPUT_BITS = new int[] { 24, 32, 40, 48, 56, 64, 72, 80, 96, 112, 128, 160, 512, 1024 };
     private static final int ITERATIONS = 1000;
     private static final double BIAS_THRESHOLD = 0.01; // 1%

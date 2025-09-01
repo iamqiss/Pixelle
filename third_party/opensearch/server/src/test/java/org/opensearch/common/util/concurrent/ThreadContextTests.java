@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.logging.HeaderWarning;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.logging.HeaderWarning;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -46,13 +46,13 @@ import java.util.function.Supplier;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_ID;
+import static org.density.tasks.TaskResourceTrackingService.TASK_ID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class ThreadContextTests extends OpenSearchTestCase {
+public class ThreadContextTests extends DensityTestCase {
 
     public void testStashContext() {
         Settings build = Settings.builder().put("request.headers.default", "1").build();

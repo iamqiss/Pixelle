@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.settings.CacheSettings;
-import org.opensearch.common.cache.store.OpenSearchOnHeapCache;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.settings.CacheSettings;
+import org.density.common.cache.store.DensityOnHeapCache;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
 
-public class TieredSpilloverCacheBaseIT extends OpenSearchIntegTestCase {
+public class TieredSpilloverCacheBaseIT extends DensityIntegTestCase {
 
     public Settings defaultSettings(String onHeapCacheSizeInBytesOrPercentage, int numberOfSegments) {
         return Settings.builder()
@@ -26,7 +26,7 @@ public class TieredSpilloverCacheBaseIT extends OpenSearchIntegTestCase {
                 TieredSpilloverCacheSettings.TIERED_SPILLOVER_ONHEAP_STORE_NAME.getConcreteSettingForNamespace(
                     CacheType.INDICES_REQUEST_CACHE.getSettingPrefix()
                 ).getKey(),
-                OpenSearchOnHeapCache.OpenSearchOnHeapCacheFactory.NAME
+                DensityOnHeapCache.DensityOnHeapCacheFactory.NAME
             )
             .put(
                 TieredSpilloverCacheSettings.TIERED_SPILLOVER_DISK_STORE_NAME.getConcreteSettingForNamespace(

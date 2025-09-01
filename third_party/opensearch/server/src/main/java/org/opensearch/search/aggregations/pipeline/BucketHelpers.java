@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.InvalidAggregationPathException;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.opensearch.search.aggregations.metrics.InternalNumericMetricsAggregation;
-import org.opensearch.search.aggregations.support.AggregationPath;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.XContentLocation;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.InvalidAggregationPathException;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.metrics.InternalNumericMetricsAggregation;
+import org.density.search.aggregations.support.AggregationPath;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import java.util.List;
  * A set of static helpers to simplify working with aggregation buckets, in
  * particular providing utilities that help pipeline aggregations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BucketHelpers {
 
@@ -68,7 +68,7 @@ public class BucketHelpers {
      * "insert_zeros": empty buckets will be filled with zeros for all metrics
      * "skip": empty buckets will simply be ignored
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum GapPolicy implements Writeable {
         INSERT_ZEROS((byte) 0, "insert_zeros"),

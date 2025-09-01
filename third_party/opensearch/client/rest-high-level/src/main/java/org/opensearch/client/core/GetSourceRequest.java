@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.client.Validatable;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.action.get.GetRequest;
+import org.density.client.Validatable;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 public final class GetSourceRequest implements Validatable {
     private String routing;

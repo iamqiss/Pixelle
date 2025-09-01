@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.protobufs.InlineScript;
-import org.opensearch.protobufs.ObjectMap;
-import org.opensearch.protobufs.ScriptField;
-import org.opensearch.protobufs.ScriptLanguage;
-import org.opensearch.protobufs.ScriptLanguage.BuiltinScriptLanguage;
-import org.opensearch.protobufs.StoredScriptId;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.InlineScript;
+import org.density.protobufs.ObjectMap;
+import org.density.protobufs.ScriptField;
+import org.density.protobufs.ScriptLanguage;
+import org.density.protobufs.ScriptLanguage.BuiltinScriptLanguage;
+import org.density.protobufs.StoredScriptId;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
+public class ScriptFieldProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithInlineScript() throws IOException {
         // Create a protobuf ScriptField with inline script
@@ -33,7 +33,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
             .setLang(ScriptLanguage.newBuilder().setBuiltinScriptLanguage(BuiltinScriptLanguage.BUILTIN_SCRIPT_LANGUAGE_PAINLESS).build())
             .build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).setIgnoreFailure(true).build();
 
@@ -60,7 +60,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
         // Create a protobuf ScriptField with stored script
         StoredScriptId storedScriptId = StoredScriptId.newBuilder().setId("my_stored_script").build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setStoredScriptId(storedScriptId).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setStoredScriptId(storedScriptId).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).build();
 
@@ -101,7 +101,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
             .setParams(objectMapBuilder.build())
             .build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).build();
 
@@ -134,7 +134,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
             .setLang(ScriptLanguage.newBuilder().setStringValue("mylang").build())
             .build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).build();
 
@@ -164,7 +164,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
             .putAllOptions(optionsMap)
             .build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).build();
 
@@ -195,7 +195,7 @@ public class ScriptFieldProtoUtilsTests extends OpenSearchTestCase {
             .putAllOptions(optionsMap)
             .build();
 
-        org.opensearch.protobufs.Script script = org.opensearch.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
+        org.density.protobufs.Script script = org.density.protobufs.Script.newBuilder().setInlineScript(inlineScript).build();
 
         ScriptField scriptField = ScriptField.newBuilder().setScript(script).build();
 

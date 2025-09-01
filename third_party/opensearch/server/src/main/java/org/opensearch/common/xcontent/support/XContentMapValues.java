@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.support;
+package org.density.common.xcontent.support;
 
 import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.CharacterRunAutomaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
+import org.density.DensityParseException;
+import org.density.common.Booleans;
+import org.density.common.Numbers;
+import org.density.common.regex.Regex;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ import java.util.function.Function;
 /**
  * Map values for xcontent parsing.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class XContentMapValues {
 
@@ -603,7 +603,7 @@ public class XContentMapValues {
         if (node instanceof Map) {
             return (Map<String, Object>) node;
         } else {
-            throw new OpenSearchParseException(desc + " should be a hash but was of type: " + node.getClass());
+            throw new DensityParseException(desc + " should be a hash but was of type: " + node.getClass());
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.script.ExplainableScoreScript;
-import org.opensearch.script.ScoreScript;
-import org.opensearch.script.Script;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.script.ExplainableScoreScript;
+import org.density.script.ScoreScript;
+import org.density.script.Script;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -47,7 +47,7 @@ import java.util.Objects;
 /**
  * Script score function for search.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptScoreFunction extends ScoreFunction {
 

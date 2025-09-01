@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search.aggregations.metrics;
+package org.density.geo.search.aggregations.metrics;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,24 +19,24 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeUtils;
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.tests.common.AggregationInspectionHelper;
-import org.opensearch.geo.tests.common.RandomGeoGeometryGenerator;
-import org.opensearch.geometry.Circle;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeUtils;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.tests.common.AggregationInspectionHelper;
+import org.density.geo.tests.common.RandomGeoGeometryGenerator;
+import org.density.geometry.Circle;
+import org.density.geometry.Geometry;
+import org.density.geometry.Line;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.ShapeType;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.index.mapper.MappedFieldType;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 
@@ -213,15 +213,15 @@ public class GeoBoundsGeoShapeAggregatorTests extends AggregatorTestCase {
 
     /**
      * Random function to generate a {@link LatLonGeometry}. Now for indexing of GeoShape field, we index all the
-     * different Geometry shapes that we support({@link ShapeType}) in OpenSearch are broken down into 3 shapes only.
+     * different Geometry shapes that we support({@link ShapeType}) in Density are broken down into 3 shapes only.
      * Hence, we are generating only 3 shapes : {@link org.apache.lucene.geo.Point},
      * {@link org.apache.lucene.geo.Line}, {@link org.apache.lucene.geo.Polygon}. {@link Circle} is not supported.
-     * Check {@link GeoShapeIndexer#prepareForIndexing(org.opensearch.geometry.Geometry)}
+     * Check {@link GeoShapeIndexer#prepareForIndexing(org.density.geometry.Geometry)}
      *
      * @return {@link LatLonGeometry}
      */
     private static Geometry randomLuceneGeometry(final Random r) {
-        int shapeNumber = OpenSearchTestCase.randomIntBetween(0, 2);
+        int shapeNumber = DensityTestCase.randomIntBetween(0, 2);
         if (shapeNumber == 0) {
             // Point
             return RandomGeoGeometryGenerator.randomPoint(r);

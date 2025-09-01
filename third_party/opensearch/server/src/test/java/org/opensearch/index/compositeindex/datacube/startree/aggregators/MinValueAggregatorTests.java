@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.index.mapper.FieldValueConverter;
-import org.opensearch.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.FieldValueConverter;
+import org.density.index.mapper.NumberFieldMapper;
 
 public class MinValueAggregatorTests extends AbstractValueAggregatorTests {
     private MinValueAggregator aggregator;

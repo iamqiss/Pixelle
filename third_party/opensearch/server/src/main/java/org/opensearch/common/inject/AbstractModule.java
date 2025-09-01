@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,19 +23,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.inject.binder.AnnotatedBindingBuilder;
-import org.opensearch.common.inject.binder.AnnotatedConstantBindingBuilder;
-import org.opensearch.common.inject.binder.LinkedBindingBuilder;
-import org.opensearch.common.inject.matcher.Matcher;
-import org.opensearch.common.inject.spi.Message;
-import org.opensearch.common.inject.spi.TypeConverter;
-import org.opensearch.common.inject.spi.TypeListener;
+import org.density.common.inject.binder.AnnotatedBindingBuilder;
+import org.density.common.inject.binder.AnnotatedConstantBindingBuilder;
+import org.density.common.inject.binder.LinkedBindingBuilder;
+import org.density.common.inject.matcher.Matcher;
+import org.density.common.inject.spi.Message;
+import org.density.common.inject.spi.TypeConverter;
+import org.density.common.inject.spi.TypeListener;
 
 import java.lang.annotation.Annotation;
 import java.util.Objects;
@@ -58,7 +58,7 @@ import java.util.Objects;
  *
  * @author crazybob@google.com (Bob Lee)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractModule implements Module {
 
@@ -241,8 +241,8 @@ public abstract class AbstractModule implements Module {
     }
 
     /**
-     * @see Binder#bindListener(org.opensearch.common.inject.matcher.Matcher,
-     *      org.opensearch.common.inject.spi.TypeListener)
+     * @see Binder#bindListener(org.density.common.inject.matcher.Matcher,
+     *      org.density.common.inject.spi.TypeListener)
      * @since 2.0
      */
     protected void bindListener(Matcher<? super TypeLiteral<?>> typeMatcher, TypeListener listener) {

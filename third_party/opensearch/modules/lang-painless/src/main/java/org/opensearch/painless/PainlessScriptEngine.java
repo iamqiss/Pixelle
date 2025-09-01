@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.painless.Compiler.Loader;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.lookup.PainlessLookupBuilder;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.symbol.ScriptScope;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
-import org.opensearch.script.ScriptException;
+import org.density.SpecialPermission;
+import org.density.common.settings.Settings;
+import org.density.painless.Compiler.Loader;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.lookup.PainlessLookupBuilder;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.symbol.ScriptScope;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
+import org.density.script.ScriptException;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -62,7 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.painless.WriterConstants.OBJECT_TYPE;
+import static org.density.painless.WriterConstants.OBJECT_TYPE;
 
 /**
  * Implementation of a ScriptEngine for the Painless language.

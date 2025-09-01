@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryShardContext;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.search.aggregations.support.AggregationUsageService.OTHER_SUBTYPE;
+import static org.density.search.aggregations.support.AggregationUsageService.OTHER_SUBTYPE;
 
 /**
  * Base factory to instantiate an internal aggregator
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class AggregatorFactory {
@@ -110,7 +110,7 @@ public abstract class AggregatorFactory {
     /**
      * Returns the aggregation subtype for nodes usage stats.
      * <p>
-     * It should match the types registered by calling {@linkplain org.opensearch.search.aggregations.support.AggregationUsageService}.
+     * It should match the types registered by calling {@linkplain org.density.search.aggregations.support.AggregationUsageService}.
      * In other words, it should be ValueSourcesType for the VST aggregations OTHER_SUBTYPE for all other aggregations.
      */
     public String getStatsSubtype() {

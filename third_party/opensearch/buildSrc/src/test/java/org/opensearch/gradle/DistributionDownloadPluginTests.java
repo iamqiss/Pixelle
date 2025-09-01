@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle;
+package org.density.gradle;
 
-import org.opensearch.gradle.OpenSearchDistribution.Platform;
-import org.opensearch.gradle.OpenSearchDistribution.Type;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.test.GradleUnitTestCase;
+import org.density.gradle.DensityDistribution.Platform;
+import org.density.gradle.DensityDistribution.Type;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.test.GradleUnitTestCase;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.internal.artifacts.repositories.DefaultIvyArtifactRepository;
@@ -77,7 +77,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
     );
 
     public void testVersionDefault() {
-        OpenSearchDistribution distro = checkDistro(
+        DensityDistribution distro = checkDistro(
             createProject(null, false),
             "testdistro",
             null,
@@ -85,22 +85,22 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
             Platform.LINUX,
             JavaPackageType.JDK
         );
-        assertEquals(distro.getVersion(), VersionProperties.getOpenSearch());
+        assertEquals(distro.getVersion(), VersionProperties.getDensity());
     }
 
     public void testCustomDistributionUrlWithUrl() {
         Project project = ProjectBuilder.builder().build();
-        String customUrl = "https://artifacts.opensearch.org/custom";
+        String customUrl = "https://artifacts.density.org/custom";
         project.getExtensions().getExtraProperties().set("customDistributionUrl", customUrl);
         DistributionDownloadPlugin plugin = new DistributionDownloadPlugin();
         plugin.apply(project);
         assertEquals(2, project.getRepositories().size());
         assertEquals(
-            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("opensearch-downloads")).getUrl().toString(),
+            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("density-downloads")).getUrl().toString(),
             customUrl
         );
         assertEquals(
-            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("opensearch-snapshots")).getUrl().toString(),
+            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("density-snapshots")).getUrl().toString(),
             customUrl
         );
     }
@@ -111,16 +111,16 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         plugin.apply(project);
         assertEquals(3, project.getRepositories().size());
         assertEquals(
-            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("opensearch-downloads")).getUrl().toString(),
-            "https://artifacts.opensearch.org"
+            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("density-downloads")).getUrl().toString(),
+            "https://artifacts.density.org"
         );
         assertEquals(
-            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("opensearch-downloads2")).getUrl().toString(),
-            "https://artifacts.opensearch.org"
+            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("density-downloads2")).getUrl().toString(),
+            "https://artifacts.density.org"
         );
         assertEquals(
-            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("opensearch-snapshots")).getUrl().toString(),
-            "https://artifacts.opensearch.org"
+            ((DefaultIvyArtifactRepository) project.getRepositories().getAt("density-snapshots")).getUrl().toString(),
+            "https://artifacts.density.org"
         );
     }
 
@@ -137,7 +137,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
     }
 
     public void testTypeDefault() {
-        OpenSearchDistribution distro = checkDistro(
+        DensityDistribution distro = checkDistro(
             createProject(null, false),
             "testdistro",
             "5.0.0",
@@ -149,7 +149,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
     }
 
     public void testPlatformDefault() {
-        OpenSearchDistribution distro = checkDistro(
+        DensityDistribution distro = checkDistro(
             createProject(null, false),
             "testdistro",
             "5.0.0",
@@ -157,7 +157,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
             null,
             JavaPackageType.JDK
         );
-        assertEquals(distro.getPlatform(), OpenSearchDistribution.CURRENT_PLATFORM);
+        assertEquals(distro.getPlatform(), DensityDistribution.CURRENT_PLATFORM);
     }
 
     public void testPlatformForIntegTest() {
@@ -168,12 +168,12 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
             Type.INTEG_TEST_ZIP,
             Platform.LINUX,
             null,
-            "platform cannot be set on opensearch distribution [testdistro]"
+            "platform cannot be set on density distribution [testdistro]"
         );
     }
 
     public void testBundledJdkDefault() {
-        OpenSearchDistribution distro = checkDistro(
+        DensityDistribution distro = checkDistro(
             createProject(null, false),
             "testdistro",
             "5.0.0",
@@ -192,7 +192,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
             Type.INTEG_TEST_ZIP,
             null,
             JavaPackageType.JDK,
-            "bundledJdk cannot be set on opensearch distribution [testdistro]"
+            "bundledJdk cannot be set on density distribution [testdistro]"
         );
     }
 
@@ -201,7 +201,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         Project archiveProject = ProjectBuilder.builder().withParent(archivesProject).withName("integ-test-zip").build();
         archiveProject.getConfigurations().create("default");
         archiveProject.getArtifacts().add("default", new File("doesnotmatter"));
-        createDistro(project, "distro", VersionProperties.getOpenSearch(), Type.INTEG_TEST_ZIP, null, null);
+        createDistro(project, "distro", VersionProperties.getDensity(), Type.INTEG_TEST_ZIP, null, null);
         checkPlugin(project);
     }
 
@@ -216,10 +216,10 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
                     Project archiveProject = ProjectBuilder.builder().withParent(archivesProject).withName(projectName).build();
                     archiveProject.getConfigurations().create("default");
                     archiveProject.getArtifacts().add("default", new File("doesnotmatter"));
-                    final OpenSearchDistribution distro = createDistro(
+                    final DensityDistribution distro = createDistro(
                         project,
                         "distro",
-                        VersionProperties.getOpenSearch(),
+                        VersionProperties.getDensity(),
                         Type.ARCHIVE,
                         platform,
                         bundledJdk
@@ -239,7 +239,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
                 Project packageProject = ProjectBuilder.builder().withParent(packagesProject).withName(projectName).build();
                 packageProject.getConfigurations().create("default");
                 packageProject.getArtifacts().add("default", new File("doesnotmatter"));
-                createDistro(project, "distro", VersionProperties.getOpenSearch(), packageType, null, bundledJdk);
+                createDistro(project, "distro", VersionProperties.getDensity(), packageType, null, bundledJdk);
                 checkPlugin(project);
             }
         }
@@ -286,7 +286,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         assertThat(e.getMessage(), containsString(message));
     }
 
-    private OpenSearchDistribution createDistro(
+    private DensityDistribution createDistro(
         Project project,
         String name,
         String version,
@@ -294,7 +294,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         Platform platform,
         JavaPackageType bundledJdk
     ) {
-        NamedDomainObjectContainer<OpenSearchDistribution> distros = DistributionDownloadPlugin.getContainer(project);
+        NamedDomainObjectContainer<DensityDistribution> distros = DistributionDownloadPlugin.getContainer(project);
         return distros.create(name, distro -> {
             if (version != null) {
                 distro.setVersion(version);
@@ -312,7 +312,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
     }
 
     // create a distro and finalize its configuration
-    private OpenSearchDistribution checkDistro(
+    private DensityDistribution checkDistro(
         Project project,
         String name,
         String version,
@@ -320,7 +320,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         Platform platform,
         JavaPackageType bundledJdk
     ) {
-        OpenSearchDistribution distribution = createDistro(project, name, version, type, platform, bundledJdk);
+        DensityDistribution distribution = createDistro(project, name, version, type, platform, bundledJdk);
         distribution.finalizeValues();
         return distribution;
     }
@@ -344,7 +344,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         Project archiveProject = ProjectBuilder.builder().withParent(bwcProject).withName(projectName).build();
         archiveProject.getConfigurations().create(config);
         archiveProject.getArtifacts().add(config, new File("doesnotmatter"));
-        final OpenSearchDistribution distro = createDistro(project, "distro", version.toString(), type, platform, JavaPackageType.JDK);
+        final DensityDistribution distro = createDistro(project, "distro", version.toString(), type, platform, JavaPackageType.JDK);
         distro.setArchitecture(Architecture.current());
         checkPlugin(project);
     }
@@ -360,7 +360,7 @@ public class DistributionDownloadPluginTests extends GradleUnitTestCase {
         if (bwcVersions != null) {
             project.getExtensions().getExtraProperties().set("bwcVersions", bwcVersions);
         }
-        project.getPlugins().apply("opensearch.distribution-download");
+        project.getPlugins().apply("density.distribution-download");
         return project;
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Map;
 
 /**
  * A script implementation of a query filter.
- * See {@link org.opensearch.index.query.ScriptQueryBuilder}.
+ * See {@link org.density.index.query.ScriptQueryBuilder}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class FilterScript {
 
@@ -82,7 +82,7 @@ public abstract class FilterScript {
     /**
      * A factory to construct {@link FilterScript} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface LeafFactory {
         FilterScript newInstance(LeafReaderContext ctx) throws IOException;
@@ -91,7 +91,7 @@ public abstract class FilterScript {
     /**
      * A factory to construct stateful {@link FilterScript} factories for a specific index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         LeafFactory newFactory(Map<String, Object> params, SearchLookup lookup);

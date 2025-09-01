@@ -1,29 +1,29 @@
 /*
- * Copyright OpenSearch Contributors
+ * Copyright Density Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.identity;
+package org.density.identity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.identity.noop.NoopIdentityPlugin;
-import org.opensearch.identity.tokens.TokenManager;
-import org.opensearch.plugins.IdentityAwarePlugin;
-import org.opensearch.plugins.IdentityPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.common.annotation.InternalApi;
+import org.density.common.settings.Settings;
+import org.density.identity.noop.NoopIdentityPlugin;
+import org.density.identity.tokens.TokenManager;
+import org.density.plugins.IdentityAwarePlugin;
+import org.density.plugins.IdentityPlugin;
+import org.density.plugins.Plugin;
+import org.density.threadpool.ThreadPool;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Identity and access control for OpenSearch
+ * Identity and access control for Density
  *
- * @opensearch.internal
+ * @density.internal
  * */
 @InternalApi
 public class IdentityService {
@@ -42,7 +42,7 @@ public class IdentityService {
             log.debug("Identity plugins size is 1");
             identityPlugin = identityPlugins.get(0);
         } else {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "Multiple identity plugins are not supported, found: "
                     + identityPlugins.stream().map(Object::getClass).map(Class::getName).collect(Collectors.joining(","))
             );

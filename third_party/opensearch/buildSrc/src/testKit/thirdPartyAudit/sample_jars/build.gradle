@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -21,7 +21,7 @@ dependencies {
 }
 
 ["0.0.1", "0.0.2"].forEach { v ->
-  ["opensearch", "other"].forEach { p ->
+  ["density", "other"].forEach { p ->
     tasks.register("dummy-${p}-${v}", Jar) {
       destinationDirectory = file("${buildDir}/testrepo/org/${p}/gradle/dummy-io/${v}/")
       archiveFileName = "dummy-io-${v}.jar"
@@ -40,7 +40,7 @@ dependencies {
 }
 
 ["0.0.1"].forEach { v ->
-  ["opensearch", "other"].forEach { p ->
+  ["density", "other"].forEach { p ->
     tasks.register("broken-log4j-${p}-${v}", Jar) {
       destinationDirectory = file("${buildDir}/testrepo/org/${p}/gradle/broken-log4j/${v}/")
       archiveFileName = "broken-log4j-${v}.jar"

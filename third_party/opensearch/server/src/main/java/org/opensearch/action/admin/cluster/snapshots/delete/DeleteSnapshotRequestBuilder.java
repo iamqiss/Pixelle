@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.delete;
+package org.density.action.admin.cluster.snapshots.delete;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Delete snapshot request builder
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DeleteSnapshotRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -51,14 +51,14 @@ public class DeleteSnapshotRequestBuilder extends ClusterManagerNodeOperationReq
     /**
      * Constructs delete snapshot request builder
      */
-    public DeleteSnapshotRequestBuilder(OpenSearchClient client, DeleteSnapshotAction action) {
+    public DeleteSnapshotRequestBuilder(DensityClient client, DeleteSnapshotAction action) {
         super(client, action, new DeleteSnapshotRequest());
     }
 
     /**
      * Constructs delete snapshot request builder with specified repository and snapshot names
      */
-    public DeleteSnapshotRequestBuilder(OpenSearchClient client, DeleteSnapshotAction action, String repository, String... snapshots) {
+    public DeleteSnapshotRequestBuilder(DensityClient client, DeleteSnapshotAction action, String repository, String... snapshots) {
         super(client, action, new DeleteSnapshotRequest(repository, snapshots));
     }
 

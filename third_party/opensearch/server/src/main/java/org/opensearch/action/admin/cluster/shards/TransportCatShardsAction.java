@@ -1,43 +1,43 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards;
+package org.density.action.admin.cluster.shards;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateRequest;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.pagination.ShardPaginationStrategy;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.HandledTransportAction;
-import org.opensearch.action.support.TimeoutTaskCancellationUtility;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.breaker.ResponseLimitBreachedException;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.state.ClusterStateRequest;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.pagination.PageParams;
+import org.density.action.pagination.ShardPaginationStrategy;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.HandledTransportAction;
+import org.density.action.support.TimeoutTaskCancellationUtility;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.breaker.ResponseLimitBreachedException;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.inject.Inject;
+import org.density.core.action.ActionListener;
+import org.density.core.action.NotifyOnceListener;
+import org.density.tasks.CancellableTask;
+import org.density.tasks.Task;
+import org.density.transport.TransportService;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.common.breaker.ResponseLimitSettings.LimitEntity.SHARDS;
+import static org.density.common.breaker.ResponseLimitSettings.LimitEntity.SHARDS;
 
 /**
  * Perform cat shards action
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportCatShardsAction extends HandledTransportAction<CatShardsRequest, CatShardsResponse> {
 

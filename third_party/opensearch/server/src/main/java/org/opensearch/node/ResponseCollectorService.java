@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.ExponentiallyWeightedMovingAverage;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.ExponentiallyWeightedMovingAverage;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentMap;
  * tasks executed on each node, making the EWMA of the values available to the
  * coordinating node.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class ResponseCollectorService implements ClusterStateListener {
@@ -123,7 +123,7 @@ public final class ResponseCollectorService implements ClusterStateListener {
      * node's statistics. This includes the EWMA of queue size, response time,
      * and service time.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ComputedNodeStats implements Writeable {

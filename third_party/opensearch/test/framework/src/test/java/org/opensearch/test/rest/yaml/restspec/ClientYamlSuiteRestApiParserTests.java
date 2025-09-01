@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.restspec;
+package org.density.test.rest.yaml.restspec;
 
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.test.rest.yaml.section.AbstractClientYamlTestFragmentParserTestCase;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.test.rest.yaml.section.AbstractClientYamlTestFragmentParserTestCase;
 
 import java.util.Iterator;
 

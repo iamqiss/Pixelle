@@ -1,38 +1,38 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.autoforcemerge;
+package org.density.index.autoforcemerge;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractAsyncTask;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.translog.TranslogStats;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.monitor.MonitorService;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.monitor.jvm.JvmService;
-import org.opensearch.monitor.os.OsService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractAsyncTask;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardState;
+import org.density.index.translog.TranslogStats;
+import org.density.indices.IndicesService;
+import org.density.monitor.MonitorService;
+import org.density.monitor.fs.FsService;
+import org.density.monitor.jvm.JvmService;
+import org.density.monitor.os.OsService;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -44,15 +44,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_CLUSTER_STATE_ENABLED_SETTING;
 
 /**
- * AutoForceMergeManager : Manages automatic force merge operations for indices in OpenSearch. This component monitors and
+ * AutoForceMergeManager : Manages automatic force merge operations for indices in Density. This component monitors and
  * triggers force merge on primary shards based on their translog age and system conditions. It ensures
  * optimal segment counts while respecting node resources and health constraints. Force merge operations
  * are executed with configurable delays to prevent system overload.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class AutoForceMergeManager extends AbstractLifecycleComponent {
 
@@ -96,7 +96,7 @@ public class AutoForceMergeManager extends AbstractLifecycleComponent {
         this.configurationValidator = new ConfigurationValidator();
         this.nodeValidator = new NodeValidator();
         this.shardValidator = new ShardValidator();
-        this.allocatedProcessors = OpenSearchExecutors.allocatedProcessors(clusterService.getSettings());
+        this.allocatedProcessors = DensityExecutors.allocatedProcessors(clusterService.getSettings());
         this.resourceTrackers = ResourceTrackerProvider.create(threadPool);
     }
 

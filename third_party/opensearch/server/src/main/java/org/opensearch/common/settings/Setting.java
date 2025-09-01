@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.unit.MemorySizeValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.common.unit.MemorySizeValue;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ import java.util.stream.Stream;
 /**
  * A setting. Encapsulates typical stuff like default value, parsing, and scope.
  * Some (Settings.Property.Dynamic) can be modified at run time using the API.
- * All settings inside opensearch or in any of the plugins should use this type-safe and generic settings infrastructure
+ * All settings inside density or in any of the plugins should use this type-safe and generic settings infrastructure
  * together with {@link AbstractScopedSettings}. This class contains several utility methods that makes it straight forward
  * to add settings for the majority of the cases. For instance a simple boolean settings can be defined like this:
  * <pre>{@code
@@ -103,7 +103,7 @@ import java.util.stream.Stream;
  * }
  * </pre>
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Setting<T> implements ToXContentObject {
@@ -111,7 +111,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * Property of the setting
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Property {
@@ -520,7 +520,7 @@ public class Setting<T> implements ToXContentObject {
                 validator.validate(parsed, map, exists(settings));
             }
             return parsed;
-        } catch (OpenSearchParseException ex) {
+        } catch (DensityParseException ex) {
             throw new IllegalArgumentException(ex.getMessage(), ex);
         } catch (NumberFormatException ex) {
             String err = "Failed to parse value" + (isFiltered() ? "" : " [" + value + "]") + " for setting [" + getKey() + "]";
@@ -576,7 +576,7 @@ public class Setting<T> implements ToXContentObject {
                 "Setting ["
                     + getKey()
                     + "] is a non-secure setting"
-                    + " and must be stored inside opensearch.yml, but was found inside the OpenSearch keystore"
+                    + " and must be stored inside density.yml, but was found inside the Density keystore"
             );
         }
         return settings.get(getKey(), defaultValue.apply(settings));
@@ -590,7 +590,7 @@ public class Setting<T> implements ToXContentObject {
             final String key = getKey();
             Settings.DeprecationLoggerHolder.deprecationLogger.deprecate(
                 key,
-                "[{}] setting was deprecated in OpenSearch and will be removed in a future release! "
+                "[{}] setting was deprecated in Density and will be removed in a future release! "
                     + "See the breaking changes documentation for the next major version.",
                 key
             );
@@ -651,7 +651,7 @@ public class Setting<T> implements ToXContentObject {
      * Allows a setting to declare a dependency on another setting being set. Optionally, a setting can validate the value of the dependent
      * setting.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface SettingDependency {
@@ -801,7 +801,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * Allows an affix setting to declare a dependency on another affix setting.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface AffixSettingDependency extends SettingDependency {
@@ -814,7 +814,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * An affix setting
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class AffixSetting<T> extends Setting<T> {
@@ -1048,7 +1048,7 @@ public class Setting<T> implements ToXContentObject {
      *
      * @param <T> the type of the {@link Setting}
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -1097,7 +1097,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * A group setting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class GroupSetting extends Setting<Settings> {
         private final String key;
@@ -2404,14 +2404,14 @@ public class Setting<T> implements ToXContentObject {
             builder.endArray();
             return builder.toString();
         } catch (IOException ex) {
-            throw new OpenSearchException(ex);
+            throw new DensityException(ex);
         }
     }
 
     /**
      * A list setting
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ListSetting<T> extends Setting<List<T>> {
 
@@ -2876,7 +2876,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * Key for the setting
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Key {
@@ -2886,7 +2886,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * A simple key for a setting
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class SimpleKey implements Key {
@@ -2923,7 +2923,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * Settings Group keys
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class GroupKey extends SimpleKey {
         public GroupKey(String key) {
@@ -2942,7 +2942,7 @@ public class Setting<T> implements ToXContentObject {
     /**
      * List settings key
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class ListKey extends SimpleKey {
         private final Pattern pattern;
@@ -2962,7 +2962,7 @@ public class Setting<T> implements ToXContentObject {
      * A key that allows for static pre and suffix. This is used for settings
      * that have dynamic namespaces like for different accounts etc.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class AffixKey implements Key {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.geometry.utils.StandardValidator;
-import org.opensearch.geometry.utils.WellKnownText;
+import org.density.DensityParseException;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Geometry;
+import org.density.geometry.Rectangle;
+import org.density.geometry.ShapeType;
+import org.density.geometry.utils.StandardValidator;
+import org.density.geometry.utils.WellKnownText;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -53,7 +53,7 @@ import java.util.Objects;
  * A class representing a Geo-Bounding-Box for use by Geo queries and aggregations
  * that deal with extents/rectangles representing rectangular areas of interest.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoBoundingBox implements ToXContentObject, Writeable {
     private static final WellKnownText WKT_PARSER = new WellKnownText(true, new StandardValidator(true));
@@ -189,10 +189,10 @@ public class GeoBoundingBox implements ToXContentObject, Writeable {
     /**
      * Parses the bounding box and returns bottom, top, left, right coordinates
      */
-    public static GeoBoundingBox parseBoundingBox(XContentParser parser) throws IOException, OpenSearchParseException {
+    public static GeoBoundingBox parseBoundingBox(XContentParser parser) throws IOException, DensityParseException {
         XContentParser.Token token = parser.currentToken();
         if (token != XContentParser.Token.START_OBJECT) {
-            throw new OpenSearchParseException("failed to parse bounding box. Expected start object but found [{}]", token);
+            throw new DensityParseException("failed to parse bounding box. Expected start object but found [{}]", token);
         }
 
         double top = Double.NaN;
@@ -212,13 +212,13 @@ public class GeoBoundingBox implements ToXContentObject, Writeable {
                     try {
                         Geometry geometry = WKT_PARSER.fromWKT(parser.text());
                         if (ShapeType.ENVELOPE.equals(geometry.type()) == false) {
-                            throw new OpenSearchParseException(
+                            throw new DensityParseException(
                                 "failed to parse WKT bounding box. [" + geometry.type() + "] found. expected [" + ShapeType.ENVELOPE + "]"
                             );
                         }
                         envelope = (Rectangle) geometry;
                     } catch (ParseException | IllegalArgumentException e) {
-                        throw new OpenSearchParseException("failed to parse WKT bounding box", e);
+                        throw new DensityParseException("failed to parse WKT bounding box", e);
                     }
                 } else if (TOP_FIELD.match(currentFieldName, parser.getDeprecationHandler())) {
                     top = parser.doubleValue();
@@ -246,11 +246,11 @@ public class GeoBoundingBox implements ToXContentObject, Writeable {
                         bottom = sparse.getLat();
                         left = sparse.getLon();
                     } else {
-                        throw new OpenSearchParseException("failed to parse bounding box. unexpected field [{}]", currentFieldName);
+                        throw new DensityParseException("failed to parse bounding box. unexpected field [{}]", currentFieldName);
                     }
                 }
             } else {
-                throw new OpenSearchParseException("failed to parse bounding box. field name expected but [{}] found", token);
+                throw new DensityParseException("failed to parse bounding box. field name expected but [{}] found", token);
             }
         }
         if (envelope != null) {
@@ -258,7 +258,7 @@ public class GeoBoundingBox implements ToXContentObject, Writeable {
                 || Double.isNaN(bottom) == false
                 || Double.isNaN(left) == false
                 || Double.isNaN(right) == false) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "failed to parse bounding box. Conflicting definition found " + "using well-known text and explicit corners."
                 );
             }

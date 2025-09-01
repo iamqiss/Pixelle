@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.Level;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.logging.LogConfigurator;
-import org.opensearch.common.unit.MemorySizeValue;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.logging.LogConfigurator;
+import org.density.common.unit.MemorySizeValue;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.settings.SecureString;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,14 +90,14 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.core.common.unit.ByteSizeValue.parseBytesSizeValue;
+import static org.density.common.settings.AbstractScopedSettings.ARCHIVED_SETTINGS_PREFIX;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.core.common.unit.ByteSizeValue.parseBytesSizeValue;
 
 /**
  * An immutable settings implementation.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class Settings implements ToXContentFragment {
@@ -345,9 +345,9 @@ public final class Settings implements ToXContentFragment {
     /**
      * We have to lazy initialize the deprecation logger as otherwise a static logger here would be constructed before logging is configured
      * leading to a runtime failure (see {@link LogConfigurator#checkErrorListener()} ). The premature construction would come from any
-     * {@link Setting} object constructed in, for example, {@link org.opensearch.env.Environment}.
+     * {@link Setting} object constructed in, for example, {@link org.density.env.Environment}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class DeprecationLoggerHolder {
         static DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(Settings.class);
@@ -635,7 +635,7 @@ public final class Settings implements ToXContentFragment {
                 while (!parser.isClosed() && (lastToken = parser.nextToken()) == null)
                     ;
             } catch (Exception e) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "malformed, expected end of settings but encountered additional content starting at line number: [{}], "
                         + "column number: [{}]",
                     e,
@@ -644,7 +644,7 @@ public final class Settings implements ToXContentFragment {
                 );
             }
             if (lastToken != null) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "malformed, expected end of settings but encountered additional content starting at line number: [{}], "
                         + "column number: [{}]",
                     parser.getTokenLocation().lineNumber,
@@ -703,7 +703,7 @@ public final class Settings implements ToXContentFragment {
 
     private static void validateValue(String key, Object currentValue, XContentParser parser, boolean allowNullValues) {
         if (currentValue == null && allowNullValues == false) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "null-valued setting found for key [{}] found at line number [{}], column number [{}]",
                 key,
                 parser.getTokenLocation().lineNumber,
@@ -753,7 +753,7 @@ public final class Settings implements ToXContentFragment {
      * settings implementation. Use {@link Settings#builder()} in order to
      * construct it.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -1090,7 +1090,7 @@ public final class Settings implements ToXContentFragment {
                 builder.map(map);
                 return loadFromSource(builder.toString(), builder.contentType());
             } catch (IOException e) {
-                throw new OpenSearchGenerationException("Failed to generate [" + map + "]", e);
+                throw new DensityGenerationException("Failed to generate [" + map + "]", e);
             }
         }
 
@@ -1141,7 +1141,7 @@ public final class Settings implements ToXContentFragment {
                     }
                 }
                 put(fromXContent(parser, acceptNullValues, true));
-            } catch (OpenSearchParseException e) {
+            } catch (DensityParseException e) {
                 throw e;
             } catch (Exception e) {
                 throw new SettingsException("Failed to load settings from [" + resourceName + "]", e);
@@ -1407,7 +1407,7 @@ public final class Settings implements ToXContentFragment {
     /**
      * Prefixed secure settings
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class PrefixedSecureSettings implements SecureSettings {
         private final SecureSettings delegate;

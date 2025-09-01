@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.list;
+package org.density.rest.action.list;
 
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.pagination.IndexPaginationStrategy;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.common.breaker.ResponseLimitSettings;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.cat.RestIndicesAction;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.pagination.IndexPaginationStrategy;
+import org.density.action.pagination.PageParams;
+import org.density.common.breaker.ResponseLimitSettings;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.rest.RestRequest;
+import org.density.rest.action.cat.RestIndicesAction;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,12 +24,12 @@ import java.util.Objects;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _list API action to output indices in pages.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestIndicesListAction extends RestIndicesAction {
 

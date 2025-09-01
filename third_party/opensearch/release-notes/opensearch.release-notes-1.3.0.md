@@ -2,7 +2,7 @@
 
 * __MapperService has to be passed in as null for EnginePlugins CodecService constructor (#2177) (#2413)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Wed, 9 Mar 2022 10:17:33 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Wed, 9 Mar 2022 10:17:33 -0500
 
     efs/remotes/os_or/1.3
     * MapperService has to be passed in as null for EnginePlugins CodecService
@@ -34,7 +34,7 @@
 * __Install plugin command help (#2193) (#2264)__
 
     [Joshua Palis](mailto:jpalis@amazon.com) - Mon, 7 Mar 2022 15:24:56 -0500
-  * edited opensearch-plugin install help output to include plugin URL
+  * edited density-plugin install help output to include plugin URL
   * fixed unit test for plugin install help output by correctly identifying the
           beginning og the non-option argument list
   * added comments to install plugins help non option argument ouput unit test
@@ -48,7 +48,7 @@
 
 * __Add valuesField in PercentilesAggregationBuilder streamInput constructor (#2308) (#2389)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Mon, 7 Mar 2022 13:07:41 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Mon, 7 Mar 2022 13:07:41 -0500
 
      Signed-off-by: Subhobrata Dey &lt;sbcd90@gmail.com&gt;
      (cherry picked from commit e1fd4b75b4f888d8d486baceeb9fd6fe7df44416)
@@ -57,7 +57,7 @@
 
 * __Updated the url for docker distribution (#2325) (#2360)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Mon, 7 Mar 2022 11:52:46 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Mon, 7 Mar 2022 11:52:46 -0500
 
   Signed-off-by: Owais Kazi &lt;owaiskazi19@gmail.com&gt;
     (cherry picked from commit 9224537704bb12980a129afb1e7b6ba6ab93680e)
@@ -124,7 +124,7 @@
 
 * __Remove Github DCO action since DCO runs via Github App now (#2317) (#2323)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 12:12:55 -0800
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 12:12:55 -0800
 
     Signed-off-by: Vacha Shah &lt;vachshah@amazon.com&gt;
     (cherry picked from commit cdb42ad3013f67970def21e15c546c9c4fd08d6f)
@@ -133,7 +133,7 @@
 
 * __[Backport 1.x] Avoid logging duplicate deprecation warnings multiple times (#2315)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 14:23:05 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 14:23:05 -0500
 
     * Avoid logging duplicate deprecation warnings multiple times (#1660)
 
@@ -167,7 +167,7 @@
 
 * __Add support of SOCKS proxies for S3 repository (#2160) (#2316)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 13:49:40 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Thu, 3 Mar 2022 13:49:40 -0500
 
     Signed-off-by: Andrey Pleskach &lt;ples@aiven.io&gt;
     (cherry picked from commit f13b951c7006700a9b8a8bb2cdecd67439bc1e86)
@@ -176,7 +176,7 @@
 
 * __Fix flaky test case - string profiler via global ordinals (#2226) (#2313)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Wed, 2 Mar 2022 17:48:34 -0600
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Wed, 2 Mar 2022 17:48:34 -0600
 
     forcemerge to one segment before executing aggregation query.
      Signed-off-by: Peng Huo &lt;penghuo@gmail.com&gt;
@@ -185,7 +185,7 @@
 
 * __Auto-increment next development iteration. (#1816) (#2164)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Wed, 2 Mar 2022 15:46:28 -0800
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Wed, 2 Mar 2022 15:46:28 -0800
 
     * Auto-increment next development iteration.
      Signed-off-by: dblock &lt;dblock@amazon.com&gt;
@@ -217,7 +217,7 @@
 
 * __Adding shards per node constraint for predictability to testClusterGr… (#2110) (#2265)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Mon, 28 Feb 2022 15:59:57 -0600
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Mon, 28 Feb 2022 15:59:57 -0600
 
     * Adding shards per node constraint for predictability to
     testClusterGreenAfterPartialRelocation
@@ -322,7 +322,7 @@
 
 * __Add proxy username and password settings for Azure repository (#2098) (#2108)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Wed, 16 Feb 2022 12:01:51 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Wed, 16 Feb 2022 12:01:51 -0500
 
     Added username/password proxy settings for Azure repository.
     Security
@@ -349,7 +349,7 @@
 
 * __Mapping update for “date_range” field type is not idempotent (#2094) (#2106)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Tue, 15 Feb 2022 11:44:17 -0600
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Tue, 15 Feb 2022 11:44:17 -0600
 
     Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
     (cherry picked from commit 6b6f03368f49f5f8001d6d0ed85cd9af7bab76f6)
@@ -358,7 +358,7 @@
 
 * __Fix integration tests failure (#2067) (#2090)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Fri, 11 Feb 2022 11:07:46 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Fri, 11 Feb 2022 11:07:46 -0500
 
     Fixed integration tests failure on Linux with Kernel 5.16.x
      Signed-off-by: Andrey Pleskach &lt;ples@aiven.io&gt;
@@ -370,11 +370,11 @@
 
     [Ankit Jain](mailto:jain.ankitk@gmail.com) - Fri, 11 Feb 2022 09:36:21 -0500
 
-    * Stabilizing org.opensearch.cluster.routing.MovePrimaryFirstTests.test…
+    * Stabilizing org.density.cluster.routing.MovePrimaryFirstTests.test…
     (#2048)
 
     * Stabilizing
-    org.opensearch.cluster.routing.MovePrimaryFirstTests.testClusterGreenAfterPartialRelocation
+    org.density.cluster.routing.MovePrimaryFirstTests.testClusterGreenAfterPartialRelocation
 
      Signed-off-by: Ankit Jain &lt;jain.ankitk@gmail.com&gt;
 
@@ -393,7 +393,7 @@
 
 * __Removing lingering transportclient (#1955) (#2088)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Thu, 10 Feb 2022 17:21:12 -0800
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Thu, 10 Feb 2022 17:21:12 -0800
 
     Signed-off-by: Sarat Vemulapalli &lt;vemulapallisarat@gmail.com&gt;
     (cherry picked from commit 781156471a1827b1b66445f716c7567f714dda86)
@@ -402,7 +402,7 @@
 
 * __Prioritize primary shard movement during shard allocation (#1445) (#2079)__
 
-    [opensearch-trigger-bot[bot]](mailto:98922864+opensearch-trigger-bot[bot]@users.noreply.github.com) - Thu, 10 Feb 2022 13:48:38 -0500
+    [density-trigger-bot[bot]](mailto:98922864+density-trigger-bot[bot]@users.noreply.github.com) - Thu, 10 Feb 2022 13:48:38 -0500
 
     When some node or set of nodes is excluded (based on some cluster setting)
     BalancedShardsAllocator iterates over them in breadth first order picking 1
@@ -440,7 +440,7 @@
      Co-authored-by: Vacha &lt;vachshah@amazon.com&gt;
 
 
-* __Another attempt to fix o.o.transport.netty4.OpenSearchLoggingHandlerIT fails w/ stack overflow (#2051) (#2055)__
+* __Another attempt to fix o.o.transport.netty4.DensityLoggingHandlerIT fails w/ stack overflow (#2051) (#2055)__
 
     [github-actions[bot]](mailto:41898282+github-actions[bot]@users.noreply.github.com) - Mon, 7 Feb 2022 16:11:06 -0500
 
@@ -558,7 +558,7 @@
      Co-authored-by: Sarat Vemulapalli &lt;vemulapallisarat@gmail.com&gt;
 
 
-* __[FEATURE] Add OPENSEARCH_JAVA_HOME env to override JAVA_HOME (#2040)__
+* __[FEATURE] Add DENSITY_JAVA_HOME env to override JAVA_HOME (#2040)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Wed, 2 Feb 2022 12:16:50 -0800
 
@@ -754,7 +754,7 @@
 
     In preparation for removing all LegacyESVersion support by 3.0; this commit
 
-    largely refactors the LegacyESVersion test logic from the OpenSearch Version
+    largely refactors the LegacyESVersion test logic from the Density Version
 
     test logic into an independent test class. This PR also updates
     Version.fromString
@@ -768,7 +768,7 @@
      Signed-off-by: Nicholas Walter Knize &lt;nknize@apache.org&gt;
 
 
-* __Fixing org.opensearch.common.network.InetAddressesTests.testForStringIPv6WithScopeIdInput (#1913) (#1914)__
+* __Fixing org.density.common.network.InetAddressesTests.testForStringIPv6WithScopeIdInput (#1913) (#1914)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Sat, 15 Jan 2022 10:14:17 -0600
 
@@ -785,11 +785,11 @@
      Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
 
 
-* __Fix o.o.transport.netty4.OpenSearchLoggingHandlerIT stack overflow test failure (#1900) (#1906)__
+* __Fix o.o.transport.netty4.DensityLoggingHandlerIT stack overflow test failure (#1900) (#1906)__
 
     [Andriy Redko](mailto:andriy.redko@aiven.io) - Fri, 14 Jan 2022 12:38:18 -0600
 
-    Attempt to fix o.o.transport.netty4.OpenSearchLoggingHandlerIT fails w/ stack
+    Attempt to fix o.o.transport.netty4.DensityLoggingHandlerIT fails w/ stack
     overflow by
     hardening test expectation patterns in regex patterns
      Signed-off-by: Andriy Redko &lt;andriy.redko@aiven.io&gt;
@@ -1074,11 +1074,11 @@
     Signed-off-by: dblock &lt;dblock@dblock.org&gt;
 
 
-* __Move Gradle wrapper and precommit checks into OpenSearch repo. (#1664) (#1678)__
+* __Move Gradle wrapper and precommit checks into Density repo. (#1664) (#1678)__
 
     [Daniel Doubrovkine (dB.)](mailto:dblock@dblock.org) - Wed, 8 Dec 2021 11:45:55 -0500
 
-    * Move Gradle checks into OpenSearch repo.
+    * Move Gradle checks into Density repo.
      Signed-off-by: dblock &lt;dblock@amazon.com&gt;
 
     * Use working-directory for gradle wrapper validation.
@@ -1102,7 +1102,7 @@
 
     I observed a test failure with the message
     &#39;Attempted to append to non-started appender mock&#39; from an assertion in
-    `OpenSearchTestCase::after`. I believe this indicates that a
+    `DensityTestCase::after`. I believe this indicates that a
     MockLogAppender
     (which is named &#34;mock&#34;) was added as an appender to the
     static logging context

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.DynamicTemplate.XContentFieldType;
-import org.opensearch.index.mapper.MapperService.MergeReason;
+import org.density.DensityException;
+import org.density.common.Explicit;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.DynamicTemplate.XContentFieldType;
+import org.density.index.mapper.MapperService.MergeReason;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,13 +59,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.support.XContentMapValues.nodeBooleanValue;
-import static org.opensearch.index.mapper.TypeParsers.parseDateTimeFormatter;
+import static org.density.common.xcontent.support.XContentMapValues.nodeBooleanValue;
+import static org.density.index.mapper.TypeParsers.parseDateTimeFormatter;
 
 /**
  * The root object mapper for a document
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RootObjectMapper extends ObjectMapper {
@@ -74,7 +74,7 @@ public class RootObjectMapper extends ObjectMapper {
     /**
      * Default parameters for root object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final DateFormatter[] DYNAMIC_DATE_TIME_FORMATTERS = new DateFormatter[] {
@@ -87,7 +87,7 @@ public class RootObjectMapper extends ObjectMapper {
     /**
      * Builder for the root object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ObjectMapper.Builder<Builder> {
 
@@ -172,7 +172,7 @@ public class RootObjectMapper extends ObjectMapper {
     /**
      * Type parser for the root object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser extends ObjectMapper.TypeParser {
 
@@ -545,7 +545,7 @@ public class RootObjectMapper extends ObjectMapper {
                 mapper.deriveSource(builder, leafReader, docId);
             }
         } catch (Exception e) {
-            throw new OpenSearchException("Failed to derive source for doc id [" + docId + "]", e);
+            throw new DensityException("Failed to derive source for doc id [" + docId + "]", e);
         } finally {
             builder.endObject();
         }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.validate;
+package org.density.validate;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.MoreLikeThisQueryBuilder.Item;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.validate.query.ValidateQueryResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.IndexNotFoundException;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.MoreLikeThisQueryBuilder.Item;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.indices.TermsLookup;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.transport.client.Client;
 import org.hamcrest.Matcher;
 
 import java.io.IOException;
@@ -59,11 +59,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -71,7 +71,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 @ClusterScope(scope = Scope.SUITE)
-public class SimpleValidateQueryIT extends OpenSearchIntegTestCase {
+public class SimpleValidateQueryIT extends DensityIntegTestCase {
     public void testSimpleValidateQuery() throws Exception {
         createIndex("test");
         ensureGreen();
@@ -506,7 +506,7 @@ public class SimpleValidateQueryIT extends OpenSearchIntegTestCase {
         assertThat(response.isValid(), is(true));
     }
 
-    // Issue: https://github.com/opensearch-project/OpenSearch/issues/2036
+    // Issue: https://github.com/density-project/Density/issues/2036
     public void testValidateDateRangeInQueryString() throws IOException {
         assertAcked(prepareCreate("test").setSettings(Settings.builder().put(indexSettings()).put("index.number_of_shards", 1)));
 

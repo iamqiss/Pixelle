@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
 
 import java.nio.file.Path;
 
 /**
  * Base settings class for key store commands.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BaseKeyStoreCommand extends KeyStoreAwareCommand {
 
@@ -92,12 +92,12 @@ public abstract class BaseKeyStoreCommand extends KeyStoreAwareCommand {
                 if (keyStoreMustExist) {
                     throw new UserException(
                         ExitCodes.DATA_ERROR,
-                        "OpenSearch keystore not found at ["
+                        "Density keystore not found at ["
                             + KeyStoreWrapper.keystorePath(env.configDir())
                             + "]. Use 'create' command to create one."
                     );
                 } else if (options.has(forceOption) == false) {
-                    if (terminal.promptYesNo("The opensearch keystore does not exist. Do you want to create it?", false) == false) {
+                    if (terminal.promptYesNo("The density keystore does not exist. Do you want to create it?", false) == false) {
                         terminal.println("Exiting without creating keystore.");
                         return;
                     }

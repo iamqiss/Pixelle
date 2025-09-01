@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.repositories.verify;
+package org.density.action.admin.cluster.repositories.verify;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for verify repository request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class VerifyRepositoryRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -50,14 +50,14 @@ public class VerifyRepositoryRequestBuilder extends ClusterManagerNodeOperationR
     /**
      * Constructs unregister repository request builder
      */
-    public VerifyRepositoryRequestBuilder(OpenSearchClient client, VerifyRepositoryAction action) {
+    public VerifyRepositoryRequestBuilder(DensityClient client, VerifyRepositoryAction action) {
         super(client, action, new VerifyRepositoryRequest());
     }
 
     /**
      * Constructs unregister repository request builder with specified repository name
      */
-    public VerifyRepositoryRequestBuilder(OpenSearchClient client, VerifyRepositoryAction action, String name) {
+    public VerifyRepositoryRequestBuilder(DensityClient client, VerifyRepositoryAction action, String name) {
         super(client, action, new VerifyRepositoryRequest(name));
     }
 

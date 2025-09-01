@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import java.util.Map;
 
 /**
  * A script used in bucket aggregations that returns a {@code double} value.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BucketAggregationScript {
 
@@ -66,7 +66,7 @@ public abstract class BucketAggregationScript {
     /**
      * Factory for bucket agg script
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         BucketAggregationScript newInstance(Map<String, Object> params);

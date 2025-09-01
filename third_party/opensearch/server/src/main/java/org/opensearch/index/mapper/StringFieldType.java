@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Term;
@@ -44,17 +44,17 @@ import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.DensityException;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.common.unit.Fuzziness;
+import org.density.index.query.QueryShardContext;
 
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.opensearch.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
+import static org.density.search.SearchService.ALLOW_EXPENSIVE_QUERIES;
 import static org.apache.lucene.search.FuzzyQuery.defaultRewriteMethod;
 
 /** Base class for {@link MappedFieldType} implementations that use the same
@@ -62,7 +62,7 @@ import static org.apache.lucene.search.FuzzyQuery.defaultRewriteMethod;
  * that partial matching queries such as prefix, wildcard and fuzzy queries
  * can be implemented.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class StringFieldType extends TermBasedFieldType {
 
@@ -90,7 +90,7 @@ public abstract class StringFieldType extends TermBasedFieldType {
         QueryShardContext context
     ) {
         if (!context.allowExpensiveQueries()) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[fuzzy] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }
@@ -111,7 +111,7 @@ public abstract class StringFieldType extends TermBasedFieldType {
     @Override
     public Query prefixQuery(String value, MultiTermQuery.RewriteMethod method, boolean caseInsensitive, QueryShardContext context) {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[prefix] queries cannot be executed when '"
                     + ALLOW_EXPENSIVE_QUERIES.getKey()
                     + "' is set to false. For optimised prefix queries on text "
@@ -188,7 +188,7 @@ public abstract class StringFieldType extends TermBasedFieldType {
     ) {
         failIfNotIndexed();
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[wildcard] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }
@@ -219,7 +219,7 @@ public abstract class StringFieldType extends TermBasedFieldType {
         QueryShardContext context
     ) {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[regexp] queries cannot be executed when '" + ALLOW_EXPENSIVE_QUERIES.getKey() + "' is set to false."
             );
         }
@@ -240,7 +240,7 @@ public abstract class StringFieldType extends TermBasedFieldType {
     @Override
     public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper, QueryShardContext context) {
         if (context.allowExpensiveQueries() == false) {
-            throw new OpenSearchException(
+            throw new DensityException(
                 "[range] queries on [text] or [keyword] fields cannot be executed when '"
                     + ALLOW_EXPENSIVE_QUERIES.getKey()
                     + "' is set to false."

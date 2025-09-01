@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.common.SuppressForbidden;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -57,7 +57,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * so that if elections are failing due to a network partition that lasts for a long time then when the partition heals there is an election
  * attempt reasonably quickly.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ElectionSchedulerFactory {
 
@@ -186,7 +186,7 @@ public class ElectionSchedulerFactory {
     /**
      * The Election scheduler.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class ElectionScheduler implements Releasable {
         private final AtomicBoolean isClosed = new AtomicBoolean();

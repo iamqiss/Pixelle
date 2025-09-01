@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksRequest;
-import org.opensearch.client.tasks.CancelTasksRequest;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksRequest;
+import org.density.client.tasks.CancelTasksRequest;
+import org.density.core.tasks.TaskId;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,12 +46,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class TasksRequestConvertersTests extends OpenSearchTestCase {
+public class TasksRequestConvertersTests extends DensityTestCase {
 
     public void testCancelTasks() {
         Map<String, String> expectedParams = new HashMap<>();
-        org.opensearch.client.tasks.TaskId taskId = new org.opensearch.client.tasks.TaskId(randomAlphaOfLength(5), randomNonNegativeLong());
-        org.opensearch.client.tasks.TaskId parentTaskId = new org.opensearch.client.tasks.TaskId(
+        org.density.client.tasks.TaskId taskId = new org.density.client.tasks.TaskId(randomAlphaOfLength(5), randomNonNegativeLong());
+        org.density.client.tasks.TaskId parentTaskId = new org.density.client.tasks.TaskId(
             randomAlphaOfLength(5),
             randomNonNegativeLong()
         );

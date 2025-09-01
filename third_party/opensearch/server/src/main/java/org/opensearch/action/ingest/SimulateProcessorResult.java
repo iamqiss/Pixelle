@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.ingest.IngestDocument;
+import org.density.DensityException;
+import org.density.common.collect.Tuple;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.ingest.ConfigurationUtils;
+import org.density.ingest.IngestDocument;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * Simulates an ingest processor result
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SimulateProcessorResult implements Writeable, ToXContentObject {
 
@@ -87,13 +87,13 @@ public class SimulateProcessorResult implements Writeable, ToXContentObject {
     private final Exception failure;
     private final Tuple<String, Boolean> conditionalWithResult;
 
-    private static final ConstructingObjectParser<OpenSearchException, Void> IGNORED_ERROR_PARSER = new ConstructingObjectParser<>(
+    private static final ConstructingObjectParser<DensityException, Void> IGNORED_ERROR_PARSER = new ConstructingObjectParser<>(
         "ignored_error_parser",
         true,
-        a -> (OpenSearchException) a[0]
+        a -> (DensityException) a[0]
     );
     static {
-        IGNORED_ERROR_PARSER.declareObject(constructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField("error"));
+        IGNORED_ERROR_PARSER.declareObject(constructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField("error"));
     }
 
     private static final ConstructingObjectParser<Tuple<String, Boolean>, Void> IF_CONDITION_PARSER = new ConstructingObjectParser<>(
@@ -122,9 +122,9 @@ public class SimulateProcessorResult implements Writeable, ToXContentObject {
             IngestDocument document = a[4] == null ? null : ((WriteableIngestDocument) a[4]).getIngestDocument();
             Exception failure = null;
             if (a[5] != null) {
-                failure = (OpenSearchException) a[5];
+                failure = (DensityException) a[5];
             } else if (a[6] != null) {
-                failure = (OpenSearchException) a[6];
+                failure = (DensityException) a[6];
             }
 
             return new SimulateProcessorResult(type, processorTag, description, document, failure, conditionalWithResult);
@@ -141,7 +141,7 @@ public class SimulateProcessorResult implements Writeable, ToXContentObject {
             new ParseField(WriteableIngestDocument.DOC_FIELD)
         );
         PARSER.declareObject(optionalConstructorArg(), IGNORED_ERROR_PARSER, new ParseField(IGNORED_ERROR_FIELD));
-        PARSER.declareObject(optionalConstructorArg(), (p, c) -> OpenSearchException.fromXContent(p), new ParseField("error"));
+        PARSER.declareObject(optionalConstructorArg(), (p, c) -> DensityException.fromXContent(p), new ParseField("error"));
     }
 
     public SimulateProcessorResult(
@@ -269,10 +269,10 @@ public class SimulateProcessorResult implements Writeable, ToXContentObject {
 
         if (failure != null && ingestDocument != null) {
             builder.startObject(IGNORED_ERROR_FIELD);
-            OpenSearchException.generateFailureXContent(builder, params, failure, true);
+            DensityException.generateFailureXContent(builder, params, failure, true);
             builder.endObject();
         } else if (failure != null) {
-            OpenSearchException.generateFailureXContent(builder, params, failure, true);
+            DensityException.generateFailureXContent(builder, params, failure, true);
         }
 
         if (ingestDocument != null) {

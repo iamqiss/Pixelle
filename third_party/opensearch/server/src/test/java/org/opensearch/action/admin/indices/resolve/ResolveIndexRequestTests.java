@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.resolve;
+package org.density.action.admin.indices.resolve;
 
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction.Request;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.action.admin.indices.resolve.ResolveIndexAction.Request;
+import org.density.action.support.IndicesOptions;
+import org.density.core.common.io.stream.Writeable;
+import org.density.test.AbstractWireSerializingTestCase;
 
 public class ResolveIndexRequestTests extends AbstractWireSerializingTestCase<Request> {
 

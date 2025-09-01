@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,69 +26,69 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.admin.indices.close.CloseIndexClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse.IndexResult;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse.ShardResult;
-import org.opensearch.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
-import org.opensearch.action.admin.indices.open.OpenIndexClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockClusterStateUpdateRequest;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse.AddBlockResult;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse.AddBlockShardResult;
-import org.opensearch.action.admin.indices.readonly.TransportVerifyShardIndexBlockAction;
-import org.opensearch.action.support.ActiveShardsObserver;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.ack.OpenIndexClusterStateUpdateResponse;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata.APIBlock;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.NotifyOnceListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.snapshots.RestoreService;
-import org.opensearch.snapshots.SnapshotInProgressException;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.ActionRunnable;
+import org.density.action.admin.indices.close.CloseIndexClusterStateUpdateRequest;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.close.CloseIndexResponse.IndexResult;
+import org.density.action.admin.indices.close.CloseIndexResponse.ShardResult;
+import org.density.action.admin.indices.close.TransportVerifyShardBeforeCloseAction;
+import org.density.action.admin.indices.open.OpenIndexClusterStateUpdateRequest;
+import org.density.action.admin.indices.readonly.AddIndexBlockClusterStateUpdateRequest;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse.AddBlockResult;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse.AddBlockShardResult;
+import org.density.action.admin.indices.readonly.TransportVerifyShardIndexBlockAction;
+import org.density.action.support.ActiveShardsObserver;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.ack.OpenIndexClusterStateUpdateResponse;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata.APIBlock;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.CountDown;
+import org.density.core.action.ActionListener;
+import org.density.core.action.NotifyOnceListener;
+import org.density.core.common.Strings;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.tasks.TaskId;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.IndicesService;
+import org.density.indices.ShardLimitValidator;
+import org.density.snapshots.RestoreService;
+import org.density.snapshots.SnapshotInProgressException;
+import org.density.snapshots.SnapshotsService;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,7 +110,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Service responsible for submitting open/close index requests as well as for adding index blocks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataIndexStateService {
     private static final Logger logger = LogManager.getLogger(MetadataIndexStateService.class);
@@ -581,7 +581,7 @@ public class MetadataIndexStateService {
      * this action succeed then the shard is considered to be ready for closing. When all shards of a given index are ready for closing,
      * the index is considered ready to be closed.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class WaitForClosedBlocksApplied extends ActionRunnable<Map<Index, IndexResult>> {
 
@@ -715,7 +715,7 @@ public class MetadataIndexStateService {
      * Helper class that coordinates with shards to ensure that blocks have been properly applied to all shards using
      * {@link TransportVerifyShardIndexBlockAction}.
      *
-     * @opensearch.metadata
+     * @density.metadata
      */
     class WaitForBlocksApplied extends ActionRunnable<Map<Index, AddBlockResult>> {
 
@@ -1028,7 +1028,7 @@ public class MetadataIndexStateService {
                 try {
                     indicesService.verifyIndexMetadata(updatedIndexMetadata, updatedIndexMetadata);
                 } catch (Exception e) {
-                    throw new OpenSearchException("Failed to verify index " + index, e);
+                    throw new DensityException("Failed to verify index " + index, e);
                 }
                 metadata.put(updatedIndexMetadata, true);
             }

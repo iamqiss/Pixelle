@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.regex.Regex;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ import java.util.TreeMap;
 /**
  * A template that is dynamic based on field types
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DynamicTemplate implements ToXContentObject {
@@ -56,7 +56,7 @@ public class DynamicTemplate implements ToXContentObject {
     /**
      * Match type of the template
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum MatchType {
         SIMPLE {
@@ -98,7 +98,7 @@ public class DynamicTemplate implements ToXContentObject {
     /**
      * The type of a field as detected while parsing a json document.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum XContentFieldType {

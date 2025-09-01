@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.action.ActionListener;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.action.ActionListener;
 
 import java.io.Closeable;
 import java.util.Set;
@@ -42,7 +42,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Transport connection manager.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ConnectionManager extends Closeable {
 
@@ -83,7 +83,7 @@ public interface ConnectionManager extends Closeable {
     /**
      * Validates a connection
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     interface ConnectionValidator {
@@ -93,7 +93,7 @@ public interface ConnectionManager extends Closeable {
     /**
      * Connection listener for a delegating node
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class DelegatingNodeConnectionListener implements TransportConnectionListener {
 

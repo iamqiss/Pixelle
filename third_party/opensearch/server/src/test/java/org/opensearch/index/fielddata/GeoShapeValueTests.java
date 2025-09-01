@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.geometry.Point;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.geometry.Point;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class GeoShapeValueTests extends OpenSearchTestCase {
+public class GeoShapeValueTests extends DensityTestCase {
 
     public void testMissingGeoShapeValue() throws IOException {
         final int numDocs = TestUtil.nextInt(random(), 1, 100);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.bootstrap.BootstrapInfo;
-import org.opensearch.painless.antlr.Walker;
-import org.opensearch.painless.ir.ClassNode;
-import org.opensearch.painless.lookup.PainlessLookup;
-import org.opensearch.painless.node.SClass;
-import org.opensearch.painless.phase.DefaultConstantFoldingOptimizationPhase;
-import org.opensearch.painless.phase.DefaultStringConcatenationOptimizationPhase;
-import org.opensearch.painless.phase.DocFieldsPhase;
-import org.opensearch.painless.phase.PainlessSemanticAnalysisPhase;
-import org.opensearch.painless.phase.PainlessSemanticHeaderPhase;
-import org.opensearch.painless.phase.PainlessUserTreeToIRTreePhase;
-import org.opensearch.painless.spi.Allowlist;
-import org.opensearch.painless.symbol.Decorations.IRNodeDecoration;
-import org.opensearch.painless.symbol.ScriptScope;
+import org.density.bootstrap.BootstrapInfo;
+import org.density.painless.antlr.Walker;
+import org.density.painless.ir.ClassNode;
+import org.density.painless.lookup.PainlessLookup;
+import org.density.painless.node.SClass;
+import org.density.painless.phase.DefaultConstantFoldingOptimizationPhase;
+import org.density.painless.phase.DefaultStringConcatenationOptimizationPhase;
+import org.density.painless.phase.DocFieldsPhase;
+import org.density.painless.phase.PainlessSemanticAnalysisPhase;
+import org.density.painless.phase.PainlessSemanticHeaderPhase;
+import org.density.painless.phase.PainlessUserTreeToIRTreePhase;
+import org.density.painless.spi.Allowlist;
+import org.density.painless.symbol.Decorations.IRNodeDecoration;
+import org.density.painless.symbol.ScriptScope;
 import org.objectweb.asm.util.Printer;
 
 import java.lang.reflect.Method;
@@ -59,7 +59,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.painless.WriterConstants.CLASS_NAME;
+import static org.density.painless.WriterConstants.CLASS_NAME;
 
 /**
  * The Compiler is the entry point for generating a Painless script.  The compiler will receive a Painless

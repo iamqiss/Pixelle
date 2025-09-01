@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.tasks;
+package org.density.client.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 /**
  * Client side counterpart of server side version.
- * {@link org.opensearch.action.admin.cluster.node.tasks.list.TaskGroup}
+ * {@link org.density.action.admin.cluster.node.tasks.list.TaskGroup}
  */
 public class TaskGroup {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LogEvent;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.AbstractScopedSettings.SettingUpdater;
-import org.opensearch.common.settings.Setting.ByteSizeValueParser;
-import org.opensearch.common.settings.Setting.DoubleParser;
-import org.opensearch.common.settings.Setting.FloatParser;
-import org.opensearch.common.settings.Setting.IntegerParser;
-import org.opensearch.common.settings.Setting.LongParser;
-import org.opensearch.common.settings.Setting.MemorySizeValueParser;
-import org.opensearch.common.settings.Setting.MinMaxTimeValueParser;
-import org.opensearch.common.settings.Setting.MinTimeValueParser;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Setting.RegexValidator;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.AbstractScopedSettings.SettingUpdater;
+import org.density.common.settings.Setting.ByteSizeValueParser;
+import org.density.common.settings.Setting.DoubleParser;
+import org.density.common.settings.Setting.FloatParser;
+import org.density.common.settings.Setting.IntegerParser;
+import org.density.common.settings.Setting.LongParser;
+import org.density.common.settings.Setting.MemorySizeValueParser;
+import org.density.common.settings.Setting.MinMaxTimeValueParser;
+import org.density.common.settings.Setting.MinTimeValueParser;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Setting.RegexValidator;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.index.IndexSettings;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,7 +74,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.IndexSettingsTests.newIndexMeta;
+import static org.density.index.IndexSettingsTests.newIndexMeta;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -82,7 +82,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-public class SettingTests extends OpenSearchTestCase {
+public class SettingTests extends DensityTestCase {
 
     public void testGet() {
         Setting<Boolean> booleanSetting = Setting.boolSetting("foo.bar", false, Property.Dynamic, Property.NodeScope);
@@ -1780,10 +1780,10 @@ public class SettingTests extends OpenSearchTestCase {
         final Settings settings = Settings.builder().setSecureSettings(secureSettings).build();
         Setting<String> setting = Setting.simpleString("foo", Property.NodeScope);
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> setting.get(settings));
-        assertThat(e.getMessage(), containsString("must be stored inside opensearch.yml"));
+        assertThat(e.getMessage(), containsString("must be stored inside density.yml"));
     }
 
-    @TestLogging(value = "org.opensearch.common.settings.IndexScopedSettings:INFO", reason = "to ensure we log INFO-level messages from IndexScopedSettings")
+    @TestLogging(value = "org.density.common.settings.IndexScopedSettings:INFO", reason = "to ensure we log INFO-level messages from IndexScopedSettings")
     public void testLogSettingUpdate() throws Exception {
         final IndexMetadata metadata = newIndexMeta(
             "index1",
@@ -1796,7 +1796,7 @@ public class SettingTests extends OpenSearchTestCase {
             mockLogAppender.addExpectation(
                 new MockLogAppender.SeenEventExpectation(
                     "message",
-                    "org.opensearch.common.settings.IndexScopedSettings",
+                    "org.density.common.settings.IndexScopedSettings",
                     Level.INFO,
                     "updating [index.refresh_interval] from [20s] to [10s]"
                 ) {

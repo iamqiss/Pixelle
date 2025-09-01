@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -43,7 +43,7 @@ import java.time.ZonedDateTime;
 /**
  * A date range agg result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedDateRange extends ParsedRange {
 
@@ -74,7 +74,7 @@ public class ParsedDateRange extends ParsedRange {
     /**
      * Parsed bucket for a date range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ParsedBucket extends ParsedRange.ParsedBucket {
 

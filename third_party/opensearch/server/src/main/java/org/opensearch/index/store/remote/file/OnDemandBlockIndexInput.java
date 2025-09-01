@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.file;
+package org.density.index.store.remote.file;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.RandomAccessInput;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
+import org.density.common.util.concurrent.DensityExecutors;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * this is okay because at that point the {@link OnDemandBlockIndexInput} instance is phantom
  * reachable and therefore not able to be accessed by any other thread.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class OnDemandBlockIndexInput extends IndexInput implements RandomAccessInput {
     private static final Logger logger = LogManager.getLogger(OnDemandBlockIndexInput.class);
@@ -47,7 +47,7 @@ public abstract class OnDemandBlockIndexInput extends IndexInput implements Rand
      * the cleaning action is a no-op. For an open IndexInput, the close action
      * will decrement a reference count.
      */
-    private static final Cleaner CLEANER = Cleaner.create(OpenSearchExecutors.daemonThreadFactory(CLEANER_THREAD_NAME_PREFIX));
+    private static final Cleaner CLEANER = Cleaner.create(DensityExecutors.daemonThreadFactory(CLEANER_THREAD_NAME_PREFIX));
 
     /**
      * Start offset of the virtual file : non-zero in the slice case

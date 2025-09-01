@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
 import java.util.Collections;
 
@@ -199,10 +199,10 @@ public class BasicExpressionTests extends ScriptTestCase {
         assertNull(exec("def    a = null;  return a?.length()"));
         assertEquals(3, exec("def    a = 'foo'; return a?.length()"));
         // Read shortcut
-        assertMustBeNullable("org.opensearch.painless.FeatureTestObject a = null; return a?.x");
-        assertMustBeNullable("org.opensearch.painless.FeatureTestObject a = new org.opensearch.painless.FeatureTestObject(); return a?.x");
+        assertMustBeNullable("org.density.painless.FeatureTestObject a = null; return a?.x");
+        assertMustBeNullable("org.density.painless.FeatureTestObject a = new org.density.painless.FeatureTestObject(); return a?.x");
         assertNull(exec("def    a = null;  return a?.x"));
-        assertEquals(0, exec("def    a = new org.opensearch.painless.FeatureTestObject(); return a?.x"));
+        assertEquals(0, exec("def    a = new org.density.painless.FeatureTestObject(); return a?.x"));
 
         // Maps
         // Call
@@ -257,8 +257,8 @@ public class BasicExpressionTests extends ScriptTestCase {
         );
 
         // Writes, all unsupported at this point
-        // assertEquals(null, exec("org.opensearch.painless.FeatureTestObject a = null; return a?.x")); // Read field
-        // assertEquals(null, exec("org.opensearch.painless.FeatureTestObject a = null; a?.x = 7; return a?.x")); // Write field
+        // assertEquals(null, exec("org.density.painless.FeatureTestObject a = null; return a?.x")); // Read field
+        // assertEquals(null, exec("org.density.painless.FeatureTestObject a = null; a?.x = 7; return a?.x")); // Write field
         // assertEquals(null, exec("Map a = null; a?.other = 'wow'; return a?.other")); // Write shortcut
         // assertEquals(null, exec("def a = null; a?.other = 'cat'; return a?.other")); // Write shortcut
         // assertEquals(null, exec("Map a = ['thing': 'bar']; a.other?.cat = 'no'; return a.other?.cat"));

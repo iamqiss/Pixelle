@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;
 
-import org.opensearch.action.admin.indices.view.CreateViewAction;
-import org.opensearch.action.admin.indices.view.DeleteViewAction;
-import org.opensearch.action.admin.indices.view.GetViewAction;
-import org.opensearch.action.admin.indices.view.ListViewNamesAction;
-import org.opensearch.action.admin.indices.view.SearchViewAction;
-import org.opensearch.action.admin.indices.view.UpdateViewAction;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.NamedRoute;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestCancellableNodeClient;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.rest.action.search.RestSearchAction;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.indices.view.CreateViewAction;
+import org.density.action.admin.indices.view.DeleteViewAction;
+import org.density.action.admin.indices.view.GetViewAction;
+import org.density.action.admin.indices.view.ListViewNamesAction;
+import org.density.action.admin.indices.view.SearchViewAction;
+import org.density.action.admin.indices.view.UpdateViewAction;
+import org.density.action.search.SearchRequest;
+import org.density.common.ValidationException;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.NamedRoute;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestCancellableNodeClient;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.rest.action.RestToXContentListener;
+import org.density.rest.action.search.RestSearchAction;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.function.IntConsumer;
 
-import static org.opensearch.rest.RestRequest.Method.DELETE;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.rest.RestRequest.Method.DELETE;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /** All rest handlers for view actions */
 @ExperimentalApi

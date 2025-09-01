@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.node;
+package org.density.cluster.node;
 
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.Matcher;
 
 import java.util.Collection;
@@ -45,15 +45,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.test.NodeRoles.addRoles;
-import static org.opensearch.test.NodeRoles.onlyRole;
-import static org.opensearch.test.NodeRoles.removeRoles;
+import static org.density.test.NodeRoles.addRoles;
+import static org.density.test.NodeRoles.onlyRole;
+import static org.density.test.NodeRoles.removeRoles;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
-public class DiscoveryNodeRoleIT extends OpenSearchIntegTestCase {
+public class DiscoveryNodeRoleIT extends DensityIntegTestCase {
 
     public static class AdditionalRolePlugin extends Plugin {
 

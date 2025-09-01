@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.document.LatLonPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.mapper.ParseContext.Document;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.ParseContext;
+import org.density.index.mapper.ParseContext.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,8 +62,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.geometry.utils.Geohash.addNeighbors;
-import static org.opensearch.geometry.utils.Geohash.stringEncode;
+import static org.density.geometry.utils.Geohash.addNeighbors;
+import static org.density.geometry.utils.Geohash.stringEncode;
 
 /**
  * A {@link ContextMapping} that uses a geo location/area as a
@@ -75,7 +75,7 @@ import static org.opensearch.geometry.utils.Geohash.stringEncode;
  * {@link GeoQueryContext} defines the options for constructing
  * a unit of query context for this context type
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
 
@@ -158,11 +158,11 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
      * see {@code GeoPoint(String)} for GEO POINT
      */
     @Override
-    public Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, OpenSearchParseException {
+    public Set<String> parseContext(ParseContext parseContext, XContentParser parser) throws IOException, DensityParseException {
         if (fieldName != null) {
             MappedFieldType fieldType = parseContext.mapperService().fieldType(fieldName);
             if (!(fieldType != null && fieldType.unwrap() instanceof GeoPointFieldMapper.GeoPointFieldType)) {
-                throw new OpenSearchParseException("referenced field must be mapped to geo_point");
+                throw new DensityParseException("referenced field must be mapped to geo_point");
             }
         }
         final Set<String> contexts = new HashSet<>();
@@ -177,10 +177,10 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
                     if (parser.nextToken() == Token.END_ARRAY) {
                         contexts.add(stringEncode(lon, lat, precision));
                     } else {
-                        throw new OpenSearchParseException("only two values [lon, lat] expected");
+                        throw new DensityParseException("only two values [lon, lat] expected");
                     }
                 } else {
-                    throw new OpenSearchParseException("latitude must be a numeric value");
+                    throw new DensityParseException("latitude must be a numeric value");
                 }
             } else {
                 while (token != Token.END_ARRAY) {
@@ -311,9 +311,9 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
         if (fieldName != null) {
             MappedFieldType mappedFieldType = fieldResolver.apply(fieldName);
             if (mappedFieldType == null) {
-                throw new OpenSearchParseException("field [{}] referenced in context [{}] is not defined in the mapping", fieldName, name);
+                throw new DensityParseException("field [{}] referenced in context [{}] is not defined in the mapping", fieldName, name);
             } else if (GeoPointFieldMapper.CONTENT_TYPE.equals(mappedFieldType.typeName()) == false) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "field [{}] referenced in context [{}] must be mapped to geo_point, found [{}]",
                     fieldName,
                     name,
@@ -342,7 +342,7 @@ public class GeoContextMapping extends ContextMapping<GeoQueryContext> {
     /**
      * Builder for geo context mapping
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ContextBuilder<GeoContextMapping> {
 

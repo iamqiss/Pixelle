@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.ShardSearchFailure;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.common.ParsingException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.rest.action.RestActions;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class CountResponseTests extends OpenSearchTestCase {
+public class CountResponseTests extends DensityTestCase {
 
     // Not comparing XContent for equivalence as we cannot compare the ShardSearchFailure#cause, because it will be wrapped in an outer
-    // OpenSearchException. Best effort: try to check that the original message appears somewhere in the rendered xContent
+    // DensityException. Best effort: try to check that the original message appears somewhere in the rendered xContent
     // For more see ShardSearchFailureTests.
     public void testFromXContent() throws IOException {
         xContentTester(this::createParser, this::createTestInstance, this::toXContent, CountResponse::fromXContent).supportsUnknownFields(
@@ -140,12 +140,12 @@ public class CountResponseTests extends OpenSearchTestCase {
             String originalMsg = originalFailure.getCause().getMessage();
             assertEquals(
                 parsedFailure.getCause().getMessage(),
-                "OpenSearch exception [type=parsing_exception, reason=" + originalMsg + "]"
+                "Density exception [type=parsing_exception, reason=" + originalMsg + "]"
             );
             String nestedMsg = originalFailure.getCause().getCause().getMessage();
             assertEquals(
                 parsedFailure.getCause().getCause().getMessage(),
-                "OpenSearch exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
+                "Density exception [type=illegal_argument_exception, reason=" + nestedMsg + "]"
             );
         }
     }

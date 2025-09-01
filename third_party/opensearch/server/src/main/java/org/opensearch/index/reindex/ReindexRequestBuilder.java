@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.index.IndexAction;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchRequestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.index.IndexAction;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchRequestBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Builder for reindex requests
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReindexRequestBuilder extends AbstractBulkIndexByScrollRequestBuilder<ReindexRequest, ReindexRequestBuilder> {
     private final IndexRequestBuilder destination;
 
-    public ReindexRequestBuilder(OpenSearchClient client, ActionType<BulkByScrollResponse> action) {
+    public ReindexRequestBuilder(DensityClient client, ActionType<BulkByScrollResponse> action) {
         this(
             client,
             action,
@@ -57,7 +57,7 @@ public class ReindexRequestBuilder extends AbstractBulkIndexByScrollRequestBuild
     }
 
     private ReindexRequestBuilder(
-        OpenSearchClient client,
+        DensityClient client,
         ActionType<BulkByScrollResponse> action,
         SearchRequestBuilder search,
         IndexRequestBuilder destination

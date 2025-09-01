@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure.trackers;
+package org.density.search.backpressure.trackers;
 
-import org.opensearch.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.search.backpressure.trackers.NodeDuressTrackers.NodeDuressTracker;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class NodeDuressTrackerTests extends OpenSearchTestCase {
+public class NodeDuressTrackerTests extends DensityTestCase {
 
     public void testNodeDuressTracker() {
         AtomicReference<Double> cpuUsage = new AtomicReference<>(0.0);

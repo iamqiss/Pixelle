@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.coordination.NoClusterManagerBlockService;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentLocation;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchParseException;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.ShardSearchFailure;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.coordination.NoClusterManagerBlockService;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.ParsingException;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentLocation;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.SearchHit;
+import org.density.search.SearchParseException;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,13 +67,13 @@ import java.util.OptionalInt;
 import java.util.function.Predicate;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.TestSearchContext.SHARD_TARGET;
-import static org.opensearch.test.XContentTestUtils.insertRandomFields;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.TestSearchContext.SHARD_TARGET;
+import static org.density.test.XContentTestUtils.insertRandomFields;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class RankEvalResponseTests extends OpenSearchTestCase {
+public class RankEvalResponseTests extends DensityTestCase {
 
     private static final Exception[] RANDOM_EXCEPTIONS = new Exception[] {
         new ClusterBlockException(singleton(NoClusterManagerBlockService.NO_CLUSTER_MANAGER_BLOCK_WRITES)),
@@ -89,7 +89,7 @@ public class RankEvalResponseTests extends OpenSearchTestCase {
                     new SearchShardTarget("node_1", new ShardId("foo", "_na_", 1), null, OriginalIndices.NONE)
                 ) }
         ),
-        new OpenSearchException(
+        new DensityException(
             "Parsing failed",
             new ParsingException(9, 42, "Wrong state", new NullPointerException("Unexpected null value"))
         ) };
@@ -165,7 +165,7 @@ public class RankEvalResponseTests extends OpenSearchTestCase {
         assertEquals(testItem.getFailures().keySet(), parsedItem.getFailures().keySet());
         for (String queryId : testItem.getFailures().keySet()) {
             Exception ex = parsedItem.getFailures().get(queryId);
-            assertThat(ex, instanceOf(OpenSearchException.class));
+            assertThat(ex, instanceOf(DensityException.class));
         }
     }
 

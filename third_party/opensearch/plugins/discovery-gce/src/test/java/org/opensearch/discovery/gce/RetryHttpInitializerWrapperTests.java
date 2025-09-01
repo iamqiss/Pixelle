@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
 import com.google.api.client.googleapis.testing.auth.oauth2.MockGoogleCredential;
 import com.google.api.client.http.GenericUrl;
@@ -47,15 +47,15 @@ import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.google.api.client.testing.util.MockSleeper;
 import com.google.api.services.compute.Compute;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
-public class RetryHttpInitializerWrapperTests extends OpenSearchTestCase {
+public class RetryHttpInitializerWrapperTests extends DensityTestCase {
 
     private static class FailThenSuccessBackoffTransport extends MockHttpTransport {
 
@@ -122,9 +122,9 @@ public class RetryHttpInitializerWrapperTests extends OpenSearchTestCase {
             retryHttpInitializerWrapper
         ).setApplicationName("test").build();
 
-        // TODO (URL) replace w/ opensearch url
+        // TODO (URL) replace w/ density url
         HttpRequest request = client.getRequestFactory()
-            .buildRequest("Get", new GenericUrl("https://github.com/opensearch-project/OpenSearch"), null);
+            .buildRequest("Get", new GenericUrl("https://github.com/density-project/Density"), null);
         HttpResponse response = request.execute();
 
         assertThat(mockSleeper.getCount(), equalTo(3));
@@ -156,9 +156,9 @@ public class RetryHttpInitializerWrapperTests extends OpenSearchTestCase {
             .setApplicationName("test")
             .build();
 
-        // TODO (URL) replace w/ opensearch URL
+        // TODO (URL) replace w/ density URL
         HttpRequest request1 = client.getRequestFactory()
-            .buildRequest("Get", new GenericUrl("https://github.com/opensearch-project/OpenSearch"), null);
+            .buildRequest("Get", new GenericUrl("https://github.com/density-project/Density"), null);
         try {
             request1.execute();
             fail("Request should fail if wait too long");
@@ -188,9 +188,9 @@ public class RetryHttpInitializerWrapperTests extends OpenSearchTestCase {
             retryHttpInitializerWrapper
         ).setApplicationName("test").build();
 
-        // TODO (URL) replace w/ opensearch URL
+        // TODO (URL) replace w/ density URL
         HttpRequest request = client.getRequestFactory()
-            .buildRequest("Get", new GenericUrl("https://github.com/opensearch-project/OpenSearch"), null);
+            .buildRequest("Get", new GenericUrl("https://github.com/density-project/Density"), null);
         HttpResponse response = request.execute();
 
         assertThat(mockSleeper.getCount(), equalTo(1));

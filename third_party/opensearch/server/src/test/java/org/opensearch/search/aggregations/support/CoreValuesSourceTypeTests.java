@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class CoreValuesSourceTypeTests extends OpenSearchTestCase {
+public class CoreValuesSourceTypeTests extends DensityTestCase {
 
     public void testFromString() {
         assertThat(CoreValuesSourceType.fromString("numeric"), equalTo(CoreValuesSourceType.NUMERIC));
@@ -47,7 +47,7 @@ public class CoreValuesSourceTypeTests extends OpenSearchTestCase {
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> CoreValuesSourceType.fromString("does_not_exist"));
         assertThat(
             e.getMessage(),
-            equalTo("No enum constant org.opensearch.search.aggregations.support.CoreValuesSourceType.DOES_NOT_EXIST")
+            equalTo("No enum constant org.density.search.aggregations.support.CoreValuesSourceType.DOES_NOT_EXIST")
         );
         expectThrows(NullPointerException.class, () -> CoreValuesSourceType.fromString(null));
     }

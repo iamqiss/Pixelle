@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.service.ReportingService;
+import org.density.common.annotation.PublicApi;
+import org.density.core.service.ReportingService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.LongAdder;
 /**
  * Service to track telemetry about aggregations
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AggregationUsageService implements ReportingService<AggregationInfo> {
@@ -54,7 +54,7 @@ public class AggregationUsageService implements ReportingService<AggregationInfo
     /**
      * Builder for the Agg usage service to track telemetry
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.index.Index;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Tests for {@link ChecksumWritableBlobStoreFormat}
  */
-public class ChecksumWritableBlobStoreFormatTests extends OpenSearchTestCase {
+public class ChecksumWritableBlobStoreFormatTests extends DensityTestCase {
     private static final String TEST_BLOB_FILE_NAME = "test-blob-name";
     private static final long VERSION = 5L;
 

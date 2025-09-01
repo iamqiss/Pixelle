@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.blobstore.fs;
+package org.density.common.blobstore.fs;
 
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.AbstractBlobContainer;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.AbstractBlobContainer;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.io.Streams;
+import org.density.common.util.io.IOUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,14 +67,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import static java.util.Collections.unmodifiableMap;
 
 /**
- * A file system based implementation of {@link org.opensearch.common.blobstore.BlobContainer}.
+ * A file system based implementation of {@link org.density.common.blobstore.BlobContainer}.
  * All blobs in the container are stored on a file system, the location of which is specified by the {@link BlobPath}.
  * <p>
- * Note that the methods in this implementation of {@link org.opensearch.common.blobstore.BlobContainer} may
+ * Note that the methods in this implementation of {@link org.density.common.blobstore.BlobContainer} may
  * additionally throw a {@link java.lang.SecurityException} if the configured {@link java.lang.SecurityManager}
  * does not permit read and/or write access to the underlying files.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FsBlobContainer extends AbstractBlobContainer {
 
@@ -228,7 +228,7 @@ public class FsBlobContainer extends AbstractBlobContainer {
         Files.createDirectories(path);
         try (OutputStream outputStream = Files.newOutputStream(tempBlobPath, StandardOpenOption.CREATE_NEW)) {
             final int bufferSize = blobStore.bufferSizeInBytes();
-            org.opensearch.common.util.io.Streams.copy(
+            org.density.common.util.io.Streams.copy(
                 inputStream,
                 outputStream,
                 new byte[blobSize < bufferSize ? Math.toIntExact(blobSize) : bufferSize]

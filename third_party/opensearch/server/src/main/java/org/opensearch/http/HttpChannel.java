@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.network.CloseableChannel;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.annotation.PublicApi;
+import org.density.common.network.CloseableChannel;
+import org.density.core.action.ActionListener;
 
 import java.net.InetSocketAddress;
 import java.util.Optional;
@@ -42,7 +42,7 @@ import java.util.Optional;
 /**
  * Represents an HTTP comms channel
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface HttpChannel extends CloseableChannel {

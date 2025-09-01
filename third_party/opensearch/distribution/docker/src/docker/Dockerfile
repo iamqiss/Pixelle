@@ -16,12 +16,12 @@
 */ %>
 ################################################################################
 # Build stage 0 `builder`:
-# Extract OpenSearch artifact
+# Extract Density artifact
 ################################################################################
 
 FROM ${base_image} AS builder
 # `tini` is a tiny but valid init for containers. This is used to cleanly
-# control how OpenSearch and any child processes are shut down.
+# control how Density and any child processes are shut down.
 #
 # The tini GitHub page gives instructions for verifying the binary using
 # gpg, but the keyservers are slow to return the key and this can fail the
@@ -40,28 +40,28 @@ RUN set -eux ; \\
     mv \${tini_bin} /tini ; \\
     chmod +x /tini
 
-RUN mkdir /usr/share/opensearch
-WORKDIR /usr/share/opensearch
+RUN mkdir /usr/share/density
+WORKDIR /usr/share/density
 
-${source_opensearch}
+${source_density}
 
-RUN tar zxf /opt/opensearch.tar.gz --strip-components=1
-RUN sed -i -e 's/OPENSEARCH_DISTRIBUTION_TYPE=tar/OPENSEARCH_DISTRIBUTION_TYPE=docker/' /usr/share/opensearch/bin/opensearch-env
+RUN tar zxf /opt/density.tar.gz --strip-components=1
+RUN sed -i -e 's/DENSITY_DISTRIBUTION_TYPE=tar/DENSITY_DISTRIBUTION_TYPE=docker/' /usr/share/density/bin/density-env
 RUN mkdir -p config config/jvm.options.d data logs
 RUN chmod 0775 config config/jvm.options.d data logs
-COPY config/opensearch.yml config/log4j2.properties config/
-RUN chmod 0660 config/opensearch.yml config/log4j2.properties
+COPY config/density.yml config/log4j2.properties config/
+RUN chmod 0660 config/density.yml config/log4j2.properties
 
 ################################################################################
-# Build stage 1 (the actual OpenSearch image):
+# Build stage 1 (the actual Density image):
 #
-# Copy opensearch from stage 0
+# Copy density from stage 0
 # Add entrypoint
 ################################################################################
 
 FROM ${base_image}
 
-ENV OPENSEARCH_CONTAINER true
+ENV DENSITY_CONTAINER true
 
 RUN set -e \\
      && dnf -y update \\
@@ -70,27 +70,27 @@ RUN set -e \\
      && dnf clean all \\
      && rm -rf /var/cache/dnf
 
-RUN groupadd -g 1000 opensearch && \\
-    adduser -u 1000 -g 1000 -G 0 -d /usr/share/opensearch opensearch && \\
-    chmod 0775 /usr/share/opensearch && \\
-    chown -R 1000:0 /usr/share/opensearch
+RUN groupadd -g 1000 density && \\
+    adduser -u 1000 -g 1000 -G 0 -d /usr/share/density density && \\
+    chmod 0775 /usr/share/density && \\
+    chown -R 1000:0 /usr/share/density
 
-WORKDIR /usr/share/opensearch
-COPY --from=builder --chown=1000:0 /usr/share/opensearch /usr/share/opensearch
+WORKDIR /usr/share/density
+COPY --from=builder --chown=1000:0 /usr/share/density /usr/share/density
 COPY --from=builder --chown=0:0 /tini /tini
 
 # Replace OpenJDK's built-in CA certificate keystore with the one from the OS
 # vendor. The latter is superior in several ways.
 # REF: https://github.com/elastic/elasticsearch-docker/issues/171
-RUN ln -sf /etc/pki/ca-trust/extracted/java/cacerts /usr/share/opensearch/jdk/lib/security/cacerts
+RUN ln -sf /etc/pki/ca-trust/extracted/java/cacerts /usr/share/density/jdk/lib/security/cacerts
 
-ENV PATH /usr/share/opensearch/bin:\$PATH
+ENV PATH /usr/share/density/bin:\$PATH
 
 COPY bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # The JDK's directories' permissions don't allow `java` to be executed under a different
 # group to the default. Fix this.
-RUN find /usr/share/opensearch/jdk -type d -exec chmod 0755 '{}' \\; && \\
+RUN find /usr/share/density/jdk -type d -exec chmod 0755 '{}' \\; && \\
     chmod g=u /etc/passwd && \\
     chmod 0775 /usr/local/bin/docker-entrypoint.sh
 
@@ -101,27 +101,27 @@ EXPOSE 9200 9300
 
 LABEL org.label-schema.build-date="${build_date}" \\
   org.label-schema.license="${license}" \\
-  org.label-schema.name="OpenSearch" \\
+  org.label-schema.name="Density" \\
   org.label-schema.schema-version="1.0" \\
-  org.label-schema.url="https://www.opensearch.org" \\
-  org.label-schema.usage="https://www.opensearch.org/guide/en/opensearch/reference/index.html" \\
+  org.label-schema.url="https://www.density.org" \\
+  org.label-schema.usage="https://www.density.org/guide/en/density/reference/index.html" \\
   org.label-schema.vcs-ref="${git_revision}" \\
-  org.label-schema.vcs-url="https://github.com/opensearch-project/OpenSearch" \\
-  org.label-schema.vendor="OpenSearch" \\
+  org.label-schema.vcs-url="https://github.com/density-project/Density" \\
+  org.label-schema.vendor="Density" \\
   org.label-schema.version="${version}" \\
   org.opencontainers.image.created="${build_date}" \\
-  org.opencontainers.image.documentation="https://www.opensearch.org/guide/en/opensearch/reference/index.html" \\
+  org.opencontainers.image.documentation="https://www.density.org/guide/en/density/reference/index.html" \\
   org.opencontainers.image.licenses="${license}" \\
   org.opencontainers.image.revision="${git_revision}" \\
-  org.opencontainers.image.source="https://github.com/opensearch-project/OpenSearch" \\
-  org.opencontainers.image.title="OpenSearch" \\
-  org.opencontainers.image.url="https://www.opensearch.org" \\
-  org.opencontainers.image.vendor="OpenSearch" \\
+  org.opencontainers.image.source="https://github.com/density-project/Density" \\
+  org.opencontainers.image.title="Density" \\
+  org.opencontainers.image.url="https://www.density.org" \\
+  org.opencontainers.image.vendor="Density" \\
   org.opencontainers.image.version="${version}"
 
 ENTRYPOINT ["/tini", "--", "/usr/local/bin/docker-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
-CMD ["opensearchwrapper"]
+CMD ["densitywrapper"]
 
 ################################################################################
 # End of multi-stage Dockerfile

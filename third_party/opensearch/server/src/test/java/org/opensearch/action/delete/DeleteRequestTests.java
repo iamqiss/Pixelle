@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.delete;
+package org.density.action.delete;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class DeleteRequestTests extends OpenSearchTestCase {
+public class DeleteRequestTests extends DensityTestCase {
 
     public void testValidation() {
         {

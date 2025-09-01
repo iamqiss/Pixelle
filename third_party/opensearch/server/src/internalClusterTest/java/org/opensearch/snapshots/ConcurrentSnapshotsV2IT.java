@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.store.remote.file.CleanerDaemonThreadLeakFilter;
-import org.opensearch.node.Node;
-import org.opensearch.remotestore.RemoteSnapshotIT;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.rest.RestStatus;
+import org.density.index.store.remote.file.CleanerDaemonThreadLeakFilter;
+import org.density.node.Node;
+import org.density.remotestore.RemoteSnapshotIT;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
+import static org.density.common.util.FeatureFlags.WRITABLE_WARM_INDEX_SETTING;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -47,7 +47,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class ConcurrentSnapshotsV2IT extends RemoteSnapshotIT {
 
     public ConcurrentSnapshotsV2IT(Settings nodeSettings) {
@@ -569,7 +569,7 @@ public class ConcurrentSnapshotsV2IT extends RemoteSnapshotIT {
         assertEquals(2, snapInfo.size());
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/16205")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/16205")
     public void testDeleteAndCloneV1WhileV2CreateOngoing() throws Exception {
         final String clusterManagerName = internalCluster().startClusterManagerOnlyNode(pinnedTimestampSettings());
         internalCluster().startDataAndWarmNodes(1, pinnedTimestampSettings());
@@ -642,7 +642,7 @@ public class ConcurrentSnapshotsV2IT extends RemoteSnapshotIT {
         ensureGreen();
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/16205")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/16205")
     public void testDeleteAndCloneV1WhileCreateOngoing() throws Exception {
         final String clusterManagerName = internalCluster().startClusterManagerOnlyNode(pinnedTimestampSettings());
         internalCluster().startDataAndWarmNodes(1, pinnedTimestampSettings());

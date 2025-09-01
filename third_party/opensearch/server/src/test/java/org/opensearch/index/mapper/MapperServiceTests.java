@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.search.Sort;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentContraints;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisMode;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.ReloadableCustomAnalyzer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.KeywordFieldMapper.KeywordFieldType;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.indices.InvalidTypeNameException;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentContraints;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.env.Environment;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisMode;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.ReloadableCustomAnalyzer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.KeywordFieldMapper.KeywordFieldType;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.indices.IndicesModule;
+import org.density.indices.InvalidTypeNameException;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -70,14 +70,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MapperServiceTests extends OpenSearchSingleNodeTestCase {
+public class MapperServiceTests extends DensitySingleNodeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> getPlugins() {
@@ -191,7 +191,7 @@ public class MapperServiceTests extends OpenSearchSingleNodeTestCase {
             ex.getMessage(),
             is(
                 "The provided value 1001 of the index setting 'index.mapping.depth.limit' exceeds per-JVM configured limit of 1000. "
-                    + "Please change the setting value or increase per-JVM limit using 'opensearch.xcontent.depth.max' system property."
+                    + "Please change the setting value or increase per-JVM limit using 'density.xcontent.depth.max' system property."
             )
         );
     }
@@ -411,7 +411,7 @@ public class MapperServiceTests extends OpenSearchSingleNodeTestCase {
             ex.getMessage(),
             is(
                 "The provided value 50001 of the index setting 'index.mapping.field_name_length.limit' exceeds per-JVM configured limit of 50000. "
-                    + "Please change the setting value or increase per-JVM limit using 'opensearch.xcontent.name.length.max' system property."
+                    + "Please change the setting value or increase per-JVM limit using 'density.xcontent.name.length.max' system property."
             )
         );
     }
@@ -633,7 +633,7 @@ public class MapperServiceTests extends OpenSearchSingleNodeTestCase {
         }
 
         assertWarnings(
-            "[index.mapper.dynamic] setting was deprecated in OpenSearch and will be removed in a future release! See the breaking changes documentation for the next major version."
+            "[index.mapper.dynamic] setting was deprecated in Density and will be removed in a future release! See the breaking changes documentation for the next major version."
         );
     }
 

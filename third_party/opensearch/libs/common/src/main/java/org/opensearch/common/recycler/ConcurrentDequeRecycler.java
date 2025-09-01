@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.recycler;
+package org.density.common.recycler;
 
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.ConcurrentCollections;
 
 import java.util.Deque;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * A {@link Recycler} implementation based on a concurrent {@link Deque}. This implementation is thread-safe.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ConcurrentDequeRecycler<T> extends DequeRecycler<T> {
 

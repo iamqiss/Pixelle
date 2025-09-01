@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.http.netty4.Netty4HttpServerTransport;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.http.netty4.Netty4HttpServerTransport;
+import org.density.test.DensityTestCase;
 
-public final class SharedGroupFactoryTests extends OpenSearchTestCase {
+public final class SharedGroupFactoryTests extends DensityTestCase {
 
     public void testSharedEventLoops() throws Exception {
         SharedGroupFactory sharedGroupFactory = new SharedGroupFactory(Settings.EMPTY);

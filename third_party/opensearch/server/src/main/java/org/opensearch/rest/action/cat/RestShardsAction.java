@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,46 +26,46 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.admin.cluster.shards.CatShardsAction;
-import org.opensearch.action.admin.cluster.shards.CatShardsRequest;
-import org.opensearch.action.admin.cluster.shards.CatShardsResponse;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.common.Table;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.cache.query.QueryCacheStats;
-import org.opensearch.index.engine.CommitStats;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.fielddata.FieldDataStats;
-import org.opensearch.index.flush.FlushStats;
-import org.opensearch.index.get.GetStats;
-import org.opensearch.index.merge.MergeStats;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.search.stats.SearchStats;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.index.warmer.WarmerStats;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.rest.action.RestResponseListener;
-import org.opensearch.rest.action.list.AbstractListAction;
-import org.opensearch.search.suggest.completion.CompletionStats;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.shards.CatShardsAction;
+import org.density.action.admin.cluster.shards.CatShardsRequest;
+import org.density.action.admin.cluster.shards.CatShardsResponse;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.pagination.PageToken;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.common.Table;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.index.cache.query.QueryCacheStats;
+import org.density.index.engine.CommitStats;
+import org.density.index.engine.Engine;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.fielddata.FieldDataStats;
+import org.density.index.flush.FlushStats;
+import org.density.index.get.GetStats;
+import org.density.index.merge.MergeStats;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.search.stats.SearchStats;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.StoreStats;
+import org.density.index.warmer.WarmerStats;
+import org.density.rest.RestRequest;
+import org.density.rest.RestResponse;
+import org.density.rest.action.RestResponseListener;
+import org.density.rest.action.list.AbstractListAction;
+import org.density.search.suggest.completion.CompletionStats;
+import org.density.transport.client.node.NodeClient;
 
 import java.time.Instant;
 import java.util.List;
@@ -74,13 +74,13 @@ import java.util.function.Function;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.search.SearchService.NO_TIMEOUT;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.search.SearchService.NO_TIMEOUT;
 
 /**
  * _cat API action to get shard information
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestShardsAction extends AbstractListAction {
 

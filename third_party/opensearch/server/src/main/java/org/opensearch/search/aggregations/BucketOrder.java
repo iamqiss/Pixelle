@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,19 +25,19 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
-import org.opensearch.search.aggregations.support.AggregationPath;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
+import org.density.search.aggregations.support.AggregationPath;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ import java.util.function.ToLongFunction;
  * of the buckets internals with its ordinal with
  * {@link #partiallyBuiltBucketComparator(ToLongFunction, Aggregator)}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BucketOrder implements ToXContentObject, Writeable {
     /**

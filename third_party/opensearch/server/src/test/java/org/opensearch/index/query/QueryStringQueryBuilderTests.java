@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.SortedNumericDocValuesField;
@@ -65,21 +65,21 @@ import org.apache.lucene.util.automaton.Automata;
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.TooComplexToDeterminizeException;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.FieldNamesFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.search.QueryStringQueryParser;
-import org.opensearch.lucene.queries.BlendedTermQuery;
-import org.opensearch.search.approximate.ApproximatePointRangeQuery;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.FieldNamesFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.search.QueryStringQueryParser;
+import org.density.lucene.queries.BlendedTermQuery;
+import org.density.search.approximate.ApproximatePointRangeQuery;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.test.AbstractQueryTestCase;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 
@@ -93,10 +93,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBooleanSubQuery;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertBooleanSubQuery;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.Matchers.containsString;

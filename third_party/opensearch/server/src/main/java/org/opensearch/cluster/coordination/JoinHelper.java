@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,53 +25,53 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.Version;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.coordination.Coordinator.Mode;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterManagerService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.BytesTransportRequest;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.Version;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.coordination.Coordinator.Mode;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterManagerService;
+import org.density.common.Priority;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.transport.TransportResponse;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.BytesTransportRequest;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -90,12 +90,12 @@ import java.util.function.Function;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * Helper utility class for joining the cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JoinHelper {
 
@@ -314,7 +314,7 @@ public class JoinHelper {
     /**
      * A failed join attempt.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     // package-private for testing
     static class FailedJoinAttempt {
@@ -496,7 +496,7 @@ public class JoinHelper {
     /**
      * The callback interface.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface JoinCallback {
         void onSuccess();
@@ -507,7 +507,7 @@ public class JoinHelper {
     /**
      * Listener for the join task
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class JoinTaskListener implements ClusterStateTaskListener {
         private final JoinTaskExecutor.Task task;
@@ -543,7 +543,7 @@ public class JoinHelper {
     /**
      * A leader join accumulator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class LeaderJoinAccumulator implements JoinAccumulator {
         @Override
@@ -568,7 +568,7 @@ public class JoinHelper {
     /**
      * An initial join accumulator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class InitialJoinAccumulator implements JoinAccumulator {
         @Override
@@ -586,7 +586,7 @@ public class JoinHelper {
     /**
      * A follower join accumulator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FollowerJoinAccumulator implements JoinAccumulator {
         @Override
@@ -603,7 +603,7 @@ public class JoinHelper {
     /**
      * A candidate join accumulator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class CandidateJoinAccumulator implements JoinAccumulator {
 

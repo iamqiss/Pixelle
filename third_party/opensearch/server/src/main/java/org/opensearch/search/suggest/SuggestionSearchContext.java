@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest;
+package org.density.search.suggest;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryShardContext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Context used for suggestion based search
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SuggestionSearchContext {
@@ -60,7 +60,7 @@ public class SuggestionSearchContext {
     /**
      * The suggestion context
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class SuggestionContext {

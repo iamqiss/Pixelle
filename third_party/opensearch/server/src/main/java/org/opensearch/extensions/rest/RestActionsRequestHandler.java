@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.rest;
+package org.density.extensions.rest;
 
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.extensions.AcknowledgedResponse;
-import org.opensearch.extensions.DiscoveryExtensionNode;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.core.transport.TransportResponse;
+import org.density.extensions.AcknowledgedResponse;
+import org.density.extensions.DiscoveryExtensionNode;
+import org.density.identity.IdentityService;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.transport.TransportService;
 
 import java.util.Map;
 
 /**
  * Handles requests to register extension REST actions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RestActionsRequestHandler {
 

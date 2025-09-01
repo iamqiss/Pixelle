@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.annotation.InternalApi;
+import org.density.common.annotation.InternalApi;
 
 /**
  * Storage interface used for storing tracing context
  * @param <K> key type
  * @param <V> value type
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public interface TracerContextStorage<K, V> {

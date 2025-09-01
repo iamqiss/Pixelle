@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io;
+package org.density.core.common.io;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.io.Streams;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.Streams;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -45,13 +45,13 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import static org.opensearch.common.io.Streams.copyToString;
+import static org.density.common.io.Streams.copyToString;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
- * Unit tests for {@link org.opensearch.common.io.Streams}.
+ * Unit tests for {@link org.density.common.io.Streams}.
  */
-public class StreamsTests extends OpenSearchTestCase {
+public class StreamsTests extends DensityTestCase {
 
     public void testCopyFromByteArray() throws IOException {
         byte[] content = "content".getBytes(StandardCharsets.UTF_8);
@@ -105,7 +105,7 @@ public class StreamsTests extends OpenSearchTestCase {
         final int limit = randomIntBetween(0, bytes.length);
         final BytesArray stuffArray = new BytesArray(bytes);
         final ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length);
-        final long count = org.opensearch.common.util.io.Streams.copy(Streams.limitStream(stuffArray.streamInput(), limit), out);
+        final long count = org.density.common.util.io.Streams.copy(Streams.limitStream(stuffArray.streamInput(), limit), out);
         assertEquals(limit, count);
         assertThat(Arrays.equals(out.toByteArray(), Arrays.copyOf(bytes, limit)), equalTo(true));
     }

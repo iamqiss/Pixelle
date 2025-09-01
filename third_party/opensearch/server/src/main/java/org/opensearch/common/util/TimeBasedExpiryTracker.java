@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.LongSupplier;
@@ -15,7 +15,7 @@ import java.util.function.LongSupplier;
  * This class can be utilised to track the time based expiration events.
  * Clients should be more cautious with the expiry time as this class is not completely thread safe. This is intentional
  * as nanoSecond granularity level error for `lastAccessTimeInNanos` is tolerable and can be ignored.
- * @opensearch.internal
+ * @density.internal
  */
 public class TimeBasedExpiryTracker implements BooleanSupplier {
     private final LongSupplier nanoTimeSupplier;

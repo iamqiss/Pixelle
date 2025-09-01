@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.ResourceAlreadyExistsException;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.cluster.AbstractNamedDiffable;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ObjectParser.NamedObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ResourceAlreadyExistsException;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.cluster.AbstractNamedDiffable;
+import org.density.cluster.ClusterState;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.Nullable;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ObjectParser.NamedObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -67,13 +67,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.metadata.Metadata.ALL_CONTEXTS;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.cluster.metadata.Metadata.ALL_CONTEXTS;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * A cluster state record that contains a list of all running persistent tasks
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PersistentTasksCustomMetadata extends AbstractNamedDiffable<Metadata.Custom> implements Metadata.Custom {
 
@@ -280,7 +280,7 @@ public final class PersistentTasksCustomMetadata extends AbstractNamedDiffable<M
     /**
      * The assignment.
      *
-     * @opensearch.internal
+     * @density.internal
      */
 
     public static class Assignment {
@@ -608,7 +608,7 @@ public final class PersistentTasksCustomMetadata extends AbstractNamedDiffable<M
     /**
      * The task builder.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private final Map<String, PersistentTask<?>> tasks = new HashMap<>();

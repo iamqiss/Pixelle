@@ -1,26 +1,26 @@
-import org.opensearch.gradle.util.GradleUtils
+import org.density.gradle.util.GradleUtils
 
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-apply plugin: 'opensearch.java-rest-test'
-apply plugin: 'opensearch.opensearchplugin'
+apply plugin: 'density.java-rest-test'
+apply plugin: 'density.densityplugin'
 
 configurations {
   bcFips
 }
 
-opensearchplugin {
+densityplugin {
   description = 'Test-only plugin to expose BCFIPS SecureRandom provider'
-  classname = 'org.opensearch.FipsSmokeTestPlugin'
+  classname = 'org.density.FipsSmokeTestPlugin'
 }
 
 GradleUtils.extendSourceSet(project, "main", "javaRestTest", javaRestTest)

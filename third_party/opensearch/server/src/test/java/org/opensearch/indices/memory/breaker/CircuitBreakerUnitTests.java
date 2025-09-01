@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.memory.breaker;
+package org.density.indices.memory.breaker;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.indices.breaker.BreakerSettings;
-import org.opensearch.indices.breaker.HierarchyCircuitBreakerService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.indices.breaker.BreakerSettings;
+import org.density.indices.breaker.HierarchyCircuitBreakerService;
+import org.density.test.DensityTestCase;
 
 import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Unit tests for the circuit breaker
  */
-public class CircuitBreakerUnitTests extends OpenSearchTestCase {
+public class CircuitBreakerUnitTests extends DensityTestCase {
     public static long pctBytes(String percentString) {
         return Settings.EMPTY.getAsMemory("", percentString).getBytes();
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,41 +25,41 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.resync;
+package org.density.action.resync;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.replication.ReplicationOperation;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportReplicationAction;
-import org.opensearch.action.support.replication.TransportWriteAction;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.IndexingPressureService;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.PrimaryReplicaSyncer;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.tasks.Task;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.replication.ReplicationOperation;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportReplicationAction;
+import org.density.action.support.replication.TransportWriteAction;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.IndexingPressureService;
+import org.density.index.engine.Engine;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.PrimaryReplicaSyncer;
+import org.density.index.translog.Translog;
+import org.density.indices.IndicesService;
+import org.density.indices.SystemIndices;
+import org.density.tasks.Task;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -68,7 +68,7 @@ import java.util.stream.Stream;
 /**
  * Perform replication resync
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportResyncReplicationAction extends TransportWriteAction<
     ResyncReplicationRequest,
@@ -262,7 +262,7 @@ public class TransportResyncReplicationAction extends TransportWriteAction<
      * Replica shards fail to execute resync operations will be failed but won't be marked as stale.
      * This avoids marking shards as stale during cluster restart but enforces primary-replica resync mandatory.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class ResyncActionReplicasProxy extends ReplicasProxy {
 

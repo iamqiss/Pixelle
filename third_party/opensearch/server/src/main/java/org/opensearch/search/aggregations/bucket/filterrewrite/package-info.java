@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -14,6 +14,6 @@
  * <li> figure out the "ranges" from the aggregation </li>
  * <li> leverage the ranges and bkd index to get the result of each range bucket quickly </li>
  * </ul>
- * More details in https://github.com/opensearch-project/OpenSearch/pull/14464
+ * More details in https://github.com/density-project/Density/pull/14464
  */
-package org.opensearch.search.aggregations.bucket.filterrewrite;
+package org.density.search.aggregations.bucket.filterrewrite;

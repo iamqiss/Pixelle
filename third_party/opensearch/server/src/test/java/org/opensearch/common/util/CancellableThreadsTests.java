@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.util.CancellableThreads.IOInterruptible;
-import org.opensearch.common.util.CancellableThreads.Interruptible;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.util.CancellableThreads.IOInterruptible;
+import org.density.common.util.CancellableThreads.Interruptible;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -41,10 +41,10 @@ import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.util.CancellableThreads.ExecutionCancelledException;
+import static org.density.common.util.CancellableThreads.ExecutionCancelledException;
 import static org.hamcrest.Matchers.equalTo;
 
-public class CancellableThreadsTests extends OpenSearchTestCase {
+public class CancellableThreadsTests extends DensityTestCase {
     public static class CustomException extends RuntimeException {
         public CustomException(String msg) {
             super(msg);

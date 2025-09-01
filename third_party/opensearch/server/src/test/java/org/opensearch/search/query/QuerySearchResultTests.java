@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,39 +26,39 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.OriginalIndicesTests;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.Aggregations;
-import org.opensearch.search.aggregations.InternalAggregationsTests;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.suggest.SuggestTests;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.action.OriginalIndicesTests;
+import org.density.action.search.SearchRequest;
+import org.density.common.UUIDs;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchModule;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.Aggregations;
+import org.density.search.aggregations.InternalAggregationsTests;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.suggest.SuggestTests;
+import org.density.test.DensityTestCase;
 
 import static java.util.Collections.emptyList;
 
-public class QuerySearchResultTests extends OpenSearchTestCase {
+public class QuerySearchResultTests extends DensityTestCase {
 
     private final NamedWriteableRegistry namedWriteableRegistry;
 

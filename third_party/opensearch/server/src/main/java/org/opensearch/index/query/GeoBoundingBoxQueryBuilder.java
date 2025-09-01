@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.SpatialStrategy;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
-import org.opensearch.index.mapper.GeoShapeQueryable;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.DensityParseException;
+import org.density.common.Numbers;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.SpatialStrategy;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geometry.Rectangle;
+import org.density.geometry.utils.Geohash;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.GeoShapeFieldMapper;
+import org.density.index.mapper.GeoShapeQueryable;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -64,7 +64,7 @@ import java.util.Objects;
  * This query can only operate on fields of type geo_point that have latitude and longitude
  * enabled.
  *
- * @opensearch.internal
+ * @density.internal
  * */
 public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBoundingBoxQueryBuilder> implements WithFieldName {
     public static final String NAME = "geo_bounding_box";
@@ -409,7 +409,7 @@ public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBounding
                     bbox = GeoBoundingBox.parseBoundingBox(parser);
                     fieldName = currentFieldName;
                 } catch (Exception e) {
-                    throw new OpenSearchParseException("failed to parse [{}] query. [{}]", NAME, e.getMessage());
+                    throw new DensityParseException("failed to parse [{}] query. [{}]", NAME, e.getMessage());
                 }
             } else if (token.isValue()) {
                 if (AbstractQueryBuilder.NAME_FIELD.match(currentFieldName, parser.getDeprecationHandler())) {
@@ -434,7 +434,7 @@ public class GeoBoundingBoxQueryBuilder extends AbstractQueryBuilder<GeoBounding
         }
 
         if (bbox == null) {
-            throw new OpenSearchParseException("failed to parse [{}] query. bounding box not provided", NAME);
+            throw new DensityParseException("failed to parse [{}] query. bounding box not provided", NAME);
         }
 
         GeoBoundingBoxQueryBuilder builder = new GeoBoundingBoxQueryBuilder(fieldName);

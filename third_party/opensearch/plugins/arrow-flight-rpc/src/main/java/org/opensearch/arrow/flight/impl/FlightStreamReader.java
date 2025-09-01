@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightRuntimeException;
 import org.apache.arrow.flight.FlightStream;
 import org.apache.arrow.vector.VectorSchemaRoot;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.arrow.spi.StreamReader;
+import org.density.ExceptionsHelper;
+import org.density.arrow.spi.StreamReader;
 
 /**
  * FlightStreamReader is a wrapper class that adapts the FlightStream interface

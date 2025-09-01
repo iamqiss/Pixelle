@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.internal.SearchContext;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -51,7 +51,7 @@ import java.util.Objects;
  * a single unified constructor for both algos, but internally switch execution
  * depending on which algo is selected
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class PercentilesConfig implements ToXContent, Writeable {
     private final PercentilesMethod method;
@@ -126,7 +126,7 @@ public abstract class PercentilesConfig implements ToXContent, Writeable {
     /**
      * The TDigest
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TDigest extends PercentilesConfig {
         static final double DEFAULT_COMPRESSION = 100.0;
@@ -227,7 +227,7 @@ public abstract class PercentilesConfig implements ToXContent, Writeable {
     /**
      * The HDR value
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Hdr extends PercentilesConfig {
         static final int DEFAULT_NUMBER_SIG_FIGS = 3;

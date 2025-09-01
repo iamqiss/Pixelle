@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.Booleans;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,14 +21,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
 
-import static org.opensearch.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
+import static org.density.cluster.metadata.MetadataIndexStateService.isIndexVerifiedBeforeClosed;
 
 /**
  * This class acts as a functional wrapper around the {@code index.auto_expand_search_replicas} setting.
  * This setting's value expands into a minimum and maximum value, requiring special handling based on the
  * number of search nodes in the cluster. This class handles parsing and simplifies access to these values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class AutoExpandSearchReplicas {
     // the value we recognize in the "max" position to mean all the search nodes

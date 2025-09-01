@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.routing;
+package org.density.routing;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.common.Priority;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.common.Priority;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.common.util.set.Sets.newHashSet;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.common.util.set.Sets.newHashSet;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AliasResolveRoutingIT extends OpenSearchIntegTestCase {
+public class AliasResolveRoutingIT extends DensityIntegTestCase {
 
     // see https://github.com/elastic/elasticsearch/issues/13278
     public void testSearchClosedWildcardIndex() throws ExecutionException, InterruptedException {

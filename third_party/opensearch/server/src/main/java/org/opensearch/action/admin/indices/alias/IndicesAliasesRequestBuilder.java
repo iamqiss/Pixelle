@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.alias;
+package org.density.action.admin.indices.alias;
 
-import org.opensearch.action.support.clustermanager.AcknowledgedRequestBuilder;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.AcknowledgedRequestBuilder;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.common.annotation.PublicApi;
+import org.density.index.query.QueryBuilder;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * Builder for request to modify many aliases at once.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesAliasesRequestBuilder extends AcknowledgedRequestBuilder<
@@ -51,7 +51,7 @@ public class IndicesAliasesRequestBuilder extends AcknowledgedRequestBuilder<
     AcknowledgedResponse,
     IndicesAliasesRequestBuilder> {
 
-    public IndicesAliasesRequestBuilder(OpenSearchClient client, IndicesAliasesAction action) {
+    public IndicesAliasesRequestBuilder(DensityClient client, IndicesAliasesAction action) {
         super(client, action, new IndicesAliasesRequest());
     }
 

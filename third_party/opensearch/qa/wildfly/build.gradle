@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,15 +28,15 @@
  * under the License.
  */
 
-import org.opensearch.gradle.Architecture
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.test.TestTask
+import org.density.gradle.Architecture
+import org.density.gradle.VersionProperties
+import org.density.gradle.info.BuildParams
+import org.density.gradle.test.TestTask
 
 apply plugin: 'war'
-apply plugin: 'opensearch.build'
-apply plugin: 'opensearch.test.fixtures'
-apply plugin: 'opensearch.internal-distribution-download'
+apply plugin: 'density.build'
+apply plugin: 'density.test.fixtures'
+apply plugin: 'density.internal-distribution-download'
 
 testFixtures.useFixture()
 
@@ -72,17 +72,17 @@ war {
   archiveFileName = 'example-app.war'
 }
 
-opensearch_distributions {
+density_distributions {
   docker {
     type = 'docker'
     architecture = Architecture.current()
-    version = VersionProperties.getOpenSearch()
+    version = VersionProperties.getDensity()
     failIfUnavailable = false // This ensures we skip this testing if Docker is unavailable
   }
 }
 
 preProcessFixture {
-  dependsOn war, opensearch_distributions.docker
+  dependsOn war, density_distributions.docker
 }
 
 dockerCompose {

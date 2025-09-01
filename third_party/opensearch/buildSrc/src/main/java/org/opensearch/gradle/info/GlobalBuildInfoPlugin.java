@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.info;
+package org.density.gradle.info;
 
 import org.apache.commons.io.IOUtils;
-import org.opensearch.gradle.BwcVersions;
-import org.opensearch.gradle.util.Util;
+import org.density.gradle.BwcVersions;
+import org.density.gradle.util.Util;
 import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
@@ -75,8 +75,8 @@ import java.util.stream.Stream;
 
 public class GlobalBuildInfoPlugin implements Plugin<Project> {
     private static final Logger LOGGER = Logging.getLogger(GlobalBuildInfoPlugin.class);
-    private static final String DEFAULT_LEGACY_VERSION_JAVA_FILE_PATH = "libs/core/src/main/java/org/opensearch/LegacyESVersion.java";
-    private static final String DEFAULT_VERSION_JAVA_FILE_PATH = "libs/core/src/main/java/org/opensearch/Version.java";
+    private static final String DEFAULT_LEGACY_VERSION_JAVA_FILE_PATH = "libs/core/src/main/java/org/density/LegacyESVersion.java";
+    private static final String DEFAULT_VERSION_JAVA_FILE_PATH = "libs/core/src/main/java/org/density/Version.java";
     private static Integer _defaultParallel = null;
 
     private final JvmMetadataDetector jvmMetadataDetector;
@@ -167,7 +167,7 @@ public class GlobalBuildInfoPlugin implements Plugin<Project> {
         final String gradleJvmDetails = getJavaInstallation(gradleJvm.getJavaHome()).getDisplayName();
 
         LOGGER.quiet("=======================================");
-        LOGGER.quiet("OpenSearch Build Hamster says Hello!");
+        LOGGER.quiet("Density Build Hamster says Hello!");
         LOGGER.quiet("  Gradle Version        : " + GradleVersion.current().getVersion());
         LOGGER.quiet("  OS Info               : " + osName + " " + osVersion + " (" + osArch + ")");
         if (BuildParams.getIsRuntimeJavaHomeSet()) {
@@ -308,7 +308,7 @@ public class GlobalBuildInfoPlugin implements Plugin<Project> {
         if (versionedJavaHome == null) {
             final String exceptionMessage = String.format(
                 Locale.ROOT,
-                "$%s must be set to build OpenSearch. "
+                "$%s must be set to build Density. "
                     + "Note that if the variable was just set you "
                     + "might have to run `./gradlew --stop` for "
                     + "it to be picked up. See https://github.com/elastic/elasticsearch/issues/31399 details.",

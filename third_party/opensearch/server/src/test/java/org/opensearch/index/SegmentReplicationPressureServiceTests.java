@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.replication.OpenSearchIndexLevelReplicationTestCase;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.replication.DensityIndexLevelReplicationTestCase;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,10 +33,10 @@ import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
 import static java.util.Arrays.asList;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_INDEXING_CHECKPOINTS;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_REPLICATION_LIMIT_STALE_REPLICA_SETTING;
-import static org.opensearch.index.SegmentReplicationPressureService.MAX_REPLICATION_TIME_BACKPRESSURE_SETTING;
-import static org.opensearch.index.SegmentReplicationPressureService.SEGMENT_REPLICATION_INDEXING_PRESSURE_ENABLED;
+import static org.density.index.SegmentReplicationPressureService.MAX_INDEXING_CHECKPOINTS;
+import static org.density.index.SegmentReplicationPressureService.MAX_REPLICATION_LIMIT_STALE_REPLICA_SETTING;
+import static org.density.index.SegmentReplicationPressureService.MAX_REPLICATION_TIME_BACKPRESSURE_SETTING;
+import static org.density.index.SegmentReplicationPressureService.SEGMENT_REPLICATION_INDEXING_PRESSURE_ENABLED;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class SegmentReplicationPressureServiceTests extends OpenSearchIndexLevelReplicationTestCase {
+public class SegmentReplicationPressureServiceTests extends DensityIndexLevelReplicationTestCase {
 
     private static ShardStateAction shardStateAction = Mockito.mock(ShardStateAction.class);
     private static final Settings settings = Settings.builder()
@@ -76,12 +76,12 @@ public class SegmentReplicationPressureServiceTests extends OpenSearchIndexLevel
             assertEquals(5, replicaStats.getCheckpointsBehindCount());
 
             assertBusy(
-                () -> expectThrows(OpenSearchRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId())),
+                () -> expectThrows(DensityRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId())),
                 30,
                 TimeUnit.SECONDS
             );
             assertBusy(
-                () -> expectThrows(OpenSearchRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId())),
+                () -> expectThrows(DensityRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId())),
                 30,
                 TimeUnit.SECONDS
             );
@@ -172,7 +172,7 @@ public class SegmentReplicationPressureServiceTests extends OpenSearchIndexLevel
                 assertTrue(shardStats.getCurrentReplicationTimeMillis() > TimeValue.timeValueSeconds(5).millis());
             });
 
-            expectThrows(OpenSearchRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId()));
+            expectThrows(DensityRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId()));
 
             SegmentReplicationStats segmentReplicationStats = service.nodeStats();
             assertEquals(1, segmentReplicationStats.getShardStats().get(primaryShard.shardId()).getRejectedRequestCount());
@@ -181,7 +181,7 @@ public class SegmentReplicationPressureServiceTests extends OpenSearchIndexLevel
             final List<IndexShard> replicas = shards.getReplicas();
             replicateSegments(primaryShard, asList(replicas.get(0)));
 
-            expectThrows(OpenSearchRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId()));
+            expectThrows(DensityRejectedExecutionException.class, () -> service.isSegrepLimitBreached(primaryShard.shardId()));
 
             segmentReplicationStats = service.nodeStats();
             assertEquals(2, segmentReplicationStats.getShardStats().get(primaryShard.shardId()).getRejectedRequestCount());

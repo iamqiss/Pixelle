@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -56,7 +56,7 @@ import java.util.Optional;
  * <p>
  * Both formatters support fractional time, up to nanosecond precision.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class EpochTime {
 
@@ -280,7 +280,7 @@ class EpochTime {
     /**
      * Base class for an epoch field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class EpochField implements TemporalField {
 

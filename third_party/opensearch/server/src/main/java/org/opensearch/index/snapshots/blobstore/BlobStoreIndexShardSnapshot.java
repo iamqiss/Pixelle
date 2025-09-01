@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.store.StoreFileMetadata;
+import org.density.DensityParseException;
+import org.density.common.lucene.Lucene;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.store.StoreFileMetadata;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,14 +56,14 @@ import java.util.stream.IntStream;
 /**
  * Shard snapshot metadata
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexShardSnapshot {
 
     /**
      * Information about snapshotted file
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FileInfo {
 
@@ -197,7 +197,7 @@ public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexSha
         }
 
         /**
-         * Returns file md5 checksum provided by {@link org.opensearch.index.store.Store}
+         * Returns file md5 checksum provided by {@link org.density.index.store.Store}
          *
          * @return file checksum
          */
@@ -326,28 +326,28 @@ public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexSha
                                 metaHash.offset = 0;
                                 metaHash.length = metaHash.bytes.length;
                             } else {
-                                throw new OpenSearchParseException("unknown parameter [{}]", currentFieldName);
+                                throw new DensityParseException("unknown parameter [{}]", currentFieldName);
                             }
                         } else {
-                            throw new OpenSearchParseException("unexpected token  [{}]", token);
+                            throw new DensityParseException("unexpected token  [{}]", token);
                         }
                     } else {
-                        throw new OpenSearchParseException("unexpected token [{}]", token);
+                        throw new DensityParseException("unexpected token [{}]", token);
                     }
                 }
             }
 
             // Verify that file information is complete
             if (name == null || Strings.validFileName(name) == false) {
-                throw new OpenSearchParseException("missing or invalid file name [" + name + "]");
+                throw new DensityParseException("missing or invalid file name [" + name + "]");
             } else if (physicalName == null || Strings.validFileName(physicalName) == false) {
-                throw new OpenSearchParseException("missing or invalid physical file name [" + physicalName + "]");
+                throw new DensityParseException("missing or invalid physical file name [" + physicalName + "]");
             } else if (length < 0) {
-                throw new OpenSearchParseException("missing or invalid file length");
+                throw new DensityParseException("missing or invalid file length");
             } else if (writtenBy == null) {
-                throw new OpenSearchParseException("missing or invalid written_by [" + writtenByStr + "]");
+                throw new DensityParseException("missing or invalid written_by [" + writtenByStr + "]");
             } else if (checksum == null) {
-                throw new OpenSearchParseException("missing checksum for name [" + name + "]");
+                throw new DensityParseException("missing checksum for name [" + name + "]");
             }
             return new FileInfo(name, new StoreFileMetadata(physicalName, length, checksum, writtenBy, metaHash), partSize);
         }
@@ -494,7 +494,7 @@ public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexSha
     private static final String TIME = "time";
     private static final String FILES = "files";
     // for the sake of BWC keep the actual property names as in 6.x
-    // + there is a constraint in #fromXContent() that leads to OpenSearchParseException("unknown parameter [incremental_file_count]");
+    // + there is a constraint in #fromXContent() that leads to DensityParseException("unknown parameter [incremental_file_count]");
     private static final String INCREMENTAL_FILE_COUNT = "number_of_files";
     private static final String INCREMENTAL_SIZE = "total_size";
 
@@ -567,7 +567,7 @@ public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexSha
                     } else if (PARSE_INCREMENTAL_SIZE.match(currentFieldName, parser.getDeprecationHandler())) {
                         incrementalSize = parser.longValue();
                     } else {
-                        throw new OpenSearchParseException("unknown parameter [{}]", currentFieldName);
+                        throw new DensityParseException("unknown parameter [{}]", currentFieldName);
                     }
                 } else if (token == XContentParser.Token.START_ARRAY) {
                     if (PARSE_FILES.match(currentFieldName, parser.getDeprecationHandler())) {
@@ -575,10 +575,10 @@ public class BlobStoreIndexShardSnapshot implements ToXContentFragment, IndexSha
                             indexFiles.add(FileInfo.fromXContent(parser));
                         }
                     } else {
-                        throw new OpenSearchParseException("unknown parameter [{}]", currentFieldName);
+                        throw new DensityParseException("unknown parameter [{}]", currentFieldName);
                     }
                 } else {
-                    throw new OpenSearchParseException("unexpected token [{}]", token);
+                    throw new DensityParseException("unexpected token [{}]", token);
                 }
             }
         }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexSettings;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexSettings;
 
 /**
  * Base character filter factory used in analysis chain
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractCharFilterFactory extends AbstractIndexComponent implements CharFilterFactory {
 

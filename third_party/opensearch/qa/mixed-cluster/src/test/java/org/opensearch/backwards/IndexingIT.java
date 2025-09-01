@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,32 +25,32 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.backwards;
+package org.density.backwards;
 
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.Version;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.RestClient;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
-import org.opensearch.test.rest.yaml.ObjectPath;
+import org.density.LegacyESVersion;
+import org.density.Version;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.client.RestClient;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.Strings;
+import org.density.index.seqno.SeqNoStats;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.core.rest.RestStatus;
+import org.density.test.rest.DensityRestTestCase;
+import org.density.test.rest.yaml.ObjectPath;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -64,7 +64,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 
-public class IndexingIT extends OpenSearchRestTestCase {
+public class IndexingIT extends DensityRestTestCase {
 
     protected static final Version UPGRADE_FROM_VERSION = Version.fromString(System.getProperty("tests.upgrade_from_version"));
     private static final String TEST_MAPPING = createTestMapping();
@@ -161,8 +161,8 @@ public class IndexingIT extends OpenSearchRestTestCase {
 
 
     /**
-     * This test creates a cluster with primary on higher version but due to {@link org.opensearch.cluster.routing.allocation.decider.NodeVersionAllocationDecider};
-     * replica shard allocation on lower OpenSearch version is prevented. Thus, this test though cover the use case where
+     * This test creates a cluster with primary on higher version but due to {@link org.density.cluster.routing.allocation.decider.NodeVersionAllocationDecider};
+     * replica shard allocation on lower Density version is prevented. Thus, this test though cover the use case where
      * primary shard containing nodes are running on higher OS version while replicas are unassigned.
      */
     public void testIndexingWithReplicaOnBwcNodes() throws Exception {

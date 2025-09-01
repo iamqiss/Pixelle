@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.DocValues;
@@ -42,20 +42,20 @@ import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.fielddata.AbstractBinaryDocValues;
-import org.opensearch.index.fielddata.AbstractNumericDocValues;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.LongToSortedNumericUnsignedLongValues;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericUnsignedLongValues;
+import org.density.common.Numbers;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.fielddata.AbstractBinaryDocValues;
+import org.density.index.fielddata.AbstractNumericDocValues;
+import org.density.index.fielddata.AbstractSortedDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.LongToSortedNumericUnsignedLongValues;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.SortedNumericUnsignedLongValues;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -63,7 +63,7 @@ import java.util.Locale;
 /**
  * Defines what values to pick in the case a document contains multiple values for a particular field.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public enum MultiValueMode implements Writeable {

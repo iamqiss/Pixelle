@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,33 +25,33 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.cluster.coordination.CoordinationState.PersistedState;
-import org.opensearch.cluster.coordination.PersistedStateRegistry.PersistedStateType;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.Assertions;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.gateway.GatewayMetaState.RemotePersistedState;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateService;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.cluster.coordination.CoordinationState.PersistedState;
+import org.density.cluster.coordination.PersistedStateRegistry.PersistedStateType;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.core.Assertions;
+import org.density.core.common.transport.TransportAddress;
+import org.density.gateway.GatewayMetaState.RemotePersistedState;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateService;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.repositories.fs.FsRepository;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -67,11 +67,11 @@ import org.mockito.Mockito;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.gateway.remote.RemoteClusterStateService.REMOTE_PUBLICATION_SETTING_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_CLUSTER_STATE_REPOSITORY_NAME_ATTRIBUTE_KEY;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_SETTINGS_ATTRIBUTE_KEY_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_REPOSITORY_TYPE_ATTRIBUTE_KEY_FORMAT;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.REMOTE_STORE_ROUTING_TABLE_REPOSITORY_NAME_ATTRIBUTE_KEY;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
@@ -84,7 +84,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-public class CoordinationStateTests extends OpenSearchTestCase {
+public class CoordinationStateTests extends DensityTestCase {
 
     private DiscoveryNode node1;
     private DiscoveryNode node2;
@@ -952,7 +952,7 @@ public class CoordinationStateTests extends OpenSearchTestCase {
             .stateVersion(0L)
             .clusterUUID(randomAlphaOfLength(10))
             .stateUUID(randomAlphaOfLength(10))
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .nodeId(randomAlphaOfLength(10))
             .committed(false)
             .codecVersion(1)
@@ -1052,7 +1052,7 @@ public class CoordinationStateTests extends OpenSearchTestCase {
             .clusterUUID(state2.metadata().clusterUUID())
             .nodeId(node1.getId())
             .stateUUID(randomAlphaOfLength(10))
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .committed(false)
             .codecVersion(1)
             .globalMetadataFileName(randomAlphaOfLength(10))
@@ -1126,7 +1126,7 @@ public class CoordinationStateTests extends OpenSearchTestCase {
             .clusterUUID(state2.metadata().clusterUUID())
             .nodeId(node1.getId())
             .stateUUID(randomAlphaOfLength(10))
-            .opensearchVersion(Version.CURRENT)
+            .densityVersion(Version.CURRENT)
             .committed(false)
             .codecVersion(1)
             .globalMetadataFileName(randomAlphaOfLength(10))

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.bulk.BackoffPolicy;
-import org.opensearch.action.bulk.BulkItemResponse;
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.search.SearchHit;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.action.bulk.BackoffPolicy;
+import org.density.action.bulk.BulkItemResponse;
+import org.density.action.search.ShardSearchFailure;
+import org.density.common.Nullable;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.search.SearchHit;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.List;
@@ -68,7 +68,7 @@ import static java.util.Objects.requireNonNull;
  * of failures during searching (though not yet). Once the onResponse consumer is done, it should call AsyncResponse.isDone(time) to receive
  * more data (only receives one response at a time).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ScrollableHitSource {
     private final AtomicReference<String> scrollId = new AtomicReference<>();
@@ -182,7 +182,7 @@ public abstract class ScrollableHitSource {
     /**
      * Asynchronous response
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface AsyncResponse {
         /**
@@ -200,7 +200,7 @@ public abstract class ScrollableHitSource {
     /**
      * Response from each scroll batch.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Response {
         private final boolean timedOut;
@@ -257,7 +257,7 @@ public abstract class ScrollableHitSource {
      * A document returned as part of the response. Think of it like {@link SearchHit} but with all the things reindex needs in convenient
      * methods.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Hit {
         /**
@@ -271,7 +271,7 @@ public abstract class ScrollableHitSource {
         String getId();
 
         /**
-         * The version of the match or {@code -1} if the version wasn't requested. The {@code -1} keeps it inline with OpenSearch's
+         * The version of the match or {@code -1} if the version wasn't requested. The {@code -1} keeps it inline with Density's
          * internal APIs.
          */
         long getVersion();
@@ -309,7 +309,7 @@ public abstract class ScrollableHitSource {
     /**
      * An implementation of {@linkplain Hit} that uses getters and setters.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class BasicHit implements Hit {
         private final String index;
@@ -391,7 +391,7 @@ public abstract class ScrollableHitSource {
     /**
      * A failure during search. Like {@link ShardSearchFailure} but useful for reindex from remote as well.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class SearchFailure implements Writeable, ToXContentObject {
         private final Throwable reason;
@@ -490,7 +490,7 @@ public abstract class ScrollableHitSource {
             builder.field(REASON_FIELD);
             {
                 builder.startObject();
-                OpenSearchException.generateThrowableXContent(builder, params, reason);
+                DensityException.generateThrowableXContent(builder, params, reason);
                 builder.endObject();
             }
             builder.endObject();

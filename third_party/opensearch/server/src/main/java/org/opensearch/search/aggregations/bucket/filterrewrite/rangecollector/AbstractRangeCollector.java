@@ -1,15 +1,15 @@
 /*
 * SPDX-License-Identifier: Apache-2.0
 *
-* The OpenSearch Contributors require contributions made to
+* The Density Contributors require contributions made to
 * this file be licensed under the Apache-2.0 license or a
 * compatible open source license.
 */
 
-package org.opensearch.search.aggregations.bucket.filterrewrite.rangecollector;
+package org.density.search.aggregations.bucket.filterrewrite.rangecollector;
 
-import org.opensearch.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
-import org.opensearch.search.aggregations.bucket.filterrewrite.Ranges;
+import org.density.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
+import org.density.search.aggregations.bucket.filterrewrite.Ranges;
 
 import java.util.function.BiConsumer;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.index.CorruptIndexException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.coordination.ClusterBootstrapService;
-import org.opensearch.cluster.coordination.LagDetector;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.Murmur3HashFunction;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.disruption.NetworkDisruption.Bridge;
-import org.opensearch.test.disruption.NetworkDisruption.TwoPartitions;
-import org.opensearch.test.disruption.ServiceDisruptionScheme;
-import org.opensearch.test.junit.annotations.TestIssueLogging;
-import org.opensearch.transport.client.Client;
+import org.density.DensityException;
+import org.density.action.NoShardAvailableActionException;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.index.IndexResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.coordination.ClusterBootstrapService;
+import org.density.cluster.coordination.LagDetector;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.Murmur3HashFunction;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.VersionType;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.indices.IndicesService;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.disruption.NetworkDisruption.Bridge;
+import org.density.test.disruption.NetworkDisruption.TwoPartitions;
+import org.density.test.disruption.ServiceDisruptionScheme;
+import org.density.test.junit.annotations.TestIssueLogging;
+import org.density.transport.client.Client;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,9 +80,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.opensearch.action.DocWriteResponse.Result.CREATED;
-import static org.opensearch.action.DocWriteResponse.Result.UPDATED;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.action.DocWriteResponse.Result.CREATED;
+import static org.density.action.DocWriteResponse.Result.UPDATED;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -94,7 +94,7 @@ import static org.hamcrest.Matchers.oneOf;
 /**
  * Tests various cluster operations (e.g., indexing) during disruptions.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class ClusterDisruptionIT extends AbstractDisruptionTestCase {
 
     private enum ConflictMode {
@@ -114,10 +114,10 @@ public class ClusterDisruptionIT extends AbstractDisruptionTestCase {
      * <p>
      * This test is a superset of tests run in the Jepsen test suite, with the exception of versioned updates
      */
-    @TestIssueLogging(value = "_root:DEBUG,org.opensearch.action.bulk:TRACE,org.opensearch.action.get:TRACE,"
-        + "org.opensearch.discovery:TRACE,org.opensearch.action.support.replication:TRACE,"
-        + "org.opensearch.cluster.service:TRACE,org.opensearch.indices.recovery:TRACE,"
-        + "org.opensearch.indices.cluster:TRACE,org.opensearch.index.shard:TRACE", issueUrl = "https://github.com/elastic/elasticsearch/issues/41068")
+    @TestIssueLogging(value = "_root:DEBUG,org.density.action.bulk:TRACE,org.density.action.get:TRACE,"
+        + "org.density.discovery:TRACE,org.density.action.support.replication:TRACE,"
+        + "org.density.cluster.service:TRACE,org.density.indices.recovery:TRACE,"
+        + "org.density.indices.cluster:TRACE,org.density.index.shard:TRACE", issueUrl = "https://github.com/elastic/elasticsearch/issues/41068")
     public void testAckedIndexing() throws Exception {
 
         final int seconds = !(TEST_NIGHTLY && rarely()) ? 1 : 5;
@@ -188,7 +188,7 @@ public class ClusterDisruptionIT extends AbstractDisruptionTestCase {
                                 assertThat(response.getResult(), is(oneOf(CREATED, UPDATED)));
                                 ackedDocs.put(id, node);
                                 logger.trace("[{}] indexed id [{}] through node [{}], response [{}]", name, id, node, response);
-                            } catch (OpenSearchException e) {
+                            } catch (DensityException e) {
                                 exceptedExceptions.add(e);
                                 final String docId = id;
                                 logger.trace(() -> new ParameterizedMessage("[{}] failed id [{}] through node [{}]", name, docId, node), e);
@@ -525,7 +525,7 @@ public class ClusterDisruptionIT extends AbstractDisruptionTestCase {
                         assertThat(response.getResult(), is(oneOf(CREATED, UPDATED)));
                         logger.info("--> index id={} seq_no={}", response.getId(), response.getSeqNo());
                         ackedDocs.add(response.getId());
-                    } catch (OpenSearchException ignore) {
+                    } catch (DensityException ignore) {
                         logger.info("--> fail to index id={}", id);
                     }
                 }

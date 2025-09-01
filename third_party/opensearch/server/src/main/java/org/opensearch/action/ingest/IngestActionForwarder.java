@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateApplier;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.Randomness;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.transport.TransportService;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateApplier;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.Randomness;
+import org.density.core.action.ActionListener;
+import org.density.transport.TransportService;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * TODO: move this into IngestService and make index/bulk actions call that
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class IngestActionForwarder implements ClusterStateApplier {
 

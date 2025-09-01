@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule;
+package org.density.rule;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.rule.action.UpdateRuleRequest;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.rule.action.UpdateRuleRequest;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -25,7 +25,7 @@ import java.util.UUID;
 
 /**
  * Utility class for operations related to {@link Rule} objects.
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class RuleUtils {

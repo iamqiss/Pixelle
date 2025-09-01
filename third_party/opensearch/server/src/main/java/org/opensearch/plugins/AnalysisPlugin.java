@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharFilter;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.Tokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.PreBuiltAnalyzerProviderFactory;
-import org.opensearch.index.analysis.PreConfiguredCharFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenizer;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.PreBuiltAnalyzerProviderFactory;
+import org.density.index.analysis.PreConfiguredCharFilter;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.PreConfiguredTokenizer;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +58,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 
 /**
- * An additional extension point for {@link Plugin}s that extends OpenSearch's analysis functionality. To add an additional
+ * An additional extension point for {@link Plugin}s that extends Density's analysis functionality. To add an additional
  * {@link TokenFilter} just implement the interface and implement the {@link #getTokenFilters()} method:
  *
  * <pre>
@@ -70,11 +70,11 @@ import static java.util.Collections.emptyMap;
  * }
  * </pre>
  *
- * OpenSearch doesn't have any automatic mechanism to share these components between indexes. If any component is heavy enough to warrant
+ * Density doesn't have any automatic mechanism to share these components between indexes. If any component is heavy enough to warrant
  * such sharing then it is the Plugin's responsibility to do it in their {@link AnalysisProvider} implementation. We recommend against doing
  * this unless absolutely necessary because it can be difficult to get the caching right given things like behavior changes across versions.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface AnalysisPlugin {
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.settings.SecureString;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -73,7 +73,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SettingsTests extends OpenSearchTestCase {
+public class SettingsTests extends DensityTestCase {
 
     public void testReplacePropertiesPlaceholderSystemProperty() {
         String value = System.getProperty("java.home");
@@ -514,7 +514,7 @@ public class SettingsTests extends OpenSearchTestCase {
         Setting<SecureString> setting = SecureSetting.secureString("something.secure", null);
         Settings settings = Settings.builder().put("something.secure", "notreallysecure").build();
         IllegalArgumentException e = expectThrows(IllegalArgumentException.class, () -> setting.get(settings));
-        assertTrue(e.getMessage().contains("must be stored inside the OpenSearch keystore"));
+        assertTrue(e.getMessage().contains("must be stored inside the Density keystore"));
     }
 
     public void testSecureSettingIllegalName() {
@@ -556,7 +556,7 @@ public class SettingsTests extends OpenSearchTestCase {
     }
 
     public void testSimpleJsonSettings() throws Exception {
-        final String json = "/org/opensearch/common/settings/loader/test-settings.json";
+        final String json = "/org/density/common/settings/loader/test-settings.json";
         final Settings settings = Settings.builder().loadFromStream(json, getClass().getResourceAsStream(json), false).build();
 
         assertThat(settings.get("test1.value1"), equalTo("value1"));
@@ -602,7 +602,7 @@ public class SettingsTests extends OpenSearchTestCase {
     }
 
     public void testSimpleYamlSettings() throws Exception {
-        final String yaml = "/org/opensearch/common/settings/loader/test-settings.yml";
+        final String yaml = "/org/density/common/settings/loader/test-settings.yml";
         final Settings settings = Settings.builder().loadFromStream(yaml, getClass().getResourceAsStream(yaml), false).build();
 
         assertThat(settings.get("test1.value1"), equalTo("value1"));
@@ -643,16 +643,16 @@ public class SettingsTests extends OpenSearchTestCase {
     }
 
     public void testIndentation() throws Exception {
-        String yaml = "/org/opensearch/common/settings/loader/indentation-settings.yml";
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> {
+        String yaml = "/org/density/common/settings/loader/indentation-settings.yml";
+        DensityParseException e = expectThrows(DensityParseException.class, () -> {
             Settings.builder().loadFromStream(yaml, getClass().getResourceAsStream(yaml), false);
         });
         assertTrue(e.getMessage(), e.getMessage().contains("malformed"));
     }
 
     public void testIndentationWithExplicitDocumentStart() throws Exception {
-        String yaml = "/org/opensearch/common/settings/loader/indentation-with-explicit-document-start-settings.yml";
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> {
+        String yaml = "/org/density/common/settings/loader/indentation-with-explicit-document-start-settings.yml";
+        DensityParseException e = expectThrows(DensityParseException.class, () -> {
             Settings.builder().loadFromStream(yaml, getClass().getResourceAsStream(yaml), false);
         });
         assertTrue(e.getMessage(), e.getMessage().contains("malformed"));
@@ -661,7 +661,7 @@ public class SettingsTests extends OpenSearchTestCase {
     public void testMissingValue() throws Exception {
         Path tmp = createTempFile("test", ".yaml");
         Files.write(tmp, Collections.singletonList("foo: # missing value\n"), StandardCharsets.UTF_8);
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> { Settings.builder().loadFromPath(tmp); });
+        DensityParseException e = expectThrows(DensityParseException.class, () -> { Settings.builder().loadFromPath(tmp); });
         assertTrue(
             e.getMessage(),
             e.getMessage().contains("null-valued setting found for key [foo] found at line number [1], column number [5]")

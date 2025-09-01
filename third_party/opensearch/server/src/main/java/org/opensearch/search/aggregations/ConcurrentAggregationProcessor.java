@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.query.InternalProfileCollectorManager;
-import org.opensearch.search.profile.query.InternalProfileComponent;
-import org.opensearch.search.query.QueryPhaseExecutionException;
-import org.opensearch.search.query.ReduceableSearchResult;
+import org.density.common.lucene.search.Queries;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.query.InternalProfileCollectorManager;
+import org.density.search.profile.query.InternalProfileComponent;
+import org.density.search.query.QueryPhaseExecutionException;
+import org.density.search.query.ReduceableSearchResult;
 
 import java.io.IOException;
 import java.util.Collections;
 
 /**
- * {@link AggregationProcessor} implementation to be used with {@link org.opensearch.search.query.ConcurrentQueryPhaseSearcher}. It takes
+ * {@link AggregationProcessor} implementation to be used with {@link org.density.search.query.ConcurrentQueryPhaseSearcher}. It takes
  * care of performing shard level reduce on Aggregation results collected as part of concurrent execution among slices. This is done to
  * avoid the increase in aggregation result sets returned by each shard to coordinator where final reduce happens for results received from
  * all the shards

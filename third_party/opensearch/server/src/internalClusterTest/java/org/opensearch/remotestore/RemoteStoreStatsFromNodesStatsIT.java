@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.remote.RemoteSegmentStats;
-import org.opensearch.index.translog.RemoteTranslogStats;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.common.settings.Settings;
+import org.density.index.remote.RemoteSegmentStats;
+import org.density.index.translog.RemoteTranslogStats;
+import org.density.test.DensityIntegTestCase;
 import org.junit.Before;
 
 import java.util.concurrent.TimeUnit;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreStatsFromNodesStatsIT extends RemoteStoreBaseIntegTestCase {
     private static final String INDEX_NAME = "remote-index-1";
     private static final int DATA_NODE_COUNT = 2;

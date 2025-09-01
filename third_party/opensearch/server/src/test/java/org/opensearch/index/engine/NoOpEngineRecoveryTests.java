@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.cluster.routing.RecoverySource.ExistingStoreRecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
+import org.density.cluster.routing.RecoverySource.ExistingStoreRecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.settings.Settings;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
 
 import java.io.IOException;
 
-import static org.opensearch.cluster.routing.ShardRoutingHelper.initWithSameId;
+import static org.density.cluster.routing.ShardRoutingHelper.initWithSameId;
 
 public class NoOpEngineRecoveryTests extends IndexShardTestCase {
 

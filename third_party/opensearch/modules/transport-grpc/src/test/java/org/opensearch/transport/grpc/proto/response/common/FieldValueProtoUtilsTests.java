@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.common;
+package org.density.transport.grpc.proto.response.common;
 
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.GeneralNumber;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.GeneralNumber;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FieldValueProtoUtilsTests extends OpenSearchTestCase {
+public class FieldValueProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithInteger() {
         Integer intValue = 42;
@@ -113,7 +113,7 @@ public class FieldValueProtoUtilsTests extends OpenSearchTestCase {
         assertNotNull("FieldValue should not be null", fieldValue);
         assertTrue("FieldValue should have object map", fieldValue.hasObjectMap());
 
-        org.opensearch.protobufs.ObjectMap objectMap = fieldValue.getObjectMap();
+        org.density.protobufs.ObjectMap objectMap = fieldValue.getObjectMap();
         assertEquals("ObjectMap should have 3 fields", 3, objectMap.getFieldsCount());
 
         // Check string field
@@ -146,7 +146,7 @@ public class FieldValueProtoUtilsTests extends OpenSearchTestCase {
         assertNotNull("FieldValue should not be null", fieldValue);
         assertTrue("FieldValue should have object map", fieldValue.hasObjectMap());
 
-        org.opensearch.protobufs.ObjectMap outerObjectMap = fieldValue.getObjectMap();
+        org.density.protobufs.ObjectMap outerObjectMap = fieldValue.getObjectMap();
         assertEquals("Outer object map should have 2 fields", 2, outerObjectMap.getFieldsCount());
 
         // Check outer string field
@@ -158,7 +158,7 @@ public class FieldValueProtoUtilsTests extends OpenSearchTestCase {
         assertTrue("Nested map field should exist", outerObjectMap.containsFields("nested_map"));
         assertTrue("Nested map field should have object map", outerObjectMap.getFieldsOrThrow("nested_map").hasObjectMap());
 
-        org.opensearch.protobufs.ObjectMap nestedObjectMap = outerObjectMap.getFieldsOrThrow("nested_map").getObjectMap();
+        org.density.protobufs.ObjectMap nestedObjectMap = outerObjectMap.getFieldsOrThrow("nested_map").getObjectMap();
         assertEquals("Nested object map should have 2 fields", 2, nestedObjectMap.getFieldsCount());
 
         // Check nested string field

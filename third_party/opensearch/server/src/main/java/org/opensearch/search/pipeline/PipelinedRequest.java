@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchPhaseResults;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.search.SearchPhaseResult;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchPhaseResults;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.core.action.ActionListener;
+import org.density.search.SearchPhaseResult;
 
 import java.util.List;
 
 /**
  * Groups a search pipeline based on a request and the request after being transformed by the pipeline.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PipelinedRequest extends SearchRequest {
     private final Pipeline pipeline;

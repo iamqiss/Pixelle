@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,94 +26,94 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.analyze.AnalyzeAction;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheAction;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexAction;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexAction;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.flush.TransportShardFlushAction;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeAction;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsAction;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsAction;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingAction;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexAction;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryAction;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.TransportShardRefreshAction;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsAction;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsRequest;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsAction;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsAction;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsAction;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsAction;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryAction;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.action.bulk.BulkAction;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.explain.ExplainAction;
-import org.opensearch.action.explain.ExplainRequest;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesAction;
-import org.opensearch.action.fieldcaps.FieldCapabilitiesRequest;
-import org.opensearch.action.get.GetAction;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.action.get.MultiGetAction;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchTransportService;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionAction;
-import org.opensearch.action.support.clustermanager.term.GetTermVersionRequest;
-import org.opensearch.action.support.replication.TransportReplicationActionTests;
-import org.opensearch.action.termvectors.MultiTermVectorsAction;
-import org.opensearch.action.termvectors.MultiTermVectorsRequest;
-import org.opensearch.action.termvectors.TermVectorsAction;
-import org.opensearch.action.termvectors.TermVectorsRequest;
-import org.opensearch.action.update.UpdateAction;
-import org.opensearch.action.update.UpdateRequest;
-import org.opensearch.action.update.UpdateResponse;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.PluginsService;
-import org.opensearch.script.MockScriptPlugin;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportInterceptor;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.analyze.AnalyzeAction;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheAction;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.close.CloseIndexAction;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.delete.DeleteIndexAction;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.flush.TransportShardFlushAction;
+import org.density.action.admin.indices.forcemerge.ForceMergeAction;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsAction;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsRequest;
+import org.density.action.admin.indices.mapping.get.GetMappingsAction;
+import org.density.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.density.action.admin.indices.mapping.put.PutMappingAction;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.admin.indices.open.OpenIndexAction;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.recovery.RecoveryAction;
+import org.density.action.admin.indices.recovery.RecoveryRequest;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.TransportShardRefreshAction;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsAction;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsRequest;
+import org.density.action.admin.indices.segments.IndicesSegmentsAction;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsAction;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.put.UpdateSettingsAction;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsAction;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryAction;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.action.bulk.BulkAction;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.explain.ExplainAction;
+import org.density.action.explain.ExplainRequest;
+import org.density.action.fieldcaps.FieldCapabilitiesAction;
+import org.density.action.fieldcaps.FieldCapabilitiesRequest;
+import org.density.action.get.GetAction;
+import org.density.action.get.GetRequest;
+import org.density.action.get.MultiGetAction;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchTransportService;
+import org.density.action.search.SearchType;
+import org.density.action.support.clustermanager.term.GetTermVersionAction;
+import org.density.action.support.clustermanager.term.GetTermVersionRequest;
+import org.density.action.support.replication.TransportReplicationActionTests;
+import org.density.action.termvectors.MultiTermVectorsAction;
+import org.density.action.termvectors.MultiTermVectorsRequest;
+import org.density.action.termvectors.TermVectorsAction;
+import org.density.action.termvectors.TermVectorsRequest;
+import org.density.action.update.UpdateAction;
+import org.density.action.update.UpdateRequest;
+import org.density.action.update.UpdateResponse;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.PluginsService;
+import org.density.script.MockScriptPlugin;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.tasks.Task;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportInterceptor;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.transport.client.Requests;
 import org.junit.After;
 import org.junit.Before;
 
@@ -128,15 +128,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 
 @ClusterScope(scope = Scope.SUITE, numClientNodes = 1, minNumDataNodes = 2)
-public class IndicesRequestIT extends OpenSearchIntegTestCase {
+public class IndicesRequestIT extends DensityIntegTestCase {
 
     private final List<String> indices = new ArrayList<>();
 

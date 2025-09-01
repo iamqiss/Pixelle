@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,13 +28,13 @@
  * under the License.
  */
 
-import org.opensearch.gradle.JavaPackageType 
+import org.density.gradle.JavaPackageType 
 
-apply plugin: 'opensearch.internal-distribution-archive-setup'
+apply plugin: 'density.internal-distribution-archive-setup'
 
 CopySpec archiveFiles(CopySpec modulesFiles, String distributionType, String platform, String architecture, JavaPackageType java) {
   return copySpec {
-    into("opensearch-${version}") {
+    into("density-${version}") {
       into('lib') {
         with libFiles()
       }
@@ -239,9 +239,9 @@ distribution_archives {
 
 subprojects {
   apply plugin: 'distribution'
-  apply plugin: 'opensearch.internal-distribution-archive-check'
+  apply plugin: 'density.internal-distribution-archive-check'
 
-  group = "org.opensearch.distribution"
+  group = "org.density.distribution"
 }
 
 tasks.each {

@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.search;
+package org.density.geo.search;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.geo.GeoModulePluginIntegTestCase;
-import org.opensearch.geo.search.aggregations.common.GeoBoundsHelper;
-import org.opensearch.geo.search.aggregations.metrics.GeoBounds;
-import org.opensearch.geo.tests.common.AggregationBuilders;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.geo.tests.common.RandomGeoGeometryGenerator;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.utils.WellKnownText;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.geo.GeoModulePluginIntegTestCase;
+import org.density.geo.search.aggregations.common.GeoBoundsHelper;
+import org.density.geo.search.aggregations.metrics.GeoBounds;
+import org.density.geo.tests.common.AggregationBuilders;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.geo.tests.common.RandomGeoGeometryGenerator;
+import org.density.geometry.Geometry;
+import org.density.geometry.utils.WellKnownText;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.closeTo;
 
 /**
  * Tests to validate if user specified a missingValue in the input while doing the aggregation
  */
-@OpenSearchIntegTestCase.SuiteScopeTestCase
+@DensityIntegTestCase.SuiteScopeTestCase
 public class MissingValueIT extends GeoModulePluginIntegTestCase {
 
     private static final String INDEX_NAME = "idx";

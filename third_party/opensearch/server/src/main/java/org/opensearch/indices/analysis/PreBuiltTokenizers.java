@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.opensearch.Version;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.Version;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
 
 /**
  * Pre-built tokenizers for analysis
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum PreBuiltTokenizers {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery.gce;
+package org.density.discovery.gce;
 
 import com.google.api.services.compute.model.AccessConfig;
 import com.google.api.services.compute.model.Instance;
@@ -39,17 +39,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.util.Supplier;
-import org.opensearch.cloud.gce.GceInstancesService;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.SeedHostsProvider;
-import org.opensearch.transport.TransportService;
+import org.density.cloud.gce.GceInstancesService;
+import org.density.common.network.NetworkAddress;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.SeedHostsProvider;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -122,7 +122,7 @@ public class GceSeedHostsProvider implements SeedHostsProvider {
         if (this.project == null || this.project.isEmpty() || this.zones == null || this.zones.isEmpty()) {
             throw new IllegalArgumentException(
                 "one or more gce discovery settings are missing. "
-                    + "Check opensearch.yml file. Should have ["
+                    + "Check density.yml file. Should have ["
                     + GceInstancesService.PROJECT_SETTING.getKey()
                     + "] and ["
                     + GceInstancesService.ZONE_SETTING.getKey()
@@ -250,20 +250,20 @@ public class GceSeedHostsProvider implements SeedHostsProvider {
                         logger.trace("current node found. Ignoring {} - {}", name, ip_private);
                     } else {
                         String address = ip_private;
-                        // Test if we have opensearch_port metadata defined here
-                        if (instance.getMetadata() != null && instance.getMetadata().containsKey("opensearch_port")) {
-                            Object opensearch_port = instance.getMetadata().get("opensearch_port");
-                            logger.trace("opensearch_port is defined with {}", opensearch_port);
-                            if (opensearch_port instanceof String) {
-                                address = address.concat(":").concat((String) opensearch_port);
+                        // Test if we have density_port metadata defined here
+                        if (instance.getMetadata() != null && instance.getMetadata().containsKey("density_port")) {
+                            Object density_port = instance.getMetadata().get("density_port");
+                            logger.trace("density_port is defined with {}", density_port);
+                            if (density_port instanceof String) {
+                                address = address.concat(":").concat((String) density_port);
                             } else {
                                 // Ignoring other values
-                                logger.trace("opensearch_port is instance of {}. Ignoring...", opensearch_port.getClass().getName());
+                                logger.trace("density_port is instance of {}. Ignoring...", density_port.getClass().getName());
                             }
                         }
 
                         // ip_private is a single IP Address. We need to build a TransportAddress from it
-                        // If user has set `opensearch_port` metadata, we don't need to ping all ports
+                        // If user has set `density_port` metadata, we don't need to ping all ports
                         TransportAddress[] addresses = transportService.addressesFromString(address);
 
                         for (TransportAddress transportAddress : addresses) {

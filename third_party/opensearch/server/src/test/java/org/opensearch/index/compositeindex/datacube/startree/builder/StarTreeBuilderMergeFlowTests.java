@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.builder;
+package org.density.index.compositeindex.datacube.startree.builder;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.DocValuesType;
@@ -14,31 +14,31 @@ import org.apache.lucene.index.SegmentWriteState;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.DocIdSetIterator;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.codec.composite.LuceneDocValuesConsumerFactory;
-import org.opensearch.index.codec.composite.composite912.Composite912DocValuesFormat;
-import org.opensearch.index.compositeindex.CompositeIndexConstants;
-import org.opensearch.index.compositeindex.datacube.Dimension;
-import org.opensearch.index.compositeindex.datacube.DimensionDataType;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.NumericDimension;
-import org.opensearch.index.compositeindex.datacube.ReadDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeDocument;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
-import org.opensearch.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
-import org.opensearch.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.common.settings.Settings;
+import org.density.index.codec.composite.LuceneDocValuesConsumerFactory;
+import org.density.index.codec.composite.composite912.Composite912DocValuesFormat;
+import org.density.index.compositeindex.CompositeIndexConstants;
+import org.density.index.compositeindex.datacube.Dimension;
+import org.density.index.compositeindex.datacube.DimensionDataType;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.NumericDimension;
+import org.density.index.compositeindex.datacube.ReadDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeDocument;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.DimensionConfig;
+import org.density.index.compositeindex.datacube.startree.fileformats.meta.StarTreeMetadata;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedNumericStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.SortedSetStarTreeValuesIterator;
+import org.density.index.compositeindex.datacube.startree.utils.iterator.StarTreeValuesIterator;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MappingLookup;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,12 +54,12 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.compositeindex.CompositeIndexConstants.SEGMENT_DOCS_COUNT;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getSortedNumericMock;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getSortedSetMock;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.traverseStarTree;
-import static org.opensearch.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.validateStarTree;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
+import static org.density.index.compositeindex.CompositeIndexConstants.SEGMENT_DOCS_COUNT;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getSortedNumericMock;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.getSortedSetMock;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.traverseStarTree;
+import static org.density.index.compositeindex.datacube.startree.builder.BuilderTestsUtils.validateStarTree;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.fullyQualifiedFieldNameForStarTreeMetricsDocValues;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -437,7 +437,7 @@ public class StarTreeBuilderMergeFlowTests extends StarTreeBuilderTestCase {
 
         DocumentMapper documentMapper = mock(DocumentMapper.class);
         when(mapperService.documentMapper()).thenReturn(documentMapper);
-        Settings settings = Settings.builder().put(settings(org.opensearch.Version.CURRENT).build()).build();
+        Settings settings = Settings.builder().put(settings(org.density.Version.CURRENT).build()).build();
         NumberFieldMapper numberFieldMapper1 = new NumberFieldMapper.Builder(
             "field1",
             randomFrom(NumberFieldMapper.NumberType.values()),

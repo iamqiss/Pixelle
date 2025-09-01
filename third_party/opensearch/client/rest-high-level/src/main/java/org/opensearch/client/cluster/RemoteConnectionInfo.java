@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.cluster;
+package org.density.client.cluster;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * This class encapsulates all remote cluster information to be rendered on
@@ -89,7 +89,7 @@ public final class RemoteConnectionInfo {
 
     private final ModeInfo modeInfo;
     // TODO: deprecate and remove this field in favor of initialConnectionTimeout field that is of type TimeValue.
-    // When rest api versioning exists then change org.opensearch.transport.RemoteConnectionInfo to properly serialize
+    // When rest api versioning exists then change org.density.transport.RemoteConnectionInfo to properly serialize
     // the initialConnectionTimeout field so that we can properly parse initialConnectionTimeout as TimeValue
     private final String initialConnectionTimeoutString;
     private final String clusterAlias;

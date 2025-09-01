@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,37 +26,37 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.mapping.get;
+package org.density.action.admin.indices.mapping.get;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsResponse.FieldMappingMetadata;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.single.shard.TransportSingleShardAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.routing.ShardsIterator;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentHelper;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MappingLookup;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.DensityException;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsResponse.FieldMappingMetadata;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.single.shard.TransportSingleShardAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.routing.ShardsIterator;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.regex.Regex;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentHelper;
+import org.density.index.IndexService;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MappingLookup;
+import org.density.indices.IndicesService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -69,7 +69,7 @@ import static java.util.Collections.singletonMap;
 /**
  * Transport action used to retrieve the mappings related to fields that belong to a specific index
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TransportGetFieldMappingsIndexAction extends TransportSingleShardAction<
     GetFieldMappingsIndexRequest,
@@ -226,7 +226,7 @@ public class TransportGetFieldMappingsIndexAction extends TransportSingleShardAc
                 );
                 fieldMappings.put(field, new FieldMappingMetadata(fieldMapper.name(), bytes));
             } catch (IOException e) {
-                throw new OpenSearchException("failed to serialize XContent of field [" + field + "]", e);
+                throw new DensityException("failed to serialize XContent of field [" + field + "]", e);
             }
         }
     }

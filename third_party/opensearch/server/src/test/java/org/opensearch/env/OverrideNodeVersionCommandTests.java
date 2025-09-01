@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cli.MockTerminal;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class OverrideNodeVersionCommandTests extends OpenSearchTestCase {
+public class OverrideNodeVersionCommandTests extends DensityTestCase {
 
     private Environment environment;
     private Path[] nodePaths;
@@ -112,8 +112,8 @@ public class OverrideNodeVersionCommandTests extends OpenSearchTestCase {
     public void testFailsOnEmptyPath() {
         final Path emptyPath = createTempDir();
         final MockTerminal mockTerminal = new MockTerminal();
-        final OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        final DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> new OverrideNodeVersionCommand().processNodePaths(mockTerminal, new Path[] { emptyPath }, 0, noOptions, environment)
         );
         assertThat(openSearchException.getMessage(), equalTo(OverrideNodeVersionCommand.NO_METADATA_MESSAGE));
@@ -124,8 +124,8 @@ public class OverrideNodeVersionCommandTests extends OpenSearchTestCase {
         final Version nodeVersion = Version.fromId(between(Version.CURRENT.minimumIndexCompatibilityVersion().id, Version.CURRENT.id));
         PersistedClusterStateService.overrideVersion(nodeVersion, nodePaths);
         final MockTerminal mockTerminal = new MockTerminal();
-        final OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        final DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> new OverrideNodeVersionCommand().processNodePaths(mockTerminal, nodePaths, 0, noOptions, environment)
         );
         assertThat(
@@ -144,8 +144,8 @@ public class OverrideNodeVersionCommandTests extends OpenSearchTestCase {
         PersistedClusterStateService.overrideVersion(nodeVersion, nodePaths);
         final MockTerminal mockTerminal = new MockTerminal();
         mockTerminal.addTextInput("n\n");
-        final OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        final DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> new OverrideNodeVersionCommand().processNodePaths(mockTerminal, nodePaths, 0, noOptions, environment)
         );
         assertThat(openSearchException.getMessage(), equalTo("aborted by user"));
@@ -170,8 +170,8 @@ public class OverrideNodeVersionCommandTests extends OpenSearchTestCase {
         PersistedClusterStateService.overrideVersion(nodeVersion, nodePaths);
         final MockTerminal mockTerminal = new MockTerminal();
         mockTerminal.addTextInput(randomFrom("yy", "Yy", "n", "yes", "true", "N", "no"));
-        final OpenSearchException openSearchException = expectThrows(
-            OpenSearchException.class,
+        final DensityException openSearchException = expectThrows(
+            DensityException.class,
             () -> new OverrideNodeVersionCommand().processNodePaths(mockTerminal, nodePaths, 0, noOptions, environment)
         );
         assertThat(openSearchException.getMessage(), equalTo("aborted by user"));

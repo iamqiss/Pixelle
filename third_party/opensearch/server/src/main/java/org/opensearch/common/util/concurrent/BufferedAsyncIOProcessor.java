@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.function.Supplier;
  * gets scheduled. Subsequent requests will get buffered till drainAndProcessAndRelease gets called in this new
  * processor thread.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BufferedAsyncIOProcessor<Item> extends AsyncIOProcessor<Item> {
 

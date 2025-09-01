@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata.State;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata.State;
+import org.density.index.IndexNotFoundException;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.opensearch.cluster.DataStreamTestHelper.createBackingIndex;
-import static org.opensearch.cluster.DataStreamTestHelper.createTimestampField;
-import static org.opensearch.common.util.set.Sets.newHashSet;
+import static org.density.cluster.DataStreamTestHelper.createBackingIndex;
+import static org.density.cluster.DataStreamTestHelper.createTimestampField;
+import static org.density.common.util.set.Sets.newHashSet;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 
-public class WildcardExpressionResolverTests extends OpenSearchTestCase {
+public class WildcardExpressionResolverTests extends DensityTestCase {
     public void testConvertWildcardsJustIndicesTests() {
         Metadata.Builder mdBuilder = Metadata.builder()
             .put(indexBuilder("testXXX"))

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.core;
+package org.density.client.core;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.action.search.ShardSearchFailure;
+import org.density.core.ParseField;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * A response to _count API request.
@@ -202,7 +202,7 @@ public final class CountResponse {
         static ShardStats fromXContent(XContentParser parser) throws IOException {
             int successfulShards = -1;
             int totalShards = -1;
-            int skippedShards = 0; // BWC @see org.opensearch.action.search.SearchResponse
+            int skippedShards = 0; // BWC @see org.density.action.search.SearchResponse
             List<ShardSearchFailure> failures = new ArrayList<>();
             XContentParser.Token token;
             String currentName = parser.currentName();

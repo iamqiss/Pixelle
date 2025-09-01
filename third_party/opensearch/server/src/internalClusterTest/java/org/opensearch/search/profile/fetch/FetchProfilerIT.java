@@ -1,32 +1,32 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile.fetch;
+package org.density.search.profile.fetch;
 
 import org.apache.lucene.tests.util.English;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileShardResult;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileShardResult;
+import org.density.search.sort.SortOrder;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class FetchProfilerIT extends OpenSearchIntegTestCase {
+public class FetchProfilerIT extends DensityIntegTestCase {
 
     /**
      * This test verifies that the fetch profiler returns reasonable results for a simple match_all query

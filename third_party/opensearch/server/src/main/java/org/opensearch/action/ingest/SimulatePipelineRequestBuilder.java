@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.action.ActionRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder to simulate a pipeline
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SimulatePipelineRequestBuilder extends ActionRequestBuilder<SimulatePipelineRequest, SimulatePipelineResponse> {
@@ -49,7 +49,7 @@ public class SimulatePipelineRequestBuilder extends ActionRequestBuilder<Simulat
     /**
      * Create a new builder for {@link SimulatePipelineRequest}s
      */
-    public SimulatePipelineRequestBuilder(OpenSearchClient client, SimulatePipelineAction action) {
+    public SimulatePipelineRequestBuilder(DensityClient client, SimulatePipelineAction action) {
         super(client, action, new SimulatePipelineRequest());
     }
 
@@ -57,7 +57,7 @@ public class SimulatePipelineRequestBuilder extends ActionRequestBuilder<Simulat
      * Create a new builder for {@link SimulatePipelineRequest}s
      */
     public SimulatePipelineRequestBuilder(
-        OpenSearchClient client,
+        DensityClient client,
         SimulatePipelineAction action,
         BytesReference source,
         MediaType mediaType

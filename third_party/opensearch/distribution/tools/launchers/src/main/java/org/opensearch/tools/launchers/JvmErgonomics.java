@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.launchers;
+package org.density.tools.launchers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Tunes OpenSearch JVM settings based on inspection of provided JVM options.
+ * Tunes Density JVM settings based on inspection of provided JVM options.
  */
 final class JvmErgonomics {
 
@@ -60,7 +60,7 @@ final class JvmErgonomics {
     }
 
     /**
-     * Chooses additional JVM options for OpenSearch.
+     * Chooses additional JVM options for Density.
      *
      * @param userDefinedJvmOptions A list of JVM options that have been defined by the user.
      * @return A list of additional JVM options to set.

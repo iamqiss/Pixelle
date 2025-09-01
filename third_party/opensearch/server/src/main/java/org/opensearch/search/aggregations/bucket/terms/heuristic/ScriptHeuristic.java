@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms.heuristic;
+package org.density.search.aggregations.bucket.terms.heuristic;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.Script;
-import org.opensearch.script.SignificantTermsHeuristicScoreScript;
-import org.opensearch.search.aggregations.InternalAggregation;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.script.Script;
+import org.density.script.SignificantTermsHeuristicScoreScript;
+import org.density.search.aggregations.InternalAggregation;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * Script significance heuristic for significant terms agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ScriptHeuristic extends SignificanceHeuristic {
     public static final String NAME = "script_heuristic";
@@ -69,7 +69,7 @@ public class ScriptHeuristic extends SignificanceHeuristic {
      * This class holds an executable form of the script with private variables ready for execution
      * on a single search thread.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ExecutableScriptHeuristic extends ScriptHeuristic {
         private final LongAccessor subsetSizeHolder;
@@ -185,7 +185,7 @@ public class ScriptHeuristic extends SignificanceHeuristic {
     /**
      * Accesses long values
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public final class LongAccessor extends Number {
         public long value;

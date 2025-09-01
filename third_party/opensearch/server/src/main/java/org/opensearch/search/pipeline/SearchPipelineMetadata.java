@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.Version;
+import org.density.cluster.Diff;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Represents the search pipelines that are available in the cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchPipelineMetadata implements Metadata.Custom {
     public static final String TYPE = "search_pipeline";

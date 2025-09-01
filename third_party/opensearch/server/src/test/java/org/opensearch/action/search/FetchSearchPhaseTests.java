@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.fetch.ShardFetchSearchRequest;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Transport;
+import org.density.action.OriginalIndices;
+import org.density.common.UUIDs;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.fetch.ShardFetchSearchRequest;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.transport.Transport;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FetchSearchPhaseTests extends OpenSearchTestCase {
+public class FetchSearchPhaseTests extends DensityTestCase {
 
     public void testShortcutQueryAndFetchOptimization() {
         SearchPhaseController controller = new SearchPhaseController(
@@ -67,7 +67,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
         );
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(1);
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),
@@ -128,7 +128,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
             s -> InternalAggregationTestCase.emptyReduceContextBuilder()
         );
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),
@@ -224,7 +224,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
             s -> InternalAggregationTestCase.emptyReduceContextBuilder()
         );
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),
@@ -322,7 +322,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
         );
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(numHits);
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),
@@ -412,7 +412,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
             s -> InternalAggregationTestCase.emptyReduceContextBuilder()
         );
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),
@@ -504,7 +504,7 @@ public class FetchSearchPhaseTests extends OpenSearchTestCase {
             s -> InternalAggregationTestCase.emptyReduceContextBuilder()
         );
         QueryPhaseResultConsumer results = controller.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.getRequest(),

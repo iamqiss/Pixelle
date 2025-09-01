@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.script.Script;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.script.Script;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -51,15 +51,15 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.BUCKETS_PATH;
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.FORMAT;
-import static org.opensearch.search.aggregations.pipeline.PipelineAggregator.Parser.GAP_POLICY;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.BUCKETS_PATH;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.FORMAT;
+import static org.density.search.aggregations.pipeline.PipelineAggregator.Parser.GAP_POLICY;
 
 /**
  * Aggregation Builder for bucket_script agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class BucketScriptPipelineAggregationBuilder extends AbstractPipelineAggregationBuilder<BucketScriptPipelineAggregationBuilder> {
     public static final String NAME = "bucket_script";

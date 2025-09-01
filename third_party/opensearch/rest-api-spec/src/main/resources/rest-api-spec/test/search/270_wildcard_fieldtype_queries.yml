@@ -24,7 +24,7 @@ setup:
         index: test
         id: 1
         body:
-          my_field: "org.opensearch.transport.NodeDisconnectedException: [node_s0][127.0.0.1:39953][disconnected] disconnected"
+          my_field: "org.density.transport.NodeDisconnectedException: [node_s0][127.0.0.1:39953][disconnected] disconnected"
   - do:
       index:
         index: test

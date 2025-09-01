@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.shiro;
+package org.density.identity.shiro;
 
-import org.opensearch.identity.tokens.AuthToken;
-import org.opensearch.identity.tokens.BasicAuthToken;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.identity.tokens.AuthToken;
+import org.density.identity.tokens.BasicAuthToken;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -22,7 +22,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class ShiroTokenExtractorTests extends OpenSearchTestCase {
+public class ShiroTokenExtractorTests extends DensityTestCase {
 
     public void testAuthorizationHeaderExtractionWithBasicAuthToken() {
         String basicAuthHeader = Base64.getEncoder().encodeToString("foo:bar".getBytes(StandardCharsets.UTF_8));

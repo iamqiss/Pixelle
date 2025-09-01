@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.codec;
+package org.density.index.codec;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec.Mode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.codec.composite.CompositeCodecFactory;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.MapBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.codec.composite.CompositeCodecFactory;
+import org.density.index.mapper.MapperService;
 
 import java.util.Map;
 
 /**
  * Since Lucene 4.0 low level index segments are read and written through a
  * codec layer that allows to use use-case specific file formats &amp;
- * data-structures per field. OpenSearch exposes the full
+ * data-structures per field. Density exposes the full
  * {@link Codec} capabilities through this {@link CodecService}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "3.3.0")
 public class CodecService {

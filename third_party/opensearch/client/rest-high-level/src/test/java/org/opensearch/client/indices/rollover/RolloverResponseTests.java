@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices.rollover;
+package org.density.client.indices.rollover;
 
-import org.opensearch.action.admin.indices.rollover.Condition;
-import org.opensearch.action.admin.indices.rollover.MaxAgeCondition;
-import org.opensearch.action.admin.indices.rollover.MaxDocsCondition;
-import org.opensearch.action.admin.indices.rollover.MaxSizeCondition;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.admin.indices.rollover.Condition;
+import org.density.action.admin.indices.rollover.MaxAgeCondition;
+import org.density.action.admin.indices.rollover.MaxDocsCondition;
+import org.density.action.admin.indices.rollover.MaxSizeCondition;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.opensearch.test.AbstractXContentTestCase.xContentTester;
+import static org.density.test.AbstractXContentTestCase.xContentTester;
 
-public class RolloverResponseTests extends OpenSearchTestCase {
+public class RolloverResponseTests extends DensityTestCase {
 
     private static final List<Supplier<Condition<?>>> conditionSuppliers = new ArrayList<>();
     static {
@@ -90,8 +90,8 @@ public class RolloverResponseTests extends OpenSearchTestCase {
     }
 
     private static void toXContent(RolloverResponse response, XContentBuilder builder) throws IOException {
-        org.opensearch.action.admin.indices.rollover.RolloverResponse serverResponse =
-            new org.opensearch.action.admin.indices.rollover.RolloverResponse(
+        org.density.action.admin.indices.rollover.RolloverResponse serverResponse =
+            new org.density.action.admin.indices.rollover.RolloverResponse(
                 response.getOldIndex(),
                 response.getNewIndex(),
                 response.getConditionStatus(),

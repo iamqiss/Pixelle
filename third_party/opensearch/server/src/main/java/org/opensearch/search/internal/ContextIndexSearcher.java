@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -65,29 +65,29 @@ import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BitSetIterator;
 import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.SparseFixedBitSet;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.lucene.util.CombinedBitSet;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.approximate.ApproximateScoreQuery;
-import org.opensearch.search.dfs.AggregatedDfs;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.QueryFetchSearchResult;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.Timer;
-import org.opensearch.search.profile.query.ProfileWeight;
-import org.opensearch.search.profile.query.QueryProfiler;
-import org.opensearch.search.profile.query.QueryTimingType;
-import org.opensearch.search.query.QueryPhase;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.MinAndMax;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.lucene.util.CombinedBitSet;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchHits;
+import org.density.search.SearchService;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.approximate.ApproximateScoreQuery;
+import org.density.search.dfs.AggregatedDfs;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.QueryFetchSearchResult;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.Timer;
+import org.density.search.profile.query.ProfileWeight;
+import org.density.search.profile.query.QueryProfiler;
+import org.density.search.profile.query.QueryTimingType;
+import org.density.search.query.QueryPhase;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.MinAndMax;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ import java.util.concurrent.Executor;
 /**
  * Context-aware extension of {@link IndexSearcher}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ContextIndexSearcher extends IndexSearcher implements Releasable {
@@ -256,7 +256,7 @@ public class ContextIndexSearcher extends IndexSearcher implements Releasable {
 
         TopFieldDocs mergedTopDocs = (TopFieldDocs) manager.reduce(collectors);
         // Lucene sets shards indexes during merging of topDocs from different collectors
-        // We need to reset shard index; OpenSearch will set shard index later during reduce stage
+        // We need to reset shard index; Density will set shard index later during reduce stage
         for (ScoreDoc scoreDoc : mergedTopDocs.scoreDocs) {
             scoreDoc.shardIndex = -1;
         }
@@ -269,7 +269,7 @@ public class ContextIndexSearcher extends IndexSearcher implements Releasable {
     @Override
     public void search(Query query, Collector collector) throws IOException {
         // TODO : Remove when switching to use the @org.apache.lucene.search.IndexSearcher#search(Query, CollectorManager) variant from
-        // @org.opensearch.search.query.QueryPhase#searchWithCollector which then calls the overridden
+        // @org.density.search.query.QueryPhase#searchWithCollector which then calls the overridden
         // search(LeafReaderContextPartition[] partitions, Weight weight, Collector collector)
         query = collector.scoreMode().needsScores() ? rewrite(query) : rewrite(new ConstantScoreQuery(query));
         Weight weight = createWeight(query, collector.scoreMode(), 1);
@@ -288,7 +288,7 @@ public class ContextIndexSearcher extends IndexSearcher implements Releasable {
     ) throws IOException {
         TopFieldDocs mergedTopDocs = search(query, manager);
         // Lucene sets shards indexes during merging of topDocs from different collectors
-        // We need to reset shard index; OpenSearch will set shard index later during reduce stage
+        // We need to reset shard index; Density will set shard index later during reduce stage
         for (ScoreDoc scoreDoc : mergedTopDocs.scoreDocs) {
             scoreDoc.shardIndex = -1;
         }

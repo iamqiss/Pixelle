@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
 import org.apache.lucene.search.BooleanClause;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilderVisitor;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.search.pipeline.AbstractProcessor;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
+import org.density.action.search.SearchRequest;
+import org.density.common.hash.MurmurHash3;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.core.common.Strings;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilderVisitor;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.ingest.ConfigurationUtils;
+import org.density.search.pipeline.AbstractProcessor;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchRequestProcessor;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * A search request processor that automatically adds routing to search requests

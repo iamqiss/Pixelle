@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.network.InetAddresses;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.singleton;
 
-public class BinaryRangeUtilTests extends OpenSearchTestCase {
+public class BinaryRangeUtilTests extends DensityTestCase {
 
     public void testBasics() {
         BytesRef encoded1 = new BytesRef(BinaryRangeUtil.encodeLong(Long.MIN_VALUE));
@@ -201,7 +201,7 @@ public class BinaryRangeUtilTests extends OpenSearchTestCase {
         int iters = randomIntBetween(32, 1024);
         for (int i = 0; i < iters; i++) {
             float start = randomFloat();
-            // for some reason, OpenSearchTestCase doesn't provide randomFloatBetween
+            // for some reason, DensityTestCase doesn't provide randomFloatBetween
             float end = randomFloat();
             if (start > end) {
                 float temp = start;

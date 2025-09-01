@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,57 +26,57 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.tasks;
+package org.density.action.admin.cluster.node.tasks;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.admin.cluster.health.ClusterHealthAction;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskRequest;
-import org.opensearch.action.admin.cluster.node.tasks.get.GetTaskResponse;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksAction;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshAction;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeAction;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryAction;
-import org.opensearch.action.bulk.BulkAction;
-import org.opensearch.action.index.IndexAction;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchTransportService;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.action.support.replication.TransportReplicationActionTests;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.Streams;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceStats;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.core.tasks.resourcetracker.TaskThreadUsage;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.StrictDynamicMappingException;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.tasks.TaskResult;
-import org.opensearch.tasks.TaskResultsService;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.tasks.MockTaskManager;
-import org.opensearch.test.tasks.MockTaskManagerListener;
-import org.opensearch.transport.ReceiveTimeoutTransportException;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.DensityTimeoutException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.admin.cluster.health.ClusterHealthAction;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskRequest;
+import org.density.action.admin.cluster.node.tasks.get.GetTaskResponse;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksAction;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.admin.indices.refresh.RefreshAction;
+import org.density.action.admin.indices.upgrade.post.UpgradeAction;
+import org.density.action.admin.indices.validate.query.ValidateQueryAction;
+import org.density.action.bulk.BulkAction;
+import org.density.action.index.IndexAction;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchTransportService;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.action.support.replication.TransportReplicationActionTests;
+import org.density.common.action.ActionFuture;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.Streams;
+import org.density.core.action.ActionListener;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.TaskResourceStats;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.core.tasks.resourcetracker.TaskThreadUsage;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.StrictDynamicMappingException;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.tasks.Task;
+import org.density.tasks.TaskInfo;
+import org.density.tasks.TaskResult;
+import org.density.tasks.TaskResultsService;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.tasks.MockTaskManager;
+import org.density.test.tasks.MockTaskManagerListener;
+import org.density.transport.ReceiveTimeoutTransportException;
+import org.density.transport.TransportService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -97,12 +97,12 @@ import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singleton;
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.common.unit.TimeValue.timeValueSeconds;
-import static org.opensearch.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.common.unit.TimeValue.timeValueSeconds;
+import static org.density.http.HttpTransportSettings.SETTING_HTTP_MAX_HEADER_SIZE;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
@@ -122,7 +122,7 @@ import static org.mockito.Mockito.spy;
  * <p>
  * We need at least 2 nodes so we have a cluster-manager node a non-cluster-manager node
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, minNumDataNodes = 2)
 public class TasksIT extends AbstractTasksIT {
 
     protected final TaskInfo taskInfo = new TaskInfo(
@@ -740,7 +740,7 @@ public class TasksIT extends AbstractTasksIT {
             Iterable<? extends Throwable> failures = wait.apply(taskId);
 
             for (Throwable failure : failures) {
-                assertNotNull(ExceptionsHelper.unwrap(failure, OpenSearchTimeoutException.class, ReceiveTimeoutTransportException.class));
+                assertNotNull(ExceptionsHelper.unwrap(failure, DensityTimeoutException.class, ReceiveTimeoutTransportException.class));
             }
         } finally {
             // Now we can unblock those requests
@@ -804,7 +804,7 @@ public class TasksIT extends AbstractTasksIT {
             .get();
 
         // It should finish quickly and without complaint and list the list tasks themselves
-        assertThat(response.getNodeFailures(), emptyCollectionOf(OpenSearchException.class));
+        assertThat(response.getNodeFailures(), emptyCollectionOf(DensityException.class));
         assertThat(response.getTaskFailures(), emptyCollectionOf(TaskOperationFailure.class));
         assertThat(response.getTasks().size(), greaterThanOrEqualTo(1));
     }
@@ -957,7 +957,7 @@ public class TasksIT extends AbstractTasksIT {
         // given
         TaskResultsService resultsService = spy(internalCluster().getInstance(TaskResultsService.class));
 
-        InputStream mockInputStream = getClass().getResourceAsStream("/org/opensearch/tasks/missing-fields-task-index-mapping.json");
+        InputStream mockInputStream = getClass().getResourceAsStream("/org/density/tasks/missing-fields-task-index-mapping.json");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Streams.copy(mockInputStream, out);
         String mockJsonString = out.toString(StandardCharsets.UTF_8.name());

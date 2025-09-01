@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.core.tasks.TaskId;
+import org.density.core.tasks.TaskId;
 
 import java.util.Map;
 
 /**
  * An interface for a request that can be used to register a task manager task
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface TaskAwareRequest {
     /**

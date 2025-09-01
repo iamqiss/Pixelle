@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.collect.Tuple;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,9 +67,9 @@ import static org.apache.lucene.geo.GeoUtils.orient;
  * Methods to wrap polygons at the dateline and building shapes from the data held by the
  * builder.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class PolygonBuilder extends ShapeBuilder<JtsGeometry, org.opensearch.geometry.Geometry, PolygonBuilder> {
+public class PolygonBuilder extends ShapeBuilder<JtsGeometry, org.density.geometry.Geometry, PolygonBuilder> {
 
     public static final GeoShapeType TYPE = GeoShapeType.POLYGON;
 
@@ -246,7 +246,7 @@ public class PolygonBuilder extends ShapeBuilder<JtsGeometry, org.opensearch.geo
     }
 
     @Override
-    public org.opensearch.geometry.Geometry buildGeometry() {
+    public org.density.geometry.Geometry buildGeometry() {
         return toPolygonGeometry();
     }
 
@@ -293,16 +293,16 @@ public class PolygonBuilder extends ShapeBuilder<JtsGeometry, org.opensearch.geo
         return factory.createPolygon(shell, holes);
     }
 
-    public org.opensearch.geometry.Polygon toPolygonGeometry() {
-        final List<org.opensearch.geometry.LinearRing> holes = new ArrayList<>(this.holes.size());
+    public org.density.geometry.Polygon toPolygonGeometry() {
+        final List<org.density.geometry.LinearRing> holes = new ArrayList<>(this.holes.size());
         for (int i = 0; i < this.holes.size(); ++i) {
             holes.add(linearRing(this.holes.get(i).coordinates));
         }
-        return new org.opensearch.geometry.Polygon(linearRing(this.shell.coordinates), holes);
+        return new org.density.geometry.Polygon(linearRing(this.shell.coordinates), holes);
     }
 
-    protected static org.opensearch.geometry.LinearRing linearRing(List<Coordinate> coordinates) {
-        return new org.opensearch.geometry.LinearRing(
+    protected static org.density.geometry.LinearRing linearRing(List<Coordinate> coordinates) {
+        return new org.density.geometry.LinearRing(
             coordinates.stream().mapToDouble(i -> i.x).toArray(),
             coordinates.stream().mapToDouble(i -> i.y).toArray()
         );

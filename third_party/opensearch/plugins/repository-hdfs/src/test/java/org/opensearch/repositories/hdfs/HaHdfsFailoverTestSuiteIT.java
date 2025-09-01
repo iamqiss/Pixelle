@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ha.BadFencingConfigurationException;
@@ -42,11 +42,11 @@ import org.apache.hadoop.ha.protocolPB.HAServiceProtocolClientSideTranslatorPB;
 import org.apache.hadoop.hdfs.tools.DFSHAAdmin;
 import org.apache.hadoop.security.SecurityUtil;
 import org.apache.hadoop.security.UserGroupInformation;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.RestClient;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.RestClient;
+import org.density.common.io.PathUtils;
+import org.density.test.rest.DensityRestTestCase;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -63,7 +63,7 @@ import java.util.List;
  * Integration test that runs against an HA-Enabled HDFS instance
  */
 @SuppressWarnings("removal")
-public class HaHdfsFailoverTestSuiteIT extends OpenSearchRestTestCase {
+public class HaHdfsFailoverTestSuiteIT extends DensityRestTestCase {
 
     public void testHAFailoverWithRepository() throws Exception {
         RestClient client = client();
@@ -130,7 +130,7 @@ public class HaHdfsFailoverTestSuiteIT extends OpenSearchRestTestCase {
                     + "\"type\":\"hdfs\","
                     + "\"settings\":{"
                     + "\"uri\": \"hdfs://ha-hdfs/\",\n"
-                    + "\"path\": \"/user/opensearch/existing/readonly-repository\","
+                    + "\"path\": \"/user/density/existing/readonly-repository\","
                     + "\"readonly\": \"true\","
                     + securityCredentials(securityEnabled, esKerberosPrincipal)
                     + "\"conf.dfs.nameservices\": \"ha-hdfs\","

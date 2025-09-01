@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -9,10 +9,10 @@
 /*
  * Based on code from the Internet Time Utility project (https://github.com/ethlo/itu) under the Apache License, version 2.0.
  * Copyright (C) 2017 Morten Haraldsen (ethlo)
- * Modifications (C) OpenSearch Contributors. All Rights Reserved.
+ * Modifications (C) Density Contributors. All Rights Reserved.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
 import java.text.ParsePosition;
 import java.time.DateTimeException;
@@ -59,7 +59,7 @@ import java.util.Locale;
  *      TZD  = time zone designator (Z or z or +hh:mm or -hh:mm)
  * </pre>
  */
-final class RFC3339CompatibleDateTimeFormatter extends OpenSearchDateTimeFormatter {
+final class RFC3339CompatibleDateTimeFormatter extends DensityDateTimeFormatter {
     public static final char DATE_SEPARATOR = '-';
     public static final char TIME_SEPARATOR = ':';
     public static final char SEPARATOR_UPPER = 'T';
@@ -88,12 +88,12 @@ final class RFC3339CompatibleDateTimeFormatter extends OpenSearchDateTimeFormatt
     }
 
     @Override
-    public OpenSearchDateTimeFormatter withZone(ZoneId zoneId) {
+    public DensityDateTimeFormatter withZone(ZoneId zoneId) {
         return new RFC3339CompatibleDateTimeFormatter(getFormatter().withZone(zoneId), zoneId);
     }
 
     @Override
-    public OpenSearchDateTimeFormatter withLocale(Locale locale) {
+    public DensityDateTimeFormatter withLocale(Locale locale) {
         return new RFC3339CompatibleDateTimeFormatter(getFormatter().withLocale(locale));
     }
 

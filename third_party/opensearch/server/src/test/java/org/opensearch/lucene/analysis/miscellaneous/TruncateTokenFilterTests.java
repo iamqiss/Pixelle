@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.lucene.analysis.miscellaneous;
+package org.density.lucene.analysis.miscellaneous;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -38,13 +38,13 @@ import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.miscellaneous.TruncateTokenFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.tests.analysis.MockTokenizer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TruncateTokenFilterTests extends OpenSearchTestCase {
+public class TruncateTokenFilterTests extends DensityTestCase {
     public void testSimple() throws IOException {
         Analyzer analyzer = new Analyzer() {
             @Override

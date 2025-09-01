@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
@@ -38,46 +38,46 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.join.BitSetProducer;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.Version;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexSortConfig;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.DerivedFieldResolver;
-import org.opensearch.index.mapper.DerivedFieldResolverFactory;
-import org.opensearch.index.mapper.DerivedFieldType;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.query.support.NestedScope;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptFactory;
-import org.opensearch.script.ScriptService;
-import org.opensearch.search.aggregations.support.AggregationUsageService;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.startree.StarTreeQueryContext;
-import org.opensearch.transport.RemoteClusterAware;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.common.CheckedFunction;
+import org.density.common.SetOnce;
+import org.density.common.TriFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.search.Queries;
+import org.density.common.util.BigArrays;
+import org.density.core.action.ActionListener;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.index.Index;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.IndexSortConfig;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.DerivedFieldResolver;
+import org.density.index.mapper.DerivedFieldResolverFactory;
+import org.density.index.mapper.DerivedFieldType;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.query.support.NestedScope;
+import org.density.index.similarity.SimilarityService;
+import org.density.script.Script;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptFactory;
+import org.density.script.ScriptService;
+import org.density.search.aggregations.support.AggregationUsageService;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.startree.StarTreeQueryContext;
+import org.density.transport.RemoteClusterAware;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -98,7 +98,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Context object used to create lucene queries on the shard level.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class QueryShardContext extends BaseQueryRewriteContext {

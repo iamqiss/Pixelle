@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.exists.indices;
+package org.density.action.admin.indices.exists.indices;
 
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 /**
  * Transport request builder for checking if an index exists
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesExistsRequestBuilder extends ClusterManagerNodeReadOperationRequestBuilder<
@@ -47,7 +47,7 @@ public class IndicesExistsRequestBuilder extends ClusterManagerNodeReadOperation
     IndicesExistsResponse,
     IndicesExistsRequestBuilder> {
 
-    public IndicesExistsRequestBuilder(OpenSearchClient client, IndicesExistsAction action, String... indices) {
+    public IndicesExistsRequestBuilder(DensityClient client, IndicesExistsAction action, String... indices) {
         super(client, action, new IndicesExistsRequest(indices));
     }
 

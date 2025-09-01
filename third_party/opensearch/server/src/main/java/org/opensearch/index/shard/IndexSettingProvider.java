@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
 
 /**
  * An {@link IndexSettingProvider} is a provider for index level settings that can be set
  * explicitly as a default value (so they show up as "set" for newly created indices)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndexSettingProvider {

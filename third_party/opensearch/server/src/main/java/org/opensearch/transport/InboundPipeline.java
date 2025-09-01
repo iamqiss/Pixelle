@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.common.breaker.CircuitBreaker;
+import org.density.Version;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.common.breaker.CircuitBreaker;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -49,7 +49,7 @@ import java.util.function.Supplier;
 /**
  * Pipeline for receiving inbound messages
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InboundPipeline implements Releasable {
 

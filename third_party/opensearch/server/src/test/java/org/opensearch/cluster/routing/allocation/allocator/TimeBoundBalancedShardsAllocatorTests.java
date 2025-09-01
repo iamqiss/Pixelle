@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation.allocator;
+package org.density.cluster.routing.allocation.allocator;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.RoutingAllocation;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.cluster.routing.allocation.decider.SameShardAllocationDecider;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.threadpool.TestThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.RoutingAllocation;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.cluster.routing.allocation.decider.SameShardAllocationDecider;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.ClusterServiceUtils;
+import org.density.threadpool.TestThreadPool;
 import org.junit.After;
 
 import java.util.Arrays;
@@ -43,12 +43,12 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
-import static org.opensearch.cluster.routing.ShardRoutingState.STARTED;
-import static org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator.ALLOCATOR_TIMEOUT_SETTING;
-import static org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator.FOLLOW_UP_REROUTE_PRIORITY_SETTING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.STARTED;
+import static org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator.ALLOCATOR_TIMEOUT_SETTING;
+import static org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator.FOLLOW_UP_REROUTE_PRIORITY_SETTING;
 
-public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationTestCase {
+public class TimeBoundBalancedShardsAllocatorTests extends DensityAllocationTestCase {
 
     private TestThreadPool threadPool;
     private ClusterService clusterService;
@@ -104,7 +104,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -146,7 +146,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -189,7 +189,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -232,7 +232,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -276,7 +276,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -323,7 +323,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -365,7 +365,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -410,7 +410,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -455,7 +455,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -501,7 +501,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -561,7 +561,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
         AtomicBoolean rerouteScheduled = new AtomicBoolean(false);
         final RerouteService rerouteService = (reason, priority, listener) -> {
             if (randomBoolean()) {
-                listener.onFailure(new OpenSearchException("simulated"));
+                listener.onFailure(new DensityException("simulated"));
             } else {
                 listener.onResponse(clusterService.state());
             }
@@ -628,7 +628,7 @@ public class TimeBoundBalancedShardsAllocatorTests extends OpenSearchAllocationT
             IllegalArgumentException.class,
             () -> FOLLOW_UP_REROUTE_PRIORITY_SETTING.get(wrongPriority2)
         );
-        assertEquals("No enum constant org.opensearch.common.Priority.RANDOM", iae2.getMessage());
+        assertEquals("No enum constant org.density.common.Priority.RANDOM", iae2.getMessage());
     }
 
     private RoutingTable buildRoutingTable(Metadata metadata) {

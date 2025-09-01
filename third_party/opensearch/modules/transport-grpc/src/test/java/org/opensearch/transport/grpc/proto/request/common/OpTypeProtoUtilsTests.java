@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.common;
+package org.density.transport.grpc.proto.request.common;
 
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.protobufs.OpType;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.protobufs.OpType;
+import org.density.test.DensityTestCase;
 
-public class OpTypeProtoUtilsTests extends OpenSearchTestCase {
+public class OpTypeProtoUtilsTests extends DensityTestCase {
 
     public void testFromProtoWithOpTypeCreate() {
         // Test conversion from OpType.OP_TYPE_CREATE to DocWriteRequest.OpType.CREATE

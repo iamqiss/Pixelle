@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.cli;
+package org.density.common.cli;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import joptsimple.util.KeyValuePair;
-import org.opensearch.cli.Command;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.node.InternalSettingsPreparer;
+import org.density.cli.Command;
+import org.density.cli.ExitCodes;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.node.InternalSettingsPreparer;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,9 +51,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * A cli command which requires an {@link org.opensearch.env.Environment} to use current paths and settings.
+ * A cli command which requires an {@link org.density.env.Environment} to use current paths and settings.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class EnvironmentAwareCommand extends Command {
 
@@ -62,7 +62,7 @@ public abstract class EnvironmentAwareCommand extends Command {
     private final OptionSpec<KeyValuePair> settingOption;
 
     /**
-     * Construct the command with the specified command description. This command will have logging configured without reading OpenSearch
+     * Construct the command with the specified command description. This command will have logging configured without reading Density
      * configuration files.
      *
      * @param description the command description
@@ -103,9 +103,9 @@ public abstract class EnvironmentAwareCommand extends Command {
             settings.put(kvp.key, kvp.value);
         }
 
-        putSystemPropertyIfSettingIsMissing(settings, "path.data", "opensearch.path.data");
-        putSystemPropertyIfSettingIsMissing(settings, "path.home", "opensearch.path.home");
-        putSystemPropertyIfSettingIsMissing(settings, "path.logs", "opensearch.path.logs");
+        putSystemPropertyIfSettingIsMissing(settings, "path.data", "density.path.data");
+        putSystemPropertyIfSettingIsMissing(settings, "path.home", "density.path.home");
+        putSystemPropertyIfSettingIsMissing(settings, "path.logs", "density.path.logs");
 
         execute(terminal, options, createEnv(settings));
     }
@@ -117,15 +117,15 @@ public abstract class EnvironmentAwareCommand extends Command {
 
     /** Create an {@link Environment} for the command to use. Overrideable for tests. */
     protected final Environment createEnv(final Settings baseSettings, final Map<String, String> settings) throws UserException {
-        final String esPathConf = System.getProperty("opensearch.path.conf");
+        final String esPathConf = System.getProperty("density.path.conf");
         if (esPathConf == null) {
-            throw new UserException(ExitCodes.CONFIG, "the system property [opensearch.path.conf] must be set");
+            throw new UserException(ExitCodes.CONFIG, "the system property [density.path.conf] must be set");
         }
         return InternalSettingsPreparer.prepareEnvironment(
             baseSettings,
             settings,
             getConfigPath(esPathConf),
-            // HOSTNAME is set by opensearch-env and opensearch-env.bat so it is always available
+            // HOSTNAME is set by density-env and density-env.bat so it is always available
             () -> System.getenv("HOSTNAME")
         );
     }

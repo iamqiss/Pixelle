@@ -3,9 +3,9 @@
 setlocal enabledelayedexpansion
 setlocal enableextensions
 
-set OPENSEARCH_MAIN_CLASS=org.opensearch.tools.cli.keystore.KeyStoreCli
-set OPENSEARCH_ADDITIONAL_CLASSPATH_DIRECTORIES=lib/tools/keystore-cli
-call "%~dp0opensearch-cli.bat" ^
+set DENSITY_MAIN_CLASS=org.density.tools.cli.keystore.KeyStoreCli
+set DENSITY_ADDITIONAL_CLASSPATH_DIRECTORIES=lib/tools/keystore-cli
+call "%~dp0density-cli.bat" ^
   %%* ^
   || goto exit
 

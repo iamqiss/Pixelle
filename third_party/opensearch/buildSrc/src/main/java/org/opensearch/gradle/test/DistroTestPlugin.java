@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.test;
+package org.density.gradle.test;
 
-import org.opensearch.gradle.Architecture;
-import org.opensearch.gradle.DistributionDownloadPlugin;
-import org.opensearch.gradle.JavaPackageType;
-import org.opensearch.gradle.Jdk;
-import org.opensearch.gradle.JdkDownloadPlugin;
-import org.opensearch.gradle.OpenSearchDistribution;
-import org.opensearch.gradle.SystemPropertyCommandLineArgumentProvider;
-import org.opensearch.gradle.Version;
-import org.opensearch.gradle.VersionProperties;
-import org.opensearch.gradle.docker.DockerSupportPlugin;
-import org.opensearch.gradle.docker.DockerSupportService;
-import org.opensearch.gradle.info.BuildParams;
-import org.opensearch.gradle.internal.InternalDistributionDownloadPlugin;
-import org.opensearch.gradle.util.GradleUtils;
-import org.opensearch.gradle.util.Util;
-import org.opensearch.gradle.vagrant.VagrantBasePlugin;
-import org.opensearch.gradle.vagrant.VagrantExtension;
-import org.opensearch.gradle.vagrant.VagrantMachine;
+import org.density.gradle.Architecture;
+import org.density.gradle.DistributionDownloadPlugin;
+import org.density.gradle.JavaPackageType;
+import org.density.gradle.Jdk;
+import org.density.gradle.JdkDownloadPlugin;
+import org.density.gradle.DensityDistribution;
+import org.density.gradle.SystemPropertyCommandLineArgumentProvider;
+import org.density.gradle.Version;
+import org.density.gradle.VersionProperties;
+import org.density.gradle.docker.DockerSupportPlugin;
+import org.density.gradle.docker.DockerSupportService;
+import org.density.gradle.info.BuildParams;
+import org.density.gradle.internal.InternalDistributionDownloadPlugin;
+import org.density.gradle.util.GradleUtils;
+import org.density.gradle.util.Util;
+import org.density.gradle.vagrant.VagrantBasePlugin;
+import org.density.gradle.vagrant.VagrantExtension;
+import org.density.gradle.vagrant.VagrantMachine;
 import org.gradle.api.Action;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
@@ -94,7 +94,7 @@ public class DistroTestPlugin implements Plugin<Project> {
         project.getRootProject().getPluginManager().apply(DockerSupportPlugin.class);
         project.getPlugins().apply(InternalDistributionDownloadPlugin.class);
         project.getPlugins().apply(JdkDownloadPlugin.class);
-        project.getPluginManager().apply("opensearch.build");
+        project.getPluginManager().apply("density.build");
 
         Provider<DockerSupportService> dockerSupport = GradleUtils.getBuildService(
             project.getGradle().getSharedServices(),
@@ -103,20 +103,20 @@ public class DistroTestPlugin implements Plugin<Project> {
 
         // TODO: it would be useful to also have the SYSTEM_JAVA_HOME setup in the root project, so that running from GCP only needs
         // a java for gradle to run, and the tests are self sufficient and consistent with the java they use
-        NamedDomainObjectContainer<OpenSearchDistribution> allDistributions = DistributionDownloadPlugin.getContainer(project);
-        List<OpenSearchDistribution> testDistributions = configureDistributions(project);
+        NamedDomainObjectContainer<DensityDistribution> allDistributions = DistributionDownloadPlugin.getContainer(project);
+        List<DensityDistribution> testDistributions = configureDistributions(project);
 
-        Map<OpenSearchDistribution.Type, TaskProvider<?>> lifecycleTasks = lifecycleTasks(project, "destructiveDistroTest");
+        Map<DensityDistribution.Type, TaskProvider<?>> lifecycleTasks = lifecycleTasks(project, "destructiveDistroTest");
         Map<String, TaskProvider<?>> versionTasks = versionTasks(project, "destructiveDistroUpgradeTest");
         TaskProvider<Task> destructiveDistroTest = project.getTasks().register("destructiveDistroTest");
 
         Configuration examplePlugin = configureExamplePlugin(project);
 
         List<TaskProvider<Test>> windowsTestTasks = new ArrayList<>();
-        Map<OpenSearchDistribution.Type, List<TaskProvider<Test>>> linuxTestTasks = new HashMap<>();
+        Map<DensityDistribution.Type, List<TaskProvider<Test>>> linuxTestTasks = new HashMap<>();
         Map<String, List<TaskProvider<Test>>> upgradeTestTasks = new HashMap<>();
         Map<String, TaskProvider<?>> depsTasks = new HashMap<>();
-        for (OpenSearchDistribution distribution : testDistributions) {
+        for (DensityDistribution distribution : testDistributions) {
             String taskname = destructiveDistroTestTaskName(distribution);
             TaskProvider<?> depsTask = project.getTasks().register(taskname + "#deps");
             depsTask.configure(t -> t.dependsOn(distribution, examplePlugin));
@@ -129,7 +129,7 @@ public class DistroTestPlugin implements Plugin<Project> {
                     addSysprop(t, EXAMPLE_PLUGIN_SYSPROP, () -> examplePlugin.getSingleFile().toString());
                     t.exclude("**/PackageUpgradeTests.class");
                 }, depsTask);
-                if (distribution.getPlatform() == OpenSearchDistribution.Platform.WINDOWS) {
+                if (distribution.getPlatform() == DensityDistribution.Platform.WINDOWS) {
                     windowsTestTasks.add(destructiveTask);
                 } else {
                     linuxTestTasks.computeIfAbsent(distribution.getType(), k -> new ArrayList<>()).add(destructiveTask);
@@ -138,13 +138,13 @@ public class DistroTestPlugin implements Plugin<Project> {
                 lifecycleTasks.get(distribution.getType()).configure(t -> t.dependsOn(destructiveTask));
             }
 
-            if ((distribution.getType() == OpenSearchDistribution.Type.DEB || distribution.getType() == OpenSearchDistribution.Type.RPM)
+            if ((distribution.getType() == DensityDistribution.Type.DEB || distribution.getType() == DensityDistribution.Type.RPM)
                 && distribution.getBundledJdk() != JavaPackageType.NONE) {
                 for (Version version : BuildParams.getBwcVersions().getIndexCompatible()) {
                     if (version.before("6.3.0")) {
                         continue; // before opening xpack
                     }
-                    final OpenSearchDistribution bwcDistro;
+                    final DensityDistribution bwcDistro;
                     if (version.equals(Version.fromString(distribution.getVersion()))) {
                         // this is the same as the distribution we are testing
                         bwcDistro = distribution;
@@ -191,18 +191,18 @@ public class DistroTestPlugin implements Plugin<Project> {
                 project.getConfigurations().getByName("testRuntimeClasspath")
             );
 
-            Map<OpenSearchDistribution.Type, TaskProvider<?>> vmLifecyleTasks = lifecycleTasks(vmProject, "distroTest");
+            Map<DensityDistribution.Type, TaskProvider<?>> vmLifecyleTasks = lifecycleTasks(vmProject, "distroTest");
             Map<String, TaskProvider<?>> vmVersionTasks = versionTasks(vmProject, "distroUpgradeTest");
             TaskProvider<Task> distroTest = vmProject.getTasks().register("distroTest");
 
             // windows boxes get windows distributions, and linux boxes get linux distributions
             if (isWindows(vmProject)) {
                 configureVMWrapperTasks(vmProject, windowsTestTasks, depsTasks, wrapperTask -> {
-                    vmLifecyleTasks.get(OpenSearchDistribution.Type.ARCHIVE).configure(t -> t.dependsOn(wrapperTask));
+                    vmLifecyleTasks.get(DensityDistribution.Type.ARCHIVE).configure(t -> t.dependsOn(wrapperTask));
                 }, vmDependencies);
             } else {
-                for (Entry<OpenSearchDistribution.Type, List<TaskProvider<Test>>> entry : linuxTestTasks.entrySet()) {
-                    OpenSearchDistribution.Type type = entry.getKey();
+                for (Entry<DensityDistribution.Type, List<TaskProvider<Test>>> entry : linuxTestTasks.entrySet()) {
+                    DensityDistribution.Type type = entry.getKey();
                     TaskProvider<?> vmLifecycleTask = vmLifecyleTasks.get(type);
                     configureVMWrapperTasks(vmProject, entry.getValue(), depsTasks, wrapperTask -> {
                         vmLifecycleTask.configure(t -> t.dependsOn(wrapperTask));
@@ -215,7 +215,7 @@ public class DistroTestPlugin implements Plugin<Project> {
                         // auto-detection doesn't work.
                         //
                         // The shouldTestDocker property could be null, hence we use Boolean.TRUE.equals()
-                        boolean shouldExecute = (type != OpenSearchDistribution.Type.DOCKER)
+                        boolean shouldExecute = (type != DensityDistribution.Type.DOCKER)
                             || Boolean.TRUE.equals(vmProject.findProperty("shouldTestDocker"));
 
                         if (shouldExecute) {
@@ -239,13 +239,13 @@ public class DistroTestPlugin implements Plugin<Project> {
         });
     }
 
-    private static Map<OpenSearchDistribution.Type, TaskProvider<?>> lifecycleTasks(Project project, String taskPrefix) {
-        Map<OpenSearchDistribution.Type, TaskProvider<?>> lifecyleTasks = new HashMap<>();
+    private static Map<DensityDistribution.Type, TaskProvider<?>> lifecycleTasks(Project project, String taskPrefix) {
+        Map<DensityDistribution.Type, TaskProvider<?>> lifecyleTasks = new HashMap<>();
 
-        lifecyleTasks.put(OpenSearchDistribution.Type.DOCKER, project.getTasks().register(taskPrefix + ".docker"));
-        lifecyleTasks.put(OpenSearchDistribution.Type.ARCHIVE, project.getTasks().register(taskPrefix + ".archives"));
-        lifecyleTasks.put(OpenSearchDistribution.Type.DEB, project.getTasks().register(taskPrefix + ".packages"));
-        lifecyleTasks.put(OpenSearchDistribution.Type.RPM, lifecyleTasks.get(OpenSearchDistribution.Type.DEB));
+        lifecyleTasks.put(DensityDistribution.Type.DOCKER, project.getTasks().register(taskPrefix + ".docker"));
+        lifecyleTasks.put(DensityDistribution.Type.ARCHIVE, project.getTasks().register(taskPrefix + ".archives"));
+        lifecyleTasks.put(DensityDistribution.Type.DEB, project.getTasks().register(taskPrefix + ".packages"));
+        lifecyleTasks.put(DensityDistribution.Type.RPM, lifecyleTasks.get(DensityDistribution.Type.DEB));
 
         return lifecyleTasks;
     }
@@ -354,7 +354,7 @@ public class DistroTestPlugin implements Plugin<Project> {
     private static TaskProvider<Test> configureTestTask(
         Project project,
         String taskname,
-        OpenSearchDistribution distribution,
+        DensityDistribution distribution,
         Action<? super Test> configure,
         Object... deps
     ) {
@@ -371,15 +371,15 @@ public class DistroTestPlugin implements Plugin<Project> {
         });
     }
 
-    private List<OpenSearchDistribution> configureDistributions(Project project) {
-        NamedDomainObjectContainer<OpenSearchDistribution> distributions = DistributionDownloadPlugin.getContainer(project);
-        List<OpenSearchDistribution> currentDistros = new ArrayList<>();
+    private List<DensityDistribution> configureDistributions(Project project) {
+        NamedDomainObjectContainer<DensityDistribution> distributions = DistributionDownloadPlugin.getContainer(project);
+        List<DensityDistribution> currentDistros = new ArrayList<>();
 
         for (Architecture architecture : Architecture.values()) {
-            for (OpenSearchDistribution.Type type : Arrays.asList(
-                OpenSearchDistribution.Type.DEB,
-                OpenSearchDistribution.Type.RPM,
-                OpenSearchDistribution.Type.DOCKER
+            for (DensityDistribution.Type type : Arrays.asList(
+                DensityDistribution.Type.DEB,
+                DensityDistribution.Type.RPM,
+                DensityDistribution.Type.DOCKER
             )) {
                 for (JavaPackageType bundledJdk : Set.of(JavaPackageType.NONE, JavaPackageType.JDK)) {
                     if (bundledJdk == JavaPackageType.NONE) {
@@ -388,22 +388,22 @@ public class DistroTestPlugin implements Plugin<Project> {
                             continue;
                         }
                         // All our Docker images include a bundled JDK so it doesn't make sense to test without one.
-                        if (type == OpenSearchDistribution.Type.DOCKER) {
+                        if (type == DensityDistribution.Type.DOCKER) {
                             continue;
                         }
                     }
 
                     currentDistros.add(
-                        createDistro(distributions, architecture, type, null, bundledJdk, VersionProperties.getOpenSearch())
+                        createDistro(distributions, architecture, type, null, bundledJdk, VersionProperties.getDensity())
                     );
                 }
             }
         }
 
         for (Architecture architecture : Architecture.values()) {
-            for (OpenSearchDistribution.Platform platform : Arrays.asList(
-                OpenSearchDistribution.Platform.LINUX,
-                OpenSearchDistribution.Platform.WINDOWS
+            for (DensityDistribution.Platform platform : Arrays.asList(
+                DensityDistribution.Platform.LINUX,
+                DensityDistribution.Platform.WINDOWS
             )) {
                 for (JavaPackageType bundledJdk : Set.of(JavaPackageType.NONE, JavaPackageType.JDK)) {
                     if (bundledJdk == JavaPackageType.NONE && architecture != Architecture.X64) {
@@ -416,10 +416,10 @@ public class DistroTestPlugin implements Plugin<Project> {
                         createDistro(
                             distributions,
                             architecture,
-                            OpenSearchDistribution.Type.ARCHIVE,
+                            DensityDistribution.Type.ARCHIVE,
                             platform,
                             bundledJdk,
-                            VersionProperties.getOpenSearch()
+                            VersionProperties.getDensity()
                         )
                     );
                 }
@@ -429,20 +429,20 @@ public class DistroTestPlugin implements Plugin<Project> {
         return currentDistros;
     }
 
-    private static OpenSearchDistribution createDistro(
-        NamedDomainObjectContainer<OpenSearchDistribution> distributions,
+    private static DensityDistribution createDistro(
+        NamedDomainObjectContainer<DensityDistribution> distributions,
         Architecture architecture,
-        OpenSearchDistribution.Type type,
-        OpenSearchDistribution.Platform platform,
+        DensityDistribution.Type type,
+        DensityDistribution.Platform platform,
         JavaPackageType bundledJdk,
         String version
     ) {
         String name = distroId(type, platform, bundledJdk, architecture) + "-" + version;
-        boolean isDocker = type == OpenSearchDistribution.Type.DOCKER;
-        OpenSearchDistribution distro = distributions.create(name, d -> {
+        boolean isDocker = type == DensityDistribution.Type.DOCKER;
+        DensityDistribution distro = distributions.create(name, d -> {
             d.setArchitecture(architecture);
             d.setType(type);
-            if (type == OpenSearchDistribution.Type.ARCHIVE) {
+            if (type == DensityDistribution.Type.ARCHIVE) {
                 d.setPlatform(platform);
             }
             if (isDocker == false) {
@@ -466,23 +466,23 @@ public class DistroTestPlugin implements Plugin<Project> {
     }
 
     private static String distroId(
-        OpenSearchDistribution.Type type,
-        OpenSearchDistribution.Platform platform,
+        DensityDistribution.Type type,
+        DensityDistribution.Platform platform,
         JavaPackageType bundledJdk,
         Architecture architecture
     ) {
-        return (type == OpenSearchDistribution.Type.ARCHIVE ? platform + "-" : "") + type + (bundledJdk != JavaPackageType.NONE
+        return (type == DensityDistribution.Type.ARCHIVE ? platform + "-" : "") + type + (bundledJdk != JavaPackageType.NONE
             ? (bundledJdk == JavaPackageType.JDK ? "" : "-jre")
             : "-no-jdk") + (architecture == Architecture.X64 ? "" : "-" + architecture.toString().toLowerCase());
     }
 
-    private static String destructiveDistroTestTaskName(OpenSearchDistribution distro) {
-        OpenSearchDistribution.Type type = distro.getType();
+    private static String destructiveDistroTestTaskName(DensityDistribution distro) {
+        DensityDistribution.Type type = distro.getType();
         return "destructiveDistroTest." + distroId(type, distro.getPlatform(), distro.getBundledJdk(), distro.getArchitecture());
     }
 
-    private static String destructiveDistroUpgradeTestTaskName(OpenSearchDistribution distro, String bwcVersion) {
-        OpenSearchDistribution.Type type = distro.getType();
+    private static String destructiveDistroUpgradeTestTaskName(DensityDistribution distro, String bwcVersion) {
+        DensityDistribution.Type type = distro.getType();
         return "destructiveDistroUpgradeTest.v"
             + bwcVersion
             + "."

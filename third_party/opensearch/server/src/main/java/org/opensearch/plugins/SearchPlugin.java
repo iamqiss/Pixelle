@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,60 +26,60 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ContextParser;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryParser;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilder;
-import org.opensearch.index.query.functionscore.ScoreFunctionParser;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.PipelineAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregation;
-import org.opensearch.search.aggregations.bucket.composite.CompositeAggregationParsingFunction;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.terms.SignificantTerms;
-import org.opensearch.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
-import org.opensearch.search.aggregations.pipeline.MovAvgModel;
-import org.opensearch.search.aggregations.pipeline.MovAvgPipelineAggregator;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.subphase.highlight.Highlighter;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.query.QueryCollectorContextSpecFactory;
-import org.opensearch.search.query.QueryPhaseSearcher;
-import org.opensearch.search.rescore.Rescorer;
-import org.opensearch.search.rescore.RescorerBuilder;
-import org.opensearch.search.sort.SortBuilder;
-import org.opensearch.search.sort.SortParser;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggester;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.CheckedFunction;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.common.settings.Settings;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ContextParser;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryParser;
+import org.density.index.query.functionscore.ScoreFunctionBuilder;
+import org.density.index.query.functionscore.ScoreFunctionParser;
+import org.density.search.SearchExtBuilder;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.PipelineAggregationBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeAggregation;
+import org.density.search.aggregations.bucket.composite.CompositeAggregationParsingFunction;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.search.aggregations.bucket.terms.SignificantTerms;
+import org.density.search.aggregations.bucket.terms.heuristic.SignificanceHeuristic;
+import org.density.search.aggregations.pipeline.MovAvgModel;
+import org.density.search.aggregations.pipeline.MovAvgPipelineAggregator;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.subphase.highlight.Highlighter;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.query.QueryCollectorContextSpecFactory;
+import org.density.search.query.QueryPhaseSearcher;
+import org.density.search.rescore.Rescorer;
+import org.density.search.rescore.RescorerBuilder;
+import org.density.search.sort.SortBuilder;
+import org.density.search.sort.SortParser;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggester;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -98,7 +98,7 @@ import static java.util.Collections.emptyMap;
 /**
  * Plugin for extending search time behavior.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface SearchPlugin {
 
@@ -566,7 +566,7 @@ public interface SearchPlugin {
         }
 
         /**
-         * Get the function to register the {@link org.opensearch.search.aggregations.support.ValuesSource} to aggregator mappings for
+         * Get the function to register the {@link org.density.search.aggregations.support.ValuesSource} to aggregator mappings for
          * this aggregation
          */
         public Consumer<ValuesSourceRegistry.Builder> getAggregatorRegistrar() {
@@ -574,7 +574,7 @@ public interface SearchPlugin {
         }
 
         /**
-         * Set the function to register the {@link org.opensearch.search.aggregations.support.ValuesSource} to aggregator mappings for
+         * Set the function to register the {@link org.density.search.aggregations.support.ValuesSource} to aggregator mappings for
          * this aggregation
          */
         public AggregationSpec setAggregatorRegistrar(Consumer<ValuesSourceRegistry.Builder> aggregatorRegistrar) {
@@ -602,7 +602,7 @@ public interface SearchPlugin {
          * Specification for registering an aggregation in Composite Aggregation
          *
          * @param aggregatorRegistrar function to register the
-         * {@link org.opensearch.search.aggregations.support.ValuesSource} to aggregator mappings for Composite
+         * {@link org.density.search.aggregations.support.ValuesSource} to aggregator mappings for Composite
          *                            aggregation
          * @param valueSourceBuilderClass ValueSourceBuilder class name which is building the aggregation
          * @param byteCode byte code which is used in serialisation and de-serialisation to indentify which

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.common.Priority;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.common.util.concurrent.PrioritizedRunnable;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Priority;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.common.util.concurrent.PrioritizedRunnable;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MockSinglePrioritizingExecutorTests extends OpenSearchTestCase {
+public class MockSinglePrioritizingExecutorTests extends DensityTestCase {
 
     public void testPrioritizedEsThreadPoolExecutor() {
         final DeterministicTaskQueue taskQueue = DeterministicTaskQueueTests.newTaskQueue();
-        final PrioritizedOpenSearchThreadPoolExecutor executor = new MockSinglePrioritizingExecutor(
+        final PrioritizedDensityThreadPoolExecutor executor = new MockSinglePrioritizingExecutor(
             "test",
             taskQueue,
             taskQueue.getThreadPool()

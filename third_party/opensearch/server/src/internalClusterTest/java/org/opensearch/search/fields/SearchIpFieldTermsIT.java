@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.fields;
+package org.density.search.fields;
 
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.action.bulk.BulkRequestBuilder;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.bulk.BulkRequestBuilder;
+import org.density.action.search.SearchResponse;
+import org.density.common.network.InetAddresses;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.test.DensitySingleNodeTestCase;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
@@ -31,10 +31,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SearchIpFieldTermsIT extends OpenSearchSingleNodeTestCase {
+public class SearchIpFieldTermsIT extends DensitySingleNodeTestCase {
 
     /**
      * @return number of expected matches

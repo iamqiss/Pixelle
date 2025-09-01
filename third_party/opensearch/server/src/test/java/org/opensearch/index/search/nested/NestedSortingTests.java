@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.nested;
+package org.density.index.search.nested;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -57,29 +57,29 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.join.ToParentBlockJoinQuery;
 import org.apache.lucene.tests.util.TestUtil;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.fielddata.AbstractFieldDataTestCase;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.NoOrdinalsStringFieldDataTests;
-import org.opensearch.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
-import org.opensearch.index.fielddata.plain.PagedBytesIndexFieldData;
-import org.opensearch.index.mapper.NestedPathFieldMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.NestedSortBuilder;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.fielddata.AbstractFieldDataTestCase;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.NoOrdinalsStringFieldDataTests;
+import org.density.index.fielddata.fieldcomparator.BytesRefFieldComparatorSource;
+import org.density.index.fielddata.plain.PagedBytesIndexFieldData;
+import org.density.index.mapper.NestedPathFieldMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.MultiValueMode;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.NestedSortBuilder;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.opensearch.index.mapper.SeqNoFieldMapper.PRIMARY_TERM_NAME;
+import static org.density.index.mapper.SeqNoFieldMapper.PRIMARY_TERM_NAME;
 import static org.hamcrest.Matchers.equalTo;
 
 public class NestedSortingTests extends AbstractFieldDataTestCase {
@@ -122,7 +122,7 @@ public class NestedSortingTests extends AbstractFieldDataTestCase {
 
         MultiValueMode sortMode = randomFrom(Arrays.asList(MultiValueMode.MIN, MultiValueMode.MAX));
         DirectoryReader reader = DirectoryReader.open(writer);
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
         IndexSearcher searcher = new IndexSearcher(reader);
         PagedBytesIndexFieldData indexFieldData1 = getForField("f");
         IndexFieldData<?> indexFieldData2 = NoOrdinalsStringFieldDataTests.hideOrdinals(indexFieldData1);
@@ -314,7 +314,7 @@ public class NestedSortingTests extends AbstractFieldDataTestCase {
 
         MultiValueMode sortMode = MultiValueMode.MIN;
         DirectoryReader reader = DirectoryReader.open(writer);
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
         IndexSearcher searcher = new IndexSearcher(reader);
         PagedBytesIndexFieldData indexFieldData = getForField("field2");
         Query parentFilter = new TermQuery(new Term(NestedPathFieldMapper.NAME, "parent"));
@@ -635,7 +635,7 @@ public class NestedSortingTests extends AbstractFieldDataTestCase {
             }
         }
         DirectoryReader reader = DirectoryReader.open(writer);
-        reader = OpenSearchDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
+        reader = DensityDirectoryReader.wrap(reader, new ShardId(indexService.index(), 0));
         IndexSearcher searcher = new IndexSearcher(reader);
         QueryShardContext queryShardContext = indexService.newQueryShardContext(0, searcher, () -> 0L, null);
 

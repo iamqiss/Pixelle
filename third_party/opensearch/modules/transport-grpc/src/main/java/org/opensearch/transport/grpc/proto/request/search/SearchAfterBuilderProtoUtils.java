@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.GeneralNumber;
-import org.opensearch.search.searchafter.SearchAfterBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.GeneralNumber;
+import org.density.search.searchafter.SearchAfterBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility class for converting SearchAfterBuilder Protocol Buffers to OpenSearch objects.
+ * Utility class for converting SearchAfterBuilder Protocol Buffers to Density objects.
  * This class provides methods to transform Protocol Buffer representations of search_after
- * values into their corresponding OpenSearch object arrays for pagination in search operations.
+ * values into their corresponding Density object arrays for pagination in search operations.
  */
 public class SearchAfterBuilderProtoUtils {
 

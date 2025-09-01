@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,18 +26,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import groovy.transform.CompileStatic
-import org.opensearch.gradle.BuildPlugin
-import org.opensearch.gradle.testclusters.TestClustersPlugin
+import org.density.gradle.BuildPlugin
+import org.density.gradle.testclusters.TestClustersPlugin
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaBasePlugin
 
 /**
- * Adds support for starting an OpenSearch cluster before running integration
+ * Adds support for starting an Density cluster before running integration
  * tests. Used in conjunction with {@link StandaloneRestTestPlugin} for qa
  * projects and in conjunction with {@link BuildPlugin} for testing the rest
  * client.
@@ -45,20 +45,20 @@ import org.gradle.api.plugins.JavaBasePlugin
 @CompileStatic
 class RestTestPlugin implements Plugin<Project> {
     List<String> REQUIRED_PLUGINS = [
-        'opensearch.build',
-        'opensearch.standalone-rest-test']
+        'density.build',
+        'density.standalone-rest-test']
 
     @Override
     void apply(Project project) {
         if (false == REQUIRED_PLUGINS.any { project.pluginManager.hasPlugin(it) }) {
-            throw new InvalidUserDataException('opensearch.rest-test '
-                + 'requires either opensearch.build or '
-                + 'opensearch.standalone-rest-test')
+            throw new InvalidUserDataException('density.rest-test '
+                + 'requires either density.build or '
+                + 'density.standalone-rest-test')
         }
         project.getPlugins().apply(RestTestBasePlugin.class);
         project.pluginManager.apply(TestClustersPlugin)
         RestIntegTestTask integTest = project.tasks.create('integTest', RestIntegTestTask.class)
-        integTest.description = 'Runs rest tests against an opensearch cluster.'
+        integTest.description = 'Runs rest tests against an density cluster.'
         integTest.group = JavaBasePlugin.VERIFICATION_GROUP
         integTest.mustRunAfter(project.tasks.named('precommit'))
         project.tasks.named('check').configure { it.dependsOn(integTest) }

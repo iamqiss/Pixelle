@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.LeafReaderContext;
@@ -14,12 +14,12 @@ import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregator;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.profile.query.CollectorResult;
-import org.opensearch.search.query.ReduceableSearchResult;
-import org.opensearch.test.TestSearchContext;
+import org.density.index.engine.Engine;
+import org.density.search.aggregations.bucket.global.GlobalAggregator;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.profile.query.CollectorResult;
+import org.density.search.query.ReduceableSearchResult;
+import org.density.test.TestSearchContext;
 
 import java.util.ArrayList;
 import java.util.Collection;

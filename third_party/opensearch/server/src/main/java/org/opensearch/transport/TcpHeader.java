@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.Version;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
 /**
  * Header for TCP messages
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TcpHeader {
 

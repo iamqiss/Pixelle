@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.size;
+package org.density.index.mapper.size;
 
-import org.opensearch.common.Explicit;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MetadataFieldMapper;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper.NumberType;
-import org.opensearch.index.mapper.ParametrizedFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
+import org.density.common.Explicit;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MetadataFieldMapper;
+import org.density.index.mapper.NumberFieldMapper.NumberFieldType;
+import org.density.index.mapper.NumberFieldMapper.NumberType;
+import org.density.index.mapper.ParametrizedFieldMapper;
+import org.density.index.mapper.ParseContext;
 
 import java.io.IOException;
 import java.util.Collections;

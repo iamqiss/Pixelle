@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
 /**
- * Marker interface that needs to be implemented by all {@link org.opensearch.action.ActionRequest} subclasses that are composed of
+ * Marker interface that needs to be implemented by all {@link org.density.action.ActionRequest} subclasses that are composed of
  * multiple sub-requests which relate to one or more indices.  A composite request is executed by its own transport action class
- * (e.g. {@link org.opensearch.action.search.TransportMultiSearchAction}), which goes through all sub-requests and delegates their
- * execution to the appropriate transport action (e.g. {@link org.opensearch.action.search.TransportSearchAction}) for each single item.
+ * (e.g. {@link org.density.action.search.TransportMultiSearchAction}), which goes through all sub-requests and delegates their
+ * execution to the appropriate transport action (e.g. {@link org.density.action.search.TransportSearchAction}) for each single item.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface CompositeIndicesRequest {}

@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -35,25 +35,25 @@ import com.avast.gradle.dockercompose.tasks.ComposePull
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import de.thetaphi.forbiddenapis.gradle.ForbiddenApisPlugin
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.opensearch.gradle.BuildPlugin
-import org.opensearch.gradle.Version
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.plugin.PluginBuildPlugin
-import org.opensearch.gradle.tar.SymbolicLinkPreservingTar
+import org.density.gradle.BuildPlugin
+import org.density.gradle.Version
+import org.density.gradle.VersionProperties
+import org.density.gradle.info.BuildParams
+import org.density.gradle.plugin.PluginBuildPlugin
+import org.density.gradle.tar.SymbolicLinkPreservingTar
 import org.gradle.plugins.ide.eclipse.model.AccessRule
 import org.gradle.plugins.ide.eclipse.model.EclipseJdt
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 import org.gradle.api.Project;
 import org.gradle.process.ExecResult;
-import org.opensearch.gradle.CheckCompatibilityTask
+import org.density.gradle.CheckCompatibilityTask
 
-import static org.opensearch.gradle.util.GradleUtils.maybeConfigure
+import static org.density.gradle.util.GradleUtils.maybeConfigure
 
 plugins {
   id 'lifecycle-base'
-  id 'opensearch.docker-support'
-  id 'opensearch.global-build-info'
+  id 'density.docker-support'
+  id 'density.global-build-info'
   id "com.diffplug.spotless" version "6.25.0" apply false
   id "org.gradle.test-retry" version "1.6.2" apply false
   id "test-report-aggregation"
@@ -72,14 +72,14 @@ apply from: 'gradle/code-coverage.gradle'
 
 // common maven publishing configuration
 allprojects {
-  group = 'org.opensearch'
-  version = VersionProperties.getOpenSearch()
-  description = "OpenSearch subproject ${project.path}"
+  group = 'org.density'
+  version = VersionProperties.getDensity()
+  description = "Density subproject ${project.path}"
 }
 
 configure(allprojects - project(':distribution:archives:integ-test-zip')) {
   project.pluginManager.withPlugin('nebula.maven-base-publish') {
-    if (project.pluginManager.hasPlugin('opensearch.build') == false) {
+    if (project.pluginManager.hasPlugin('density.build') == false) {
       throw new GradleException("Project ${path} publishes a pom but doesn't apply the build plugin.")
     }
   }
@@ -106,8 +106,8 @@ subprojects {
             license.appendNode('distribution', 'repo')
 
             Node developer = node.appendNode('developers').appendNode('developer')
-            developer.appendNode('name', 'OpenSearch')
-            developer.appendNode('url', 'https://github.com/opensearch-project/OpenSearch')
+            developer.appendNode('name', 'Density')
+            developer.appendNode('url', 'https://github.com/density-project/Density')
           }
         }
       }
@@ -206,7 +206,7 @@ tasks.register("verifyVersions") {
     // Read the list from maven central.
     // Fetch the metadata and parse the xml into Version instances because it's more straight forward here
     // rather than bwcVersion ( VersionCollection ).
-    new URL('https://repo1.maven.org/maven2/org/opensearch/opensearch/maven-metadata.xml').openStream().withStream { s ->
+    new URL('https://repo1.maven.org/maven2/org/density/density/maven-metadata.xml').openStream().withStream { s ->
       BuildParams.bwcVersions.compareToAuthoritative(
         new XmlParser().parse(s)
           .versioning.versions.version
@@ -313,7 +313,7 @@ allprojects {
     if (failOnJavadocWarning) {
       javadoc.options.addStringOption('Xwerror', '-quiet')
     }
-    javadoc.options.tags = ["opensearch.internal", "opensearch.api", "opensearch.experimental"]
+    javadoc.options.tags = ["density.internal", "density.api", "density.experimental"]
     javadoc.options.addStringOption("-release", java.targetCompatibility.majorVersion)
   }
 
@@ -331,13 +331,13 @@ allprojects {
 
   project.afterEvaluate {
     // Handle javadoc dependencies across projects. Order matters: the linksOffline for
-    // org.opensearch:opensearch must be the last one or all the links for the
-    // other packages (e.g org.opensearch.client) will point to server rather than
+    // org.density:density must be the last one or all the links for the
+    // other packages (e.g org.density.client) will point to server rather than
     // their own artifacts.
     if (project.plugins.hasPlugin(BuildPlugin) || project.plugins.hasPlugin(PluginBuildPlugin)) {
-      String artifactsHost = VersionProperties.getOpenSearch().endsWith("-SNAPSHOT")
-        ? "https://artifacts.opensearch.org/snapshots/"
-        : "https://artifacts.opensearch.org/releases/"
+      String artifactsHost = VersionProperties.getDensity().endsWith("-SNAPSHOT")
+        ? "https://artifacts.density.org/snapshots/"
+        : "https://artifacts.density.org/releases/"
       Closure sortClosure = { a, b -> b.group <=> a.group }
       Closure depJavadocClosure = { shadowed, dep ->
         if ((dep instanceof ProjectDependency) == false) {
@@ -465,79 +465,79 @@ subprojects {
       }
       failOnPassedAfterRetry = false
       filter {
-        includeClasses.add("org.opensearch.action.admin.cluster.node.tasks.ResourceAwareTasksTests")
-        includeClasses.add("org.opensearch.action.admin.cluster.tasks.PendingTasksBlocksIT")
-        includeClasses.add("org.opensearch.action.admin.indices.create.CreateIndexIT")
-        includeClasses.add("org.opensearch.action.admin.indices.create.ShrinkIndexIT")
-        includeClasses.add("org.opensearch.aliases.IndexAliasesIT")
-        includeClasses.add("org.opensearch.backwards.MixedClusterClientYamlTestSuiteIT")
-        includeClasses.add("org.opensearch.blocks.SimpleBlocksIT")
-        includeClasses.add("org.opensearch.client.PitIT")
-        includeClasses.add("org.opensearch.client.ReindexIT")
-        includeClasses.add("org.opensearch.cluster.ClusterHealthIT")
-        includeClasses.add("org.opensearch.cluster.allocation.AwarenessAllocationIT")
-        includeClasses.add("org.opensearch.cluster.allocation.ClusterRerouteIT")
-        includeClasses.add("org.opensearch.cluster.coordination.AwarenessAttributeDecommissionIT")
-        includeClasses.add("org.opensearch.cluster.metadata.IndexGraveyardTests")
-        includeClasses.add("org.opensearch.cluster.routing.MovePrimaryFirstTests")
-        includeClasses.add("org.opensearch.cluster.routing.allocation.decider.DiskThresholdDeciderIT")
-        includeClasses.add("org.opensearch.common.util.concurrent.QueueResizableOpenSearchThreadPoolExecutorTests")
-        includeClasses.add("org.opensearch.gateway.RecoveryFromGatewayIT")
-        includeClasses.add("org.opensearch.gateway.ReplicaShardAllocatorIT")
-        includeClasses.add("org.opensearch.http.SearchRestCancellationIT")
-        includeClasses.add("org.opensearch.http.netty4.Netty4HttpServerTransportTests")
-        includeClasses.add("org.opensearch.index.IndexServiceTests")
-        includeClasses.add("org.opensearch.index.IndexSettingsTests")
-        includeClasses.add("org.opensearch.index.SegmentReplicationPressureIT")
-        includeClasses.add("org.opensearch.index.ShardIndexingPressureIT")
-        includeClasses.add("org.opensearch.index.ShardIndexingPressureSettingsIT")
-        includeClasses.add("org.opensearch.index.reindex.BulkByScrollResponseTests")
-        includeClasses.add("org.opensearch.index.reindex.DeleteByQueryBasicTests")
-        includeClasses.add("org.opensearch.index.reindex.UpdateByQueryBasicTests")
-        includeClasses.add("org.opensearch.index.shard.IndexShardIT")
-        includeClasses.add("org.opensearch.index.shard.RemoteIndexShardTests")
-        includeClasses.add("org.opensearch.index.shard.RemoteStoreRefreshListenerTests")
-        includeClasses.add("org.opensearch.index.translog.RemoteFSTranslogTests")
-        includeClasses.add("org.opensearch.indices.DateMathIndexExpressionsIntegrationIT")
-        includeClasses.add("org.opensearch.indices.replication.RemoteStoreReplicationSourceTests")
-        includeClasses.add("org.opensearch.indices.replication.SegmentReplicationAllocationIT")
-        includeClasses.add("org.opensearch.indices.replication.SegmentReplicationIT")
-        includeClasses.add("org.opensearch.indices.replication.SegmentReplicationRelocationIT")
-        includeClasses.add("org.opensearch.indices.replication.SegmentReplicationTargetServiceTests")
-        includeClasses.add("org.opensearch.indices.state.CloseWhileRelocatingShardsIT")
-        includeClasses.add("org.opensearch.monitor.fs.FsHealthServiceTests")
-        includeClasses.add("org.opensearch.recovery.ReplicationCollectionTests")
-        includeClasses.add("org.opensearch.remotestore.CreateRemoteIndexClusterDefaultDocRep")
-        includeClasses.add("org.opensearch.remotestore.CreateRemoteIndexIT")
-        includeClasses.add("org.opensearch.remotestore.CreateRemoteIndexTranslogDisabledIT")
-        includeClasses.add("org.opensearch.remotestore.RemoteStoreBackpressureIT")
-        includeClasses.add("org.opensearch.remotestore.RemoteStoreIT")
-        includeClasses.add("org.opensearch.remotestore.RemoteStoreRefreshListenerIT")
-        includeClasses.add("org.opensearch.remotestore.RemoteStoreStatsIT")
-        includeClasses.add("org.opensearch.remotestore.SegmentReplicationRemoteStoreIT")
-        includeClasses.add("org.opensearch.remotestore.SegmentReplicationUsingRemoteStoreIT")
-        includeClasses.add("org.opensearch.remotestore.multipart.RemoteStoreMultipartIT")
-        includeClasses.add("org.opensearch.repositories.azure.AzureBlobContainerRetriesTests")
-        includeClasses.add("org.opensearch.repositories.azure.AzureBlobStoreRepositoryTests")
-        includeClasses.add("org.opensearch.repositories.gcs.GoogleCloudStorageBlobContainerRetriesTests")
-        includeClasses.add("org.opensearch.repositories.gcs.GoogleCloudStorageBlobStoreRepositoryTests")
-        includeClasses.add("org.opensearch.repositories.s3.S3BlobStoreRepositoryTests")
-        includeClasses.add("org.opensearch.search.ConcurrentSegmentSearchTimeoutIT")
-        includeClasses.add("org.opensearch.search.SearchTimeoutIT")
-        includeClasses.add("org.opensearch.search.SearchWeightedRoutingIT")
-        includeClasses.add("org.opensearch.search.aggregations.bucket.DoubleTermsIT")
-        includeClasses.add("org.opensearch.search.aggregations.bucket.terms.StringTermsIT")
-        includeClasses.add("org.opensearch.search.aggregations.metrics.CardinalityIT")
-        includeClasses.add("org.opensearch.search.backpressure.SearchBackpressureIT")
-        includeClasses.add("org.opensearch.search.basic.SearchWithRandomIOExceptionsIT")
-        includeClasses.add("org.opensearch.search.pit.DeletePitMultiNodeIT")
-        includeClasses.add("org.opensearch.smoketest.SmokeTestMultiNodeClientYamlTestSuiteIT")
-        includeClasses.add("org.opensearch.snapshots.CloneSnapshotIT")
-        includeClasses.add("org.opensearch.snapshots.DedicatedClusterSnapshotRestoreIT")
-        includeClasses.add("org.opensearch.snapshots.RestoreSnapshotIT")
-        includeClasses.add("org.opensearch.snapshots.SnapshotStatusApisIT")
-        includeClasses.add("org.opensearch.test.rest.ClientYamlTestSuiteIT")
-        includeClasses.add("org.opensearch.upgrade.DetectEsInstallationTaskTests")
+        includeClasses.add("org.density.action.admin.cluster.node.tasks.ResourceAwareTasksTests")
+        includeClasses.add("org.density.action.admin.cluster.tasks.PendingTasksBlocksIT")
+        includeClasses.add("org.density.action.admin.indices.create.CreateIndexIT")
+        includeClasses.add("org.density.action.admin.indices.create.ShrinkIndexIT")
+        includeClasses.add("org.density.aliases.IndexAliasesIT")
+        includeClasses.add("org.density.backwards.MixedClusterClientYamlTestSuiteIT")
+        includeClasses.add("org.density.blocks.SimpleBlocksIT")
+        includeClasses.add("org.density.client.PitIT")
+        includeClasses.add("org.density.client.ReindexIT")
+        includeClasses.add("org.density.cluster.ClusterHealthIT")
+        includeClasses.add("org.density.cluster.allocation.AwarenessAllocationIT")
+        includeClasses.add("org.density.cluster.allocation.ClusterRerouteIT")
+        includeClasses.add("org.density.cluster.coordination.AwarenessAttributeDecommissionIT")
+        includeClasses.add("org.density.cluster.metadata.IndexGraveyardTests")
+        includeClasses.add("org.density.cluster.routing.MovePrimaryFirstTests")
+        includeClasses.add("org.density.cluster.routing.allocation.decider.DiskThresholdDeciderIT")
+        includeClasses.add("org.density.common.util.concurrent.QueueResizableDensityThreadPoolExecutorTests")
+        includeClasses.add("org.density.gateway.RecoveryFromGatewayIT")
+        includeClasses.add("org.density.gateway.ReplicaShardAllocatorIT")
+        includeClasses.add("org.density.http.SearchRestCancellationIT")
+        includeClasses.add("org.density.http.netty4.Netty4HttpServerTransportTests")
+        includeClasses.add("org.density.index.IndexServiceTests")
+        includeClasses.add("org.density.index.IndexSettingsTests")
+        includeClasses.add("org.density.index.SegmentReplicationPressureIT")
+        includeClasses.add("org.density.index.ShardIndexingPressureIT")
+        includeClasses.add("org.density.index.ShardIndexingPressureSettingsIT")
+        includeClasses.add("org.density.index.reindex.BulkByScrollResponseTests")
+        includeClasses.add("org.density.index.reindex.DeleteByQueryBasicTests")
+        includeClasses.add("org.density.index.reindex.UpdateByQueryBasicTests")
+        includeClasses.add("org.density.index.shard.IndexShardIT")
+        includeClasses.add("org.density.index.shard.RemoteIndexShardTests")
+        includeClasses.add("org.density.index.shard.RemoteStoreRefreshListenerTests")
+        includeClasses.add("org.density.index.translog.RemoteFSTranslogTests")
+        includeClasses.add("org.density.indices.DateMathIndexExpressionsIntegrationIT")
+        includeClasses.add("org.density.indices.replication.RemoteStoreReplicationSourceTests")
+        includeClasses.add("org.density.indices.replication.SegmentReplicationAllocationIT")
+        includeClasses.add("org.density.indices.replication.SegmentReplicationIT")
+        includeClasses.add("org.density.indices.replication.SegmentReplicationRelocationIT")
+        includeClasses.add("org.density.indices.replication.SegmentReplicationTargetServiceTests")
+        includeClasses.add("org.density.indices.state.CloseWhileRelocatingShardsIT")
+        includeClasses.add("org.density.monitor.fs.FsHealthServiceTests")
+        includeClasses.add("org.density.recovery.ReplicationCollectionTests")
+        includeClasses.add("org.density.remotestore.CreateRemoteIndexClusterDefaultDocRep")
+        includeClasses.add("org.density.remotestore.CreateRemoteIndexIT")
+        includeClasses.add("org.density.remotestore.CreateRemoteIndexTranslogDisabledIT")
+        includeClasses.add("org.density.remotestore.RemoteStoreBackpressureIT")
+        includeClasses.add("org.density.remotestore.RemoteStoreIT")
+        includeClasses.add("org.density.remotestore.RemoteStoreRefreshListenerIT")
+        includeClasses.add("org.density.remotestore.RemoteStoreStatsIT")
+        includeClasses.add("org.density.remotestore.SegmentReplicationRemoteStoreIT")
+        includeClasses.add("org.density.remotestore.SegmentReplicationUsingRemoteStoreIT")
+        includeClasses.add("org.density.remotestore.multipart.RemoteStoreMultipartIT")
+        includeClasses.add("org.density.repositories.azure.AzureBlobContainerRetriesTests")
+        includeClasses.add("org.density.repositories.azure.AzureBlobStoreRepositoryTests")
+        includeClasses.add("org.density.repositories.gcs.GoogleCloudStorageBlobContainerRetriesTests")
+        includeClasses.add("org.density.repositories.gcs.GoogleCloudStorageBlobStoreRepositoryTests")
+        includeClasses.add("org.density.repositories.s3.S3BlobStoreRepositoryTests")
+        includeClasses.add("org.density.search.ConcurrentSegmentSearchTimeoutIT")
+        includeClasses.add("org.density.search.SearchTimeoutIT")
+        includeClasses.add("org.density.search.SearchWeightedRoutingIT")
+        includeClasses.add("org.density.search.aggregations.bucket.DoubleTermsIT")
+        includeClasses.add("org.density.search.aggregations.bucket.terms.StringTermsIT")
+        includeClasses.add("org.density.search.aggregations.metrics.CardinalityIT")
+        includeClasses.add("org.density.search.backpressure.SearchBackpressureIT")
+        includeClasses.add("org.density.search.basic.SearchWithRandomIOExceptionsIT")
+        includeClasses.add("org.density.search.pit.DeletePitMultiNodeIT")
+        includeClasses.add("org.density.smoketest.SmokeTestMultiNodeClientYamlTestSuiteIT")
+        includeClasses.add("org.density.snapshots.CloneSnapshotIT")
+        includeClasses.add("org.density.snapshots.DedicatedClusterSnapshotRestoreIT")
+        includeClasses.add("org.density.snapshots.RestoreSnapshotIT")
+        includeClasses.add("org.density.snapshots.SnapshotStatusApisIT")
+        includeClasses.add("org.density.test.rest.ClientYamlTestSuiteIT")
+        includeClasses.add("org.density.upgrade.DetectEsInstallationTaskTests")
       }
     }
   }
@@ -655,7 +655,7 @@ gradle.projectsEvaluated {
 }
 
 allprojects {
-  tasks.register('resolveAllDependencies', org.opensearch.gradle.ResolveAllDependencies) {
+  tasks.register('resolveAllDependencies', org.density.gradle.ResolveAllDependencies) {
     configs = project.configurations
     if (project.path.contains("fixture")) {
       dependsOn tasks.withType(ComposePull)
@@ -691,7 +691,7 @@ allprojects {
     checkPart1.configure { dependsOn 'check' }
   }
 
-  plugins.withId('opensearch.testclusters') {
+  plugins.withId('density.testclusters') {
     testClusters.configureEach {
       if (BuildParams.inFipsJvm) {
         keystorePassword 'notarealpasswordphrase'

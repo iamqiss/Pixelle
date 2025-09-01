@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.parsers.GeoWKTParser;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.MultiLine;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.parsers.GeoWKTParser;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.Line;
+import org.density.geometry.MultiLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ import org.locationtech.spatial4j.shape.jts.JtsGeometry;
 /**
  * Builds a multi line string geometry
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class MultiLineStringBuilder extends ShapeBuilder<JtsGeometry, org.opensearch.geometry.Geometry, MultiLineStringBuilder> {
+public class MultiLineStringBuilder extends ShapeBuilder<JtsGeometry, org.density.geometry.Geometry, MultiLineStringBuilder> {
 
     public static final GeoShapeType TYPE = GeoShapeType.MULTILINESTRING;
 
@@ -169,7 +169,7 @@ public class MultiLineStringBuilder extends ShapeBuilder<JtsGeometry, org.opense
     }
 
     @Override
-    public org.opensearch.geometry.Geometry buildGeometry() {
+    public org.density.geometry.Geometry buildGeometry() {
         if (lines.isEmpty()) {
             return MultiLine.EMPTY;
         }

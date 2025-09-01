@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry;
+package org.density.telemetry;
 
-import org.opensearch.SpecialPermission;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.telemetry.metrics.exporter.OTelMetricsExporterFactory;
-import org.opensearch.telemetry.tracing.exporter.OTelSpanExporterFactory;
-import org.opensearch.telemetry.tracing.sampler.OTelSamplerFactory;
-import org.opensearch.telemetry.tracing.sampler.ProbabilisticSampler;
-import org.opensearch.telemetry.tracing.sampler.ProbabilisticTransportActionSampler;
+import org.density.SpecialPermission;
+import org.density.common.settings.Setting;
+import org.density.common.unit.TimeValue;
+import org.density.telemetry.metrics.exporter.OTelMetricsExporterFactory;
+import org.density.telemetry.tracing.exporter.OTelSpanExporterFactory;
+import org.density.telemetry.tracing.sampler.OTelSamplerFactory;
+import org.density.telemetry.tracing.sampler.ProbabilisticSampler;
+import org.density.telemetry.tracing.sampler.ProbabilisticTransportActionSampler;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;

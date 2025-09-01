@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.wildfly;
+package org.density.wildfly;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
@@ -45,11 +45,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.tests.util.TestRuleLimitSysouts;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.cluster.ClusterModule;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.net.URI;
@@ -73,7 +73,7 @@ public class WildflyIT extends LuceneTestCase {
             throw new IllegalStateException(
                 "Could not find system property "
                     + propertyName
-                    + ". This test expects to run with the opensearch.test.fixtures Gradle plugin"
+                    + ". This test expects to run with the density.test.fixtures Gradle plugin"
             );
         }
         return "http://localhost:" + port + "/example-app/transport";

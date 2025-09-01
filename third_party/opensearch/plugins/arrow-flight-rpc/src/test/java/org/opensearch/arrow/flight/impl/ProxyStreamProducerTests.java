@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.impl;
+package org.density.arrow.flight.impl;
 
 import org.apache.arrow.flight.FlightStream;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
-import org.opensearch.arrow.spi.StreamProducer;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.arrow.spi.StreamProducer;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 import org.junit.After;
 
 import static org.mockito.Mockito.doThrow;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ProxyStreamProducerTests extends OpenSearchTestCase {
+public class ProxyStreamProducerTests extends DensityTestCase {
 
     private FlightStream mockRemoteStream;
     private BufferAllocator mockAllocator;

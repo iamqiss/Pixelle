@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.Randomness;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.Randomness;
+import org.density.core.action.ActionListener;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -60,7 +60,7 @@ import java.util.function.Function;
 
 import static org.hamcrest.Matchers.lessThan;
 
-public class BatchedRerouteServiceTests extends OpenSearchTestCase {
+public class BatchedRerouteServiceTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private ClusterService clusterService;
@@ -203,7 +203,7 @@ public class BatchedRerouteServiceTests extends OpenSearchTestCase {
 
         final BatchedRerouteService batchedRerouteService = new BatchedRerouteService(clusterService, (s, r) -> {
             if (rarely()) {
-                throw new OpenSearchException("simulated");
+                throw new DensityException("simulated");
             }
             return randomBoolean() ? s : ClusterState.builder(s).build();
         });
@@ -214,12 +214,12 @@ public class BatchedRerouteServiceTests extends OpenSearchTestCase {
             batchedRerouteService.reroute("iteration " + i, randomFrom(EnumSet.allOf(Priority.class)), ActionListener.wrap(r -> {
                 countDownLatch.countDown();
                 if (rarely()) {
-                    throw new OpenSearchException("failure during notification");
+                    throw new DensityException("failure during notification");
                 }
             }, e -> {
                 countDownLatch.countDown();
                 if (randomBoolean()) {
-                    throw new OpenSearchException("failure during failure notification", e);
+                    throw new DensityException("failure during failure notification", e);
                 }
             }));
             if (rarely()) {

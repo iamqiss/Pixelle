@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.resource.tracker;
+package org.density.node.resource.tracker;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.monitor.process.ProcessProbe;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.unit.TimeValue;
+import org.density.monitor.process.ProcessProbe;
+import org.density.threadpool.ThreadPool;
 
 /**
  * AverageCpuUsageTracker tracks the average CPU usage by polling the CPU usage every (pollingInterval)

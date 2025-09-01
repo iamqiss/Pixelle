@@ -1,6 +1,6 @@
 # Stream Transport Example
 
-Step-by-step guide to implement streaming transport actions in OpenSearch.
+Step-by-step guide to implement streaming transport actions in Density.
 
 ## Step 1: Create Action Definition
 

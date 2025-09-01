@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.benchmark.index.codec.fuzzy;
+package org.density.benchmark.index.codec.fuzzy;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.UUIDs;
-import org.opensearch.index.codec.fuzzy.FuzzySet;
-import org.opensearch.index.codec.fuzzy.FuzzySetFactory;
-import org.opensearch.index.codec.fuzzy.FuzzySetParameters;
-import org.opensearch.index.mapper.IdFieldMapper;
+import org.density.common.UUIDs;
+import org.density.index.codec.fuzzy.FuzzySet;
+import org.density.index.codec.fuzzy.FuzzySetFactory;
+import org.density.index.codec.fuzzy.FuzzySetParameters;
+import org.density.index.mapper.IdFieldMapper;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;

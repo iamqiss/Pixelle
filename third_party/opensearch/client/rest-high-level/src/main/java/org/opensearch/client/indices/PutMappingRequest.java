@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.client.TimedRequest;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityGenerationException;
+import org.density.action.IndicesRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.client.TimedRequest;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +53,7 @@ import java.util.Map;
  * the new mappings will be merged with the existing one. If there are elements that cannot
  * be merged, the request will be rejected.
  *
- * @opensearch.api
+ * @density.api
  */
 public class PutMappingRequest extends TimedRequest implements IndicesRequest, ToXContentObject {
 
@@ -114,7 +114,7 @@ public class PutMappingRequest extends TimedRequest implements IndicesRequest, T
             builder.map(mappingSource);
             return source(builder);
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + mappingSource + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + mappingSource + "]", e);
         }
     }
 

@@ -1,13 +1,13 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.lessThan;
 /**
  * Test class for SemanticVersion
  */
-public class SemanticVersionTests extends OpenSearchTestCase {
+public class SemanticVersionTests extends DensityTestCase {
 
     public void testBasicVersionParsing() {
         SemanticVersion version = SemanticVersion.parse("1.2.3");

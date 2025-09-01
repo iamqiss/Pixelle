@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,17 +25,17 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.configuration;
+package org.density.action.admin.cluster.configuration;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ClearVotingConfigExclusionsResponseTests extends OpenSearchTestCase {
+public class ClearVotingConfigExclusionsResponseTests extends DensityTestCase {
     public void testSerialization() throws IOException {
         final ClearVotingConfigExclusionsResponse originalRequest = new ClearVotingConfigExclusionsResponse();
         copyWriteable(originalRequest, writableRegistry(), ClearVotingConfigExclusionsResponse::new);

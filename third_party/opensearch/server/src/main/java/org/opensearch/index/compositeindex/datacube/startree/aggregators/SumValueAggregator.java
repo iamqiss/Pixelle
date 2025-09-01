@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.aggregators;
+package org.density.index.compositeindex.datacube.startree.aggregators;
 
-import org.opensearch.index.compositeindex.datacube.startree.utils.CompensatedSumType;
-import org.opensearch.index.mapper.FieldValueConverter;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.metrics.CompensatedSum;
+import org.density.index.compositeindex.datacube.startree.utils.CompensatedSumType;
+import org.density.index.mapper.FieldValueConverter;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.metrics.CompensatedSum;
 
 /**
  * Sum value aggregator for star tree
@@ -20,7 +20,7 @@ import org.opensearch.search.aggregations.metrics.CompensatedSum;
  *
  * @see <a href="http://en.wikipedia.org/wiki/Kahan_summation_algorithm">Kahan Summation Algorithm</a>
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 class SumValueAggregator implements ValueAggregator<CompensatedSum> {
 

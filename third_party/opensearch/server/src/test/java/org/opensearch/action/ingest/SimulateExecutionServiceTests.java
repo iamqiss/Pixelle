@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.VersionType;
-import org.opensearch.ingest.AbstractProcessor;
-import org.opensearch.ingest.CompoundProcessor;
-import org.opensearch.ingest.DropProcessor;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.IngestProcessorException;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.ingest.Pipeline;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.ingest.TestProcessor;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.core.action.ActionListener;
+import org.density.index.VersionType;
+import org.density.ingest.AbstractProcessor;
+import org.density.ingest.CompoundProcessor;
+import org.density.ingest.DropProcessor;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.IngestProcessorException;
+import org.density.ingest.IngestService;
+import org.density.ingest.Pipeline;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.ingest.TestProcessor;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -71,7 +71,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
-public class SimulateExecutionServiceTests extends OpenSearchTestCase {
+public class SimulateExecutionServiceTests extends DensityTestCase {
 
     private final Integer version = randomBoolean() ? randomInt() : null;
 

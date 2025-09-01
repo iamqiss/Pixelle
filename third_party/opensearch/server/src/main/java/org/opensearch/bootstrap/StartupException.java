@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
-import org.opensearch.common.inject.CreationException;
-import org.opensearch.common.inject.spi.Message;
+import org.density.common.inject.CreationException;
+import org.density.common.inject.spi.Message;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -45,7 +45,7 @@ import java.util.function.Consumer;
  * cleanup for guice, and some guidance about consulting full
  * logs for the whole exception.
  *
- * @opensearch.internal
+ * @density.internal
  */
 // TODO: remove this when guice is removed, and exceptions are cleaned up
 // this is horrible, but its what we must do
@@ -54,7 +54,7 @@ final class StartupException extends RuntimeException {
     /** maximum length of a stacktrace, before we truncate it */
     static final int STACKTRACE_LIMIT = 30;
     /** all lines from this package are RLE-compressed */
-    static final String GUICE_PACKAGE = "org.opensearch.common.inject";
+    static final String GUICE_PACKAGE = "org.density.common.inject";
 
     /**
      * Create a new StartupException that will format {@code cause}
@@ -126,13 +126,13 @@ final class StartupException extends RuntimeException {
         // if its a guice exception, the whole thing really will not be in the log, its megabytes.
         // refer to the hack in bootstrap, where we don't log it
         if (originalCause instanceof CreationException == false) {
-            final String basePath = System.getProperty("opensearch.logs.base_path");
+            final String basePath = System.getProperty("density.logs.base_path");
             // It's possible to fail before logging has been configured, in which case there's no point
             // suggested that the user look in the log file.
             if (basePath != null) {
-                final String logPath = System.getProperty("opensearch.logs.base_path")
+                final String logPath = System.getProperty("density.logs.base_path")
                     + System.getProperty("file.separator")
-                    + System.getProperty("opensearch.logs.cluster_name")
+                    + System.getProperty("density.logs.cluster_name")
                     + ".log";
 
                 consumer.accept("For complete error details, refer to the log at " + logPath);

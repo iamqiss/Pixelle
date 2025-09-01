@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.lucene.index.IndexCommit;
-import org.opensearch.action.StepListener;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.engine.RecoveryEngineException;
-import org.opensearch.index.seqno.RetentionLease;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.RunUnderPrimaryPermit;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.Transports;
+import org.density.action.StepListener;
+import org.density.common.SetOnce;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.lease.Releasable;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.index.engine.RecoveryEngineException;
+import org.density.index.seqno.RetentionLease;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.IndexShard;
+import org.density.indices.RunUnderPrimaryPermit;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.Transports;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -29,7 +29,7 @@ import java.util.function.Consumer;
 /**
  * This handler is used when peer recovery target is a remote store enabled replica.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteStorePeerRecoverySourceHandler extends RecoverySourceHandler {
 

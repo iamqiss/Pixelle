@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.action.AliasesRequest;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterState.FeatureAware;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.Diffable;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.NamedDiffable;
-import org.opensearch.cluster.NamedDiffableValueSerializer;
-import org.opensearch.cluster.applicationtemplates.SystemTemplateMetadata;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.decommission.DecommissionAttributeMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.NamedObjectNotFoundException;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.plugins.MapperPlugin;
+import org.density.action.AliasesRequest;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterState.FeatureAware;
+import org.density.cluster.Diff;
+import org.density.cluster.Diffable;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.NamedDiffable;
+import org.density.cluster.NamedDiffableValueSerializer;
+import org.density.cluster.applicationtemplates.SystemTemplateMetadata;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.decommission.DecommissionAttributeMetadata;
+import org.density.common.Nullable;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.NamedObjectNotFoundException;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.gateway.MetadataStateFormat;
+import org.density.index.IndexNotFoundException;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.plugins.MapperPlugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,13 +94,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.common.settings.Settings.readSettingsFromStream;
-import static org.opensearch.common.settings.Settings.writeSettingsToStream;
+import static org.density.common.settings.Settings.readSettingsFromStream;
+import static org.density.common.settings.Settings.writeSettingsToStream;
 
 /**
  * Metadata information
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Metadata implements Iterable<IndexMetadata>, Diffable<Metadata>, ToXContentFragment {
@@ -130,7 +130,7 @@ public class Metadata implements Iterable<IndexMetadata>, Diffable<Metadata>, To
     /**
      * Context of the XContent.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum XContentContext {
@@ -170,7 +170,7 @@ public class Metadata implements Iterable<IndexMetadata>, Diffable<Metadata>, To
     /**
      * Custom metadata.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Custom extends NamedDiffable<Custom>, ToXContentFragment, ClusterState.FeatureAware {
@@ -1039,7 +1039,7 @@ public class Metadata implements Iterable<IndexMetadata>, Diffable<Metadata>, To
     /**
      * A diff of metadata.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MetadataDiff implements Diff<Metadata> {
 
@@ -1185,7 +1185,7 @@ public class Metadata implements Iterable<IndexMetadata>, Diffable<Metadata>, To
     /**
      * Builder of metadata.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

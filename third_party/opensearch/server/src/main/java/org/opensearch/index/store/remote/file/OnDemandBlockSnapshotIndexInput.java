@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.file;
+package org.density.index.store.remote.file;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
-import org.opensearch.index.store.remote.utils.BlobFetchRequest;
-import org.opensearch.index.store.remote.utils.TransferManager;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
+import org.density.index.store.remote.utils.BlobFetchRequest;
+import org.density.index.store.remote.utils.TransferManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
  * <br>
  * This class rely on {@link TransferManager} to really fetch the snapshot files from the remote blob store and maybe cache them
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class OnDemandBlockSnapshotIndexInput extends OnDemandBlockIndexInput {
     private static final Logger logger = LogManager.getLogger(OnDemandBlockSnapshotIndexInput.class);

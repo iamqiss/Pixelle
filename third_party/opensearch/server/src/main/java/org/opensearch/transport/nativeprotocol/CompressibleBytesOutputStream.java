@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.nativeprotocol;
+package org.density.transport.nativeprotocol;
 
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStream;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.compress.CompressorRegistry;
+import org.density.common.io.Streams;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStream;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.compress.CompressorRegistry;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -56,7 +56,7 @@ import java.util.zip.DeflaterOutputStream;
  * {@link CompressibleBytesOutputStream#close()} will NOT close the underlying stream. The byte stream passed
  * in the constructor must be closed individually.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class CompressibleBytesOutputStream extends StreamOutput {
 

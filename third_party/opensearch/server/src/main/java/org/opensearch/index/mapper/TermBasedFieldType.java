@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BoostQuery;
@@ -39,9 +39,9 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.lucene.search.AutomatonQueries;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.lucene.search.AutomatonQueries;
+import org.density.index.query.QueryShardContext;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +49,7 @@ import java.util.Map;
 /** Base {@link MappedFieldType} implementation for a field that is indexed
  *  with the inverted index.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TermBasedFieldType extends SimpleMappedFieldType {
 

@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.clustermanager.term;
+package org.density.action.support.clustermanager.term;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
 
 import java.io.IOException;
 
 /**
  * Response object of cluster term
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GetTermVersionResponse extends ActionResponse {
 

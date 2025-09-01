@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,38 +43,38 @@ import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.store.NativeFSLockFactory;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.IndexStoreListener;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.fs.FsProbe;
-import org.opensearch.monitor.jvm.JvmInfo;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.CheckedFunction;
+import org.density.common.Randomness;
+import org.density.common.SuppressForbidden;
+import org.density.common.UUIDs;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.Strings;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.util.FileSystemUtils;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.MetadataStateFormat;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.IndexStoreListener;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.fs.FsProbe;
+import org.density.monitor.jvm.JvmInfo;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -110,14 +110,14 @@ import static java.util.Collections.unmodifiableSet;
 /**
  * A component that holds all data paths for a single node.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class NodeEnvironment implements Closeable {
     /**
      * A node path.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class NodePath {
@@ -236,7 +236,7 @@ public final class NodeEnvironment implements Closeable {
     /**
      * The node lock.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class NodeLock implements Releasable {
 
@@ -304,7 +304,7 @@ public final class NodeEnvironment implements Closeable {
 
     /**
      * Setup the environment.
-     * @param settings settings from opensearch.yml
+     * @param settings settings from density.yml
      */
     public NodeEnvironment(Settings settings, Environment environment, IndexStoreListener indexStoreListener) throws IOException {
         if (DiscoveryNode.nodeRequiresLocalStorage(settings) == false) {
@@ -546,7 +546,7 @@ public final class NodeEnvironment implements Closeable {
     /**
      * Acquires, then releases, all {@code write.lock} files in the given
      * shard paths. The "write.lock" file is assumed to be under the shard
-     * path's "index" directory as used by OpenSearch.
+     * path's "index" directory as used by Density.
      *
      * @throws LockObtainFailedException if any of the locks could not be acquired
      */
@@ -581,7 +581,7 @@ public final class NodeEnvironment implements Closeable {
      *
      * @param lock the shards lock
      * @throws IOException if an IOException occurs
-     * @throws OpenSearchException if the write.lock is not acquirable
+     * @throws DensityException if the write.lock is not acquirable
      */
     public void deleteShardDirectoryUnderLock(ShardLock lock, IndexSettings indexSettings) throws IOException {
         final ShardId shardId = lock.getShardId();
@@ -797,7 +797,7 @@ public final class NodeEnvironment implements Closeable {
     /**
      * A functional interface that people can use to reference {@link #shardLock(ShardId, String, long)}
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -919,7 +919,7 @@ public final class NodeEnvironment implements Closeable {
      **/
     public String nodeId() {
         // we currently only return the ID and hide the underlying nodeMetadata implementation in order to avoid
-        // confusion with other "metadata" like node settings found in opensearch.yml. In future
+        // confusion with other "metadata" like node settings found in density.yml. In future
         // we can encapsulate both (and more) in one NodeMetadata (or NodeSettings) object ala IndexSettings
         return nodeMetadata.nodeId();
     }
@@ -1175,7 +1175,7 @@ public final class NodeEnvironment implements Closeable {
                 throw new IllegalStateException(
                     "atomic_move is not supported by the filesystem on path ["
                         + nodePath.path
-                        + "] atomic_move is required for opensearch to work correctly.",
+                        + "] atomic_move is required for density to work correctly.",
                     ex
                 );
             } finally {
@@ -1193,7 +1193,7 @@ public final class NodeEnvironment implements Closeable {
         if (shardDataPaths.isEmpty() == false) {
             final String message = String.format(
                 Locale.ROOT,
-                "node does not have the %s role but has shard data: %s. Use 'opensearch-node repurpose' tool to clean up",
+                "node does not have the %s role but has shard data: %s. Use 'density-node repurpose' tool to clean up",
                 DiscoveryNodeRole.DATA_ROLE.roleName(),
                 shardDataPaths
             );
@@ -1209,7 +1209,7 @@ public final class NodeEnvironment implements Closeable {
         if (cacheDataPaths.isEmpty() == false) {
             final String message = String.format(
                 Locale.ROOT,
-                "node does not have the %s role but has data within node warm cache: %s. Use 'opensearch-node repurpose' tool to clean up",
+                "node does not have the %s role but has data within node warm cache: %s. Use 'density-node repurpose' tool to clean up",
                 DiscoveryNodeRole.WARM_ROLE.roleName(),
                 cacheDataPaths
             );
@@ -1222,7 +1222,7 @@ public final class NodeEnvironment implements Closeable {
         if (indexMetadataPaths.isEmpty() == false) {
             final String message = String.format(
                 Locale.ROOT,
-                "node does not have the %s and %s roles but has index metadata: %s. Use 'opensearch-node repurpose' tool to clean up",
+                "node does not have the %s and %s roles but has index metadata: %s. Use 'density-node repurpose' tool to clean up",
                 DiscoveryNodeRole.DATA_ROLE.roleName(),
                 DiscoveryNodeRole.CLUSTER_MANAGER_ROLE.roleName(),
                 indexMetadataPaths
@@ -1415,7 +1415,7 @@ public final class NodeEnvironment implements Closeable {
     }
 
     // package private for testing
-    static final String TEMP_FILE_NAME = ".opensearch_temp_file";
+    static final String TEMP_FILE_NAME = ".density_temp_file";
 
     private static void tryWriteTempFile(Path path) throws IOException {
         if (Files.exists(path)) {

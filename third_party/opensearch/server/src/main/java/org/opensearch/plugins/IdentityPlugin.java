@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.identity.PluginSubject;
-import org.opensearch.identity.Subject;
-import org.opensearch.identity.tokens.TokenManager;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.identity.PluginSubject;
+import org.density.identity.Subject;
+import org.density.identity.tokens.TokenManager;
 
 /**
- * Plugin that provides identity and access control for OpenSearch
+ * Plugin that provides identity and access control for Density
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface IdentityPlugin {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test;
+package org.density.test;
 
 import java.io.IOException;
 
@@ -85,7 +85,7 @@ public class EqualsHashCodeTestUtils {
             String objectName = original.getClass().getSimpleName();
             assertFalse(objectName + " is equal to null", original.equals(null));
             // TODO not sure how useful the following test is
-            assertFalse(objectName + " is equal to incompatible type", original.equals(OpenSearchTestCase.randomFrom(someObjects)));
+            assertFalse(objectName + " is equal to incompatible type", original.equals(DensityTestCase.randomFrom(someObjects)));
             assertTrue(objectName + " is not equal to self", original.equals(original));
             assertThat(
                 objectName + " hashcode returns different values if called multiple times",

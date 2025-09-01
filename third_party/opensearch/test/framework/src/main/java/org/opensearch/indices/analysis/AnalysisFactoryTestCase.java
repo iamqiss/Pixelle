@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.lucene.analysis.TokenFilterFactory;
 import org.apache.lucene.analysis.TokenizerFactory;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.index.analysis.HunspellTokenFilterFactory;
-import org.opensearch.index.analysis.ShingleTokenFilterFactory;
-import org.opensearch.index.analysis.StandardTokenizerFactory;
-import org.opensearch.index.analysis.StopTokenFilterFactory;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.collect.MapBuilder;
+import org.density.index.analysis.HunspellTokenFilterFactory;
+import org.density.index.analysis.ShingleTokenFilterFactory;
+import org.density.index.analysis.StandardTokenizerFactory;
+import org.density.index.analysis.StopTokenFilterFactory;
+import org.density.plugins.AnalysisPlugin;
+import org.density.test.DensityTestCase;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -58,10 +58,10 @@ import static java.util.Collections.emptyMap;
  * If we don't want to expose one for a specific reason, just map it to Void.
  * The deprecated ones can be mapped to Deprecated.class.
  */
-public abstract class AnalysisFactoryTestCase extends OpenSearchTestCase {
+public abstract class AnalysisFactoryTestCase extends DensityTestCase {
 
     private static final Map<String, Class<?>> KNOWN_TOKENIZERS = new MapBuilder<String, Class<?>>()
-        // exposed in OpenSearch
+        // exposed in Density
         .put("classic", MovedToAnalysisCommon.class)
         .put("edgengram", MovedToAnalysisCommon.class)
         .put("keyword", MovedToAnalysisCommon.class)
@@ -81,7 +81,7 @@ public abstract class AnalysisFactoryTestCase extends OpenSearchTestCase {
         .immutableMap();
 
     static final Map<String, Class<?>> KNOWN_TOKENFILTERS = new MapBuilder<String, Class<?>>()
-        // exposed in OpenSearch
+        // exposed in Density
         .put("apostrophe", MovedToAnalysisCommon.class)
         .put("arabicnormalization", MovedToAnalysisCommon.class)
         .put("arabicstem", MovedToAnalysisCommon.class)

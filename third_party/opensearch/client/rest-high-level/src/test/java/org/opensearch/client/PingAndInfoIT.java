@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client;
+package org.density.client;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.opensearch.client.core.MainResponse;
+import org.density.client.core.MainResponse;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class PingAndInfoIT extends OpenSearchRestHighLevelClientTestCase {
+public class PingAndInfoIT extends DensityRestHighLevelClientTestCase {
 
     public void testPing() throws IOException {
         assertTrue(highLevelClient().ping(RequestOptions.DEFAULT));

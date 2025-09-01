@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.LocalNodeClusterManagerListener;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.hash.MessageDigests;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.LocalNodeClusterManagerListener;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.hash.MessageDigests;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -66,7 +66,7 @@ import java.util.function.Consumer;
  * This is colloquially referred to as the secure setting consistency check. It will publish and verify hashes only for the collection
  * of settings passed in the constructor. The settings have to have the {@link Setting.Property#Consistent} property.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ConsistentSettingsService {
     private static final Logger logger = LogManager.getLogger(ConsistentSettingsService.class);

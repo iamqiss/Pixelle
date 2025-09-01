@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.decommission.awareness.put;
+package org.density.action.admin.cluster.decommission.awareness.put;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.cluster.decommission.DecommissionAttribute;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.cluster.decommission.DecommissionAttribute;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.DensityClient;
 
 /**
  * Register decommission request builder
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class DecommissionRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -26,7 +26,7 @@ public class DecommissionRequestBuilder extends ClusterManagerNodeOperationReque
     DecommissionResponse,
     DecommissionRequestBuilder> {
 
-    public DecommissionRequestBuilder(OpenSearchClient client, ActionType<DecommissionResponse> action, DecommissionRequest request) {
+    public DecommissionRequestBuilder(DensityClient client, ActionType<DecommissionResponse> action, DecommissionRequest request) {
         super(client, action, request);
     }
 

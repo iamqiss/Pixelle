@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.math.BigInteger;
 
-public class MinAndMaxTests extends OpenSearchTestCase {
+public class MinAndMaxTests extends DensityTestCase {
 
     public void testCompareMin() {
         assertEquals(true, new MinAndMax<Long>(0L, 9L).compareMin(15L) < 0); // LONG

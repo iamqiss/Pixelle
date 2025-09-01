@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore;
+package org.density.remotestore;
 
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStats;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequestBuilder;
-import org.opensearch.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.FollowersChecker;
-import org.opensearch.cluster.coordination.LeaderChecker;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.remote.RemoteSegmentTransferTracker;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.disruption.NetworkDisruption;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.test.transport.MockTransportService;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.remotestore.restore.RestoreRemoteStoreRequest;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStats;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsRequestBuilder;
+import org.density.action.admin.cluster.remotestore.stats.RemoteStoreStatsResponse;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.FollowersChecker;
+import org.density.cluster.coordination.LeaderChecker;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.common.SetOnce;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.remote.RemoteSegmentTransferTracker;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.disruption.NetworkDisruption;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.test.transport.MockTransportService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,10 +45,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class RemoteStoreStatsIT extends RemoteStoreBaseIntegTestCase {
 
     private static final String INDEX_NAME = "remote-store-test-idx-1";
@@ -251,7 +251,7 @@ public class RemoteStoreStatsIT extends RemoteStoreBaseIntegTestCase {
         }
     }
 
-    @TestLogging(reason = "Getting trace logs from remote store package", value = "org.opensearch.index.shard:TRACE")
+    @TestLogging(reason = "Getting trace logs from remote store package", value = "org.density.index.shard:TRACE")
     public void testDownloadStatsCorrectnessSinglePrimarySingleReplica() throws Exception {
         setup();
         // Scenario:
@@ -318,7 +318,7 @@ public class RemoteStoreStatsIT extends RemoteStoreBaseIntegTestCase {
         }
     }
 
-    @TestLogging(reason = "Getting trace logs from remote store package", value = "org.opensearch.index.shard:TRACE")
+    @TestLogging(reason = "Getting trace logs from remote store package", value = "org.density.index.shard:TRACE")
     public void testDownloadStatsCorrectnessSinglePrimaryMultipleReplicaShards() throws Exception {
         setup();
         // Scenario:

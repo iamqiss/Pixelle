@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.restspec;
+package org.density.test.rest.yaml.restspec;
 
-import org.opensearch.common.collect.Tuple;
+import org.density.common.collect.Tuple;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,7 +46,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
- * Specification of an OpenSearch endpoint used by the YAML specs to generate REST requests.
+ * Specification of an Density endpoint used by the YAML specs to generate REST requests.
  */
 public class ClientYamlSuiteRestApi {
 

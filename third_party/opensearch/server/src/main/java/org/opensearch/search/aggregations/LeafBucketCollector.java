@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.LeafCollector;
 import org.apache.lucene.search.Scorable;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -43,7 +43,7 @@ import java.util.stream.StreamSupport;
 /**
  * Per-leaf bucket collector.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class LeafBucketCollector implements LeafCollector {
 

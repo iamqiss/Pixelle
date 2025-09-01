@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.gateway.MetadataStateFormat;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.store.IndexStoreListener;
-import org.opensearch.node.Node;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.NodeRoles;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.io.IOUtils;
+import org.density.common.util.set.Sets;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.gateway.MetadataStateFormat;
+import org.density.index.IndexSettings;
+import org.density.index.store.IndexStoreListener;
+import org.density.node.Node;
+import org.density.test.IndexSettingsModule;
+import org.density.test.NodeRoles;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,8 +66,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.test.NodeRoles.nonClusterManagerNode;
-import static org.opensearch.test.NodeRoles.nonDataNode;
+import static org.density.test.NodeRoles.nonClusterManagerNode;
+import static org.density.test.NodeRoles.nonDataNode;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
@@ -76,7 +76,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
 @LuceneTestCase.SuppressFileSystems("ExtrasFS") // TODO: fix test to allow extras
-public class NodeEnvironmentTests extends OpenSearchTestCase {
+public class NodeEnvironmentTests extends DensityTestCase {
     private final IndexSettings idxSettings = IndexSettingsModule.newIndexSettings("foo", Settings.EMPTY);
 
     public void testNodeLockSillySettings() {
@@ -96,7 +96,7 @@ public class NodeEnvironmentTests extends OpenSearchTestCase {
         );
         assertEquals(value, max);
         assertWarnings(
-            "[node.max_local_storage_nodes] setting was deprecated in OpenSearch and will be removed in a future release! "
+            "[node.max_local_storage_nodes] setting was deprecated in Density and will be removed in a future release! "
                 + "See the breaking changes documentation for the next major version."
         );
     }
@@ -124,7 +124,7 @@ public class NodeEnvironmentTests extends OpenSearchTestCase {
         env.close();
         assertThat(env.lockedShards(), empty());
         assertWarnings(
-            "[node.max_local_storage_nodes] setting was deprecated in OpenSearch and will be removed in a future release! "
+            "[node.max_local_storage_nodes] setting was deprecated in Density and will be removed in a future release! "
                 + "See the breaking changes documentation for the next major version."
         );
     }
@@ -164,7 +164,7 @@ public class NodeEnvironmentTests extends OpenSearchTestCase {
         }
         IOUtils.close(first, second);
         assertWarnings(
-            "[node.max_local_storage_nodes] setting was deprecated in OpenSearch and will be removed in a future release! "
+            "[node.max_local_storage_nodes] setting was deprecated in Density and will be removed in a future release! "
                 + "See the breaking changes documentation for the next major version."
         );
     }

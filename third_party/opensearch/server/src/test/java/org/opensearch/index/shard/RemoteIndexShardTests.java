@@ -1,48 +1,48 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.index.IndexFileNames;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.util.Version;
-import org.opensearch.action.StepListener;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.concurrent.GatedCloseable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.engine.DocIdSeqNoAndSource;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.engine.NRTReplicationEngineFactory;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.CheckpointInfoResponse;
-import org.opensearch.indices.replication.GetSegmentFilesResponse;
-import org.opensearch.indices.replication.RemoteStoreReplicationSource;
-import org.opensearch.indices.replication.SegmentReplicationSourceFactory;
-import org.opensearch.indices.replication.SegmentReplicationState;
-import org.opensearch.indices.replication.SegmentReplicationTarget;
-import org.opensearch.indices.replication.SegmentReplicationTargetService;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.Snapshot;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotShardsService;
-import org.opensearch.test.CorruptionUtils;
-import org.opensearch.test.junit.annotations.TestLogging;
+import org.density.action.StepListener;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.concurrent.GatedCloseable;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.index.engine.DocIdSeqNoAndSource;
+import org.density.index.engine.Engine;
+import org.density.index.engine.InternalEngine;
+import org.density.index.engine.NRTReplicationEngineFactory;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.CheckpointInfoResponse;
+import org.density.indices.replication.GetSegmentFilesResponse;
+import org.density.indices.replication.RemoteStoreReplicationSource;
+import org.density.indices.replication.SegmentReplicationSourceFactory;
+import org.density.indices.replication.SegmentReplicationState;
+import org.density.indices.replication.SegmentReplicationTarget;
+import org.density.indices.replication.SegmentReplicationTargetService;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.Snapshot;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotShardsService;
+import org.density.test.CorruptionUtils;
+import org.density.test.junit.annotations.TestLogging;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 
@@ -60,9 +60,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.util.FeatureFlags.MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG;
-import static org.opensearch.index.engine.EngineTestCase.assertAtMostOneLuceneDocumentPerSequenceNumber;
-import static org.opensearch.index.shard.RemoteStoreRefreshListener.EXCLUDE_FILES;
+import static org.density.common.util.FeatureFlags.MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG;
+import static org.density.index.engine.EngineTestCase.assertAtMostOneLuceneDocumentPerSequenceNumber;
+import static org.density.index.shard.RemoteStoreRefreshListener.EXCLUDE_FILES;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
@@ -312,7 +312,7 @@ public class RemoteIndexShardTests extends SegmentReplicationIndexShardTests {
         }
     }
 
-    @TestLogging(reason = "Getting trace logs from replication package", value = "org.opensearch.indices.replication:TRACE")
+    @TestLogging(reason = "Getting trace logs from replication package", value = "org.density.indices.replication:TRACE")
     public void testRepicaCleansUpOldCommitsWhenReceivingNew() throws Exception {
         final Path remotePath = createTempDir();
         try (ReplicationGroup shards = createGroup(1, getIndexSettings(), indexMapping, new NRTReplicationEngineFactory(), remotePath)) {
@@ -631,7 +631,7 @@ public class RemoteIndexShardTests extends SegmentReplicationIndexShardTests {
 
     @LockFeatureFlag(MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG)
     @Override
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/pull/18255")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/pull/18255")
     public void testMergedSegmentReplication() throws Exception {
         // TODO: wait for remote store to support merged segment warmer
         super.testMergedSegmentReplication();
@@ -639,7 +639,7 @@ public class RemoteIndexShardTests extends SegmentReplicationIndexShardTests {
 
     @LockFeatureFlag(MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG)
     @Override
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/pull/18255")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/pull/18255")
     public void testMergedSegmentReplicationWithZeroReplica() throws Exception {
         // TODO: wait for remote store to support merged segment warmer
         super.testMergedSegmentReplicationWithZeroReplica();
@@ -647,7 +647,7 @@ public class RemoteIndexShardTests extends SegmentReplicationIndexShardTests {
 
     @LockFeatureFlag(MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG)
     @Override
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/pull/18720")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/pull/18720")
     public void testCleanupRedundantPendingMergeSegment() throws Exception {
         super.testCleanupRedundantPendingMergeSegment();
     }

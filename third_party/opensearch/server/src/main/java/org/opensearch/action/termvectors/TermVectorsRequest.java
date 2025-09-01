@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.RealtimeRequest;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.RealtimeRequest;
+import org.density.action.ValidateActions;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Request returning the term vector (doc frequency, positions, offsets) for a
@@ -75,7 +75,7 @@ import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
  * Note, the {@link #index()}, and {@link #id(String)} are
  * required.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> implements RealtimeRequest {
@@ -120,7 +120,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
     /**
      * Internal filter settings
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class FilterSettings {
@@ -575,7 +575,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
     /**
      * The flags.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Flag {
@@ -605,7 +605,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
                             fields.add(parser.text());
                         }
                     } else {
-                        throw new OpenSearchParseException("failed to parse term vectors request. field [fields] must be an array");
+                        throw new DensityParseException("failed to parse term vectors request. field [fields] must be an array");
                     }
                 } else if (OFFSETS.match(currentFieldName, parser.getDeprecationHandler())) {
                     termVectorsRequest.offsets(parser.booleanValue());
@@ -628,14 +628,14 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
                     termVectorsRequest.index = parser.text();
                 } else if (ID.match(currentFieldName, parser.getDeprecationHandler())) {
                     if (termVectorsRequest.doc != null) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse term vectors request. " + "either [id] or [doc] can be specified, but not both!"
                         );
                     }
                     termVectorsRequest.id = parser.text();
                 } else if (DOC.match(currentFieldName, parser.getDeprecationHandler())) {
                     if (termVectorsRequest.id != null) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse term vectors request. " + "either [id] or [doc] can be specified, but not both!"
                         );
                     }
@@ -647,7 +647,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
                 } else if (VERSION_TYPE.match(currentFieldName, parser.getDeprecationHandler())) {
                     termVectorsRequest.versionType = VersionType.fromString(parser.text());
                 } else {
-                    throw new OpenSearchParseException("failed to parse term vectors request. unknown field [{}]", currentFieldName);
+                    throw new DensityParseException("failed to parse term vectors request. unknown field [{}]", currentFieldName);
                 }
             }
         }
@@ -663,7 +663,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
             if (e.getValue() instanceof String) {
                 mapStrStr.put(e.getKey(), (String) e.getValue());
             } else {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "expecting the analyzer at [{}] to be a String, but found [{}] instead",
                     e.getKey(),
                     e.getValue().getClass()
@@ -696,7 +696,7 @@ public class TermVectorsRequest extends SingleShardRequest<TermVectorsRequest> i
                 } else if (currentFieldName.equals("max_word_length")) {
                     settings.maxWordLength = parser.intValue();
                 } else {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "failed to parse term vectors request. "
                             + "the field [{}] is not valid for filter parameter for term vector request",
                         currentFieldName

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
@@ -42,42 +42,42 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FilterDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.StepListener;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.RecoverySource.SnapshotRecoverySource;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.engine.EngineException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.snapshots.IndexShardRestoreFailedException;
-import org.opensearch.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.remote.metadata.RemoteSegmentMetadata;
-import org.opensearch.index.translog.Checkpoint;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogHeader;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.StepListener;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.RecoverySource.SnapshotRecoverySource;
+import org.density.common.UUIDs;
+import org.density.common.lucene.Lucene;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.engine.EngineException;
+import org.density.index.mapper.MapperService;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.snapshots.IndexShardRestoreFailedException;
+import org.density.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.store.remote.metadata.RemoteSegmentMetadata;
+import org.density.index.translog.Checkpoint;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogHeader;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -91,14 +91,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.unit.TimeValue.timeValueMillis;
-import static org.opensearch.index.translog.Translog.CHECKPOINT_FILE_NAME;
+import static org.density.common.unit.TimeValue.timeValueMillis;
+import static org.density.index.translog.Translog.CHECKPOINT_FILE_NAME;
 
 /**
  * This package private utility class encapsulates the logic to recover an index shard from either an existing index on
  * disk or from a snapshot in a repository.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class StoreRecovery {
 
@@ -276,7 +276,7 @@ final class StoreRecovery {
     /**
      * Directory wrapper that records copy process for recovery statistics
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class StatsDirectoryWrapper extends FilterDirectory {
         private final ReplicationLuceneIndex index;

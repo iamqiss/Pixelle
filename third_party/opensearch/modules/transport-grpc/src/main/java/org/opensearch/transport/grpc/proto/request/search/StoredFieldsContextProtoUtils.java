@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.request.search;
+package org.density.transport.grpc.proto.request.search;
 
-import org.opensearch.rest.RestRequest;
-import org.opensearch.search.fetch.StoredFieldsContext;
+import org.density.rest.RestRequest;
+import org.density.search.fetch.StoredFieldsContext;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Utility class for converting StoredFieldsContext between OpenSearch and Protocol Buffers formats.
+ * Utility class for converting StoredFieldsContext between Density and Protocol Buffers formats.
  * This class provides methods to create StoredFieldsContext objects from Protocol Buffer requests
  * to ensure proper handling of stored fields in search operations.
  */
@@ -46,7 +46,7 @@ public class StoredFieldsContextProtoUtils {
      * @param request the Protocol Buffer SearchRequest
      * @return a StoredFieldsContext
      */
-    protected static StoredFieldsContext fromProtoRequest(org.opensearch.protobufs.SearchRequest request) {
+    protected static StoredFieldsContext fromProtoRequest(org.density.protobufs.SearchRequest request) {
         if (request.getStoredFieldsCount() > 0) {
             return StoredFieldsContext.fromList(request.getStoredFieldsList());
         }

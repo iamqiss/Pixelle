@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote.model;
+package org.density.gateway.remote.model;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.remote.BlobPathParameters;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.NoneCompressor;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.gateway.remote.ClusterMetadataManifest;
-import org.opensearch.gateway.remote.RemoteClusterStateUtils;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.network.NetworkModule;
+import org.density.common.remote.BlobPathParameters;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.NoneCompressor;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.gateway.remote.ClusterMetadataManifest;
+import org.density.gateway.remote.RemoteClusterStateUtils;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.indices.IndicesModule;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -35,15 +35,15 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTES_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_EPHEMERAL_PATH_TOKEN;
-import static org.opensearch.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTES_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.RemoteClusterStateUtils.CLUSTER_STATE_EPHEMERAL_PATH_TOKEN;
+import static org.density.gateway.remote.model.RemoteDiscoveryNodes.DISCOVERY_NODES;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RemoteDiscoveryNodesTests extends OpenSearchTestCase {
+public class RemoteDiscoveryNodesTests extends DensityTestCase {
     private static final String TEST_BLOB_NAME = "/test-path/test-blob-name";
     private static final String TEST_BLOB_PATH = "test-path";
     private static final String TEST_BLOB_FILE_NAME = "test-blob-name";
@@ -93,9 +93,9 @@ public class RemoteDiscoveryNodesTests extends OpenSearchTestCase {
     }
 
     public void testBlobPathTokens() {
-        String uploadedFile = "user/local/opensearch/discovery-nodes";
+        String uploadedFile = "user/local/density/discovery-nodes";
         RemoteDiscoveryNodes remoteObjectForDownload = new RemoteDiscoveryNodes(uploadedFile, clusterUUID, compressor);
-        assertArrayEquals(remoteObjectForDownload.getBlobPathTokens(), new String[] { "user", "local", "opensearch", "discovery-nodes" });
+        assertArrayEquals(remoteObjectForDownload.getBlobPathTokens(), new String[] { "user", "local", "density", "discovery-nodes" });
     }
 
     public void testBlobPathParameters() {
@@ -151,7 +151,7 @@ public class RemoteDiscoveryNodesTests extends OpenSearchTestCase {
         DiscoveryNodes nodes = mock(DiscoveryNodes.class);
         InputStream in = mock(InputStream.class);
         when(in.read(any(byte[].class))).thenThrow(new IOException("mock-exception"));
-        String uploadedFile = "user/local/opensearch/discovery-nodes";
+        String uploadedFile = "user/local/density/discovery-nodes";
         RemoteDiscoveryNodes remoteObjectForDownload = new RemoteDiscoveryNodes(uploadedFile, clusterUUID, compressor);
         IOException ioe = assertThrows(IOException.class, () -> remoteObjectForDownload.deserialize(in));
     }

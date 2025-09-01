@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.CallHeaders;
 import org.apache.arrow.flight.CallInfo;
@@ -17,8 +17,8 @@ import org.apache.arrow.flight.RequestContext;
 import java.nio.ByteBuffer;
 import java.util.Base64;
 
-import static org.opensearch.arrow.flight.transport.ClientHeaderMiddleware.CORRELATION_ID_KEY;
-import static org.opensearch.arrow.flight.transport.ClientHeaderMiddleware.RAW_HEADER_KEY;
+import static org.density.arrow.flight.transport.ClientHeaderMiddleware.CORRELATION_ID_KEY;
+import static org.density.arrow.flight.transport.ClientHeaderMiddleware.RAW_HEADER_KEY;
 
 /**
  * ServerHeaderMiddleware is created per call to handle the response header

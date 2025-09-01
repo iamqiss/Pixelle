@@ -1,15 +1,15 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.index.shard.ShardId;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import static java.util.Objects.isNull;
  * update and evict operations can be abstracted out to support any other strategy such as LRU, if
  * discovered a need later.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardIndexingPressureStore {
 

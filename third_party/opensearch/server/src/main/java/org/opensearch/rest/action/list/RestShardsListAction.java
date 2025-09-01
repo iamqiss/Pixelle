@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.list;
+package org.density.rest.action.list;
 
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.pagination.ShardPaginationStrategy;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.cat.RestShardsAction;
+import org.density.action.pagination.PageParams;
+import org.density.action.pagination.ShardPaginationStrategy;
+import org.density.rest.RestRequest;
+import org.density.rest.action.cat.RestShardsAction;
 
 import java.util.List;
 import java.util.Objects;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.GET;
 
 /**
  * _list API action to output shards in pages.
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestShardsListAction extends RestShardsAction {
 

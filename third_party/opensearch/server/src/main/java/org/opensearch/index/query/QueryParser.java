@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
 /**
  * Defines a query parser that is able to parse {@link QueryBuilder}s from {@link XContent}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @FunctionalInterface
 public interface QueryParser<QB extends QueryBuilder> {

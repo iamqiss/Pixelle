@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.indices.stats.CommonStats;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.RecoverySource.PeerRecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.StoreStats;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.indices.stats.CommonStats;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.RecoverySource.PeerRecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.StoreStats;
+import org.density.monitor.fs.FsInfo;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -58,7 +58,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static org.hamcrest.Matchers.equalTo;
 
-public class DiskUsageTests extends OpenSearchTestCase {
+public class DiskUsageTests extends DensityTestCase {
     public void testDiskUsageCalc() {
         DiskUsage du = new DiskUsage("node1", "n1", "random", 100, 40);
         assertThat(du.getFreeDiskAsPercentage(), equalTo(40.0));

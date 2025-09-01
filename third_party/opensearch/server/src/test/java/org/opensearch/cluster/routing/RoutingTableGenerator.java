@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
 import com.carrotsearch.randomizedtesting.RandomizedContext;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.health.ClusterHealthStatus;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.DensityException;
+import org.density.cluster.health.ClusterHealthStatus;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.index.shard.ShardId;
 
-import static org.opensearch.cluster.health.ClusterShardHealth.getInactivePrimaryHealth;
+import static org.density.cluster.health.ClusterShardHealth.getInactivePrimaryHealth;
 
 public class RoutingTableGenerator {
     private static int node_id = 1;
@@ -85,7 +85,7 @@ public class RoutingTableGenerator {
                     ShardRoutingState.RELOCATING
                 );
             default:
-                throw new OpenSearchException("Unknown state: " + state.name());
+                throw new DensityException("Unknown state: " + state.name());
         }
 
     }

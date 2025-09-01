@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.FeatureField;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.RankFeatureFieldMapper.RankFeatureFieldType;
-import org.opensearch.index.mapper.RankFeatureMetaFieldMapper;
-import org.opensearch.index.mapper.RankFeaturesFieldMapper.RankFeaturesFieldType;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.RankFeatureFieldMapper.RankFeatureFieldType;
+import org.density.index.mapper.RankFeatureMetaFieldMapper;
+import org.density.index.mapper.RankFeaturesFieldMapper.RankFeaturesFieldType;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml;
+package org.density.test.rest.yaml;
 
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.Version;
-import org.opensearch.client.NodeSelector;
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.RestClientBuilder;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
+import org.density.Version;
+import org.density.client.NodeSelector;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.client.RestClient;
+import org.density.client.RestClientBuilder;
+import org.density.common.CheckedSupplier;
+import org.density.test.rest.yaml.restspec.ClientYamlSuiteRestSpec;
 
 import java.io.IOException;
 import java.util.HashMap;

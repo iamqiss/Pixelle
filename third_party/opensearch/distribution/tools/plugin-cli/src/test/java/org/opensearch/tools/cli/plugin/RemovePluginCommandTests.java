@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.plugin;
+package org.density.tools.cli.plugin;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.Version;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.plugins.PluginTestUtil;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cli.ExitCodes;
+import org.density.cli.MockTerminal;
+import org.density.cli.UserException;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.plugins.PluginTestUtil;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.junit.Before;
 
 import java.io.BufferedReader;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 
 @LuceneTestCase.SuppressFileSystems("*")
-public class RemovePluginCommandTests extends OpenSearchTestCase {
+public class RemovePluginCommandTests extends DensityTestCase {
 
     private Path home;
     private Environment env;
@@ -87,7 +87,7 @@ public class RemovePluginCommandTests extends OpenSearchTestCase {
         super.setUp();
         home = createTempDir();
         Files.createDirectories(home.resolve("bin"));
-        Files.createFile(home.resolve("bin").resolve("opensearch"));
+        Files.createFile(home.resolve("bin").resolve("density"));
         Files.createDirectories(home.resolve("plugins"));
         Settings settings = Settings.builder().put("path.home", home).build();
         env = TestEnvironment.newEnvironment(settings);
@@ -110,7 +110,7 @@ public class RemovePluginCommandTests extends OpenSearchTestCase {
                 name,
                 "version",
                 "1.0",
-                "opensearch.version",
+                "density.version",
                 version.toString(),
                 "java.version",
                 System.getProperty("java.specification.version"),
@@ -189,7 +189,7 @@ public class RemovePluginCommandTests extends OpenSearchTestCase {
         Files.createFile(binDir.resolve("somescript"));
         removePlugin("fake", home, randomBoolean());
         assertFalse(Files.exists(env.pluginsDir().resolve("fake")));
-        assertTrue(Files.exists(env.binDir().resolve("opensearch")));
+        assertTrue(Files.exists(env.binDir().resolve("density")));
         assertFalse(Files.exists(binDir));
         assertRemoveCleaned(env);
     }
@@ -262,7 +262,7 @@ public class RemovePluginCommandTests extends OpenSearchTestCase {
     public void testRemoveUninstalledPluginErrors() throws Exception {
         UserException e = expectThrows(UserException.class, () -> removePlugin("fake", home, randomBoolean()));
         assertEquals(ExitCodes.CONFIG, e.exitCode);
-        assertEquals("plugin [fake] not found; run 'opensearch-plugin list' to get list of installed plugins", e.getMessage());
+        assertEquals("plugin [fake] not found; run 'density-plugin list' to get list of installed plugins", e.getMessage());
 
         MockTerminal terminal = new MockTerminal();
 
@@ -278,7 +278,7 @@ public class RemovePluginCommandTests extends OpenSearchTestCase {
             assertEquals("searching in other folders to find if plugin exists with custom folder name", reader.readLine());
             assertEquals("-> removing [fake]...", reader.readLine());
             assertEquals(
-                "ERROR: plugin [fake] not found; run 'opensearch-plugin list' to get list of installed plugins",
+                "ERROR: plugin [fake] not found; run 'density-plugin list' to get list of installed plugins",
                 errorReader.readLine()
             );
             assertNull(reader.readLine());

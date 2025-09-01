@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.compositeindex.datacube.startree.fileformats.data;
+package org.density.index.compositeindex.datacube.startree.fileformats.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.store.IndexOutput;
-import org.opensearch.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
+import org.density.index.compositeindex.datacube.startree.node.InMemoryTreeNode;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.opensearch.index.compositeindex.datacube.startree.fileformats.node.FixedLengthStarTreeNode.SERIALIZABLE_DATA_SIZE_IN_BYTES;
-import static org.opensearch.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
+import static org.density.index.compositeindex.datacube.startree.fileformats.node.FixedLengthStarTreeNode.SERIALIZABLE_DATA_SIZE_IN_BYTES;
+import static org.density.index.compositeindex.datacube.startree.utils.StarTreeUtils.ALL;
 
 /**
  * Utility class for serializing a star-tree data structure.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class StarTreeDataWriter {
 

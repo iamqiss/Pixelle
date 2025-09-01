@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.node.resource.tracker;
+package org.density.node.resource.tracker;
 
-import org.opensearch.common.ValidationException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.ValidationException;
+import org.density.common.unit.TimeValue;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.fs.FsService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 /**
  * Tests to validate AverageMemoryUsageTracker and AverageCpuUsageTracker implementation
  */
-public class AverageUsageTrackerTests extends OpenSearchTestCase {
+public class AverageUsageTrackerTests extends DensityTestCase {
     ThreadPool threadPool;
     AverageMemoryUsageTracker averageMemoryUsageTracker;
     AverageCpuUsageTracker averageCpuUsageTracker;

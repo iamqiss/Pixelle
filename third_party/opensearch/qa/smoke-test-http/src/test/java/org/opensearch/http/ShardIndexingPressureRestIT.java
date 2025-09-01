@@ -1,27 +1,27 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.client.Request;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.index.IndexingPressure;
-import org.opensearch.index.ShardIndexingPressureSettings;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.XContentTestUtils;
+import org.density.client.Request;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.index.IndexingPressure;
+import org.density.index.ShardIndexingPressureSettings;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.XContentTestUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static org.opensearch.core.rest.RestStatus.CREATED;
-import static org.opensearch.core.rest.RestStatus.OK;
-import static org.opensearch.core.rest.RestStatus.TOO_MANY_REQUESTS;
+import static org.density.core.rest.RestStatus.CREATED;
+import static org.density.core.rest.RestStatus.OK;
+import static org.density.core.rest.RestStatus.TOO_MANY_REQUESTS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.lessThan;
 /**
  * Test Shard Indexing Pressure Metrics and Statistics
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 2,
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 2,
     numClientNodes = 0)
 public class ShardIndexingPressureRestIT extends HttpSmokeTestCase {
 

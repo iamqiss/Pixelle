@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.stats;
+package org.density.action.admin.indices.stats;
 
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.UUIDs;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.ToXContent;
+import org.density.index.shard.ShardPath;
+import org.density.test.DensityTestCase;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.object.HasToString.hasToString;
 
-public class IndicesStatsResponseTests extends OpenSearchTestCase {
+public class IndicesStatsResponseTests extends DensityTestCase {
 
     public void testInvalidLevel() {
         final IndicesStatsResponse response = new IndicesStatsResponse(null, 0, 0, 0, null);

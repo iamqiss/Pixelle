@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,32 +25,32 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.Version;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.action.support.WriteResponse;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.seqno.SequenceNumbers;
+import org.density.Version;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.action.support.WriteResponse;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MapperService;
+import org.density.index.seqno.SequenceNumbers;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -58,14 +58,14 @@ import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * A base class for the response of a write operation that involves a single doc
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class DocWriteResponse extends ReplicationResponse implements WriteResponse, StatusToXContentObject {
@@ -83,7 +83,7 @@ public abstract class DocWriteResponse extends ReplicationResponse implements Wr
      * An enum that represents the results of CRUD operations, primarily used to communicate the type of
      * operation that occurred.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Result implements Writeable {
@@ -167,7 +167,7 @@ public abstract class DocWriteResponse extends ReplicationResponse implements Wr
     }
 
     /**
-     * Needed for deserialization of single item requests in {@link org.opensearch.action.index.IndexAction} and BwC
+     * Needed for deserialization of single item requests in {@link org.density.action.index.IndexAction} and BwC
      * deserialization path
      */
     protected DocWriteResponse(StreamInput in) throws IOException {
@@ -397,7 +397,7 @@ public abstract class DocWriteResponse extends ReplicationResponse implements Wr
      * xcontent parsing to temporarily store the parsed values, then the {@link Builder#build()} method is called to
      * instantiate the appropriate {@link DocWriteResponse} with the parsed values.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Builder {
 

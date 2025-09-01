@@ -1,6 +1,6 @@
-# OpenSearch REST API JSON specification
+# Density REST API JSON specification
 
-This repository contains a collection of JSON files which describe the [OpenSearch](https://github.com/opensearch-project/OpenSearch) HTTP API.
+This repository contains a collection of JSON files which describe the [Density](https://github.com/density-project/Density) HTTP API.
 
 Their purpose is to formalize and standardize the API, to facilitate development of libraries and integrations.
 
@@ -74,7 +74,7 @@ If an API is stable but it response should be treated as an arbitrary map of key
 
 ## Backwards compatibility
 
-The specification follows the same backward compatibility guarantees as OpenSearch.
+The specification follows the same backward compatibility guarantees as Density.
 
 - Within a Major, additions only.
 - If an item has been documented wrong it should be deprecated instead as removing these might break downstream clients.

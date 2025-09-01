@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.geogrid;
+package org.density.geo.search.aggregations.bucket.geogrid;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.document.SortedSetDocValuesField;
@@ -43,21 +43,21 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.geo.GeoModulePlugin;
-import org.opensearch.geo.tests.common.AggregationInspectionHelper;
-import org.opensearch.geo.tests.common.RandomGeoGenerator;
-import org.opensearch.index.mapper.GeoPointFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.plugins.SearchPlugin;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorTestCase;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.common.CheckedConsumer;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoUtils;
+import org.density.geo.GeoModulePlugin;
+import org.density.geo.tests.common.AggregationInspectionHelper;
+import org.density.geo.tests.common.RandomGeoGenerator;
+import org.density.index.mapper.GeoPointFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.plugins.SearchPlugin;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorTestCase;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;

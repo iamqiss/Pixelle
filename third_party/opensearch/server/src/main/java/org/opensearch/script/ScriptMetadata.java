@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.Diff;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.logging.DeprecationLogger;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import java.util.Map;
  * {@link ScriptMetadata} is used to store user-defined scripts
  * as part of the {@link ClusterState} using only an id as the key.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class ScriptMetadata implements Metadata.Custom, Writeable, ToXContentFragment {
 
@@ -73,7 +73,7 @@ public final class ScriptMetadata implements Metadata.Custom, Writeable, ToXCont
      * to generate a new {@link Map} of scripts that will be used to update
      * the current {@link ClusterState}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class Builder {
 

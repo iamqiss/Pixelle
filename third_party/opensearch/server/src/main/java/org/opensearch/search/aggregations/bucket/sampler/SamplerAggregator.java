@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,29 +25,29 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.sampler;
+package org.density.search.aggregations.bucket.sampler;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.misc.search.DiversifiedTopDocsCollector;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.ParseField;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.DeferableBucketAggregator;
-import org.opensearch.search.aggregations.bucket.DeferringBucketCollector;
-import org.opensearch.search.aggregations.bucket.SingleBucketAggregator;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.lease.Releasables;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.ParseField;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.DeferableBucketAggregator;
+import org.density.search.aggregations.bucket.DeferringBucketCollector;
+import org.density.search.aggregations.bucket.SingleBucketAggregator;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -63,7 +63,7 @@ import java.util.Map;
  * values would be preferable to users having to recreate this logic in a
  * 'script' e.g. to turn a datetime in milliseconds into a month key value.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SamplerAggregator extends DeferableBucketAggregator implements SingleBucketAggregator {
 
@@ -76,7 +76,7 @@ public class SamplerAggregator extends DeferableBucketAggregator implements Sing
     /**
      * The execution mode for the sampler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum ExecutionMode {
 

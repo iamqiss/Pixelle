@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.LongPoint;
@@ -48,26 +48,26 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.AggregationBuilder;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.bucket.terms.StringTerms;
-import org.opensearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.opensearch.search.aggregations.metrics.InternalMax;
-import org.opensearch.search.aggregations.metrics.InternalStats;
-import org.opensearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.InternalSimpleValue;
-import org.opensearch.search.aggregations.support.AggregationInspectionHelper;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.AggregationBuilder;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.bucket.terms.StringTerms;
+import org.density.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.density.search.aggregations.metrics.InternalMax;
+import org.density.search.aggregations.metrics.InternalStats;
+import org.density.search.aggregations.metrics.MaxAggregationBuilder;
+import org.density.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
+import org.density.search.aggregations.pipeline.InternalSimpleValue;
+import org.density.search.aggregations.support.AggregationInspectionHelper;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -915,7 +915,7 @@ public class AutoDateHistogramAggregatorTests extends DateHistogramAggregatorTes
         );
     }
 
-    // Bugfix: https://github.com/opensearch-project/OpenSearch/issues/16932
+    // Bugfix: https://github.com/density-project/Density/issues/16932
     public void testFilterRewriteWithTZRoundingRangeAssert() throws IOException {
         /*
         multiBucketIndexData must overlap with DST to produce a 'LinkedListLookup' prepared rounding.

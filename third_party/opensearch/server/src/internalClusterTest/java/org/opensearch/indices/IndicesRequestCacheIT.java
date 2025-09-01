@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -40,39 +40,39 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.Weight;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.allocation.command.MoveAllocationCommand;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram;
-import org.opensearch.search.aggregations.bucket.histogram.Histogram.Bucket;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.allocation.command.MoveAllocationCommand;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.env.NodeEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.TermQueryBuilder;
+import org.density.search.aggregations.bucket.global.GlobalAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.density.search.aggregations.bucket.histogram.Histogram;
+import org.density.search.aggregations.bucket.histogram.Histogram.Bucket;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -86,21 +86,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_ALLOCATION_ENABLE_SETTING;
-import static org.opensearch.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_MAX_SIZE_ALLOWED_IN_CACHE_SETTING;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateHistogram;
-import static org.opensearch.search.aggregations.AggregationBuilders.dateRange;
-import static org.opensearch.search.aggregations.AggregationBuilders.filter;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.routing.allocation.decider.EnableAllocationDecider.CLUSTER_ROUTING_ALLOCATION_ENABLE_SETTING;
+import static org.density.indices.IndicesRequestCache.INDICES_REQUEST_CACHE_MAX_SIZE_ALLOWED_IN_CACHE_SETTING;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.aggregations.AggregationBuilders.dateHistogram;
+import static org.density.search.aggregations.AggregationBuilders.dateRange;
+import static org.density.search.aggregations.AggregationBuilders.filter;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
-public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0, supportsDedicatedMasters = false)
+public class IndicesRequestCacheIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public IndicesRequestCacheIT(Settings settings) {
         super(settings);
     }
@@ -238,7 +238,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             // to ensure that query is executed even if it rewrites to match_no_docs
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 5);
 
@@ -248,7 +248,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-20").lte("2016-03-26"))
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r2);
+        DensityAssertions.assertAllSuccessful(r2);
         assertThat(r2.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 3, 7);
 
@@ -258,7 +258,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-21").lte("2016-03-27"))
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r3);
+        DensityAssertions.assertAllSuccessful(r3);
         assertThat(r3.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 6, 9);
     }
@@ -306,7 +306,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-19").lte("2016-03-28"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, index, 0, 1);
 
@@ -315,7 +315,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-19").lte("2016-03-28"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r2);
+        DensityAssertions.assertAllSuccessful(r2);
         assertThat(r2.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, index, 1, 1);
 
@@ -324,7 +324,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-19").lte("2016-03-28"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r3);
+        DensityAssertions.assertAllSuccessful(r3);
         assertThat(r3.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, index, 2, 1);
     }
@@ -374,7 +374,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             // to ensure that query is executed even if it rewrites to match_no_docs
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(9L));
         assertCacheState(client, index, 0, 1);
 
@@ -384,7 +384,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("d").gte("2013-01-01T00:00:00").lte("now"))
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r2);
+        DensityAssertions.assertAllSuccessful(r2);
         assertThat(r2.getHits().getTotalHits().value(), equalTo(9L));
         assertCacheState(client, index, 1, 1);
 
@@ -394,7 +394,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("d").gte("2013-01-01T00:00:00").lte("now"))
             .addAggregation(new GlobalAggregationBuilder("global"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r3);
+        DensityAssertions.assertAllSuccessful(r3);
         assertThat(r3.getHits().getTotalHits().value(), equalTo(9L));
         assertCacheState(client, index, 2, 1);
     }
@@ -436,7 +436,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .prepareForceMerge("index-1", "index-2", "index-3")
             .setFlush(true)
             .get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
         refreshAndWaitForReplication();
         ensureSearchable("index-1", "index-2", "index-3");
 
@@ -449,7 +449,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("d").gte("now-7d/d").lte("now"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, "index-1", 0, 1);
         assertCacheState(client, "index-2", 0, 1);
@@ -463,7 +463,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("d").gte("now-7d/d").lte("now"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r2);
+        DensityAssertions.assertAllSuccessful(r2);
         assertThat(r2.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, "index-1", 1, 1);
         assertCacheState(client, "index-2", 1, 1);
@@ -474,7 +474,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("d").gte("now-7d/d").lte("now"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r3);
+        DensityAssertions.assertAllSuccessful(r3);
         assertThat(r3.getHits().getTotalHits().value(), equalTo(8L));
         assertCacheState(client, "index-1", 2, 1);
         assertCacheState(client, "index-2", 2, 1);
@@ -518,7 +518,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(1)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-19").lte("2016-03-25"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 0);
 
@@ -528,7 +528,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-20").lte("2016-03-26"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r2);
+        DensityAssertions.assertAllSuccessful(r2);
         assertThat(r2.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 0);
 
@@ -540,7 +540,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setRequestCache(true)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-20").lte("2016-03-26"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r3);
+        DensityAssertions.assertAllSuccessful(r3);
         assertThat(r3.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 0);
 
@@ -552,7 +552,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-20").lte("2016-03-26"))
             .addAggregation(dateRange("foo").field("s").addRange("now-10y", "now"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r5);
+        DensityAssertions.assertAllSuccessful(r5);
         assertThat(r5.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 0);
 
@@ -563,7 +563,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setRequestCache(true)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-21").lte("2016-03-27"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r6);
+        DensityAssertions.assertAllSuccessful(r6);
         assertThat(r6.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 2);
 
@@ -575,7 +575,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-20").lte("2016-03-26"))
             .addAggregation(filter("foo", QueryBuilders.rangeQuery("s").from("now-10y").to("now")))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r4);
+        DensityAssertions.assertAllSuccessful(r4);
         assertThat(r4.getHits().getTotalHits().value(), equalTo(7L));
         assertCacheState(client, index, 0, 4);
 
@@ -593,7 +593,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(maxCacheableSize)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-22").lte("2016-03-26"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r7);
+        DensityAssertions.assertAllSuccessful(r7);
         assertThat(r7.getHits().getTotalHits().value(), equalTo(5L));
         assertCacheState(client, index, 0, 6);
 
@@ -603,7 +603,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(maxCacheableSize + 1)
             .setQuery(QueryBuilders.rangeQuery("s").gte("2016-03-22").lte("2016-03-26"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r8);
+        DensityAssertions.assertAllSuccessful(r8);
         assertThat(r8.getHits().getTotalHits().value(), equalTo(5L));
         assertCacheState(client, index, 0, 6);
     }
@@ -634,7 +634,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
 
         // Force merge the index to ensure there can be no background merges during the subsequent searches that would invalidate the cache
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge(index).setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
 
         assertCacheState(client, index, 0, 0);
 
@@ -643,7 +643,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("created_at").gte("now-7d/d"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(1L));
         assertCacheState(client, index, 0, 1);
 
@@ -652,17 +652,17 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
             .setSize(0)
             .setQuery(QueryBuilders.rangeQuery("created_at").gte("now-7d/d"))
             .get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(1L));
         assertCacheState(client, index, 1, 1);
 
         r1 = client.prepareSearch("last_week").setSearchType(SearchType.QUERY_THEN_FETCH).setSize(0).get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(1L));
         assertCacheState(client, index, 1, 2);
 
         r1 = client.prepareSearch("last_week").setSearchType(SearchType.QUERY_THEN_FETCH).setSize(0).get();
-        OpenSearchAssertions.assertAllSuccessful(r1);
+        DensityAssertions.assertAllSuccessful(r1);
         assertThat(r1.getHits().getTotalHits().value(), equalTo(1L));
         assertCacheState(client, index, 2, 2);
     }
@@ -700,7 +700,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
                 .setQuery(QueryBuilders.termQuery("k", "hello"))
                 .get();
             assertSearchResponse(resp);
-            OpenSearchAssertions.assertAllSuccessful(resp);
+            DensityAssertions.assertAllSuccessful(resp);
             assertThat(resp.getHits().getTotalHits().value(), equalTo(1L));
             if (profile == false) {
                 if (i == 1) {
@@ -871,7 +871,7 @@ public class IndicesRequestCacheIT extends ParameterizedStaticSettingsOpenSearch
 
     private void forceMerge(Client client, String index) {
         ForceMergeResponse forceMergeResponse = client.admin().indices().prepareForceMerge(index).setFlush(true).get();
-        OpenSearchAssertions.assertAllSuccessful(forceMergeResponse);
+        DensityAssertions.assertAllSuccessful(forceMergeResponse);
         refreshAndWaitForReplication();
     }
 

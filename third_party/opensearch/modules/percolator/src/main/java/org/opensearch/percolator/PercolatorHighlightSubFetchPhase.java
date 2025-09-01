@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.QueryVisitor;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.fetch.FetchContext;
-import org.opensearch.search.fetch.FetchSubPhase;
-import org.opensearch.search.fetch.FetchSubPhaseProcessor;
-import org.opensearch.search.fetch.subphase.highlight.HighlightField;
-import org.opensearch.search.fetch.subphase.highlight.HighlightPhase;
-import org.opensearch.search.fetch.subphase.highlight.Highlighter;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.document.DocumentField;
+import org.density.core.common.bytes.BytesReference;
+import org.density.search.SearchHit;
+import org.density.search.fetch.FetchContext;
+import org.density.search.fetch.FetchSubPhase;
+import org.density.search.fetch.FetchSubPhaseProcessor;
+import org.density.search.fetch.subphase.highlight.HighlightField;
+import org.density.search.fetch.subphase.highlight.HighlightPhase;
+import org.density.search.fetch.subphase.highlight.Highlighter;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;

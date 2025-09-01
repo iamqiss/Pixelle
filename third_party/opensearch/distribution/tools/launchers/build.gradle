@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -29,7 +29,7 @@
  */
 import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
 
-apply plugin: 'opensearch.build'
+apply plugin: 'density.build'
 
 dependencies {
   compileOnly project(':distribution:tools:java-version-checker')
@@ -39,7 +39,7 @@ dependencies {
 }
 
 base {
-  archivesName = 'opensearch-launchers'
+  archivesName = 'density-launchers'
 }
 
 tasks.withType(CheckForbiddenApis).configureEach {
@@ -50,7 +50,7 @@ testingConventions {
   naming.clear()
   naming {
     Tests {
-      baseClass 'org.opensearch.tools.launchers.LaunchersTestCase'
+      baseClass 'org.density.tools.launchers.LaunchersTestCase'
     }
   }
 }

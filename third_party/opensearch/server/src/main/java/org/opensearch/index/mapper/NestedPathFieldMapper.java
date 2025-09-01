@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -15,26 +15,26 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 
 /**
  * Replacement for TypesFieldMapper used in nested fields
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NestedPathFieldMapper extends MetadataFieldMapper {
-    // OpenSearch version 2.0 removed types; this name is used for bwc
+    // Density version 2.0 removed types; this name is used for bwc
     public static final String LEGACY_NAME = "_type";
     public static final String NAME = "_nested_path";
 
     /**
      * Default parameters for the field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
         public static final FieldType FIELD_TYPE = new FieldType();
@@ -72,12 +72,12 @@ public class NestedPathFieldMapper extends MetadataFieldMapper {
         c -> c.indexVersionCreated().before(Version.V_2_0_0) ? LEGACY_INSTANCE : INSTANCE
     );
 
-    /** helper method to create a lucene field based on the opensearch version */
+    /** helper method to create a lucene field based on the density version */
     public static Field field(Version version, String path) {
         return new Field(name(version), path, Defaults.FIELD_TYPE);
     }
 
-    /** helper method to create a query based on the opensearch version */
+    /** helper method to create a query based on the density version */
     public static Query filter(Version version, String path) {
         return new TermQuery(new Term(name(version), new BytesRef(path)));
     }
@@ -85,7 +85,7 @@ public class NestedPathFieldMapper extends MetadataFieldMapper {
     /**
      * field type for the NestPath field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class NestedPathFieldType extends StringFieldType {
         private NestedPathFieldType(String name) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.ParseContext.Document;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.ParseContext.Document;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
+public class JavaMultiFieldMergeTests extends DensitySingleNodeTestCase {
     public void testMergeMultiField() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/test-mapping1.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/test-mapping1.json");
         MapperService mapperService = createIndex("test").mapperService();
 
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
@@ -62,7 +62,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         f = doc.getField("name.indexed");
         assertThat(f, nullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/test-mapping2.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/test-mapping2.json");
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
         assertTrue(mapperService.fieldType("name").isSearchable());
@@ -78,7 +78,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         f = doc.getField("name.indexed");
         assertThat(f, notNullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/test-mapping3.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/test-mapping3.json");
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
         assertTrue(mapperService.fieldType("name").isSearchable());
@@ -88,7 +88,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         assertThat(mapperService.fieldType("name.not_indexed2"), notNullValue());
         assertThat(mapperService.fieldType("name.not_indexed3"), nullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/test-mapping4.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/test-mapping4.json");
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
         assertTrue(mapperService.fieldType("name").isSearchable());
@@ -100,7 +100,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
     }
 
     public void testUpgradeFromMultiFieldTypeToMultiFields() throws Exception {
-        String mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/test-mapping1.json");
+        String mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/test-mapping1.json");
         MapperService mapperService = createIndex("test").mapperService();
 
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
@@ -115,7 +115,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         f = doc.getField("name.indexed");
         assertThat(f, nullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/upgrade1.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/upgrade1.json");
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
         assertTrue(mapperService.fieldType("name").isSearchable());
@@ -131,7 +131,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         f = doc.getField("name.indexed");
         assertThat(f, notNullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/upgrade2.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/upgrade2.json");
         mapperService.merge(MapperService.SINGLE_MAPPING_NAME, new CompressedXContent(mapping), MapperService.MergeReason.MAPPING_UPDATE);
 
         assertTrue(mapperService.fieldType("name").isSearchable());
@@ -141,7 +141,7 @@ public class JavaMultiFieldMergeTests extends OpenSearchSingleNodeTestCase {
         assertThat(mapperService.fieldType("name.not_indexed2"), notNullValue());
         assertThat(mapperService.fieldType("name.not_indexed3"), nullValue());
 
-        mapping = copyToStringFromClasspath("/org/opensearch/index/mapper/multifield/merge/upgrade3.json");
+        mapping = copyToStringFromClasspath("/org/density/index/mapper/multifield/merge/upgrade3.json");
         try {
             mapperService.merge(
                 MapperService.SINGLE_MAPPING_NAME,

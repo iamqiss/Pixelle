@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.admin.cluster.settings.ClusterUpdateSettingsResponse;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.test.DensitySingleNodeTestCase;
 
-import static org.opensearch.gateway.ShardsBatchGatewayAllocator.GATEWAY_ALLOCATOR_BATCH_SIZE;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.gateway.ShardsBatchGatewayAllocator.GATEWAY_ALLOCATOR_BATCH_SIZE;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ShardsBatchGatewayAllocatorTests extends OpenSearchSingleNodeTestCase {
+public class ShardsBatchGatewayAllocatorTests extends DensitySingleNodeTestCase {
     public void testBatchSizeValueUpdate() {
         Setting<Long> setting1 = GATEWAY_ALLOCATOR_BATCH_SIZE;
         Settings batchSizeSetting = Settings.builder().put(setting1.getKey(), "3000").build();

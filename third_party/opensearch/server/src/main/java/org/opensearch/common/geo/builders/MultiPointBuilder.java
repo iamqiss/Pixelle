@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.builders;
+package org.density.common.geo.builders;
 
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.XShapeCollection;
-import org.opensearch.common.geo.parsers.ShapeParser;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.geometry.MultiPoint;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.XShapeCollection;
+import org.density.common.geo.parsers.ShapeParser;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.geometry.MultiPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import org.locationtech.spatial4j.shape.Point;
 /**
  * Builds a multi point geometry
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MultiPointBuilder extends ShapeBuilder<XShapeCollection<Point>, MultiPoint, MultiPointBuilder> {
 
@@ -107,7 +107,7 @@ public class MultiPointBuilder extends ShapeBuilder<XShapeCollection<Point>, Mul
             return MultiPoint.EMPTY;
         }
         return new MultiPoint(
-            coordinates.stream().map(coord -> new org.opensearch.geometry.Point(coord.x, coord.y)).collect(Collectors.toList())
+            coordinates.stream().map(coord -> new org.density.geometry.Point(coord.x, coord.y)).collect(Collectors.toList())
         );
     }
 

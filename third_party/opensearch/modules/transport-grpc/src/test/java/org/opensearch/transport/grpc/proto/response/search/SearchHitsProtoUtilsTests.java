@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.search;
+package org.density.transport.grpc.proto.response.search;
 
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.protobufs.HitsMetadata;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.index.shard.ShardId;
+import org.density.protobufs.HitsMetadata;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class SearchHitsProtoUtilsTests extends OpenSearchTestCase {
+public class SearchHitsProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithBasicFields() throws IOException {
         // Create SearchHits with basic fields
@@ -46,7 +46,7 @@ public class SearchHitsProtoUtilsTests extends OpenSearchTestCase {
         assertEquals("Total hits value should match", 10, hitsMetadata.getTotal().getTotalHits().getValue());
         assertEquals(
             "Total hits relation should be EQUAL_TO",
-            org.opensearch.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_EQ,
+            org.density.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_EQ,
             hitsMetadata.getTotal().getTotalHits().getRelation()
         );
         assertEquals("Max score should match", 3.0f, hitsMetadata.getMaxScore().getFloatValue(), 0.0f);
@@ -96,7 +96,7 @@ public class SearchHitsProtoUtilsTests extends OpenSearchTestCase {
         assertEquals("Total hits value should match", 10, hitsMetadata.getTotal().getTotalHits().getValue());
         assertEquals(
             "Total hits relation should be GREATER_THAN_OR_EQUAL_TO",
-            org.opensearch.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_GTE,
+            org.density.protobufs.TotalHits.TotalHitsRelation.TOTAL_HITS_RELATION_GTE,
             hitsMetadata.getTotal().getTotalHits().getRelation()
         );
     }

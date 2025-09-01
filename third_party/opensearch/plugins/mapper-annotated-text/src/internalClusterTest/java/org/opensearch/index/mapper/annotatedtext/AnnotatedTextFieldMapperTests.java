@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper.annotatedtext;
+package org.density.index.mapper.annotatedtext;
 
 import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
@@ -47,25 +47,25 @@ import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.CustomAnalyzer;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.analysis.StandardTokenizerFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.MapperTestCase;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.plugin.mapper.AnnotatedTextPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.CustomAnalyzer;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.analysis.StandardTokenizerFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MapperParsingException;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.MapperTestCase;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.plugin.mapper.AnnotatedTextPlugin;
+import org.density.plugins.Plugin;
 
 import java.io.IOException;
 import java.util.Arrays;

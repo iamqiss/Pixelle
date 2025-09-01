@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.explain;
+package org.density.action.explain;
 
-import org.opensearch.action.support.single.shard.SingleShardOperationRequestBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.single.shard.SingleShardOperationRequestBuilder;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.index.query.QueryBuilder;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.transport.client.DensityClient;
 
 /**
  * A builder for {@link ExplainRequest}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ExplainRequestBuilder extends SingleShardOperationRequestBuilder<ExplainRequest, ExplainResponse, ExplainRequestBuilder> {
 
-    ExplainRequestBuilder(OpenSearchClient client, ExplainAction action) {
+    ExplainRequestBuilder(DensityClient client, ExplainAction action) {
         super(client, action, new ExplainRequest());
     }
 
-    public ExplainRequestBuilder(OpenSearchClient client, ExplainAction action, String index, String id) {
+    public ExplainRequestBuilder(DensityClient client, ExplainAction action, String index, String id) {
         super(client, action, new ExplainRequest().index(index).id(id));
     }
 

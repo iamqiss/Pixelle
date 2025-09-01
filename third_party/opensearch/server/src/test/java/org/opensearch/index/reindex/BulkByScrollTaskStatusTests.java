@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.reindex.BulkByScrollTask.Status;
-import org.opensearch.test.AbstractXContentTestCase;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.Randomness;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.reindex.BulkByScrollTask.Status;
+import org.density.test.AbstractXContentTestCase;
 import org.hamcrest.Matchers;
 
 import java.io.IOException;
@@ -115,7 +115,7 @@ public class BulkByScrollTaskStatusTests extends AbstractXContentTestCase<BulkBy
                 return null;
             }
             if (randomBoolean()) {
-                return new BulkByScrollTask.StatusOrException(new OpenSearchException(randomAlphaOfLength(5)));
+                return new BulkByScrollTask.StatusOrException(new DensityException(randomAlphaOfLength(5)));
             }
             return new BulkByScrollTask.StatusOrException(randomWorkingStatus(i));
         }).collect(toList());

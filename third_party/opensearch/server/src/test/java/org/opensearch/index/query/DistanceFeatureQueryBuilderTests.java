@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.document.LatLonPoint;
 import org.apache.lucene.document.LongField;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.DateFieldMapper.DateFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.DistanceFeatureQueryBuilder.Origin;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.lucene.search.Queries;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.unit.TimeValue;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.DateFieldMapper.DateFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.DistanceFeatureQueryBuilder.Origin;
+import org.density.test.AbstractQueryTestCase;
 import org.joda.time.DateTime;
 
 import java.io.IOException;

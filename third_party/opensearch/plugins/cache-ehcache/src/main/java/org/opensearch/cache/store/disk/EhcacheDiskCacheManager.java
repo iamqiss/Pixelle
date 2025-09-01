@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.store.disk;
+package org.density.cache.store.disk;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cache.EhcacheDiskCacheSettings;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.cache.EhcacheDiskCacheSettings;
+import org.density.common.SuppressForbidden;
+import org.density.common.cache.CacheType;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,10 +37,10 @@ import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.PooledExecutionServiceConfigurationBuilder;
 
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_WRITE_MAXIMUM_THREADS_KEY;
-import static org.opensearch.cache.EhcacheDiskCacheSettings.DISK_WRITE_MIN_THREADS_KEY;
-import static org.opensearch.cache.store.disk.EhcacheDiskCache.THREAD_POOL_ALIAS_PREFIX;
-import static org.opensearch.cache.store.disk.EhcacheDiskCache.UNIQUE_ID;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_WRITE_MAXIMUM_THREADS_KEY;
+import static org.density.cache.EhcacheDiskCacheSettings.DISK_WRITE_MIN_THREADS_KEY;
+import static org.density.cache.store.disk.EhcacheDiskCache.THREAD_POOL_ALIAS_PREFIX;
+import static org.density.cache.store.disk.EhcacheDiskCache.UNIQUE_ID;
 
 /**
  * This is responsible to create a single cache manager for a cache type, and is used to create subsequent caches if

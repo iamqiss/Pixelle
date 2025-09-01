@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.transport.client.Client;
+import org.density.DensityParseException;
+import org.density.common.annotation.PublicApi;
+import org.density.common.document.DocumentField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.get.GetResult;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -60,7 +60,7 @@ import java.util.Objects;
  * @see GetRequest
  * @see Client#get(GetRequest)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetResponse extends ActionResponse implements Iterable<DocumentField>, ToXContentObject {
@@ -157,7 +157,7 @@ public class GetResponse extends ActionResponse implements Iterable<DocumentFiel
     /**
      * The source of the document (As a map).
      */
-    public Map<String, Object> getSourceAsMap() throws OpenSearchParseException {
+    public Map<String, Object> getSourceAsMap() throws DensityParseException {
         return getResult.sourceAsMap();
     }
 
@@ -194,7 +194,7 @@ public class GetResponse extends ActionResponse implements Iterable<DocumentFiel
      * doesn't know. But before returning the result it will check that enough information were
      * parsed to return a valid {@link GetResponse} instance and throws a {@link ParsingException}
      * otherwise. This is the case when we get a 404 back, which can be parsed as a normal
-     * {@link GetResponse} with found set to false, or as an opensearch exception. The caller
+     * {@link GetResponse} with found set to false, or as an density exception. The caller
      * of this method needs a way to figure out whether we got back a valid get response, which
      * can be done by catching ParsingException.
      *

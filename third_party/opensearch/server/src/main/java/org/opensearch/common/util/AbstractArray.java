@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.Accountable;
-import org.opensearch.core.common.util.BigArray;
+import org.density.core.common.util.BigArray;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Base array
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AbstractArray implements BigArray {
 

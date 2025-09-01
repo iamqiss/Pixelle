@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.lucene.backward_codecs.store.EndiannessReverserUtil;
 import org.apache.lucene.codecs.CodecUtil;
@@ -40,12 +40,12 @@ import org.apache.lucene.store.ChecksumIndexInput;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.cli.ExitCodes;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.hash.MessageDigests;
-import org.opensearch.core.common.settings.SecureString;
+import org.density.cli.ExitCodes;
+import org.density.cli.UserException;
+import org.density.common.Randomness;
+import org.density.common.SetOnce;
+import org.density.common.hash.MessageDigests;
+import org.density.core.common.settings.SecureString;
 
 import javax.crypto.AEADBadTagException;
 import javax.crypto.Cipher;
@@ -87,14 +87,14 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * A disk based container for sensitive settings in OpenSearch.
+ * A disk based container for sensitive settings in Density.
  * <p>
  * Loading a keystore has 2 phases. First, call {@link #load(Path)}. Then call
  * {@link #decrypt(char[])} with the keystore password, or an empty char array if
  * {@link #hasPassword()} is {@code false}.  Loading and decrypting should happen
  * in a single thread. Once decrypted, settings may be read in multiple threads.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class KeyStoreWrapper implements SecureSettings {
 
@@ -107,7 +107,7 @@ public class KeyStoreWrapper implements SecureSettings {
     /**
      * An entry in the keystore. The bytes are opaque and interpreted based on the entry type.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Entry {
         final byte[] bytes;
@@ -131,7 +131,7 @@ public class KeyStoreWrapper implements SecureSettings {
         .toCharArray();
 
     /** The name of the keystore file to read and write. */
-    private static final String KEYSTORE_FILENAME = "opensearch.keystore";
+    private static final String KEYSTORE_FILENAME = "density.keystore";
 
     /** The version of the metadata written before the keystore data. */
     public static final int FORMAT_VERSION = 4;
@@ -233,7 +233,7 @@ public class KeyStoreWrapper implements SecureSettings {
     }
 
     /**
-     * Loads information about the OpenSearch keystore from the provided config directory.
+     * Loads information about the Density keystore from the provided config directory.
      * <p>
      * {@link #decrypt(char[])} must be called before reading or writing any entries.
      * Returns {@code null} if no keystore exists.
@@ -251,7 +251,7 @@ public class KeyStoreWrapper implements SecureSettings {
                 formatVersion = CodecUtil.checkHeader(input, keystoreFileName, MIN_FORMAT_VERSION, FORMAT_VERSION);
             } catch (IndexFormatTooOldException e) {
                 throw new IllegalStateException(
-                    "The OpenSearch keystore ["
+                    "The Density keystore ["
                         + keystoreFile
                         + "] format is too old. "
                         + "You should delete and recreate it in order to upgrade.",
@@ -259,7 +259,7 @@ public class KeyStoreWrapper implements SecureSettings {
                 );
             } catch (IndexFormatTooNewException e) {
                 throw new IllegalStateException(
-                    "The OpenSearch keystore ["
+                    "The Density keystore ["
                         + keystoreFile
                         + "] format is too new. "
                         + "Are you trying to downgrade? You should delete and recreate it in order to downgrade.",
@@ -559,7 +559,7 @@ public class KeyStoreWrapper implements SecureSettings {
         } catch (final AccessDeniedException e) {
             final String message = String.format(
                 Locale.ROOT,
-                "unable to create temporary keystore at [%s], write permissions required for [%s] or run [opensearch-keystore upgrade]",
+                "unable to create temporary keystore at [%s], write permissions required for [%s] or run [density-keystore upgrade]",
                 configDir.resolve(tmpFile),
                 configDir
             );

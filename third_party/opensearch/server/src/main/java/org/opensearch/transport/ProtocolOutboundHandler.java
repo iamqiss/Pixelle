@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.core.transport.TransportResponse;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.core.transport.TransportResponse;
 
 import java.io.IOException;
 import java.util.Set;
@@ -19,7 +19,7 @@ import java.util.Set;
  * Protocol based outbound data handler.
  * Different transport protocols can have different implementations of this class.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class ProtocolOutboundHandler {
 

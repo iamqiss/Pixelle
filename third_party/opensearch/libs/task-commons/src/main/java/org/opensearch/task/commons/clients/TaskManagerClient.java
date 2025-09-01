@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.task.commons.clients;
+package org.density.task.commons.clients;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.task.commons.task.Task;
-import org.opensearch.task.commons.task.TaskId;
-import org.opensearch.task.commons.worker.WorkerNode;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.task.commons.task.Task;
+import org.density.task.commons.task.TaskId;
+import org.density.task.commons.worker.WorkerNode;
 
 import java.util.List;
 
 /**
  * Client used to interact with Task Store/Queue.
  *
- * TODO: TaskManager can be something not running an opensearch process.
- * We need to come up with a way to allow this interface to be used with in and out opensearch as well
+ * TODO: TaskManager can be something not running an density process.
+ * We need to come up with a way to allow this interface to be used with in and out density as well
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface TaskManagerClient {

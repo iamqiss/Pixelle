@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.profile.aggregation.AggregationProfileShardResult;
-import org.opensearch.search.profile.aggregation.AggregationProfiler;
-import org.opensearch.search.profile.fetch.FetchProfileShardResult;
-import org.opensearch.search.profile.fetch.FetchProfiler;
-import org.opensearch.search.profile.query.QueryProfileShardResult;
-import org.opensearch.search.profile.query.QueryProfiler;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.profile.aggregation.AggregationProfileShardResult;
+import org.density.search.profile.aggregation.AggregationProfiler;
+import org.density.search.profile.fetch.FetchProfileShardResult;
+import org.density.search.profile.fetch.FetchProfiler;
+import org.density.search.profile.query.QueryProfileShardResult;
+import org.density.search.profile.query.QueryProfiler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,13 +54,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
 
 /**
  * A container class to hold all the profile results across all shards.  Internally
  * holds a map of shard ID -&gt; Profiled results
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SearchProfileShardResults implements Writeable, ToXContentFragment {
     private static final String SEARCHES_FIELD = "searches";

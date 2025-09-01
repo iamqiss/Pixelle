@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.admin.indices.shrink.ResizeType;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ack.ClusterStateUpdateRequest;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.Index;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.admin.indices.shrink.ResizeType;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ack.ClusterStateUpdateRequest;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.metadata.Context;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.index.Index;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -48,7 +48,7 @@ import java.util.Set;
 /**
  * Cluster state update request that allows to create an index
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CreateIndexClusterStateUpdateRequest extends ClusterStateUpdateRequest<CreateIndexClusterStateUpdateRequest> {
 

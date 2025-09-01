@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
+import org.density.DensityException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
 
 import java.io.IOException;
 
 /**
  * This exception is thrown whenever a failure occurs in decommission request @{@link DecommissionService}
  *
- * @opensearch.internal
+ * @density.internal
  */
 
-public class DecommissioningFailedException extends OpenSearchException {
+public class DecommissioningFailedException extends DensityException {
 
     private final DecommissionAttribute decommissionAttribute;
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.geoip;
+package org.density.ingest.geoip;
 
 import com.maxmind.geoip2.DatabaseReader;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.CheckedSupplier;
+import org.density.common.SetOnce;
+import org.density.common.util.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.IOException;

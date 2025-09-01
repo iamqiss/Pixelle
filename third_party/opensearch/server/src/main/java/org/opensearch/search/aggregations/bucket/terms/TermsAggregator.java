@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms;
+package org.density.search.aggregations.bucket.terms;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.AggregationExecutionException;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.InternalOrder.Aggregation;
-import org.opensearch.search.aggregations.InternalOrder.CompoundOrder;
-import org.opensearch.search.aggregations.bucket.DeferableBucketAggregator;
-import org.opensearch.search.aggregations.bucket.nested.NestedAggregator;
-import org.opensearch.search.aggregations.support.AggregationPath;
-import org.opensearch.search.internal.SearchContext;
+import org.density.DensityException;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.AggregationExecutionException;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.InternalOrder.Aggregation;
+import org.density.search.aggregations.InternalOrder.CompoundOrder;
+import org.density.search.aggregations.bucket.DeferableBucketAggregator;
+import org.density.search.aggregations.bucket.nested.NestedAggregator;
+import org.density.search.aggregations.support.AggregationPath;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -61,14 +61,14 @@ import java.util.Set;
 /**
  * Base aggregator class to aggregate documents by terms
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class TermsAggregator extends DeferableBucketAggregator {
 
     /**
      * Bucket count thresholds
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class BucketCountThresholds implements Writeable, ToXContentFragment {
@@ -126,11 +126,11 @@ public abstract class TermsAggregator extends DeferableBucketAggregator {
             }
 
             if (requiredSize <= 0 || shardSize <= 0) {
-                throw new OpenSearchException("parameters [required_size] and [shard_size] must be >0 in terms aggregation.");
+                throw new DensityException("parameters [required_size] and [shard_size] must be >0 in terms aggregation.");
             }
 
             if (minDocCount < 0 || shardMinDocCount < 0) {
-                throw new OpenSearchException("parameter [min_doc_count] and [shardMinDocCount] must be >=0 in terms aggregation.");
+                throw new DensityException("parameter [min_doc_count] and [shardMinDocCount] must be >=0 in terms aggregation.");
             }
         }
 
@@ -203,7 +203,7 @@ public abstract class TermsAggregator extends DeferableBucketAggregator {
      * deserialization on the coordinator during reduce as shardMinDocCount and shardSize should not be accessed this way on the
      * coordinator.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class CoordinatorBucketCountThresholds extends BucketCountThresholds {
 

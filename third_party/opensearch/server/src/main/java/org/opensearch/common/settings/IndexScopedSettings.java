@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,42 +25,42 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.ExistingShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.EnableAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexSortConfig;
-import org.opensearch.index.IndexingSlowLog;
-import org.opensearch.index.LogByteSizeMergePolicyProvider;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.index.MergeSchedulerConfig;
-import org.opensearch.index.SearchSlowLog;
-import org.opensearch.index.TieredMergePolicyProvider;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.fielddata.IndexFieldDataService;
-import org.opensearch.index.mapper.FieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.index.store.FsDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.IndicesRequestCache;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.ExistingShardsAllocator;
+import org.density.cluster.routing.allocation.decider.EnableAllocationDecider;
+import org.density.cluster.routing.allocation.decider.MaxRetryAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.Loggers;
+import org.density.common.settings.Setting.Property;
+import org.density.common.util.FeatureFlags;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.IndexSortConfig;
+import org.density.index.IndexingSlowLog;
+import org.density.index.LogByteSizeMergePolicyProvider;
+import org.density.index.MergePolicyProvider;
+import org.density.index.MergeSchedulerConfig;
+import org.density.index.SearchSlowLog;
+import org.density.index.TieredMergePolicyProvider;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.engine.EngineConfig;
+import org.density.index.fielddata.IndexFieldDataService;
+import org.density.index.mapper.FieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.similarity.SimilarityService;
+import org.density.index.store.FsDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.indices.IndicesRequestCache;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,7 +74,7 @@ import java.util.function.Predicate;
  * Encapsulates all valid index level settings.
  * @see Property#IndexScope
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexScopedSettings extends AbstractScopedSettings {
@@ -351,7 +351,7 @@ public final class IndexScopedSettings extends AbstractScopedSettings {
             case IndexMetadata.INDEX_RESIZE_SOURCE_UUID_KEY:
             case IndexMetadata.INDEX_RESIZE_SOURCE_NAME_KEY:
                 // we keep this setting for BWC to support indexes created in 1.1.0
-                // this can be removed in OpenSearch 3.0
+                // this can be removed in Density 3.0
             case "index.plugins.replication.translog.retention_lease.pruning.enabled":
                 return true;
             default:

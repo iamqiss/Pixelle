@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,50 +25,50 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.apache.lucene.tests.store.BaseDirectoryWrapper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cli.MockTerminal;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.RecoverySource;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingHelper;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.gateway.PersistedClusterStateService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.MergePolicyProvider;
-import org.opensearch.index.engine.EngineConfigFactory;
-import org.opensearch.index.engine.EngineCreationFailureException;
-import org.opensearch.index.engine.InternalEngineFactory;
-import org.opensearch.index.seqno.RetentionLeaseSyncer;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TestTranslog;
-import org.opensearch.index.translog.TranslogCorruptedException;
-import org.opensearch.index.translog.TranslogException;
-import org.opensearch.test.CorruptionUtils;
-import org.opensearch.test.DummyShardLock;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cli.MockTerminal;
+import org.density.cli.Terminal;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.RecoverySource;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingHelper;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.common.CheckedFunction;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.core.index.shard.ShardId;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.env.TestEnvironment;
+import org.density.gateway.PersistedClusterStateService;
+import org.density.index.IndexSettings;
+import org.density.index.MergePolicyProvider;
+import org.density.index.engine.EngineConfigFactory;
+import org.density.index.engine.EngineCreationFailureException;
+import org.density.index.engine.InternalEngineFactory;
+import org.density.index.seqno.RetentionLeaseSyncer;
+import org.density.index.store.Store;
+import org.density.index.translog.TestTranslog;
+import org.density.index.translog.TranslogCorruptedException;
+import org.density.index.translog.TranslogException;
+import org.density.test.CorruptionUtils;
+import org.density.test.DummyShardLock;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -80,7 +80,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.opensearch.index.shard.RemoveCorruptedShardDataCommand.TRUNCATE_CLEAN_TRANSLOG_FLAG;
+import static org.density.index.shard.RemoveCorruptedShardDataCommand.TRUNCATE_CLEAN_TRANSLOG_FLAG;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
@@ -210,7 +210,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
             final OptionSet options = parser.parse("-d", indexPath.toString());
             command.execute(t, options, environment);
             fail("expected the command to fail not being able to find a corrupt file marker");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), startsWith("Shard does not seem to be corrupted at"));
             assertThat(t.getOutput(), containsString("Lucene index is clean at"));
         }
@@ -244,7 +244,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
         try {
             command.execute(t, options, environment);
             fail();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             if (corruptSegments) {
                 assertThat(e.getMessage(), either(is("Index is unrecoverable")).or(startsWith("unable to list commits")));
             } else {
@@ -312,7 +312,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
         try {
             command.execute(t, options, environment);
             fail();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), containsString("aborted by user"));
             assertThat(t.getOutput(), containsString("Continue and remove corrupted data from the shard ?"));
         }
@@ -368,7 +368,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
         try {
             command.execute(t, options, environment);
             fail();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), containsString("aborted by user"));
             assertThat(t.getOutput(), containsString("Continue and remove corrupted data from the shard ?"));
         }
@@ -443,7 +443,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
         final OptionSet options = parser.parse("-d", translogPath.toString());
         t.setVerbosity(Terminal.Verbosity.VERBOSE);
         assertThat(
-            expectThrows(OpenSearchException.class, () -> command.execute(t, options, environment)).getMessage(),
+            expectThrows(DensityException.class, () -> command.execute(t, options, environment)).getMessage(),
             allOf(containsString("Shard does not seem to be corrupted"), containsString("--" + TRUNCATE_CLEAN_TRANSLOG_FLAG))
         );
         assertThat(t.getOutput(), containsString("Lucene index is clean"));
@@ -492,7 +492,7 @@ public class RemoveCorruptedShardDataCommandTests extends IndexShardTestCase {
         try {
             command.execute(t, options, environment);
             fail();
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), containsString("aborted by user"));
             assertThat(t.getOutput(), containsString("Continue and remove corrupted data from the shard ?"));
             assertThat(t.getOutput(), containsString("Lucene index is marked corrupted, but no corruption detected"));

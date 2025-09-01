@@ -1,39 +1,39 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.InputStreamWithMetadata;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.io.VersionedCodecStreamWrapper;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogReader;
-import org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import org.opensearch.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
-import org.opensearch.index.translog.transfer.listener.TranslogTransferListener;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.common.SetOnce;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.InputStreamWithMetadata;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.io.VersionedCodecStreamWrapper;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.logging.Loggers;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogReader;
+import org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import org.density.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
+import org.density.index.translog.transfer.listener.TranslogTransferListener;
+import org.density.indices.RemoteStoreSettings;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,14 +52,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
-import static org.opensearch.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
-import static org.opensearch.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
+import static org.density.index.translog.transfer.FileSnapshot.TransferFileSnapshot;
+import static org.density.index.translog.transfer.FileSnapshot.TranslogFileSnapshot;
+import static org.density.index.translog.transfer.TranslogTransferMetadata.METADATA_SEPARATOR;
 
 /**
  * The class responsible for orchestrating the transfer of a {@link TransferSnapshot} via a {@link TransferService}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TranslogTransferManager {
 
@@ -193,7 +193,7 @@ public class TranslogTransferManager {
 
             uploadStartTime = System.nanoTime();
             // TODO: Ideally each file's upload start time should be when it is actually picked for upload
-            // https://github.com/opensearch-project/OpenSearch/issues/9729
+            // https://github.com/density-project/Density/issues/9729
             fileTransferTracker.recordFileTransferStartTime(uploadStartTime);
             transferService.uploadBlobs(toUpload, blobPathMap, latchedActionListener, WritePriority.HIGH);
 
@@ -250,7 +250,7 @@ public class TranslogTransferManager {
     private void captureStatsBeforeUpload() {
         remoteTranslogTransferTracker.incrementTotalUploadsStarted();
         // TODO: Ideally each file's byte uploads started should be when it is actually picked for upload
-        // https://github.com/opensearch-project/OpenSearch/issues/9729
+        // https://github.com/density-project/Density/issues/9729
         remoteTranslogTransferTracker.addUploadBytesStarted(fileTransferTracker.getTotalBytesToUpload());
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.env.Environment;
-import org.opensearch.index.remote.RemoteStoreEnums;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.RepositoryPlugin;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryStats;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.repositories.fs.FsRepository;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotShardPaths;
-import org.opensearch.snapshots.SnapshotShardPaths.ShardInfo;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.Version;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.compress.Compressor;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.env.Environment;
+import org.density.index.remote.RemoteStoreEnums;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.plugins.Plugin;
+import org.density.plugins.RepositoryPlugin;
+import org.density.repositories.IndexId;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryStats;
+import org.density.repositories.ShardGenerations;
+import org.density.repositories.fs.FsRepository;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotShardPaths;
+import org.density.snapshots.SnapshotShardPaths.ShardInfo;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -91,8 +91,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.repositories.RepositoryDataTests.generateRandomRepoData;
-import static org.opensearch.repositories.blobstore.BlobStoreRepository.calculateMaxWithinIntLimit;
+import static org.density.repositories.RepositoryDataTests.generateRandomRepoData;
+import static org.density.repositories.blobstore.BlobStoreRepository.calculateMaxWithinIntLimit;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
@@ -140,12 +140,12 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
 
     public void testRetrieveSnapshots() throws Exception {
         final Client client = client();
-        final Path location = OpenSearchIntegTestCase.randomRepoPath(node().settings());
+        final Path location = DensityIntegTestCase.randomRepoPath(node().settings());
         final String repositoryName = "test-repo";
 
         logger.info("-->  creating repository");
         Settings.Builder settings = Settings.builder().put(node().settings()).put("location", location);
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
 
         logger.info("--> creating an index and indexing documents");
         final String indexName = "test-idx";
@@ -181,7 +181,7 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(repositoryName);
         final List<SnapshotId> originalSnapshots = Arrays.asList(snapshotId1, snapshotId2);
 
-        List<SnapshotId> snapshotIds = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
+        List<SnapshotId> snapshotIds = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
             .getSnapshotIds()
             .stream()
             .sorted((s1, s2) -> s1.getName().compareTo(s2.getName()))
@@ -193,10 +193,10 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
         final BlobStoreRepository repository = setupRepo();
         final long pendingGeneration = repository.metadata.pendingGeneration();
         // write to and read from a index file with no entries
-        assertThat(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository).getSnapshotIds().size(), equalTo(0));
+        assertThat(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository).getSnapshotIds().size(), equalTo(0));
         final RepositoryData emptyData = RepositoryData.EMPTY;
         writeIndexGen(repository, emptyData, emptyData.getGenId());
-        RepositoryData repoData = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
+        RepositoryData repoData = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository);
         assertEquals(repoData, emptyData);
         assertEquals(repoData.getIndices().size(), 0);
         assertEquals(repoData.getSnapshotIds().size(), 0);
@@ -205,40 +205,40 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
         // write to and read from an index file with snapshots but no indices
         repoData = addRandomSnapshotsToRepoData(repoData, false);
         writeIndexGen(repository, repoData, repoData.getGenId());
-        assertEquals(repoData, OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository));
+        assertEquals(repoData, DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository));
 
         // write to and read from a index file with random repository data
-        repoData = addRandomSnapshotsToRepoData(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), true);
+        repoData = addRandomSnapshotsToRepoData(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), true);
         writeIndexGen(repository, repoData, repoData.getGenId());
-        assertEquals(repoData, OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository));
+        assertEquals(repoData, DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository));
     }
 
     public void testIndexGenerationalFiles() throws Exception {
         final BlobStoreRepository repository = setupRepo();
-        assertEquals(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), RepositoryData.EMPTY);
+        assertEquals(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), RepositoryData.EMPTY);
 
         final long pendingGeneration = repository.metadata.pendingGeneration();
 
         // write to index generational file
         RepositoryData repositoryData = generateRandomRepoData();
         writeIndexGen(repository, repositoryData, RepositoryData.EMPTY_REPO_GEN);
-        assertThat(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), equalTo(repositoryData));
+        assertThat(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), equalTo(repositoryData));
         final long expectedGeneration = pendingGeneration + 1L;
         assertThat(repository.latestIndexBlobId(), equalTo(expectedGeneration));
         assertThat(repository.readSnapshotIndexLatestBlob(), equalTo(expectedGeneration));
 
         // adding more and writing to a new index generational file
-        repositoryData = addRandomSnapshotsToRepoData(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), true);
+        repositoryData = addRandomSnapshotsToRepoData(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), true);
         writeIndexGen(repository, repositoryData, repositoryData.getGenId());
-        assertEquals(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), repositoryData);
+        assertEquals(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), repositoryData);
         assertThat(repository.latestIndexBlobId(), equalTo(expectedGeneration + 1L));
         assertThat(repository.readSnapshotIndexLatestBlob(), equalTo(expectedGeneration + 1L));
 
         // removing a snapshot and writing to a new index generational file
-        repositoryData = OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
+        repositoryData = DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository)
             .removeSnapshots(Collections.singleton(repositoryData.getSnapshotIds().iterator().next()), ShardGenerations.EMPTY);
         writeIndexGen(repository, repositoryData, repositoryData.getGenId());
-        assertEquals(OpenSearchBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), repositoryData);
+        assertEquals(DensityBlobStoreRepositoryIntegTestCase.getRepositoryData(repository), repositoryData);
         assertThat(repository.latestIndexBlobId(), equalTo(expectedGeneration + 2L));
         assertThat(repository.readSnapshotIndexLatestBlob(), equalTo(expectedGeneration + 2L));
     }
@@ -262,7 +262,7 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
 
     public void testBadChunksize() throws Exception {
         final Client client = client();
-        final Path location = OpenSearchIntegTestCase.randomRepoPath(node().settings());
+        final Path location = DensityIntegTestCase.randomRepoPath(node().settings());
         final String repositoryName = "test-repo";
         Settings.Builder settings = Settings.builder()
             .put(node().settings())
@@ -270,19 +270,19 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
             .put("chunk_size", randomLongBetween(-10, 0), ByteSizeUnit.BYTES);
         expectThrows(
             RepositoryException.class,
-            () -> OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings)
+            () -> DensityIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings)
         );
     }
 
     public void testPrefixModeVerification() throws Exception {
         final Client client = client();
-        final Path location = OpenSearchIntegTestCase.randomRepoPath(node().settings());
+        final Path location = DensityIntegTestCase.randomRepoPath(node().settings());
         final String repositoryName = "test-repo";
         Settings.Builder settings = Settings.builder()
             .put(node().settings())
             .put("location", location)
             .put(BlobStoreRepository.PREFIX_MODE_VERIFICATION_SETTING.getKey(), true);
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
 
         final RepositoriesService repositoriesService = getInstanceFromNode(RepositoriesService.class);
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(repositoryName);
@@ -290,7 +290,7 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
     }
 
     public void testFsRepositoryCompressDeprecatedIgnored() {
-        final Path location = OpenSearchIntegTestCase.randomRepoPath(node().settings());
+        final Path location = DensityIntegTestCase.randomRepoPath(node().settings());
         final Settings settings = Settings.builder().put(node().settings()).put("location", location).build();
         final RepositoryMetadata metadata = new RepositoryMetadata("test-repo", REPO_TYPE, settings);
 
@@ -313,11 +313,11 @@ public class BlobStoreRepositoryTests extends BlobStoreRepositoryHelperTests {
 
     private BlobStoreRepository setupRepo() {
         final Client client = client();
-        final Path location = OpenSearchIntegTestCase.randomRepoPath(node().settings());
+        final Path location = DensityIntegTestCase.randomRepoPath(node().settings());
         final String repositoryName = "test-repo";
 
         Settings.Builder settings = Settings.builder().put(node().settings()).put("location", location);
-        OpenSearchIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
+        DensityIntegTestCase.putRepository(client.admin().cluster(), repositoryName, REPO_TYPE, settings);
 
         final RepositoriesService repositoriesService = getInstanceFromNode(RepositoriesService.class);
         final BlobStoreRepository repository = (BlobStoreRepository) repositoriesService.repository(repositoryName);

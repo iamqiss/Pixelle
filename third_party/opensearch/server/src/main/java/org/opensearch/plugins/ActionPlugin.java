@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.RequestValidators;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.support.ActionFilter;
-import org.opensearch.action.support.TransportAction;
-import org.opensearch.action.support.TransportActions;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsFilter;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.rest.RestController;
-import org.opensearch.rest.RestHandler;
-import org.opensearch.rest.RestHeaderDefinition;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.RequestValidators;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.support.ActionFilter;
+import org.density.action.support.TransportAction;
+import org.density.action.support.TransportActions;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsFilter;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.rest.RestController;
+import org.density.rest.RestHandler;
+import org.density.rest.RestHeaderDefinition;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -62,7 +62,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
- * An additional extension point for {@link Plugin}s that extends OpenSearch's scripting functionality. Implement it like this:
+ * An additional extension point for {@link Plugin}s that extends Density's scripting functionality. Implement it like this:
  * <pre>{@code
  *   {@literal @}Override
  *   public List<ActionHandler<?, ?>> getActions() {
@@ -73,7 +73,7 @@ import java.util.stream.Collectors;
  *   }
  * }</pre>
  *
- * @opensearch.api
+ * @density.api
  */
 public interface ActionPlugin {
     /**
@@ -155,7 +155,7 @@ public interface ActionPlugin {
     /**
      *  Class responsible for handing Transport Actions
      *
-     * @opensearch.internal
+     * @density.internal
      */
     final class ActionHandler<Request extends ActionRequest, Response extends ActionResponse> {
         private final ActionType<Response> action;
@@ -216,7 +216,7 @@ public interface ActionPlugin {
 
     /**
      * Returns a collection of validators that are used by {@link RequestValidators} to validate a
-     * {@link org.opensearch.action.admin.indices.mapping.put.PutMappingRequest} before the executing it.
+     * {@link org.density.action.admin.indices.mapping.put.PutMappingRequest} before the executing it.
      */
     default Collection<RequestValidators.RequestValidator<PutMappingRequest>> mappingRequestValidators() {
         return Collections.emptyList();

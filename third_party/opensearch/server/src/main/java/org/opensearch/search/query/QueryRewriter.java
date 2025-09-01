@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
 
 /**
  * Interface for query rewriting implementations that optimize query structure
  * before conversion to Lucene queries.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface QueryRewriter {

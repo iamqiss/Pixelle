@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.translog.transfer;
+package org.density.index.translog.transfer;
 
-import org.opensearch.common.io.IndexIOStreamHandler;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.IndexIOStreamHandler;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 /**
- * Unit tests for {@link org.opensearch.index.translog.transfer.TranslogTransferMetadataHandlerFactoryTests}.
+ * Unit tests for {@link org.density.index.translog.transfer.TranslogTransferMetadataHandlerFactoryTests}.
  */
-public class TranslogTransferMetadataHandlerFactoryTests extends OpenSearchTestCase {
+public class TranslogTransferMetadataHandlerFactoryTests extends DensityTestCase {
 
     private TranslogTransferMetadataHandlerFactory translogTransferMetadataHandlerFactory;
 

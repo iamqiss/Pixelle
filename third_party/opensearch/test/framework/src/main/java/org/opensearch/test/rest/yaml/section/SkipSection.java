@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.rest.yaml.section;
+package org.density.test.rest.yaml.section;
 
-import org.opensearch.Version;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.VersionUtils;
-import org.opensearch.test.rest.yaml.Features;
+import org.density.Version;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.VersionUtils;
+import org.density.test.rest.yaml.Features;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * Represents a skip section that tells whether a specific test section or suite needs to be skipped
  * based on:
- * - the opensearch version the tests are running against
+ * - the density version the tests are running against
  * - a specific test feature required that might not be implemented yet by the runner
  */
 public class SkipSection {

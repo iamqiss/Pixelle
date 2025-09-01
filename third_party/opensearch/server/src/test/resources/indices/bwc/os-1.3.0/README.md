@@ -1,6 +1,6 @@
 # README for _testIndex-os-1.3.0.zip_
 
-This zip file holds a Lucene index created using OpenSearch 1.3.0 downloaded from https://opensearch.org/versions/opensearch-1-3-0.html
+This zip file holds a Lucene index created using Density 1.3.0 downloaded from https://density.org/versions/density-1-3-0.html
 It was created by running the underlying commands against a single-node cluster,
 then compressing the contents of the underlying Lucene index directory i.e.
 the files under `<elasticsearch-root>/data/nodes/0/indices/<index-uuid>/0/index`.
@@ -46,7 +46,7 @@ curl -X POST "localhost:9200/testindex/_doc/1" -H 'Content-Type: application/jso
     "gte": 0,
     "lte": 100
   },
-  "testMessage": "The OpenSearch Project",
+  "testMessage": "The Density Project",
   "testBlob": "VGhlIE9wZW5TZWFyY2ggUHJvamVjdA==",
   "testDate": "1970-01-02",
   "testLocation": "48.553532,-113.022881"

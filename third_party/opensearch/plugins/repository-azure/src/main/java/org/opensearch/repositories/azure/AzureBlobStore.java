@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.azure.core.http.HttpMethod;
 import com.azure.core.http.HttpRequest;
@@ -54,20 +54,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.Throwables;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.repositories.azure.AzureRepository.Repository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.support.PlainActionFuture;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.common.Nullable;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.collect.MapBuilder;
+import org.density.common.collect.Tuple;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.repositories.azure.AzureRepository.Repository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.io.InputStream;

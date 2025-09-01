@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.similarity.SimilarityProvider;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.query.QueryShardContext;
+import org.density.index.similarity.SimilarityProvider;
+import org.density.script.ScriptService;
 
 import java.io.IOException;
 import java.util.Map;
@@ -53,9 +53,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * The foundation OpenSearch mapper
+ * The foundation Density mapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
@@ -63,7 +63,7 @@ public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
     /**
      * The builder context used in field mappings
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class BuilderContext {
@@ -100,7 +100,7 @@ public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
     /**
      * Base mapper builder
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class Builder<T extends Builder> implements MapperBuilderProperties {
@@ -124,7 +124,7 @@ public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
     /**
      * Type parser for the mapper
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface TypeParser {
@@ -132,7 +132,7 @@ public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
         /**
          * Parser context for the type parser
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         class ParserContext {
@@ -232,7 +232,7 @@ public abstract class Mapper implements ToXContentFragment, Iterable<Mapper> {
             /**
              * Base mutiple field parser context
              *
-             * @opensearch.internal
+             * @density.internal
              */
             static class MultiFieldParserContext extends ParserContext {
                 MultiFieldParserContext(ParserContext in) {

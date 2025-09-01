@@ -1,25 +1,25 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchException;
-import org.opensearch.search.aggregations.AggregationProcessor;
-import org.opensearch.search.aggregations.ConcurrentAggregationProcessor;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.profile.query.ProfileCollectorManager;
-import org.opensearch.search.query.QueryPhase.DefaultQueryPhaseSearcher;
+import org.density.DensityException;
+import org.density.search.aggregations.AggregationProcessor;
+import org.density.search.aggregations.ConcurrentAggregationProcessor;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.SearchContext;
+import org.density.search.profile.query.ProfileCollectorManager;
+import org.density.search.query.QueryPhase.DefaultQueryPhaseSearcher;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -114,8 +114,8 @@ public class ConcurrentQueryPhaseSearcher extends DefaultQueryPhaseSearcher {
     }
 
     private static <T extends Exception> void rethrowCauseIfPossible(RuntimeException re, SearchContext searchContext) throws T {
-        // Rethrow exception if cause is null or if it's an instance of OpenSearchException
-        if (re.getCause() == null || re instanceof OpenSearchException) {
+        // Rethrow exception if cause is null or if it's an instance of DensityException
+        if (re.getCause() == null || re instanceof DensityException) {
             throw re;
         }
 

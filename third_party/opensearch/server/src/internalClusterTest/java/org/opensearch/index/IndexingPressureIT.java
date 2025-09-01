@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.stats.ShardStats;
-import org.opensearch.action.bulk.BulkRequest;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.bulk.TransportShardBulkAction;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.stats.ShardStats;
+import org.density.action.bulk.BulkRequest;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.bulk.TransportShardBulkAction;
+import org.density.action.index.IndexRequest;
+import org.density.action.index.IndexResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.UUIDs;
+import org.density.common.action.ActionFuture;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.plugins.Plugin;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,12 +62,12 @@ import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 2, numClientNodes = 1)
-public class IndexingPressureIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 2, numClientNodes = 1)
+public class IndexingPressureIT extends DensityIntegTestCase {
 
     public static final String INDEX_NAME = "test";
 
@@ -304,7 +304,7 @@ public class IndexingPressureIT extends OpenSearchIntegTestCase {
                 assertEquals(0, coordinatingWriteLimits.getCurrentReplicaBytes());
             });
 
-            expectThrows(OpenSearchRejectedExecutionException.class, () -> {
+            expectThrows(DensityRejectedExecutionException.class, () -> {
                 if (randomBoolean()) {
                     client(coordinatingOnlyNode).bulk(bulkRequest).actionGet();
                 } else if (randomBoolean()) {
@@ -377,7 +377,7 @@ public class IndexingPressureIT extends OpenSearchIntegTestCase {
 
             BulkResponse responses = client(coordinatingOnlyNode).bulk(bulkRequest).actionGet();
             assertTrue(responses.hasFailures());
-            assertThat(responses.getItems()[0].getFailure().getCause().getCause(), instanceOf(OpenSearchRejectedExecutionException.class));
+            assertThat(responses.getItems()[0].getFailure().getCause().getCause(), instanceOf(DensityRejectedExecutionException.class));
 
             replicaRelease.close();
 

@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,9 +27,9 @@
  * under the License.
  */
 
-package org.opensearch.gradle.internal
+package org.density.gradle.internal
 
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.fixtures.AbstractGradleFuncTest
 import org.gradle.testkit.runner.TaskOutcome
 
 class InternalBwcGitPluginFuncTest extends AbstractGradleFuncTest {
@@ -42,8 +42,8 @@ class InternalBwcGitPluginFuncTest extends AbstractGradleFuncTest {
         given:
         internalBuild();
         buildFile << """
-            import org.opensearch.gradle.Version;
-            apply plugin: org.opensearch.gradle.internal.InternalBwcGitPlugin
+            import org.density.gradle.Version;
+            apply plugin: org.density.gradle.internal.InternalBwcGitPlugin
 
             bwcGitConfig {
                  bwcVersion = project.provider { Version.fromString("7.10.0") }

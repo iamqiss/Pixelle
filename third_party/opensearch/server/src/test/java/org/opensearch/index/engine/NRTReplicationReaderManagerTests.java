@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.SegmentInfos;
 import org.apache.lucene.index.StandardDirectoryReader;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TranslogConfig;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.codec.CodecService;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.TranslogConfig;
 
 import java.io.IOException;
 
@@ -62,13 +62,13 @@ public class NRTReplicationReaderManagerTests extends EngineTestCase {
                 .build();
 
             NRTReplicationReaderManager readerManager = new NRTReplicationReaderManager(
-                OpenSearchDirectoryReader.wrap(reader, shardId),
+                DensityDirectoryReader.wrap(reader, shardId),
                 (files) -> {},
                 (files) -> {},
                 testConfig
             );
             assertEquals(initialInfos, readerManager.getSegmentInfos());
-            try (final OpenSearchDirectoryReader acquire = readerManager.acquire()) {
+            try (final DensityDirectoryReader acquire = readerManager.acquire()) {
                 assertNull(readerManager.refreshIfNeeded(acquire));
             }
 
@@ -78,7 +78,7 @@ public class NRTReplicationReaderManagerTests extends EngineTestCase {
 
             readerManager.updateSegments(infos_2);
             assertEquals(infos_2, readerManager.getSegmentInfos());
-            try (final OpenSearchDirectoryReader acquire = readerManager.acquire()) {
+            try (final DensityDirectoryReader acquire = readerManager.acquire()) {
                 final StandardDirectoryReader standardReader = NRTReplicationReaderManager.unwrapStandardReader(acquire);
                 assertEquals(infos_2, standardReader.getSegmentInfos());
             }

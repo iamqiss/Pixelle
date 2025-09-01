@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.lucene.document.LatLonShapeDocValuesField;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.LeafGeoShapeFieldData;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.search.aggregations.AggregationExecutionException;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.LeafGeoShapeFieldData;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.search.aggregations.AggregationExecutionException;
 
 /**
  * Base class for retrieving GeoShape doc values which are added as {@link LatLonShapeDocValuesField} in Lucene
@@ -35,7 +35,7 @@ public abstract class AbstractLeafGeoShapeFieldData implements LeafGeoShapeField
      */
     @Override
     public final ScriptDocValues<?> getScriptValues() {
-        // TODO: https://github.com/opensearch-project/geospatial/issues/128
+        // TODO: https://github.com/density-project/geospatial/issues/128
         throw new AggregationExecutionException("Script doc value for the GeoShape field is not supported");
     }
 }

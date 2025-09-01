@@ -1,42 +1,42 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterInfo;
-import org.opensearch.cluster.ClusterModule;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.cluster.EmptyClusterInfoService;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.RoutingNodes;
-import org.opensearch.cluster.routing.RoutingPool;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.routing.allocation.allocator.BalancedShardsAllocator;
-import org.opensearch.cluster.routing.allocation.allocator.ShardsAllocator;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.AllocationDeciders;
-import org.opensearch.cluster.routing.allocation.decider.Decision;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexModule;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.test.gateway.TestGatewayAllocator;
+import org.density.Version;
+import org.density.cluster.ClusterInfo;
+import org.density.cluster.ClusterModule;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DiskUsage;
+import org.density.cluster.EmptyClusterInfoService;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.RoutingNodes;
+import org.density.cluster.routing.RoutingPool;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.routing.allocation.allocator.BalancedShardsAllocator;
+import org.density.cluster.routing.allocation.allocator.ShardsAllocator;
+import org.density.cluster.routing.allocation.decider.AllocationDecider;
+import org.density.cluster.routing.allocation.decider.AllocationDeciders;
+import org.density.cluster.routing.allocation.decider.Decision;
+import org.density.common.SuppressForbidden;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.index.IndexModule;
+import org.density.node.NodeResourceUsageStats;
+import org.density.test.gateway.TestGatewayAllocator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,10 +44,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.cluster.routing.ShardRoutingState.INITIALIZING;
+import static org.density.cluster.routing.ShardRoutingState.INITIALIZING;
 
 @SuppressForbidden(reason = "feature flag overrides")
-public abstract class RemoteShardsBalancerBaseTestCase extends OpenSearchAllocationTestCase {
+public abstract class RemoteShardsBalancerBaseTestCase extends DensityAllocationTestCase {
     protected static final String LOCAL_NODE_PREFIX = "local-only-node";
     protected static final String REMOTE_NODE_PREFIX = "remote-capable-node";
     protected static final String LOCAL_IDX_PREFIX = "local-idx";
@@ -204,7 +204,7 @@ public abstract class RemoteShardsBalancerBaseTestCase extends OpenSearchAllocat
 
     public AllocationService createRemoteCapableAllocationService() {
         Settings settings = Settings.Builder.EMPTY_SETTINGS;
-        return new OpenSearchAllocationTestCase.MockAllocationService(
+        return new DensityAllocationTestCase.MockAllocationService(
             randomAllocationDeciders(settings, EMPTY_CLUSTER_SETTINGS, random()),
             new TestGatewayAllocator(),
             createShardAllocator(settings),
@@ -226,7 +226,7 @@ public abstract class RemoteShardsBalancerBaseTestCase extends OpenSearchAllocat
 
     public AllocationService createRejectRemoteAllocationService(boolean throttle) {
         Settings settings = Settings.Builder.EMPTY_SETTINGS;
-        return new OpenSearchAllocationTestCase.MockAllocationService(
+        return new DensityAllocationTestCase.MockAllocationService(
             createRejectRemoteAllocationDeciders(throttle),
             new TestGatewayAllocator(),
             createShardAllocator(settings),

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support;
+package org.density.action.support;
 
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityTimeoutException;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -44,14 +44,14 @@ import java.util.function.Consumer;
 /**
  * Supports timeouts on listeners
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ListenerTimeouts {
 
     /**
      * Wraps a listener with a listener that can timeout. After the timeout period the
      * {@link ActionListener#onFailure(Exception)} will be called with a
-     * {@link OpenSearchTimeoutException} if the listener has not already been completed.
+     * {@link DensityTimeoutException} if the listener has not already been completed.
      *
      * @param threadPool used to schedule the timeout
      * @param listener to that can timeout
@@ -69,7 +69,7 @@ public class ListenerTimeouts {
     ) {
         return wrapWithTimeout(threadPool, timeout, executor, listener, (ignore) -> {
             String timeoutMessage = "[" + listenerName + "]" + " timed out after [" + timeout + "]";
-            listener.onFailure(new OpenSearchTimeoutException(timeoutMessage));
+            listener.onFailure(new DensityTimeoutException(timeoutMessage));
         });
     }
 
@@ -99,7 +99,7 @@ public class ListenerTimeouts {
     /**
      * Listener that can time out
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TimeoutableListener<Response> implements ActionListener<Response>, Runnable {
 

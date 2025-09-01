@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -26,18 +26,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import org.apache.tools.ant.DefaultLogger
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.opensearch.gradle.BuildPlugin
-import org.opensearch.gradle.BwcVersions
-import org.opensearch.gradle.LoggedExec
-import org.opensearch.gradle.Version
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.info.BuildParams
-import org.opensearch.gradle.plugin.PluginBuildPlugin
-import org.opensearch.gradle.plugin.PluginPropertiesExtension
+import org.density.gradle.BuildPlugin
+import org.density.gradle.BwcVersions
+import org.density.gradle.LoggedExec
+import org.density.gradle.Version
+import org.density.gradle.VersionProperties
+import org.density.gradle.info.BuildParams
+import org.density.gradle.plugin.PluginBuildPlugin
+import org.density.gradle.plugin.PluginPropertiesExtension
 import org.gradle.api.AntBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -97,13 +97,13 @@ class ClusterFormationTasks {
             throw new GradleException("bwcVersion must not be null if numBwcNodes is > 0")
         }
         // this is our current version distribution configuration we use for all kinds of REST tests etc.
-        Configuration currentDistro = project.configurations.create("${prefix}_opensearchDistro")
-        Configuration bwcDistro = project.configurations.create("${prefix}_opensearchBwcDistro")
-        Configuration bwcPlugins = project.configurations.create("${prefix}_opensearchBwcPlugins")
+        Configuration currentDistro = project.configurations.create("${prefix}_densityDistro")
+        Configuration bwcDistro = project.configurations.create("${prefix}_densityBwcDistro")
+        Configuration bwcPlugins = project.configurations.create("${prefix}_densityBwcPlugins")
         if (System.getProperty('tests.distribution', 'archive') == 'integ-test-zip') {
             throw new Exception("tests.distribution=integ-test-zip is not supported")
         }
-        configureDistributionDependency(project, config.distribution, currentDistro, VersionProperties.getOpenSearch())
+        configureDistributionDependency(project, config.distribution, currentDistro, VersionProperties.getDensity())
         boolean hasBwcNodes = config.numBwcNodes > 0
         if (hasBwcNodes) {
             if (config.bwcVersion == null) {
@@ -125,18 +125,18 @@ class ClusterFormationTasks {
             // we start N nodes and out of these N nodes there might be M bwc nodes.
             // for each of those nodes we might have a different configuration
             Configuration distro
-            String opensearchVersion
+            String densityVersion
             if (i < config.numBwcNodes) {
-                opensearchVersion = config.bwcVersion.toString()
+                densityVersion = config.bwcVersion.toString()
                 if (project.bwcVersions.unreleased.contains(config.bwcVersion)) {
-                    opensearchVersion += "-SNAPSHOT"
+                    densityVersion += "-SNAPSHOT"
                 }
                 distro = bwcDistro
             } else {
-                opensearchVersion = VersionProperties.getOpenSearch()
+                densityVersion = VersionProperties.getDensity()
                 distro = currentDistro
             }
-            NodeInfo node = new NodeInfo(config, i, project, prefix, opensearchVersion, sharedDir)
+            NodeInfo node = new NodeInfo(config, i, project, prefix, densityVersion, sharedDir)
             nodes.add(node)
             Closure<Map> writeConfigSetup
             Object dependsOn
@@ -187,7 +187,7 @@ class ClusterFormationTasks {
     }
 
     /** Adds a dependency on the given distribution */
-    static void configureDistributionDependency(Project project, String distro, Configuration configuration, String opensearchVersion) {
+    static void configureDistributionDependency(Project project, String distro, Configuration configuration, String densityVersion) {
         boolean internalBuild = project.hasProperty('bwcVersions')
         if (distro.equals("integ-test-zip")) {
             // short circuit integ test so it doesn't complicate the rest of the distribution setup below
@@ -199,17 +199,17 @@ class ClusterFormationTasks {
             } else {
                 project.dependencies.add(
                         configuration.name,
-                        "org.opensearch.distribution.integ-test-zip:opensearch:${opensearchVersion}@zip"
+                        "org.density.distribution.integ-test-zip:density:${densityVersion}@zip"
                 )
             }
             return
         }
 
-        Version version = Version.fromString(opensearchVersion)
+        Version version = Version.fromString(densityVersion)
         String os = getOs()
         String classifier = "-${os}-x64"
         String packaging = os.equals('windows') ? 'zip' : 'tar.gz'
-        String artifactName = 'opensearch'
+        String artifactName = 'density'
         Object dependency
         String snapshotProject = "${os}-${os.equals('windows') ? 'zip' : 'tar'}"
         if (version.before("7.0.0")) {
@@ -227,43 +227,43 @@ class ClusterFormationTasks {
             dependency = project.dependencies.project(
                     path: unreleasedInfo.gradleProjectPath, configuration: snapshotProject
             )
-        } else if (internalBuild && opensearchVersion.equals(VersionProperties.getOpenSearch())) {
+        } else if (internalBuild && densityVersion.equals(VersionProperties.getDensity())) {
             dependency = project.dependencies.project(path: ":distribution:archives:${snapshotProject}")
         } else {
             if (version.before('7.0.0')) {
                 classifier = "" // for bwc, before we had classifiers
             }
             // group does not matter as it is not used when we pull from the ivy repo that points to the download service
-            dependency = "dnm:${artifactName}:${opensearchVersion}${classifier}@${packaging}"
+            dependency = "dnm:${artifactName}:${densityVersion}${classifier}@${packaging}"
         }
         project.dependencies.add(configuration.name, dependency)
     }
 
     /** Adds a dependency on a different version of the given plugin, which will be retrieved using gradle's dependency resolution */
-    static void configureBwcPluginDependency(Project project, Object plugin, Configuration configuration, Version opensearchVersion) {
+    static void configureBwcPluginDependency(Project project, Object plugin, Configuration configuration, Version densityVersion) {
         if (plugin instanceof Project) {
             Project pluginProject = (Project)plugin
-            verifyProjectHasBuildPlugin(configuration.name, opensearchVersion, project, pluginProject)
+            verifyProjectHasBuildPlugin(configuration.name, densityVersion, project, pluginProject)
             final String pluginName = findPluginName(pluginProject)
-            project.dependencies.add(configuration.name, "org.opensearch.plugin:${pluginName}:${opensearchVersion}@zip")
+            project.dependencies.add(configuration.name, "org.density.plugin:${pluginName}:${densityVersion}@zip")
         } else {
             project.dependencies.add(configuration.name, "${plugin}@zip")
         }
     }
 
     /**
-     * Adds dependent tasks to start an opensearch cluster before the given task is executed,
+     * Adds dependent tasks to start an density cluster before the given task is executed,
      * and stop it after it has finished executing.
      *
      * The setup of the cluster involves the following:
      * <ol>
      *   <li>Cleanup the extraction directory</li>
-     *   <li>Extract a fresh copy of opensearch</li>
-     *   <li>Write an opensearch.yml config file</li>
+     *   <li>Extract a fresh copy of density</li>
+     *   <li>Write an density.yml config file</li>
      *   <li>Copy plugins that will be installed to a temporary dir (which contains spaces)</li>
      *   <li>Install plugins</li>
      *   <li>Run additional setup commands</li>
-     *   <li>Start opensearch<li>
+     *   <li>Start density<li>
      * </ol>
      *
      * @return a task which starts the node.
@@ -291,7 +291,7 @@ class ClusterFormationTasks {
         setup = configureAddKeystoreFileTasks(prefix, project, setup, node)
 
         if (node.config.plugins.isEmpty() == false) {
-            if (node.nodeVersion == Version.fromString(VersionProperties.getOpenSearch())) {
+            if (node.nodeVersion == Version.fromString(VersionProperties.getDensity())) {
                 setup = configureCopyPluginsTask(taskName(prefix, node, 'copyPlugins'), project, setup, node, prefix)
             } else {
                 setup = configureCopyBwcPluginsTask(taskName(prefix, node, 'copyBwcPlugins'), project, setup, node, prefix)
@@ -352,13 +352,13 @@ class ClusterFormationTasks {
         return start
     }
 
-    /** Adds a task to extract the opensearch distribution */
+    /** Adds a task to extract the density distribution */
     static Task configureExtractTask(String name, Project project, Task setup, NodeInfo node,
                                      Configuration configuration, String distribution) {
         List extractDependsOn = [configuration, setup]
         /* configuration.singleFile will be an external artifact if this is being run by a plugin not living in the
-          opensearch source tree. If this is a plugin built in the opensearch source tree or this is a distro in
-          the opensearch source tree then this should be the version of opensearch built by the source tree.
+          density source tree. If this is a plugin built in the density source tree or this is a distro in
+          the density source tree then this should be the version of density built by the source tree.
           If it isn't then Bad Things(TM) will happen. */
         Task extract = project.tasks.create(name: name, type: Copy, dependsOn: extractDependsOn) {
             if (getOs().equals("windows") || distribution.equals("integ-test-zip") || node.nodeVersion.before("7.0.0")) {
@@ -377,7 +377,7 @@ class ClusterFormationTasks {
         return extract
     }
 
-    /** Adds a task to write opensearch.yml for the given node configuration */
+    /** Adds a task to write density.yml for the given node configuration */
     static Task configureWriteConfigTask(String name, Project project, Task setup, NodeInfo node, Closure<Map> configFilter) {
         Map esConfig = [
                 'cluster.name'                 : node.clusterName,
@@ -437,7 +437,7 @@ class ClusterFormationTasks {
             }
 
             esConfig = configFilter.call(esConfig)
-            File configFile = new File(node.pathConf, 'opensearch.yml')
+            File configFile = new File(node.pathConf, 'density.yml')
             logger.info("Configuring ${configFile}")
             configFile.setText(esConfig.collect { key, value -> "${key}: ${value}" }.join('\n'), 'UTF-8')
         }
@@ -452,7 +452,7 @@ class ClusterFormationTasks {
              * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to
              * getting the short name requiring the path to already exist.
              */
-            final Object esKeystoreUtil = "${-> node.binPath().resolve('opensearch-keystore').toString()}"
+            final Object esKeystoreUtil = "${-> node.binPath().resolve('density-keystore').toString()}"
             return configureExecTask(name, project, setup, node, esKeystoreUtil, 'create')
         }
     }
@@ -465,7 +465,7 @@ class ClusterFormationTasks {
          * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to getting
          * the short name requiring the path to already exist.
          */
-        final Object esKeystoreUtil = "${-> node.binPath().resolve('opensearch-keystore').toString()}"
+        final Object esKeystoreUtil = "${-> node.binPath().resolve('density-keystore').toString()}"
         for (Map.Entry<String, String> entry in kvs) {
             String key = entry.getKey()
             String name = taskName(parent, node, 'addToKeystore#' + key)
@@ -490,7 +490,7 @@ class ClusterFormationTasks {
          * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to getting
          * the short name requiring the path to already exist.
          */
-        final Object esKeystoreUtil = "${-> node.binPath().resolve('opensearch-keystore').toString()}"
+        final Object esKeystoreUtil = "${-> node.binPath().resolve('density-keystore').toString()}"
         for (Map.Entry<String, Object> entry in kvs) {
             String key = entry.getKey()
             String name = taskName(parent, node, 'addToKeystore#' + key)
@@ -602,7 +602,7 @@ class ClusterFormationTasks {
 
     /** Configures task to copy a plugin based on a zip file resolved using dependencies for an older version */
     static Task configureCopyBwcPluginsTask(String name, Project project, Task setup, NodeInfo node, String prefix) {
-        Configuration bwcPlugins = project.configurations.getByName("${prefix}_opensearchBwcPlugins")
+        Configuration bwcPlugins = project.configurations.getByName("${prefix}_densityBwcPlugins")
         for (Map.Entry<String, Object> plugin : node.config.plugins.entrySet()) {
             String configurationName = pluginBwcConfigurationName(prefix, plugin.key)
             Configuration configuration = project.configurations.findByName(configurationName)
@@ -638,7 +638,7 @@ class ClusterFormationTasks {
             return setup
         }
         if (module.plugins.hasPlugin(PluginBuildPlugin) == false) {
-            throw new GradleException("Task ${name} cannot include module ${module.path} which is not an opensearchplugin")
+            throw new GradleException("Task ${name} cannot include module ${module.path} which is not an densityplugin")
         }
         Copy installModule = project.tasks.create(name, Copy.class)
         installModule.dependsOn(setup)
@@ -650,7 +650,7 @@ class ClusterFormationTasks {
 
     static Task configureInstallPluginTask(String name, Project project, Task setup, NodeInfo node, String pluginName, String prefix) {
         FileCollection pluginZip;
-        if (node.nodeVersion != Version.fromString(VersionProperties.getOpenSearch())) {
+        if (node.nodeVersion != Version.fromString(VersionProperties.getDensity())) {
             pluginZip = project.configurations.getByName(pluginBwcConfigurationName(prefix, pluginName))
         } else {
             pluginZip = project.configurations.getByName(pluginConfigurationName(prefix, pluginName))
@@ -661,7 +661,7 @@ class ClusterFormationTasks {
          * We have to delay building the string as the path will not exist during configuration which will fail on Windows due to getting
          * the short name requiring the path to already exist.
          */
-        final Object esPluginUtil = "${-> node.binPath().resolve('opensearch-plugin').toString()}"
+        final Object esPluginUtil = "${-> node.binPath().resolve('density-plugin').toString()}"
         final Object[] args = [esPluginUtil, 'install', '--batch', file]
         return configureExecTask(name, project, setup, node, args)
     }
@@ -710,12 +710,12 @@ class ClusterFormationTasks {
                 node.config.distribution == 'integ-test-zip')
     }
 
-    /** Adds a task to start an opensearch node with the given configuration */
+    /** Adds a task to start an density node with the given configuration */
     static Task configureStartTask(String name, Project project, Task setup, NodeInfo node) {
         // this closure is converted into ant nodes by groovy's AntBuilder
         Closure antRunner = { AntBuilder ant ->
             ant.exec(executable: node.executable, spawn: node.config.daemonize, newenvironment: true,
-                     dir: node.cwd, taskname: 'opensearch') {
+                     dir: node.cwd, taskname: 'density') {
                 node.env.each { key, value -> env(key: key, value: value) }
                 if (useRuntimeJava(project, node)) {
                     env(key: 'JAVA_HOME', value: project.runtimeJavaHome)
@@ -731,14 +731,14 @@ class ClusterFormationTasks {
             }
         }
 
-        // this closure is the actual code to run opensearch
-        Closure opensearchRunner = {
+        // this closure is the actual code to run density
+        Closure densityRunner = {
             // Due to how ant exec works with the spawn option, we lose all stdout/stderr from the
-            // process executed. To work around this, when spawning, we wrap the opensearch start
+            // process executed. To work around this, when spawning, we wrap the density start
             // command inside another shell script, which simply internally redirects the output
-            // of the real opensearch script. This allows ant to keep the streams open with the
+            // of the real density script. This allows ant to keep the streams open with the
             // dummy process, but us to have the output available if there is an error in the
-            // opensearch start script
+            // density start script
             if (node.config.daemonize) {
                 node.writeWrapperScript()
             }
@@ -758,7 +758,7 @@ class ClusterFormationTasks {
         if (node.javaVersion != null) {
             BuildPlugin.requireJavaHome(start, node.javaVersion)
         }
-        start.doLast(opensearchRunner)
+        start.doLast(densityRunner)
         start.doFirst {
             // If the node runs in a FIPS 140-2 JVM, the BCFKS default keystore will be password protected
             if (BuildParams.inFipsJvm) {
@@ -767,24 +767,24 @@ class ClusterFormationTasks {
             }
 
             // Configure ES JAVA OPTS - adds system properties, assertion flags, remote debug etc
-            List<String> opensearchJavaOpts = [node.env.get('OPENSEARCH_JAVA_OPTS', '')]
+            List<String> densityJavaOpts = [node.env.get('DENSITY_JAVA_OPTS', '')]
             String collectedSystemProperties = node.config.systemProperties.collect { key, value -> "-D${key}=${value}" }.join(" ")
-            opensearchJavaOpts.add(collectedSystemProperties)
-            opensearchJavaOpts.add(node.config.jvmArgs)
+            densityJavaOpts.add(collectedSystemProperties)
+            densityJavaOpts.add(node.config.jvmArgs)
             if (Boolean.parseBoolean(System.getProperty('tests.asserts', 'true'))) {
                 // put the enable assertions options before other options to allow
                 // flexibility to disable assertions for specific packages or classes
                 // in the cluster-specific options
-                opensearchJavaOpts.add("-ea")
-                opensearchJavaOpts.add("-esa")
+                densityJavaOpts.add("-ea")
+                densityJavaOpts.add("-esa")
             }
             // we must add debug options inside the closure so the config is read at execution time, as
             // gradle task options are not processed until the end of the configuration phase
             if (node.config.debug) {
-                println 'Running opensearch in debug mode, suspending until connected on port 8000'
-                opensearchJavaOpts.add('-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000')
+                println 'Running density in debug mode, suspending until connected on port 8000'
+                densityJavaOpts.add('-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000')
             }
-            node.env['OPENSEARCH_JAVA_OPTS'] = opensearchJavaOpts.join(" ")
+            node.env['DENSITY_JAVA_OPTS'] = densityJavaOpts.join(" ")
 
             //
             project.logger.info("Starting node in ${node.clusterName} distribution: ${node.config.distribution}")
@@ -832,18 +832,18 @@ class ClusterFormationTasks {
                 }
             }
             if (ant.properties.containsKey("failed${name}".toString())) {
-                waitFailed(project, nodes, logger, "Failed to start opensearch: timed out after ${waitSeconds} seconds")
+                waitFailed(project, nodes, logger, "Failed to start density: timed out after ${waitSeconds} seconds")
             }
 
             boolean anyNodeFailed = false
             for (NodeInfo node : nodes) {
                 if (node.failedMarker.exists()) {
-                    logger.error("Failed to start opensearch: ${node.failedMarker.toString()} exists")
+                    logger.error("Failed to start density: ${node.failedMarker.toString()} exists")
                     anyNodeFailed = true
                 }
             }
             if (anyNodeFailed) {
-                waitFailed(project, nodes, logger, 'Failed to start opensearch')
+                waitFailed(project, nodes, logger, 'Failed to start density')
             }
 
             // make sure all files exist otherwise we haven't fully started up
@@ -854,7 +854,7 @@ class ClusterFormationTasks {
                 missingFile |= node.transportPortsFile.exists() == false
             }
             if (missingFile) {
-                waitFailed(project, nodes, logger, 'OpenSearch did not complete startup in time allotted')
+                waitFailed(project, nodes, logger, 'Density did not complete startup in time allotted')
             }
 
             // go through each node checking the wait condition
@@ -871,7 +871,7 @@ class ClusterFormationTasks {
                 }
 
                 if (success == false) {
-                    waitFailed(project, nodes, logger, 'OpenSearch cluster failed to pass wait condition')
+                    waitFailed(project, nodes, logger, 'Density cluster failed to pass wait condition')
                 }
             }
         }
@@ -914,7 +914,7 @@ class ClusterFormationTasks {
         throw new GradleException(msg)
     }
 
-    /** Adds a task to check if the process with the given pidfile is actually opensearch */
+    /** Adds a task to check if the process with the given pidfile is actually density */
     static Task configureCheckPreviousTask(String name, Project project, Object depends, NodeInfo node) {
         return project.tasks.create(name: name, type: Exec, dependsOn: depends) {
             onlyIf { node.pidFile.exists() }
@@ -925,12 +925,12 @@ class ClusterFormationTasks {
             standardOutput = new ByteArrayOutputStream()
             doLast {
                 String out = standardOutput.toString()
-                if (out.contains("${ext.pid} org.opensearch.bootstrap.OpenSearch") == false) {
+                if (out.contains("${ext.pid} org.density.bootstrap.Density") == false) {
                     logger.error('jps -l')
                     logger.error(out)
                     logger.error("pid file: ${node.pidFile}")
                     logger.error("pid: ${ext.pid}")
-                    throw new GradleException("jps -l did not report any process with org.opensearch.bootstrap.OpenSearch\n" +
+                    throw new GradleException("jps -l did not report any process with org.density.bootstrap.Density\n" +
                             "Did you run gradle clean? Maybe an old pid file is still lying around.")
                 } else {
                     logger.info(out)
@@ -939,7 +939,7 @@ class ClusterFormationTasks {
         }
     }
 
-    /** Adds a task to kill an opensearch node with the given pidfile */
+    /** Adds a task to kill an density node with the given pidfile */
     static Task configureStopTask(String name, Project project, Object depends, NodeInfo node) {
         return project.tasks.create(name: name, type: LoggedExec, dependsOn: depends) {
             onlyIf { node.pidFile.exists() }
@@ -995,13 +995,13 @@ class ClusterFormationTasks {
     static void verifyProjectHasBuildPlugin(String name, Version version, Project project, Project pluginProject) {
         if (pluginProject.plugins.hasPlugin(PluginBuildPlugin) == false) {
             throw new GradleException("Task [${name}] cannot add plugin [${pluginProject.path}] with version [${version}] to project's " +
-                    "[${project.path}] dependencies: the plugin is not an opensearchplugin")
+                    "[${project.path}] dependencies: the plugin is not an densityplugin")
         }
     }
 
     /** Find the plugin name in the given project. */
     static String findPluginName(Project pluginProject) {
-        PluginPropertiesExtension extension = pluginProject.extensions.findByName('opensearchplugin')
+        PluginPropertiesExtension extension = pluginProject.extensions.findByName('densityplugin')
         return extension.name
     }
 

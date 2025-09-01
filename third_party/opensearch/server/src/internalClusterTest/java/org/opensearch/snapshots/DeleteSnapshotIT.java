@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.snapshots;
+package org.density.snapshots;
 
-import org.opensearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.store.RemoteBufferedOutputDirectory;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.remotestore.RemoteStoreBaseIntegTestCase;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.action.ActionFuture;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.store.RemoteBufferedOutputDirectory;
+import org.density.indices.RemoteStoreSettings;
+import org.density.remotestore.RemoteStoreBaseIntegTestCase;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Client;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -33,14 +33,14 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
-import static org.opensearch.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
-import static org.opensearch.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.index.remote.RemoteStoreEnums.DataCategory.SEGMENTS;
+import static org.density.index.remote.RemoteStoreEnums.DataType.LOCK_FILES;
+import static org.density.remotestore.RemoteStoreBaseIntegTestCase.remoteStoreClusterSettings;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class DeleteSnapshotIT extends AbstractSnapshotIntegTestCase {
 
     private static final String REMOTE_REPO_NAME = "remote-store-repo-name";
@@ -131,7 +131,7 @@ public class DeleteSnapshotIT extends AbstractSnapshotIntegTestCase {
     }
 
     // Deleting multiple shallow copy snapshots as part of single delete call with repo having only shallow copy snapshots.
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/9208")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/9208")
     public void testDeleteMultipleShallowCopySnapshotsCase1() throws Exception {
         disableRepoConsistencyCheck("Remote store repository is being used in the test");
         final Path remoteStoreRepoPath = randomRepoPath();
@@ -173,7 +173,7 @@ public class DeleteSnapshotIT extends AbstractSnapshotIntegTestCase {
     // Deleting multiple shallow copy snapshots as part of single delete call with both partial and full copy snapshot present in the repo
     // And then deleting multiple full copy snapshots as part of single delete call with both partial and shallow copy snapshots present in
     // the repo
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8610")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8610")
     public void testDeleteMultipleShallowCopySnapshotsCase2() throws Exception {
         disableRepoConsistencyCheck("Remote store repository is being used in the test");
         final Path remoteStoreRepoPath = randomRepoPath();
@@ -257,7 +257,7 @@ public class DeleteSnapshotIT extends AbstractSnapshotIntegTestCase {
     }
 
     // Deleting subset of shallow and full copy snapshots as part of single delete call and then deleting all snapshots in the repo.
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/8610")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/8610")
     public void testDeleteMultipleShallowCopySnapshotsCase3() throws Exception {
         disableRepoConsistencyCheck("Remote store repository is being used in the test");
         final Path remoteStoreRepoPath = randomRepoPath();
@@ -316,7 +316,7 @@ public class DeleteSnapshotIT extends AbstractSnapshotIntegTestCase {
         assert (getLockFilesInRemoteStore(remoteStoreEnabledIndexName, REMOTE_REPO_NAME).length == 0);
     }
 
-    @AwaitsFix(bugUrl = "https://github.com/opensearch-project/OpenSearch/issues/9208")
+    @AwaitsFix(bugUrl = "https://github.com/density-project/Density/issues/9208")
     public void testRemoteStoreCleanupForDeletedIndex() throws Exception {
         disableRepoConsistencyCheck("Remote store repository is being used in the test");
         final Path remoteStoreRepoPath = randomRepoPath();

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -24,20 +24,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
-import org.opensearch.common.SetOnce.AlreadySetException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.SetOnce.AlreadySetException;
+import org.density.test.DensityTestCase;
 
 import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class SetOnceTests extends OpenSearchTestCase {
+public class SetOnceTests extends DensityTestCase {
     private static final class SetOnceThread extends Thread {
         SetOnce<Integer> set;
         boolean success = false;

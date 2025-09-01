@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.DiskUsage;
+import org.density.cluster.DiskUsage;
 
 /**
  * Base interface for disk threshold evaluation logic.
  * This interface defines methods for evaluating whether a node exceeds
  * various watermarks based on disk usage.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface DiskThresholdEvaluator {
 

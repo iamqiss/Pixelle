@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportInterceptor;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpServerTransport;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
+import org.density.transport.Transport;
+import org.density.transport.TransportInterceptor;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +56,7 @@ import java.util.function.Supplier;
 /**
  * Plugin for extending network and transport related classes
  *
- * @opensearch.api
+ * @density.api
  */
 public interface NetworkPlugin {
     /**
@@ -92,7 +92,7 @@ public interface NetworkPlugin {
 
     /**
      * Returns a map of {@link Transport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#TRANSPORT_TYPE_KEY} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#TRANSPORT_TYPE_KEY} to configure a specific implementation.
      */
     default Map<String, Supplier<Transport>> getTransports(
         Settings settings,
@@ -108,7 +108,7 @@ public interface NetworkPlugin {
 
     /**
      * Returns a map of {@link HttpServerTransport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
      */
     default Map<String, Supplier<HttpServerTransport>> getHttpTransports(
         Settings settings,
@@ -127,7 +127,7 @@ public interface NetworkPlugin {
 
     /**
      * Returns a map of secure {@link AuxTransport} suppliers.
-     * See {@link org.opensearch.transport.AuxTransport#AUX_TRANSPORT_TYPES_SETTING} to configure a specific implementation.
+     * See {@link org.density.transport.AuxTransport#AUX_TRANSPORT_TYPES_SETTING} to configure a specific implementation.
      */
     @ExperimentalApi
     default Map<String, Supplier<AuxTransport>> getSecureAuxTransports(
@@ -144,7 +144,7 @@ public interface NetworkPlugin {
 
     /**
      * Returns a map of secure {@link Transport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#TRANSPORT_TYPE_KEY} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#TRANSPORT_TYPE_KEY} to configure a specific implementation.
      */
     default Map<String, Supplier<Transport>> getSecureTransports(
         Settings settings,
@@ -161,7 +161,7 @@ public interface NetworkPlugin {
 
     /**
      * Returns a map of secure {@link HttpServerTransport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
      */
     default Map<String, Supplier<HttpServerTransport>> getSecureHttpTransports(
         Settings settings,

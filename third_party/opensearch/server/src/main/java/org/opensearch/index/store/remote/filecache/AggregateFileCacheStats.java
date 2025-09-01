@@ -1,36 +1,36 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.filecache;
+package org.density.index.store.remote.filecache;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.EnumSet;
 
 /**
  * Statistics for the file cache system that tracks memory usage and performance metrics.
- * {@link FileCache} internally uses a {@link org.opensearch.index.store.remote.utils.cache.SegmentedCache}
+ * {@link FileCache} internally uses a {@link org.density.index.store.remote.utils.cache.SegmentedCache}
  * to manage cached file data in memory segments.
  * This class aggregates statistics across all cache segments including:
  * - Memory usage (total, active, used)
  * - Cache performance (hits, misses, evictions)
  * - Utilization percentages
- * The statistics are exposed via {@link org.opensearch.action.admin.cluster.node.stats.NodeStats}
+ * The statistics are exposed via {@link org.density.action.admin.cluster.node.stats.NodeStats}
  * to provide visibility into cache behavior and performance.
  *
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public class AggregateFileCacheStats implements Writeable, ToXContentFragment {

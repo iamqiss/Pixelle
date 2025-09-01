@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc;
+package org.density.transport.grpc;
 
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.common.network.NetworkAddress;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.grpc.ssl.NettyGrpcClient;
+import org.density.action.index.IndexResponse;
+import org.density.common.network.NetworkAddress;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.transport.TransportAddress;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.grpc.ssl.NettyGrpcClient;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -26,13 +26,13 @@ import java.util.concurrent.TimeUnit;
 
 import io.grpc.health.v1.HealthCheckResponse;
 
-import static org.opensearch.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
-import static org.opensearch.transport.grpc.Netty4GrpcServerTransport.GRPC_TRANSPORT_SETTING_KEY;
+import static org.density.transport.AuxTransport.AUX_TRANSPORT_TYPES_KEY;
+import static org.density.transport.grpc.Netty4GrpcServerTransport.GRPC_TRANSPORT_SETTING_KEY;
 
 /**
  * Base test class for gRPC transport integration tests.
  */
-public abstract class GrpcTransportBaseIT extends OpenSearchIntegTestCase {
+public abstract class GrpcTransportBaseIT extends DensityIntegTestCase {
 
     // Common constants
     protected static final String DEFAULT_INDEX_NAME = "test-grpc-index";

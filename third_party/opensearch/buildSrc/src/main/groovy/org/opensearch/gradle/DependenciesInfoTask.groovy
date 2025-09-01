@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,10 +27,10 @@
  * under the License.
  */
 
-package org.opensearch.gradle
+package org.density.gradle
 
-import org.opensearch.gradle.precommit.DependencyLicensesTask
-import org.opensearch.gradle.precommit.LicenseAnalyzer
+import org.density.gradle.precommit.DependencyLicensesTask
+import org.density.gradle.precommit.LicenseAnalyzer
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.DependencySet
@@ -139,7 +139,7 @@ class DependenciesInfoTask extends ConventionTask {
      *     <li><em>UNKNOWN</em> if LICENSE file is not present for this dependency.</li>
      *     <li><em>one SPDX identifier</em> if the LICENSE content matches with an SPDX license.</li>
      *     <li><em>Custom;URL</em> if it's not an SPDX license,
-     *          URL is the Github URL to the LICENSE file in opensearch repository.</li>
+     *          URL is the Github URL to the LICENSE file in density repository.</li>
      * </ul>
      *
      * @param group dependency group

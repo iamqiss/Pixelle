@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.util.concurrent.CountDown;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
+import org.density.action.OriginalIndices;
+import org.density.action.support.GroupedActionListener;
+import org.density.action.support.IndicesOptions;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.util.concurrent.CountDown;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -68,13 +68,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.settings.Setting.boolSetting;
-import static org.opensearch.common.settings.Setting.timeSetting;
+import static org.density.common.settings.Setting.boolSetting;
+import static org.density.common.settings.Setting.timeSetting;
 
 /**
  * Basic service for accessing remote clusters via gateway nodes
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class RemoteClusterService extends RemoteClusterAware implements Closeable {
@@ -427,7 +427,7 @@ public final class RemoteClusterService extends RemoteClusterAware implements Cl
     /**
      * Internal class to hold cluster alias and key and track a remote connection
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class RemoteConnectionEnabled<T> implements Setting.Validator<T> {
 

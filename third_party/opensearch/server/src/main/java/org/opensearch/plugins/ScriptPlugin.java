@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptEngine;
+import org.density.common.settings.Settings;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptEngine;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,9 +41,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An additional extension point for {@link Plugin}s that extends OpenSearch's scripting functionality.
+ * An additional extension point for {@link Plugin}s that extends Density's scripting functionality.
  *
- * @opensearch.api
+ * @density.api
  */
 public interface ScriptPlugin {
 

@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,17 +18,17 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.store.remote.file.OnDemandBlockSnapshotIndexInput;
-import org.opensearch.index.store.remote.filecache.CachedFullFileIndexInput;
-import org.opensearch.index.store.remote.filecache.CachedIndexInput;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.index.store.remote.filecache.FileCache.RestoredCachedIndexInput;
-import org.opensearch.index.store.remote.utils.FileTypeUtils;
-import org.opensearch.index.store.remote.utils.TransferManager;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.store.remote.file.OnDemandBlockSnapshotIndexInput;
+import org.density.index.store.remote.filecache.CachedFullFileIndexInput;
+import org.density.index.store.remote.filecache.CachedIndexInput;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.index.store.remote.filecache.FileCache.RestoredCachedIndexInput;
+import org.density.index.store.remote.utils.FileTypeUtils;
+import org.density.index.store.remote.utils.TransferManager;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.index.store.remote.utils.FileTypeUtils.BLOCK_FILE_IDENTIFIER;
+import static org.density.index.store.remote.utils.FileTypeUtils.BLOCK_FILE_IDENTIFIER;
 import static org.apache.lucene.index.IndexFileNames.SEGMENTS;
 
 /**
@@ -51,7 +51,7 @@ import static org.apache.lucene.index.IndexFileNames.SEGMENTS;
  * All such abstractions will be handled by the Composite directory itself
  * Implements all required methods by Directory abstraction
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class CompositeDirectory extends FilterDirectory {
@@ -115,7 +115,7 @@ public class CompositeDirectory extends FilterDirectory {
      *
      * @throws IOException in case of I/O error
      */
-    // TODO: https://github.com/opensearch-project/OpenSearch/issues/17527
+    // TODO: https://github.com/density-project/Density/issues/17527
     @Override
     public String[] listAll() throws IOException {
         ensureOpen();
@@ -180,7 +180,7 @@ public class CompositeDirectory extends FilterDirectory {
             List<String> blockFiles = listBlockFiles(name);
             if (blockFiles.isEmpty()) {
                 // Remove this condition when this issue is addressed.
-                // TODO: https://github.com/opensearch-project/OpenSearch/issues/17526
+                // TODO: https://github.com/density-project/Density/issues/17526
                 logger.debug("The file [{}] or its block files do not exist in local directory", name);
             } else {
                 for (String blockFile : blockFiles) {
@@ -360,7 +360,7 @@ public class CompositeDirectory extends FilterDirectory {
         String[] localFiles = listLocalFiles();
         for (String localFile : localFiles) {
             // Delete segments_N file with ref count 1 created during index creation on replica shards
-            // TODO: https://github.com/opensearch-project/OpenSearch/issues/17534
+            // TODO: https://github.com/density-project/Density/issues/17534
             if (localFile.startsWith(SEGMENTS)) {
                 fileCache.remove(getFilePath(localFile));
             }

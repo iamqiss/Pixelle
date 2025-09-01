@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -15,23 +15,23 @@ import org.apache.lucene.index.IndexFileNames;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.util.ArrayUtil;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.recovery.FileChunkWriter;
-import org.opensearch.indices.recovery.MultiChunkTransfer;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.Transports;
+import org.density.ExceptionsHelper;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.lease.Releasable;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.recovery.FileChunkWriter;
+import org.density.indices.recovery.MultiChunkTransfer;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.Transports;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ import java.util.function.IntSupplier;
  * SegmentFileSender handles building and starting a {@link MultiChunkTransfer} to orchestrate sending chunks to a given targetNode.
  * This class delegates to a {@link FileChunkWriter} to handle the transport of chunks.
  *
- * @opensearch.internal
+ * @density.internal
  * // TODO: make this package-private after combining recovery and replication into single package.
  */
 public final class SegmentFileTransferHandler {
@@ -230,7 +230,7 @@ public final class SegmentFileTransferHandler {
     /**
      * A file chunk from the recovery source
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class FileChunk implements MultiChunkTransfer.ChunkRequest, Releasable {
         final StoreFileMetadata md;

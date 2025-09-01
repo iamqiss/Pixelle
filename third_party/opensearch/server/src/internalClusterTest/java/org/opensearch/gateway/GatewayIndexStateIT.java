@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.opensearch.action.admin.cluster.state.ClusterStateResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexGraveyard;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.UnassignedInfo;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.index.mapper.MapperParsingException;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.ShardLimitValidator;
-import org.opensearch.test.InternalTestCluster.RestartCallback;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import org.opensearch.test.OpenSearchIntegTestCase.Scope;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.health.ClusterHealthResponse;
+import org.density.action.admin.cluster.state.ClusterStateResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.support.ActiveShardCount;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexGraveyard;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.UnassignedInfo;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.env.NodeEnvironment;
+import org.density.index.mapper.MapperParsingException;
+import org.density.indices.IndexClosedException;
+import org.density.indices.ShardLimitValidator;
+import org.density.test.InternalTestCluster.RestartCallback;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
+import org.density.test.DensityIntegTestCase.Scope;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -74,11 +74,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.NodeRoles.nonDataNode;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.NodeRoles.nonDataNode;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -86,7 +86,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 0)
-public class GatewayIndexStateIT extends OpenSearchIntegTestCase {
+public class GatewayIndexStateIT extends DensityIntegTestCase {
 
     private final Logger logger = LogManager.getLogger(GatewayIndexStateIT.class);
 
@@ -459,7 +459,7 @@ public class GatewayIndexStateIT extends OpenSearchIntegTestCase {
         assertEquals(IndexMetadata.State.CLOSE, state.getMetadata().index(metadata.getIndex()).getState());
         assertEquals("classic", state.getMetadata().index(metadata.getIndex()).getSettings().get("archived.index.similarity.BM25.type"));
         // try to open it with the broken setting - fail again!
-        OpenSearchException ex = expectThrows(OpenSearchException.class, () -> client().admin().indices().prepareOpen("test").get());
+        DensityException ex = expectThrows(DensityException.class, () -> client().admin().indices().prepareOpen("test").get());
         assertEquals(ex.getMessage(), "Failed to verify index " + metadata.getIndex());
         assertNotNull(ex.getCause());
         assertEquals(IllegalArgumentException.class, ex.getCause().getClass());
@@ -531,7 +531,7 @@ public class GatewayIndexStateIT extends OpenSearchIntegTestCase {
         client().admin().indices().prepareClose("test").get();
 
         // try to open it with the broken setting - fail again!
-        OpenSearchException ex = expectThrows(OpenSearchException.class, () -> client().admin().indices().prepareOpen("test").get());
+        DensityException ex = expectThrows(DensityException.class, () -> client().admin().indices().prepareOpen("test").get());
         assertEquals(ex.getMessage(), "Failed to verify index " + metadata.getIndex());
         assertNotNull(ex.getCause());
         assertEquals(MapperParsingException.class, ex.getCause().getClass());

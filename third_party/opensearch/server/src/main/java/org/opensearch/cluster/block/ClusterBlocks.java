@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.block;
+package org.density.cluster.block;
 
-import org.opensearch.cluster.AbstractDiffable;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.MetadataIndexStateService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.VerifiableWriteable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.index.IndexModule;
+import org.density.cluster.AbstractDiffable;
+import org.density.cluster.ClusterState;
+import org.density.cluster.Diff;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.MetadataIndexStateService;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.util.set.Sets;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.VerifiableWriteable;
+import org.density.core.rest.RestStatus;
+import org.density.index.IndexModule;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -61,12 +61,12 @@ import java.util.function.Predicate;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toSet;
-import static org.opensearch.index.IndexModule.INDEX_STORE_TYPE_SETTING;
+import static org.density.index.IndexModule.INDEX_STORE_TYPE_SETTING;
 
 /**
  * Represents current cluster level blocks to block dirty operations done against the cluster.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterBlocks extends AbstractDiffable<ClusterBlocks> implements VerifiableWriteable {
@@ -359,7 +359,7 @@ public class ClusterBlocks extends AbstractDiffable<ClusterBlocks> implements Ve
     /**
      * An immutable level holder.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ImmutableLevelHolder {
 
@@ -387,7 +387,7 @@ public class ClusterBlocks extends AbstractDiffable<ClusterBlocks> implements Ve
     /**
      * Builder for cluster blocks.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {

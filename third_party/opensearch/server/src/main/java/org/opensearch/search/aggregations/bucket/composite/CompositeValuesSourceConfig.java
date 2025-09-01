@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.IndexReader;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.Nullable;
+import org.density.common.util.BigArrays;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.sort.SortOrder;
 
 import java.util.function.LongConsumer;
 
 /**
  * Field configuration class for composite values
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompositeValuesSourceConfig {
 
     /**
      * A single dimension provider
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface SingleDimensionValuesSourceProvider {

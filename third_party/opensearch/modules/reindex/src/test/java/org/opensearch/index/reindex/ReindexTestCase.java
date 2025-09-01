@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,13 +42,13 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.test.OpenSearchIntegTestCase.Scope.SUITE;
+import static org.density.test.DensityIntegTestCase.Scope.SUITE;
 
 /**
  * Base test case for integration tests against the reindex plugin.
  */
 @ClusterScope(scope = SUITE)
-public abstract class ReindexTestCase extends OpenSearchIntegTestCase {
+public abstract class ReindexTestCase extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Arrays.asList(ReindexModulePlugin.class);

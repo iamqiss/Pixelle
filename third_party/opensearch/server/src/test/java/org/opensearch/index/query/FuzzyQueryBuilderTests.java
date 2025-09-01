@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.DensityParseException;
+import org.density.common.unit.Fuzziness;
+import org.density.core.common.ParsingException;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -181,8 +181,8 @@ public class FuzzyQueryBuilderTests extends AbstractQueryTestCase<FuzzyQueryBuil
             + "        }\n"
             + "    }\n"
             + "}";
-        OpenSearchParseException e = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e = expectThrows(
+            DensityParseException.class,
             () -> parseQuery(queryMissingFuzzinessUpLimit).toQuery(createShardContext())
         );
         String msg = "failed to find low and high distance values";
@@ -219,7 +219,7 @@ public class FuzzyQueryBuilderTests extends AbstractQueryTestCase<FuzzyQueryBuil
             + "        }\n"
             + "    }\n"
             + "}";
-        e = expectThrows(OpenSearchParseException.class, () -> parseQuery(queryMissingFuzzinessUpLimit2).toQuery(createShardContext()));
+        e = expectThrows(DensityParseException.class, () -> parseQuery(queryMissingFuzzinessUpLimit2).toQuery(createShardContext()));
         assertTrue(e.getMessage() + " didn't contain: " + msg + " but: " + e.getMessage(), e.getMessage().contains(msg));
 
         String queryMissingFuzzinessLowLimit = "{\n"
@@ -234,7 +234,7 @@ public class FuzzyQueryBuilderTests extends AbstractQueryTestCase<FuzzyQueryBuil
             + "        }\n"
             + "    }\n"
             + "}";
-        e = expectThrows(OpenSearchParseException.class, () -> parseQuery(queryMissingFuzzinessLowLimit).toQuery(createShardContext()));
+        e = expectThrows(DensityParseException.class, () -> parseQuery(queryMissingFuzzinessLowLimit).toQuery(createShardContext()));
         msg = "failed to parse [AUTO:,5] as a \"auto:int,int\"";
         assertTrue(e.getMessage() + " didn't contain: " + msg + " but: " + e.getMessage(), e.getMessage().contains(msg));
     }

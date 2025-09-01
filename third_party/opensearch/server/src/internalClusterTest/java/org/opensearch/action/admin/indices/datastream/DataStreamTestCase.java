@@ -1,37 +1,37 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.datastream;
+package org.density.action.admin.indices.datastream;
 
-import org.opensearch.action.admin.indices.rollover.RolloverRequest;
-import org.opensearch.action.admin.indices.rollover.RolloverResponse;
-import org.opensearch.action.admin.indices.template.delete.DeleteComposableIndexTemplateAction;
-import org.opensearch.action.admin.indices.template.put.PutComposableIndexTemplateAction;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.DataStream;
-import org.opensearch.cluster.metadata.Template;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.rollover.RolloverRequest;
+import org.density.action.admin.indices.rollover.RolloverResponse;
+import org.density.action.admin.indices.template.delete.DeleteComposableIndexTemplateAction;
+import org.density.action.admin.indices.template.put.PutComposableIndexTemplateAction;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.DataStream;
+import org.density.cluster.metadata.Template;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
-import static org.opensearch.test.OpenSearchIntegTestCase.Scope;
+import static org.density.test.DensityIntegTestCase.ClusterScope;
+import static org.density.test.DensityIntegTestCase.Scope;
 import static org.hamcrest.Matchers.is;
 
 @ClusterScope(scope = Scope.TEST, numDataNodes = 2)
-public class DataStreamTestCase extends OpenSearchIntegTestCase {
+public class DataStreamTestCase extends DensityIntegTestCase {
 
     public AcknowledgedResponse createDataStream(String name) throws Exception {
         CreateDataStreamAction.Request request = new CreateDataStreamAction.Request(name);

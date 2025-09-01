@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor;
+package org.density.monitor;
 
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.monitor.fs.FsService;
-import org.opensearch.monitor.fs.FsServiceProvider;
-import org.opensearch.monitor.jvm.JvmGcMonitorService;
-import org.opensearch.monitor.jvm.JvmService;
-import org.opensearch.monitor.os.OsService;
-import org.opensearch.monitor.process.ProcessService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.settings.Settings;
+import org.density.monitor.fs.FsService;
+import org.density.monitor.fs.FsServiceProvider;
+import org.density.monitor.jvm.JvmGcMonitorService;
+import org.density.monitor.jvm.JvmService;
+import org.density.monitor.os.OsService;
+import org.density.monitor.process.ProcessService;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 
 /**
  * The resource monitoring service
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MonitorService extends AbstractLifecycleComponent {
 

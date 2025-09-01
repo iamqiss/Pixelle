@@ -1,7 +1,7 @@
 {
   "nodes.usage":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/nodes-apis/nodes-usage/",
+      "url":"https://density.org/docs/latest/api-reference/nodes-apis/nodes-usage/",
       "description":"Returns low-level information about REST actions usage on nodes."
     },
     "stability":"stable",

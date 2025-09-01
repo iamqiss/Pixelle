@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.snapshots.Snapshot;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.repositories.IndexId;
+import org.density.snapshots.Snapshot;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -57,7 +57,7 @@ import java.util.Objects;
  * - {@link SnapshotRecoverySource} recovery from a snapshot
  * - {@link LocalShardsRecoverySource} recovery from other shards of another index on the same node
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class RecoverySource implements Writeable, ToXContentObject {
@@ -113,7 +113,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * Type of recovery.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Type {
@@ -153,7 +153,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * Recovery from a fresh copy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class EmptyStoreRecoverySource extends RecoverySource {
         public static final EmptyStoreRecoverySource INSTANCE = new EmptyStoreRecoverySource();
@@ -172,7 +172,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * Recovery from an existing on-disk store
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class ExistingStoreRecoverySource extends RecoverySource {
         /**
@@ -227,7 +227,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * recovery from other shards on same node (shrink index action)
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class LocalShardsRecoverySource extends RecoverySource {
 
@@ -250,7 +250,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * recovery from a snapshot
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class SnapshotRecoverySource extends RecoverySource {
@@ -469,7 +469,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * Recovery from remote store
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class RemoteStoreRecoverySource extends RecoverySource {
@@ -550,7 +550,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
 
         // TODO: This override should be removed/be updated to return "true",
         // i.e. we expect no retention leases, once the following issue is fixed:
-        // https://github.com/opensearch-project/OpenSearch/issues/8795
+        // https://github.com/density-project/Density/issues/8795
         @Override
         public boolean expectEmptyRetentionLeases() {
             return false;
@@ -560,7 +560,7 @@ public abstract class RecoverySource implements Writeable, ToXContentObject {
     /**
      * peer recovery from a primary shard
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class PeerRecoverySource extends RecoverySource {
 

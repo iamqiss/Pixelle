@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.view;
+package org.density.action.admin.indices.view;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.View;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchResponse;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.View;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.action.ActionListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.ArrayList;
 import java.util.List;

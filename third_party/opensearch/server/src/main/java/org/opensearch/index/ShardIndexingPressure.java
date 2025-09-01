@@ -1,26 +1,26 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.ShardIndexingPressureTracker.CommonOperationTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.OperationTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.PerformanceTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.RejectionTracker;
-import org.opensearch.index.ShardIndexingPressureTracker.StatsTracker;
-import org.opensearch.index.stats.IndexingPressurePerShardStats;
-import org.opensearch.index.stats.ShardIndexingPressureStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.cluster.service.ClusterService;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.index.ShardIndexingPressureTracker.CommonOperationTracker;
+import org.density.index.ShardIndexingPressureTracker.OperationTracker;
+import org.density.index.ShardIndexingPressureTracker.PerformanceTracker;
+import org.density.index.ShardIndexingPressureTracker.RejectionTracker;
+import org.density.index.ShardIndexingPressureTracker.StatsTracker;
+import org.density.index.stats.IndexingPressurePerShardStats;
+import org.density.index.stats.ShardIndexingPressureStats;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 2. Memory Accounting at Node level. Tracking is done using the IndexingPressure artefacts to support feature seamless toggling.
  * 3. Interfaces to access the statistics for shard trackers.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ShardIndexingPressure extends IndexingPressure {
 
@@ -344,7 +344,7 @@ public class ShardIndexingPressure extends IndexingPressure {
         ShardId shardId = tracker.getShardId();
 
         rejectionTracker.incrementTotalRejections();
-        throw new OpenSearchRejectedExecutionException(
+        throw new DensityRejectedExecutionException(
             "rejected execution of "
                 + operationType
                 + " operation ["

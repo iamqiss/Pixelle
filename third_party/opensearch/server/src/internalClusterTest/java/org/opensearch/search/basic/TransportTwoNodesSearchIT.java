@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.basic;
+package org.density.search.basic;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.search.MultiSearchResponse;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.functionscore.ScriptScoreFunctionBuilder;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.search.aggregations.bucket.filter.Filter;
-import org.opensearch.search.aggregations.bucket.global.Global;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.search.MultiSearchResponse;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.functionscore.ScriptScoreFunctionBuilder;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.SearchHit;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.search.aggregations.bucket.filter.Filter;
+import org.density.search.aggregations.bucket.global.Global;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -62,17 +62,17 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.opensearch.action.search.SearchType.DFS_QUERY_THEN_FETCH;
-import static org.opensearch.action.search.SearchType.QUERY_THEN_FETCH;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.builder.SearchSourceBuilder.searchSource;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.transport.client.Requests.createIndexRequest;
-import static org.opensearch.transport.client.Requests.searchRequest;
+import static org.density.action.search.SearchType.DFS_QUERY_THEN_FETCH;
+import static org.density.action.search.SearchType.QUERY_THEN_FETCH;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.builder.SearchSourceBuilder.searchSource;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.transport.client.Requests.createIndexRequest;
+import static org.density.transport.client.Requests.searchRequest;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -80,7 +80,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
-public class TransportTwoNodesSearchIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class TransportTwoNodesSearchIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public TransportTwoNodesSearchIT(Settings staticSettings) {
         super(staticSettings);
@@ -360,7 +360,7 @@ public class TransportTwoNodesSearchIT extends ParameterizedStaticSettingsOpenSe
             assertThat(searchResponse.getSuccessfulShards(), equalTo(0));
             assertThat(searchResponse.getFailedShards(), equalTo(test.numPrimaries));
             fail("search should fail");
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.unwrapCause(), instanceOf(SearchPhaseExecutionException.class));
             // all is well
         }

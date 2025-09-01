@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 import java.util.Map;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PipelineTests extends OpenSearchTestCase {
+public class PipelineTests extends DensityTestCase {
 
     public void testCreatePipelineWithEmptyConfig() {
         final Pipeline pipeline = Pipeline.createSystemIngestPipeline("test-index", Collections.emptyMap(), Collections.emptyMap());

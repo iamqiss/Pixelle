@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.compress.spi;
+package org.density.common.compress.spi;
 
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.spi.CompressorProvider;
+import org.density.common.compress.DeflateCompressor;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.spi.CompressorProvider;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
@@ -18,9 +18,9 @@ import java.util.Map.Entry;
 
 /**
  * Default {@link Compressor} implementations provided by the
- * opensearch core library
+ * density core library
  *
- * @opensearch.internal
+ * @density.internal
  *
  * @deprecated This class is deprecated and will be removed when the {@link DeflateCompressor} is moved to the compress
  * library as a default compression option

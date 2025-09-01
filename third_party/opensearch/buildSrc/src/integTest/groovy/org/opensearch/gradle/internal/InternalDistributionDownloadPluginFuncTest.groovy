@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,10 +27,10 @@
  * under the License.
  */
 
-package org.opensearch.gradle.internal
+package org.density.gradle.internal
 
-import org.opensearch.gradle.VersionProperties
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.VersionProperties
+import org.density.gradle.fixtures.AbstractGradleFuncTest
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Rule
@@ -44,7 +44,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
         given:
         buildFile.text = """
             plugins {
-             id 'opensearch.internal-distribution-download'
+             id 'density.internal-distribution-download'
             }
         """
 
@@ -52,19 +52,19 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
         def result = gradleRunner("tasks").buildAndFail()
 
         then:
-        assertOutputContains(result.output, "Plugin 'opensearch.internal-distribution-download' is not supported. " +
-            "Use 'opensearch.distribution-download' plugin instead")
+        assertOutputContains(result.output, "Plugin 'density.internal-distribution-download' is not supported. " +
+            "Use 'density.distribution-download' plugin instead")
     }
 
     def "resolves current version from local build"() {
         given:
         internalBuild()
         localDistroSetup()
-        def distroVersion = VersionProperties.getOpenSearch()
+        def distroVersion = VersionProperties.getDensity()
         buildFile << """
-            apply plugin: 'opensearch.internal-distribution-download'
+            apply plugin: 'density.internal-distribution-download'
 
-            opensearch_distributions {
+            density_distributions {
               test_distro {
                   version = "$distroVersion"
                   type = "archive"
@@ -73,7 +73,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
               }
             }
             tasks.register("setupDistro", Sync) {
-                from(opensearch_distributions.test_distro.extracted)
+                from(density_distributions.test_distro.extracted)
                 into("build/distro")
             }
         """
@@ -92,9 +92,9 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
         internalBuild()
         bwcMinorProjectSetup()
         buildFile << """
-            apply plugin: 'opensearch.internal-distribution-download'
+            apply plugin: 'density.internal-distribution-download'
 
-            opensearch_distributions {
+            density_distributions {
               test_distro {
                   version = "8.1.0"
                   type = "archive"
@@ -103,7 +103,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
               }
             }
             tasks.register("setupDistro", Sync) {
-                from(opensearch_distributions.test_distro.extracted)
+                from(density_distributions.test_distro.extracted)
                 into("build/distro")
             }
         """
@@ -113,7 +113,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
         then:
         result.task(":distribution:bwc:minor:buildBwcExpandedTask").outcome == TaskOutcome.SUCCESS
         result.task(":setupDistro").outcome == TaskOutcome.SUCCESS
-        assertExtractedDistroIsCreated("distribution/bwc/minor/build/install/opensearch-distro",
+        assertExtractedDistroIsCreated("distribution/bwc/minor/build/install/density-distro",
                 'bwc-marker.txt')
     }
 
@@ -122,9 +122,9 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
         internalBuild()
         bwcMinorProjectSetup()
         buildFile << """
-            apply plugin: 'opensearch.internal-distribution-download'
+            apply plugin: 'density.internal-distribution-download'
 
-            opensearch_distributions {
+            density_distributions {
               test_distro {
                   version = "8.1.0"
                   type = "archive"
@@ -134,7 +134,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
               }
             }
             tasks.register("createExtractedTestDistro") {
-                dependsOn opensearch_distributions.test_distro.extracted
+                dependsOn density_distributions.test_distro.extracted
             }
         """
         when:
@@ -168,7 +168,7 @@ class InternalDistributionDownloadPluginFuncTest extends AbstractGradleFuncTest 
             configurations.create("expanded-linux-tar")
             def expandedTask = tasks.register("buildBwcExpandedTask", Copy) {
                 from('bwc-marker.txt')
-                into('build/install/opensearch-distro')
+                into('build/install/density-distro')
             }
             artifacts {
                 it.add("expanded-linux-tar", file('build/install')) {

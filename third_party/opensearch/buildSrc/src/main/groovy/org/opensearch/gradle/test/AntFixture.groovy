@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,7 +27,7 @@
  * under the License.
  */
 
-package org.opensearch.gradle.test
+package org.density.gradle.test
 
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
@@ -35,8 +35,8 @@ import org.gradle.api.GradleException
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskProvider
-import org.opensearch.gradle.AntTask
-import org.opensearch.gradle.LoggedExec
+import org.density.gradle.AntTask
+import org.density.gradle.LoggedExec
 
 import javax.inject.Inject
 
@@ -241,7 +241,7 @@ class AntFixture extends AntTask implements Fixture {
         throw toThrow
     }
 
-    /** Adds a task to kill an opensearch node with the given pidfile */
+    /** Adds a task to kill an density node with the given pidfile */
     private TaskProvider createStopTask() {
         final AntFixture fixture = this
         final Object pid = "${ -> fixture.pid }"

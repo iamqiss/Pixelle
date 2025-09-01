@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.filter;
+package org.density.search.aggregations.bucket.filter;
 
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ import java.util.List;
  * A multi bucket aggregation where the buckets are defined by a set of filters (a bucket per filter). Each bucket
  * will collect all documents matching its filter.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Filters extends MultiBucketsAggregation {
 

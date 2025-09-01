@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.parsers;
+package org.density.common.geo.parsers;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +46,7 @@ import org.locationtech.jts.geom.Coordinate;
  * Can either be a leaf node consisting of a Coordinate, or a parent with
  * children
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CoordinateNode implements ToXContentObject {
     public final Coordinate coordinate;
@@ -80,7 +80,7 @@ public class CoordinateNode implements ToXContentObject {
 
     protected int numDimensions() {
         if (isEmpty()) {
-            throw new OpenSearchException("attempting to get number of dimensions on an empty coordinate node");
+            throw new DensityException("attempting to get number of dimensions on an empty coordinate node");
         }
         if (coordinate != null) {
             return Double.isNaN(coordinate.z) ? 2 : 3;

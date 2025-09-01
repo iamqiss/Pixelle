@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.streamingingestion.state.ShardIngestionState;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexSettings;
+import org.density.action.admin.indices.streamingingestion.state.ShardIngestionState;
+import org.density.common.logging.Loggers;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexSettings;
 
 /**
  * Base index shard class
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractIndexShardComponent implements IndexShardComponent {
 

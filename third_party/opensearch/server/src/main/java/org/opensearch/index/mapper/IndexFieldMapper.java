@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.ConstantIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.ConstantIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 import java.util.function.Supplier;
@@ -48,7 +48,7 @@ import java.util.function.Supplier;
 /**
  * Index specific field mapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexFieldMapper extends MetadataFieldMapper {
@@ -62,7 +62,7 @@ public class IndexFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for Index field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class IndexFieldType extends ConstantFieldType {
 

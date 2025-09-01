@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
+package org.density.transport.grpc.proto.response.exceptions.shardoperationfailedexception;
 
-import org.opensearch.action.search.ShardSearchFailure;
-import org.opensearch.action.support.replication.ReplicationResponse;
-import org.opensearch.core.action.ShardOperationFailedException;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.protobufs.ShardFailure;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.snapshots.SnapshotShardFailure;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.search.ShardSearchFailure;
+import org.density.action.support.replication.ReplicationResponse;
+import org.density.core.action.ShardOperationFailedException;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.protobufs.ShardFailure;
+import org.density.search.SearchShardTarget;
+import org.density.snapshots.SnapshotShardFailure;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 
-public class ShardOperationFailedExceptionProtoUtilsTests extends OpenSearchTestCase {
+public class ShardOperationFailedExceptionProtoUtilsTests extends DensityTestCase {
 
     public void testToProtoWithShardSearchFailure() throws IOException {
 

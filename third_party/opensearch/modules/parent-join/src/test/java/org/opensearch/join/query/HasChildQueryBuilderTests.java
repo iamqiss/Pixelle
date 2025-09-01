@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.join.query;
+package org.density.join.query;
 
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 
@@ -44,29 +44,29 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.search.similarities.PerFieldSimilarityWrapper;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.IdsQueryBuilder;
-import org.opensearch.index.query.InnerHitBuilder;
-import org.opensearch.index.query.InnerHitContextBuilder;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.WrapperQueryBuilder;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.join.ParentJoinModulePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.sort.FieldSortBuilder;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.test.AbstractQueryTestCase;
-import org.opensearch.test.TestGeoShapeFieldMapperPlugin;
-import org.opensearch.test.VersionUtils;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.IdsQueryBuilder;
+import org.density.index.query.InnerHitBuilder;
+import org.density.index.query.InnerHitContextBuilder;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.WrapperQueryBuilder;
+import org.density.index.similarity.SimilarityService;
+import org.density.join.ParentJoinModulePlugin;
+import org.density.plugins.Plugin;
+import org.density.search.sort.FieldSortBuilder;
+import org.density.search.sort.SortOrder;
+import org.density.test.AbstractQueryTestCase;
+import org.density.test.TestGeoShapeFieldMapperPlugin;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,8 +77,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.join.query.JoinQueryBuilders.hasChildQuery;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.join.query.JoinQueryBuilders.hasChildQuery;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -391,7 +391,7 @@ public class HasChildQueryBuilderTests extends AbstractQueryTestCase<HasChildQue
         when(queryShardContext.allowExpensiveQueries()).thenReturn(false);
 
         HasChildQueryBuilder queryBuilder = hasChildQuery(CHILD_DOC, new TermQueryBuilder("custom_string", "value"), ScoreMode.None);
-        OpenSearchException e = expectThrows(OpenSearchException.class, () -> queryBuilder.toQuery(queryShardContext));
+        DensityException e = expectThrows(DensityException.class, () -> queryBuilder.toQuery(queryShardContext));
         assertEquals("[joining] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", e.getMessage());
     }
 

@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
 
 import java.util.Map;
 

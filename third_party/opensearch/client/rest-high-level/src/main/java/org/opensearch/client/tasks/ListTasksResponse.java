@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.tasks;
+package org.density.client.tasks;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,12 +45,12 @@ import static java.util.stream.Collectors.toList;
 public class ListTasksResponse {
 
     protected final List<TaskOperationFailure> taskFailures = new ArrayList<>();
-    protected final List<OpenSearchException> nodeFailures = new ArrayList<>();
+    protected final List<DensityException> nodeFailures = new ArrayList<>();
     protected final List<NodeData> nodesInfoData = new ArrayList<>();
     protected final List<TaskInfo> tasks = new ArrayList<>();
     protected final List<TaskGroup> taskGroups = new ArrayList<>();
 
-    ListTasksResponse(List<NodeData> nodesInfoData, List<TaskOperationFailure> taskFailures, List<OpenSearchException> nodeFailures) {
+    ListTasksResponse(List<NodeData> nodesInfoData, List<TaskOperationFailure> taskFailures, List<DensityException> nodeFailures) {
         if (taskFailures != null) {
             this.taskFailures.addAll(taskFailures);
         }
@@ -104,7 +104,7 @@ public class ListTasksResponse {
         return taskFailures;
     }
 
-    public List<OpenSearchException> getNodeFailures() {
+    public List<DensityException> getNodeFailures() {
         return nodeFailures;
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.analyze;
+package org.density.action.admin.indices.analyze;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.single.shard.SingleShardRequest;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.analysis.NameOrDefinition;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ActionType;
+import org.density.action.support.single.shard.SingleShardRequest;
+import org.density.common.annotation.PublicApi;
+import org.density.core.ParseField;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.analysis.NameOrDefinition;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,12 +58,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Transport action for analyzing text
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
@@ -79,7 +79,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
      * A request to analyze a text associated with a specific index. Allow to provide
      * the actual analyzer name to perform the analysis with.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Request extends SingleShardRequest<Request> {
@@ -311,7 +311,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
     /**
      * Inner Response
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Response extends ActionResponse implements ToXContentObject {
@@ -396,7 +396,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String TOKENS = "tokens";
@@ -408,7 +408,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
     /**
      * Inner Analyze Token
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class AnalyzeToken implements Writeable, ToXContentObject {
@@ -547,7 +547,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
     /**
      * Inner Detail Analyze Response
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class DetailAnalyzeResponse implements Writeable, ToXContentFragment {
@@ -715,7 +715,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
     /**
      * Inner Analyze Token List
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class AnalyzeTokenList implements Writeable, ToXContentObject {
@@ -790,7 +790,7 @@ public class AnalyzeAction extends ActionType<AnalyzeAction.Response> {
     /**
      * Inner character filtered text
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class CharFilteredText implements Writeable, ToXContentObject {

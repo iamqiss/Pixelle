@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.TextFieldMapper;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.TextFieldMapper;
 
 import java.util.Map;
 
-import static org.opensearch.index.analysis.AnalyzerComponents.createComponents;
+import static org.density.index.analysis.AnalyzerComponents.createComponents;
 
 /**
  * A custom analyzer that is built out of a single {@link org.apache.lucene.analysis.Tokenizer} and a list
  * of {@link org.apache.lucene.analysis.TokenFilter}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CustomAnalyzerProvider extends AbstractIndexAnalyzerProvider<Analyzer> {
 

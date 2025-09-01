@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.rest;
+package org.density.rule.rest;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
-public class RestUpdateRuleActionTests extends OpenSearchTestCase {
+public class RestUpdateRuleActionTests extends DensityTestCase {
     RestUpdateRuleAction action = new RestUpdateRuleAction();;
 
     public void testGetName() {

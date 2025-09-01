@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.rule.autotagging.FeatureType;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.rule.autotagging.FeatureType;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import java.io.IOException;
  * A request to delete a Rule by ID
  * Example:
  * curl -XDELETE "localhost:9200/_rules/{featureType}/{_id}"
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public class DeleteRuleRequest extends ActionRequest {

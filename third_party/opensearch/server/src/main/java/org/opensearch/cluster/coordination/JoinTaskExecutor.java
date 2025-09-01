@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,34 +25,34 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.NotClusterManagerException;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.decommission.NodeDecommissionedException;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.RerouteService;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.node.remotestore.RemoteStoreNodeService;
-import org.opensearch.persistent.PersistentTasksCustomMetadata;
+import org.density.Version;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.NotClusterManagerException;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.decommission.NodeDecommissionedException;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.RerouteService;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.node.remotestore.RemoteStoreNodeService;
+import org.density.persistent.PersistentTasksCustomMetadata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,19 +68,19 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import static org.opensearch.cluster.decommission.DecommissionHelper.nodeCommissioned;
-import static org.opensearch.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.getClusterStateRepoName;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.getRoutingTableRepoName;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.CompatibilityMode.MIXED;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.CompatibilityMode.STRICT;
-import static org.opensearch.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
+import static org.density.cluster.decommission.DecommissionHelper.nodeCommissioned;
+import static org.density.gateway.GatewayService.STATE_NOT_RECOVERED_BLOCK;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.getClusterStateRepoName;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.getRoutingTableRepoName;
+import static org.density.node.remotestore.RemoteStoreNodeService.CompatibilityMode;
+import static org.density.node.remotestore.RemoteStoreNodeService.CompatibilityMode.MIXED;
+import static org.density.node.remotestore.RemoteStoreNodeService.CompatibilityMode.STRICT;
+import static org.density.node.remotestore.RemoteStoreNodeService.REMOTE_STORE_COMPATIBILITY_MODE_SETTING;
 
 /**
- * Main executor for Nodes joining the OpenSearch cluster
+ * Main executor for Nodes joining the Density cluster
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JoinTaskExecutor implements ClusterStateTaskExecutor<JoinTaskExecutor.Task> {
 
@@ -94,7 +94,7 @@ public class JoinTaskExecutor implements ClusterStateTaskExecutor<JoinTaskExecut
     /**
      * Task for the join task executor.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Task {
 
@@ -385,7 +385,7 @@ public class JoinTaskExecutor implements ClusterStateTaskExecutor<JoinTaskExecut
 
     /**
      * Ensures that all indices are compatible with the given node version. This will ensure that all indices in the given metadata
-     * will not be created with a newer version of opensearch as well as that all indices are newer or equal to the minimum index
+     * will not be created with a newer version of density as well as that all indices are newer or equal to the minimum index
      * compatibility version.
      *
      * @throws IllegalStateException if any index is incompatible with the given version

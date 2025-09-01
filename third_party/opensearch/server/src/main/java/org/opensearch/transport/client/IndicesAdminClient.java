@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,121 +26,121 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.client;
+package org.density.transport.client;
 
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequest;
-import org.opensearch.action.admin.indices.alias.IndicesAliasesRequestBuilder;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesRequestBuilder;
-import org.opensearch.action.admin.indices.alias.get.GetAliasesResponse;
-import org.opensearch.action.admin.indices.analyze.AnalyzeAction;
-import org.opensearch.action.admin.indices.analyze.AnalyzeRequestBuilder;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheRequestBuilder;
-import org.opensearch.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.close.CloseIndexRequestBuilder;
-import org.opensearch.action.admin.indices.close.CloseIndexResponse;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.opensearch.action.admin.indices.create.CreateIndexResponse;
-import org.opensearch.action.admin.indices.datastream.CreateDataStreamAction;
-import org.opensearch.action.admin.indices.datastream.DeleteDataStreamAction;
-import org.opensearch.action.admin.indices.datastream.GetDataStreamAction;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
-import org.opensearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.opensearch.action.admin.indices.flush.FlushRequest;
-import org.opensearch.action.admin.indices.flush.FlushRequestBuilder;
-import org.opensearch.action.admin.indices.flush.FlushResponse;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeRequestBuilder;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.get.GetIndexRequest;
-import org.opensearch.action.admin.indices.get.GetIndexRequestBuilder;
-import org.opensearch.action.admin.indices.get.GetIndexResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
-import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
-import org.opensearch.action.admin.indices.open.OpenIndexRequest;
-import org.opensearch.action.admin.indices.open.OpenIndexRequestBuilder;
-import org.opensearch.action.admin.indices.open.OpenIndexResponse;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockRequest;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockRequestBuilder;
-import org.opensearch.action.admin.indices.readonly.AddIndexBlockResponse;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequest;
-import org.opensearch.action.admin.indices.recovery.RecoveryRequestBuilder;
-import org.opensearch.action.admin.indices.recovery.RecoveryResponse;
-import org.opensearch.action.admin.indices.refresh.RefreshRequest;
-import org.opensearch.action.admin.indices.refresh.RefreshRequestBuilder;
-import org.opensearch.action.admin.indices.refresh.RefreshResponse;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsRequest;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsRequestBuilder;
-import org.opensearch.action.admin.indices.replication.SegmentReplicationStatsResponse;
-import org.opensearch.action.admin.indices.resolve.ResolveIndexAction;
-import org.opensearch.action.admin.indices.rollover.RolloverRequest;
-import org.opensearch.action.admin.indices.rollover.RolloverRequestBuilder;
-import org.opensearch.action.admin.indices.rollover.RolloverResponse;
-import org.opensearch.action.admin.indices.scale.searchonly.ScaleIndexRequestBuilder;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentResponse;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequest;
-import org.opensearch.action.admin.indices.segments.IndicesSegmentsRequestBuilder;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequest;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsRequestBuilder;
-import org.opensearch.action.admin.indices.settings.get.GetSettingsResponse;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequest;
-import org.opensearch.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoreRequestBuilder;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresRequest;
-import org.opensearch.action.admin.indices.shards.IndicesShardStoresResponse;
-import org.opensearch.action.admin.indices.shrink.ResizeRequest;
-import org.opensearch.action.admin.indices.shrink.ResizeRequestBuilder;
-import org.opensearch.action.admin.indices.shrink.ResizeResponse;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.opensearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
-import org.opensearch.action.admin.indices.stats.IndicesStatsResponse;
-import org.opensearch.action.admin.indices.streamingingestion.pause.PauseIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.pause.PauseIngestionResponse;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
-import org.opensearch.action.admin.indices.streamingingestion.state.GetIngestionStateRequest;
-import org.opensearch.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
-import org.opensearch.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesRequest;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesRequestBuilder;
-import org.opensearch.action.admin.indices.template.get.GetIndexTemplatesResponse;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequest;
-import org.opensearch.action.admin.indices.template.put.PutIndexTemplateRequestBuilder;
-import org.opensearch.action.admin.indices.upgrade.get.UpgradeStatusRequest;
-import org.opensearch.action.admin.indices.upgrade.get.UpgradeStatusRequestBuilder;
-import org.opensearch.action.admin.indices.upgrade.get.UpgradeStatusResponse;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeRequest;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeRequestBuilder;
-import org.opensearch.action.admin.indices.upgrade.post.UpgradeResponse;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequest;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryRequestBuilder;
-import org.opensearch.action.admin.indices.validate.query.ValidateQueryResponse;
-import org.opensearch.action.admin.indices.view.CreateViewAction;
-import org.opensearch.action.admin.indices.view.DeleteViewAction;
-import org.opensearch.action.admin.indices.view.GetViewAction;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
-import org.opensearch.cluster.metadata.IndexMetadata.APIBlock;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionListener;
+import org.density.action.admin.indices.alias.IndicesAliasesRequest;
+import org.density.action.admin.indices.alias.IndicesAliasesRequestBuilder;
+import org.density.action.admin.indices.alias.get.GetAliasesRequest;
+import org.density.action.admin.indices.alias.get.GetAliasesRequestBuilder;
+import org.density.action.admin.indices.alias.get.GetAliasesResponse;
+import org.density.action.admin.indices.analyze.AnalyzeAction;
+import org.density.action.admin.indices.analyze.AnalyzeRequestBuilder;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequest;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheRequestBuilder;
+import org.density.action.admin.indices.cache.clear.ClearIndicesCacheResponse;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.close.CloseIndexRequestBuilder;
+import org.density.action.admin.indices.close.CloseIndexResponse;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.density.action.admin.indices.create.CreateIndexResponse;
+import org.density.action.admin.indices.datastream.CreateDataStreamAction;
+import org.density.action.admin.indices.datastream.DeleteDataStreamAction;
+import org.density.action.admin.indices.datastream.GetDataStreamAction;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.delete.DeleteIndexRequestBuilder;
+import org.density.action.admin.indices.exists.indices.IndicesExistsRequest;
+import org.density.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
+import org.density.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.density.action.admin.indices.flush.FlushRequest;
+import org.density.action.admin.indices.flush.FlushRequestBuilder;
+import org.density.action.admin.indices.flush.FlushResponse;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeRequestBuilder;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.get.GetIndexRequest;
+import org.density.action.admin.indices.get.GetIndexRequestBuilder;
+import org.density.action.admin.indices.get.GetIndexResponse;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsRequest;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
+import org.density.action.admin.indices.mapping.get.GetFieldMappingsResponse;
+import org.density.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.density.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.admin.indices.mapping.put.PutMappingRequestBuilder;
+import org.density.action.admin.indices.open.OpenIndexRequest;
+import org.density.action.admin.indices.open.OpenIndexRequestBuilder;
+import org.density.action.admin.indices.open.OpenIndexResponse;
+import org.density.action.admin.indices.readonly.AddIndexBlockRequest;
+import org.density.action.admin.indices.readonly.AddIndexBlockRequestBuilder;
+import org.density.action.admin.indices.readonly.AddIndexBlockResponse;
+import org.density.action.admin.indices.recovery.RecoveryRequest;
+import org.density.action.admin.indices.recovery.RecoveryRequestBuilder;
+import org.density.action.admin.indices.recovery.RecoveryResponse;
+import org.density.action.admin.indices.refresh.RefreshRequest;
+import org.density.action.admin.indices.refresh.RefreshRequestBuilder;
+import org.density.action.admin.indices.refresh.RefreshResponse;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsRequest;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsRequestBuilder;
+import org.density.action.admin.indices.replication.SegmentReplicationStatsResponse;
+import org.density.action.admin.indices.resolve.ResolveIndexAction;
+import org.density.action.admin.indices.rollover.RolloverRequest;
+import org.density.action.admin.indices.rollover.RolloverRequestBuilder;
+import org.density.action.admin.indices.rollover.RolloverResponse;
+import org.density.action.admin.indices.scale.searchonly.ScaleIndexRequestBuilder;
+import org.density.action.admin.indices.segments.IndicesSegmentResponse;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequest;
+import org.density.action.admin.indices.segments.IndicesSegmentsRequestBuilder;
+import org.density.action.admin.indices.settings.get.GetSettingsRequest;
+import org.density.action.admin.indices.settings.get.GetSettingsRequestBuilder;
+import org.density.action.admin.indices.settings.get.GetSettingsResponse;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequest;
+import org.density.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
+import org.density.action.admin.indices.shards.IndicesShardStoreRequestBuilder;
+import org.density.action.admin.indices.shards.IndicesShardStoresRequest;
+import org.density.action.admin.indices.shards.IndicesShardStoresResponse;
+import org.density.action.admin.indices.shrink.ResizeRequest;
+import org.density.action.admin.indices.shrink.ResizeRequestBuilder;
+import org.density.action.admin.indices.shrink.ResizeResponse;
+import org.density.action.admin.indices.stats.IndicesStatsRequest;
+import org.density.action.admin.indices.stats.IndicesStatsRequestBuilder;
+import org.density.action.admin.indices.stats.IndicesStatsResponse;
+import org.density.action.admin.indices.streamingingestion.pause.PauseIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.pause.PauseIngestionResponse;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
+import org.density.action.admin.indices.streamingingestion.state.GetIngestionStateRequest;
+import org.density.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequest;
+import org.density.action.admin.indices.template.delete.DeleteIndexTemplateRequestBuilder;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesRequest;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesRequestBuilder;
+import org.density.action.admin.indices.template.get.GetIndexTemplatesResponse;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequest;
+import org.density.action.admin.indices.template.put.PutIndexTemplateRequestBuilder;
+import org.density.action.admin.indices.upgrade.get.UpgradeStatusRequest;
+import org.density.action.admin.indices.upgrade.get.UpgradeStatusRequestBuilder;
+import org.density.action.admin.indices.upgrade.get.UpgradeStatusResponse;
+import org.density.action.admin.indices.upgrade.post.UpgradeRequest;
+import org.density.action.admin.indices.upgrade.post.UpgradeRequestBuilder;
+import org.density.action.admin.indices.upgrade.post.UpgradeResponse;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequest;
+import org.density.action.admin.indices.validate.query.ValidateQueryRequestBuilder;
+import org.density.action.admin.indices.validate.query.ValidateQueryResponse;
+import org.density.action.admin.indices.view.CreateViewAction;
+import org.density.action.admin.indices.view.DeleteViewAction;
+import org.density.action.admin.indices.view.GetViewAction;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
+import org.density.cluster.metadata.IndexMetadata.APIBlock;
+import org.density.common.Nullable;
+import org.density.common.action.ActionFuture;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionListener;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -150,10 +150,10 @@ import java.util.concurrent.CompletionStage;
  *
  * @see AdminClient#indices()
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
-public interface IndicesAdminClient extends OpenSearchClient {
+public interface IndicesAdminClient extends DensityClient {
 
     /**
      * Indices Exists.

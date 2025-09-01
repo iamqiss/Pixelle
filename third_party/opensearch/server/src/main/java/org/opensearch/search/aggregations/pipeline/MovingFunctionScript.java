@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.script.ScriptContext;
-import org.opensearch.script.ScriptFactory;
+import org.density.script.ScriptContext;
+import org.density.script.ScriptFactory;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ import java.util.Map;
  * This class provides a custom script context for the Moving Function pipeline aggregation,
  * so that we can expose a number of pre-baked moving functions like min, max, movavg, etc
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class MovingFunctionScript {
     /**
@@ -54,7 +54,7 @@ public abstract class MovingFunctionScript {
     /**
      * Factory interface
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         MovingFunctionScript newInstance();

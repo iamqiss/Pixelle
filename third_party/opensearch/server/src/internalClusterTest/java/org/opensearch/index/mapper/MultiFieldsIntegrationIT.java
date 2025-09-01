@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.admin.indices.mapping.get.GetMappingsResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.geo.GeoPoint;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.index.query.QueryBuilders.constantScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.geoDistanceQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.index.query.QueryBuilders.constantScoreQuery;
+import static org.density.index.query.QueryBuilders.geoDistanceQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class MultiFieldsIntegrationIT extends OpenSearchIntegTestCase {
+public class MultiFieldsIntegrationIT extends DensityIntegTestCase {
     @SuppressWarnings("unchecked")
     public void testMultiFields() throws Exception {
         assertAcked(client().admin().indices().prepareCreate("my-index").setMapping(createTypeSource()));

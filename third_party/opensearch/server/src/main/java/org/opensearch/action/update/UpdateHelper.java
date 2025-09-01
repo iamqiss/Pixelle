@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,41 +26,41 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.delete.DeleteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.DocumentMissingException;
-import org.opensearch.index.engine.DocumentSourceMissingException;
-import org.opensearch.index.get.GetResult;
-import org.opensearch.index.mapper.RoutingFieldMapper;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptService;
-import org.opensearch.script.ScriptType;
-import org.opensearch.script.UpdateScript;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.transport.client.Requests;
+import org.density.DensityException;
+import org.density.action.DocWriteResponse;
+import org.density.action.delete.DeleteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.common.Nullable;
+import org.density.common.collect.Tuple;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.index.engine.DocumentMissingException;
+import org.density.index.engine.DocumentSourceMissingException;
+import org.density.index.get.GetResult;
+import org.density.index.mapper.RoutingFieldMapper;
+import org.density.index.shard.IndexShard;
+import org.density.script.Script;
+import org.density.script.ScriptService;
+import org.density.script.ScriptType;
+import org.density.script.UpdateScript;
+import org.density.search.lookup.SourceLookup;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -71,7 +71,7 @@ import java.util.function.LongSupplier;
 /**
  * Helper for translating an update request to an index, delete request or update response.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateHelper {
 
@@ -379,7 +379,7 @@ public class UpdateHelper {
                     sourceFilteredAsBytes = BytesReference.bytes(builder);
                 }
             } catch (IOException e) {
-                throw new OpenSearchException("Error filtering source", e);
+                throw new DensityException("Error filtering source", e);
             }
         }
 
@@ -400,7 +400,7 @@ public class UpdateHelper {
     /**
      * Internal result
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Result {
 
@@ -481,7 +481,7 @@ public class UpdateHelper {
     /**
      * Field names used to populate the script context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ContextFields {
         public static final String CTX = "ctx";

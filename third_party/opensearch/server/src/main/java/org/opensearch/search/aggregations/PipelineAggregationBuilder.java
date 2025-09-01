@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,26 +25,26 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.aggregations.AggregatorFactories.Builder;
-import org.opensearch.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.ValidateActions;
+import org.density.common.annotation.PublicApi;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.Rewriteable;
+import org.density.search.aggregations.AggregatorFactories.Builder;
+import org.density.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.density.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.density.search.aggregations.pipeline.PipelineAggregator;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -55,7 +55,7 @@ import java.util.Objects;
  * A factory that knows how to create an {@link PipelineAggregator} of a
  * specific type.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class PipelineAggregationBuilder
@@ -103,7 +103,7 @@ public abstract class PipelineAggregationBuilder
     /**
      * The context used for validation
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class ValidationContext {
         /**
@@ -133,7 +133,7 @@ public abstract class PipelineAggregationBuilder
         /**
          * The root of the tree
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class ForTreeRoot extends ValidationContext {
             private final Collection<AggregationBuilder> siblingAggregations;
@@ -178,7 +178,7 @@ public abstract class PipelineAggregationBuilder
         /**
          * The internal tree node
          *
-         * @opensearch.internal
+         * @density.internal
          */
         private static class ForInsideTree extends ValidationContext {
             private final AggregationBuilder parent;

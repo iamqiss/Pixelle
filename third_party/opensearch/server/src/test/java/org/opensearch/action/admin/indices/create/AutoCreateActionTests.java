@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.ComposableIndexTemplate.DataStreamTemplate;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.ComposableIndexTemplate.DataStreamTemplate;
+import org.density.cluster.metadata.Metadata;
+import org.density.test.DensityTestCase;
 
 import java.util.Collections;
 
@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AutoCreateActionTests extends OpenSearchTestCase {
+public class AutoCreateActionTests extends DensityTestCase {
 
     public void testResolveAutoCreateDataStreams() {
         Metadata metadata;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.geo;
+package org.density.test.geo;
 
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.search.geo.GeoShapeQueryTests;
+import org.density.DensityException;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.search.geo.GeoShapeQueryTests;
 import org.junit.Assert;
 
 import java.util.Random;
@@ -257,7 +257,7 @@ public class RandomShapeGenerator extends RandomGeoGenerator {
                 }
                 return pgb;
             default:
-                throw new OpenSearchException("Unable to create shape of type [" + st + "]");
+                throw new DensityException("Unable to create shape of type [" + st + "]");
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.WriteRequest;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.support.single.instance.InstanceShardOperationRequest;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.WriteRequest;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.support.single.instance.InstanceShardOperationRequest;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,14 +70,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Transport request for updating an index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
@@ -557,7 +557,7 @@ public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
      * sequence number. Must be used in combination with {@link #setIfPrimaryTerm(long)}
      *
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public UpdateRequest setIfSeqNo(long seqNo) {
         if (seqNo < 0 && seqNo != UNASSIGNED_SEQ_NO) {
@@ -572,7 +572,7 @@ public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
      * primary term. Must be used in combination with {@link #setIfSeqNo(long)}
      *
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public UpdateRequest setIfPrimaryTerm(long term) {
         if (term < 0) {
@@ -585,7 +585,7 @@ public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
     /**
      * If set, only perform this update request if the document was last modification was assigned this sequence number.
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public long ifSeqNo() {
         return ifSeqNo;
@@ -595,7 +595,7 @@ public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
      * If set, only perform this update request if the document was last modification was assigned this primary term.
      * <p>
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public long ifPrimaryTerm() {
         return ifPrimaryTerm;
@@ -726,7 +726,7 @@ public class UpdateRequest extends InstanceShardOperationRequest<UpdateRequest>
 
     /**
      * Sets the index request to be used if the document does not exists. Otherwise, a
-     * {@link org.opensearch.index.engine.DocumentMissingException} is thrown.
+     * {@link org.density.index.engine.DocumentMissingException} is thrown.
      */
     public UpdateRequest upsert(IndexRequest upsertRequest) {
         this.upsertRequest = upsertRequest;

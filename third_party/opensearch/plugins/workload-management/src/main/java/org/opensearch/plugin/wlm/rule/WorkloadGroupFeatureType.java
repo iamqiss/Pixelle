@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule;
+package org.density.plugin.wlm.rule;
 
-import org.opensearch.rule.RuleAttribute;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.FeatureValueValidator;
+import org.density.rule.RuleAttribute;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.FeatureValueValidator;
 
 import java.util.Map;
 
 /**
  * Represents a feature type specific to the workload group feature
- * @opensearch.experimental
+ * @density.experimental
  */
 public class WorkloadGroupFeatureType implements FeatureType {
     /**

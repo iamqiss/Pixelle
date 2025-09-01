@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.channels;
+package org.density.telemetry.tracing.channels;
 
-import org.opensearch.Version;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.SpanScope;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.transport.BaseTcpTransportChannel;
-import org.opensearch.transport.TcpTransportChannel;
-import org.opensearch.transport.TransportChannel;
+import org.density.Version;
+import org.density.core.action.ActionListener;
+import org.density.core.transport.TransportResponse;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.SpanScope;
+import org.density.telemetry.tracing.Tracer;
+import org.density.transport.BaseTcpTransportChannel;
+import org.density.transport.TcpTransportChannel;
+import org.density.transport.TransportChannel;
 
 import java.io.IOException;
 import java.util.Optional;

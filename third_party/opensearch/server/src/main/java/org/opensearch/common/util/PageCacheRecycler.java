@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.recycler.AbstractRecyclerC;
-import org.opensearch.common.recycler.Recycler;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.bytes.PagedBytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.recycler.AbstractRecyclerC;
+import org.density.common.recycler.Recycler;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.bytes.PagedBytesReference;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.opensearch.common.recycler.Recyclers.concurrent;
-import static org.opensearch.common.recycler.Recyclers.concurrentDeque;
-import static org.opensearch.common.recycler.Recyclers.dequeFactory;
-import static org.opensearch.common.recycler.Recyclers.none;
+import static org.density.common.recycler.Recyclers.concurrent;
+import static org.density.common.recycler.Recyclers.concurrentDeque;
+import static org.density.common.recycler.Recyclers.dequeFactory;
+import static org.density.common.recycler.Recyclers.none;
 
 /**
  * A recycler of fixed-size pages.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public class PageCacheRecycler {
@@ -117,7 +117,7 @@ public class PageCacheRecycler {
     public PageCacheRecycler(Settings settings) {
         final Type type = TYPE_SETTING.get(settings);
         final long limit = LIMIT_HEAP_SETTING.get(settings).getBytes();
-        final int allocatedProcessors = OpenSearchExecutors.allocatedProcessors(settings);
+        final int allocatedProcessors = DensityExecutors.allocatedProcessors(settings);
 
         // We have a global amount of memory that we need to divide across data types.
         // Since some types are more useful than other ones we give them different weights.
@@ -237,7 +237,7 @@ public class PageCacheRecycler {
     /**
      * Type of the page cache recycler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Type {
         QUEUE {

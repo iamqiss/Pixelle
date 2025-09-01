@@ -11,7 +11,7 @@
 ## -Xms4g
 ## -Xmx4g
 ##
-## See https://opensearch.org/docs/opensearch/install/important-settings/
+## See https://density.org/docs/density/install/important-settings/
 ## for more information
 ##
 ################################################################
@@ -48,7 +48,7 @@
 11-:-XX:InitiatingHeapOccupancyPercent=30
 
 ## JVM temporary directory
--Djava.io.tmpdir=${OPENSEARCH_TMPDIR}
+-Djava.io.tmpdir=${DENSITY_TMPDIR}
 
 ## heap dumps
 
@@ -84,5 +84,5 @@ ${error.file}
 23:-XX:CompileCommand=dontinline,java/lang/invoke/MethodHandle.setAsTypeCache
 23:-XX:CompileCommand=dontinline,java/lang/invoke/MethodHandle.asTypeUncached
 
-21-:-javaagent:agent/opensearch-agent.jar
+21-:-javaagent:agent/density-agent.jar
 21-:--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED

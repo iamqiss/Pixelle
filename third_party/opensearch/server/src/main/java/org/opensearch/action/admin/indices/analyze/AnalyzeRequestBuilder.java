@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,22 +25,22 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.analyze;
+package org.density.action.admin.indices.analyze;
 
-import org.opensearch.action.support.single.shard.SingleShardOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.single.shard.SingleShardOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * Transport request builder for analyzing text
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class AnalyzeRequestBuilder extends SingleShardOperationRequestBuilder<
@@ -48,11 +48,11 @@ public class AnalyzeRequestBuilder extends SingleShardOperationRequestBuilder<
     AnalyzeAction.Response,
     AnalyzeRequestBuilder> {
 
-    public AnalyzeRequestBuilder(OpenSearchClient client, AnalyzeAction action) {
+    public AnalyzeRequestBuilder(DensityClient client, AnalyzeAction action) {
         super(client, action, new AnalyzeAction.Request());
     }
 
-    public AnalyzeRequestBuilder(OpenSearchClient client, AnalyzeAction action, String index, String... text) {
+    public AnalyzeRequestBuilder(DensityClient client, AnalyzeAction action, String index, String... text) {
         super(client, action, new AnalyzeAction.Request(index).text(text));
     }
 

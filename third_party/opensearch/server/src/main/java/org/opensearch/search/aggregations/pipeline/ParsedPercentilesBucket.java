@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.metrics.ParsedPercentiles;
-import org.opensearch.search.aggregations.metrics.Percentiles;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.metrics.ParsedPercentiles;
+import org.density.search.aggregations.metrics.Percentiles;
 
 import java.io.IOException;
 import java.util.Map.Entry;
@@ -44,7 +44,7 @@ import java.util.Map.Entry;
 /**
  * A percentiles bucket agg result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedPercentilesBucket extends ParsedPercentiles implements Percentiles {
 

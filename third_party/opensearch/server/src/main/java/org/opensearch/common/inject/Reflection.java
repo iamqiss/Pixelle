@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,11 +23,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
 import java.lang.reflect.Constructor;
 
@@ -44,7 +44,7 @@ class Reflection {
      * A placeholder. This enables us to continue processing and gather more
      * errors but blows up if you actually try to use it.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class InvalidConstructor {
         InvalidConstructor() {

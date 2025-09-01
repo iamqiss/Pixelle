@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.compress;
+package org.density.core.compress;
 
-import org.opensearch.core.xcontent.XContent;
+import org.density.core.xcontent.XContent;
 
 /**
  * Exception indicating that we were expecting some {@link XContent} but could
  * not detect its type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NotXContentException extends RuntimeException {
 

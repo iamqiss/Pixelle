@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.search.Explanation;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.density.core.common.Strings;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.functionscore.FunctionScoreQueryBuilder;
 
 /**
  * Helper utility class for functions
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Functions {
     private Functions() {}

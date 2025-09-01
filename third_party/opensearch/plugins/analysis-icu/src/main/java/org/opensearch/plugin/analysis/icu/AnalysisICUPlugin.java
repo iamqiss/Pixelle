@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugin.analysis.icu;
+package org.density.plugin.analysis.icu;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.IcuAnalyzerProvider;
-import org.opensearch.index.analysis.IcuCollationTokenFilterFactory;
-import org.opensearch.index.analysis.IcuFoldingTokenFilterFactory;
-import org.opensearch.index.analysis.IcuNormalizerCharFilterFactory;
-import org.opensearch.index.analysis.IcuNormalizerTokenFilterFactory;
-import org.opensearch.index.analysis.IcuTokenizerFactory;
-import org.opensearch.index.analysis.IcuTransformTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.mapper.ICUCollationKeywordFieldMapper;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.MapperPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.DocValueFormat;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.IcuAnalyzerProvider;
+import org.density.index.analysis.IcuCollationTokenFilterFactory;
+import org.density.index.analysis.IcuFoldingTokenFilterFactory;
+import org.density.index.analysis.IcuNormalizerCharFilterFactory;
+import org.density.index.analysis.IcuNormalizerTokenFilterFactory;
+import org.density.index.analysis.IcuTokenizerFactory;
+import org.density.index.analysis.IcuTransformTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.mapper.ICUCollationKeywordFieldMapper;
+import org.density.index.mapper.Mapper;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.MapperPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.DocValueFormat;
 
 import java.util.Collections;
 import java.util.HashMap;

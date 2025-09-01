@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.lucene.index;
+package org.density.common.lucene.index;
 
 import org.apache.lucene.codecs.StoredFieldsReader;
 import org.apache.lucene.index.CodecReader;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.StoredFields;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.core.common.bytes.BytesReference;
+import org.density.common.CheckedFunction;
+import org.density.core.common.bytes.BytesReference;
 
 import java.io.IOException;
 
 /**
  * Wraps a {@link LeafReader} and provides access to the derived source.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DerivedSourceLeafReader extends SequentialStoredFieldsLeafReader {
 

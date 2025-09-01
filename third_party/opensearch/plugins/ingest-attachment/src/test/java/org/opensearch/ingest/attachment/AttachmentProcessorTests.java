@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.attachment;
+package org.density.ingest.attachment;
 
 import org.apache.commons.io.IOUtils;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.InputStream;
@@ -50,7 +50,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.ingest.IngestDocumentMatcher.assertIngestDocument;
+import static org.density.ingest.IngestDocumentMatcher.assertIngestDocument;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -61,7 +61,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-public class AttachmentProcessorTests extends OpenSearchTestCase {
+public class AttachmentProcessorTests extends DensityTestCase {
 
     private AttachmentProcessor processor;
 
@@ -205,7 +205,7 @@ public class AttachmentProcessorTests extends OpenSearchTestCase {
     }
 
     public void testEncryptedPdf() throws Exception {
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> parseDocument("encrypted.pdf", processor));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> parseDocument("encrypted.pdf", processor));
         assertThat(e.getDetailedMessage(), containsString("document is encrypted"));
     }
 
@@ -220,7 +220,7 @@ public class AttachmentProcessorTests extends OpenSearchTestCase {
         assertThat(attachmentData.get("content"), is(notNullValue()));
         assertThat(attachmentData.get("content_length"), is(notNullValue()));
         assertThat(attachmentData.get("author"), is("foobar"));
-        assertThat(attachmentData.get("keywords"), is("opensearch,cool,bonsai"));
+        assertThat(attachmentData.get("keywords"), is("density,cool,bonsai"));
         assertThat(attachmentData.get("title"), is("Hello"));
         assertThat(attachmentData.get("content_type").toString(), containsString("text/html"));
     }
@@ -257,7 +257,7 @@ public class AttachmentProcessorTests extends OpenSearchTestCase {
     }
 
     public void testParseAsBytesArray() throws Exception {
-        String path = "/org/opensearch/ingest/attachment/test/sample-files/text-in-english.txt";
+        String path = "/org/density/ingest/attachment/test/sample-files/text-in-english.txt";
         byte[] bytes;
         try (InputStream is = AttachmentProcessorTests.class.getResourceAsStream(path)) {
             bytes = IOUtils.toByteArray(is);
@@ -393,7 +393,7 @@ public class AttachmentProcessorTests extends OpenSearchTestCase {
     }
 
     private Object getAsBinaryOrBase64(String filename) throws Exception {
-        String path = "/org/opensearch/ingest/attachment/test/sample-files/" + filename;
+        String path = "/org/density/ingest/attachment/test/sample-files/" + filename;
         try (InputStream is = AttachmentProcessorTests.class.getResourceAsStream(path)) {
             byte bytes[] = IOUtils.toByteArray(is);
             // behave like CBOR from time to time

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.DensityTestCase;
 
-import static org.opensearch.wlm.WorkloadManagementSettings.NODE_CPU_CANCELLATION_THRESHOLD_SETTING_NAME;
-import static org.opensearch.wlm.WorkloadManagementSettings.NODE_CPU_REJECTION_THRESHOLD_SETTING_NAME;
-import static org.opensearch.wlm.WorkloadManagementSettings.NODE_MEMORY_CANCELLATION_THRESHOLD_SETTING_NAME;
-import static org.opensearch.wlm.WorkloadManagementSettings.NODE_MEMORY_REJECTION_THRESHOLD_SETTING_NAME;
+import static org.density.wlm.WorkloadManagementSettings.NODE_CPU_CANCELLATION_THRESHOLD_SETTING_NAME;
+import static org.density.wlm.WorkloadManagementSettings.NODE_CPU_REJECTION_THRESHOLD_SETTING_NAME;
+import static org.density.wlm.WorkloadManagementSettings.NODE_MEMORY_CANCELLATION_THRESHOLD_SETTING_NAME;
+import static org.density.wlm.WorkloadManagementSettings.NODE_MEMORY_REJECTION_THRESHOLD_SETTING_NAME;
 
-public class WorkloadManagementSettingsTests extends OpenSearchTestCase {
+public class WorkloadManagementSettingsTests extends DensityTestCase {
 
     /**
      * Tests the invalid value for {@code wlm.workload_group.node.memory_rejection_threshold}

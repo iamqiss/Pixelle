@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,55 +26,55 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.TaskOperationFailure;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.tasks.BaseTasksRequest;
-import org.opensearch.action.support.tasks.BaseTasksResponse;
-import org.opensearch.action.support.tasks.TasksRequestBuilder;
-import org.opensearch.action.support.tasks.TransportTasksAction;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexNameExpressionResolver;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.lifecycle.Lifecycle;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Assignment;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.plugins.ActionPlugin;
-import org.opensearch.plugins.PersistentTaskPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.FailedNodeException;
+import org.density.action.TaskOperationFailure;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.tasks.BaseTasksRequest;
+import org.density.action.support.tasks.BaseTasksResponse;
+import org.density.action.support.tasks.TasksRequestBuilder;
+import org.density.action.support.tasks.TransportTasksAction;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexNameExpressionResolver;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.lifecycle.Lifecycle;
+import org.density.common.settings.SettingsModule;
+import org.density.core.ParseField;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.persistent.PersistentTasksCustomMetadata.Assignment;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.plugins.ActionPlugin;
+import org.density.plugins.PersistentTaskPlugin;
+import org.density.plugins.Plugin;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportService;
+import org.density.transport.client.Client;
+import org.density.transport.client.DensityClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,9 +89,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Objects.requireNonNull;
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
-import static org.opensearch.test.OpenSearchTestCase.assertBusy;
-import static org.opensearch.test.OpenSearchTestCase.randomBoolean;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.test.DensityTestCase.assertBusy;
+import static org.density.test.DensityTestCase.randomBoolean;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -517,7 +517,7 @@ public class TestPersistentTasksPlugin extends Plugin implements ActionPlugin, P
 
     public static class TestTasksRequestBuilder extends TasksRequestBuilder<TestTasksRequest, TestTasksResponse, TestTasksRequestBuilder> {
 
-        protected TestTasksRequestBuilder(OpenSearchClient client) {
+        protected TestTasksRequestBuilder(DensityClient client) {
             super(client, TestTaskAction.INSTANCE, new TestTasksRequest());
         }
 

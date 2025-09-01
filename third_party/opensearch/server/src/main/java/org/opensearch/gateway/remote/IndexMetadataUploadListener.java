@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.core.action.ActionListener;
+import org.density.threadpool.ThreadPool;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutorService;
  * for index creation (also triggerred after enabling the remote cluster statement for the first time). The listener
  * is intended to be run in parallel and async with the index metadata upload.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class IndexMetadataUploadListener {
 

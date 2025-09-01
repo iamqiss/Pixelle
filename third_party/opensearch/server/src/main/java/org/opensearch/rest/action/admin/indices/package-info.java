@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,12 +26,12 @@
  */
 
 /**
- * {@link org.opensearch.rest.RestHandler}s for administrative actions that can be taken on indexes like creation, deletion, setting up
+ * {@link org.density.rest.RestHandler}s for administrative actions that can be taken on indexes like creation, deletion, setting up
  * aliases, and changing mapping.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.indices;
+package org.density.rest.action.admin.indices;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.client;
+package org.density.test.client;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.ActionModule.DynamicActionRegistry;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskListener;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteClusterService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.DensityException;
+import org.density.action.ActionModule.DynamicActionRegistry;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.tasks.Task;
+import org.density.tasks.TaskListener;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteClusterService;
+import org.density.transport.client.Client;
+import org.density.transport.client.node.NodeClient;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -128,7 +128,7 @@ public class NoOpNodeClient extends NodeClient {
         try {
             ThreadPool.terminate(threadPool(), 10, TimeUnit.SECONDS);
         } catch (Exception e) {
-            throw new OpenSearchException(e.getMessage(), e);
+            throw new DensityException(e.getMessage(), e);
         }
     }
 }

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.profile;
+package org.density.search.profile;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Collector;
-import org.opensearch.common.annotation.PublicApi;
+import org.density.common.annotation.PublicApi;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * Provide contextual profile breakdowns which are associated with freestyle context. Used when concurrent
  * search over segments is activated and each collector needs own non-shareable profile breakdown instance.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "3.2.0")
 public abstract class ContextualProfileBreakdown extends AbstractProfileBreakdown {

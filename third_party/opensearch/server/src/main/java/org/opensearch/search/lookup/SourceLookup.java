@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.lookup;
+package org.density.search.lookup;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.CheckedBiConsumer;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lucene.index.SequentialStoredFieldsLeafReader;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.index.fieldvisitor.FieldsVisitor;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.DensityParseException;
+import org.density.common.CheckedBiConsumer;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.lucene.index.SequentialStoredFieldsLeafReader;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaType;
+import org.density.index.fieldvisitor.FieldsVisitor;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -59,7 +59,7 @@ import static java.util.Collections.emptyMap;
 /**
  * Orchestrator class for source lookups. Not thread safe.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SourceLookup implements Map {
@@ -112,16 +112,16 @@ public class SourceLookup implements Map {
                 this.source = tuple.v2();
             }
         } catch (Exception e) {
-            throw new OpenSearchParseException("failed to parse / load source", e);
+            throw new DensityParseException("failed to parse / load source", e);
         }
         return this.source;
     }
 
-    private static Tuple<XContentType, Map<String, Object>> sourceAsMapAndType(BytesReference source) throws OpenSearchParseException {
+    private static Tuple<XContentType, Map<String, Object>> sourceAsMapAndType(BytesReference source) throws DensityParseException {
         return XContentHelper.convertToMap(source, false);
     }
 
-    public static Map<String, Object> sourceAsMap(BytesReference source) throws OpenSearchParseException {
+    public static Map<String, Object> sourceAsMap(BytesReference source) throws DensityParseException {
         return sourceAsMapAndType(source).v2();
     }
 

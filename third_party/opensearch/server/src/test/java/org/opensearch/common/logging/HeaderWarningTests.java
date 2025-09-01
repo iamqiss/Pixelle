@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import com.carrotsearch.randomizedtesting.generators.CodepointSetGenerator;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.hamcrest.RegexMatcher;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.test.DensityTestCase;
+import org.density.test.hamcrest.RegexMatcher;
 import org.hamcrest.core.IsSame;
 
 import java.io.IOException;
@@ -48,8 +48,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static org.opensearch.common.logging.HeaderWarning.WARNING_HEADER_PATTERN;
-import static org.opensearch.test.hamcrest.RegexMatcher.matches;
+import static org.density.common.logging.HeaderWarning.WARNING_HEADER_PATTERN;
+import static org.density.test.hamcrest.RegexMatcher.matches;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -58,7 +58,7 @@ import static org.hamcrest.Matchers.not;
 /**
  * Tests {@link HeaderWarning}
  */
-public class HeaderWarningTests extends OpenSearchTestCase {
+public class HeaderWarningTests extends DensityTestCase {
 
     private static final RegexMatcher warningValueMatcher = matches(WARNING_HEADER_PATTERN.pattern());
 

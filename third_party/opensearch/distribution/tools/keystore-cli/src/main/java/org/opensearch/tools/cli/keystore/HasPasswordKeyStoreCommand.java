@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import joptsimple.OptionSet;
-import org.opensearch.cli.Terminal;
-import org.opensearch.cli.UserException;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.env.Environment;
+import org.density.cli.Terminal;
+import org.density.cli.UserException;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.env.Environment;
 
 import java.nio.file.Path;
 
@@ -44,7 +44,7 @@ import java.nio.file.Path;
  * KeyStore command that checks if the keystore exists and is password-protected.
  * Exits with a non-zero status code if the keystore is missing or not password-protected.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HasPasswordKeyStoreCommand extends KeyStoreAwareCommand {
 
@@ -81,7 +81,7 @@ public class HasPasswordKeyStoreCommand extends KeyStoreAwareCommand {
         // We handle error printing here so we can respect the "--silent" flag
         // We have to throw an exception to get a nonzero exit code
         if (keyStore == null) {
-            terminal.errorPrintln(Terminal.Verbosity.NORMAL, "ERROR: OpenSearch keystore not found");
+            terminal.errorPrintln(Terminal.Verbosity.NORMAL, "ERROR: Density keystore not found");
             throw new UserException(NO_PASSWORD_EXIT_CODE, null);
         }
         if (keyStore.hasPassword() == false) {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,53 +26,53 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedObjectNotFoundException;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.ContentPath;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.Mapper;
-import org.opensearch.index.mapper.TextFieldMapper;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.Rewriteable;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.rescore.QueryRescorer.QueryRescoreContext;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedObjectNotFoundException;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.ContentPath;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.Mapper;
+import org.density.index.mapper.TextFieldMapper;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.Rewriteable;
+import org.density.search.SearchModule;
+import org.density.search.rescore.QueryRescorer.QueryRescoreContext;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
+import static org.density.test.EqualsHashCodeTestUtils.checkEqualsAndHashCode;
 import static org.hamcrest.Matchers.containsString;
 
-public class QueryRescorerBuilderTests extends OpenSearchTestCase {
+public class QueryRescorerBuilderTests extends DensityTestCase {
 
     private static final int NUMBER_OF_TESTBUILDERS = 20;
     private static NamedWriteableRegistry namedWriteableRegistry;
@@ -151,7 +151,7 @@ public class QueryRescorerBuilderTests extends OpenSearchTestCase {
      * test that build() outputs a {@link RescoreContext} that has the same properties
      * than the test builder
      */
-    public void testBuildRescoreSearchContext() throws OpenSearchParseException, IOException {
+    public void testBuildRescoreSearchContext() throws DensityParseException, IOException {
         final long nowInMillis = randomNonNegativeLong();
         Settings indexSettings = Settings.builder().put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT).build();
         IndexSettings idxSettings = IndexSettingsModule.newIndexSettings(randomAlphaOfLengthBetween(1, 10), indexSettings);
@@ -287,7 +287,7 @@ public class QueryRescorerBuilderTests extends OpenSearchTestCase {
         };
 
         QueryBuilder rewriteQb = new AlwaysRewriteQueryBuilder();
-        org.opensearch.search.rescore.QueryRescorerBuilder rescoreBuilder = new org.opensearch.search.rescore.QueryRescorerBuilder(
+        org.density.search.rescore.QueryRescorerBuilder rescoreBuilder = new org.density.search.rescore.QueryRescorerBuilder(
             rewriteQb
         );
 
@@ -371,7 +371,7 @@ public class QueryRescorerBuilderTests extends OpenSearchTestCase {
     }
 
     private static RescorerBuilder<?> mutate(RescorerBuilder<?> original) throws IOException {
-        RescorerBuilder<?> mutation = OpenSearchTestCase.copyWriteable(original, namedWriteableRegistry, QueryRescorerBuilder::new);
+        RescorerBuilder<?> mutation = DensityTestCase.copyWriteable(original, namedWriteableRegistry, QueryRescorerBuilder::new);
         if (randomBoolean()) {
             Integer windowSize = original.windowSize();
             if (windowSize != null) {
@@ -411,7 +411,7 @@ public class QueryRescorerBuilderTests extends OpenSearchTestCase {
      */
     public static QueryRescorerBuilder randomRescoreBuilder() {
         QueryBuilder queryBuilder = new MatchAllQueryBuilder().boost(randomFloat()).queryName(randomAlphaOfLength(20));
-        org.opensearch.search.rescore.QueryRescorerBuilder rescorer = new org.opensearch.search.rescore.QueryRescorerBuilder(queryBuilder);
+        org.density.search.rescore.QueryRescorerBuilder rescorer = new org.density.search.rescore.QueryRescorerBuilder(queryBuilder);
         if (randomBoolean()) {
             rescorer.setQueryWeight(randomFloat());
         }

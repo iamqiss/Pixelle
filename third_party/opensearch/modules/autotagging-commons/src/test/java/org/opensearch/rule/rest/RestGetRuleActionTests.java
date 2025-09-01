@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.rest;
+package org.density.rule.rest;
 
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.RestRequest.Method;
-import org.opensearch.rule.InMemoryRuleProcessingServiceTests;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.rest.RestRequest;
+import org.density.rest.RestRequest.Method;
+import org.density.rule.InMemoryRuleProcessingServiceTests;
+import org.density.rule.autotagging.FeatureType;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 import org.junit.Before;
 
 import java.util.Map;
 
-import static org.opensearch.rule.rest.RestGetRuleAction.FEATURE_TYPE;
+import static org.density.rule.rest.RestGetRuleAction.FEATURE_TYPE;
 
-public class RestGetRuleActionTests extends OpenSearchTestCase {
+public class RestGetRuleActionTests extends DensityTestCase {
 
     private RestGetRuleAction action;
 

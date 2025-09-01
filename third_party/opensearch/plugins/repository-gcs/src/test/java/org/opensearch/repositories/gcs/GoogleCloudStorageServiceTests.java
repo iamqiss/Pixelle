@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.gcs;
+package org.density.repositories.gcs;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.http.HttpTransportOptions;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
@@ -59,17 +59,17 @@ import java.util.UUID;
 
 import org.mockito.Mockito;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GoogleCloudStorageServiceTests extends OpenSearchTestCase {
+public class GoogleCloudStorageServiceTests extends DensityTestCase {
 
     final TimeValue connectTimeValue = TimeValue.timeValueNanos(randomIntBetween(0, 2000000));
     final TimeValue readTimeValue = TimeValue.timeValueNanos(randomIntBetween(0, 2000000));
     final String applicationName = randomAlphaOfLength(randomIntBetween(1, 10)).toLowerCase(Locale.ROOT);
     final String endpoint = randomFrom("http://", "https://")
-        + randomFrom("www.opensearch.org", "www.googleapis.com", "localhost/api", "google.com/oauth")
+        + randomFrom("www.density.org", "www.googleapis.com", "localhost/api", "google.com/oauth")
         + ":"
         + randomIntBetween(1, 65535);
     final String projectIdName = randomAlphaOfLength(randomIntBetween(1, 10)).toLowerCase(Locale.ROOT);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless.spi;
+package org.density.painless.spi;
 
-import org.opensearch.painless.spi.annotation.AllowlistAnnotationParser;
+import org.density.painless.spi.annotation.AllowlistAnnotationParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.Objects;
 public final class Allowlist {
 
     private static final String[] BASE_ALLOWLIST_FILES = new String[] {
-        "org.opensearch.txt",
+        "org.density.txt",
         "java.lang.txt",
         "java.math.txt",
         "java.text.txt",

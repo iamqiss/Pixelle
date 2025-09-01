@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.painless;
+package org.density.painless;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.painless.action.PainlessContextClassBindingInfo;
-import org.opensearch.painless.action.PainlessContextClassInfo;
-import org.opensearch.painless.action.PainlessContextConstructorInfo;
-import org.opensearch.painless.action.PainlessContextFieldInfo;
-import org.opensearch.painless.action.PainlessContextInfo;
-import org.opensearch.painless.action.PainlessContextInstanceBindingInfo;
-import org.opensearch.painless.action.PainlessContextMethodInfo;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.common.util.io.IOUtils;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.painless.action.PainlessContextClassBindingInfo;
+import org.density.painless.action.PainlessContextClassInfo;
+import org.density.painless.action.PainlessContextConstructorInfo;
+import org.density.painless.action.PainlessContextFieldInfo;
+import org.density.painless.action.PainlessContextInfo;
+import org.density.painless.action.PainlessContextInstanceBindingInfo;
+import org.density.painless.action.PainlessContextMethodInfo;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -575,9 +575,9 @@ public final class ContextDocGenerator {
         stream.print("* " + getType(javaNamesToDisplayNames, classBindingInfo.getRtn()) + " " + classBindingInfo.getName() + "(");
 
         for (int parameterIndex = 0; parameterIndex < classBindingInfo.getParameters().size(); ++parameterIndex) {
-            // temporary fix to not print org.opensearch.script.ScoreScript parameter until
+            // temporary fix to not print org.density.script.ScoreScript parameter until
             // class instance bindings are created and the information is appropriately added to the context info classes
-            if ("org.opensearch.script.ScoreScript".equals(
+            if ("org.density.script.ScoreScript".equals(
                 getType(javaNamesToDisplayNames, classBindingInfo.getParameters().get(parameterIndex))
             )) {
                 continue;
@@ -666,7 +666,7 @@ public final class ContextDocGenerator {
             javaType = "float";
         } else if ("D".equals(javaType) || "double".equals(javaType)) {
             javaType = "double";
-        } else if ("org.opensearch.painless.lookup.def".equals(javaType)) {
+        } else if ("org.density.painless.lookup.def".equals(javaType)) {
             javaType = "def";
         } else {
             javaType = javaNamesToDisplayNames.get(javaType);
@@ -760,7 +760,7 @@ public final class ContextDocGenerator {
             javaType = "float";
         } else if ("D".equals(javaType) || "double".equals(javaType)) {
             javaType = "double";
-        } else if ("org.opensearch.painless.lookup.def".equals(javaType)) {
+        } else if ("org.density.painless.lookup.def".equals(javaType)) {
             javaType = "java.lang.Object";
         }
 
@@ -846,7 +846,7 @@ public final class ContextDocGenerator {
                 || "long".equals(v.getName())
                 || "float".equals(v.getName())
                 || "double".equals(v.getName())
-                || "org.opensearch.painless.lookup.def".equals(v.getName())
+                || "org.density.painless.lookup.def".equals(v.getName())
                 || isInternalClass(v.getName())
                 || classExcludes.contains(v)
         );
@@ -895,8 +895,8 @@ public final class ContextDocGenerator {
     }
 
     private static boolean isInternalClass(String javaName) {
-        return javaName.equals("org.opensearch.script.ScoreScript")
-            || javaName.equals("org.opensearch.script.ScoreScript$ExplanationHolder");
+        return javaName.equals("org.density.script.ScoreScript")
+            || javaName.equals("org.density.script.ScoreScript$ExplanationHolder");
     }
 
     private ContextDocGenerator() {

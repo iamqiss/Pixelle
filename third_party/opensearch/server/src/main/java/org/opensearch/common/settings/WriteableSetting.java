@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.settings.Setting.ByteSizeValueParser;
-import org.opensearch.common.settings.Setting.DoubleParser;
-import org.opensearch.common.settings.Setting.FloatParser;
-import org.opensearch.common.settings.Setting.IntegerParser;
-import org.opensearch.common.settings.Setting.LongParser;
-import org.opensearch.common.settings.Setting.MemorySizeValueParser;
-import org.opensearch.common.settings.Setting.MinMaxTimeValueParser;
-import org.opensearch.common.settings.Setting.MinTimeValueParser;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Setting.RegexValidator;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.settings.Setting.ByteSizeValueParser;
+import org.density.common.settings.Setting.DoubleParser;
+import org.density.common.settings.Setting.FloatParser;
+import org.density.common.settings.Setting.IntegerParser;
+import org.density.common.settings.Setting.LongParser;
+import org.density.common.settings.Setting.MemorySizeValueParser;
+import org.density.common.settings.Setting.MinMaxTimeValueParser;
+import org.density.common.settings.Setting.MinTimeValueParser;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Setting.RegexValidator;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Wrapper for {@link Setting} with {@link #writeTo(StreamOutput)} implementation dependent on the setting type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class WriteableSetting implements Writeable {
 

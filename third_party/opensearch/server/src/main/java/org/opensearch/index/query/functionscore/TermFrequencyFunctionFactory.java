@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.queries.function.FunctionValues;
@@ -14,7 +14,7 @@ import org.apache.lucene.queries.function.valuesource.SumTotalTermFreqValueSourc
 import org.apache.lucene.queries.function.valuesource.TermFreqValueSource;
 import org.apache.lucene.queries.function.valuesource.TotalTermFreqValueSource;
 import org.apache.lucene.search.IndexSearcher;
-import org.opensearch.common.lucene.BytesRefs;
+import org.density.common.lucene.BytesRefs;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.Map;
  * the specified function name, field, and term. Each term frequency function is designed
  * to compute document scores based on specific term frequency calculations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class TermFrequencyFunctionFactory {
     public static TermFrequencyFunction createFunction(

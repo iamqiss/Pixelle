@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.search.ReferenceManager;
-import org.opensearch.Version;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.codec.CodecService;
-import org.opensearch.index.engine.EngineConfig;
-import org.opensearch.index.engine.InternalEngine;
-import org.opensearch.index.refresh.RefreshStats;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardTestCase;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.threadpool.Scheduler.Cancellable;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPoolStats;
+import org.density.Version;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.SetOnce;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.codec.CodecService;
+import org.density.index.engine.EngineConfig;
+import org.density.index.engine.InternalEngine;
+import org.density.index.refresh.RefreshStats;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardTestCase;
+import org.density.indices.recovery.RecoveryState;
+import org.density.threadpool.Scheduler.Cancellable;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPoolStats;
 
 import java.io.IOException;
 import java.util.ArrayList;

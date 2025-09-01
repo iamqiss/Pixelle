@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -43,53 +43,53 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.MockBigArrays;
-import org.opensearch.common.util.MockPageCacheRecycler;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.IndexCache;
-import org.opensearch.index.cache.query.QueryCache;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.MultiBucketConsumerService;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.deciders.ConcurrentSearchDecision;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.LegacyReaderContext;
-import org.opensearch.search.internal.PitReaderContext;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.action.search.SearchType;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.common.util.MockBigArrays;
+import org.density.common.util.MockPageCacheRecycler;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.cache.IndexCache;
+import org.density.index.cache.query.QueryCache;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.MultiBucketConsumerService;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.deciders.ConcurrentSearchDecision;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.LegacyReaderContext;
+import org.density.search.internal.PitReaderContext;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.slice.SliceBuilder;
+import org.density.search.sort.SortAndFormats;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static org.opensearch.index.IndexSettings.INDEX_SEARCH_THROTTLED;
+import static org.density.index.IndexSettings.INDEX_SEARCH_THROTTLED;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.any;
@@ -116,7 +116,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.nullable;
 import static org.mockito.Mockito.when;
 
-public class DefaultSearchContextTests extends OpenSearchTestCase {
+public class DefaultSearchContextTests extends DensityTestCase {
     private final ExecutorService executor;
 
     @ParametersFactory
@@ -464,8 +464,8 @@ public class DefaultSearchContextTests extends OpenSearchTestCase {
             when(sliceBuilder.getMax()).thenReturn(numSlicesForPit);
             context5.sliceBuilder(sliceBuilder);
 
-            OpenSearchRejectedExecutionException exception1 = expectThrows(
-                OpenSearchRejectedExecutionException.class,
+            DensityRejectedExecutionException exception1 = expectThrows(
+                DensityRejectedExecutionException.class,
                 () -> context5.preProcess(false)
             );
             assertThat(

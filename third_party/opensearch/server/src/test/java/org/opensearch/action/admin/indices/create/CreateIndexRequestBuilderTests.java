@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.create;
+package org.density.action.admin.indices.create;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpClient;
+import org.density.DensityParseException;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpClient;
 import org.junit.After;
 import org.junit.Before;
 
@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class CreateIndexRequestBuilderTests extends OpenSearchTestCase {
+public class CreateIndexRequestBuilderTests extends DensityTestCase {
 
     private static final String KEY = "my.settings.key";
     private static final String VALUE = "my.settings.value";
@@ -74,7 +74,7 @@ public class CreateIndexRequestBuilderTests extends OpenSearchTestCase {
     public void testSetSource() throws IOException {
         CreateIndexRequestBuilder builder = new CreateIndexRequestBuilder(this.testClient, CreateIndexAction.INSTANCE);
 
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> {
+        DensityParseException e = expectThrows(DensityParseException.class, () -> {
             builder.setSource("{\"" + KEY + "\" : \"" + VALUE + "\"}", MediaTypeRegistry.JSON);
         });
         assertEquals(String.format(Locale.ROOT, "unknown key [%s] for create index", KEY), e.getMessage());

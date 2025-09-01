@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.analysis.phone;
+package org.density.analysis.phone;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
 
 import java.util.Map;
 import java.util.TreeMap;

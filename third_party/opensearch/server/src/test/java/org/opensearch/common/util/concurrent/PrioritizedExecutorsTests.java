@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.common.Priority;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.Priority;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class PrioritizedExecutorsTests extends OpenSearchTestCase {
+public class PrioritizedExecutorsTests extends DensityTestCase {
 
     private final ThreadContext holder = new ThreadContext(Settings.EMPTY);
 
@@ -83,9 +83,9 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
     }
 
     public void testSubmitPrioritizedExecutorWithRunnables() throws Exception {
-        ExecutorService executor = OpenSearchExecutors.newSinglePrioritizing(
+        ExecutorService executor = DensityExecutors.newSinglePrioritizing(
             getName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             null
         );
@@ -117,9 +117,9 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
     }
 
     public void testExecutePrioritizedExecutorWithRunnables() throws Exception {
-        ExecutorService executor = OpenSearchExecutors.newSinglePrioritizing(
+        ExecutorService executor = DensityExecutors.newSinglePrioritizing(
             getName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             null
         );
@@ -151,9 +151,9 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
     }
 
     public void testSubmitPrioritizedExecutorWithCallables() throws Exception {
-        ExecutorService executor = OpenSearchExecutors.newSinglePrioritizing(
+        ExecutorService executor = DensityExecutors.newSinglePrioritizing(
             getName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             null
         );
@@ -185,9 +185,9 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
     }
 
     public void testSubmitPrioritizedExecutorWithMixed() throws Exception {
-        ExecutorService executor = OpenSearchExecutors.newSinglePrioritizing(
+        ExecutorService executor = DensityExecutors.newSinglePrioritizing(
             getTestName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             null
         );
@@ -219,10 +219,10 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
     }
 
     public void testTimeout() throws Exception {
-        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor(OpenSearchExecutors.daemonThreadFactory(getTestName()));
-        PrioritizedOpenSearchThreadPoolExecutor executor = OpenSearchExecutors.newSinglePrioritizing(
+        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor(DensityExecutors.daemonThreadFactory(getTestName()));
+        PrioritizedDensityThreadPoolExecutor executor = DensityExecutors.newSinglePrioritizing(
             getName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             timer
         );
@@ -246,7 +246,7 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
             }
         });
         invoked.await();
-        PrioritizedOpenSearchThreadPoolExecutor.Pending[] pending = executor.getPending();
+        PrioritizedDensityThreadPoolExecutor.Pending[] pending = executor.getPending();
         assertThat(pending.length, equalTo(1));
         assertThat(pending[0].task.toString(), equalTo("the blocking"));
         assertThat(pending[0].executing, equalTo(true));
@@ -291,9 +291,9 @@ public class PrioritizedExecutorsTests extends OpenSearchTestCase {
         ThreadPool threadPool = new TestThreadPool("test");
         final ScheduledThreadPoolExecutor timer = (ScheduledThreadPoolExecutor) threadPool.scheduler();
         final AtomicBoolean timeoutCalled = new AtomicBoolean();
-        PrioritizedOpenSearchThreadPoolExecutor executor = OpenSearchExecutors.newSinglePrioritizing(
+        PrioritizedDensityThreadPoolExecutor executor = DensityExecutors.newSinglePrioritizing(
             getName(),
-            OpenSearchExecutors.daemonThreadFactory(getTestName()),
+            DensityExecutors.daemonThreadFactory(getTestName()),
             holder,
             timer
         );

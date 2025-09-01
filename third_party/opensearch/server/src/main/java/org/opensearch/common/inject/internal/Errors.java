@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,26 +23,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.internal;
+package org.density.common.inject.internal;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.inject.ConfigurationException;
-import org.opensearch.common.inject.CreationException;
-import org.opensearch.common.inject.Key;
-import org.opensearch.common.inject.MembersInjector;
-import org.opensearch.common.inject.Provider;
-import org.opensearch.common.inject.ProvisionException;
-import org.opensearch.common.inject.Scope;
-import org.opensearch.common.inject.TypeLiteral;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.InjectionListener;
-import org.opensearch.common.inject.spi.InjectionPoint;
-import org.opensearch.common.inject.spi.Message;
-import org.opensearch.common.inject.spi.TypeListenerBinding;
+import org.density.common.inject.ConfigurationException;
+import org.density.common.inject.CreationException;
+import org.density.common.inject.Key;
+import org.density.common.inject.MembersInjector;
+import org.density.common.inject.Provider;
+import org.density.common.inject.ProvisionException;
+import org.density.common.inject.Scope;
+import org.density.common.inject.TypeLiteral;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.InjectionListener;
+import org.density.common.inject.spi.InjectionPoint;
+import org.density.common.inject.spi.Message;
+import org.density.common.inject.spi.TypeListenerBinding;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -78,7 +78,7 @@ import static java.util.Collections.unmodifiableList;
  *
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class Errors {
 
@@ -595,7 +595,7 @@ public final class Errors {
     /**
      * A converter
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class Converter<T> {
 

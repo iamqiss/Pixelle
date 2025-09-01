@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.filter;
+package org.density.search.aggregations.bucket.filter;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.bucket.InternalSingleBucketAggregation;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.bucket.InternalSingleBucketAggregation;
 
 import java.io.IOException;
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Implementation of filter agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalFilter extends InternalSingleBucketAggregation implements Filter {
     InternalFilter(String name, long docCount, InternalAggregations subAggregations, Map<String, Object> metadata) {

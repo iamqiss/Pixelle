@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.net;
+package org.density.common.util.net;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 /**
  * Utilities for network-related methods.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class NetUtils {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.metadata.ProcessClusterEventTimeoutException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.common.util.concurrent.PrioritizedOpenSearchThreadPoolExecutor;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.metadata.ProcessClusterEventTimeoutException;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.common.util.concurrent.PrioritizedDensityThreadPoolExecutor;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,14 +55,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.opensearch.common.util.concurrent.OpenSearchExecutors.daemonThreadFactory;
+import static org.density.common.util.concurrent.DensityExecutors.daemonThreadFactory;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
-public class TaskExecutorTests extends OpenSearchTestCase {
+public class TaskExecutorTests extends DensityTestCase {
 
     protected static ThreadPool threadPool;
-    protected PrioritizedOpenSearchThreadPoolExecutor threadExecutor;
+    protected PrioritizedDensityThreadPoolExecutor threadExecutor;
 
     @BeforeClass
     public static void createThreadPool() {
@@ -79,7 +79,7 @@ public class TaskExecutorTests extends OpenSearchTestCase {
 
     @Before
     public void setUpExecutor() {
-        threadExecutor = OpenSearchExecutors.newSinglePrioritizing(
+        threadExecutor = DensityExecutors.newSinglePrioritizing(
             getClass().getName() + "/" + getTestName(),
             daemonThreadFactory(Settings.EMPTY, "test_thread"),
             threadPool.getThreadContext(),

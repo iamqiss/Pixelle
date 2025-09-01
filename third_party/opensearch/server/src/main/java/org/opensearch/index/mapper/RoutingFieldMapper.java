@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.Lucene;
+import org.density.index.query.QueryShardContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * Internal field mapper for _routing fields
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RoutingFieldMapper extends MetadataFieldMapper {
@@ -62,7 +62,7 @@ public class RoutingFieldMapper extends MetadataFieldMapper {
     /**
      * Default parameters for routing fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Defaults {
 
@@ -85,7 +85,7 @@ public class RoutingFieldMapper extends MetadataFieldMapper {
     /**
      * Builder for routing fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends MetadataFieldMapper.Builder {
 
@@ -111,7 +111,7 @@ public class RoutingFieldMapper extends MetadataFieldMapper {
     /**
      * Field type for routing fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class RoutingFieldType extends StringFieldType {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.tasks.TaskId;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.unit.TimeValue;
+import org.density.core.tasks.TaskId;
 
 import java.util.Map;
 
-import static org.opensearch.search.SearchService.NO_TIMEOUT;
+import static org.density.search.SearchService.NO_TIMEOUT;
 
 /**
  * A task that can be canceled
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class CancellableTask extends Task {
 

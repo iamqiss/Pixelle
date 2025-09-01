@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.utils.cache;
+package org.density.index.store.remote.utils.cache;
 
-import org.opensearch.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
+import org.density.index.store.remote.utils.cache.stats.IRefCountedCacheStats;
 
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  * @param <K> type of the key
  * @param <V> type of the value
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface RefCountedCache<K, V> {
 

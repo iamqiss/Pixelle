@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
 import java.security.BasicPermission;
 
 /**
- * OpenSearch-specific permission to check before entering
+ * Density-specific permission to check before entering
  * {@code AccessController.doPrivileged()} blocks.
  * <p>
  * We try to avoid these blocks in our code and keep security simple,
@@ -69,7 +69,7 @@ import java.security.BasicPermission;
  *   );
  * </code></pre>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class SpecialPermission extends BasicPermission {
 

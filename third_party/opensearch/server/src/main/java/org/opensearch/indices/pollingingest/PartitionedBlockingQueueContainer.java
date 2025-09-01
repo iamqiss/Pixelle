@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.pollingingest;
+package org.density.indices.pollingingest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.util.RequestUtils;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.IngestionShardConsumer;
-import org.opensearch.index.IngestionShardPointer;
-import org.opensearch.index.Message;
-import org.opensearch.index.engine.IngestionEngine;
-import org.opensearch.index.mapper.IdFieldMapper;
+import org.density.common.util.RequestUtils;
+import org.density.core.common.Strings;
+import org.density.index.IngestionShardConsumer;
+import org.density.index.IngestionShardPointer;
+import org.density.index.Message;
+import org.density.index.engine.IngestionEngine;
+import org.density.index.mapper.IdFieldMapper;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.opensearch.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
+import static org.density.action.index.IndexRequest.UNSET_AUTO_GENERATED_TIMESTAMP;
 
 /**
  * A partitioned blocking queue approach is used to support multiple writer threads. This class holds a blocking queue

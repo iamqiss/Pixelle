@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script;
+package org.density.script;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.Map;
@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Script for number sorts
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class NumberSortScript extends AbstractSortScript {
 
@@ -61,7 +61,7 @@ public abstract class NumberSortScript extends AbstractSortScript {
     /**
      * A factory to construct {@link NumberSortScript} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface LeafFactory {
         NumberSortScript newInstance(LeafReaderContext ctx) throws IOException;
@@ -75,7 +75,7 @@ public abstract class NumberSortScript extends AbstractSortScript {
     /**
      * A factory to construct stateful {@link NumberSortScript} factories for a specific index.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Factory extends ScriptFactory {
         LeafFactory newFactory(Map<String, Object> params, SearchLookup lookup);

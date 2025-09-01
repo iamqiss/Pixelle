@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions.settings;
+package org.density.extensions.settings;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.SettingsModule;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.extensions.AcknowledgedResponse;
+import org.density.common.settings.Setting;
+import org.density.common.settings.SettingsModule;
+import org.density.core.transport.TransportResponse;
+import org.density.extensions.AcknowledgedResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Handles requests to register a list of custom extension settings.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CustomSettingsRequestHandler {
 
@@ -44,7 +44,7 @@ public class CustomSettingsRequestHandler {
     public TransportResponse handleRegisterCustomSettingsRequest(RegisterCustomSettingsRequest customSettingsRequest) throws Exception {
         // TODO: How do we prevent key collisions in settings registration?
         // we have settingsRequest.getUniqueId() available or could enforce reverse DNS naming
-        // See https://github.com/opensearch-project/opensearch-sdk-java/issues/142
+        // See https://github.com/density-project/density-sdk-java/issues/142
         List<String> registeredCustomSettings = new ArrayList<>();
         for (Setting<?> setting : customSettingsRequest.getSettings()) {
             settingsModule.registerDynamicSetting(setting);

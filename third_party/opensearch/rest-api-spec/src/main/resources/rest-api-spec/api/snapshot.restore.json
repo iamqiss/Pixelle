@@ -1,7 +1,7 @@
 {
   "snapshot.restore":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/restore-snapshot/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/restore-snapshot/",
       "description":"Restores a snapshot."
     },
     "stability":"stable",

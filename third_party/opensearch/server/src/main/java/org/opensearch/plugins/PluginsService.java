@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,24 +38,24 @@ import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.codecs.DocValuesFormat;
 import org.apache.lucene.codecs.KnnVectorsFormat;
 import org.apache.lucene.codecs.PostingsFormat;
-import org.opensearch.Build;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.PluginsAndModules;
-import org.opensearch.common.bootstrap.JarHell;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.inject.Module;
-import org.opensearch.common.lifecycle.LifecycleComponent;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.index.IndexModule;
-import org.opensearch.lucene.util.SPIClassIterator;
-import org.opensearch.semver.SemverRange;
-import org.opensearch.threadpool.ExecutorBuilder;
-import org.opensearch.transport.TransportSettings;
+import org.density.Build;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.PluginsAndModules;
+import org.density.common.bootstrap.JarHell;
+import org.density.common.collect.Tuple;
+import org.density.common.inject.Module;
+import org.density.common.lifecycle.LifecycleComponent;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.core.common.Strings;
+import org.density.core.service.ReportingService;
+import org.density.index.IndexModule;
+import org.density.lucene.util.SPIClassIterator;
+import org.density.semver.SemverRange;
+import org.density.threadpool.ExecutorBuilder;
+import org.density.transport.TransportSettings;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -83,12 +83,12 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.core.util.FileSystemUtils.isAccessibleDirectory;
+import static org.density.core.util.FileSystemUtils.isAccessibleDirectory;
 
 /**
  * Service responsible for loading plugins and modules (internal and external)
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PluginsService implements ReportingService<PluginsAndModules> {
 
@@ -450,15 +450,15 @@ public class PluginsService implements ReportingService<PluginsAndModules> {
     }
 
     /**
-     * Verify the given plugin is compatible with the current OpenSearch installation.
+     * Verify the given plugin is compatible with the current Density installation.
      */
     public static void verifyCompatibility(PluginInfo info) {
         if (!isPluginVersionCompatible(info, Version.CURRENT)) {
             throw new IllegalArgumentException(
                 "Plugin ["
                     + info.getName()
-                    + "] was built for OpenSearch version "
-                    + info.getOpenSearchVersionRangesString()
+                    + "] was built for Density version "
+                    + info.getDensityVersionRangesString()
                     + " but version "
                     + Version.CURRENT
                     + " is running"
@@ -469,7 +469,7 @@ public class PluginsService implements ReportingService<PluginsAndModules> {
 
     public static boolean isPluginVersionCompatible(final PluginInfo pluginInfo, final Version coreVersion) {
         // Core version must satisfy the semver range in plugin info
-        for (SemverRange range : pluginInfo.getOpenSearchVersionRanges()) {
+        for (SemverRange range : pluginInfo.getDensityVersionRanges()) {
             if (!range.isSatisfiedBy(coreVersion)) {
                 return false;
             }
@@ -490,7 +490,7 @@ public class PluginsService implements ReportingService<PluginsAndModules> {
                 final String name = fileName.substring(1 + fileName.indexOf("-"));
                 final String message = String.format(
                     Locale.ROOT,
-                    "found file [%s] from a failed attempt to remove the plugin [%s]; execute [opensearch-plugin remove %2$s]",
+                    "found file [%s] from a failed attempt to remove the plugin [%s]; execute [density-plugin remove %2$s]",
                     removing,
                     name
                 );
@@ -847,7 +847,7 @@ public class PluginsService implements ReportingService<PluginsAndModules> {
         try {
             return Class.forName(className, false, loader).asSubclass(Plugin.class);
         } catch (Throwable t) {
-            throw new OpenSearchException("Unable to load plugin class [" + className + "]", t);
+            throw new DensityException("Unable to load plugin class [" + className + "]", t);
         }
     }
 
@@ -887,8 +887,8 @@ public class PluginsService implements ReportingService<PluginsAndModules> {
             Locale.ROOT,
             "no public constructor of correct signature for [%s]; must be [%s], [%s], or [%s]",
             clazz.getName(),
-            "(org.opensearch.common.settings.Settings,java.nio.file.Path)",
-            "(org.opensearch.common.settings.Settings)",
+            "(org.density.common.settings.Settings,java.nio.file.Path)",
+            "(org.density.common.settings.Settings)",
             "()"
         );
     }

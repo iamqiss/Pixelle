@@ -1,18 +1,18 @@
 /*
- * Copyright OpenSearch Contributors.
+ * Copyright Density Contributors.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.stats.IndexingPressureStats;
-import org.opensearch.index.stats.ShardIndexingPressureStats;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.cluster.service.ClusterService;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lease.Releasable;
+import org.density.common.settings.Settings;
+import org.density.core.index.shard.ShardId;
+import org.density.index.stats.IndexingPressureStats;
+import org.density.index.stats.ShardIndexingPressureStats;
 
 import java.util.function.LongSupplier;
 
@@ -20,7 +20,7 @@ import java.util.function.LongSupplier;
  * Sets up classes for node/shard level indexing pressure.
  * Provides abstraction and orchestration for indexing pressure interfaces when called from Transport Actions or for Stats.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.3.0")
 public class IndexingPressureService {

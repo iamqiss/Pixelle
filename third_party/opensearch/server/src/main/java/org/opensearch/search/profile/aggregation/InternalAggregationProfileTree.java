@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.aggregation;
+package org.density.search.profile.aggregation;
 
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.profile.AbstractInternalProfileTree;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.profile.AbstractInternalProfileTree;
 
 /**
  * The profiling tree for different levels of agg profiling
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalAggregationProfileTree extends AbstractInternalProfileTree<AggregationProfileBreakdown, Aggregator> {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.indices;
+package org.density.client.indices;
 
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.client.AbstractResponseTestCase;
-import org.opensearch.client.GetAliasesResponseTests;
-import org.opensearch.cluster.metadata.AliasMetadata;
-import org.opensearch.cluster.metadata.Context;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.RandomCreateIndexGenerator;
-import org.opensearch.index.mapper.MapperService;
+import org.density.client.AbstractResponseTestCase;
+import org.density.client.GetAliasesResponseTests;
+import org.density.cluster.metadata.AliasMetadata;
+import org.density.cluster.metadata.Context;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.RandomCreateIndexGenerator;
+import org.density.index.mapper.MapperService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,11 +56,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GetIndexResponseTests extends AbstractResponseTestCase<
-    org.opensearch.action.admin.indices.get.GetIndexResponse,
+    org.density.action.admin.indices.get.GetIndexResponse,
     GetIndexResponse> {
 
     @Override
-    protected org.opensearch.action.admin.indices.get.GetIndexResponse createServerTestInstance(XContentType xContentType) {
+    protected org.density.action.admin.indices.get.GetIndexResponse createServerTestInstance(XContentType xContentType) {
         String[] indices = generateRandomStringArray(5, 5, false, false);
         final Map<String, MappingMetadata> mappings = new HashMap<>();
         final Map<String, List<AliasMetadata>> aliases = new HashMap<>();
@@ -97,7 +97,7 @@ public class GetIndexResponseTests extends AbstractResponseTestCase<
                 contexts.put(index, new Context(randomAlphaOfLength(5).toLowerCase(Locale.ROOT)));
             }
         }
-        return new org.opensearch.action.admin.indices.get.GetIndexResponse(
+        return new org.density.action.admin.indices.get.GetIndexResponse(
             indices,
             mappings,
             aliases,
@@ -115,7 +115,7 @@ public class GetIndexResponseTests extends AbstractResponseTestCase<
 
     @Override
     protected void assertInstances(
-        org.opensearch.action.admin.indices.get.GetIndexResponse serverTestInstance,
+        org.density.action.admin.indices.get.GetIndexResponse serverTestInstance,
         GetIndexResponse clientInstance
     ) {
         assertArrayEquals(serverTestInstance.getIndices(), clientInstance.getIndices());

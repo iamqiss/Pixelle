@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.indices.SystemIndices;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.service.ClusterService;
+import org.density.indices.SystemIndices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ import java.util.Map;
 /**
  * A service responsible for updating the metadata used by system indices.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SystemIndexMetadataUpgradeService implements ClusterStateListener {
 
@@ -96,7 +96,7 @@ public class SystemIndexMetadataUpgradeService implements ClusterStateListener {
     /**
      * Task to update system index metadata.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public class SystemIndexMetadataUpdateTask extends ClusterStateUpdateTask {
 

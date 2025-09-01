@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm;
+package org.density.plugin.wlm;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.support.ActionFilterChain;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.storage.AttributeValueStoreFactory;
-import org.opensearch.rule.storage.DefaultAttributeValueStore;
-import org.opensearch.tasks.Task;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.action.ActionRequest;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksRequest;
+import org.density.action.search.SearchRequest;
+import org.density.action.support.ActionFilterChain;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.storage.AttributeValueStoreFactory;
+import org.density.rule.storage.DefaultAttributeValueStore;
+import org.density.tasks.Task;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.io.IOException;
 import java.util.Map;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AutoTaggingActionFilterTests extends OpenSearchTestCase {
+public class AutoTaggingActionFilterTests extends DensityTestCase {
 
     AutoTaggingActionFilter autoTaggingActionFilter;
     InMemoryRuleProcessingService ruleProcessingService;

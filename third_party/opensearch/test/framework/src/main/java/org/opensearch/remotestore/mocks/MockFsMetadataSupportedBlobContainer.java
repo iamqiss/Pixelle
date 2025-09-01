@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.remotestore.mocks;
+package org.density.remotestore.mocks;
 
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.InputStreamWithMetadata;
-import org.opensearch.common.blobstore.fs.FsBlobStore;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.remotestore.multipart.mocks.MockFsAsyncBlobContainer;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.InputStreamWithMetadata;
+import org.density.common.blobstore.fs.FsBlobStore;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.core.action.ActionListener;
+import org.density.remotestore.multipart.mocks.MockFsAsyncBlobContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

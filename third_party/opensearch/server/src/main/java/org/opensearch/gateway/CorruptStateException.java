@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gateway;
+package org.density.gateway;
 
-import org.opensearch.OpenSearchCorruptionException;
+import org.density.DensityCorruptionException;
 
 /**
- * This exception is thrown when OpenSearch detects
+ * This exception is thrown when Density detects
  * an inconsistency in one of it's persistent states.
  *
- * @opensearch.internal
+ * @density.internal
  */
-public class CorruptStateException extends OpenSearchCorruptionException {
+public class CorruptStateException extends DensityCorruptionException {
 
     /**
      * Creates a new {@link CorruptStateException}

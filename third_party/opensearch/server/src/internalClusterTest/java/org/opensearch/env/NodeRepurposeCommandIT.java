@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.env;
+package org.density.env;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.NoShardAvailableActionException;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.test.NodeRoles;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.NoShardAvailableActionException;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.settings.Settings;
+import org.density.indices.IndicesService;
+import org.density.test.NodeRoles;
+import org.density.test.DensityIntegTestCase;
 import org.hamcrest.Matcher;
 
 import java.util.Arrays;
@@ -48,8 +48,8 @@ import java.util.HashSet;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
-public class NodeRepurposeCommandIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
+public class NodeRepurposeCommandIT extends DensityIntegTestCase {
 
     public void testRepurpose() throws Exception {
         final String indexName = "test-repurpose";
@@ -100,8 +100,8 @@ public class NodeRepurposeCommandIT extends OpenSearchIntegTestCase {
         logger.info("--> Repurposing node 1");
         executeRepurposeCommand(noClusterManagerNoDataSettingsForDataNode, 1, 1);
 
-        OpenSearchException lockedException = expectThrows(
-            OpenSearchException.class,
+        DensityException lockedException = expectThrows(
+            DensityException.class,
             () -> executeRepurposeCommand(noClusterManagerNoDataSettingsForClusterManagerNode, 1, 1)
         );
 

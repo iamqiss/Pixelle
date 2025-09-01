@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.document.Field;
@@ -52,18 +52,18 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.OperationRouting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.Uid;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.indices.replication.common.ReplicationLuceneIndex;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.OperationRouting;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.core.index.shard.ShardId;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.Uid;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.indices.replication.common.ReplicationLuceneIndex;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -76,7 +76,7 @@ import java.util.function.Predicate;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class StoreRecoveryTests extends OpenSearchTestCase {
+public class StoreRecoveryTests extends DensityTestCase {
 
     public void testAddIndices() throws IOException {
         Directory[] dirs = new Directory[randomIntBetween(1, 10)];

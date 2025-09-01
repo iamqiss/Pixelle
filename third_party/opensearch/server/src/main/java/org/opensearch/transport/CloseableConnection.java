@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport;
+package org.density.transport;
 
-import org.opensearch.common.concurrent.CompletableContext;
-import org.opensearch.core.action.ActionListener;
+import org.density.common.concurrent.CompletableContext;
+import org.density.core.action.ActionListener;
 
 /**
  * Abstract Transport.Connection that provides common close logic.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class CloseableConnection implements Transport.Connection {
 

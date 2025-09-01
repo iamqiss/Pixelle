@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.ReferenceManager;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.metrics.MeanMetric;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.index.translog.Translog;
+import org.density.common.collect.Tuple;
+import org.density.common.lease.Releasable;
+import org.density.common.metrics.MeanMetric;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.index.translog.Translog;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -57,7 +57,7 @@ import static java.util.Objects.requireNonNull;
  * <p>
  * When {@link Closeable#close()}d it will no longer accept listeners and flush any existing listeners.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RefreshListeners implements ReferenceManager.RefreshListener, Closeable {
     private final IntSupplier getMaxRefreshListeners;

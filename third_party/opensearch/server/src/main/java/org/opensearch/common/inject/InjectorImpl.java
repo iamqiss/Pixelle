@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,32 +23,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject;
+package org.density.common.inject;
 
-import org.opensearch.common.Classes;
-import org.opensearch.common.inject.internal.Annotations;
-import org.opensearch.common.inject.internal.BindingImpl;
-import org.opensearch.common.inject.internal.Errors;
-import org.opensearch.common.inject.internal.ErrorsException;
-import org.opensearch.common.inject.internal.InstanceBindingImpl;
-import org.opensearch.common.inject.internal.InternalContext;
-import org.opensearch.common.inject.internal.InternalFactory;
-import org.opensearch.common.inject.internal.LinkedBindingImpl;
-import org.opensearch.common.inject.internal.LinkedProviderBindingImpl;
-import org.opensearch.common.inject.internal.MatcherAndConverter;
-import org.opensearch.common.inject.internal.Scoping;
-import org.opensearch.common.inject.internal.SourceProvider;
-import org.opensearch.common.inject.internal.ToStringBuilder;
-import org.opensearch.common.inject.spi.BindingTargetVisitor;
-import org.opensearch.common.inject.spi.ConvertedConstantBinding;
-import org.opensearch.common.inject.spi.Dependency;
-import org.opensearch.common.inject.spi.ProviderBinding;
-import org.opensearch.common.inject.spi.ProviderKeyBinding;
-import org.opensearch.common.inject.util.Providers;
+import org.density.common.Classes;
+import org.density.common.inject.internal.Annotations;
+import org.density.common.inject.internal.BindingImpl;
+import org.density.common.inject.internal.Errors;
+import org.density.common.inject.internal.ErrorsException;
+import org.density.common.inject.internal.InstanceBindingImpl;
+import org.density.common.inject.internal.InternalContext;
+import org.density.common.inject.internal.InternalFactory;
+import org.density.common.inject.internal.LinkedBindingImpl;
+import org.density.common.inject.internal.LinkedProviderBindingImpl;
+import org.density.common.inject.internal.MatcherAndConverter;
+import org.density.common.inject.internal.Scoping;
+import org.density.common.inject.internal.SourceProvider;
+import org.density.common.inject.internal.ToStringBuilder;
+import org.density.common.inject.spi.BindingTargetVisitor;
+import org.density.common.inject.spi.ConvertedConstantBinding;
+import org.density.common.inject.spi.Dependency;
+import org.density.common.inject.spi.ProviderBinding;
+import org.density.common.inject.spi.ProviderKeyBinding;
+import org.density.common.inject.util.Providers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.GenericArrayType;
@@ -65,7 +65,7 @@ import java.util.Set;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
-import static org.opensearch.common.inject.internal.Annotations.findScopeAnnotation;
+import static org.density.common.inject.internal.Annotations.findScopeAnnotation;
 
 /**
  * Default {@link Injector} implementation.
@@ -73,7 +73,7 @@ import static org.opensearch.common.inject.internal.Annotations.findScopeAnnotat
  * @author crazybob@google.com (Bob Lee)
  * @see InjectorBuilder
  *
- * @opensearch.internal
+ * @density.internal
  */
 class InjectorImpl implements Injector, Lookups {
     final State state;
@@ -204,7 +204,7 @@ class InjectorImpl implements Injector, Lookups {
     /**
      * Implementation for a binding object
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ProviderBindingImpl<T> extends BindingImpl<Provider<T>> implements ProviderBinding<Provider<T>> {
         final BindingImpl<T> providedBinding;
@@ -296,7 +296,7 @@ class InjectorImpl implements Injector, Lookups {
     /**
      * Implementation for a converted constant
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ConvertedConstantBindingImpl<T> extends BindingImpl<T> implements ConvertedConstantBinding<T> {
         final T value;
@@ -622,7 +622,7 @@ class InjectorImpl implements Injector, Lookups {
     /**
      * Multimap for java bindings
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class BindingsMultimap {
         final Map<TypeLiteral<?>, List<Binding<?>>> multimap = new HashMap<>();
@@ -677,7 +677,7 @@ class InjectorImpl implements Injector, Lookups {
     /**
      * Invokes a method.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     interface MethodInvoker {
         Object invoke(Object target, Object... parameters) throws IllegalAccessException, InvocationTargetException;
@@ -722,7 +722,7 @@ class InjectorImpl implements Injector, Lookups {
 
     <T> Provider<T> getProviderOrThrow(final Key<T> key, Errors errors) throws ErrorsException {
         final InternalFactory<? extends T> factory = getInternalFactory(key, errors);
-        // OpenSearch: optimize for a common case of read only instance getting from the parent...
+        // Density: optimize for a common case of read only instance getting from the parent...
         if (factory instanceof InternalFactory.Instance) {
             return new Provider<T>() {
                 @Override

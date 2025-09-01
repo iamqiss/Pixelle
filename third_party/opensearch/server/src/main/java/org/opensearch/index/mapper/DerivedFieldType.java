@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.InetAddressPoint;
@@ -19,24 +19,24 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MultiTermQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.query.DerivedFieldQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.script.DerivedFieldScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Nullable;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.network.InetAddresses;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateMathParser;
+import org.density.common.unit.Fuzziness;
+import org.density.geometry.Geometry;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.query.DerivedFieldQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.script.AggregationScript;
+import org.density.script.DerivedFieldScript;
+import org.density.script.Script;
+import org.density.search.DocValueFormat;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
  * MappedFieldType for Derived Fields
  * Contains logic to execute different type of queries on a derived field of given type.
  *
- * @opensearch.internal
+ * @density.internal
  */
 
 public class DerivedFieldType extends MappedFieldType implements GeoShapeQueryable {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.pagination.PageToken;
-import org.opensearch.common.Table;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.rest.AbstractRestChannel;
-import org.opensearch.rest.RestResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.pagination.PageToken;
+import org.density.common.Table;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.rest.AbstractRestChannel;
+import org.density.rest.RestResponse;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -48,14 +48,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.rest.action.cat.RestTable.buildDisplayHeaders;
-import static org.opensearch.rest.action.cat.RestTable.buildResponse;
+import static org.density.rest.action.cat.RestTable.buildDisplayHeaders;
+import static org.density.rest.action.cat.RestTable.buildResponse;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
-public class RestTableTests extends OpenSearchTestCase {
+public class RestTableTests extends DensityTestCase {
 
     private static final String APPLICATION_JSON = MediaTypeRegistry.JSON.mediaType();
     private static final String APPLICATION_YAML = XContentType.YAML.mediaType();

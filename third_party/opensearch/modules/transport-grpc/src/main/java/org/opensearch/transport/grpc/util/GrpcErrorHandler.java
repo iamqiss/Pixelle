@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.util;
+package org.density.transport.grpc.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.InputCoercionException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.compress.NotCompressedException;
-import org.opensearch.core.compress.NotXContentException;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.core.compress.NotCompressedException;
+import org.density.core.compress.NotXContentException;
+import org.density.core.concurrency.DensityRejectedExecutionException;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -44,17 +44,17 @@ public class GrpcErrorHandler {
      * @return StatusRuntimeException with appropriate GRPC status and HTTP-identical error messages
      */
     public static StatusRuntimeException convertToGrpcError(Exception e) {
-        // ========== OpenSearch Business Logic Exceptions ==========
-        // Custom OpenSearch exceptions which extend {@link OpenSearchException}.
+        // ========== Density Business Logic Exceptions ==========
+        // Custom Density exceptions which extend {@link DensityException}.
         // Uses {@link RestToGrpcStatusConverter} for REST -> gRPC status mapping and
-        // follows {@link OpenSearchException#generateFailureXContent} unwrapping logic
-        if (e instanceof OpenSearchException) {
-            return handleOpenSearchException((OpenSearchException) e);
+        // follows {@link DensityException#generateFailureXContent} unwrapping logic
+        if (e instanceof DensityException) {
+            return handleDensityException((DensityException) e);
         }
 
-        // ========== OpenSearch Core System Exceptions ==========
-        // Low-level OpenSearch exceptions that don't extend OpenSearchException - include full details
-        else if (e instanceof OpenSearchRejectedExecutionException) {
+        // ========== Density Core System Exceptions ==========
+        // Low-level Density exceptions that don't extend DensityException - include full details
+        else if (e instanceof DensityRejectedExecutionException) {
             return Status.RESOURCE_EXHAUSTED.withDescription(ExceptionsHelper.stackTrace(e)).asRuntimeException();
         } else if (e instanceof NotXContentException) {
             return Status.INVALID_ARGUMENT.withDescription(ExceptionsHelper.stackTrace(e)).asRuntimeException();
@@ -95,19 +95,19 @@ public class GrpcErrorHandler {
     }
 
     /**
-     * Handles OpenSearch-specific exceptions by converting their HTTP status to GRPC status.
+     * Handles Density-specific exceptions by converting their HTTP status to GRPC status.
      * Uses {@link ExceptionsHelper#summaryMessage(Throwable)} for exact parity with HTTP error handling.
      *
-     * Uses {@link ExceptionsHelper#unwrapToOpenSearchException(Throwable)} for shared unwrapping logic
-     * with HTTP's {@link OpenSearchException#generateFailureXContent}.
+     * Uses {@link ExceptionsHelper#unwrapToDensityException(Throwable)} for shared unwrapping logic
+     * with HTTP's {@link DensityException#generateFailureXContent}.
      *
-     * @param e The {@link OpenSearchException} to convert
+     * @param e The {@link DensityException} to convert
      * @return StatusRuntimeException with mapped GRPC status and HTTP-identical error message
      */
-    private static StatusRuntimeException handleOpenSearchException(OpenSearchException e) {
+    private static StatusRuntimeException handleDensityException(DensityException e) {
         Status grpcStatus = RestToGrpcStatusConverter.convertRestToGrpcStatus(e.status());
 
-        Throwable unwrapped = ExceptionsHelper.unwrapToOpenSearchException(e);
+        Throwable unwrapped = ExceptionsHelper.unwrapToDensityException(e);
 
         String description = ExceptionsHelper.summaryMessage(unwrapped);
         return grpcStatus.withDescription(description).asRuntimeException();

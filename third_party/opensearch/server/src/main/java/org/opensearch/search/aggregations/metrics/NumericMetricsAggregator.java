@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
-import org.opensearch.common.util.Comparators;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.util.Comparators;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Base class to aggregate all docs into a single numeric metric value.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class NumericMetricsAggregator extends MetricsAggregator {
 
@@ -54,7 +54,7 @@ public abstract class NumericMetricsAggregator extends MetricsAggregator {
     /**
      * Single numeric metric agg value
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class SingleValue extends NumericMetricsAggregator {
 
@@ -83,7 +83,7 @@ public abstract class NumericMetricsAggregator extends MetricsAggregator {
     /**
      * Multi numeric metric agg value
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class MultiValue extends NumericMetricsAggregator {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.support;
+package org.density.search.aggregations.support;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.search.DocValueFormat;
+import org.density.common.annotation.PublicApi;
+import org.density.script.AggregationScript;
+import org.density.search.DocValueFormat;
 
 import java.time.ZoneId;
 import java.util.function.LongSupplier;
@@ -59,7 +59,7 @@ import java.util.function.LongSupplier;
  * a sum aggregation).  When adding a new ValuesSourceType, new aggregators should be added and registered at the same time, to add support
  * for the new type to existing aggregations, as appropriate.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface ValuesSourceType {
@@ -72,7 +72,7 @@ public interface ValuesSourceType {
 
     /**
      * Returns the type-specific sub class for a script data source.  {@link ValuesSource}s that do not support scripts should throw
-     * {@link org.opensearch.search.aggregations.AggregationExecutionException}.  Note that this method is called when a script is
+     * {@link org.density.search.aggregations.AggregationExecutionException}.  Note that this method is called when a script is
      * operating without an underlying field.  Scripts operating over fields are handled by the script argument to getField below.
      *
      * @param script - The script being wrapped
@@ -92,7 +92,7 @@ public interface ValuesSourceType {
 
     /**
      * Apply the given missing value to an already-constructed {@link ValuesSource}.  Types which do not support missing values should throw
-     * {@link org.opensearch.search.aggregations.AggregationExecutionException}
+     * {@link org.density.search.aggregations.AggregationExecutionException}
      *
      * @param valuesSource - The original {@link ValuesSource}
      * @param rawMissing - The missing value we got from the parser, typically a string or number
@@ -104,7 +104,7 @@ public interface ValuesSourceType {
 
     /**
      * This method provides a hook for specifying a type-specific formatter.  When {@link ValuesSourceConfig} can resolve a
-     * {@link org.opensearch.index.mapper.MappedFieldType}, it prefers to get the formatter from there.  Only when a field can't be
+     * {@link org.density.index.mapper.MappedFieldType}, it prefers to get the formatter from there.  Only when a field can't be
      * resolved (which is to say script cases and unmapped field cases), it will fall back to calling this method on whatever
      * {@link ValuesSourceType} it was able to resolve to.
      *

@@ -1,7 +1,7 @@
 {
   "snapshot.verify_repository":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/snapshots/verify-snapshot-repository/",
+      "url":"https://density.org/docs/latest/api-reference/snapshots/verify-snapshot-repository/",
       "description":"Verifies a repository."
     },
     "stability":"stable",

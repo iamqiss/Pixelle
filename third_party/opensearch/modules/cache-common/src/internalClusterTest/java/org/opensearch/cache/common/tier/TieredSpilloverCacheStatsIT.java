@@ -1,34 +1,34 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cache.common.tier;
+package org.density.cache.common.tier;
 
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsRequest;
-import org.opensearch.action.admin.cluster.node.stats.NodesStatsResponse;
-import org.opensearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.opensearch.action.admin.indices.forcemerge.ForceMergeResponse;
-import org.opensearch.action.admin.indices.stats.CommonStatsFlags;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.cache.CacheType;
-import org.opensearch.common.cache.service.NodeCacheStats;
-import org.opensearch.common.cache.stats.ImmutableCacheStats;
-import org.opensearch.common.cache.stats.ImmutableCacheStatsHolder;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.request.RequestCacheStats;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.IndicesRequestCache;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.hamcrest.OpenSearchAssertions;
-import org.opensearch.transport.client.Client;
+import org.density.action.admin.cluster.node.stats.NodesStatsRequest;
+import org.density.action.admin.cluster.node.stats.NodesStatsResponse;
+import org.density.action.admin.indices.delete.DeleteIndexRequest;
+import org.density.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.density.action.admin.indices.stats.CommonStatsFlags;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.cache.CacheType;
+import org.density.common.cache.service.NodeCacheStats;
+import org.density.common.cache.stats.ImmutableCacheStats;
+import org.density.common.cache.stats.ImmutableCacheStatsHolder;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.index.IndexSettings;
+import org.density.index.cache.request.RequestCacheStats;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.IndicesRequestCache;
+import org.density.plugins.Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.hamcrest.DensityAssertions;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -38,15 +38,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_NAME;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
-import static org.opensearch.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
-import static org.opensearch.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_NAME;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_DISK;
+import static org.density.cache.common.tier.TieredSpilloverCacheStatsHolder.TIER_DIMENSION_VALUE_ON_HEAP;
+import static org.density.indices.IndicesService.INDICES_CACHE_CLEAN_INTERVAL_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 
 // Use a single data node to simplify accessing cache stats across different shards.
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class TieredSpilloverCacheStatsIT extends TieredSpilloverCacheBaseIT {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
@@ -550,7 +550,7 @@ public class TieredSpilloverCacheStatsIT extends TieredSpilloverCacheBaseIT {
             // pad with zeros so request 0 and request 10 have the same size ("0000" and "0010" instead of "0" and "10")
             .get();
         assertSearchResponse(resp);
-        OpenSearchAssertions.assertAllSuccessful(resp);
+        DensityAssertions.assertAllSuccessful(resp);
         return resp;
     }
 

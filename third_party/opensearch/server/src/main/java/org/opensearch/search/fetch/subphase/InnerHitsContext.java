@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase;
+package org.density.search.fetch.subphase;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.CollectionTerminatedException;
@@ -44,13 +44,13 @@ import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.SubSearchContext;
-import org.opensearch.search.lookup.SourceLookup;
-import org.opensearch.search.profile.Profilers;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.search.SearchHit;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.SubSearchContext;
+import org.density.search.lookup.SourceLookup;
+import org.density.search.profile.Profilers;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -61,7 +61,7 @@ import java.util.Objects;
 /**
  * Context used for inner hits retrieval
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class InnerHitsContext {
@@ -95,7 +95,7 @@ public final class InnerHitsContext {
      * A {@link SubSearchContext} that associates {@link TopDocs} to each {@link SearchHit}
      * in the parent search context
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class InnerHitSubContext extends SubSearchContext {

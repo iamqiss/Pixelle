@@ -1,50 +1,50 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations.startree;
+package org.density.search.aggregations.startree;
 
 import org.apache.lucene.document.FloatPoint;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.NumericUtils;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.compositeindex.datacube.DateDimension;
-import org.opensearch.index.compositeindex.datacube.Metric;
-import org.opensearch.index.compositeindex.datacube.MetricStat;
-import org.opensearch.index.compositeindex.datacube.OrdinalDimension;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeField;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
-import org.opensearch.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
-import org.opensearch.index.mapper.CompositeDataCubeFieldType;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.KeywordFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.StarTreeMapper;
-import org.opensearch.index.mapper.WildcardFieldMapper;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.query.WildcardQueryBuilder;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.startree.filter.DimensionFilter;
-import org.opensearch.search.startree.filter.ExactMatchDimFilter;
-import org.opensearch.search.startree.filter.RangeMatchDimFilter;
-import org.opensearch.search.startree.filter.StarTreeFilter;
-import org.opensearch.search.startree.filter.provider.StarTreeFilterProvider;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.Rounding;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.index.IndexSettings;
+import org.density.index.compositeindex.datacube.DateDimension;
+import org.density.index.compositeindex.datacube.Metric;
+import org.density.index.compositeindex.datacube.MetricStat;
+import org.density.index.compositeindex.datacube.OrdinalDimension;
+import org.density.index.compositeindex.datacube.startree.StarTreeField;
+import org.density.index.compositeindex.datacube.startree.StarTreeFieldConfiguration;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitAdapter;
+import org.density.index.compositeindex.datacube.startree.utils.date.DateTimeUnitRounding;
+import org.density.index.mapper.CompositeDataCubeFieldType;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.KeywordFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.StarTreeMapper;
+import org.density.index.mapper.WildcardFieldMapper;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.query.WildcardQueryBuilder;
+import org.density.search.internal.SearchContext;
+import org.density.search.startree.filter.DimensionFilter;
+import org.density.search.startree.filter.ExactMatchDimFilter;
+import org.density.search.startree.filter.RangeMatchDimFilter;
+import org.density.search.startree.filter.StarTreeFilter;
+import org.density.search.startree.filter.provider.StarTreeFilterProvider;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -59,7 +59,7 @@ import java.util.Set;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BoolStarTreeFilterProviderTests extends OpenSearchTestCase {
+public class BoolStarTreeFilterProviderTests extends DensityTestCase {
     private SearchContext searchContext;
     private MapperService mapperService;
     private CompositeDataCubeFieldType compositeFieldType;
@@ -167,7 +167,7 @@ public class BoolStarTreeFilterProviderTests extends OpenSearchTestCase {
         long expectedToMillis = Instant.parse(toDateStr).toEpochMilli() - 1;
 
         BoolQueryBuilder boolQuery = new BoolQueryBuilder().must(new TermQueryBuilder(METHOD, "GET"))
-            .must(new RangeQueryBuilder(EVENT_DATE).gte(fromDateStr).lt(toDateStr).format(DATE_FORMAT)); // Common OpenSearch date format
+            .must(new RangeQueryBuilder(EVENT_DATE).gte(fromDateStr).lt(toDateStr).format(DATE_FORMAT)); // Common Density date format
 
         StarTreeFilterProvider provider = StarTreeFilterProvider.SingletonFactory.getProvider(boolQuery);
         StarTreeFilter filter = provider.getFilter(searchContext, boolQuery, compositeFieldType);

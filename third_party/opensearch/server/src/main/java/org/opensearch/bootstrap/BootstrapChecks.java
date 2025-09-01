@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.bootstrap;
+package org.density.bootstrap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.util.Constants;
-import org.opensearch.bootstrap.jvm.DenyJvmVersionsParser;
-import org.opensearch.cluster.coordination.ClusterBootstrapService;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.core.common.transport.BoundTransportAddress;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexModule;
-import org.opensearch.javaagent.bootstrap.AgentPolicy;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.process.ProcessProbe;
-import org.opensearch.node.NodeRoleSettings;
-import org.opensearch.node.NodeValidationException;
+import org.density.bootstrap.jvm.DenyJvmVersionsParser;
+import org.density.cluster.coordination.ClusterBootstrapService;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.common.settings.Setting;
+import org.density.core.common.transport.BoundTransportAddress;
+import org.density.core.common.transport.TransportAddress;
+import org.density.discovery.DiscoveryModule;
+import org.density.env.Environment;
+import org.density.index.IndexModule;
+import org.density.javaagent.bootstrap.AgentPolicy;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.process.ProcessProbe;
+import org.density.node.NodeRoleSettings;
+import org.density.node.NodeValidationException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,27 +68,27 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
-import static org.opensearch.cluster.coordination.ClusterBootstrapService.INITIAL_MASTER_NODES_SETTING;
-import static org.opensearch.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
-import static org.opensearch.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_CLUSTER_MANAGER_NODES_SETTING;
+import static org.density.cluster.coordination.ClusterBootstrapService.INITIAL_MASTER_NODES_SETTING;
+import static org.density.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
+import static org.density.discovery.SettingsBasedSeedHostsProvider.DISCOVERY_SEED_HOSTS_SETTING;
 
 /**
  * We enforce bootstrap checks once a node has the transport protocol bound to a non-loopback interface or if the system property {@code
- * opensearch.enforce.bootstrap.checks} is set to {@code true}. In this case we assume the node is running in production and
+ * density.enforce.bootstrap.checks} is set to {@code true}. In this case we assume the node is running in production and
  * all bootstrap checks must pass.
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class BootstrapChecks {
 
     private BootstrapChecks() {}
 
-    static final String OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS = "opensearch.enforce.bootstrap.checks";
+    static final String DENSITY_ENFORCE_BOOTSTRAP_CHECKS = "density.enforce.bootstrap.checks";
 
     /**
      * Executes the bootstrap checks if the node has the transport protocol bound to a non-loopback interface. If the system property
-     * {@code opensearch.enforce.bootstrap.checks} is set to {@code true} then the bootstrap checks will be enforced regardless
+     * {@code density.enforce.bootstrap.checks} is set to {@code true} then the bootstrap checks will be enforced regardless
      * of whether or not the transport protocol is bound to a non-loopback interface.
      *
      * @param context              the current node bootstrap context
@@ -111,7 +111,7 @@ final class BootstrapChecks {
 
     /**
      * Executes the provided checks and fails the node if {@code enforceLimits} is {@code true}, otherwise logs warnings. If the system
-     * property {@code opensearch.enforce.bootstrap.checks} is set to {@code true} then the bootstrap checks will be enforced
+     * property {@code density.enforce.bootstrap.checks} is set to {@code true} then the bootstrap checks will be enforced
      * regardless of whether or not the transport protocol is bound to a non-loopback interface.
      *
      * @param context        the current node boostrap context
@@ -125,7 +125,7 @@ final class BootstrapChecks {
 
     /**
      * Executes the provided checks and fails the node if {@code enforceLimits} is {@code true}, otherwise logs warnings. If the system
-     * property {@code opensearch.enforce.bootstrap.checks }is set to {@code true} then the bootstrap checks will be enforced
+     * property {@code density.enforce.bootstrap.checks }is set to {@code true} then the bootstrap checks will be enforced
      * regardless of whether or not the transport protocol is bound to a non-loopback interface.
      *
      * @param context the current node boostrap context
@@ -138,7 +138,7 @@ final class BootstrapChecks {
         final List<String> errors = new ArrayList<>();
         final List<String> ignoredErrors = new ArrayList<>();
 
-        final String esEnforceBootstrapChecks = System.getProperty(OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS);
+        final String esEnforceBootstrapChecks = System.getProperty(DENSITY_ENFORCE_BOOTSTRAP_CHECKS);
         final boolean enforceBootstrapChecks;
         if (esEnforceBootstrapChecks == null) {
             enforceBootstrapChecks = false;
@@ -148,7 +148,7 @@ final class BootstrapChecks {
             final String message = String.format(
                 Locale.ROOT,
                 "[%s] must be [true] but was [%s]",
-                OPENSEARCH_ENFORCE_BOOTSTRAP_CHECKS,
+                DENSITY_ENFORCE_BOOTSTRAP_CHECKS,
                 esEnforceBootstrapChecks
             );
             throw new IllegalArgumentException(message);
@@ -335,7 +335,7 @@ final class BootstrapChecks {
             if (maxFileDescriptorCount != -1 && maxFileDescriptorCount < limit) {
                 final String message = String.format(
                     Locale.ROOT,
-                    "max file descriptors [%d] for opensearch process is too low, increase to at least [%d]",
+                    "max file descriptors [%d] for density process is too low, increase to at least [%d]",
                     getMaxFileDescriptorCount(),
                     limit
                 );
@@ -357,7 +357,7 @@ final class BootstrapChecks {
         @Override
         public BootstrapCheckResult check(BootstrapContext context) {
             if (BootstrapSettings.MEMORY_LOCK_SETTING.get(context.settings()) && !isMemoryLocked()) {
-                return BootstrapCheckResult.failure("memory locking requested for opensearch process but memory is not locked");
+                return BootstrapCheckResult.failure("memory locking requested for density process but memory is not locked");
             } else {
                 return BootstrapCheckResult.success();
             }
@@ -428,7 +428,7 @@ final class BootstrapChecks {
     }
 
     /**
-     * Bootstrap check that the maximum file size is unlimited (otherwise OpenSearch could run in to an I/O exception writing files).
+     * Bootstrap check that the maximum file size is unlimited (otherwise Density could run in to an I/O exception writing files).
      */
     static class MaxFileSizeCheck implements BootstrapCheck {
 
@@ -552,7 +552,7 @@ final class BootstrapChecks {
 
     /**
      * Checks if the serial collector is in use. This collector is single-threaded and devastating
-     * for performance and should not be used for a server application like OpenSearch.
+     * for performance and should not be used for a server application like Density.
      */
     static class UseSerialGCCheck implements BootstrapCheck {
 

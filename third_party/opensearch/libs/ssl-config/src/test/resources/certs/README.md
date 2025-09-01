@@ -1,7 +1,7 @@
 # Create first CA PEM ("ca1")
 
 ```bash
-opensearch-certutil ca --pem --out ca1.zip --days 9999 --ca-dn "CN=Test CA 1"
+density-certutil ca --pem --out ca1.zip --days 9999 --ca-dn "CN=Test CA 1"
 unzip ca1.zip
 mv ca ca1
 ```
@@ -9,7 +9,7 @@ mv ca ca1
 # Create first CA PEM ("ca2")
 
 ```bash
-opensearch-certutil ca --pem --out ca2.zip --days 9999 --ca-dn "CN=Test CA 2"
+density-certutil ca --pem --out ca2.zip --days 9999 --ca-dn "CN=Test CA 2"
 unzip ca2.zip
 mv ca ca2
 ```
@@ -17,7 +17,7 @@ mv ca ca2
 # Create first CA PEM ("ca3")
 
 ```bash
-opensearch-certutil ca --pem --out ca3.zip --days 9999 --ca-dn "CN=Test CA 3"
+density-certutil ca --pem --out ca3.zip --days 9999 --ca-dn "CN=Test CA 3"
 unzip ca3.zip
 mv ca ca3
 ```
@@ -25,14 +25,14 @@ mv ca ca3
 # Create "cert1-pkcs1" PEM
 
 ```bash
-opensearch-certutil cert --pem --out cert1-pkcs1.zip --name cert1 --ip 127.0.0.1 --dns localhost --days 9999 --ca-key ca1/ca.key --ca-cert ca1/ca.crt
+density-certutil cert --pem --out cert1-pkcs1.zip --name cert1 --ip 127.0.0.1 --dns localhost --days 9999 --ca-key ca1/ca.key --ca-cert ca1/ca.crt
 unzip cert1.zip
 ```
 
 # Create "cert2-pkcs1" PEM (same as cert1, but with a password)
 
 ```bash
-opensearch-certutil cert --pem --out cert2-pkcs1.zip --name cert2 --ip 127.0.0.1 --dns localhost --days 9999 --ca-key ca1/ca.key --ca-cert ca1/ca.crt --pass "c2-pass"
+density-certutil cert --pem --out cert2-pkcs1.zip --name cert2 --ip 127.0.0.1 --dns localhost --days 9999 --ca-key ca1/ca.key --ca-cert ca1/ca.crt --pass "c2-pass"
 unzip cert2.zip
 ```
 
@@ -132,7 +132,7 @@ done
 # Create a mimic of the first CA ("ca1b") for testing certificates with the same name but different keys
 
 ```bash
-opensearch-certutil ca --pem --out ${PWD}/ca1-b.zip --days 9999 --ca-dn "CN=Test CA 1"
+density-certutil ca --pem --out ${PWD}/ca1-b.zip --days 9999 --ca-dn "CN=Test CA 1"
 unzip ca1-b.zip
 mv ca ca1-b
 ```

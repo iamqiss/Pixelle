@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cloud.gce;
+package org.density.cloud.gce;
 
 import com.google.api.services.compute.model.Instance;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.unit.TimeValue;
 
 import java.io.Closeable;
 import java.util.Collection;
@@ -46,9 +46,9 @@ import java.util.function.Function;
 public interface GceInstancesService extends Closeable {
 
     /**
-     * GCE API Version: OpenSearch/GceCloud/1.0
+     * GCE API Version: Density/GceCloud/1.0
      */
-    String VERSION = "OpenSearch/GceCloud/1.0";
+    String VERSION = "Density/GceCloud/1.0";
 
     // cloud.gce settings
 

@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.concurrent;
+package org.density.common.concurrent;
 
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.AbstractRefCounted;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.AbstractRefCounted;
 
 /**
  * Decorator class that wraps an object reference as a {@link AbstractRefCounted} instance.
  * In addition to a {@link String} name, it accepts a {@link Runnable} shutdown hook that is
  * invoked when the reference count reaches zero i.e. on {@link #closeInternal()}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RefCountedReleasable<T> extends AbstractRefCounted implements Releasable {
 

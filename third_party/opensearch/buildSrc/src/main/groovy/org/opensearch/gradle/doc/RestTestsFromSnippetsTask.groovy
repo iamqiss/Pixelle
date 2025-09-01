@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,10 +27,10 @@
  * under the License.
  */
 
-package org.opensearch.gradle.doc
+package org.density.gradle.doc
 
 import groovy.transform.PackageScope
-import org.opensearch.gradle.doc.SnippetsTask.Snippet
+import org.density.gradle.doc.SnippetsTask.Snippet
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal

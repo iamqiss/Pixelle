@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.FieldType;
-import org.opensearch.Version;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.Mapper.TypeParser.ParserContext;
+import org.density.Version;
+import org.density.common.Explicit;
+import org.density.common.TriFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.Mapper.TypeParser.ParserContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ import java.util.function.Supplier;
  * Subclasses should implement a {@link Builder} that is returned from the
  * {@link #getMergeBuilder()} method, initialised with the existing builder.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class ParametrizedFieldMapper extends FieldMapper {
@@ -154,7 +154,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
     /**
      * Serializes a parameter
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     protected interface Serializer<T> {
@@ -164,7 +164,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
     /**
      * Check on whether or not a parameter should be serialized
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     protected interface SerializerCheck<T> {
@@ -182,7 +182,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
      * A configurable parameter for a field mapper
      * @param <T> the type of the value the parameter holds
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static final class Parameter<T> implements Supplier<T> {
@@ -558,7 +558,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
     /**
      * Conflicts in the field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class Conflicts {
 
@@ -586,7 +586,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
     /**
      * A Builder for a ParametrizedFieldMapper
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public abstract static class Builder extends Mapper.Builder<Builder> {
@@ -749,7 +749,7 @@ public abstract class ParametrizedFieldMapper extends FieldMapper {
     /**
      * TypeParser implementation that automatically handles parsing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class TypeParser implements Mapper.TypeParser {
 

@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
-import org.opensearch.arrow.flight.api.flightinfo.FlightServerInfoAction;
-import org.opensearch.arrow.flight.api.flightinfo.NodesFlightInfoAction;
-import org.opensearch.arrow.flight.bootstrap.FlightService;
-import org.opensearch.arrow.flight.stats.FlightStatsAction;
-import org.opensearch.arrow.flight.stats.FlightStatsRestHandler;
-import org.opensearch.arrow.spi.StreamManager;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.SecureTransportSettingsProvider;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.ExecutorBuilder;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.AuxTransport;
+import org.density.arrow.flight.api.flightinfo.FlightServerInfoAction;
+import org.density.arrow.flight.api.flightinfo.NodesFlightInfoAction;
+import org.density.arrow.flight.bootstrap.FlightService;
+import org.density.arrow.flight.stats.FlightStatsAction;
+import org.density.arrow.flight.stats.FlightStatsRestHandler;
+import org.density.arrow.spi.StreamManager;
+import org.density.cluster.ClusterState;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.service.ClusterService;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.plugins.SecureTransportSettingsProvider;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.ExecutorBuilder;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.AuxTransport;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,13 +32,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static org.opensearch.arrow.flight.bootstrap.FlightService.ARROW_FLIGHT_TRANSPORT_SETTING_KEY;
-import static org.opensearch.common.util.FeatureFlags.ARROW_STREAMS;
-import static org.opensearch.common.util.FeatureFlags.STREAM_TRANSPORT;
+import static org.density.arrow.flight.bootstrap.FlightService.ARROW_FLIGHT_TRANSPORT_SETTING_KEY;
+import static org.density.common.util.FeatureFlags.ARROW_STREAMS;
+import static org.density.common.util.FeatureFlags.STREAM_TRANSPORT;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FlightStreamPluginTests extends OpenSearchTestCase {
+public class FlightStreamPluginTests extends DensityTestCase {
     private Settings settings;
     private ClusterService clusterService;
 

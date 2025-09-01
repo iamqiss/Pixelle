@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,32 +25,32 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.example.customsettings;
+package org.density.example.customsettings;
 
 import com.carrotsearch.randomizedtesting.annotations.Name;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.test.rest.yaml.ClientYamlTestCandidate;
-import org.opensearch.test.rest.yaml.OpenSearchClientYamlSuiteTestCase;
+import org.density.test.rest.yaml.ClientYamlTestCandidate;
+import org.density.test.rest.yaml.DensityClientYamlSuiteTestCase;
 
 /**
  * {@link ExampleCustomSettingsClientYamlTestSuiteIT} executes the plugin's REST API integration tests.
  * <p>
  * The tests can be executed using the command: ./gradlew :example-plugins:custom-settings:yamlRestTest
  * <p>
- * This class extends {@link OpenSearchClientYamlSuiteTestCase}, which takes care of parsing the YAML files
+ * This class extends {@link DensityClientYamlSuiteTestCase}, which takes care of parsing the YAML files
  * located in the src/yamlRestTest/resources/rest-api-spec/test/ directory and validates them against the
  * custom REST API definition files located in src/yamlRestTest/resources/rest-api-spec/api/.
  * <p>
- * Once validated, {@link OpenSearchClientYamlSuiteTestCase} executes the REST tests against a single node
+ * Once validated, {@link DensityClientYamlSuiteTestCase} executes the REST tests against a single node
  * integration cluster which has the plugin already installed by the Gradle build script.
  * </p>
  */
-public class ExampleCustomSettingsClientYamlTestSuiteIT extends OpenSearchClientYamlSuiteTestCase {
+public class ExampleCustomSettingsClientYamlTestSuiteIT extends DensityClientYamlSuiteTestCase {
 
     public ExampleCustomSettingsClientYamlTestSuiteIT(@Name("yaml") ClientYamlTestCandidate testCandidate) {
         super(testCandidate);
@@ -59,7 +59,7 @@ public class ExampleCustomSettingsClientYamlTestSuiteIT extends OpenSearchClient
     @ParametersFactory
     public static Iterable<Object[]> parameters() throws Exception {
         // The test executes all the test candidates by default
-        // see OpenSearchClientYamlSuiteTestCase.REST_TESTS_SUITE
-        return OpenSearchClientYamlSuiteTestCase.createParameters();
+        // see DensityClientYamlSuiteTestCase.REST_TESTS_SUITE
+        return DensityClientYamlSuiteTestCase.createParameters();
     }
 }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.test;
+package org.density.test.test;
 
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.discovery.SettingsBasedSeedHostsProvider;
-import org.opensearch.env.Environment;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.node.Node.DiscoverySettings;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.MockHttpTransport;
-import org.opensearch.test.NodeConfigurationSource;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.Client;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.service.ClusterService;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.util.io.IOUtils;
+import org.density.discovery.DiscoveryModule;
+import org.density.discovery.SettingsBasedSeedHostsProvider;
+import org.density.env.Environment;
+import org.density.env.NodeEnvironment;
+import org.density.node.Node.DiscoverySettings;
+import org.density.plugins.Plugin;
+import org.density.test.InternalTestCluster;
+import org.density.test.MockHttpTransport;
+import org.density.test.NodeConfigurationSource;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.Client;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -67,9 +67,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFileExists;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFileNotExists;
+import static org.density.discovery.DiscoveryModule.DISCOVERY_SEED_PROVIDERS_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertFileExists;
+import static org.density.test.hamcrest.DensityAssertions.assertFileNotExists;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
@@ -78,7 +78,7 @@ import static org.hamcrest.Matchers.not;
  * configuration given the same seed / input.
  */
 @LuceneTestCase.SuppressFileSystems("ExtrasFS") // doesn't work with potential multi data path from test cluster yet
-public class InternalTestClusterTests extends OpenSearchTestCase {
+public class InternalTestClusterTests extends DensityTestCase {
 
     private static Collection<Class<? extends Plugin>> mockPlugins() {
         return Arrays.asList(getTestTransportPlugin(), MockHttpTransport.TestPlugin.class);

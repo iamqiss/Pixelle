@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rule.action;
+package org.density.rule.action;
 
-import org.opensearch.action.ActionType;
+import org.density.action.ActionType;
 
 /**
  * Action type for getting Rules
- * @opensearch.experimental
+ * @density.experimental
  */
 public class GetRuleAction extends ActionType<GetRuleResponse> {
 
@@ -24,7 +24,7 @@ public class GetRuleAction extends ActionType<GetRuleResponse> {
     /**
      * Name for GetRuleAction
      */
-    public static final String NAME = "cluster:admin/opensearch/rule/_get";
+    public static final String NAME = "cluster:admin/density/rule/_get";
 
     /**
      * Default constructor for GetRuleAction

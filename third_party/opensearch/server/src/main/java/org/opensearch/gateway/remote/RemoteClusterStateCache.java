@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.ClusterStateTermVersion;
-import org.opensearch.common.collect.Tuple;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.ClusterStateTermVersion;
+import org.density.common.collect.Tuple;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Cache to Remote Cluster State based on term-version check. The current implementation
  * caches the last highest version of cluster-state that was downloaded from cache.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteClusterStateCache {
 

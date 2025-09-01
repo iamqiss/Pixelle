@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,48 +26,48 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.internal;
+package org.density.search.internal;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.Query;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.search.SearchExtBuilder;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.BucketCollectorProcessor;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.collapse.CollapseContext;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.InnerHitsContext;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.profile.Profilers;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.query.ReduceableSearchResult;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.suggest.SuggestionSearchContext;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchType;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryShardContext;
+import org.density.index.shard.IndexShard;
+import org.density.index.similarity.SimilarityService;
+import org.density.search.SearchExtBuilder;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.BucketCollectorProcessor;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.collapse.CollapseContext;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.InnerHitsContext;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.profile.Profilers;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.query.ReduceableSearchResult;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.suggest.SuggestionSearchContext;
 
 import java.util.List;
 import java.util.Map;
@@ -75,7 +75,7 @@ import java.util.Map;
 /**
  * Context used during a filtered search
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class FilteredSearchContext extends SearchContext {
 

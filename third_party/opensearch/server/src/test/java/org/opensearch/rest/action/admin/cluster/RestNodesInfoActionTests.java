@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.common.util.set.Sets;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +45,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.rest.action.admin.cluster.RestNodesInfoAction.ALLOWED_METRICS;
+import static org.density.rest.action.admin.cluster.RestNodesInfoAction.ALLOWED_METRICS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
-public class RestNodesInfoActionTests extends OpenSearchTestCase {
+public class RestNodesInfoActionTests extends DensityTestCase {
 
     public void testDuplicatedFiltersAreNotRemoved() {
         Map<String, String> params = new HashMap<>();

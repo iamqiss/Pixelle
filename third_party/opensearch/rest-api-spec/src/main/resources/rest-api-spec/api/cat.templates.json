@@ -1,7 +1,7 @@
 {
   "cat.templates":{
     "documentation":{
-      "url":"https://opensearch.org/docs/latest/api-reference/cat/cat-templates/",
+      "url":"https://density.org/docs/latest/api-reference/cat/cat-templates/",
       "description":"Returns information about existing templates."
     },
     "stability":"stable",

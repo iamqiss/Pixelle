@@ -25,7 +25,7 @@ jobs:
         
       - name: Edit the issue template
         run: |
-          echo "https://github.com/opensearch-project/OpenSearch/pull/${{ env.PR_NUMBER }}." >> ./ci/documentation/issue.md
+          echo "https://github.com/density-project/Density/pull/${{ env.PR_NUMBER }}." >> ./ci/documentation/issue.md
           
       - name: Create Issue From File
         id: create-issue
@@ -34,7 +34,7 @@ jobs:
           title: Add documentation related to new feature
           content-filepath: ./ci/documentation/issue.md
           labels: documentation
-          repository: opensearch-project/documentation-website
+          repository: density-project/documentation-website
           token: ${{ steps.github_app_token.outputs.token }}
       
       - name: Print Issue

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.Processor;
-import org.opensearch.ingest.RandomDocumentPicks;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.Processor;
+import org.density.ingest.RandomDocumentPicks;
 import org.hamcrest.CoreMatchers;
 
 public class BytesProcessorTests extends AbstractStringProcessorTestCase<Long> {
@@ -73,7 +73,7 @@ public class BytesProcessorTests extends AbstractStringProcessorTestCase<Long> {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());
         String fieldName = RandomDocumentPicks.addRandomField(random(), ingestDocument, "8912pb");
         Processor processor = newProcessor(fieldName, randomBoolean(), fieldName);
-        OpenSearchException exception = expectThrows(OpenSearchException.class, () -> processor.execute(ingestDocument));
+        DensityException exception = expectThrows(DensityException.class, () -> processor.execute(ingestDocument));
         assertThat(
             exception.getMessage(),
             CoreMatchers.equalTo("failed to parse setting [Ingest Field] with value [8912pb] as a size in bytes")
@@ -88,7 +88,7 @@ public class BytesProcessorTests extends AbstractStringProcessorTestCase<Long> {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());
         String fieldName = RandomDocumentPicks.addRandomField(random(), ingestDocument, "junk");
         Processor processor = newProcessor(fieldName, randomBoolean(), fieldName);
-        OpenSearchException exception = expectThrows(OpenSearchException.class, () -> processor.execute(ingestDocument));
+        DensityException exception = expectThrows(DensityException.class, () -> processor.execute(ingestDocument));
         assertThat(exception.getMessage(), CoreMatchers.equalTo("failed to parse [junk]"));
     }
 
@@ -96,7 +96,7 @@ public class BytesProcessorTests extends AbstractStringProcessorTestCase<Long> {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());
         String fieldName = RandomDocumentPicks.addRandomField(random(), ingestDocument, "1");
         Processor processor = newProcessor(fieldName, randomBoolean(), fieldName);
-        OpenSearchException exception = expectThrows(OpenSearchException.class, () -> processor.execute(ingestDocument));
+        DensityException exception = expectThrows(DensityException.class, () -> processor.execute(ingestDocument));
         assertThat(exception.getMessage(), CoreMatchers.containsString("unit is missing or unrecognized"));
     }
 
@@ -104,7 +104,7 @@ public class BytesProcessorTests extends AbstractStringProcessorTestCase<Long> {
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random());
         String fieldName = RandomDocumentPicks.addRandomField(random(), ingestDocument, "1.1kb");
         Processor processor = newProcessor(fieldName, randomBoolean(), fieldName);
-        OpenSearchParseException e = expectThrows(OpenSearchParseException.class, () -> processor.execute(ingestDocument));
+        DensityParseException e = expectThrows(DensityParseException.class, () -> processor.execute(ingestDocument));
         assertThat(
             e.getMessage(),
             CoreMatchers.containsString(

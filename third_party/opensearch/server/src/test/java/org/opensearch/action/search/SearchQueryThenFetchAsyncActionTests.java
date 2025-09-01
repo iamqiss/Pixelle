@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.lucene.search.FieldDoc;
@@ -38,31 +38,31 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.grouping.CollapseTopFieldDocs;
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.GroupShardsIterator;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseBuilder;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.sort.SortBuilders;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Transport;
+import org.density.Version;
+import org.density.action.OriginalIndices;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.GroupShardsIterator;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseBuilder;
+import org.density.search.internal.AliasFilter;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.sort.SortBuilders;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.transport.Transport;
 import org.junit.After;
 import org.junit.Before;
 
@@ -79,7 +79,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class SearchQueryThenFetchAsyncActionTests extends OpenSearchTestCase {
+public class SearchQueryThenFetchAsyncActionTests extends DensityTestCase {
     private SearchRequestOperationsListenerAssertingListener assertingListener;
 
     @Before
@@ -205,7 +205,7 @@ public class SearchQueryThenFetchAsyncActionTests extends OpenSearchTestCase {
             searchRequest.source().collapse(new CollapseBuilder("collapse_field"));
         }
         searchRequest.allowPartialSearchResults(false);
-        Executor executor = OpenSearchExecutors.newDirectExecutorService();
+        Executor executor = DensityExecutors.newDirectExecutorService();
         SearchPhaseController controller = new SearchPhaseController(
             writableRegistry(),
             r -> InternalAggregationTestCase.emptyReduceContextBuilder()

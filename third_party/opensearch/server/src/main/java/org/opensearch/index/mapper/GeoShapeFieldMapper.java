@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,18 +39,18 @@ import org.apache.lucene.document.LatLonShape;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.Query;
-import org.opensearch.Version;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeometryParser;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.VectorGeoShapeQueryProcessor;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.Version;
+import org.density.common.Explicit;
+import org.density.common.geo.GeometryParser;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.geometry.Geometry;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.AbstractGeoShapeIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.VectorGeoShapeQueryProcessor;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,7 +61,7 @@ import java.util.function.Supplier;
  * FieldMapper for indexing {@link LatLonShape}s.
  * <p>
  * Currently Shapes can only be indexed and can only be queried using
- * {@link org.opensearch.index.query.GeoShapeQueryBuilder}, consequently
+ * {@link org.density.index.query.GeoShapeQueryBuilder}, consequently
  * a lot of behavior in this Mapper is disabled.
  * <p>
  * Format supported:
@@ -77,7 +77,7 @@ import java.util.function.Supplier;
  * <p>
  * "field" : "POLYGON ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0))
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geometry, Geometry> {
     private static final Logger logger = LogManager.getLogger(GeoShapeFieldMapper.class);
@@ -93,7 +93,7 @@ public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geomet
     /**
      * Concrete builder for geo_shape types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends AbstractShapeGeometryFieldMapper.Builder<Builder, GeoShapeFieldType> {
 
@@ -131,7 +131,7 @@ public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geomet
     /**
      * Concrete field type for geo_shape fields
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class GeoShapeFieldType extends AbstractShapeGeometryFieldType<Geometry, Geometry> implements GeoShapeQueryable {
 
@@ -166,7 +166,7 @@ public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geomet
     /**
      * The type parser
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static final class TypeParser extends AbstractShapeGeometryFieldMapper.TypeParser {
 
@@ -211,9 +211,9 @@ public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geomet
     ) {
         /*
          * We are adding the doc values for GeoShape only if the index is created with 2.9 and above version of
-         * OpenSearch. If we don't do that after the upgrade of OpenSearch customers are not able to index documents
-         * with GeoShape fields. Github issue: https://github.com/opensearch-project/OpenSearch/issues/10958,
-         * https://github.com/opensearch-project/OpenSearch/issues/10795
+         * Density. If we don't do that after the upgrade of Density customers are not able to index documents
+         * with GeoShape fields. Github issue: https://github.com/density-project/Density/issues/10958,
+         * https://github.com/density-project/Density/issues/10795
          */
         if (context.indexSettings().getIndexVersionCreated().onOrAfter(Version.V_2_9_0)) {
             Field[] fieldsArray = new Field[indexableFields.size()];
@@ -222,7 +222,7 @@ public class GeoShapeFieldMapper extends AbstractShapeGeometryFieldMapper<Geomet
         } else {
             logger.warn(
                 "The index was created with Version : {}, for geoshape doc values to work index must be "
-                    + "created with OpenSearch Version : {} or above",
+                    + "created with Density Version : {} or above",
                 context.indexSettings().getIndexVersionCreated(),
                 Version.V_2_9_0
             );

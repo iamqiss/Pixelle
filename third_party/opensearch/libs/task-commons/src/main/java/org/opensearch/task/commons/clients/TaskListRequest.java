@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.task.commons.clients;
+package org.density.task.commons.clients;
 
-import org.opensearch.task.commons.task.TaskStatus;
-import org.opensearch.task.commons.task.TaskType;
-import org.opensearch.task.commons.worker.WorkerNode;
+import org.density.task.commons.task.TaskStatus;
+import org.density.task.commons.task.TaskType;
+import org.density.task.commons.worker.WorkerNode;
 
 /**
  * Request object for listing tasks

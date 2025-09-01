@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.function;
+package org.density.common.lucene.search.function;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.Nullable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
+import org.density.DensityException;
+import org.density.common.Nullable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.SortedNumericDoubleValues;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -52,7 +52,7 @@ import java.util.Objects;
  * field from the document, optionally multiplying the field by a factor first,
  * and applying a modification (log, ln, sqrt, square, etc) afterwards.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FieldValueFactorFunction extends ScoreFunction {
     private final String field;
@@ -113,7 +113,7 @@ public class FieldValueFactorFunction extends ScoreFunction {
                     if (missing != null) {
                         value = missing;
                     } else {
-                        throw new OpenSearchException("Missing value for field [" + field + "]");
+                        throw new DensityException("Missing value for field [" + field + "]");
                     }
                 }
                 double val = value * boostFactor;
@@ -177,7 +177,7 @@ public class FieldValueFactorFunction extends ScoreFunction {
      * The Type class encapsulates the modification types that can be applied
      * to the score/value product.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public enum Modifier implements Writeable {
         NONE {

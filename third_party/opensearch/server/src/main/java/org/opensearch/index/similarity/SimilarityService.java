@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.similarity;
+package org.density.index.similarity;
 
 import org.apache.lucene.index.FieldInvertState;
 import org.apache.lucene.index.IndexOptions;
@@ -43,17 +43,17 @@ import org.apache.lucene.search.similarities.PerFieldSimilarityWrapper;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.search.similarities.Similarity.SimScorer;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.AbstractIndexComponent;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.common.TriFunction;
+import org.density.common.annotation.PublicApi;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.index.AbstractIndexComponent;
+import org.density.index.IndexModule;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.script.ScriptService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +64,7 @@ import java.util.function.Supplier;
 /**
  * Service for similarity computations
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class SimilarityService extends AbstractIndexComponent {
@@ -189,7 +189,7 @@ public final class SimilarityService extends AbstractIndexComponent {
     /**
      * Similarity per field
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class PerFieldSimilarity extends PerFieldSimilarityWrapper {
 

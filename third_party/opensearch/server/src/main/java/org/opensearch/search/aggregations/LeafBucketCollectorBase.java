@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.search.Scorable;
-import org.opensearch.common.lucene.ScorerAware;
+import org.density.common.lucene.ScorerAware;
 
 import java.io.IOException;
 
@@ -42,7 +42,7 @@ import java.io.IOException;
  * aggregator and sets the scorer on its source of values if it implements
  * {@link ScorerAware}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LeafBucketCollectorBase extends LeafBucketCollector {
 

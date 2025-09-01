@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.replication;
+package org.density.index.replication;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.CheckpointInfoResponse;
-import org.opensearch.indices.replication.GetSegmentFilesResponse;
-import org.opensearch.indices.replication.SegmentReplicationSource;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.core.action.ActionListener;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.CheckpointInfoResponse;
+import org.density.indices.replication.GetSegmentFilesResponse;
+import org.density.indices.replication.SegmentReplicationSource;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
 
 import java.util.List;
 import java.util.function.BiConsumer;

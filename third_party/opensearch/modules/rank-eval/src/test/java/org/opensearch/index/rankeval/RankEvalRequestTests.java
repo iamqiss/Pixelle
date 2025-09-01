@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.rankeval;
+package org.density.index.rankeval;
 
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.util.ArrayUtils;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable.Reader;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.action.search.SearchType;
+import org.density.action.support.IndicesOptions;
+import org.density.common.util.ArrayUtils;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.Writeable.Reader;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.test.AbstractWireSerializingTestCase;
 import org.junit.AfterClass;
 
 import java.io.IOException;

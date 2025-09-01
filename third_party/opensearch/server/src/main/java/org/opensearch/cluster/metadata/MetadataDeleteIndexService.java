@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.admin.indices.delete.DeleteIndexClusterStateUpdateRequest;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.ack.ClusterStateUpdateResponse;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Priority;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.snapshots.RestoreService;
-import org.opensearch.snapshots.SnapshotInProgressException;
-import org.opensearch.snapshots.SnapshotsService;
+import org.density.action.admin.indices.delete.DeleteIndexClusterStateUpdateRequest;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterState;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.ack.ClusterStateUpdateResponse;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Priority;
+import org.density.common.inject.Inject;
+import org.density.common.settings.Settings;
+import org.density.common.util.set.Sets;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.snapshots.RestoreService;
+import org.density.snapshots.SnapshotInProgressException;
+import org.density.snapshots.SnapshotsService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,12 +61,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_INDEX;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_INDEX;
 
 /**
  * Deletes indices.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataDeleteIndexService {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.index.seqno.LocalCheckpointTracker;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.translog.listener.TranslogEventListener;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.index.seqno.LocalCheckpointTracker;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.translog.listener.TranslogEventListener;
 
 import java.io.IOException;
 import java.util.Map;

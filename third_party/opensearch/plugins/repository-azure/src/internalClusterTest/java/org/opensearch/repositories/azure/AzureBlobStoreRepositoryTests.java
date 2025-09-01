@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.azure;
+package org.density.repositories.azure;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -41,15 +41,15 @@ import com.azure.storage.common.policy.RequestRetryOptions;
 import com.azure.storage.common.policy.RetryPolicyType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.MockSecureSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.repositories.blobstore.OpenSearchMockAPIBasedRepositoryIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.common.SuppressForbidden;
+import org.density.common.regex.Regex;
+import org.density.common.settings.MockSecureSettings;
+import org.density.common.settings.Settings;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.rest.RestStatus;
+import org.density.plugins.Plugin;
+import org.density.repositories.blobstore.DensityMockAPIBasedRepositoryIntegTestCase;
+import org.density.test.DensityIntegTestCase;
 import org.junit.AfterClass;
 
 import java.io.IOException;
@@ -64,8 +64,8 @@ import fixture.azure.AzureHttpHandler;
 import reactor.core.scheduler.Schedulers;
 
 @SuppressForbidden(reason = "this test uses a HttpServer to emulate an Azure endpoint")
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class AzureBlobStoreRepositoryTests extends OpenSearchMockAPIBasedRepositoryIntegTestCase {
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class AzureBlobStoreRepositoryTests extends DensityMockAPIBasedRepositoryIntegTestCase {
     @AfterClass
     public static void shutdownSchedulers() {
         Schedulers.shutdownNow();

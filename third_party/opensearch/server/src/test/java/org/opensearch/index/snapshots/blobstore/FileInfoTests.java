@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.snapshots.blobstore;
+package org.density.index.snapshots.blobstore;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo;
+import org.density.index.store.StoreFileMetadata;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
@@ -51,8 +51,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class FileInfoTests extends OpenSearchTestCase {
-    private static final org.apache.lucene.util.Version MIN_SUPPORTED_LUCENE_VERSION = org.opensearch.Version.CURRENT
+public class FileInfoTests extends DensityTestCase {
+    private static final org.apache.lucene.util.Version MIN_SUPPORTED_LUCENE_VERSION = org.density.Version.CURRENT
         .minimumIndexCompatibilityVersion().luceneVersion;
 
     public void testToFromXContent() throws IOException {
@@ -153,7 +153,7 @@ public class FileInfoTests extends OpenSearchTestCase {
                     parser.nextToken();
                     BlobStoreIndexShardSnapshot.FileInfo.fromXContent(parser);
                     fail("Should have failed with [" + failure + "]");
-                } catch (OpenSearchParseException ex) {
+                } catch (DensityParseException ex) {
                     assertThat(ex.getMessage(), containsString(failure));
                 }
             }

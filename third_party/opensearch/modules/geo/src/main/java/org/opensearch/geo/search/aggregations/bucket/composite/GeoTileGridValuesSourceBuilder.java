@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.geo.search.aggregations.bucket.composite;
+package org.density.geo.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.IndexReader;
-import org.opensearch.common.geo.GeoBoundingBox;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
-import org.opensearch.geo.search.aggregations.bucket.geogrid.cells.CellIdSource;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.bucket.GeoTileUtils;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceConfig;
-import org.opensearch.search.aggregations.bucket.composite.CompositeValuesSourceParserHelper;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.geo.GeoBoundingBox;
+import org.density.common.geo.GeoPoint;
+import org.density.common.util.BigArrays;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geo.search.aggregations.bucket.geogrid.GeoTileGridAggregationBuilder;
+import org.density.geo.search.aggregations.bucket.geogrid.cells.CellIdSource;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.bucket.GeoTileUtils;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceBuilder;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceConfig;
+import org.density.search.aggregations.bucket.composite.CompositeValuesSourceParserHelper;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.aggregations.support.ValuesSourceRegistry;
+import org.density.search.aggregations.support.ValuesSourceType;
+import org.density.search.sort.SortOrder;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -67,13 +67,13 @@ import java.util.function.LongUnaryOperator;
 /**
  * Builds values source for geotile_grid agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoTileGridValuesSourceBuilder extends CompositeValuesSourceBuilder<GeoTileGridValuesSourceBuilder> {
     /**
      * Supplier for a composite geotile
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @FunctionalInterface
     public interface GeoTileCompositeSuppier {

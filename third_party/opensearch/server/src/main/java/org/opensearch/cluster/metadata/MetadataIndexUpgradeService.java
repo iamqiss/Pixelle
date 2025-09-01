@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.metadata;
+package org.density.cluster.metadata;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,20 +37,20 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.Similarity;
-import org.opensearch.Version;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.settings.IndexScopedSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalyzerScope;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.indices.SystemIndices;
-import org.opensearch.indices.mapper.MapperRegistry;
-import org.opensearch.script.ScriptService;
+import org.density.Version;
+import org.density.common.TriFunction;
+import org.density.common.settings.IndexScopedSettings;
+import org.density.common.settings.Settings;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalyzerScope;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.mapper.MapperService;
+import org.density.index.similarity.SimilarityService;
+import org.density.indices.SystemIndices;
+import org.density.indices.mapper.MapperRegistry;
+import org.density.script.ScriptService;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -65,7 +65,7 @@ import java.util.Set;
  * occurs during cluster upgrade, when dangling indices are imported into the cluster or indices
  * are restored from a repository.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MetadataIndexUpgradeService {
 
@@ -122,16 +122,16 @@ public class MetadataIndexUpgradeService {
     }
 
     /**
-     * Checks if the index was already opened by this version of OpenSearch and doesn't require any additional checks.
+     * Checks if the index was already opened by this version of Density and doesn't require any additional checks.
      */
     boolean isUpgraded(IndexMetadata indexMetadata) {
         return indexMetadata.getUpgradedVersion().onOrAfter(Version.CURRENT);
     }
 
     /**
-     * The OpenSearch predecessor, Elasticsearch, v6.0 no longer supports indices created pre v5.0. All indices
+     * The Density predecessor, Elasticsearch, v6.0 no longer supports indices created pre v5.0. All indices
      * that were created before Elasticsearch v5.0 should be re-indexed in Elasticsearch 5.x
-     * before they can be opened by this version of opensearch.
+     * before they can be opened by this version of density.
      */
     private void checkSupportedVersion(IndexMetadata indexMetadata, Version minimumIndexCompatibilityVersion) {
         if (indexMetadata.getState() == IndexMetadata.State.OPEN
@@ -144,7 +144,7 @@ public class MetadataIndexUpgradeService {
                     + "] but the minimum compatible version is ["
 
                     + minimumIndexCompatibilityVersion
-                    + "]. It should be re-indexed in OpenSearch "
+                    + "]. It should be re-indexed in Density "
                     + minimumIndexCompatibilityVersion.major
                     + ".x before upgrading to "
                     + Version.CURRENT
@@ -154,7 +154,7 @@ public class MetadataIndexUpgradeService {
     }
 
     /*
-     * Returns true if this index can be supported by the current version of opensearch
+     * Returns true if this index can be supported by the current version of density
      */
     private static boolean isSupportedVersion(IndexMetadata indexMetadata, Version minimumIndexCompatibilityVersion) {
         return indexMetadata.getCreationVersion().onOrAfter(minimumIndexCompatibilityVersion);

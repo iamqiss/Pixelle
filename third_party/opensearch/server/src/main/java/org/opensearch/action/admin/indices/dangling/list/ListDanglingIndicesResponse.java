@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.dangling.list;
+package org.density.action.admin.indices.dangling.list;
 
-import org.opensearch.action.FailedNodeException;
-import org.opensearch.action.admin.indices.dangling.DanglingIndexInfo;
-import org.opensearch.action.support.nodes.BaseNodesResponse;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.StatusToXContentObject;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.action.FailedNodeException;
+import org.density.action.admin.indices.dangling.DanglingIndexInfo;
+import org.density.action.support.nodes.BaseNodesResponse;
+import org.density.cluster.ClusterName;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.StatusToXContentObject;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ import java.util.Objects;
  * information for each dangling index is presented under the "dangling_indices" key. If any nodes
  * in the cluster failed to answer, the details are presented under the "_nodes.failures" key.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ListDanglingIndicesResponse extends BaseNodesResponse<NodeListDanglingIndicesResponse> implements StatusToXContentObject {
@@ -135,7 +135,7 @@ public class ListDanglingIndicesResponse extends BaseNodesResponse<NodeListDangl
      * <p>
      * NOTE: visible for testing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AggregatedDanglingIndexInfo {
         private final String indexUUID;

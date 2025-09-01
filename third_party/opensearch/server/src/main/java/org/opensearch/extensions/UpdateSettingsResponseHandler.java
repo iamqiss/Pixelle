@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.extensions;
+package org.density.extensions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportResponseHandler;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportException;
+import org.density.transport.TransportResponseHandler;
 
 import java.io.IOException;
 
 /**
  * Response handler for {@link UpdateSettingsRequest}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class UpdateSettingsResponseHandler implements TransportResponseHandler<AcknowledgedResponse> {
     private static final Logger logger = LogManager.getLogger(UpdateSettingsResponseHandler.class);

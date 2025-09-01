@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,38 +26,38 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.get;
+package org.density.action.get;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.IndicesRequest;
-import org.opensearch.action.RealtimeRequest;
-import org.opensearch.action.ValidateActions;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.action.ActionRequest;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.IndicesRequest;
+import org.density.action.RealtimeRequest;
+import org.density.action.ValidateActions;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
+import org.density.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ import java.util.Locale;
 /**
  * Transport request for a multi get.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class MultiGetRequest extends ActionRequest
@@ -93,7 +93,7 @@ public class MultiGetRequest extends ActionRequest
     /**
      * A single get item.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Item implements Writeable, IndicesRequest, ToXContentObject {
@@ -459,10 +459,10 @@ public class MultiGetRequest extends ActionRequest
                                 fetchSourceContext.excludes()
                             );
                         } else {
-                            throw new OpenSearchParseException("illegal type for _source: [{}]", token);
+                            throw new DensityParseException("illegal type for _source: [{}]", token);
                         }
                     } else {
-                        throw new OpenSearchParseException("failed to parse multi get request. unknown field [{}]", currentFieldName);
+                        throw new DensityParseException("failed to parse multi get request. unknown field [{}]", currentFieldName);
                     }
                 } else if (token == Token.START_ARRAY) {
                     if (FIELDS.match(currentFieldName, parser.getDeprecationHandler())) {
@@ -499,7 +499,7 @@ public class MultiGetRequest extends ActionRequest
                                 } else if ("excludes".equals(currentFieldName) || "exclude".equals(currentFieldName)) {
                                     currentList = excludes != null ? excludes : (excludes = new ArrayList<>(2));
                                 } else {
-                                    throw new OpenSearchParseException("source definition may not contain [{}]", parser.text());
+                                    throw new DensityParseException("source definition may not contain [{}]", parser.text());
                                 }
                             } else if (token == Token.START_ARRAY) {
                                 while ((token = parser.nextToken()) != Token.END_ARRAY) {
@@ -508,7 +508,7 @@ public class MultiGetRequest extends ActionRequest
                             } else if (token.isValue()) {
                                 currentList.add(parser.text());
                             } else {
-                                throw new OpenSearchParseException("unexpected token while parsing source settings");
+                                throw new DensityParseException("unexpected token while parsing source settings");
                             }
                         }
 

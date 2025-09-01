@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.io;
+package org.density.common.io;
 
-import org.opensearch.common.SuppressForbidden;
+import org.density.common.SuppressForbidden;
 
 import java.net.URI;
 import java.nio.file.FileSystem;
@@ -47,7 +47,7 @@ import java.nio.file.Paths;
  * This class allows the default filesystem to
  * be changed during tests.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @SuppressForbidden(reason = "accesses the default filesystem by design")
 // TODO: can we move this to the .env package and make it package-private?

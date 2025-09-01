@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Scorable;
 import org.apache.lucene.search.ScoreMode;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.ObjectArray;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptedMetricAggContexts;
-import org.opensearch.script.ScriptedMetricAggContexts.MapScript;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.ObjectArray;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.util.CollectionUtils;
+import org.density.script.Script;
+import org.density.script.ScriptedMetricAggContexts;
+import org.density.script.ScriptedMetricAggContexts.MapScript;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.internal.SearchContext;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ import static java.util.Collections.singletonList;
 /**
  * Aggregate all docs based on a value script
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ScriptedMetricAggregator extends MetricsAggregator {
     /**

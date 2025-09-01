@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.script.Script;
-import org.opensearch.search.sort.ScriptSortBuilder.ScriptSortType;
+import org.density.common.geo.GeoPoint;
+import org.density.script.Script;
+import org.density.search.sort.ScriptSortBuilder.ScriptSortType;
 
 /**
  * A set of static factory methods for {@link SortBuilder}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SortBuilders {
 

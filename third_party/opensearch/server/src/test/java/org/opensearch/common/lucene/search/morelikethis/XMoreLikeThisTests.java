@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search.morelikethis;
+package org.density.common.lucene.search.morelikethis;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -44,14 +44,14 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.analysis.MockAnalyzer;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 
-public class XMoreLikeThisTests extends OpenSearchTestCase {
+public class XMoreLikeThisTests extends DensityTestCase {
     private void addDoc(RandomIndexWriter writer, String[] texts) throws IOException {
         Document doc = new Document();
         for (String text : texts) {

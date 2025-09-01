@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.http.HttpChunk;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.core.rest.RestStatus;
+import org.density.http.HttpChunk;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ import org.reactivestreams.Publisher;
 /**
  * A streaming channel used to prepare response and sending the response in chunks.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 @ExperimentalApi
 public interface StreamingRestChannel extends RestChannel, Publisher<HttpChunk> {

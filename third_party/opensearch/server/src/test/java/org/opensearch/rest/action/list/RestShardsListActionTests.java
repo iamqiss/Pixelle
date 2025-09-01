@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.rest.action.list;
+package org.density.rest.action.list;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.pagination.PaginationStrategy;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.DensityParseException;
+import org.density.action.pagination.PageParams;
+import org.density.action.pagination.PaginationStrategy;
+import org.density.rest.RestRequest;
+import org.density.test.DensityTestCase;
+import org.density.test.rest.FakeRestRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.opensearch.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
-import static org.opensearch.rest.action.list.RestShardsListAction.MAX_SUPPORTED_LIST_SHARDS_PAGE_SIZE;
-import static org.opensearch.rest.action.list.RestShardsListAction.MIN_SUPPORTED_LIST_SHARDS_PAGE_SIZE;
+import static org.density.action.pagination.PageParams.PARAM_ASC_SORT_VALUE;
+import static org.density.rest.action.list.RestShardsListAction.MAX_SUPPORTED_LIST_SHARDS_PAGE_SIZE;
+import static org.density.rest.action.list.RestShardsListAction.MIN_SUPPORTED_LIST_SHARDS_PAGE_SIZE;
 
-public class RestShardsListActionTests extends OpenSearchTestCase {
+public class RestShardsListActionTests extends DensityTestCase {
 
     private final RestShardsListAction action = new RestShardsListAction();
 
@@ -57,7 +57,7 @@ public class RestShardsListActionTests extends OpenSearchTestCase {
         Map<String, String> params = new HashMap<>();
         params.put("next_token", PaginationStrategy.encryptStringToken("1|-1|test"));
         RestRequest restRequest = new FakeRestRequest(params);
-        assertThrows(OpenSearchParseException.class, () -> action.validateAndGetPageParams(restRequest));
+        assertThrows(DensityParseException.class, () -> action.validateAndGetPageParams(restRequest));
     }
 
     public void testValidateAndGetPageParamsWithValidPageParams() {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.hdfs;
+package org.density.repositories.hdfs;
 
 import org.apache.hadoop.security.UserGroupInformation;
-import org.opensearch.SpecialPermission;
-import org.opensearch.env.Environment;
+import org.density.SpecialPermission;
+import org.density.env.Environment;
 
 import javax.security.auth.AuthPermission;
 import javax.security.auth.PrivateCredentialPermission;

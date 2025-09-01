@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.ingest;
+package org.density.action.ingest;
 
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.ingest.CompoundProcessor;
-import org.opensearch.ingest.IngestDocument;
-import org.opensearch.ingest.IngestService;
-import org.opensearch.ingest.Pipeline;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.ActionRunnable;
+import org.density.core.action.ActionListener;
+import org.density.ingest.CompoundProcessor;
+import org.density.ingest.IngestDocument;
+import org.density.ingest.IngestService;
+import org.density.ingest.Pipeline;
+import org.density.threadpool.ThreadPool;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 
-import static org.opensearch.ingest.TrackingResultProcessor.decorate;
+import static org.density.ingest.TrackingResultProcessor.decorate;
 
 /**
  * Service to simulate pipeline execution
  *
- * @opensearch.internal
+ * @density.internal
  */
 class SimulateExecutionService {
 

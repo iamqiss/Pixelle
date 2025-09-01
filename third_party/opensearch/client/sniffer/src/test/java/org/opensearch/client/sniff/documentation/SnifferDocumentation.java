@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.client.sniff.documentation;
+package org.density.client.sniff.documentation;
 
 import org.apache.hc.core5.http.HttpHost;
-import org.opensearch.client.Node;
-import org.opensearch.client.RestClient;
-import org.opensearch.client.sniff.NodesSniffer;
-import org.opensearch.client.sniff.OpenSearchNodesSniffer;
-import org.opensearch.client.sniff.SniffOnFailureListener;
-import org.opensearch.client.sniff.Sniffer;
+import org.density.client.Node;
+import org.density.client.RestClient;
+import org.density.client.sniff.NodesSniffer;
+import org.density.client.sniff.DensityNodesSniffer;
+import org.density.client.sniff.SniffOnFailureListener;
+import org.density.client.sniff.Sniffer;
 
 import java.io.IOException;
 import java.util.List;
@@ -107,10 +107,10 @@ public class SnifferDocumentation {
             RestClient restClient = RestClient.builder(
                     new HttpHost("http", "localhost", 9200))
                     .build();
-            NodesSniffer nodesSniffer = new OpenSearchNodesSniffer(
+            NodesSniffer nodesSniffer = new DensityNodesSniffer(
                     restClient,
-                    OpenSearchNodesSniffer.DEFAULT_SNIFF_REQUEST_TIMEOUT,
-                    OpenSearchNodesSniffer.Scheme.HTTPS);
+                    DensityNodesSniffer.DEFAULT_SNIFF_REQUEST_TIMEOUT,
+                    DensityNodesSniffer.Scheme.HTTPS);
             Sniffer sniffer = Sniffer.builder(restClient)
                     .setNodesSniffer(nodesSniffer).build();
             //end::sniffer-https
@@ -120,10 +120,10 @@ public class SnifferDocumentation {
             RestClient restClient = RestClient.builder(
                 new HttpHost("http", "localhost", 9200))
                 .build();
-            NodesSniffer nodesSniffer = new OpenSearchNodesSniffer(
+            NodesSniffer nodesSniffer = new DensityNodesSniffer(
                 restClient,
                 TimeUnit.SECONDS.toMillis(5),
-                OpenSearchNodesSniffer.Scheme.HTTP);
+                DensityNodesSniffer.Scheme.HTTP);
             Sniffer sniffer = Sniffer.builder(restClient)
                 .setNodesSniffer(nodesSniffer).build();
             //end::sniff-request-timeout

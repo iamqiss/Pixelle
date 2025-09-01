@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.CoordinatesBuilder;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.LineStringBuilder;
-import org.opensearch.common.geo.builders.MultiLineStringBuilder;
-import org.opensearch.common.geo.builders.MultiPointBuilder;
-import org.opensearch.common.geo.builders.MultiPolygonBuilder;
-import org.opensearch.common.geo.builders.PointBuilder;
-import org.opensearch.common.geo.builders.PolygonBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder.Orientation;
-import org.opensearch.common.geo.parsers.CoordinateNode;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.DensityParseException;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.CoordinatesBuilder;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.LineStringBuilder;
+import org.density.common.geo.builders.MultiLineStringBuilder;
+import org.density.common.geo.builders.MultiPointBuilder;
+import org.density.common.geo.builders.MultiPolygonBuilder;
+import org.density.common.geo.builders.PointBuilder;
+import org.density.common.geo.builders.PolygonBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.builders.ShapeBuilder.Orientation;
+import org.density.common.geo.parsers.CoordinateNode;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ import org.locationtech.jts.geom.Coordinate;
 /**
  * Enumeration that lists all {@link GeoShapeType}s that can be parsed and indexed
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum GeoShapeType {
     POINT("point") {
@@ -71,9 +71,9 @@ public enum GeoShapeType {
         @Override
         CoordinateNode validate(CoordinateNode coordinates, boolean coerce) {
             if (coordinates.isEmpty()) {
-                throw new OpenSearchParseException("invalid number of points (0) provided when expecting a single coordinate ([lat, lng])");
+                throw new DensityParseException("invalid number of points (0) provided when expecting a single coordinate ([lat, lng])");
             } else if (coordinates.children != null) {
-                throw new OpenSearchParseException("multipoint data provided when single point data expected.");
+                throw new DensityParseException("multipoint data provided when single point data expected.");
             }
             return coordinates;
         }
@@ -98,12 +98,12 @@ public enum GeoShapeType {
         CoordinateNode validate(CoordinateNode coordinates, boolean coerce) {
             if (coordinates.children == null || coordinates.children.isEmpty()) {
                 if (coordinates.coordinate != null) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "single coordinate found when expecting an array of "
                             + "coordinates. change type to point or change data to an array of >0 coordinates"
                     );
                 }
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "no data provided for multipoint object when expecting " + ">0 points (e.g., [[lat, lng]] or [[lat, lng], ...])"
                 );
             } else {
@@ -134,7 +134,7 @@ public enum GeoShapeType {
         @Override
         CoordinateNode validate(CoordinateNode coordinates, boolean coerce) {
             if (coordinates.children.size() < 2) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid number of points in LineString (found [{}] - must be >= 2)",
                     coordinates.children.size()
                 );
@@ -161,7 +161,7 @@ public enum GeoShapeType {
         @Override
         CoordinateNode validate(CoordinateNode coordinates, boolean coerce) {
             if (coordinates.children.size() < 1) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid number of lines in MultiLineString (found [{}] - must be >= 1)",
                     coordinates.children.size()
                 );
@@ -198,12 +198,12 @@ public enum GeoShapeType {
                 error += (coordinates.coordinate == null)
                     ? " No coordinate array provided"
                     : " Found a single coordinate when expecting a coordinate array";
-                throw new OpenSearchParseException(error);
+                throw new DensityParseException(error);
             }
 
             int numValidPts = coerce ? 3 : 4;
             if (coordinates.children.size() < numValidPts) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid number of points in LinearRing (found [{}] - must be >= [{}])",
                     coordinates.children.size(),
                     numValidPts
@@ -214,7 +214,7 @@ public enum GeoShapeType {
                 if (coerce) {
                     coordinates.children.add(coordinates.children.get(0));
                 } else {
-                    throw new OpenSearchParseException("invalid LinearRing found (coordinates are not closed)");
+                    throw new DensityParseException("invalid LinearRing found (coordinates are not closed)");
                 }
             }
         }
@@ -228,7 +228,7 @@ public enum GeoShapeType {
               represented as a GeoJSON geometry type, it is referred to in the Polygon geometry type definition.
              */
             if (coordinates.children == null || coordinates.children.isEmpty()) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid LinearRing provided for type polygon. Linear ring must be an array of coordinates"
                 );
             }
@@ -280,7 +280,7 @@ public enum GeoShapeType {
         CoordinateNode validate(CoordinateNode coordinates, boolean coerce) {
             // validate the coordinate array for envelope type
             if (coordinates.children.size() != 2) {
-                throw new OpenSearchParseException(
+                throw new DensityParseException(
                     "invalid number of points [{}] provided for geo_shape [{}] when expecting an array of 2 coordinates",
                     coordinates.children.size(),
                     GeoShapeType.ENVELOPE.shapename

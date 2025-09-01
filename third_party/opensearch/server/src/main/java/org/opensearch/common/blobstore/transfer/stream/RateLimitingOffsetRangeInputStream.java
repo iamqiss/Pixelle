@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.blobstore.transfer.stream;
+package org.density.common.blobstore.transfer.stream;
 
 import org.apache.lucene.store.RateLimiter;
-import org.opensearch.common.StreamLimiter;
+import org.density.common.StreamLimiter;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * Rate Limits an {@link OffsetRangeInputStream}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RateLimitingOffsetRangeInputStream extends OffsetRangeInputStream {
 

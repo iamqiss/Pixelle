@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.shards;
+package org.density.action.admin.indices.shards;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.DensityException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.annotation.PublicApi;
+import org.density.core.action.ActionResponse;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -54,7 +54,7 @@ import java.util.Map;
  * Consists of {@link StoreStatus}s for requested indices grouped by
  * indices and shard ids and a list of encountered node {@link Failure}s
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndicesShardStoresResponse extends ActionResponse implements ToXContentFragment {
@@ -62,7 +62,7 @@ public class IndicesShardStoresResponse extends ActionResponse implements ToXCon
     /**
      * Shard store information from a node
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class StoreStatus implements Writeable, ToXContentFragment, Comparable<StoreStatus> {
@@ -74,7 +74,7 @@ public class IndicesShardStoresResponse extends ActionResponse implements ToXCon
         /**
          * The status of the shard store with respect to the cluster
          *
-         * @opensearch.api
+         * @density.api
          */
         @PublicApi(since = "1.0.0")
         public enum AllocationStatus {
@@ -206,7 +206,7 @@ public class IndicesShardStoresResponse extends ActionResponse implements ToXCon
             builder.field(Fields.ALLOCATED, allocationStatus.value());
             if (storeException != null) {
                 builder.startObject(Fields.STORE_EXCEPTION);
-                OpenSearchException.generateThrowableXContent(builder, params, storeException);
+                DensityException.generateThrowableXContent(builder, params, storeException);
                 builder.endObject();
             }
             return builder;
@@ -238,7 +238,7 @@ public class IndicesShardStoresResponse extends ActionResponse implements ToXCon
     /**
      * Single node failure while retrieving shard store information
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Failure extends DefaultShardOperationFailedException {
@@ -361,7 +361,7 @@ public class IndicesShardStoresResponse extends ActionResponse implements ToXCon
     /**
      * Fields for parsing and toXContent
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String INDICES = "indices";

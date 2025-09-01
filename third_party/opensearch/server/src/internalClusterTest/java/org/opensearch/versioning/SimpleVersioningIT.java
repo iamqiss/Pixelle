@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.versioning;
+package org.density.versioning;
 
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.DocWriteResponse;
-import org.opensearch.action.bulk.BulkResponse;
-import org.opensearch.action.delete.DeleteResponse;
-import org.opensearch.action.get.GetResponse;
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.engine.VersionConflictEngineException;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.DocWriteRequest;
+import org.density.action.DocWriteResponse;
+import org.density.action.bulk.BulkResponse;
+import org.density.action.delete.DeleteResponse;
+import org.density.action.get.GetResponse;
+import org.density.action.index.IndexResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionResponse;
+import org.density.index.VersionType;
+import org.density.index.engine.VersionConflictEngineException;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,15 +56,15 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFutureThrows;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertRequestBuilderThrows;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFutureThrows;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertRequestBuilderThrows;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-public class SimpleVersioningIT extends OpenSearchIntegTestCase {
+public class SimpleVersioningIT extends DensityIntegTestCase {
     public void testExternalVersioningInitialDelete() throws Exception {
         createIndex("test");
         ensureGreen();

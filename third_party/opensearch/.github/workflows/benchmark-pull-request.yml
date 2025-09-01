@@ -5,7 +5,7 @@ on:
 jobs:
   run-performance-benchmark-on-pull-request:
     if: |
-      github.repository == 'opensearch-project/OpenSearch' &&
+      github.repository == 'density-project/Density' &&
       github.event.issue.pull_request &&
       contains(github.event.comment.body, '"run-benchmark-test"')
     runs-on: ubuntu-latest
@@ -21,11 +21,11 @@ jobs:
         run: |
           echo "PR_NUMBER=${{ github.event.issue.number }}" >> $GITHUB_ENV
           echo "REPOSITORY=${{ github.event.repository.full_name }}" >> $GITHUB_ENV
-          OPENSEARCH_VERSION=$(awk -F '=' '/^opensearch[[:space:]]*=/ {gsub(/[[:space:]]/, "", $2); print $2}' buildSrc/version.properties)
-          echo "OPENSEARCH_VERSION=$OPENSEARCH_VERSION" >> $GITHUB_ENV
-          major_version=$(echo $OPENSEARCH_VERSION | cut -d'.' -f1)
-          echo "OPENSEARCH_MAJOR_VERSION=$major_version" >> $GITHUB_ENV
-          echo "USER_TAGS=pull_request_number:${{ github.event.issue.number }},repository:OpenSearch" >> $GITHUB_ENV
+          DENSITY_VERSION=$(awk -F '=' '/^density[[:space:]]*=/ {gsub(/[[:space:]]/, "", $2); print $2}' buildSrc/version.properties)
+          echo "DENSITY_VERSION=$DENSITY_VERSION" >> $GITHUB_ENV
+          major_version=$(echo $DENSITY_VERSION | cut -d'.' -f1)
+          echo "DENSITY_MAJOR_VERSION=$major_version" >> $GITHUB_ENV
+          echo "USER_TAGS=pull_request_number:${{ github.event.issue.number }},repository:Density" >> $GITHUB_ENV
       - name: Check comment format
         id: check_comment
         uses: actions/github-script@v7
@@ -52,7 +52,7 @@ jobs:
               core.setFailed('Failed to read benchmark-configs.json');
               return;
             }
-            const openSearchMajorVersion = process.env.OPENSEARCH_MAJOR_VERSION;
+            const openSearchMajorVersion = process.env.DENSITY_MAJOR_VERSION;
             console.log('MAJOR_VERSION', openSearchMajorVersion)
             if (!benchmarkConfigs.hasOwnProperty(configId) ||
               !benchmarkConfigs[configId].supported_major_versions.includes(openSearchMajorVersion)) {
@@ -76,7 +76,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Invalid comment format or config id. Please refer to https://github.com/opensearch-project/OpenSearch/blob/main/PERFORMANCE_BENCHMARKS.md on how to run benchmarks on pull requests.'
+              body: 'Invalid comment format or config id. Please refer to https://github.com/density-project/Density/blob/main/PERFORMANCE_BENCHMARKS.md on how to run benchmarks on pull requests.'
             })
       - name: Fail workflow for invalid comment
         if: steps.check_comment.outputs.invalid == 'true'
@@ -145,7 +145,7 @@ jobs:
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: Build and Assemble OpenSearch from PR
+      - name: Build and Assemble Density from PR
         run: |
           ./gradlew :distribution:archives:linux-tar:assemble -Dbuild.snapshot=false
       - name: Configure AWS credentials
@@ -156,18 +156,18 @@ jobs:
           aws-region: us-west-2
       - name: Push to S3
         run: |
-          aws s3 cp distribution/archives/linux-tar/build/distributions/opensearch-min-$OPENSEARCH_VERSION-linux-x64.tar.gz s3://${{ secrets.ARCHIVE_ARTIFACT_BUCKET_NAME }}/PR-$PR_NUMBER/
-          echo "DISTRIBUTION_URL=${{ secrets.ARTIFACT_BUCKET_CLOUDFRONT_URL }}/PR-$PR_NUMBER/opensearch-min-$OPENSEARCH_VERSION-linux-x64.tar.gz" >> $GITHUB_ENV
-      - name: Checkout opensearch-build repo
+          aws s3 cp distribution/archives/linux-tar/build/distributions/density-min-$DENSITY_VERSION-linux-x64.tar.gz s3://${{ secrets.ARCHIVE_ARTIFACT_BUCKET_NAME }}/PR-$PR_NUMBER/
+          echo "DISTRIBUTION_URL=${{ secrets.ARTIFACT_BUCKET_CLOUDFRONT_URL }}/PR-$PR_NUMBER/density-min-$DENSITY_VERSION-linux-x64.tar.gz" >> $GITHUB_ENV
+      - name: Checkout density-build repo
         uses: actions/checkout@v5
         with:
-          repository: opensearch-project/opensearch-build
+          repository: density-project/density-build
           ref: main
-          path: opensearch-build
+          path: density-build
       - name: Trigger jenkins workflow to run gradle check
         run: |
           cat $GITHUB_ENV
-          bash opensearch-build/scripts/benchmark/benchmark-pull-request.sh -t ${{ secrets.JENKINS_PR_BENCHMARK_GENERIC_WEBHOOK_TOKEN }} -u ${{ secrets.JENKINS_GITHUB_USER}} -p ${{ secrets.JENKINS_GITHUB_USER_TOKEN}}
+          bash density-build/scripts/benchmark/benchmark-pull-request.sh -t ${{ secrets.JENKINS_PR_BENCHMARK_GENERIC_WEBHOOK_TOKEN }} -u ${{ secrets.JENKINS_GITHUB_USER}} -p ${{ secrets.JENKINS_GITHUB_USER_TOKEN}}
       - name: Update PR with Job Url
         uses: actions/github-script@v7
         with:

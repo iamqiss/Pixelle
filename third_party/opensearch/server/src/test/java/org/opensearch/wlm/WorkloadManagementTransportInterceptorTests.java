@@ -1,31 +1,31 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.wlm;
+package org.density.wlm;
 
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestHandler;
-import org.opensearch.wlm.WorkloadManagementTransportInterceptor.RequestHandler;
-import org.opensearch.wlm.cancellation.WorkloadGroupTaskCancellationService;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.service.ClusterService;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestHandler;
+import org.density.wlm.WorkloadManagementTransportInterceptor.RequestHandler;
+import org.density.wlm.cancellation.WorkloadGroupTaskCancellationService;
 
 import java.util.Collections;
 
-import static org.opensearch.threadpool.ThreadPool.Names.SAME;
+import static org.density.threadpool.ThreadPool.Names.SAME;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class WorkloadManagementTransportInterceptorTests extends OpenSearchTestCase {
+public class WorkloadManagementTransportInterceptorTests extends DensityTestCase {
     private WorkloadGroupTaskCancellationService mockTaskCancellationService;
     private ClusterService mockClusterService;
     private ThreadPool mockThreadPool;

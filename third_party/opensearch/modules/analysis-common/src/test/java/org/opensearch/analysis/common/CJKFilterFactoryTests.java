@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.lucene.analysis.miscellaneous.DisableGraphAttribute;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.lucene.analysis.miscellaneous.DisableGraphAttribute;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class CJKFilterFactoryTests extends OpenSearchTokenStreamTestCase {
-    private static final String RESOURCE = "/org/opensearch/analysis/common/cjk_analysis.json";
+public class CJKFilterFactoryTests extends DensityTokenStreamTestCase {
+    private static final String RESOURCE = "/org/density/analysis/common/cjk_analysis.json";
 
-    private OpenSearchTestCase.TestAnalysis analysis;
+    private DensityTestCase.TestAnalysis analysis;
 
     @Before
     public void setup() throws IOException {

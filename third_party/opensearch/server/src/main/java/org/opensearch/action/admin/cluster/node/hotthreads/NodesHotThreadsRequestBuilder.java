@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.node.hotthreads;
+package org.density.action.admin.cluster.node.hotthreads;
 
-import org.opensearch.action.support.nodes.NodesOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.nodes.NodesOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.transport.client.DensityClient;
 
 /**
- * Builder class for requesting OpenSearch Hot Threads
+ * Builder class for requesting Density Hot Threads
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class NodesHotThreadsRequestBuilder extends NodesOperationRequestBuilder<
@@ -48,7 +48,7 @@ public class NodesHotThreadsRequestBuilder extends NodesOperationRequestBuilder<
     NodesHotThreadsResponse,
     NodesHotThreadsRequestBuilder> {
 
-    public NodesHotThreadsRequestBuilder(OpenSearchClient client, NodesHotThreadsAction action) {
+    public NodesHotThreadsRequestBuilder(DensityClient client, NodesHotThreadsAction action) {
         super(client, action, new NodesHotThreadsRequest());
     }
 

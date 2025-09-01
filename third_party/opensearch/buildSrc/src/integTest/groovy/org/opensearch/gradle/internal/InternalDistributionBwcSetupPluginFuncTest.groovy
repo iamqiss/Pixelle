@@ -1,10 +1,10 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -27,10 +27,10 @@
  * under the License.
  */
 
-package org.opensearch.gradle.internal
+package org.density.gradle.internal
 
 import org.apache.commons.io.FileUtils
-import org.opensearch.gradle.fixtures.AbstractGradleFuncTest
+import org.density.gradle.fixtures.AbstractGradleFuncTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -49,7 +49,7 @@ class InternalDistributionBwcSetupPluginFuncTest extends AbstractGradleFuncTest 
         File buildScript = new File(testProjectDir.root, 'remote/build.gradle')
         internalBuild(buildScript)
         buildScript << """
-            apply plugin: 'opensearch.internal-distribution-bwc-setup'
+            apply plugin: 'density.internal-distribution-bwc-setup'
         """
     }
 
@@ -102,7 +102,7 @@ class InternalDistributionBwcSetupPluginFuncTest extends AbstractGradleFuncTest 
         result.output.contains("[8.0.1] > Task :distribution:archives:darwin-tar:assemble")
         normalizedOutput(result.output)
                 .contains("distfile /distribution/bwc/bugfix/build/bwc/checkout-8.0/distribution/archives/darwin-tar/" +
-                        "build/distributions/opensearch-8.0.1-SNAPSHOT-darwin-x64.tar.gz")
+                        "build/distributions/density-8.0.1-SNAPSHOT-darwin-x64.tar.gz")
     }
 
     def "bwc expanded distribution folder can be resolved as bwc project artifact"() {
@@ -150,7 +150,7 @@ class InternalDistributionBwcSetupPluginFuncTest extends AbstractGradleFuncTest 
         fakeRemote.file + "/.git"
         gradleRunner(workingRemoteGit, "wrapper").build()
         execute("git init", workingRemoteGit)
-        execute('git config user.email "build-tool@opensearch.org"', workingRemoteGit)
+        execute('git config user.email "build-tool@density.org"', workingRemoteGit)
         execute('git config user.name "Build tool"', workingRemoteGit)
         execute("git add .", workingRemoteGit)
         execute('git commit -m"Initial"', workingRemoteGit)

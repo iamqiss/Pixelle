@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.CallStatus;
 import org.apache.arrow.flight.FlightRuntimeException;
@@ -14,15 +14,15 @@ import org.apache.arrow.flight.FlightServerMiddleware;
 import org.apache.arrow.flight.NoOpFlightProducer;
 import org.apache.arrow.flight.Ticket;
 import org.apache.arrow.memory.BufferAllocator;
-import org.opensearch.arrow.flight.bootstrap.ServerConfig;
-import org.opensearch.arrow.flight.stats.FlightCallTracker;
-import org.opensearch.arrow.flight.stats.FlightStatsCollector;
-import org.opensearch.common.bytes.ReleasableBytesReference;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.InboundPipeline;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.stream.StreamException;
+import org.density.arrow.flight.bootstrap.ServerConfig;
+import org.density.arrow.flight.stats.FlightCallTracker;
+import org.density.arrow.flight.stats.FlightStatsCollector;
+import org.density.common.bytes.ReleasableBytesReference;
+import org.density.core.common.bytes.BytesArray;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.InboundPipeline;
+import org.density.transport.Transport;
+import org.density.transport.stream.StreamException;
 
 import java.util.concurrent.ExecutorService;
 

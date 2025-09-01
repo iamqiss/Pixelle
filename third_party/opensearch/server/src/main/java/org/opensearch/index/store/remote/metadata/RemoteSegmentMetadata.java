@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.metadata;
+package org.density.index.store.remote.metadata;
 
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.indices.replication.checkpoint.ReplicationCheckpoint;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.StoreFileMetadata;
+import org.density.indices.replication.checkpoint.ReplicationCheckpoint;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * Metadata object for Remote Segment
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.6.0")
 public class RemoteSegmentMetadata {

@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.decommission;
+package org.density.cluster.decommission;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.unit.TimeValue;
+import org.density.test.DensityTestCase;
 import org.junit.BeforeClass;
 
 import java.util.Set;
@@ -25,13 +25,13 @@ import java.util.Set;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
-import static org.opensearch.cluster.decommission.DecommissionHelper.addVotingConfigExclusionsForNodesToBeDecommissioned;
-import static org.opensearch.cluster.decommission.DecommissionHelper.deleteDecommissionAttributeInClusterState;
-import static org.opensearch.cluster.decommission.DecommissionHelper.filterNodesWithDecommissionAttribute;
-import static org.opensearch.cluster.decommission.DecommissionHelper.nodeCommissioned;
-import static org.opensearch.cluster.decommission.DecommissionHelper.registerDecommissionAttributeInClusterState;
+import static org.density.cluster.decommission.DecommissionHelper.addVotingConfigExclusionsForNodesToBeDecommissioned;
+import static org.density.cluster.decommission.DecommissionHelper.deleteDecommissionAttributeInClusterState;
+import static org.density.cluster.decommission.DecommissionHelper.filterNodesWithDecommissionAttribute;
+import static org.density.cluster.decommission.DecommissionHelper.nodeCommissioned;
+import static org.density.cluster.decommission.DecommissionHelper.registerDecommissionAttributeInClusterState;
 
-public class DecommissionHelperTests extends OpenSearchTestCase {
+public class DecommissionHelperTests extends DensityTestCase {
 
     private static DiscoveryNode node1, node2, node3, dataNode;
     private static ClusterState initialClusterState;

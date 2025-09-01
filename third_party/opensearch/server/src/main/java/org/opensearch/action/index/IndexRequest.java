@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,54 +26,54 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.index;
+package org.density.action.index;
 
 import org.apache.lucene.util.RamUsageEstimator;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.CompositeIndicesRequest;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.RoutingMissingException;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.replication.ReplicatedWriteRequest;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.cluster.metadata.MappingMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.uid.Versions;
-import org.opensearch.common.util.RequestUtils;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.Requests;
+import org.density.LegacyESVersion;
+import org.density.DensityGenerationException;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.CompositeIndicesRequest;
+import org.density.action.DocWriteRequest;
+import org.density.action.RoutingMissingException;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.replication.ReplicatedWriteRequest;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.cluster.metadata.MappingMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.uid.Versions;
+import org.density.common.util.RequestUtils;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.index.mapper.MapperService;
+import org.density.transport.client.Client;
+import org.density.transport.client.Requests;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Index request to index a typed JSON document into a specific index and make it searchable. Best
@@ -92,7 +92,7 @@ import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
  * @see Requests#indexRequest(String)
  * @see Client#index(IndexRequest)
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implements DocWriteRequest<IndexRequest>, CompositeIndicesRequest {
@@ -389,7 +389,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
      *
      * @param source The map to index
      */
-    public IndexRequest source(Map<String, ?> source) throws OpenSearchGenerationException {
+    public IndexRequest source(Map<String, ?> source) throws DensityGenerationException {
         return source(source, Requests.INDEX_CONTENT_TYPE);
     }
 
@@ -398,13 +398,13 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
      *
      * @param source The map to index
      */
-    public IndexRequest source(Map<String, ?> source, MediaType contentType) throws OpenSearchGenerationException {
+    public IndexRequest source(Map<String, ?> source, MediaType contentType) throws DensityGenerationException {
         try {
             XContentBuilder builder = MediaTypeRegistry.contentBuilder(contentType);
             builder.map(source);
             return source(builder);
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -464,7 +464,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
             builder.endObject();
             return source(builder);
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate", e);
+            throw new DensityGenerationException("Failed to generate", e);
         }
     }
 
@@ -577,7 +577,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
      * sequence number. Must be used in combination with {@link #setIfPrimaryTerm(long)}
      *
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public IndexRequest setIfSeqNo(long seqNo) {
         if (seqNo < 0 && seqNo != UNASSIGNED_SEQ_NO) {
@@ -592,7 +592,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
      * primary term. Must be used in combination with {@link #setIfSeqNo(long)}
      *
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public IndexRequest setIfPrimaryTerm(long term) {
         if (term < 0) {
@@ -605,7 +605,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
     /**
      * If set, only perform this indexing request if the document was last modification was assigned this sequence number.
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public long ifSeqNo() {
         return ifSeqNo;
@@ -615,7 +615,7 @@ public class IndexRequest extends ReplicatedWriteRequest<IndexRequest> implement
      * If set, only perform this indexing request if the document was last modification was assigned this primary term.
      * <p>
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public long ifPrimaryTerm() {
         return ifPrimaryTerm;

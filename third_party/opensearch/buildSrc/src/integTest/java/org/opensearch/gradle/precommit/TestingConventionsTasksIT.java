@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,13 +25,13 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.test.GradleIntegrationTestCase;
+import org.density.gradle.test.GradleIntegrationTestCase;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.Before;
@@ -52,11 +52,11 @@ public class TestingConventionsTasksIT extends GradleIntegrationTestCase {
         assertOutputContains(
             result.getOutput(),
             "Test classes implemented by inner classes will not run:",
-            "  * org.opensearch.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention1",
-            "  * org.opensearch.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention2",
-            "  * org.opensearch.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention3",
-            "  * org.opensearch.gradle.testkit.NastyInnerClasses$NamingConventionIT",
-            "  * org.opensearch.gradle.testkit.NastyInnerClasses$NamingConventionTests"
+            "  * org.density.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention1",
+            "  * org.density.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention2",
+            "  * org.density.gradle.testkit.NastyInnerClasses$LooksLikeATestWithoutNamingConvention3",
+            "  * org.density.gradle.testkit.NastyInnerClasses$NamingConventionIT",
+            "  * org.density.gradle.testkit.NastyInnerClasses$NamingConventionTests"
         );
     }
 
@@ -71,9 +71,9 @@ public class TestingConventionsTasksIT extends GradleIntegrationTestCase {
         assertOutputContains(
             result.getOutput(),
             "Seem like test classes but don't match naming convention:",
-            "  * org.opensearch.gradle.testkit.LooksLikeATestWithoutNamingConvention1",
-            "  * org.opensearch.gradle.testkit.LooksLikeATestWithoutNamingConvention2",
-            "  * org.opensearch.gradle.testkit.LooksLikeATestWithoutNamingConvention3"
+            "  * org.density.gradle.testkit.LooksLikeATestWithoutNamingConvention1",
+            "  * org.density.gradle.testkit.LooksLikeATestWithoutNamingConvention2",
+            "  * org.density.gradle.testkit.LooksLikeATestWithoutNamingConvention3"
         );
         assertOutputDoesNotContain(result.getOutput(), "LooksLikeTestsButAbstract");
     }
@@ -104,7 +104,7 @@ public class TestingConventionsTasksIT extends GradleIntegrationTestCase {
         assertOutputContains(
             result.getOutput(),
             "Test classes are not included in any enabled task (:all_classes_in_tasks:test):",
-            "  * org.opensearch.gradle.testkit.NamingConventionIT"
+            "  * org.density.gradle.testkit.NamingConventionIT"
         );
     }
 
@@ -118,12 +118,12 @@ public class TestingConventionsTasksIT extends GradleIntegrationTestCase {
         BuildResult result = runner.buildAndFail();
         assertOutputContains(
             result.getOutput(),
-            "Tests classes with suffix `IT` should extend org.opensearch.gradle.testkit.Integration but the following classes do not:",
-            "  * org.opensearch.gradle.testkit.NamingConventionIT",
-            "  * org.opensearch.gradle.testkit.NamingConventionMissmatchIT",
-            "Tests classes with suffix `Tests` should extend org.opensearch.gradle.testkit.Unit but the following classes do not:",
-            "  * org.opensearch.gradle.testkit.NamingConventionMissmatchTests",
-            "  * org.opensearch.gradle.testkit.NamingConventionTests"
+            "Tests classes with suffix `IT` should extend org.density.gradle.testkit.Integration but the following classes do not:",
+            "  * org.density.gradle.testkit.NamingConventionIT",
+            "  * org.density.gradle.testkit.NamingConventionMissmatchIT",
+            "Tests classes with suffix `Tests` should extend org.density.gradle.testkit.Unit but the following classes do not:",
+            "  * org.density.gradle.testkit.NamingConventionMissmatchTests",
+            "  * org.density.gradle.testkit.NamingConventionTests"
         );
     }
 

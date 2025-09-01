@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.ScoreDoc;
@@ -37,29 +37,29 @@ import org.apache.lucene.search.TermStatistics;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.tests.store.MockDirectoryWrapper;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.common.util.concurrent.OpenSearchExecutors;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.NoopCircuitBreaker;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.query.QuerySearchRequest;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.test.InternalAggregationTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Transport;
+import org.density.action.OriginalIndices;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.common.util.concurrent.DensityExecutors;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.NoopCircuitBreaker;
+import org.density.core.index.shard.ShardId;
+import org.density.search.DocValueFormat;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.query.QuerySearchRequest;
+import org.density.search.query.QuerySearchResult;
+import org.density.test.InternalAggregationTestCase;
+import org.density.test.DensityTestCase;
+import org.density.transport.Transport;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DfsQueryPhaseTests extends OpenSearchTestCase {
+public class DfsQueryPhaseTests extends DensityTestCase {
 
     private static DfsSearchResult newSearchResult(int shardIndex, ShardSearchContextId contextId, SearchShardTarget target) {
         DfsSearchResult result = new DfsSearchResult(contextId, target, null);
@@ -136,7 +136,7 @@ public class DfsQueryPhaseTests extends OpenSearchTestCase {
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(2);
         mockSearchPhaseContext.searchTransport = searchTransportService;
         QueryPhaseResultConsumer consumer = searchPhaseController.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.searchRequest,
@@ -221,7 +221,7 @@ public class DfsQueryPhaseTests extends OpenSearchTestCase {
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(2);
         mockSearchPhaseContext.searchTransport = searchTransportService;
         QueryPhaseResultConsumer consumer = searchPhaseController.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.searchRequest,
@@ -308,7 +308,7 @@ public class DfsQueryPhaseTests extends OpenSearchTestCase {
         MockSearchPhaseContext mockSearchPhaseContext = new MockSearchPhaseContext(2);
         mockSearchPhaseContext.searchTransport = searchTransportService;
         QueryPhaseResultConsumer consumer = searchPhaseController.newSearchPhaseResults(
-            OpenSearchExecutors.newDirectExecutorService(),
+            DensityExecutors.newDirectExecutorService(),
             new NoopCircuitBreaker(CircuitBreaker.REQUEST),
             SearchProgressListener.NOOP,
             mockSearchPhaseContext.searchRequest,

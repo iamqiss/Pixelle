@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing.channels;
+package org.density.telemetry.tracing.channels;
 
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpResponse;
-import org.opensearch.telemetry.tracing.Span;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.telemetry.tracing.listener.TraceableActionListener;
+import org.density.core.action.ActionListener;
+import org.density.http.HttpChannel;
+import org.density.http.HttpResponse;
+import org.density.telemetry.tracing.Span;
+import org.density.telemetry.tracing.Tracer;
+import org.density.telemetry.tracing.listener.TraceableActionListener;
 
 import java.net.InetSocketAddress;
 import java.util.Objects;

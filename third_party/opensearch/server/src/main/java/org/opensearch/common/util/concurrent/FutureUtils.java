@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.util.concurrent;
+package org.density.common.util.concurrent;
 
-import org.opensearch.OpenSearchTimeoutException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SuppressForbidden;
+import org.density.DensityTimeoutException;
+import org.density.common.Nullable;
+import org.density.common.SuppressForbidden;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -44,7 +44,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * Future utilities.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FutureUtils {
 
@@ -93,7 +93,7 @@ public class FutureUtils {
         try {
             return future.get(timeout, unit);
         } catch (TimeoutException e) {
-            throw new OpenSearchTimeoutException(e);
+            throw new DensityTimeoutException(e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Future got interrupted", e);

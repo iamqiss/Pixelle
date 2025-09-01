@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.search.profile.AbstractProfileBreakdown;
-import org.opensearch.search.profile.AbstractProfiler;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
+import org.density.common.annotation.PublicApi;
+import org.density.search.profile.AbstractProfileBreakdown;
+import org.density.search.profile.AbstractProfiler;
+import org.density.search.profile.ContextualProfileBreakdown;
 
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +52,7 @@ import java.util.Objects;
  * request may execute two searches (query + global agg).  A Profiler just
  * represents one of those
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class QueryProfiler extends AbstractProfiler<ContextualProfileBreakdown, Query> {

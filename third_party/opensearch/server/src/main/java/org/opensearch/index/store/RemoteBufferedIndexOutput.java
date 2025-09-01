@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.lucene.store.DataInput;
 import org.apache.lucene.store.OutputStreamIndexOutput;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.io.stream.BytesStreamOutput;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.io.stream.BytesStreamOutput;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import java.io.InputStream;
  * TODO: extend the class to continously write to the store if content size in buffer gets higher than a specific size.
  * @see RemoteBufferedOutputDirectory
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteBufferedIndexOutput extends RemoteIndexOutput {
     private final BytesStreamOutput out;

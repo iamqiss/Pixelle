@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,40 +25,40 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.histogram;
+package org.density.search.aggregations.bucket.histogram;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.util.CollectionUtil;
-import org.opensearch.common.Rounding;
-import org.opensearch.common.Rounding.Prepared;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.IntArray;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.core.common.util.ByteArray;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.Aggregator;
-import org.opensearch.search.aggregations.AggregatorFactories;
-import org.opensearch.search.aggregations.BucketOrder;
-import org.opensearch.search.aggregations.CardinalityUpperBound;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.LeafBucketCollectorBase;
-import org.opensearch.search.aggregations.bucket.DeferableBucketAggregator;
-import org.opensearch.search.aggregations.bucket.DeferringBucketCollector;
-import org.opensearch.search.aggregations.bucket.MergingBucketsDeferringCollector;
-import org.opensearch.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge;
-import org.opensearch.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
-import org.opensearch.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder.RoundingInfo;
-import org.opensearch.search.aggregations.bucket.terms.LongKeyedBucketOrds;
-import org.opensearch.search.aggregations.support.ValuesSource;
-import org.opensearch.search.aggregations.support.ValuesSourceConfig;
-import org.opensearch.search.internal.SearchContext;
+import org.density.common.Rounding;
+import org.density.common.Rounding.Prepared;
+import org.density.common.lease.Releasables;
+import org.density.common.util.IntArray;
+import org.density.common.util.LongArray;
+import org.density.core.common.util.ByteArray;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.Aggregator;
+import org.density.search.aggregations.AggregatorFactories;
+import org.density.search.aggregations.BucketOrder;
+import org.density.search.aggregations.CardinalityUpperBound;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.LeafBucketCollectorBase;
+import org.density.search.aggregations.bucket.DeferableBucketAggregator;
+import org.density.search.aggregations.bucket.DeferringBucketCollector;
+import org.density.search.aggregations.bucket.MergingBucketsDeferringCollector;
+import org.density.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge;
+import org.density.search.aggregations.bucket.filterrewrite.FilterRewriteOptimizationContext;
+import org.density.search.aggregations.bucket.histogram.AutoDateHistogramAggregationBuilder.RoundingInfo;
+import org.density.search.aggregations.bucket.terms.LongKeyedBucketOrds;
+import org.density.search.aggregations.support.ValuesSource;
+import org.density.search.aggregations.support.ValuesSourceConfig;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -67,7 +67,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.LongToIntFunction;
 
-import static org.opensearch.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge.segmentMatchAll;
+import static org.density.search.aggregations.bucket.filterrewrite.DateHistogramAggregatorBridge.segmentMatchAll;
 
 /**
  * An aggregator for date values that attempts to return a specific number of
@@ -81,7 +81,7 @@ import static org.opensearch.search.aggregations.bucket.filterrewrite.DateHistog
  * when you can use it. This is an important aggregation and we need that
  * performance.
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AutoDateHistogramAggregator extends DeferableBucketAggregator {
     static AutoDateHistogramAggregator build(
@@ -342,7 +342,7 @@ abstract class AutoDateHistogramAggregator extends DeferableBucketAggregator {
      * the "shape" of the roundings is <strong>roughly</strong>
      * logarithmically increasing.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FromSingle extends AutoDateHistogramAggregator {
         /**
@@ -536,7 +536,7 @@ abstract class AutoDateHistogramAggregator extends DeferableBucketAggregator {
      * collect and picking the rounding based on a real, accurate count and the
      * min and max.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FromMany extends AutoDateHistogramAggregator {
         /**

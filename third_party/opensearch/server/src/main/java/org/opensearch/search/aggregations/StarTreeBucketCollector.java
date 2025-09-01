@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.aggregations;
+package org.density.search.aggregations;
 
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.index.compositeindex.datacube.startree.index.StarTreeValues;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.index.compositeindex.datacube.startree.index.StarTreeValues;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
  * Collector for star tree aggregation
  * This abstract class exposes utilities to help avoid traversing star-tree multiple times and
  * collect relevant metrics across nested aggregations in a single traversal
- * @opensearch.internal
+ * @density.internal
  */
 @ExperimentalApi
 public abstract class StarTreeBucketCollector {

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
 /**
- * A definition for an http header that should be copied to the {@link org.opensearch.common.util.concurrent.ThreadContext} when
+ * A definition for an http header that should be copied to the {@link org.density.common.util.concurrent.ThreadContext} when
  * reading the request on the rest layer.
  *
- * @opensearch.api
+ * @density.api
  */
 public final class RestHeaderDefinition {
     private final String name;

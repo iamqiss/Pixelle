@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.tools.cli.keystore;
+package org.density.tools.cli.keystore;
 
 import org.apache.lucene.backward_codecs.store.EndiannessReverserUtil;
 import org.apache.lucene.codecs.CodecUtil;
@@ -38,12 +38,12 @@ import org.apache.lucene.store.DataOutput;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.NIOFSDirectory;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.settings.KeyStoreWrapper;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.env.Environment;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Randomness;
+import org.density.common.settings.KeyStoreWrapper;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.settings.SecureString;
+import org.density.env.Environment;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -86,7 +86,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class KeyStoreWrapperTests extends OpenSearchTestCase {
+public class KeyStoreWrapperTests extends DensityTestCase {
 
     Environment env;
     List<FileSystem> fileSystems = new ArrayList<>();
@@ -196,8 +196,8 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
     public void testFailWhenCannotConsumeSecretStream() throws Exception {
         Path configDir = env.configDir();
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
-        try (IndexOutput indexOutput = directory.createOutput("opensearch.keystore", IOContext.DEFAULT)) {
-            CodecUtil.writeHeader(indexOutput, "opensearch.keystore", 3);
+        try (IndexOutput indexOutput = directory.createOutput("density.keystore", IOContext.DEFAULT)) {
+            CodecUtil.writeHeader(indexOutput, "density.keystore", 3);
             indexOutput.writeByte((byte) 0); // No password
             SecureRandom random = Randomness.createSecure();
             byte[] salt = new byte[64];
@@ -224,8 +224,8 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
     public void testFailWhenCannotConsumeEncryptedBytesStream() throws Exception {
         Path configDir = env.configDir();
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
-        try (IndexOutput indexOutput = directory.createOutput("opensearch.keystore", IOContext.DEFAULT)) {
-            CodecUtil.writeHeader(indexOutput, "opensearch.keystore", 3);
+        try (IndexOutput indexOutput = directory.createOutput("density.keystore", IOContext.DEFAULT)) {
+            CodecUtil.writeHeader(indexOutput, "density.keystore", 3);
             indexOutput.writeByte((byte) 0); // No password
             SecureRandom random = Randomness.createSecure();
             byte[] salt = new byte[64];
@@ -253,8 +253,8 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
     public void testFailWhenSecretStreamNotConsumed() throws Exception {
         Path configDir = env.configDir();
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
-        try (IndexOutput indexOutput = directory.createOutput("opensearch.keystore", IOContext.DEFAULT)) {
-            CodecUtil.writeHeader(indexOutput, "opensearch.keystore", 3);
+        try (IndexOutput indexOutput = directory.createOutput("density.keystore", IOContext.DEFAULT)) {
+            CodecUtil.writeHeader(indexOutput, "density.keystore", 3);
             indexOutput.writeByte((byte) 0); // No password
             SecureRandom random = Randomness.createSecure();
             byte[] salt = new byte[64];
@@ -280,8 +280,8 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
     public void testFailWhenEncryptedBytesStreamIsNotConsumed() throws Exception {
         Path configDir = env.configDir();
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
-        try (IndexOutput indexOutput = directory.createOutput("opensearch.keystore", IOContext.DEFAULT)) {
-            CodecUtil.writeHeader(indexOutput, "opensearch.keystore", 3);
+        try (IndexOutput indexOutput = directory.createOutput("density.keystore", IOContext.DEFAULT)) {
+            CodecUtil.writeHeader(indexOutput, "density.keystore", 3);
             indexOutput.writeByte((byte) 0); // No password
             SecureRandom random = Randomness.createSecure();
             byte[] salt = new byte[64];
@@ -415,8 +415,8 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
         InvalidKeySpecException, KeyStoreException {
         Path configDir = env.configDir();
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
-        try (IndexOutput output = EndiannessReverserUtil.createOutput(directory, "opensearch.keystore", IOContext.DEFAULT)) {
-            CodecUtil.writeHeader(output, "opensearch.keystore", 1);
+        try (IndexOutput output = EndiannessReverserUtil.createOutput(directory, "density.keystore", IOContext.DEFAULT)) {
+            CodecUtil.writeHeader(output, "density.keystore", 1);
             output.writeByte((byte) 0); // hasPassword = false
             output.writeString("PKCS12");
             output.writeString("PBE");
@@ -442,9 +442,9 @@ public class KeyStoreWrapperTests extends OpenSearchTestCase {
         NIOFSDirectory directory = new NIOFSDirectory(configDir);
         byte[] fileBytes = new byte[20];
         random().nextBytes(fileBytes);
-        try (IndexOutput output = EndiannessReverserUtil.createOutput(directory, "opensearch.keystore", IOContext.DEFAULT)) {
+        try (IndexOutput output = EndiannessReverserUtil.createOutput(directory, "density.keystore", IOContext.DEFAULT)) {
 
-            CodecUtil.writeHeader(output, "opensearch.keystore", 2);
+            CodecUtil.writeHeader(output, "density.keystore", 2);
             output.writeByte((byte) 0); // hasPassword = false
             output.writeString("PKCS12");
             output.writeString("PBE"); // string algo

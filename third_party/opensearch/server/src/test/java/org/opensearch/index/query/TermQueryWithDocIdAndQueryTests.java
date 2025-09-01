@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TotalHits;
-import org.opensearch.action.get.GetRequest;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.client.AdminClient;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.IndicesAdminClient;
+import org.density.action.get.GetRequest;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.indices.TermsLookup;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.test.DensityTestCase;
+import org.density.transport.client.AdminClient;
+import org.density.transport.client.Client;
+import org.density.transport.client.IndicesAdminClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
+public class TermQueryWithDocIdAndQueryTests extends DensityTestCase {
 
     private IndexSettings newTestIndexSettings(int maxTermsCount, int maxResultWindow) {
         Settings settings = Settings.builder()
@@ -305,28 +305,28 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
         when(mockAdminClient.indices()).thenReturn(mockIndicesAdminClient);
 
         doAnswer(invocation -> {
-            ActionListener<org.opensearch.action.admin.indices.settings.get.GetSettingsResponse> listener = invocation.getArgument(1);
-            org.opensearch.action.admin.indices.settings.get.GetSettingsResponse settingsResponse = mock(
-                org.opensearch.action.admin.indices.settings.get.GetSettingsResponse.class
+            ActionListener<org.density.action.admin.indices.settings.get.GetSettingsResponse> listener = invocation.getArgument(1);
+            org.density.action.admin.indices.settings.get.GetSettingsResponse settingsResponse = mock(
+                org.density.action.admin.indices.settings.get.GetSettingsResponse.class
             );
             when(settingsResponse.getIndexToSettings()).thenReturn(
-                Collections.singletonMap("classes", org.opensearch.common.settings.Settings.EMPTY)
+                Collections.singletonMap("classes", org.density.common.settings.Settings.EMPTY)
             );
             listener.onResponse(settingsResponse);
             return null;
         }).when(mockIndicesAdminClient).getSettings(any(), any());
 
         doAnswer(invocation -> {
-            ActionListener<org.opensearch.action.search.SearchResponse> listener = invocation.getArgument(1);
+            ActionListener<org.density.action.search.SearchResponse> listener = invocation.getArgument(1);
 
             SearchHit hit = new SearchHit(0);
             String json = "{\"enrolled\":[\"111\",\"222\"]}";
-            hit.sourceRef(new org.opensearch.core.common.bytes.BytesArray(json));
+            hit.sourceRef(new org.density.core.common.bytes.BytesArray(json));
 
             TotalHits totalHits = new TotalHits(1, TotalHits.Relation.EQUAL_TO);
 
             SearchHits searchHits = new SearchHits(new SearchHit[] { hit }, totalHits, 1.0f);
-            org.opensearch.action.search.SearchResponseSections sections = new org.opensearch.action.search.SearchResponseSections(
+            org.density.action.search.SearchResponseSections sections = new org.density.action.search.SearchResponseSections(
                 searchHits,
                 null,
                 null,
@@ -335,7 +335,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
                 null,
                 1
             );
-            org.opensearch.action.search.SearchResponse searchResponse = new org.opensearch.action.search.SearchResponse(
+            org.density.action.search.SearchResponse searchResponse = new org.density.action.search.SearchResponse(
                 sections,
                 "",
                 1,
@@ -347,7 +347,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
             );
             listener.onResponse(searchResponse);
             return null;
-        }).when(mockClient).search(any(org.opensearch.action.search.SearchRequest.class), any());
+        }).when(mockClient).search(any(org.density.action.search.SearchRequest.class), any());
 
         QueryRewriteContext mockRewriteContext = mock(QueryRewriteContext.class);
 
@@ -361,7 +361,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
                 ActionListener<List<Object>>>) asyncAction;
             called[0] = true;
             // Instead of asserting on result, just call onResponse with null or empty list.
-            lambda.accept(mockClient, org.opensearch.core.action.ActionListener.wrap(list -> {
+            lambda.accept(mockClient, org.density.core.action.ActionListener.wrap(list -> {
                 // We cannot assert the values due to static method, so just print for visibility.
             }, ex -> { fail("Should not throw: " + (ex != null ? ex.getMessage() : "")); }));
             return null;
@@ -397,9 +397,9 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
 
         // Simulate settings response
         doAnswer(invocation -> {
-            ActionListener<org.opensearch.action.admin.indices.settings.get.GetSettingsResponse> listener = invocation.getArgument(1);
-            org.opensearch.action.admin.indices.settings.get.GetSettingsResponse settingsResponse = mock(
-                org.opensearch.action.admin.indices.settings.get.GetSettingsResponse.class
+            ActionListener<org.density.action.admin.indices.settings.get.GetSettingsResponse> listener = invocation.getArgument(1);
+            org.density.action.admin.indices.settings.get.GetSettingsResponse settingsResponse = mock(
+                org.density.action.admin.indices.settings.get.GetSettingsResponse.class
             );
             when(settingsResponse.getIndexToSettings()).thenReturn(Collections.singletonMap("classes", idxSettings));
             listener.onResponse(settingsResponse);
@@ -408,7 +408,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
 
         // Simulate a search response with more total hits than fetchSize
         doAnswer(invocation -> {
-            ActionListener<org.opensearch.action.search.SearchResponse> listener = invocation.getArgument(1);
+            ActionListener<org.density.action.search.SearchResponse> listener = invocation.getArgument(1);
 
             SearchHit[] hits = new SearchHit[5]; // Only 5 returned
             for (int i = 0; i < 5; i++)
@@ -419,7 +419,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
             );
 
             SearchHits searchHits = new SearchHits(hits, totalHits, 1.0f);
-            org.opensearch.action.search.SearchResponseSections sections = new org.opensearch.action.search.SearchResponseSections(
+            org.density.action.search.SearchResponseSections sections = new org.density.action.search.SearchResponseSections(
                 searchHits,
                 null,
                 null,
@@ -428,7 +428,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
                 null,
                 1
             );
-            org.opensearch.action.search.SearchResponse searchResponse = new org.opensearch.action.search.SearchResponse(
+            org.density.action.search.SearchResponse searchResponse = new org.density.action.search.SearchResponse(
                 sections,
                 "",
                 1,
@@ -440,7 +440,7 @@ public class TermQueryWithDocIdAndQueryTests extends OpenSearchTestCase {
             );
             listener.onResponse(searchResponse);
             return null;
-        }).when(mockClient).search(any(org.opensearch.action.search.SearchRequest.class), any());
+        }).when(mockClient).search(any(org.density.action.search.SearchRequest.class), any());
 
         QueryRewriteContext mockRewriteContext = mock(QueryRewriteContext.class);
 

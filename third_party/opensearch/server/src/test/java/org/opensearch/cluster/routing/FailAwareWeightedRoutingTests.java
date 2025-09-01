@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing;
+package org.density.cluster.routing;
 
-import org.opensearch.Version;
-import org.opensearch.action.OriginalIndicesTests;
-import org.opensearch.action.search.SearchShardIterator;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.NodeNotConnectedException;
+import org.density.Version;
+import org.density.action.OriginalIndicesTests;
+import org.density.action.search.SearchShardIterator;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.index.shard.ShardId;
+import org.density.search.SearchShardTarget;
+import org.density.test.DensityTestCase;
+import org.density.transport.NodeNotConnectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,12 +34,12 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_CREATION_DATE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_REPLICAS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_VERSION_CREATED;
 
-public class FailAwareWeightedRoutingTests extends OpenSearchTestCase {
+public class FailAwareWeightedRoutingTests extends DensityTestCase {
 
     private ClusterState setUpCluster() {
         return setUpCluster(Settings.EMPTY);
@@ -142,7 +142,7 @@ public class FailAwareWeightedRoutingTests extends OpenSearchTestCase {
 
         // fail open is not executed since fail open conditions don't met
         SearchShardTarget next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNull(next);
         assertEquals(1, shardSkipped.get());
     }
@@ -194,10 +194,10 @@ public class FailAwareWeightedRoutingTests extends OpenSearchTestCase {
 
         // fail open is not executed since fail open conditions don't met
         SearchShardTarget next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNotNull(next);
         next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNull(next);
         assertEquals(0, shardSkipped.get());
     }
@@ -251,16 +251,16 @@ public class FailAwareWeightedRoutingTests extends OpenSearchTestCase {
 
         // fail open is not executed since fail open conditions don't met
         SearchShardTarget next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNotNull(next);
         next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNotNull(next);
         next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNotNull(next);
         next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardSkipped.incrementAndGet());
         assertNull(next);
         assertEquals(0, shardSkipped.get());
     }
@@ -383,7 +383,7 @@ public class FailAwareWeightedRoutingTests extends OpenSearchTestCase {
         // since there is an unassigned shard in the cluster, fail open is executed and shard present in node with
         // weighted routing weight zero is returned
         SearchShardTarget next = FailAwareWeightedRouting.getInstance()
-            .findNext(searchShardIterator, clusterState, new OpenSearchRejectedExecutionException(), () -> shardsSkipped.incrementAndGet());
+            .findNext(searchShardIterator, clusterState, new DensityRejectedExecutionException(), () -> shardsSkipped.incrementAndGet());
         assertNotNull(next);
         assertEquals("node_zone_c", next.getNodeId());
         assertEquals(1, shardsSkipped.incrementAndGet());

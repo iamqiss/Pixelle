@@ -1,71 +1,71 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.gateway.remote;
+package org.density.gateway.remote;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.DiffableUtils;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.CoordinationMetadata;
-import org.opensearch.cluster.coordination.PersistedStateStats;
-import org.opensearch.cluster.metadata.DiffableStringMap;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.Metadata.XContentContext;
-import org.opensearch.cluster.metadata.TemplatesMetadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.node.DiscoveryNodes.Builder;
-import org.opensearch.cluster.routing.IndexRoutingTable;
-import org.opensearch.cluster.routing.RoutingTable;
-import org.opensearch.cluster.routing.StringKeyDiffProvider;
-import org.opensearch.cluster.routing.remote.RemoteRoutingTableService;
-import org.opensearch.cluster.routing.remote.RemoteRoutingTableServiceFactory;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
-import org.opensearch.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
-import org.opensearch.gateway.remote.model.RemoteClusterBlocks;
-import org.opensearch.gateway.remote.model.RemoteClusterStateCustoms;
-import org.opensearch.gateway.remote.model.RemoteClusterStateManifestInfo;
-import org.opensearch.gateway.remote.model.RemoteCoordinationMetadata;
-import org.opensearch.gateway.remote.model.RemoteCustomMetadata;
-import org.opensearch.gateway.remote.model.RemoteDiscoveryNodes;
-import org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings;
-import org.opensearch.gateway.remote.model.RemoteIndexMetadata;
-import org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata;
-import org.opensearch.gateway.remote.model.RemoteReadResult;
-import org.opensearch.gateway.remote.model.RemoteTemplatesMetadata;
-import org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata;
-import org.opensearch.gateway.remote.routingtable.RemoteRoutingTableDiff;
-import org.opensearch.index.translog.transfer.BlobStoreTransferService;
-import org.opensearch.node.remotestore.RemoteStoreNodeAttribute;
-import org.opensearch.repositories.RepositoriesService;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.LatchedActionListener;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.Diff;
+import org.density.cluster.DiffableUtils;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.CoordinationMetadata;
+import org.density.cluster.coordination.PersistedStateStats;
+import org.density.cluster.metadata.DiffableStringMap;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.Metadata.XContentContext;
+import org.density.cluster.metadata.TemplatesMetadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.node.DiscoveryNodes.Builder;
+import org.density.cluster.routing.IndexRoutingTable;
+import org.density.cluster.routing.RoutingTable;
+import org.density.cluster.routing.StringKeyDiffProvider;
+import org.density.cluster.routing.remote.RemoteRoutingTableService;
+import org.density.cluster.routing.remote.RemoteRoutingTableServiceFactory;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.annotation.InternalApi;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.io.IOUtils;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedIndexMetadata;
+import org.density.gateway.remote.ClusterMetadataManifest.UploadedMetadataAttribute;
+import org.density.gateway.remote.model.RemoteClusterBlocks;
+import org.density.gateway.remote.model.RemoteClusterStateCustoms;
+import org.density.gateway.remote.model.RemoteClusterStateManifestInfo;
+import org.density.gateway.remote.model.RemoteCoordinationMetadata;
+import org.density.gateway.remote.model.RemoteCustomMetadata;
+import org.density.gateway.remote.model.RemoteDiscoveryNodes;
+import org.density.gateway.remote.model.RemoteHashesOfConsistentSettings;
+import org.density.gateway.remote.model.RemoteIndexMetadata;
+import org.density.gateway.remote.model.RemotePersistentSettingsMetadata;
+import org.density.gateway.remote.model.RemoteReadResult;
+import org.density.gateway.remote.model.RemoteTemplatesMetadata;
+import org.density.gateway.remote.model.RemoteTransientSettingsMetadata;
+import org.density.gateway.remote.routingtable.RemoteRoutingTableDiff;
+import org.density.index.translog.transfer.BlobStoreTransferService;
+import org.density.node.remotestore.RemoteStoreNodeAttribute;
+import org.density.repositories.RepositoriesService;
+import org.density.repositories.Repository;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.threadpool.ThreadPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -92,34 +92,34 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
-import static org.opensearch.cluster.ClusterState.CUSTOM_VALUE_SERIALIZER;
-import static org.opensearch.gateway.PersistedClusterStateService.SLOW_WRITE_LOGGING_THRESHOLD;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V2;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.CODEC_V3;
-import static org.opensearch.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTE;
-import static org.opensearch.gateway.remote.RemoteClusterStateAttributesManager.DISCOVERY_NODES;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.DELIMITER;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.UploadedMetadataResults;
-import static org.opensearch.gateway.remote.RemoteClusterStateUtils.clusterUUIDContainer;
-import static org.opensearch.gateway.remote.model.RemoteClusterStateCustoms.CLUSTER_STATE_CUSTOM;
-import static org.opensearch.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
-import static org.opensearch.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
-import static org.opensearch.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
-import static org.opensearch.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
-import static org.opensearch.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
-import static org.opensearch.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
+import static org.density.cluster.ClusterState.CUSTOM_VALUE_SERIALIZER;
+import static org.density.gateway.PersistedClusterStateService.SLOW_WRITE_LOGGING_THRESHOLD;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V2;
+import static org.density.gateway.remote.ClusterMetadataManifest.CODEC_V3;
+import static org.density.gateway.remote.ClusterMetadataManifest.MANIFEST_CURRENT_CODEC_VERSION;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_BLOCKS;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.CLUSTER_STATE_ATTRIBUTE;
+import static org.density.gateway.remote.RemoteClusterStateAttributesManager.DISCOVERY_NODES;
+import static org.density.gateway.remote.RemoteClusterStateUtils.DELIMITER;
+import static org.density.gateway.remote.RemoteClusterStateUtils.UploadedMetadataResults;
+import static org.density.gateway.remote.RemoteClusterStateUtils.clusterUUIDContainer;
+import static org.density.gateway.remote.model.RemoteClusterStateCustoms.CLUSTER_STATE_CUSTOM;
+import static org.density.gateway.remote.model.RemoteCoordinationMetadata.COORDINATION_METADATA;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_DELIMITER;
+import static org.density.gateway.remote.model.RemoteCustomMetadata.CUSTOM_METADATA;
+import static org.density.gateway.remote.model.RemoteHashesOfConsistentSettings.HASHES_OF_CONSISTENT_SETTINGS;
+import static org.density.gateway.remote.model.RemotePersistentSettingsMetadata.SETTING_METADATA;
+import static org.density.gateway.remote.model.RemoteTemplatesMetadata.TEMPLATES_METADATA;
+import static org.density.gateway.remote.model.RemoteTransientSettingsMetadata.TRANSIENT_SETTING_METADATA;
+import static org.density.gateway.remote.routingtable.RemoteIndexRoutingTable.INDEX_ROUTING_METADATA_PREFIX;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteClusterStateConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteRoutingTableConfigured;
+import static org.density.node.remotestore.RemoteStoreNodeAttribute.isRemoteStoreClusterStateEnabled;
 
 /**
  * A Service which provides APIs to upload and download cluster metadata from remote store.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public class RemoteClusterStateService implements Closeable {

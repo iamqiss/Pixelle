@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.precommit;
+package org.density.gradle.precommit;
 
-import org.opensearch.gradle.ExportOpenSearchBuildResourcesTask;
-import org.opensearch.gradle.dependencies.CompileOnlyResolvePlugin;
-import org.opensearch.gradle.info.BuildParams;
+import org.density.gradle.ExportDensityBuildResourcesTask;
+import org.density.gradle.dependencies.CompileOnlyResolvePlugin;
+import org.density.gradle.info.BuildParams;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -45,7 +45,7 @@ import java.nio.file.Path;
 public class ThirdPartyAuditPrecommitPlugin extends PrecommitPlugin {
 
     public static final String JDK_JAR_HELL_CONFIG_NAME = "jdkJarHell";
-    public static final String LIBS_OPENSEARCH_CORE_PROJECT_PATH = ":libs:opensearch-core";
+    public static final String LIBS_DENSITY_CORE_PROJECT_PATH = ":libs:density-core";
 
     @Override
     public TaskProvider<? extends Task> createTask(Project project) {
@@ -54,15 +54,15 @@ public class ThirdPartyAuditPrecommitPlugin extends PrecommitPlugin {
         project.getDependencies().add("forbiddenApisCliJar", "de.thetaphi:forbiddenapis:3.8");
 
         Configuration jdkJarHellConfig = project.getConfigurations().create(JDK_JAR_HELL_CONFIG_NAME);
-        if (BuildParams.isInternal() && project.getPath().equals(":libs:opensearch-core") == false) {
+        if (BuildParams.isInternal() && project.getPath().equals(":libs:density-core") == false) {
             // External plugins will depend on this already via transitive dependencies.
             // Internal projects are not all plugins, so make sure the check is available
             // we are not doing this for this project itself to avoid jar hell with itself
-            project.getDependencies().add(JDK_JAR_HELL_CONFIG_NAME, project.project(LIBS_OPENSEARCH_CORE_PROJECT_PATH));
+            project.getDependencies().add(JDK_JAR_HELL_CONFIG_NAME, project.project(LIBS_DENSITY_CORE_PROJECT_PATH));
         }
 
-        TaskProvider<ExportOpenSearchBuildResourcesTask> resourcesTask = project.getTasks()
-            .register("thirdPartyAuditResources", ExportOpenSearchBuildResourcesTask.class);
+        TaskProvider<ExportDensityBuildResourcesTask> resourcesTask = project.getTasks()
+            .register("thirdPartyAuditResources", ExportDensityBuildResourcesTask.class);
         Path resourcesDir = project.getBuildDir().toPath().resolve("third-party-audit-config");
         resourcesTask.configure(t -> {
             t.setOutputDir(resourcesDir.toFile());

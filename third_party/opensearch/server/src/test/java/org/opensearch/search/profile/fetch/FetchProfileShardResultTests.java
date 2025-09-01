@@ -1,30 +1,30 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.search.profile.fetch;
+package org.density.search.profile.fetch;
 
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParserUtils;
-import org.opensearch.search.profile.ProfileResult;
-import org.opensearch.search.profile.ProfileResultTests;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParserUtils;
+import org.density.search.profile.ProfileResult;
+import org.density.search.profile.ProfileResultTests;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class FetchProfileShardResultTests extends OpenSearchTestCase {
+public class FetchProfileShardResultTests extends DensityTestCase {
 
     public static FetchProfileShardResult createTestItem() {
         int size = randomIntBetween(0, 5);

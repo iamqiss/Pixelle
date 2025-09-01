@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule;
+package org.density.plugin.wlm.rule;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.rule.autotagging.FeatureValueValidator;
+import org.density.ResourceNotFoundException;
+import org.density.cluster.service.ClusterService;
+import org.density.rule.autotagging.FeatureValueValidator;
 
 /**
  * Validator for the workload_group feature type
- * @opensearch.experimental
+ * @density.experimental
  */
 public class WorkloadGroupFeatureValueValidator implements FeatureValueValidator {
     private final ClusterService clusterService;

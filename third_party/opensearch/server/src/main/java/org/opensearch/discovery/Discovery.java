@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.discovery;
+package org.density.discovery;
 
-import org.opensearch.cluster.NodeConnectionsService;
-import org.opensearch.cluster.coordination.ClusterStatePublisher;
-import org.opensearch.common.lifecycle.LifecycleComponent;
+import org.density.cluster.NodeConnectionsService;
+import org.density.cluster.coordination.ClusterStatePublisher;
+import org.density.common.lifecycle.LifecycleComponent;
 
 /**
  * A pluggable module allowing to implement discovery of other nodes, publishing of the cluster
  * state to all nodes, electing a cluster-manager of the cluster that raises cluster state change
  * events.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Discovery extends LifecycleComponent, ClusterStatePublisher {
 

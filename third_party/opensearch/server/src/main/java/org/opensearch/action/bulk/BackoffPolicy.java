@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,14 +25,14 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
-import org.opensearch.common.Randomness;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.Randomness;
+import org.density.common.unit.TimeValue;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -55,7 +55,7 @@ import java.util.NoSuchElementException;
  *
  * Note that backoff policies are exposed as <code>Iterables</code> in order to be consumed multiple times.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BackoffPolicy implements Iterable<TimeValue> {
     private static final BackoffPolicy NO_BACKOFF = new NoBackoff();
@@ -147,7 +147,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete No Back Off Policy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class NoBackoff extends BackoffPolicy {
         @Override
@@ -169,7 +169,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Exponential Back Off Policy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ExponentialBackoff extends BackoffPolicy {
         private final int start;
@@ -192,7 +192,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Exponential Back Off Iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ExponentialBackoffIterator implements Iterator<TimeValue> {
         private final int numberOfElements;
@@ -326,7 +326,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Constant Back Off Policy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ConstantBackoff extends BackoffPolicy {
         private final TimeValue delay;
@@ -348,7 +348,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Constant Back Off Iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class ConstantBackoffIterator implements Iterator<TimeValue> {
         private final TimeValue delay;
@@ -378,7 +378,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Wrapped Back Off Policy
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class WrappedBackoffPolicy extends BackoffPolicy {
         private final BackoffPolicy delegate;
@@ -398,7 +398,7 @@ public abstract class BackoffPolicy implements Iterable<TimeValue> {
     /**
      * Concrete Wrapped Back Off Iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static final class WrappedBackoffIterator implements Iterator<TimeValue> {
         private final Iterator<TimeValue> delegate;

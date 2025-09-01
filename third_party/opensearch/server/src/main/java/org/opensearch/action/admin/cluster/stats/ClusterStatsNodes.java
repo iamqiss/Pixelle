@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.stats;
+package org.density.action.admin.cluster.stats;
 
-import org.opensearch.Version;
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.PluginsAndModules;
-import org.opensearch.action.admin.cluster.node.stats.NodeStats;
-import org.opensearch.action.admin.cluster.stats.ClusterStatsRequest.Metric;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodeRole;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.metrics.OperationStats;
-import org.opensearch.common.network.NetworkModule;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.transport.TransportAddress;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.discovery.DiscoveryModule;
-import org.opensearch.monitor.fs.FsInfo;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.monitor.os.OsInfo;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.transport.TransportInfo;
+import org.density.Version;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.PluginsAndModules;
+import org.density.action.admin.cluster.node.stats.NodeStats;
+import org.density.action.admin.cluster.stats.ClusterStatsRequest.Metric;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodeRole;
+import org.density.common.annotation.PublicApi;
+import org.density.common.metrics.OperationStats;
+import org.density.common.network.NetworkModule;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.Strings;
+import org.density.core.common.transport.TransportAddress;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.discovery.DiscoveryModule;
+import org.density.monitor.fs.FsInfo;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.monitor.os.OsInfo;
+import org.density.plugins.PluginInfo;
+import org.density.transport.TransportInfo;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -73,7 +73,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Per Node Cluster Stats
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class ClusterStatsNodes implements ToXContentFragment {
@@ -177,7 +177,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Fields used for creating XContent and parsing
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static final class Fields {
         static final String COUNT = "count";
@@ -257,7 +257,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Counts
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Counts implements ToXContentFragment {
@@ -307,7 +307,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String TOTAL = "total";
@@ -326,7 +326,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Operating System Stats
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class OsStats implements ToXContentFragment {
@@ -334,7 +334,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
         final int allocatedProcessors;
         final Map<String, Integer> names;
         final Map<String, Integer> prettyNames;
-        final org.opensearch.monitor.os.OsStats.Mem mem;
+        final org.density.monitor.os.OsStats.Mem mem;
 
         /**
          * Build the stats from information about each node.
@@ -374,7 +374,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
                     }
                 }
             }
-            this.mem = new org.opensearch.monitor.os.OsStats.Mem(totalMemory, freeMemory);
+            this.mem = new org.density.monitor.os.OsStats.Mem(totalMemory, freeMemory);
         }
 
         public int getAvailableProcessors() {
@@ -385,14 +385,14 @@ public class ClusterStatsNodes implements ToXContentFragment {
             return allocatedProcessors;
         }
 
-        public org.opensearch.monitor.os.OsStats.Mem getMem() {
+        public org.density.monitor.os.OsStats.Mem getMem() {
             return mem;
         }
 
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String AVAILABLE_PROCESSORS = "available_processors";
@@ -440,7 +440,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Process Stats
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class ProcessStats implements ToXContentFragment {
@@ -516,7 +516,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String CPU = "cpu";
@@ -544,7 +544,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner JVM Stats
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class JvmStats implements ToXContentFragment {
@@ -569,7 +569,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
             }
             this.versions = Collections.unmodifiableMap(versions);
             for (NodeStats nodeStats : nodeStatsList) {
-                org.opensearch.monitor.jvm.JvmStats js = nodeStats.getJvm();
+                org.density.monitor.jvm.JvmStats js = nodeStats.getJvm();
                 if (js == null) {
                     continue;
                 }
@@ -623,7 +623,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
         /**
          * Inner Fields used for creating XContent and parsing
          *
-         * @opensearch.internal
+         * @density.internal
          */
         static final class Fields {
             static final String VERSIONS = "versions";
@@ -673,7 +673,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner JVM Version
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class JvmVersion {
@@ -716,7 +716,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Network Types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class NetworkTypes implements ToXContentFragment {
 
@@ -764,7 +764,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Discovery Types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class DiscoveryTypes implements ToXContentFragment {
 
@@ -794,7 +794,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Packaging Types
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class PackagingTypes implements ToXContentFragment {
 
@@ -831,7 +831,7 @@ public class ClusterStatsNodes implements ToXContentFragment {
     /**
      * Inner Ingest Stats
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class IngestStats implements ToXContentFragment {
 
@@ -843,11 +843,11 @@ public class ClusterStatsNodes implements ToXContentFragment {
             SortedMap<String, long[]> stats = new TreeMap<>();
             for (NodeStats nodeStat : nodeStats) {
                 if (nodeStat.getIngestStats() != null) {
-                    for (Map.Entry<String, List<org.opensearch.ingest.IngestStats.ProcessorStat>> processorStats : nodeStat.getIngestStats()
+                    for (Map.Entry<String, List<org.density.ingest.IngestStats.ProcessorStat>> processorStats : nodeStat.getIngestStats()
                         .getProcessorStats()
                         .entrySet()) {
                         pipelineIds.add(processorStats.getKey());
-                        for (org.opensearch.ingest.IngestStats.ProcessorStat stat : processorStats.getValue()) {
+                        for (org.density.ingest.IngestStats.ProcessorStat stat : processorStats.getValue()) {
                             stats.compute(stat.getType(), (k, v) -> {
                                 OperationStats nodeIngestStats = stat.getStats();
                                 if (v == null) {

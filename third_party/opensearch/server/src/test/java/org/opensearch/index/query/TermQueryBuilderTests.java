@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
@@ -46,14 +46,14 @@ import org.apache.lucene.search.PointRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.ParsingException;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 
-import static org.opensearch.index.query.BoolQueryBuilderTests.getIndexSearcher;
-import static org.opensearch.index.query.MatchQueryBuilderTests.testGetComplementNumericField;
+import static org.density.index.query.BoolQueryBuilderTests.getIndexSearcher;
+import static org.density.index.query.MatchQueryBuilderTests.testGetComplementNumericField;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.either;

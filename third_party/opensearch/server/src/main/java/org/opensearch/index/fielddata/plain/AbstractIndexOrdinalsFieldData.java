@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata.plain;
+package org.density.index.fielddata.plain;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,16 +40,16 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.index.fielddata.IndexFieldDataCache;
-import org.opensearch.index.fielddata.IndexOrdinalsFieldData;
-import org.opensearch.index.fielddata.LeafOrdinalsFieldData;
-import org.opensearch.index.fielddata.RamAccountingTermsEnum;
-import org.opensearch.index.fielddata.ScriptDocValues;
-import org.opensearch.index.fielddata.ordinals.GlobalOrdinalsBuilder;
-import org.opensearch.index.fielddata.ordinals.GlobalOrdinalsIndexFieldData;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.DensityException;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.index.fielddata.IndexFieldDataCache;
+import org.density.index.fielddata.IndexOrdinalsFieldData;
+import org.density.index.fielddata.LeafOrdinalsFieldData;
+import org.density.index.fielddata.RamAccountingTermsEnum;
+import org.density.index.fielddata.ScriptDocValues;
+import org.density.index.fielddata.ordinals.GlobalOrdinalsBuilder;
+import org.density.index.fielddata.ordinals.GlobalOrdinalsIndexFieldData;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -57,7 +57,7 @@ import java.util.function.Function;
 /**
  * Base class for sorting ordinals field data
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractIndexOrdinalsFieldData implements IndexOrdinalsFieldData {
     private static final Logger logger = LogManager.getLogger(AbstractBinaryDVLeafFieldData.class);
@@ -110,10 +110,10 @@ public abstract class AbstractIndexOrdinalsFieldData implements IndexOrdinalsFie
         try {
             return cache.load(context, this);
         } catch (Exception e) {
-            if (e instanceof OpenSearchException) {
-                throw (OpenSearchException) e;
+            if (e instanceof DensityException) {
+                throw (DensityException) e;
             } else {
-                throw new OpenSearchException(e);
+                throw new DensityException(e);
             }
         }
     }
@@ -156,10 +156,10 @@ public abstract class AbstractIndexOrdinalsFieldData implements IndexOrdinalsFie
         try {
             return cache.load(indexReader, this);
         } catch (Exception e) {
-            if (e instanceof OpenSearchException) {
-                throw (OpenSearchException) e;
+            if (e instanceof DensityException) {
+                throw (DensityException) e;
             } else {
-                throw new OpenSearchException(e);
+                throw new DensityException(e);
             }
         }
     }
@@ -183,7 +183,7 @@ public abstract class AbstractIndexOrdinalsFieldData implements IndexOrdinalsFie
      * Note that the .beforeLoad(...) and .afterLoad(...) methods must be
      * manually called.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface PerValueEstimator {
 

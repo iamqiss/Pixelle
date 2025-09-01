@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.profile.query;
+package org.density.search.profile.query;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.search.profile.ContextualProfileBreakdown;
-import org.opensearch.search.profile.ProfileMetric;
-import org.opensearch.search.profile.ProfileMetricUtil;
-import org.opensearch.search.profile.ProfileResult;
+import org.density.search.profile.ContextualProfileBreakdown;
+import org.density.search.profile.ProfileMetric;
+import org.density.search.profile.ProfileMetricUtil;
+import org.density.search.profile.ProfileResult;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -45,7 +45,7 @@ import java.util.function.Supplier;
 /**
  * This class returns a list of {@link ProfileResult} that can be serialized back to the client in the non-concurrent execution.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalQueryProfileTree extends AbstractQueryProfileTree {
 

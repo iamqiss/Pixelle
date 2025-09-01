@@ -2,7 +2,7 @@
   "search_pipeline.put": {
     "documentation": {
       "description": "Creates or updates a search pipeline.",
-      "url": "https://opensearch.org/docs/latest/search-plugins/search-pipelines/creating-search-pipeline/"
+      "url": "https://density.org/docs/latest/search-plugins/search-pipelines/creating-search-pipeline/"
     },
     "stability": "stable",
     "url": {

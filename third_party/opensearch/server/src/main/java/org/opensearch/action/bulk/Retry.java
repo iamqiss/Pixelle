@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,23 +25,23 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.bulk;
+package org.density.action.bulk;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.DocWriteRequest;
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.RemoteTransportException;
+import org.density.action.DocWriteRequest;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.PlainActionFuture;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.rest.RestStatus;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.RemoteTransportException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +52,7 @@ import java.util.function.Predicate;
 /**
  * Encapsulates synchronous and asynchronous retry logic.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Retry {
     private final BackoffPolicy backoffPolicy;
@@ -99,7 +99,7 @@ public class Retry {
     /**
      * Retry handler
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class RetryHandler implements ActionListener<BulkResponse> {
         private static final RestStatus RETRY_STATUS = RestStatus.TOO_MANY_REQUESTS;
@@ -185,7 +185,7 @@ public class Retry {
                         // reset it
                         // to the global pipeline if the global pipeline exists,
                         // if not, set to null to ensure the default pipeline can be resolved and set
-                        // see org.opensearch.ingest.IngestService.resolvePipelines()
+                        // see org.density.ingest.IngestService.resolvePipelines()
                         indexRequest.setPipeline(globalPipeline);
                         indexRequest.isPipelineResolved(false);
                     }

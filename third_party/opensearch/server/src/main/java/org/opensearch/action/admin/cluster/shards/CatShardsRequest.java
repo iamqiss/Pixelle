@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards;
+package org.density.action.admin.cluster.shards;
 
-import org.opensearch.Version;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeReadRequest;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.rest.action.admin.cluster.ClusterAdminTask;
+import org.density.Version;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.pagination.PageParams;
+import org.density.action.support.clustermanager.ClusterManagerNodeReadRequest;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.rest.action.admin.cluster.ClusterAdminTask;
 
 import java.io.IOException;
 import java.util.Map;
@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * A request of _cat/shards.
  *
- * @opensearch.api
+ * @density.api
  */
 public class CatShardsRequest extends ClusterManagerNodeReadRequest<CatShardsRequest> {
 

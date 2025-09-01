@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.node;
+package org.density.node;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.settings.SettingsException;
-import org.opensearch.env.Environment;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.common.settings.Settings;
+import org.density.common.settings.SettingsException;
+import org.density.env.Environment;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +51,7 @@ import java.util.function.Supplier;
 /**
  * Prepares internal settings
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalSettingsPreparer {
 
@@ -60,7 +60,7 @@ public class InternalSettingsPreparer {
 
     /**
      * TODO: Refactor this as transport client is removed and this used to prepare settings for the transport client by
-     * gathering all opensearch system properties and setting defaults.
+     * gathering all density system properties and setting defaults.
      */
     public static Settings prepareSettings(Settings input) {
         Settings.Builder output = Settings.builder();
@@ -70,7 +70,7 @@ public class InternalSettingsPreparer {
     }
 
     /**
-     * Prepares the settings by gathering all opensearch system properties, optionally loading the configuration settings.
+     * Prepares the settings by gathering all density system properties, optionally loading the configuration settings.
      *
      * @param input      the custom settings to use; these are not overwritten by settings in the configuration file
      * @param properties map of properties key/value pairs (usually from the command-line)
@@ -90,7 +90,7 @@ public class InternalSettingsPreparer {
         Environment environment = new Environment(output.build(), configPath);
 
         output = Settings.builder(); // start with a fresh output
-        Path path = environment.configDir().resolve("opensearch.yml");
+        Path path = environment.configDir().resolve("density.yml");
         if (Files.exists(path)) {
             try {
                 output.loadFromPath(path);

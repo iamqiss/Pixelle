@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.xcontent;
+package org.density.core.xcontent;
 
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.XContentParser.Token;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.XContentParser.Token;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -45,7 +45,7 @@ import java.util.function.Consumer;
  * A set of static methods to get {@link Token} from {@link XContentParser}
  * while checking for their types and throw {@link ParsingException} if needed.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class XContentParserUtils {
 

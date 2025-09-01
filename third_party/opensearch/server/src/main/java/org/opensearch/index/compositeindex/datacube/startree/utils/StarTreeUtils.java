@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.index.compositeindex.datacube.startree.utils;
+package org.density.index.compositeindex.datacube.startree.utils;
 
 import org.apache.lucene.index.DocValuesSkipIndexType;
 import org.apache.lucene.index.DocValuesType;
@@ -13,7 +13,7 @@ import org.apache.lucene.index.FieldInfo;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.VectorEncoding;
 import org.apache.lucene.index.VectorSimilarityFunction;
-import org.opensearch.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
+import org.density.index.compositeindex.datacube.startree.aggregators.MetricAggregatorInfo;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Util class for building star tree
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class StarTreeUtils {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,50 +26,50 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.service;
+package org.density.cluster.service;
 
 import com.carrotsearch.randomizedtesting.annotations.Timeout;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.cluster.AckedClusterStateUpdateTask;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateTaskConfig;
-import org.opensearch.cluster.ClusterStateTaskExecutor;
-import org.opensearch.cluster.ClusterStateTaskListener;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.LocalClusterUpdateTask;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.coordination.ClusterStatePublisher;
-import org.opensearch.cluster.coordination.FailedToCommitClusterStateException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Priority;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.BaseFuture;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.node.Node;
-import org.opensearch.telemetry.metrics.Histogram;
-import org.opensearch.telemetry.metrics.MetricsRegistry;
-import org.opensearch.telemetry.metrics.noop.NoopMetricsRegistry;
-import org.opensearch.test.MockLogAppender;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.junit.annotations.TestLogging;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.cluster.AckedClusterStateUpdateTask;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateTaskConfig;
+import org.density.cluster.ClusterStateTaskExecutor;
+import org.density.cluster.ClusterStateTaskListener;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.LocalClusterUpdateTask;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.coordination.ClusterStatePublisher;
+import org.density.cluster.coordination.FailedToCommitClusterStateException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.Nullable;
+import org.density.common.Priority;
+import org.density.common.collect.Tuple;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.BaseFuture;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.node.Node;
+import org.density.telemetry.metrics.Histogram;
+import org.density.telemetry.metrics.MetricsRegistry;
+import org.density.telemetry.metrics.noop.NoopMetricsRegistry;
+import org.density.test.MockLogAppender;
+import org.density.test.DensityTestCase;
+import org.density.test.junit.annotations.TestLogging;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -95,9 +95,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.opensearch.cluster.service.ClusterManagerTask.CREATE_INDEX;
-import static org.opensearch.cluster.service.ClusterManagerTask.DELETE_INDEX;
-import static org.opensearch.cluster.service.ClusterManagerTask.PUT_MAPPING;
+import static org.density.cluster.service.ClusterManagerTask.CREATE_INDEX;
+import static org.density.cluster.service.ClusterManagerTask.DELETE_INDEX;
+import static org.density.cluster.service.ClusterManagerTask.PUT_MAPPING;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -111,7 +111,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ClusterManagerServiceTests extends OpenSearchTestCase {
+public class ClusterManagerServiceTests extends DensityTestCase {
 
     private static ThreadPool threadPool;
     private static long timeDiffInMillis;
@@ -378,7 +378,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.cluster.service:TRACE", reason = "to ensure that we log cluster state events on TRACE level")
+    @TestLogging(value = "org.density.cluster.service:TRACE", reason = "to ensure that we log cluster state events on TRACE level")
     public void testClusterStateUpdateLoggingWithTraceEnabled() throws Exception {
         try (MockLogAppender mockAppender = MockLogAppender.createForLoggers(LogManager.getLogger(ClusterManagerService.class))) {
             mockAppender.addExpectation(
@@ -543,7 +543,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.cluster.service:DEBUG", reason = "to ensure that we log cluster state events on DEBUG level")
+    @TestLogging(value = "org.density.cluster.service:DEBUG", reason = "to ensure that we log cluster state events on DEBUG level")
     public void testClusterStateUpdateLoggingWithDebugEnabled() throws Exception {
         try (MockLogAppender mockAppender = MockLogAppender.createForLoggers(LogManager.getLogger(ClusterManagerService.class))) {
             mockAppender.addExpectation(
@@ -551,7 +551,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test1 start",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "executing cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
+                    "executing cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
                 )
             );
             mockAppender.addExpectation(
@@ -559,7 +559,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test1 computation",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [1s] to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
+                    "took [1s] to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
                 )
             );
             mockAppender.addExpectation(
@@ -567,7 +567,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test1 notification",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [0s] to notify listeners on unchanged cluster state for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
+                    "took [0s] to notify listeners on unchanged cluster state for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]"
                 )
             );
 
@@ -576,7 +576,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test2 start",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "executing cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
+                    "executing cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
                 )
             );
             mockAppender.addExpectation(
@@ -584,7 +584,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test2 failure",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "failed to execute cluster state update (on version: [*], uuid: [*]) for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]*"
+                    "failed to execute cluster state update (on version: [*], uuid: [*]) for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]*"
                 )
             );
             mockAppender.addExpectation(
@@ -592,7 +592,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test2 computation",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [2s] to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
+                    "took [2s] to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
                 )
             );
             mockAppender.addExpectation(
@@ -600,7 +600,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test2 notification",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [0s] to notify listeners on unchanged cluster state for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
+                    "took [0s] to notify listeners on unchanged cluster state for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
                 )
             );
 
@@ -609,7 +609,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test3 start",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "executing cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
+                    "executing cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
                 )
             );
             mockAppender.addExpectation(
@@ -617,7 +617,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test3 computation",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [3s] to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
+                    "took [3s] to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
                 )
             );
             mockAppender.addExpectation(
@@ -625,7 +625,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test3 notification",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "took [4s] to notify listeners on successful publication of cluster state (version: *, uuid: *) for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
+                    "took [4s] to notify listeners on successful publication of cluster state (version: *, uuid: *) for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
                 )
             );
 
@@ -634,7 +634,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test4",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.DEBUG,
-                    "executing cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test4]"
+                    "executing cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test4]"
                 )
             );
 
@@ -1225,7 +1225,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.cluster.service:WARN", reason = "to ensure that we log cluster state events on WARN level")
+    @TestLogging(value = "org.density.cluster.service:WARN", reason = "to ensure that we log cluster state events on WARN level")
     public void testLongClusterStateUpdateLogging() throws Exception {
         try (MockLogAppender mockAppender = MockLogAppender.createForLoggers(LogManager.getLogger(ClusterManagerService.class))) {
             mockAppender.addExpectation(
@@ -1241,7 +1241,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test2",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.WARN,
-                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
+                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test2]"
                 )
             );
             mockAppender.addExpectation(
@@ -1249,7 +1249,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test3",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.WARN,
-                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
+                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test3]"
                 )
             );
             mockAppender.addExpectation(
@@ -1257,7 +1257,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test4",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.WARN,
-                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test4]"
+                    "*took [*], which is over [10s], to compute cluster state update for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test4]"
                 )
             );
             mockAppender.addExpectation(
@@ -1429,7 +1429,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
         }
     }
 
-    @TestLogging(value = "org.opensearch.cluster.service:WARN", reason = "to ensure that we log failed cluster state events on WARN level")
+    @TestLogging(value = "org.density.cluster.service:WARN", reason = "to ensure that we log failed cluster state events on WARN level")
     public void testLongClusterStateUpdateLoggingForFailedPublication() throws Exception {
         try (MockLogAppender mockAppender = MockLogAppender.createForLoggers(LogManager.getLogger(ClusterManagerService.class))) {
             mockAppender.addExpectation(
@@ -1437,7 +1437,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     "test1 should log due to slow and failing publication",
                     ClusterManagerService.class.getCanonicalName(),
                     Level.WARN,
-                    "took [*] and then failed to publish updated cluster state (version: *, uuid: *) for [Tasks batched with key: org.opensearch.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]:*"
+                    "took [*] and then failed to publish updated cluster state (version: *, uuid: *) for [Tasks batched with key: org.density.cluster.service.ClusterManagerServiceTests, count:1 and sample tasks: test1]:*"
                 )
             );
 
@@ -1471,7 +1471,7 @@ public class ClusterManagerServiceTests extends OpenSearchTestCase {
                     timeDiffInMillis += ClusterManagerService.CLUSTER_MANAGER_SERVICE_SLOW_TASK_LOGGING_THRESHOLD_SETTING.get(
                         Settings.EMPTY
                     ).millis() + randomLongBetween(1, 1000000);
-                    throw new OpenSearchException("simulated error during slow publication which should trigger logging");
+                    throw new DensityException("simulated error during slow publication which should trigger logging");
                 });
                 clusterManagerService.setClusterStateSupplier(clusterStateRef::get);
                 clusterManagerService.start();

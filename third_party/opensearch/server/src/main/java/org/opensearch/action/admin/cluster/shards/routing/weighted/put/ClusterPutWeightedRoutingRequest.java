@@ -1,44 +1,44 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards.routing.weighted.put;
+package org.density.action.admin.cluster.shards.routing.weighted.put;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.metadata.WeightedRoutingMetadata;
-import org.opensearch.cluster.routing.WeightedRouting;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.DensityGenerationException;
+import org.density.DensityParseException;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.metadata.WeightedRoutingMetadata;
+import org.density.cluster.routing.WeightedRouting;
+import org.density.common.annotation.PublicApi;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.opensearch.action.ValidateActions.addValidationError;
+import static org.density.action.ValidateActions.addValidationError;
 
 /**
  * Request to update weights for weighted round-robin shard routing policy.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.4.0")
 public class ClusterPutWeightedRoutingRequest extends ClusterManagerNodeRequest<ClusterPutWeightedRoutingRequest> {
@@ -84,13 +84,13 @@ public class ClusterPutWeightedRoutingRequest extends ClusterManagerNodeRequest<
     public void setWeightedRouting(Map<String, Object> source) {
         try {
             if (source.isEmpty()) {
-                throw new OpenSearchParseException(("Empty request body"));
+                throw new DensityParseException(("Empty request body"));
             }
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.map(source);
             setWeightedRouting(BytesReference.bytes(builder), builder.contentType());
         } catch (IOException e) {
-            throw new OpenSearchGenerationException("Failed to generate [" + source + "]", e);
+            throw new DensityGenerationException("Failed to generate [" + source + "]", e);
         }
     }
 
@@ -122,10 +122,10 @@ public class ClusterPutWeightedRoutingRequest extends ClusterManagerNodeRequest<
                     } else if (fieldName != null && fieldName.equals("weights")) {
                         weightsAttr = parser.currentName();
                     } else {
-                        throw new OpenSearchParseException("failed to parse weighted routing request object [{}]", fieldName);
+                        throw new DensityParseException("failed to parse weighted routing request object [{}]", fieldName);
                     }
                     if (parser.nextToken() != XContentParser.Token.START_OBJECT) {
-                        throw new OpenSearchParseException(
+                        throw new DensityParseException(
                             "failed to parse weighted routing request object  [{}], expected object",
                             weightsAttr
                         );
@@ -138,7 +138,7 @@ public class ClusterPutWeightedRoutingRequest extends ClusterManagerNodeRequest<
                             attrWeight = Double.parseDouble(parser.text());
                             weights.put(attrValue, attrWeight);
                         } else {
-                            throw new OpenSearchParseException(
+                            throw new DensityParseException(
                                 "failed to parse weighted routing request attribute [{}], " + "unknown type",
                                 attrWeight
                             );
@@ -149,7 +149,7 @@ public class ClusterPutWeightedRoutingRequest extends ClusterManagerNodeRequest<
                         version = parser.longValue();
                     }
                 } else {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "failed to parse weighted routing request " + "[{}], unknown " + "type",
                         attributeName
                     );

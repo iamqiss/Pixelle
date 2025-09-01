@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -62,7 +62,7 @@ import java.util.Locale;
  * So there are two methods to convert from local time back to utc,
  * {@link #localToUtc(long, Strategy)} and {@link #localToUtcInThisOffset(long)}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class LocalTimeOffset {
     /**
@@ -151,7 +151,7 @@ public abstract class LocalTimeOffset {
     /**
      * Strategy for a local time
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public interface Strategy {
         /**
@@ -214,7 +214,7 @@ public abstract class LocalTimeOffset {
     /**
      * How to get instances of {@link LocalTimeOffset}.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Lookup {
         /**
@@ -246,7 +246,7 @@ public abstract class LocalTimeOffset {
     /**
      * No previous local time offset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class NoPrevious extends LocalTimeOffset {
         NoPrevious(long millis) {
@@ -286,7 +286,7 @@ public abstract class LocalTimeOffset {
     /**
      * Transition for a local time offset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Transition extends LocalTimeOffset {
         private final LocalTimeOffset previous;
@@ -329,7 +329,7 @@ public abstract class LocalTimeOffset {
     /**
      * Gap for a local time offset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Gap extends Transition {
         private final long firstMissingLocalTime;
@@ -374,7 +374,7 @@ public abstract class LocalTimeOffset {
     /**
      * Overlap for a local time offset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Overlap extends Transition {
         private final long firstOverlappingLocalTime;
@@ -435,7 +435,7 @@ public abstract class LocalTimeOffset {
     /**
      * Fixed lookup the local time offset
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FixedLookup extends Lookup {
         private final ZoneId zone;
@@ -476,7 +476,7 @@ public abstract class LocalTimeOffset {
      * Looks up transitions by checking whether the date is after the start
      * of each transition. Simple so fast for small numbers of transitions.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinkedListLookup extends AbstractManyTransitionsLookup {
         private final LocalTimeOffset lastOffset;
@@ -514,7 +514,7 @@ public abstract class LocalTimeOffset {
      * Builds an array that can be {@link Arrays#binarySearch(long[], long)}ed
      * for the daylight savings time transitions.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class TransitionArrayLookup extends AbstractManyTransitionsLookup {
         private final LocalTimeOffset[] offsets;
@@ -577,7 +577,7 @@ public abstract class LocalTimeOffset {
     /**
      * Base class for many transitions lookup
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private abstract static class AbstractManyTransitionsLookup extends Lookup {
         protected final ZoneId zone;

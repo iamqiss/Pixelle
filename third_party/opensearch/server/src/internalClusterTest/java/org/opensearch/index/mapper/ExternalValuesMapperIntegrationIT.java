@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.geo.builders.EnvelopeBuilder;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.opensearch.test.OpenSearchIntegTestCase;
+import org.density.action.search.SearchResponse;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.geo.builders.EnvelopeBuilder;
+import org.density.common.xcontent.XContentFactory;
+import org.density.index.query.QueryBuilders;
+import org.density.plugins.Plugin;
+import org.density.search.fetch.subphase.highlight.HighlightBuilder;
+import org.density.test.DensityIntegTestCase;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ExternalValuesMapperIntegrationIT extends OpenSearchIntegTestCase {
+public class ExternalValuesMapperIntegrationIT extends DensityIntegTestCase {
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return Collections.singletonList(ExternalMapperPlugin.class);

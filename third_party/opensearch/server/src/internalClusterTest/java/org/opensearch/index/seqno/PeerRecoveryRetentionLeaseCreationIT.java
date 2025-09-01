@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.seqno;
+package org.density.index.seqno;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.NodeEnvironment;
-import org.opensearch.env.NodeMetadata;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.test.InternalTestCluster;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.UUIDs;
+import org.density.common.settings.Settings;
+import org.density.env.NodeEnvironment;
+import org.density.env.NodeMetadata;
+import org.density.index.IndexSettings;
+import org.density.test.InternalTestCluster;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.VersionUtils;
 
 import java.nio.file.Path;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.equalTo;
 
-@OpenSearchIntegTestCase.ClusterScope(numDataNodes = 0)
-public class PeerRecoveryRetentionLeaseCreationIT extends OpenSearchIntegTestCase {
+@DensityIntegTestCase.ClusterScope(numDataNodes = 0)
+public class PeerRecoveryRetentionLeaseCreationIT extends DensityIntegTestCase {
 
     @Override
     protected boolean forbidPrivateIndexSettings() {

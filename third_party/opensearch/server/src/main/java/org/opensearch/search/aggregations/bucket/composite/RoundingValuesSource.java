@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SortedNumericDocValues;
-import org.opensearch.common.Rounding;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.search.aggregations.support.ValuesSource;
+import org.density.common.Rounding;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.search.aggregations.support.ValuesSource;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ import java.io.IOException;
  * A wrapper for {@link ValuesSource.Numeric} that uses {@link Rounding} to transform the long values
  * produced by the underlying source.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RoundingValuesSource extends ValuesSource.Numeric {
     private final ValuesSource.Numeric vs;

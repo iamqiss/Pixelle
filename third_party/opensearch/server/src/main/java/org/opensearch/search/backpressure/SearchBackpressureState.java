@@ -1,14 +1,14 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure;
+package org.density.search.backpressure;
 
-import org.opensearch.common.util.TokenBucket;
+import org.density.common.util.TokenBucket;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -17,7 +17,7 @@ import java.util.function.LongSupplier;
 /**
  * Tracks the current state of task completions and cancellations.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class SearchBackpressureState implements CancellationSettingsListener {
     private final AtomicReference<TokenBucket> rateLimiter;

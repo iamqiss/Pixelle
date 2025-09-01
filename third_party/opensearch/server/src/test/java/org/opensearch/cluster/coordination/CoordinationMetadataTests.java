@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
-import org.opensearch.cluster.coordination.CoordinationMetadata.VotingConfiguration;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.set.Sets;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BufferedChecksumStreamOutput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils.CopyFunction;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfigExclusion;
+import org.density.cluster.coordination.CoordinationMetadata.VotingConfiguration;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.set.Sets;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BufferedChecksumStreamOutput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.EqualsHashCodeTestUtils.CopyFunction;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class CoordinationMetadataTests extends OpenSearchTestCase {
+public class CoordinationMetadataTests extends DensityTestCase {
 
     public void testVotingConfiguration() {
         VotingConfiguration config0 = new VotingConfiguration(Sets.newHashSet());
@@ -107,7 +107,7 @@ public class CoordinationMetadataTests extends OpenSearchTestCase {
         // Note: the explicit cast of the CopyFunction is needed for some IDE (specifically Eclipse 4.8.0) to infer the right type
         EqualsHashCodeTestUtils.checkEqualsAndHashCode(
             initialConfig,
-            (CopyFunction<VotingConfiguration>) orig -> OpenSearchTestCase.copyWriteable(
+            (CopyFunction<VotingConfiguration>) orig -> DensityTestCase.copyWriteable(
                 orig,
                 new NamedWriteableRegistry(Collections.emptyList()),
                 VotingConfiguration::new
@@ -125,7 +125,7 @@ public class CoordinationMetadataTests extends OpenSearchTestCase {
         // Note: the explicit cast of the CopyFunction is needed for some IDE (specifically Eclipse 4.8.0) to infer the right type
         EqualsHashCodeTestUtils.checkEqualsAndHashCode(
             tombstone,
-            (CopyFunction<VotingConfigExclusion>) orig -> OpenSearchTestCase.copyWriteable(
+            (CopyFunction<VotingConfigExclusion>) orig -> DensityTestCase.copyWriteable(
                 orig,
                 new NamedWriteableRegistry(Collections.emptyList()),
                 VotingConfigExclusion::new
@@ -189,7 +189,7 @@ public class CoordinationMetadataTests extends OpenSearchTestCase {
         // Note: the explicit cast of the CopyFunction is needed for some IDE (specifically Eclipse 4.8.0) to infer the right type
         EqualsHashCodeTestUtils.checkEqualsAndHashCode(
             initialMetadata,
-            (CopyFunction<CoordinationMetadata>) orig -> OpenSearchTestCase.copyWriteable(
+            (CopyFunction<CoordinationMetadata>) orig -> DensityTestCase.copyWriteable(
                 orig,
                 new NamedWriteableRegistry(Collections.emptyList()),
                 CoordinationMetadata::new
@@ -198,7 +198,7 @@ public class CoordinationMetadataTests extends OpenSearchTestCase {
                 CoordinationMetadata.Builder builder = CoordinationMetadata.builder(meta);
                 switch (randomInt(3)) {
                     case 0:
-                        builder.term(randomValueOtherThan(meta.term(), OpenSearchTestCase::randomNonNegativeLong));
+                        builder.term(randomValueOtherThan(meta.term(), DensityTestCase::randomNonNegativeLong));
                         break;
                     case 1:
                         builder.lastCommittedConfiguration(randomlyChangeVotingConfiguration(meta.getLastCommittedConfiguration()));

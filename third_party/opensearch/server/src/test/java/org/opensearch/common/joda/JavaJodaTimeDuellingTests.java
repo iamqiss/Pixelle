@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.joda;
+package org.density.common.joda;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.time.DateFormatters;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.time.FormatNames;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.common.time.DateFormatter;
+import org.density.common.time.DateFormatters;
+import org.density.common.time.DateMathParser;
+import org.density.common.time.FormatNames;
+import org.density.test.DensityTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -55,7 +55,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-public class JavaJodaTimeDuellingTests extends OpenSearchTestCase {
+public class JavaJodaTimeDuellingTests extends DensityTestCase {
     @Override
     protected boolean enableWarningsCheck() {
         return false;
@@ -127,14 +127,14 @@ public class JavaJodaTimeDuellingTests extends OpenSearchTestCase {
         // both patterns fail parsing the input text due to only 2 digits of millis. Hence full text was not parsed.
         String pattern = "yyyy-MM-dd'T'HH:mm:ss||yyyy-MM-dd'T'HH:mm:ss.SS";
         String text = "2014-06-06T12:01:02.123";
-        OpenSearchParseException e1 = expectThrows(
-            OpenSearchParseException.class,
+        DensityParseException e1 = expectThrows(
+            DensityParseException.class,
             () -> dateMathToMillis(text, DateFormatter.forPattern(pattern))
         );
         assertThat(e1.getMessage(), containsString(pattern));
         assertThat(e1.getMessage(), containsString(text));
 
-        OpenSearchParseException e2 = expectThrows(OpenSearchParseException.class, () -> dateMathToMillis(text, Joda.forPattern(pattern)));
+        DensityParseException e2 = expectThrows(DensityParseException.class, () -> dateMathToMillis(text, Joda.forPattern(pattern)));
         assertThat(e2.getMessage(), containsString(pattern));
         assertThat(e2.getMessage(), containsString(text));
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
-import org.opensearch.common.Booleans;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.common.Booleans;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.transport.PortsRange;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.common.settings.Setting.boolSetting;
-import static org.opensearch.common.settings.Setting.intSetting;
-import static org.opensearch.common.settings.Setting.listSetting;
+import static org.density.common.settings.Setting.boolSetting;
+import static org.density.common.settings.Setting.intSetting;
+import static org.density.common.settings.Setting.listSetting;
 
 /**
  * Transport settings for http connections
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class HttpTransportSettings {
 

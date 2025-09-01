@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories.blobstore;
+package org.density.repositories.blobstore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,123 +45,123 @@ import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.RateLimiter;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.Version;
-import org.opensearch.action.ActionRunnable;
-import org.opensearch.action.StepListener;
-import org.opensearch.action.support.GroupedActionListener;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.ClusterStateUpdateTask;
-import org.opensearch.cluster.RepositoryCleanupInProgress;
-import org.opensearch.cluster.SnapshotDeletionsInProgress;
-import org.opensearch.cluster.SnapshotsInProgress;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.RepositoriesMetadata;
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterManagerTaskThrottler;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.Priority;
-import org.opensearch.common.Randomness;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.EncryptedBlobStore;
-import org.opensearch.common.blobstore.fs.FsBlobContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeInputStream;
-import org.opensearch.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.compress.DeflateCompressor;
-import org.opensearch.common.io.Streams;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lifecycle.AbstractLifecycleComponent;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.lucene.store.InputStreamIndexInput;
-import org.opensearch.common.metrics.CounterMetric;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.compress.Compressor;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.compress.NotXContentException;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.index.snapshots.IndexShardSnapshotFailedException;
-import org.opensearch.core.util.BytesRefUtils;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.index.remote.RemoteStorePathStrategy;
-import org.opensearch.index.remote.RemoteStorePathStrategy.PathInput;
-import org.opensearch.index.remote.RemoteStorePathStrategy.SnapshotShardPathInput;
-import org.opensearch.index.remote.RemoteStoreUtils;
-import org.opensearch.index.remote.RemoteTranslogTransferTracker;
-import org.opensearch.index.snapshots.IndexShardRestoreFailedException;
-import org.opensearch.index.snapshots.IndexShardSnapshotStatus;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshots;
-import org.opensearch.index.snapshots.blobstore.IndexShardSnapshot;
-import org.opensearch.index.snapshots.blobstore.RateLimitingInputStream;
-import org.opensearch.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
-import org.opensearch.index.snapshots.blobstore.SlicedInputStream;
-import org.opensearch.index.snapshots.blobstore.SnapshotFiles;
-import org.opensearch.index.store.RemoteSegmentStoreDirectory;
-import org.opensearch.index.store.RemoteSegmentStoreDirectoryFactory;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.StoreFileMetadata;
-import org.opensearch.index.store.lockmanager.FileLockInfo;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManager;
-import org.opensearch.index.store.lockmanager.RemoteStoreLockManagerFactory;
-import org.opensearch.index.translog.RemoteFsTimestampAwareTranslog;
-import org.opensearch.index.translog.RemoteFsTranslog;
-import org.opensearch.index.translog.transfer.FileTransferTracker;
-import org.opensearch.index.translog.transfer.TranslogTransferManager;
-import org.opensearch.indices.RemoteStoreSettings;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.monitor.jvm.JvmInfo;
-import org.opensearch.node.remotestore.RemoteStorePinnedTimestampService;
-import org.opensearch.repositories.IndexId;
-import org.opensearch.repositories.IndexMetaDataGenerations;
-import org.opensearch.repositories.Repository;
-import org.opensearch.repositories.RepositoryCleanupResult;
-import org.opensearch.repositories.RepositoryData;
-import org.opensearch.repositories.RepositoryException;
-import org.opensearch.repositories.RepositoryOperation;
-import org.opensearch.repositories.RepositoryShardId;
-import org.opensearch.repositories.RepositoryStats;
-import org.opensearch.repositories.RepositoryVerificationException;
-import org.opensearch.repositories.ShardGenerations;
-import org.opensearch.snapshots.AbortedSnapshotException;
-import org.opensearch.snapshots.SnapshotException;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.snapshots.SnapshotMissingException;
-import org.opensearch.snapshots.SnapshotShardPaths;
-import org.opensearch.snapshots.SnapshotShardPaths.ShardInfo;
-import org.opensearch.snapshots.SnapshotsService;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.ExceptionsHelper;
+import org.density.Version;
+import org.density.action.ActionRunnable;
+import org.density.action.StepListener;
+import org.density.action.support.GroupedActionListener;
+import org.density.cluster.ClusterState;
+import org.density.cluster.ClusterStateUpdateTask;
+import org.density.cluster.RepositoryCleanupInProgress;
+import org.density.cluster.SnapshotDeletionsInProgress;
+import org.density.cluster.SnapshotsInProgress;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.RepositoriesMetadata;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterManagerTaskThrottler;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.Numbers;
+import org.density.common.Priority;
+import org.density.common.Randomness;
+import org.density.common.SetOnce;
+import org.density.common.UUIDs;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.EncryptedBlobStore;
+import org.density.common.blobstore.fs.FsBlobContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeInputStream;
+import org.density.common.blobstore.transfer.stream.RateLimitingOffsetRangeInputStream;
+import org.density.common.collect.Tuple;
+import org.density.common.compress.DeflateCompressor;
+import org.density.common.io.Streams;
+import org.density.common.lease.Releasable;
+import org.density.common.lifecycle.AbstractLifecycleComponent;
+import org.density.common.lucene.Lucene;
+import org.density.common.lucene.store.InputStreamIndexInput;
+import org.density.common.metrics.CounterMetric;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.compress.Compressor;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.compress.NotXContentException;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.index.snapshots.IndexShardSnapshotFailedException;
+import org.density.core.util.BytesRefUtils;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.MapperService;
+import org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.index.remote.RemoteStorePathStrategy;
+import org.density.index.remote.RemoteStorePathStrategy.PathInput;
+import org.density.index.remote.RemoteStorePathStrategy.SnapshotShardPathInput;
+import org.density.index.remote.RemoteStoreUtils;
+import org.density.index.remote.RemoteTranslogTransferTracker;
+import org.density.index.snapshots.IndexShardRestoreFailedException;
+import org.density.index.snapshots.IndexShardSnapshotStatus;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot;
+import org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshots;
+import org.density.index.snapshots.blobstore.IndexShardSnapshot;
+import org.density.index.snapshots.blobstore.RateLimitingInputStream;
+import org.density.index.snapshots.blobstore.RemoteStoreShardShallowCopySnapshot;
+import org.density.index.snapshots.blobstore.SlicedInputStream;
+import org.density.index.snapshots.blobstore.SnapshotFiles;
+import org.density.index.store.RemoteSegmentStoreDirectory;
+import org.density.index.store.RemoteSegmentStoreDirectoryFactory;
+import org.density.index.store.Store;
+import org.density.index.store.StoreFileMetadata;
+import org.density.index.store.lockmanager.FileLockInfo;
+import org.density.index.store.lockmanager.RemoteStoreLockManager;
+import org.density.index.store.lockmanager.RemoteStoreLockManagerFactory;
+import org.density.index.translog.RemoteFsTimestampAwareTranslog;
+import org.density.index.translog.RemoteFsTranslog;
+import org.density.index.translog.transfer.FileTransferTracker;
+import org.density.index.translog.transfer.TranslogTransferManager;
+import org.density.indices.RemoteStoreSettings;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.indices.recovery.RecoveryState;
+import org.density.monitor.jvm.JvmInfo;
+import org.density.node.remotestore.RemoteStorePinnedTimestampService;
+import org.density.repositories.IndexId;
+import org.density.repositories.IndexMetaDataGenerations;
+import org.density.repositories.Repository;
+import org.density.repositories.RepositoryCleanupResult;
+import org.density.repositories.RepositoryData;
+import org.density.repositories.RepositoryException;
+import org.density.repositories.RepositoryOperation;
+import org.density.repositories.RepositoryShardId;
+import org.density.repositories.RepositoryStats;
+import org.density.repositories.RepositoryVerificationException;
+import org.density.repositories.ShardGenerations;
+import org.density.snapshots.AbortedSnapshotException;
+import org.density.snapshots.SnapshotException;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotInfo;
+import org.density.snapshots.SnapshotMissingException;
+import org.density.snapshots.SnapshotShardPaths;
+import org.density.snapshots.SnapshotShardPaths.ShardInfo;
+import org.density.snapshots.SnapshotsService;
+import org.density.threadpool.ThreadPool;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -196,11 +196,11 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static org.opensearch.common.unit.MemorySizeValue.parseBytesSizeValueOrHeapRatio;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_COMPOSITE_1;
-import static org.opensearch.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo.canonicalName;
-import static org.opensearch.repositories.blobstore.ChecksumBlobStoreFormat.SNAPSHOT_ONLY_FORMAT_PARAMS;
-import static org.opensearch.snapshots.SnapshotShardPaths.getIndexId;
+import static org.density.common.unit.MemorySizeValue.parseBytesSizeValueOrHeapRatio;
+import static org.density.index.remote.RemoteStoreEnums.PathHashAlgorithm.FNV_1A_COMPOSITE_1;
+import static org.density.index.snapshots.blobstore.BlobStoreIndexShardSnapshot.FileInfo.canonicalName;
+import static org.density.repositories.blobstore.ChecksumBlobStoreFormat.SNAPSHOT_ONLY_FORMAT_PARAMS;
+import static org.density.snapshots.SnapshotShardPaths.getIndexId;
 
 /**
  * BlobStore - based implementation of Snapshot Repository
@@ -209,9 +209,9 @@ import static org.opensearch.snapshots.SnapshotShardPaths.getIndexId;
  * {@link #createBlobStore()}.
  * </p>
  * For in depth documentation on how exactly implementations of this class interact with the snapshot functionality please refer to the
- * documentation of the package {@link org.opensearch.repositories.blobstore}.
+ * documentation of the package {@link org.density.repositories.blobstore}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class BlobStoreRepository extends AbstractLifecycleComponent implements Repository {
     private static final Logger logger = LogManager.getLogger(BlobStoreRepository.class);
@@ -1652,7 +1652,7 @@ public abstract class BlobStoreRepository extends AbstractLifecycleComponent imp
             // directory. this issue could even happen in cases of shard level remote store data cleanup which also
             // happens asynchronously. in long term, we have plans to implement remote store GC poller mechanism which
             // will take care of such stale data.
-            // related issue: https://github.com/opensearch-project/OpenSearch/issues/8469
+            // related issue: https://github.com/density-project/Density/issues/8469
             RemoteSegmentStoreDirectoryFactory remoteDirectoryFactory = new RemoteSegmentStoreDirectoryFactory(
                 remoteStoreLockManagerFactory.getRepositoriesService(),
                 threadPool,

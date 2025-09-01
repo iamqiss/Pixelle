@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
 import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.Operations;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.tasks.TaskResultsService;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.collect.Tuple;
+import org.density.common.regex.Regex;
+import org.density.tasks.TaskResultsService;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,14 +27,14 @@ import java.util.stream.Collectors;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.tasks.TaskResultsService.TASK_INDEX;
+import static org.density.tasks.TaskResultsService.TASK_INDEX;
 
 /**
  * This class holds the {@link SystemIndexDescriptor} objects that represent system indices the
  * node knows about. This class also contains static methods that identify if index expressions match
  * registered system index patterns
  *
- * @opensearch.api
+ * @density.api
  */
 @ExperimentalApi
 public class SystemIndexRegistry {

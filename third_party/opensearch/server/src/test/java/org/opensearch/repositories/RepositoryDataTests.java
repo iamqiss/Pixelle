@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,26 +26,26 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.remote.RemoteStoreEnums.PathType;
-import org.opensearch.snapshots.SnapshotId;
-import org.opensearch.snapshots.SnapshotState;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.UUIDs;
+import org.density.common.xcontent.XContentType;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.remote.RemoteStoreEnums.PathType;
+import org.density.snapshots.SnapshotId;
+import org.density.snapshots.SnapshotState;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,9 +61,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.FIXED;
-import static org.opensearch.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
-import static org.opensearch.repositories.RepositoryData.EMPTY_REPO_GEN;
+import static org.density.index.remote.RemoteStoreEnums.PathType.FIXED;
+import static org.density.index.remote.RemoteStoreEnums.PathType.HASHED_PREFIX;
+import static org.density.repositories.RepositoryData.EMPTY_REPO_GEN;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -71,7 +71,7 @@ import static org.hamcrest.Matchers.greaterThan;
 /**
  * Tests for the {@link RepositoryData} class.
  */
-public class RepositoryDataTests extends OpenSearchTestCase {
+public class RepositoryDataTests extends DensityTestCase {
 
     public void testEqualsAndHashCode() {
         RepositoryData repositoryData1 = generateRandomRepoData(FIXED.getCode());
@@ -284,8 +284,8 @@ public class RepositoryDataTests extends OpenSearchTestCase {
         corruptedRepositoryData.snapshotsToXContent(corruptedBuilder, Version.CURRENT);
 
         try (XContentParser xParser = createParser(corruptedBuilder)) {
-            OpenSearchParseException e = expectThrows(
-                OpenSearchParseException.class,
+            DensityParseException e = expectThrows(
+                DensityParseException.class,
                 () -> RepositoryData.snapshotsFromXContent(xParser, corruptedRepositoryData.getGenId())
             );
             assertThat(
@@ -330,8 +330,8 @@ public class RepositoryDataTests extends OpenSearchTestCase {
         builder.endObject();
 
         try (XContentParser xParser = createParser(builder)) {
-            OpenSearchParseException e = expectThrows(
-                OpenSearchParseException.class,
+            DensityParseException e = expectThrows(
+                DensityParseException.class,
                 () -> RepositoryData.snapshotsFromXContent(xParser, randomNonNegativeLong())
             );
             assertThat(

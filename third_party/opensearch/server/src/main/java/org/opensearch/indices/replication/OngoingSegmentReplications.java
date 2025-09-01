@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.replication;
+package org.density.indices.replication;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.recovery.FileChunkWriter;
-import org.opensearch.indices.recovery.RecoverySettings;
+import org.density.DensityException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.index.shard.ShardId;
+import org.density.index.IndexService;
+import org.density.index.shard.IndexShard;
+import org.density.indices.IndicesService;
+import org.density.indices.recovery.FileChunkWriter;
+import org.density.indices.recovery.RecoverySettings;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * Manages references to ongoing segrep events on a node.
  * Each replica will have a new {@link SegmentReplicationSourceHandler} created when starting replication.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class OngoingSegmentReplications {
 
@@ -66,7 +66,7 @@ class OngoingSegmentReplications {
         final SegmentReplicationSourceHandler handler = allocationIdToHandlers.get(request.getTargetAllocationId());
         if (handler != null) {
             if (handler.isReplicating()) {
-                throw new OpenSearchException(
+                throw new DensityException(
                     "Replication to shard {}, on node {} has already started",
                     request.getCheckpoint().getShardId(),
                     request.getTargetNode()

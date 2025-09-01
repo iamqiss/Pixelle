@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.restore;
+package org.density.action.admin.cluster.snapshots.restore;
 
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.support.IndicesOptions;
+import org.density.action.support.clustermanager.ClusterManagerNodeOperationRequestBuilder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentType;
+import org.density.transport.client.DensityClient;
 
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Restore snapshot request builder
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RestoreSnapshotRequestBuilder extends ClusterManagerNodeOperationRequestBuilder<
@@ -56,14 +56,14 @@ public class RestoreSnapshotRequestBuilder extends ClusterManagerNodeOperationRe
     /**
      * Constructs new restore snapshot request builder
      */
-    public RestoreSnapshotRequestBuilder(OpenSearchClient client, RestoreSnapshotAction action) {
+    public RestoreSnapshotRequestBuilder(DensityClient client, RestoreSnapshotAction action) {
         super(client, action, new RestoreSnapshotRequest());
     }
 
     /**
      * Constructs new restore snapshot request builder with specified repository and snapshot names
      */
-    public RestoreSnapshotRequestBuilder(OpenSearchClient client, RestoreSnapshotAction action, String repository, String name) {
+    public RestoreSnapshotRequestBuilder(DensityClient client, RestoreSnapshotAction action, String repository, String name) {
         super(client, action, new RestoreSnapshotRequest(repository, name));
     }
 

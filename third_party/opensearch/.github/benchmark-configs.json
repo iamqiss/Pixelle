@@ -1,5 +1,5 @@
 {
-  "name": "Cluster and opensearch-benchmark configurations",
+  "name": "Cluster and density-benchmark configurations",
   "id_1": {
     "description": "Indexing only configuration for NYC_TAXIS workload",
     "supported_major_versions": ["3"],
@@ -161,7 +161,7 @@
       "SINGLE_NODE_CLUSTER": "true",
       "MIN_DISTRIBUTION": "true",
       "TEST_WORKLOAD": "big5",
-      "ADDITIONAL_CONFIG": "opensearch.experimental.feature.approximate_point_range_query.enabled:true",
+      "ADDITIONAL_CONFIG": "density.experimental.feature.approximate_point_range_query.enabled:true",
       "WORKLOAD_PARAMS": "{\"snapshot_repo_name\":\"benchmark-workloads-repo-3x\",\"snapshot_bucket_name\":\"benchmark-workload-snapshots\",\"snapshot_region\":\"us-east-1\",\"snapshot_base_path\":\"workload-snapshots-3x\",\"snapshot_name\":\"big5_1_shard_single_client\"}",
       "CAPTURE_NODE_STAT": "true",
       "TEST_PROCEDURE": "restore-from-snapshot"

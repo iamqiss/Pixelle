@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.codec;
+package org.density.index.codec;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.codecs.Codec;
@@ -38,26 +38,26 @@ import org.apache.lucene.codecs.DocValuesFormat;
 import org.apache.lucene.codecs.PostingsFormat;
 import org.apache.lucene.codecs.lucene101.Lucene101Codec;
 import org.apache.lucene.codecs.lucene90.Lucene90DocValuesFormat;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.index.codec.fuzzy.FuzzyFilterPostingsFormat;
-import org.opensearch.index.codec.fuzzy.FuzzySetFactory;
-import org.opensearch.index.codec.fuzzy.FuzzySetParameters;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.IdFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
+import org.density.common.lucene.Lucene;
+import org.density.index.codec.fuzzy.FuzzyFilterPostingsFormat;
+import org.density.index.codec.fuzzy.FuzzySetFactory;
+import org.density.index.codec.fuzzy.FuzzySetParameters;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.IdFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
 
 import java.util.Map;
 
 /**
  * {@link PerFieldMappingPostingFormatCodec This postings format} is the default
- * {@link PostingsFormat} for OpenSearch. It utilizes the
+ * {@link PostingsFormat} for Density. It utilizes the
  * {@link MapperService} to lookup a {@link PostingsFormat} per field. This
  * allows users to change the low level postings format for individual fields
  * per index in real time via the mapping API. If no specific postings format is
  * configured for a specific field the default postings format is used.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PerFieldMappingPostingFormatCodec extends Lucene101Codec {
     private final Logger logger;

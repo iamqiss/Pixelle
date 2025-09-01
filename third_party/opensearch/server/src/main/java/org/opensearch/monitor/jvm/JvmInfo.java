@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.jvm;
+package org.density.monitor.jvm;
 
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.service.ReportingService;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.common.Booleans;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.service.ReportingService;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.lang.management.GarbageCollectorMXBean;
@@ -59,7 +59,7 @@ import java.util.Map;
 /**
  * Holds information about the JVM
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class JvmInfo implements ReportingService.Info {
 
@@ -170,7 +170,7 @@ public class JvmInfo implements ReportingService.Info {
 
         }
 
-        final boolean bundledJdk = Booleans.parseBoolean(System.getProperty("opensearch.bundled_jdk", Boolean.FALSE.toString()));
+        final boolean bundledJdk = Booleans.parseBoolean(System.getProperty("density.bundled_jdk", Boolean.FALSE.toString()));
         final Boolean usingBundledJdkOrJre = bundledJdk ? usingBundledJdkOrJre() : null;
 
         INSTANCE = new JvmInfo(
@@ -596,7 +596,7 @@ public class JvmInfo implements ReportingService.Info {
     /**
      * Memory information.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Mem implements Writeable {
 

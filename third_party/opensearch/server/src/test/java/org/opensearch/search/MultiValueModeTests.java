@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.index.DocValues;
@@ -41,20 +41,20 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.util.BitSetIterator;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.FixedBitSet;
-import org.opensearch.common.Numbers;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.fielddata.AbstractBinaryDocValues;
-import org.opensearch.index.fielddata.AbstractNumericDocValues;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
-import org.opensearch.index.fielddata.AbstractSortedNumericDocValues;
-import org.opensearch.index.fielddata.AbstractSortedSetDocValues;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedBinaryDocValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericUnsignedLongValues;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.Numbers;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.fielddata.AbstractBinaryDocValues;
+import org.density.index.fielddata.AbstractNumericDocValues;
+import org.density.index.fielddata.AbstractSortedDocValues;
+import org.density.index.fielddata.AbstractSortedNumericDocValues;
+import org.density.index.fielddata.AbstractSortedSetDocValues;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedBinaryDocValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.SortedNumericUnsignedLongValues;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -64,7 +64,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class MultiValueModeTests extends OpenSearchTestCase {
+public class MultiValueModeTests extends DensityTestCase {
 
     @FunctionalInterface
     private interface Supplier<T> {

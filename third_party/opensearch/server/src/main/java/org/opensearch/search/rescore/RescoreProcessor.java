@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.rescore;
+package org.density.search.rescore;
 
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.search.internal.SearchContext;
+import org.density.DensityException;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 
 /**
  * RescoreProcessor of a search request, used to run potentially expensive scoring models against the top matching documents.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RescoreProcessor {
 
@@ -62,7 +62,7 @@ public class RescoreProcessor {
             context.queryResult()
                 .topDocs(new TopDocsAndMaxScore(topDocs, topDocs.scoreDocs[0].score), context.queryResult().sortValueFormats());
         } catch (IOException e) {
-            throw new OpenSearchException("Rescore Phase Failed", e);
+            throw new DensityException("Rescore Phase Failed", e);
         }
     }
 

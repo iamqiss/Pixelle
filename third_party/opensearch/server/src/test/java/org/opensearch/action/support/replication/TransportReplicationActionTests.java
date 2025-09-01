@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,81 +26,81 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
 import org.apache.lucene.store.AlreadyClosedException;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.action.UnavailableShardsException;
-import org.opensearch.action.admin.indices.close.CloseIndexRequest;
-import org.opensearch.action.admin.indices.create.CreateIndexRequest;
-import org.opensearch.action.support.ActionFilters;
-import org.opensearch.action.support.ActionTestUtils;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.PlainActionFuture;
-import org.opensearch.action.support.replication.ReplicationOperation.ReplicaResponse;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.OpenSearchAllocationTestCase;
-import org.opensearch.cluster.action.shard.ShardStateAction;
-import org.opensearch.cluster.block.ClusterBlock;
-import org.opensearch.cluster.block.ClusterBlockException;
-import org.opensearch.cluster.block.ClusterBlockLevel;
-import org.opensearch.cluster.block.ClusterBlocks;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.cluster.routing.AllocationId;
-import org.opensearch.cluster.routing.IndexShardRoutingTable;
-import org.opensearch.cluster.routing.RoutingNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.cluster.routing.ShardRoutingState;
-import org.opensearch.cluster.routing.TestShardRouting;
-import org.opensearch.cluster.routing.allocation.AllocationService;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.indices.breaker.NoneCircuitBreakerService;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.remote.RemoteStoreTestsHelper;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.shard.IndexShardClosedException;
-import org.opensearch.index.shard.IndexShardState;
-import org.opensearch.index.shard.ReplicationGroup;
-import org.opensearch.index.shard.ShardNotFoundException;
-import org.opensearch.index.shard.ShardNotInPrimaryModeException;
-import org.opensearch.indices.IndexClosedException;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.cluster.ClusterStateChanges;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.transport.CapturingTransport;
-import org.opensearch.test.transport.MockTransportService;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.TestTransportChannel;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportService;
-import org.opensearch.transport.client.transport.NoNodeAvailableException;
-import org.opensearch.transport.nio.MockNioTransport;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.action.UnavailableShardsException;
+import org.density.action.admin.indices.close.CloseIndexRequest;
+import org.density.action.admin.indices.create.CreateIndexRequest;
+import org.density.action.support.ActionFilters;
+import org.density.action.support.ActionTestUtils;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.PlainActionFuture;
+import org.density.action.support.replication.ReplicationOperation.ReplicaResponse;
+import org.density.cluster.ClusterState;
+import org.density.cluster.DensityAllocationTestCase;
+import org.density.cluster.action.shard.ShardStateAction;
+import org.density.cluster.block.ClusterBlock;
+import org.density.cluster.block.ClusterBlockException;
+import org.density.cluster.block.ClusterBlockLevel;
+import org.density.cluster.block.ClusterBlocks;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.cluster.routing.AllocationId;
+import org.density.cluster.routing.IndexShardRoutingTable;
+import org.density.cluster.routing.RoutingNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRoutingState;
+import org.density.cluster.routing.TestShardRouting;
+import org.density.cluster.routing.allocation.AllocationService;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.lease.Releasable;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.Settings;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.Index;
+import org.density.core.index.shard.ShardId;
+import org.density.core.indices.breaker.NoneCircuitBreakerService;
+import org.density.core.rest.RestStatus;
+import org.density.core.transport.TransportResponse;
+import org.density.index.IndexNotFoundException;
+import org.density.index.IndexService;
+import org.density.index.remote.RemoteStoreTestsHelper;
+import org.density.index.shard.IndexShard;
+import org.density.index.shard.IndexShardClosedException;
+import org.density.index.shard.IndexShardState;
+import org.density.index.shard.ReplicationGroup;
+import org.density.index.shard.ShardNotFoundException;
+import org.density.index.shard.ShardNotInPrimaryModeException;
+import org.density.indices.IndexClosedException;
+import org.density.indices.IndicesService;
+import org.density.indices.cluster.ClusterStateChanges;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.transport.CapturingTransport;
+import org.density.test.transport.MockTransportService;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.TestTransportChannel;
+import org.density.transport.Transport;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportService;
+import org.density.transport.client.transport.NoNodeAvailableException;
+import org.density.transport.nio.MockNioTransport;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -123,11 +123,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singleton;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.state;
-import static org.opensearch.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_WAIT_FOR_ACTIVE_SHARDS;
-import static org.opensearch.test.ClusterServiceUtils.createClusterService;
-import static org.opensearch.test.ClusterServiceUtils.setState;
+import static org.density.action.support.replication.ClusterStateCreationUtils.state;
+import static org.density.action.support.replication.ClusterStateCreationUtils.stateWithActivePrimary;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_WAIT_FOR_ACTIVE_SHARDS;
+import static org.density.test.ClusterServiceUtils.createClusterService;
+import static org.density.test.ClusterServiceUtils.setState;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
@@ -147,7 +147,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TransportReplicationActionTests extends OpenSearchTestCase {
+public class TransportReplicationActionTests extends DensityTestCase {
 
     private static final ShardId NO_SHARD_ID = null;
 
@@ -205,7 +205,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
         shardStateAction = new ShardStateAction(clusterService, transportService, null, null, threadPool);
         action = new TestAction(Settings.EMPTY, "internal:testAction", transportService, clusterService, shardStateAction, threadPool);
         Metadata metadata = Metadata.builder().build();
-        ClusterState clusterState = ClusterState.builder(org.opensearch.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
+        ClusterState clusterState = ClusterState.builder(org.density.cluster.ClusterName.CLUSTER_NAME_SETTING.getDefault(Settings.EMPTY))
             .metadata(metadata)
             .nodes(clusterService.state().nodes())
             .build();
@@ -563,8 +563,8 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             .shardRoutingTable(shardId)
             .shardsWithState(ShardRoutingState.INITIALIZING)
             .get(0);
-        AllocationService allocationService = OpenSearchAllocationTestCase.createAllocationService();
-        ClusterState updatedState = OpenSearchAllocationTestCase.startShardsAndReroute(allocationService, state, relocationTarget);
+        AllocationService allocationService = DensityAllocationTestCase.createAllocationService();
+        ClusterState updatedState = DensityAllocationTestCase.startShardsAndReroute(allocationService, state, relocationTarget);
 
         setState(clusterService, updatedState);
         logger.debug("--> relocation complete state:\n{}", clusterService.state());
@@ -682,7 +682,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             assertThat(capturedRequests[0].action, equalTo("internal:testAction[p]"));
             assertPhase(task, "waiting_on_primary");
             transport.handleRemoteError(capturedRequests[0].requestId, randomRetryPrimaryException(shardId));
-            assertListenerThrows("must throw index not found exception", listener, OpenSearchException.class);
+            assertListenerThrows("must throw index not found exception", listener, DensityException.class);
             assertPhase(task, "failed");
         } else {
             assertThat(listener.isDone(), equalTo(false));
@@ -849,7 +849,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
         TestAction.PrimaryShardReference primary = action.new PrimaryShardReference(shard, releasable);
         final Request request = new Request(NO_SHARD_ID);
         shard.runUnderPrimaryPermit(() -> primary.perform(request, ActionTestUtils.assertNoFailureListener(r -> {
-            final OpenSearchException exception = new OpenSearchException("testing");
+            final DensityException exception = new DensityException("testing");
             primary.failShard("test", exception);
 
             verify(shard).failShard("test", exception);
@@ -912,9 +912,9 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             assertTrue(listener.isDone());
             assertThat(listener.get(), equalTo(response));
         } else if (randomBoolean()) {
-            transport.handleRemoteError(captures[0].requestId, new OpenSearchException("simulated"));
+            transport.handleRemoteError(captures[0].requestId, new DensityException("simulated"));
             assertTrue(listener.isDone());
-            assertListenerThrows("listener should reflect remote error", listener, OpenSearchException.class);
+            assertListenerThrows("listener should reflect remote error", listener, DensityException.class);
         } else {
             transport.handleError(captures[0].requestId, new TransportException("simulated"));
             assertTrue(listener.isDone());
@@ -927,7 +927,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             replica,
             primaryTerm,
             "test",
-            new OpenSearchException("simulated"),
+            new DensityException("simulated"),
             ActionListener.wrap(r -> success.set(true), failure::set)
         );
         CapturingTransport.CapturedRequest[] shardFailedRequests = transport.getCapturedRequestsAndClear();
@@ -1026,9 +1026,9 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
             ) {
                 assertIndexShardCounter(1);
                 if (throwExceptionOnRun) {
-                    throw new OpenSearchException("simulated exception, during shardOperationOnPrimary");
+                    throw new DensityException("simulated exception, during shardOperationOnPrimary");
                 } else if (respondWithError) {
-                    listener.onFailure(new OpenSearchException("simulated exception, as a response"));
+                    listener.onFailure(new DensityException("simulated exception, as a response"));
                 } else {
                     super.shardOperationOnPrimary(request, primary, listener);
                 }
@@ -1047,7 +1047,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
         } catch (ExecutionException e) {
             if (throwExceptionOnRun || respondWithError) {
                 Throwable cause = e.getCause();
-                assertThat(cause, instanceOf(OpenSearchException.class));
+                assertThat(cause, instanceOf(DensityException.class));
                 assertThat(cause.getMessage(), containsString("simulated"));
             } else {
                 throw e;
@@ -1077,7 +1077,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
                     assertIndexShardCounter(1);
                     assertPhase(task, "replica");
                     if (throwException) {
-                        throw new OpenSearchException("simulated");
+                        throw new DensityException("simulated");
                     }
                     return new ReplicaResult();
                 });
@@ -1095,7 +1095,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
                 createTransportChannel(new PlainActionFuture<>()),
                 task
             );
-        } catch (OpenSearchException e) {
+        } catch (DensityException e) {
             assertThat(e.getMessage(), containsString("simulated"));
             assertTrue(throwException);
         }
@@ -1221,7 +1221,7 @@ public class TransportReplicationActionTests extends OpenSearchTestCase {
     }
 
     /**
-     * test throwing a {@link org.opensearch.action.support.replication.TransportReplicationAction.RetryOnReplicaException}
+     * test throwing a {@link org.density.action.support.replication.TransportReplicationAction.RetryOnReplicaException}
      * causes a retry
      */
     public void testRetryOnReplica() throws Exception {

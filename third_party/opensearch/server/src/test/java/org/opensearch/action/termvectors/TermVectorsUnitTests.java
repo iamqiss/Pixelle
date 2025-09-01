@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.termvectors;
+package org.density.action.termvectors;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -49,20 +49,20 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.opensearch.LegacyESVersion;
-import org.opensearch.action.termvectors.TermVectorsRequest.Flag;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.InputStreamStreamInput;
-import org.opensearch.core.common.io.stream.OutputStreamStreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.rest.action.document.RestTermVectorsAction;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.StreamsUtils;
+import org.density.LegacyESVersion;
+import org.density.action.termvectors.TermVectorsRequest.Flag;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.InputStreamStreamInput;
+import org.density.core.common.io.stream.OutputStreamStreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.rest.action.document.RestTermVectorsAction;
+import org.density.test.DensityTestCase;
+import org.density.test.StreamsUtils;
 import org.hamcrest.Matchers;
 
 import java.io.ByteArrayInputStream;
@@ -75,7 +75,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class TermVectorsUnitTests extends OpenSearchTestCase {
+public class TermVectorsUnitTests extends DensityTestCase {
     public void testStreamResponse() throws Exception {
         TermVectorsResponse outResponse = new TermVectorsResponse("a", "c");
         outResponse.setExists(true);
@@ -255,9 +255,9 @@ public class TermVectorsUnitTests extends OpenSearchTestCase {
             request.writeTo(out);
 
             // read
-            ByteArrayInputStream opensearchInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
-            InputStreamStreamInput opensearchBuffer = new InputStreamStreamInput(opensearchInBuffer);
-            TermVectorsRequest req2 = new TermVectorsRequest(opensearchBuffer);
+            ByteArrayInputStream densityInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
+            InputStreamStreamInput densityBuffer = new InputStreamStreamInput(densityInBuffer);
+            TermVectorsRequest req2 = new TermVectorsRequest(densityBuffer);
 
             assertThat(request.offsets(), equalTo(req2.offsets()));
             assertThat(request.fieldStatistics(), equalTo(req2.fieldStatistics()));
@@ -290,20 +290,20 @@ public class TermVectorsUnitTests extends OpenSearchTestCase {
             request.writeTo(out);
 
             // First check the type on the stream was written as "_doc" by manually parsing the stream until the type
-            ByteArrayInputStream opensearchInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
-            InputStreamStreamInput opensearchBuffer = new InputStreamStreamInput(opensearchInBuffer);
-            TaskId.readFromStream(opensearchBuffer);
-            if (opensearchBuffer.readBoolean()) {
-                new ShardId(opensearchBuffer);
+            ByteArrayInputStream densityInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
+            InputStreamStreamInput densityBuffer = new InputStreamStreamInput(densityInBuffer);
+            TaskId.readFromStream(densityBuffer);
+            if (densityBuffer.readBoolean()) {
+                new ShardId(densityBuffer);
             }
-            opensearchBuffer.readOptionalString();
-            assertThat(opensearchBuffer.readString(), equalTo("_doc"));
+            densityBuffer.readOptionalString();
+            assertThat(densityBuffer.readString(), equalTo("_doc"));
 
             // now read the stream as normal to check it is parsed correct if received from an older node
-            opensearchInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
-            opensearchBuffer = new InputStreamStreamInput(opensearchInBuffer);
-            opensearchBuffer.setVersion(LegacyESVersion.fromId(7000099));
-            TermVectorsRequest req2 = new TermVectorsRequest(opensearchBuffer);
+            densityInBuffer = new ByteArrayInputStream(outBuffer.toByteArray());
+            densityBuffer = new InputStreamStreamInput(densityInBuffer);
+            densityBuffer.setVersion(LegacyESVersion.fromId(7000099));
+            TermVectorsRequest req2 = new TermVectorsRequest(densityBuffer);
 
             assertThat(request.offsets(), equalTo(req2.offsets()));
             assertThat(request.fieldStatistics(), equalTo(req2.fieldStatistics()));
@@ -318,13 +318,13 @@ public class TermVectorsUnitTests extends OpenSearchTestCase {
     }
 
     public void testMultiParser() throws Exception {
-        byte[] bytes = StreamsUtils.copyToBytesFromClasspath("/org/opensearch/action/termvectors/multiRequest1.json");
+        byte[] bytes = StreamsUtils.copyToBytesFromClasspath("/org/density/action/termvectors/multiRequest1.json");
         XContentParser data = createParser(JsonXContent.jsonXContent, bytes);
         MultiTermVectorsRequest request = new MultiTermVectorsRequest();
         request.add(new TermVectorsRequest(), data);
         checkParsedParameters(request);
 
-        bytes = StreamsUtils.copyToBytesFromClasspath("/org/opensearch/action/termvectors/multiRequest2.json");
+        bytes = StreamsUtils.copyToBytesFromClasspath("/org/density/action/termvectors/multiRequest2.json");
         data = createParser(JsonXContent.jsonXContent, new BytesArray(bytes));
         request = new MultiTermVectorsRequest();
         request.add(new TermVectorsRequest(), data);
@@ -354,7 +354,7 @@ public class TermVectorsUnitTests extends OpenSearchTestCase {
 
     // issue #12311
     public void testMultiParserFilter() throws Exception {
-        byte[] bytes = StreamsUtils.copyToBytesFromClasspath("/org/opensearch/action/termvectors/multiRequest3.json");
+        byte[] bytes = StreamsUtils.copyToBytesFromClasspath("/org/density/action/termvectors/multiRequest3.json");
         XContentParser data = createParser(JsonXContent.jsonXContent, bytes);
         MultiTermVectorsRequest request = new MultiTermVectorsRequest();
         request.add(new TermVectorsRequest(), data);

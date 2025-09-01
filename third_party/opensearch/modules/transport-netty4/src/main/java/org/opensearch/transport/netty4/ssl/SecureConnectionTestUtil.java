@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.transport.netty4.ssl;
+package org.density.transport.netty4.ssl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,11 +25,11 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Utility class to test if the server supports SSL connections.
- * SSL Check will be done by sending an OpenSearch Ping to see if server is replying to pings.
+ * SSL Check will be done by sending an Density Ping to see if server is replying to pings.
  * Following that a custom client hello message will be sent to the server, if the server
- * side has OpenSearchPortUnificationHandler it will reply with server hello message.
+ * side has DensityPortUnificationHandler it will reply with server hello message.
  *
- * @see <a href="https://github.com/opensearch-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/opensearch/security/ssl/util/SSLConnectionTestUtil.java">SSLConnectionTestUtil</a>
+ * @see <a href="https://github.com/density-project/security/blob/d526c9f6c2a438c14db8b413148204510b9fe2e2/src/main/java/org/density/security/ssl/util/SSLConnectionTestUtil.java">SSLConnectionTestUtil</a>
  */
 class SecureConnectionTestUtil {
     private static final Logger logger = LogManager.getLogger(SecureConnectionTestUtil.class);
@@ -39,9 +39,9 @@ class SecureConnectionTestUtil {
      */
     enum SSLConnectionTestResult {
         /**
-         * OpenSearch Ping to the server failed.
+         * Density Ping to the server failed.
          */
-        OPENSEARCH_PING_FAILED,
+        DENSITY_PING_FAILED,
         /**
          * Server does not support SSL.
          */
@@ -52,7 +52,7 @@ class SecureConnectionTestUtil {
         SSL_AVAILABLE
     }
 
-    public static final byte[] OPENSEARCH_PING_MSG = new byte[] {
+    public static final byte[] DENSITY_PING_MSG = new byte[] {
         (byte) 'E',
         (byte) 'S',
         (byte) 0xFF,
@@ -91,20 +91,20 @@ class SecureConnectionTestUtil {
     /**
      * Test connection to server by performing the below steps:
      * - Send Client Hello to check if the server replies with Server Hello which indicates that Server understands SSL
-     * - Send OpenSearch Ping to check if the server replies to the OpenSearch Ping message
+     * - Send Density Ping to check if the server replies to the Density Ping message
      *
-     * @return SSLConnectionTestResult i.e. OPENSEARCH_PING_FAILED or SSL_NOT_AVAILABLE or SSL_AVAILABLE
+     * @return SSLConnectionTestResult i.e. DENSITY_PING_FAILED or SSL_NOT_AVAILABLE or SSL_AVAILABLE
      */
     public SSLConnectionTestResult testConnection() {
         if (sendDualSSLClientHello()) {
             return SSLConnectionTestResult.SSL_AVAILABLE;
         }
 
-        if (sendOpenSearchPing()) {
+        if (sendDensityPing()) {
             return SSLConnectionTestResult.SSL_NOT_AVAILABLE;
         }
 
-        return SSLConnectionTestResult.OPENSEARCH_PING_FAILED;
+        return SSLConnectionTestResult.DENSITY_PING_FAILED;
     }
 
     private boolean sendDualSSLClientHello() {
@@ -158,7 +158,7 @@ class SecureConnectionTestUtil {
         return dualSslSupported;
     }
 
-    private boolean sendOpenSearchPing() {
+    private boolean sendDensityPing() {
         boolean pingSucceeded = false;
         Socket socket = null;
         try {
@@ -172,8 +172,8 @@ class SecureConnectionTestUtil {
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
 
-            logger.debug("Sending OpenSearch Ping to {}", host);
-            outputStream.write(OPENSEARCH_PING_MSG);
+            logger.debug("Sending Density Ping to {}", host);
+            outputStream.write(DENSITY_PING_MSG);
             outputStream.flush();
 
             int currentByte;
@@ -184,21 +184,21 @@ class SecureConnectionTestUtil {
                 byteBufIndex++;
             }
             if (byteBufIndex == 6) {
-                logger.debug("Received reply for OpenSearch Ping. from {}", host);
+                logger.debug("Received reply for Density Ping. from {}", host);
                 pingSucceeded = true;
                 for (int i = 0; i < 6; i++) {
-                    if (response[i] != OPENSEARCH_PING_MSG[i]) {
+                    if (response[i] != DENSITY_PING_MSG[i]) {
                         // Unexpected byte in response
-                        logger.error("Received unexpected byte in OpenSearch Ping reply from {}", host);
+                        logger.error("Received unexpected byte in Density Ping reply from {}", host);
                         pingSucceeded = false;
                         break;
                     }
                 }
             }
         } catch (IOException ex) {
-            logger.error("OpenSearch Ping failed for {}, exception: {}", host, ex.getMessage());
+            logger.error("Density Ping failed for {}, exception: {}", host, ex.getMessage());
         } finally {
-            logger.debug("Closing OpenSearch Ping client socket for connection to {}", host);
+            logger.debug("Closing Density Ping client socket for connection to {}", host);
             if (socket != null) {
                 try {
                     socket.close();
@@ -208,7 +208,7 @@ class SecureConnectionTestUtil {
             }
         }
 
-        logger.debug("OpenSearch Ping check to server {} result = {}", host, pingSucceeded);
+        logger.debug("Density Ping check to server {} result = {}", host, pingSucceeded);
         return pingSucceeded;
     }
 }

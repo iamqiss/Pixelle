@@ -1,29 +1,29 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.reactor;
+package org.density.transport.reactor;
 
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.network.NetworkService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.PageCacheRecycler;
-import org.opensearch.core.indices.breaker.CircuitBreakerService;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.http.HttpServerTransport;
-import org.opensearch.http.HttpServerTransport.Dispatcher;
-import org.opensearch.http.reactor.netty4.ReactorNetty4HttpServerTransport;
-import org.opensearch.plugins.NetworkPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.plugins.SecureHttpTransportSettingsProvider;
-import org.opensearch.telemetry.tracing.Tracer;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.SetOnce;
+import org.density.common.network.NetworkService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.util.BigArrays;
+import org.density.common.util.PageCacheRecycler;
+import org.density.core.indices.breaker.CircuitBreakerService;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.http.HttpServerTransport;
+import org.density.http.HttpServerTransport.Dispatcher;
+import org.density.http.reactor.netty4.ReactorNetty4HttpServerTransport;
+import org.density.plugins.NetworkPlugin;
+import org.density.plugins.Plugin;
+import org.density.plugins.SecureHttpTransportSettingsProvider;
+import org.density.telemetry.tracing.Tracer;
+import org.density.threadpool.ThreadPool;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -62,7 +62,7 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
 
     /**
      * Returns a map of {@link HttpServerTransport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
      * @param settings settings
      * @param networkService network service
      * @param bigArrays big array allocator
@@ -106,7 +106,7 @@ public class ReactorNetty4Plugin extends Plugin implements NetworkPlugin {
 
     /**
      * Returns a map of {@link HttpServerTransport} suppliers.
-     * See {@link org.opensearch.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
+     * See {@link org.density.common.network.NetworkModule#HTTP_TYPE_SETTING} to configure a specific implementation.
      * @param settings settings
      * @param networkService network service
      * @param bigArrays big array allocator

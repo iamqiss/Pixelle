@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.geo.tests.common;
+package org.density.geo.tests.common;
 
-import org.opensearch.geo.algorithm.PolygonGenerator;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.GeometryCollection;
-import org.opensearch.geometry.Line;
-import org.opensearch.geometry.LinearRing;
-import org.opensearch.geometry.MultiLine;
-import org.opensearch.geometry.MultiPoint;
-import org.opensearch.geometry.MultiPolygon;
-import org.opensearch.geometry.Point;
-import org.opensearch.geometry.Polygon;
-import org.opensearch.geometry.Rectangle;
-import org.opensearch.geometry.ShapeType;
-import org.opensearch.index.mapper.GeoShapeIndexer;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.geo.algorithm.PolygonGenerator;
+import org.density.geometry.Geometry;
+import org.density.geometry.GeometryCollection;
+import org.density.geometry.Line;
+import org.density.geometry.LinearRing;
+import org.density.geometry.MultiLine;
+import org.density.geometry.MultiPoint;
+import org.density.geometry.MultiPolygon;
+import org.density.geometry.Point;
+import org.density.geometry.Polygon;
+import org.density.geometry.Rectangle;
+import org.density.geometry.ShapeType;
+import org.density.index.mapper.GeoShapeIndexer;
+import org.density.test.DensityTestCase;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -53,14 +53,14 @@ public class RandomGeoGeometryGenerator {
         .collect(Collectors.toList());
 
     /**
-     * Returns a random Geometry. It makes sure that only that geometry is returned which is supported by OpenSearch
+     * Returns a random Geometry. It makes sure that only that geometry is returned which is supported by Density
      * while indexing. Check {@link GeoShapeIndexer#prepareForIndexing(Geometry)}
      *
      * @return {@link Geometry}
      */
     public static Geometry randomGeometry(final Random r) {
         final ShapeType randomShapeType = SUPPORTED_SHAPE_TYPES.get(
-            OpenSearchTestCase.randomIntBetween(0, SUPPORTED_SHAPE_TYPES.size() - 1)
+            DensityTestCase.randomIntBetween(0, SUPPORTED_SHAPE_TYPES.size() - 1)
         );
         switch (randomShapeType) {
             case POINT:
@@ -103,7 +103,7 @@ public class RandomGeoGeometryGenerator {
      * @return {@link Polygon}
      */
     public static Polygon randomPolygon(final Random r) {
-        final int vertexCount = OpenSearchTestCase.randomIntBetween(3, MAX_VERTEXES);
+        final int vertexCount = DensityTestCase.randomIntBetween(3, MAX_VERTEXES);
         return randomPolygonWithFixedVertexCount(r, vertexCount);
     }
 
@@ -127,7 +127,7 @@ public class RandomGeoGeometryGenerator {
      * @return {@link MultiPoint}
      */
     public static MultiPoint randomMultiPoint(final Random r) {
-        int multiplePoints = OpenSearchTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
+        int multiplePoints = DensityTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
         final List<Point> pointsList = new ArrayList<>();
         IntStream.range(0, multiplePoints).forEach(i -> pointsList.add(randomPoint(r)));
         return new MultiPoint(pointsList);
@@ -140,7 +140,7 @@ public class RandomGeoGeometryGenerator {
      * @return {@link MultiPolygon}
      */
     public static MultiPolygon randomMultiPolygon(final Random r) {
-        int multiplePolygons = OpenSearchTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
+        int multiplePolygons = DensityTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
         final List<Polygon> polygonList = new ArrayList<>();
         IntStream.range(0, multiplePolygons).forEach(i -> polygonList.add(randomPolygon(r)));
         return new MultiPolygon(polygonList);
@@ -171,7 +171,7 @@ public class RandomGeoGeometryGenerator {
      * @return {@link MultiLine}
      */
     public static MultiLine randomMultiLine(Random r) {
-        int multiLines = OpenSearchTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
+        int multiLines = DensityTestCase.randomIntBetween(1, MAX_MULTIPLE_GEOMETRIES);
         final List<Line> linesList = new ArrayList<>();
         IntStream.range(0, multiLines).forEach(i -> linesList.add(randomLine(r)));
         return new MultiLine(linesList);

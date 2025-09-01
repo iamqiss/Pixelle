@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.kafka;
+package org.density.plugin.kafka;
 
 import com.carrotsearch.randomizedtesting.ThreadFilter;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
@@ -15,17 +15,17 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
-import org.opensearch.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
-import org.opensearch.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionRequest;
+import org.density.action.admin.indices.streamingingestion.resume.ResumeIngestionResponse;
+import org.density.action.admin.indices.streamingingestion.state.GetIngestionStateResponse;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.transport.client.Requests;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -43,7 +43,7 @@ import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @ThreadLeakFilters(filters = KafkaSingleNodeTests.TestContainerThreadLeakFilter.class)
-public class KafkaSingleNodeTests extends OpenSearchSingleNodeTestCase {
+public class KafkaSingleNodeTests extends DensitySingleNodeTestCase {
     private KafkaContainer kafka;
     private Producer<String, String> producer;
     private final String topicName = "test";

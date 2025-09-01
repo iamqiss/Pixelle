@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent.support.filtering;
+package org.density.common.xcontent.support.filtering;
 
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.XContentType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.test.DensityTestCase;
 
 public class JsonXContentFilteringTests extends AbstractXContentFilteringTestCase {
 
@@ -45,7 +45,7 @@ public class JsonXContentFilteringTests extends AbstractXContentFilteringTestCas
 
     @Override
     protected void assertFilterResult(XContentBuilder expected, XContentBuilder actual) {
-        if (OpenSearchTestCase.randomBoolean()) {
+        if (DensityTestCase.randomBoolean()) {
             AbstractXContentFilteringTestCase.assertXContentBuilderAsString(expected, actual);
         } else {
             AbstractXContentFilteringTestCase.assertXContentBuilderAsBytes(expected, actual);

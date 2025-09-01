@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.tasks;
+package org.density.tasks;
 
-import org.opensearch.action.admin.cluster.node.tasks.TransportTasksActionTests;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchTask;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.tasks.resourcetracker.ResourceStatsType;
-import org.opensearch.core.tasks.resourcetracker.ResourceUsageMetric;
-import org.opensearch.core.tasks.resourcetracker.TaskResourceInfo;
-import org.opensearch.core.tasks.resourcetracker.ThreadResourceInfo;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.action.admin.cluster.node.tasks.TransportTasksActionTests;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchTask;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.core.tasks.TaskId;
+import org.density.core.tasks.resourcetracker.ResourceStatsType;
+import org.density.core.tasks.resourcetracker.ResourceUsageMetric;
+import org.density.core.tasks.resourcetracker.TaskResourceInfo;
+import org.density.core.tasks.resourcetracker.ThreadResourceInfo;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 
@@ -32,12 +32,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.opensearch.core.tasks.resourcetracker.ResourceStats.CPU;
-import static org.opensearch.core.tasks.resourcetracker.ResourceStats.MEMORY;
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_ID;
-import static org.opensearch.tasks.TaskResourceTrackingService.TASK_RESOURCE_USAGE;
+import static org.density.core.tasks.resourcetracker.ResourceStats.CPU;
+import static org.density.core.tasks.resourcetracker.ResourceStats.MEMORY;
+import static org.density.tasks.TaskResourceTrackingService.TASK_ID;
+import static org.density.tasks.TaskResourceTrackingService.TASK_RESOURCE_USAGE;
 
-public class TaskResourceTrackingServiceTests extends OpenSearchTestCase {
+public class TaskResourceTrackingServiceTests extends DensityTestCase {
 
     private ThreadPool threadPool;
     private TaskResourceTrackingService taskResourceTrackingService;

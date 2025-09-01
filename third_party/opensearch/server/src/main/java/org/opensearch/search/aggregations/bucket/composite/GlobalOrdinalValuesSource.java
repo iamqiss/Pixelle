@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.composite;
+package org.density.search.aggregations.bucket.composite;
 
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.IndexReader;
@@ -40,15 +40,15 @@ import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.LongArray;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.StringFieldType;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.LeafBucketCollector;
-import org.opensearch.search.aggregations.bucket.missing.MissingOrder;
+import org.density.common.CheckedFunction;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.LongArray;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.StringFieldType;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.LeafBucketCollector;
+import org.density.search.aggregations.bucket.missing.MissingOrder;
 
 import java.io.IOException;
 
@@ -57,7 +57,7 @@ import static org.apache.lucene.index.SortedSetDocValues.NO_MORE_DOCS;
 /**
  * A {@link SingleDimensionValuesSource} for global ordinals.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class GlobalOrdinalValuesSource extends SingleDimensionValuesSource<BytesRef> {
     private final CheckedFunction<LeafReaderContext, SortedSetDocValues, IOException> docValuesFunc;

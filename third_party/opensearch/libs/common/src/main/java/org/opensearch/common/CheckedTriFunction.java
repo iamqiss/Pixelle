@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common;
+package org.density.common;
 
 /**
  * A {@link TriFunction}-like interface which allows throwing checked exceptions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @FunctionalInterface
 public interface CheckedTriFunction<S, T, U, R, E extends Exception> {

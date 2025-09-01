@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import org.apache.lucene.document.LatLonDocValuesField;
 import org.apache.lucene.index.LeafReaderContext;
@@ -42,36 +42,36 @@ import org.apache.lucene.search.Pruning;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.comparators.DoubleComparator;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.XContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.plain.AbstractLatLonPointIndexFieldData.LatLonPointIndexFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.query.GeoValidationMethod;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.MultiValueMode;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.util.BigArrays;
+import org.density.core.ParseField;
+import org.density.core.common.ParsingException;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.XContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.IndexFieldData.XFieldComparatorSource.Nested;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.plain.AbstractLatLonPointIndexFieldData.LatLonPointIndexFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.query.GeoValidationMethod;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.search.DocValueFormat;
+import org.density.search.MultiValueMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,14 +80,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
-import static org.opensearch.search.sort.FieldSortBuilder.validateMaxChildrenExistOnlyInTopLevelNestedSort;
-import static org.opensearch.search.sort.NestedSortBuilder.NESTED_FIELD;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.search.sort.FieldSortBuilder.validateMaxChildrenExistOnlyInTopLevelNestedSort;
+import static org.density.search.sort.NestedSortBuilder.NESTED_FIELD;
 
 /**
  * A geo distance based sorting on a geo point like field.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> {
     private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(GeoDistanceSortBuilder.class);
@@ -260,7 +260,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
     }
 
     /**
-     * The distance unit to use. Defaults to {@link org.opensearch.common.unit.DistanceUnit#METERS}
+     * The distance unit to use. Defaults to {@link org.density.common.unit.DistanceUnit#METERS}
      */
     public GeoDistanceSortBuilder unit(DistanceUnit unit) {
         this.unit = unit;
@@ -268,7 +268,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
     }
 
     /**
-     * Returns the distance unit to use. Defaults to {@link org.opensearch.common.unit.DistanceUnit#METERS}
+     * Returns the distance unit to use. Defaults to {@link org.density.common.unit.DistanceUnit#METERS}
      */
     public DistanceUnit unit() {
         return this.unit;
@@ -648,14 +648,14 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
         if (GeoValidationMethod.isIgnoreMalformed(validation) == false) {
             for (GeoPoint point : localPoints) {
                 if (GeoUtils.isValidLatitude(point.lat()) == false) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "illegal latitude value [{}] for [GeoDistanceSort] for field [{}].",
                         point.lat(),
                         fieldName
                     );
                 }
                 if (GeoUtils.isValidLongitude(point.lon()) == false) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "illegal longitude value [{}] for [GeoDistanceSort] for field [{}].",
                         point.lon(),
                         fieldName
@@ -793,7 +793,7 @@ public class GeoDistanceSortBuilder extends SortBuilder<GeoDistanceSortBuilder> 
                 double lon = parser.doubleValue();
                 parser.nextToken();
                 if (!parser.currentToken().equals(XContentParser.Token.VALUE_NUMBER)) {
-                    throw new OpenSearchParseException(
+                    throw new DensityParseException(
                         "geo point parsing: expected second number but got [{}] instead",
                         parser.currentToken()
                     );

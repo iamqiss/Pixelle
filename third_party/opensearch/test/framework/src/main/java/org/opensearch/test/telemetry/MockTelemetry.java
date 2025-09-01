@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.test.telemetry;
+package org.density.test.telemetry;
 
-import org.opensearch.telemetry.Telemetry;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.Counter;
-import org.opensearch.telemetry.metrics.Histogram;
-import org.opensearch.telemetry.metrics.MetricsTelemetry;
-import org.opensearch.telemetry.metrics.TaggedMeasurement;
-import org.opensearch.telemetry.metrics.noop.NoopCounter;
-import org.opensearch.telemetry.metrics.noop.NoopHistogram;
-import org.opensearch.telemetry.metrics.tags.Tags;
-import org.opensearch.telemetry.tracing.TracingTelemetry;
-import org.opensearch.test.telemetry.tracing.MockTracingTelemetry;
+import org.density.telemetry.Telemetry;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.Counter;
+import org.density.telemetry.metrics.Histogram;
+import org.density.telemetry.metrics.MetricsTelemetry;
+import org.density.telemetry.metrics.TaggedMeasurement;
+import org.density.telemetry.metrics.noop.NoopCounter;
+import org.density.telemetry.metrics.noop.NoopHistogram;
+import org.density.telemetry.metrics.tags.Tags;
+import org.density.telemetry.tracing.TracingTelemetry;
+import org.density.test.telemetry.tracing.MockTracingTelemetry;
 
 import java.io.Closeable;
 import java.util.function.Supplier;

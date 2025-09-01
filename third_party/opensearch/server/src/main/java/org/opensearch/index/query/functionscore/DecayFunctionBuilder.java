@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,47 +26,47 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query.functionscore;
+package org.density.index.query.functionscore;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Explanation;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.common.lucene.search.function.CombineFunction;
-import org.opensearch.common.lucene.search.function.LeafScoreFunction;
-import org.opensearch.common.lucene.search.function.ScoreFunction;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexGeoPointFieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.MultiGeoPointValues;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.fielddata.SortingNumericDoubleValues;
-import org.opensearch.index.mapper.DateFieldMapper;
-import org.opensearch.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.MultiValueMode;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.common.lucene.search.function.CombineFunction;
+import org.density.common.lucene.search.function.LeafScoreFunction;
+import org.density.common.lucene.search.function.ScoreFunction;
+import org.density.common.unit.DistanceUnit;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.ParsingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexGeoPointFieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.MultiGeoPointValues;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.fielddata.SortingNumericDoubleValues;
+import org.density.index.mapper.DateFieldMapper;
+import org.density.index.mapper.GeoPointFieldMapper.GeoPointFieldType;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.MultiValueMode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,7 +75,7 @@ import java.util.Objects;
 /**
  * Foundation builder for a decay function
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>> extends ScoreFunctionBuilder<DFB> {
 
@@ -303,11 +303,11 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
             } else if (DecayFunctionBuilder.OFFSET.equals(parameterName)) {
                 offset = parser.doubleValue();
             } else {
-                throw new OpenSearchParseException("parameter [{}] not supported!", parameterName);
+                throw new DensityParseException("parameter [{}] not supported!", parameterName);
             }
         }
         if (!scaleFound || !refFound) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "both [{}] and [{}] must be set for numeric fields.",
                 DecayFunctionBuilder.SCALE,
                 DecayFunctionBuilder.ORIGIN
@@ -350,11 +350,11 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
             } else if (DecayFunctionBuilder.OFFSET.equals(parameterName)) {
                 offsetString = parser.text();
             } else {
-                throw new OpenSearchParseException("parameter [{}] not supported!", parameterName);
+                throw new DensityParseException("parameter [{}] not supported!", parameterName);
             }
         }
         if (origin == null || scaleString == null) {
-            throw new OpenSearchParseException(
+            throw new DensityParseException(
                 "[{}] and [{}] must be set for geo fields.",
                 DecayFunctionBuilder.ORIGIN,
                 DecayFunctionBuilder.SCALE
@@ -391,7 +391,7 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
             } else if (DecayFunctionBuilder.OFFSET.equals(parameterName)) {
                 offsetString = parser.text();
             } else {
-                throw new OpenSearchParseException("parameter [{}] not supported!", parameterName);
+                throw new DensityParseException("parameter [{}] not supported!", parameterName);
             }
         }
         long origin;
@@ -402,7 +402,7 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
         }
 
         if (scaleString == null) {
-            throw new OpenSearchParseException("[{}] must be set for date fields.", DecayFunctionBuilder.SCALE);
+            throw new DensityParseException("[{}] must be set for date fields.", DecayFunctionBuilder.SCALE);
         }
         TimeValue val = TimeValue.parseTimeValue(
             scaleString,
@@ -428,7 +428,7 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
     /**
      * Score function for geo field data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class GeoFieldDataScoreFunction extends AbstractDistanceScoreFunction {
 
@@ -529,7 +529,7 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
     /**
      * Score function for numeric data
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class NumericFieldDataScoreFunction extends AbstractDistanceScoreFunction {
 
@@ -626,7 +626,7 @@ public abstract class DecayFunctionBuilder<DFB extends DecayFunctionBuilder<DFB>
     /**
      * This is the base class for scoring a single field.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class AbstractDistanceScoreFunction extends ScoreFunction {
 

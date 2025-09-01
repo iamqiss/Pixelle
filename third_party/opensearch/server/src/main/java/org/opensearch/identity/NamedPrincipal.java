@@ -1,9 +1,9 @@
 /*
- * Copyright OpenSearch Contributors
+ * Copyright Density Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.opensearch.identity;
+package org.density.identity;
 
 import java.security.Principal;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * Create a principal from a string
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class NamedPrincipal implements Principal {
 

@@ -1,33 +1,33 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.ingest.ConfigurationUtils;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.pipeline.AbstractProcessor;
-import org.opensearch.search.pipeline.Processor;
-import org.opensearch.search.pipeline.SearchRequestProcessor;
+import org.density.action.search.SearchRequest;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.QueryBuilder;
+import org.density.ingest.ConfigurationUtils;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.pipeline.AbstractProcessor;
+import org.density.search.pipeline.Processor;
+import org.density.search.pipeline.SearchRequestProcessor;
 
 import java.io.InputStream;
 import java.util.Map;
 
-import static org.opensearch.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
+import static org.density.index.query.AbstractQueryBuilder.parseInnerQueryBuilder;
 
 /**
  * This is a {@link SearchRequestProcessor} that replaces the incoming query with a BooleanQuery

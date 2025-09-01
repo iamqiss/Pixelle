@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.store;
+package org.density.common.lucene.store;
 
 import org.apache.lucene.store.IndexInput;
 
@@ -41,7 +41,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class ByteArrayIndexInputTests extends OpenSearchIndexInputTestCase {
+public class ByteArrayIndexInputTests extends DensityIndexInputTestCase {
     public void testRandomReads() throws IOException {
         for (int i = 0; i < 100; i++) {
             byte[] input = randomUnicodeOfLength(randomIntBetween(1, 1000)).getBytes(StandardCharsets.UTF_8);

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.cat;
+package org.density.rest.action.cat;
 
-import org.opensearch.action.ActionRequest;
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.collect.MapBuilder;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.tasks.TaskInfo;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.client.NoOpNodeClient;
-import org.opensearch.test.rest.FakeRestChannel;
-import org.opensearch.test.rest.FakeRestRequest;
+import org.density.action.ActionRequest;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.collect.MapBuilder;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.tasks.TaskInfo;
+import org.density.test.DensityTestCase;
+import org.density.test.client.NoOpNodeClient;
+import org.density.test.rest.FakeRestChannel;
+import org.density.test.rest.FakeRestRequest;
 
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.tasks.TaskInfoTests.randomResourceStats;
+import static org.density.tasks.TaskInfoTests.randomResourceStats;
 import static org.hamcrest.Matchers.is;
 
-public class RestTasksActionTests extends OpenSearchTestCase {
+public class RestTasksActionTests extends DensityTestCase {
 
     public void testConsumesParameters() throws Exception {
         RestTasksAction action = new RestTasksAction(() -> DiscoveryNodes.EMPTY_NODES);

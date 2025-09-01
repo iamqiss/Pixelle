@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,43 +26,43 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.mget;
+package org.density.mget;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.alias.Alias;
-import org.opensearch.action.get.MultiGetItemResponse;
-import org.opensearch.action.get.MultiGetRequest;
-import org.opensearch.action.get.MultiGetRequestBuilder;
-import org.opensearch.action.get.MultiGetResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
+import org.density.DensityException;
+import org.density.action.admin.indices.alias.Alias;
+import org.density.action.get.MultiGetItemResponse;
+import org.density.action.get.MultiGetRequest;
+import org.density.action.get.MultiGetRequestBuilder;
+import org.density.action.get.MultiGetResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class SimpleMgetIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SimpleMgetIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SimpleMgetIT(Settings staticSettings) {
         super(staticSettings);
@@ -98,7 +98,7 @@ public class SimpleMgetIT extends ParameterizedStaticSettingsOpenSearchIntegTest
         assertThat(mgetResponse.getResponses()[1].isFailed(), is(true));
         assertThat(mgetResponse.getResponses()[1].getFailure().getMessage(), is("no such index [nonExistingIndex]"));
         assertThat(
-            ((OpenSearchException) mgetResponse.getResponses()[1].getFailure().getFailure()).getIndex().getName(),
+            ((DensityException) mgetResponse.getResponses()[1].getFailure().getFailure()).getIndex().getName(),
             is("nonExistingIndex")
         );
 
@@ -108,7 +108,7 @@ public class SimpleMgetIT extends ParameterizedStaticSettingsOpenSearchIntegTest
         assertThat(mgetResponse.getResponses()[0].isFailed(), is(true));
         assertThat(mgetResponse.getResponses()[0].getFailure().getMessage(), is("no such index [nonExistingIndex]"));
         assertThat(
-            ((OpenSearchException) mgetResponse.getResponses()[0].getFailure().getFailure()).getIndex().getName(),
+            ((DensityException) mgetResponse.getResponses()[0].getFailure().getFailure()).getIndex().getName(),
             is("nonExistingIndex")
         );
     }

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,27 +25,27 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexFormatTooOldException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.tests.util.LuceneTestCase;
 import org.apache.lucene.tests.util.TestUtil;
-import org.opensearch.Version;
-import org.opensearch.common.lucene.LuceneTests;
-import org.opensearch.common.lucene.index.OpenSearchDirectoryReader;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.index.mapper.ParsedDocument;
-import org.opensearch.index.seqno.SeqNoStats;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.TranslogStats;
+import org.density.Version;
+import org.density.common.lucene.LuceneTests;
+import org.density.common.lucene.index.DensityDirectoryReader;
+import org.density.common.util.io.IOUtils;
+import org.density.core.common.bytes.BytesArray;
+import org.density.index.mapper.ParsedDocument;
+import org.density.index.seqno.SeqNoStats;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.store.Store;
+import org.density.index.translog.TranslogStats;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 
-import static org.opensearch.common.lucene.index.OpenSearchDirectoryReader.getOpenSearchDirectoryReader;
+import static org.density.common.lucene.index.DensityDirectoryReader.getDensityDirectoryReader;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
@@ -129,7 +129,7 @@ public class ReadOnlyEngineTests extends EngineTestCase {
                 assertSame(external.getIndexReader(), internal.getIndexReader());
                 assertThat(external.getIndexReader(), instanceOf(DirectoryReader.class));
                 DirectoryReader dirReader = external.getDirectoryReader();
-                OpenSearchDirectoryReader esReader = getOpenSearchDirectoryReader(dirReader);
+                DensityDirectoryReader esReader = getDensityDirectoryReader(dirReader);
                 IndexReader.CacheHelper helper = esReader.getReaderCacheHelper();
                 assertNotNull(helper);
                 assertEquals(helper.getKey(), dirReader.getReaderCacheHelper().getKey());

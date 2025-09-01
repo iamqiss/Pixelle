@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
 plugins {
   id 'java'
   id 'maven-publish'
-  id 'opensearch.optional-dependencies'
+  id 'density.optional-dependencies'
 }
 group = "org.custom.group"
 version = '1.0.0'

@@ -1,11 +1,11 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -28,14 +28,14 @@
 * under the License.
 */
 
-apply plugin: 'opensearch.testclusters'
-apply plugin: 'opensearch.standalone-rest-test'
-apply plugin: 'opensearch.rest-test'
-apply plugin: 'opensearch.standalone-test'
+apply plugin: 'density.testclusters'
+apply plugin: 'density.standalone-rest-test'
+apply plugin: 'density.rest-test'
+apply plugin: 'density.standalone-test'
 
 testClusters.integTest {
   /**
-   * Provide a custom log4j configuration where layout is an old style pattern and confirm that OpenSearch
+   * Provide a custom log4j configuration where layout is an old style pattern and confirm that Density
    * can successfully startup.
    */
   extraConfigFile 'log4j2.properties', file('custom-log4j2.properties')

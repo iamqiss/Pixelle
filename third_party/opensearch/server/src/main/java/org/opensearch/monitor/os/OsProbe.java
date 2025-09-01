@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.monitor.os;
+package org.density.monitor.os;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.monitor.Probes;
+import org.density.common.SuppressForbidden;
+import org.density.common.io.PathUtils;
+import org.density.monitor.Probes;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -75,7 +75,7 @@ import java.util.stream.Collectors;
  * - A non-standard libc implementation not implementing the required values
  * For a more exhaustive explanation, see https://github.com/elastic/elasticsearch/pull/42725
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class OsProbe {
 
@@ -255,13 +255,13 @@ public class OsProbe {
 
     // this property is to support a hack to workaround an issue with Docker containers mounting the cgroups hierarchy inconsistently with
     // respect to /proc/self/cgroup; for Docker containers this should be set to "/"
-    private static final String CONTROL_GROUPS_HIERARCHY_OVERRIDE = System.getProperty("opensearch.cgroups.hierarchy.override");
+    private static final String CONTROL_GROUPS_HIERARCHY_OVERRIDE = System.getProperty("density.cgroups.hierarchy.override");
 
     /**
-     * A map of the control groups to which the OpenSearch process belongs. Note that this is a map because the control groups can vary
+     * A map of the control groups to which the Density process belongs. Note that this is a map because the control groups can vary
      * from subsystem to subsystem. Additionally, this map can not be cached because a running process can be reclassified.
      *
-     * @return a map from subsystems to the control group for the OpenSearch process.
+     * @return a map from subsystems to the control group for the Density process.
      * @throws IOException if an I/O exception occurs reading {@code /proc/self/cgroup}
      */
     private Map<String, String> getControlGroups() throws IOException {
@@ -269,7 +269,7 @@ public class OsProbe {
         final Map<String, String> controllerMap = new HashMap<>();
         for (final String line : lines) {
             /*
-             * The virtual file /proc/self/cgroup lists the control groups that the OpenSearch process is a member of. Each line contains
+             * The virtual file /proc/self/cgroup lists the control groups that the Density process is a member of. Each line contains
              * three colon-separated fields of the form hierarchy-ID:subsystem-list:cgroup-path. For cgroups version 1 hierarchies, the
              * subsystem-list is a comma-separated list of subsystems. The subsystem-list can be empty if the hierarchy represents a cgroups
              * version 2 hierarchy. For cgroups version 1
@@ -297,7 +297,7 @@ public class OsProbe {
     }
 
     /**
-     * The lines from {@code /proc/self/cgroup}. This file represents the control groups to which the OpenSearch process belongs. Each
+     * The lines from {@code /proc/self/cgroup}. This file represents the control groups to which the Density process belongs. Each
      * line in this file represents a control group hierarchy of the form
      * <p>
      * {@code \d+:([^:,]+(?:,[^:,]+)?):(/.*)}
@@ -316,10 +316,10 @@ public class OsProbe {
     }
 
     /**
-     * The total CPU time in nanoseconds consumed by all tasks in the cgroup to which the OpenSearch process belongs for the {@code
+     * The total CPU time in nanoseconds consumed by all tasks in the cgroup to which the Density process belongs for the {@code
      * cpuacct} subsystem.
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code cpuacct} subsystem
+     * @param controlGroup the control group for the Density process for the {@code cpuacct} subsystem
      * @return the total CPU time in nanoseconds
      * @throws IOException if an I/O exception occurs reading {@code cpuacct.usage} for the control group
      */
@@ -328,10 +328,10 @@ public class OsProbe {
     }
 
     /**
-     * Returns the line from {@code cpuacct.usage} for the control group to which the OpenSearch process belongs for the {@code cpuacct}
+     * Returns the line from {@code cpuacct.usage} for the control group to which the Density process belongs for the {@code cpuacct}
      * subsystem. This line represents the total CPU time in nanoseconds consumed by all tasks in the same control group.
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code cpuacct} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code cpuacct} subsystem
      * @return the line from {@code cpuacct.usage}
      * @throws IOException if an I/O exception occurs reading {@code cpuacct.usage} for the control group
      */
@@ -341,10 +341,10 @@ public class OsProbe {
     }
 
     /**
-     * The total period of time in microseconds for how frequently the OpenSearch control group's access to CPU resources will be
+     * The total period of time in microseconds for how frequently the Density control group's access to CPU resources will be
      * reallocated.
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code cpuacct} subsystem
+     * @param controlGroup the control group for the Density process for the {@code cpuacct} subsystem
      * @return the CFS quota period in microseconds
      * @throws IOException if an I/O exception occurs reading {@code cpu.cfs_period_us} for the control group
      */
@@ -353,11 +353,11 @@ public class OsProbe {
     }
 
     /**
-     * Returns the line from {@code cpu.cfs_period_us} for the control group to which the OpenSearch process belongs for the {@code cpu}
+     * Returns the line from {@code cpu.cfs_period_us} for the control group to which the Density process belongs for the {@code cpu}
      * subsystem. This line represents the period of time in microseconds for how frequently the control group's access to CPU resources
      * will be reallocated.
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code cpu} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code cpu} subsystem
      * @return the line from {@code cpu.cfs_period_us}
      * @throws IOException if an I/O exception occurs reading {@code cpu.cfs_period_us} for the control group
      */
@@ -367,10 +367,10 @@ public class OsProbe {
     }
 
     /**
-     * The total time in microseconds that all tasks in the OpenSearch control group can run during one period as specified by {@code
+     * The total time in microseconds that all tasks in the Density control group can run during one period as specified by {@code
      * cpu.cfs_period_us}.
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code cpuacct} subsystem
+     * @param controlGroup the control group for the Density process for the {@code cpuacct} subsystem
      * @return the CFS quota in microseconds
      * @throws IOException if an I/O exception occurs reading {@code cpu.cfs_quota_us} for the control group
      */
@@ -379,11 +379,11 @@ public class OsProbe {
     }
 
     /**
-     * Returns the line from {@code cpu.cfs_quota_us} for the control group to which the OpenSearch process belongs for the {@code cpu}
+     * Returns the line from {@code cpu.cfs_quota_us} for the control group to which the Density process belongs for the {@code cpu}
      * subsystem. This line represents the total time in microseconds that all tasks in the control group can run during one period as
      * specified by {@code cpu.cfs_period_us}.
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code cpu} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code cpu} subsystem
      * @return the line from {@code cpu.cfs_quota_us}
      * @throws IOException if an I/O exception occurs reading {@code cpu.cfs_quota_us} for the control group
      */
@@ -393,9 +393,9 @@ public class OsProbe {
     }
 
     /**
-     * The CPU time statistics for all tasks in the OpenSearch control group.
+     * The CPU time statistics for all tasks in the Density control group.
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code cpuacct} subsystem
+     * @param controlGroup the control group for the Density process for the {@code cpuacct} subsystem
      * @return the CPU time statistics
      * @throws IOException if an I/O exception occurs reading {@code cpu.stat} for the control group
      */
@@ -434,7 +434,7 @@ public class OsProbe {
     }
 
     /**
-     * Returns the lines from {@code cpu.stat} for the control group to which the OpenSearch process belongs for the {@code cpu}
+     * Returns the lines from {@code cpu.stat} for the control group to which the Density process belongs for the {@code cpu}
      * subsystem. These lines represent the CPU time statistics and have the form
      * <blockquote><pre>
      * nr_periods \d+
@@ -445,7 +445,7 @@ public class OsProbe {
      * nr_throttled} is the number of times tasks in the given control group have been throttled, and {@code throttled_time} is the total
      * time in nanoseconds for which tasks in the given control group have been throttled.
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code cpu} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code cpu} subsystem
      * @return the lines from {@code cpu.stat}
      * @throws IOException if an I/O exception occurs reading {@code cpu.stat} for the control group
      */
@@ -461,10 +461,10 @@ public class OsProbe {
      * If there is no limit then some Linux versions return the maximum value that can be stored in an
      * unsigned 64 bit number, and this will overflow a long, hence the result type is <code>String</code>.
      * (The alternative would have been <code>BigInteger</code> but then it would not be possible to index
-     * the OS stats document into OpenSearch without losing information, as <code>BigInteger</code> is
-     * not a supported OpenSearch type.)
+     * the OS stats document into Density without losing information, as <code>BigInteger</code> is
+     * not a supported Density type.)
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code memory} subsystem
+     * @param controlGroup the control group for the Density process for the {@code memory} subsystem
      * @return the maximum amount of user memory (including file cache)
      * @throws IOException if an I/O exception occurs reading {@code memory.limit_in_bytes} for the control group
      */
@@ -473,10 +473,10 @@ public class OsProbe {
     }
 
     /**
-     * Returns the line from {@code memory.limit_in_bytes} for the control group to which the OpenSearch process belongs for the
+     * Returns the line from {@code memory.limit_in_bytes} for the control group to which the Density process belongs for the
      * {@code memory} subsystem. This line represents the maximum amount of user memory (including file cache).
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code memory} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code memory} subsystem
      * @return the line from {@code memory.limit_in_bytes}
      * @throws IOException if an I/O exception occurs reading {@code memory.limit_in_bytes} for the control group
      */
@@ -490,10 +490,10 @@ public class OsProbe {
      * If there is no limit then some Linux versions return the maximum value that can be stored in an
      * unsigned 64 bit number, and this will overflow a long, hence the result type is <code>String</code>.
      * (The alternative would have been <code>BigInteger</code> but then it would not be possible to index
-     * the OS stats document into OpenSearch without losing information, as <code>BigInteger</code> is
-     * not a supported OpenSearch type.)
+     * the OS stats document into Density without losing information, as <code>BigInteger</code> is
+     * not a supported Density type.)
      *
-     * @param controlGroup the control group for the OpenSearch process for the {@code memory} subsystem
+     * @param controlGroup the control group for the Density process for the {@code memory} subsystem
      * @return the total current memory usage by processes in the cgroup (in bytes)
      * @throws IOException if an I/O exception occurs reading {@code memory.limit_in_bytes} for the control group
      */
@@ -502,10 +502,10 @@ public class OsProbe {
     }
 
     /**
-     * Returns the line from {@code memory.usage_in_bytes} for the control group to which the OpenSearch process belongs for the
+     * Returns the line from {@code memory.usage_in_bytes} for the control group to which the Density process belongs for the
      * {@code memory} subsystem. This line represents the total current memory usage by processes in the cgroup (in bytes).
      *
-     * @param controlGroup the control group to which the OpenSearch process belongs for the {@code memory} subsystem
+     * @param controlGroup the control group to which the Density process belongs for the {@code memory} subsystem
      * @return the line from {@code memory.usage_in_bytes}
      * @throws IOException if an I/O exception occurs reading {@code memory.usage_in_bytes} for the control group
      */

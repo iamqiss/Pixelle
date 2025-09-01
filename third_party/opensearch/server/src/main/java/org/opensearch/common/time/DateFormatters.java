@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.time;
+package org.density.common.time;
 
-import org.opensearch.common.SuppressForbidden;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.util.LazyInitializable;
-import org.opensearch.core.common.Strings;
+import org.density.common.SuppressForbidden;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.util.LazyInitializable;
+import org.density.core.common.Strings;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -70,7 +70,7 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 /**
  * Utility of date formatters.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DateFormatters {
     // when run with JDK8, WeekFields for Locale.ROOT would return WeekFields.of(DayOfWeek.SUNDAY,1)
@@ -1306,7 +1306,7 @@ public class DateFormatters {
 
     public static final DateFormatter RFC3339_LENIENT_DATE_FORMATTER = new JavaDateFormatter(
         "rfc3339_lenient",
-        new OpenSearchDateTimeFormatter(STRICT_DATE_OPTIONAL_TIME_PRINTER),
+        new DensityDateTimeFormatter(STRICT_DATE_OPTIONAL_TIME_PRINTER),
         new RFC3339CompatibleDateTimeFormatter(
             new DateTimeFormatterBuilder().append(DATE_FORMATTER)
                 .optionalStart()

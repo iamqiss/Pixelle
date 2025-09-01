@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.common.action.ActionFuture;
+import org.density.common.unit.TimeValue;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.transport.client.DensityClient;
 
 import java.util.Objects;
 
 /**
  * Base Action Request Builder
  *
- * @opensearch.api
+ * @density.api
  */
 public abstract class ActionRequestBuilder<Request extends ActionRequest, Response extends ActionResponse> {
 
     protected final ActionType<Response> action;
     protected final Request request;
-    protected final OpenSearchClient client;
+    protected final DensityClient client;
 
-    protected ActionRequestBuilder(OpenSearchClient client, ActionType<Response> action, Request request) {
+    protected ActionRequestBuilder(DensityClient client, ActionType<Response> action, Request request) {
         Objects.requireNonNull(action, "action must not be null");
         this.action = action;
         this.request = request;

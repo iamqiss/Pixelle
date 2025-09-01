@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.search.geo;
+package org.density.index.search.geo;
 
 import org.apache.lucene.spatial.prefix.tree.Cell;
 import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.QuadPrefixTree;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoUtils;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentParser.Token;
-import org.opensearch.geometry.utils.Geohash;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.geo.RandomGeoGenerator;
+import org.density.DensityParseException;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoUtils;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentParser.Token;
+import org.density.geometry.utils.Geohash;
+import org.density.test.DensityTestCase;
+import org.density.test.geo.RandomGeoGenerator;
 
 import java.io.IOException;
 
 import org.locationtech.spatial4j.context.SpatialContext;
 import org.locationtech.spatial4j.distance.DistanceUtils;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
@@ -60,7 +60,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
-public class GeoUtilsTests extends OpenSearchTestCase {
+public class GeoUtilsTests extends DensityTestCase {
     private static final String ERR_MSG_INVALID_FIELDS = "field must be either [lon|lat], [type|coordinates], or [geohash]";
     private static final char[] BASE_32 = {
         '0',
@@ -516,7 +516,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
             while (parser.currentToken() != Token.VALUE_STRING) {
                 parser.nextToken();
             }
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser, new GeoPoint(), false));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser, new GeoPoint(), false));
             assertThat(e.getMessage(), containsString("but [ignore_z_value] parameter is [false]"));
         }
     }
@@ -528,7 +528,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startArray().value(lat).value(lon).value(alt).endArray();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser, new GeoPoint(), false));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser, new GeoPoint(), false));
             assertThat(e.getMessage(), containsString("but [ignore_z_value] parameter is [false]"));
             assertThat(parser.currentToken(), is(Token.END_ARRAY));
             assertNull(parser.nextToken());
@@ -567,7 +567,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("geohash", 1.0).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), containsString("geohash must be a string"));
             assertThat(parser.currentToken(), is(Token.END_OBJECT));
             assertNull(parser.nextToken());
@@ -579,7 +579,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lat", lat).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("field [lon] missing"));
             assertThat(parser.currentToken(), is(Token.END_OBJECT));
             assertNull(parser.nextToken());
@@ -591,7 +591,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lon", lon).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("field [lat] missing"));
             assertThat(parser.currentToken(), is(Token.END_OBJECT));
             assertNull(parser.nextToken());
@@ -603,7 +603,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lat", lat).field("lon", false).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("lon must be a number"));
             assertThat(parser.currentToken(), is(Token.END_OBJECT));
             assertNull(parser.nextToken());
@@ -615,7 +615,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lat", false).field("lon", lon).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("lat must be a number"));
             assertThat(parser.currentToken(), is(Token.END_OBJECT));
             assertNull(parser.nextToken());
@@ -628,7 +628,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lat", lat).field("lon", lon).field("foo", true).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -640,7 +640,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
         XContentBuilder json = jsonBuilder().startObject().field("lat", lat).field("lon", lon).field("geohash", geohash).endObject();
         try (XContentParser parser = createParser(json)) {
             parser.nextToken();
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), containsString(ERR_MSG_INVALID_FIELDS));
         }
     }
@@ -654,7 +654,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
             while (parser.currentToken() != Token.START_ARRAY) {
                 parser.nextToken();
             }
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("Exception parsing coordinates: found Z value [0.0] but [ignore_z_value] parameter is [false]"));
         }
     }
@@ -682,7 +682,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
             while (parser.currentToken() != Token.START_ARRAY) {
                 parser.nextToken();
             }
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("numeric value expected"));
             assertThat(parser.currentToken(), is(Token.END_ARRAY));
             assertThat(parser.nextToken(), is(Token.END_OBJECT));
@@ -696,7 +696,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
             while (parser.currentToken() != Token.VALUE_NUMBER) {
                 parser.nextToken();
             }
-            Exception e = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            Exception e = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertThat(e.getMessage(), is("geo_point expected"));
         }
     }
@@ -760,7 +760,7 @@ public class GeoUtilsTests extends OpenSearchTestCase {
     private void expectParseException(XContentBuilder content, String errMsg) throws IOException {
         try (XContentParser parser = createParser(content)) {
             parser.nextToken();
-            OpenSearchParseException ex = expectThrows(OpenSearchParseException.class, () -> GeoUtils.parseGeoPoint(parser));
+            DensityParseException ex = expectThrows(DensityParseException.class, () -> GeoUtils.parseGeoPoint(parser));
             assertEquals(errMsg, ex.getMessage());
         }
     }

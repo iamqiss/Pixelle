@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata.fieldcomparator;
+package org.density.index.fielddata.fieldcomparator;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
@@ -15,19 +15,19 @@ import org.apache.lucene.search.FieldComparator;
 import org.apache.lucene.search.LeafFieldComparator;
 import org.apache.lucene.search.Pruning;
 import org.apache.lucene.util.BitSet;
-import org.opensearch.index.fielddata.FieldData;
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.NumericDoubleValues;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.search.comparators.HalfFloatComparator;
-import org.opensearch.search.MultiValueMode;
+import org.density.index.fielddata.FieldData;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.NumericDoubleValues;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.search.comparators.HalfFloatComparator;
+import org.density.search.MultiValueMode;
 
 import java.io.IOException;
 
 /**
  * Comparator source for half_float values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HalfFloatValuesComparatorSource extends FloatValuesComparatorSource {
     private final IndexNumericFieldData indexFieldData;

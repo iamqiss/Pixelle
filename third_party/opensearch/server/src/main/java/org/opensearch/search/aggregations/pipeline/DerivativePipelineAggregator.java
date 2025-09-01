@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.pipeline;
+package org.density.search.aggregations.pipeline;
 
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContext;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.InternalMultiBucketAggregation;
-import org.opensearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
-import org.opensearch.search.aggregations.bucket.histogram.HistogramFactory;
-import org.opensearch.search.aggregations.pipeline.BucketHelpers.GapPolicy;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.InternalAggregation.ReduceContext;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.InternalMultiBucketAggregation;
+import org.density.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
+import org.density.search.aggregations.bucket.histogram.HistogramFactory;
+import org.density.search.aggregations.pipeline.BucketHelpers.GapPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +47,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.opensearch.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
+import static org.density.search.aggregations.pipeline.BucketHelpers.resolveBucketValue;
 
 /**
  * Aggregate all docs into a derivative value
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class DerivativePipelineAggregator extends PipelineAggregator {
     private final DocValueFormat formatter;

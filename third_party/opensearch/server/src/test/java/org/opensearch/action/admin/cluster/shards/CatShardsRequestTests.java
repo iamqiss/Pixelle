@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.cluster.shards;
+package org.density.action.admin.cluster.shards;
 
-import org.opensearch.Version;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.pagination.PageParams;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 
-public class CatShardsRequestTests extends OpenSearchTestCase {
+public class CatShardsRequestTests extends DensityTestCase {
 
     public void testSerializationWithDefaultParameters() throws Exception {
         CatShardsRequest request = new CatShardsRequest();

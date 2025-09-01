@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.cluster.ClusterManagerMetrics;
-import org.opensearch.cluster.coordination.Coordinator.Mode;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse.Empty;
-import org.opensearch.monitor.NodeHealthService;
-import org.opensearch.monitor.StatusInfo;
-import org.opensearch.threadpool.ThreadPool.Names;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportConnectionListener;
-import org.opensearch.transport.TransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportRequestOptions.Type;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.TransportService;
+import org.density.cluster.ClusterManagerMetrics;
+import org.density.cluster.coordination.Coordinator.Mode;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse.Empty;
+import org.density.monitor.NodeHealthService;
+import org.density.monitor.StatusInfo;
+import org.density.threadpool.ThreadPool.Names;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.Transport;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportConnectionListener;
+import org.density.transport.TransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportRequestOptions.Type;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.TransportService;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -70,8 +70,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
-import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * The FollowersChecker is responsible for allowing a leader to check that its followers are still connected and healthy. On deciding that a
@@ -79,7 +79,7 @@ import static org.opensearch.monitor.StatusInfo.Status.UNHEALTHY;
  * considering a follower to be faulty, to allow for a brief network partition or a long GC cycle to occur without triggering the removal of
  * a node and the consequent shard reallocation.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FollowersChecker {
 
@@ -319,7 +319,7 @@ public class FollowersChecker {
     /**
      * A fast response state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FastResponseState {
         final long term;
@@ -339,7 +339,7 @@ public class FollowersChecker {
     /**
      * A checker for an individual follower.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class FollowerChecker {
         private final DiscoveryNode discoveryNode;
@@ -482,7 +482,7 @@ public class FollowersChecker {
     /**
      * Request to check follower.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class FollowerCheckRequest extends TransportRequest {
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,7 +26,7 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -91,7 +91,7 @@ grant codeBase "${codebase.randomizedtesting-runner}" {
   // needed to fail tests on uncaught exceptions from other threads
   permission java.lang.RuntimePermission "setDefaultUncaughtExceptionHandler";
   // needed for top threads handling
-  permission org.opensearch.secure_sm.ThreadPermission "modifyArbitraryThreadGroup";
+  permission org.density.secure_sm.ThreadPermission "modifyArbitraryThreadGroup";
   // needed for TestClass creation
   permission java.lang.RuntimePermission "accessDeclaredMembers";
   permission java.net.NetPermission "accessUnixDomainSocket";
@@ -106,17 +106,17 @@ grant codeBase "${codebase.junit}" {
   permission java.io.FilePermission "${java.home}/conf/security/policy/unlimited/*", "read";
 };
 
-grant codeBase "${codebase.opensearch-core}" {
-  // opensearch-nio makes and accepts socket connections
+grant codeBase "${codebase.density-core}" {
+  // density-nio makes and accepts socket connections
   permission java.net.SocketPermission "*", "accept,resolve,connect";
 };
 
-grant codeBase "${codebase.opensearch-nio}" {
-  // opensearch-nio makes and accepts socket connections
+grant codeBase "${codebase.density-nio}" {
+  // density-nio makes and accepts socket connections
   permission java.net.SocketPermission "*", "accept,resolve,connect";
 };
 
-grant codeBase "${codebase.opensearch-rest-client}" {
+grant codeBase "${codebase.density-rest-client}" {
   // rest makes socket connections for rest tests
   permission java.net.SocketPermission "*", "connect";
   // rest client uses system properties which gets the default proxy
@@ -124,7 +124,7 @@ grant codeBase "${codebase.opensearch-rest-client}" {
   permission java.net.NetPermission "accessUnixDomainSocket";
 };
 
-grant codeBase "${codebase.opensearch-ssl-config}" {
+grant codeBase "${codebase.density-ssl-config}" {
   permission java.io.FilePermission "${java.home}/conf/security/policy/unlimited/*", "read";
 };
 
@@ -181,9 +181,9 @@ grant {
   permission java.lang.RuntimePermission "reflectionFactoryAccess";
   permission java.lang.RuntimePermission "accessClassInPackage.sun.reflect";
   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
-  permission org.opensearch.secure_sm.ThreadContextPermission "markAsSystemContext";
-  permission org.opensearch.secure_sm.ThreadContextPermission "stashAndMergeHeaders";
-  permission org.opensearch.secure_sm.ThreadContextPermission "stashWithOrigin";
+  permission org.density.secure_sm.ThreadContextPermission "markAsSystemContext";
+  permission org.density.secure_sm.ThreadContextPermission "stashAndMergeHeaders";
+  permission org.density.secure_sm.ThreadContextPermission "stashWithOrigin";
   permission java.lang.RuntimePermission "setDefaultUncaughtExceptionHandler";
   permission java.net.NetPermission "accessUnixDomainSocket";
 };

@@ -1,27 +1,27 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.kafka;
+package org.density.plugin.kafka;
 
-import org.opensearch.action.admin.cluster.node.info.NodeInfo;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoRequest;
-import org.opensearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.opensearch.action.admin.cluster.node.info.PluginsAndModules;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.indices.pollingingest.PollingIngestStats;
-import org.opensearch.plugins.PluginInfo;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.transport.client.Requests;
+import org.density.action.admin.cluster.node.info.NodeInfo;
+import org.density.action.admin.cluster.node.info.NodesInfoRequest;
+import org.density.action.admin.cluster.node.info.NodesInfoResponse;
+import org.density.action.admin.cluster.node.info.PluginsAndModules;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.indices.pollingingest.PollingIngestStats;
+import org.density.plugins.PluginInfo;
+import org.density.test.DensityIntegTestCase;
+import org.density.transport.client.Requests;
 import org.junit.Assert;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import static org.awaitility.Awaitility.await;
 /**
  * Integration test for Kafka ingestion.
  */
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST, numDataNodes = 0)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.TEST, numDataNodes = 0)
 public class IngestFromKafkaIT extends KafkaIngestionBaseIT {
     /**
      * test ingestion-kafka-plugin is installed
@@ -44,7 +44,7 @@ public class IngestFromKafkaIT extends KafkaIngestionBaseIT {
     public void testPluginsAreInstalled() {
         NodesInfoRequest nodesInfoRequest = new NodesInfoRequest();
         nodesInfoRequest.addMetric(NodesInfoRequest.Metric.PLUGINS.metricName());
-        NodesInfoResponse nodesInfoResponse = OpenSearchIntegTestCase.client().admin().cluster().nodesInfo(nodesInfoRequest).actionGet();
+        NodesInfoResponse nodesInfoResponse = DensityIntegTestCase.client().admin().cluster().nodesInfo(nodesInfoRequest).actionGet();
         List<PluginInfo> pluginInfos = nodesInfoResponse.getNodes()
             .stream()
             .flatMap(
@@ -52,7 +52,7 @@ public class IngestFromKafkaIT extends KafkaIngestionBaseIT {
             )
             .collect(Collectors.toList());
         Assert.assertTrue(
-            pluginInfos.stream().anyMatch(pluginInfo -> pluginInfo.getName().equals("org.opensearch.plugin.kafka.KafkaPlugin"))
+            pluginInfos.stream().anyMatch(pluginInfo -> pluginInfo.getName().equals("org.density.plugin.kafka.KafkaPlugin"))
         );
     }
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,7 +25,7 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
@@ -42,9 +42,9 @@ import org.apache.lucene.index.SortedNumericDocValues;
 import org.apache.lucene.index.SortedSetDocValues;
 import org.apache.lucene.search.Scorable;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.index.fielddata.AbstractNumericDocValues;
-import org.opensearch.index.fielddata.AbstractSortedDocValues;
-import org.opensearch.index.mapper.MappedFieldType;
+import org.density.index.fielddata.AbstractNumericDocValues;
+import org.density.index.fielddata.AbstractSortedDocValues;
+import org.density.index.mapper.MappedFieldType;
 
 import java.io.IOException;
 import java.util.Collection;

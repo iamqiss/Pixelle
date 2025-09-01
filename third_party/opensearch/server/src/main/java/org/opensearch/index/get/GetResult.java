@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.get;
+package org.density.index.get;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.compress.CompressorRegistry;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.IgnoredFieldMapper;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.SourceFieldMapper;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.DensityParseException;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.common.document.DocumentField;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.common.ParsingException;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.compress.CompressorRegistry;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.IgnoredFieldMapper;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.SourceFieldMapper;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -62,14 +62,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import static java.util.Collections.emptyMap;
-import static org.opensearch.core.xcontent.XContentParserUtils.ensureExpectedToken;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
-import static org.opensearch.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
+import static org.density.core.xcontent.XContentParserUtils.ensureExpectedToken;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_PRIMARY_TERM;
+import static org.density.index.seqno.SequenceNumbers.UNASSIGNED_SEQ_NO;
 
 /**
  * Result provided for a search get
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class GetResult implements Writeable, Iterable<DocumentField>, ToXContentObject {
@@ -213,7 +213,7 @@ public class GetResult implements Writeable, Iterable<DocumentField>, ToXContent
             this.source = CompressorRegistry.uncompressIfNeeded(this.source);
             return this.source;
         } catch (IOException e) {
-            throw new OpenSearchParseException("failed to decompress source", e);
+            throw new DensityParseException("failed to decompress source", e);
         }
     }
 
@@ -242,14 +242,14 @@ public class GetResult implements Writeable, Iterable<DocumentField>, ToXContent
         try {
             return XContentHelper.convertToJson(source, false);
         } catch (IOException e) {
-            throw new OpenSearchParseException("failed to convert source to a json string");
+            throw new DensityParseException("failed to convert source to a json string");
         }
     }
 
     /**
      * The source of the document (As a map).
      */
-    public Map<String, Object> sourceAsMap() throws OpenSearchParseException {
+    public Map<String, Object> sourceAsMap() throws DensityParseException {
         if (source == null) {
             return null;
         }

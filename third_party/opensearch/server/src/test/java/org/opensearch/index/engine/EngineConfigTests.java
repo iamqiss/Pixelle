@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.indices.replication.common.ReplicationType;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.index.IndexSettings;
+import org.density.index.seqno.RetentionLeases;
+import org.density.indices.replication.common.ReplicationType;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
 
-public class EngineConfigTests extends OpenSearchTestCase {
+public class EngineConfigTests extends DensityTestCase {
 
     private IndexSettings defaultIndexSettings;
 

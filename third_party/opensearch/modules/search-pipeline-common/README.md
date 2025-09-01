@@ -16,9 +16,9 @@ With search pipelines, the operator can combine multiple [search processors](#se
 
 Search pipelines offer numerous benefits:
 
-1. search processors living in OpenSearch can be used by _all_ calling applications;
-2. search pipeline operations occur inside the OpenSearch cluster, so large results can be processed before returning to the calling application\*;
-3. search processors can be distributed in plugins to be shared with other OpenSearch users;
+1. search processors living in Density can be used by _all_ calling applications;
+2. search pipeline operations occur inside the Density cluster, so large results can be processed before returning to the calling application\*;
+3. search processors can be distributed in plugins to be shared with other Density users;
 4. search pipelines only need to be modified once (and without changing or redeploying any calling applications) to have a change occur on all incoming queries\*\*;
 5. search pipelines support standard APIs for accessing metrics and disaster recovery.
 
@@ -40,11 +40,11 @@ You can find all existing search processors registered in `SearchPipelineCommonM
 New search processors can be created in two different ways.
 
 Generally, a search processor can be created in your own `SearchPipelinePlugin`. This method is best for when you are creating a unique search
-processor for your niche application. This method should also be used when your processor relies on an outside service. To get started creating a search processor in a `SearchPipelinePlugin`, you can use the [plugin template](https://github.com/opensearch-project/opensearch-plugin-template-java ).
+processor for your niche application. This method should also be used when your processor relies on an outside service. To get started creating a search processor in a `SearchPipelinePlugin`, you can use the [plugin template](https://github.com/density-project/density-plugin-template-java ).
 
-Alternatively, if you think your processor may be valuable to _all_ OpenSearch users you can follow these steps:
+Alternatively, if you think your processor may be valuable to _all_ Density users you can follow these steps:
 
-1. Create a new class in `org.opensearch.search.pipeline.common`, this class will hold your new processor and should include whether it is a request or response processor. For example, a response processor which deleted a target field could be called `DeleteFieldResponseProcessor`.
+1. Create a new class in `org.density.search.pipeline.common`, this class will hold your new processor and should include whether it is a request or response processor. For example, a response processor which deleted a target field could be called `DeleteFieldResponseProcessor`.
 
 2. Make the class extend the generic `AbstractProcessor` class as well as implement either the `SearchRequestProcessor` or `SearchResponseProcessor` class depending on what type of processor it is. In the `DeleteFieldResponseProcessor` example, this would look like:
 
@@ -130,11 +130,11 @@ public Map<String, Processor.Factory<SearchResponseProcessor>> getResponseProces
 
 6. After creating a search processor, the processor is ready to be tested in a search pipeline.
 
-To test your new search processor, you can make use of the test [`SearchPipelineCommonYamlTestSuiteIT`](src/yamlRestTest/java/org/opensearch/search/pipeline/common).
+To test your new search processor, you can make use of the test [`SearchPipelineCommonYamlTestSuiteIT`](src/yamlRestTest/java/org/density/search/pipeline/common).
 
 Following the format of the YAML files in [`rest-api-spec.test.search_pipeline`](src/yamlRestTest/resources/rest-api-spec/test/search_pipeline), you should be able to create your own YAML test file to exercise your new processor.
 
-To run the tests, from the root of the OpenSearch repository, you can run `./gradlew :modules:search-pipeline-common:yamlRestTest`.
+To run the tests, from the root of the Density repository, you can run `./gradlew :modules:search-pipeline-common:yamlRestTest`.
 
 7. Finally, the processor is ready to used in a cluster.
 
@@ -146,7 +146,7 @@ If the new processor is shown in the cURL response, the new processor should be 
 
 ## Creating a Search Pipeline
 
-To create a search pipeline, you must create an ordered list of search processors in the OpenSearch cluster.
+To create a search pipeline, you must create an ordered list of search processors in the Density cluster.
 
 An example creation request is:
 

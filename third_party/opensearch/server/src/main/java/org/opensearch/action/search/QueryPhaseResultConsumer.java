@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.TopDocs;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.search.TopDocsAndMaxScore;
-import org.opensearch.common.util.concurrent.AbstractRunnable;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.tasks.TaskCancelledException;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.aggregations.InternalAggregation.ReduceContextBuilder;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.query.QuerySearchResult;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.search.TopDocsAndMaxScore;
+import org.density.common.util.concurrent.AbstractRunnable;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.tasks.TaskCancelledException;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.aggregations.InternalAggregation.ReduceContextBuilder;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.query.QuerySearchResult;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ import java.util.function.Consumer;
  * needed to reduce the aggregations is estimated and a {@link CircuitBreakingException} is thrown if it
  * exceeds the maximum memory allowed in this breaker.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class QueryPhaseResultConsumer extends ArraySearchPhaseResults<SearchPhaseResult> implements Releasable {
     private static final Logger logger = LogManager.getLogger(QueryPhaseResultConsumer.class);
@@ -290,7 +290,7 @@ public class QueryPhaseResultConsumer extends ArraySearchPhaseResults<SearchPhas
     /**
      * Class representing pending merges
      *
-     * @opensearch.internal
+     * @density.internal
      */
     class PendingMerges implements Releasable {
         private final int batchReduceSize;
@@ -574,7 +574,7 @@ public class QueryPhaseResultConsumer extends ArraySearchPhaseResults<SearchPhas
     /**
      * A single merge result
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MergeResult {
         private final List<SearchShard> processedShards;
@@ -598,7 +598,7 @@ public class QueryPhaseResultConsumer extends ArraySearchPhaseResults<SearchPhas
     /**
      * A single merge task
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class MergeTask {
         private final List<SearchShard> emptyResults;

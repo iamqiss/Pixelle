@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.search;
+package org.density.rest.action.search;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.action.search.SearchAction;
-import org.opensearch.action.search.SearchContextId;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.StreamSearchAction;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.util.FeatureFlags;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestActions;
-import org.opensearch.rest.action.RestCancellableNodeClient;
-import org.opensearch.rest.action.RestStatusToXContentListener;
-import org.opensearch.search.Scroll;
-import org.opensearch.search.SearchService;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.sort.SortOrder;
-import org.opensearch.search.suggest.SuggestBuilder;
-import org.opensearch.search.suggest.term.TermSuggestionBuilder.SuggestMode;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionRequestValidationException;
+import org.density.action.search.SearchAction;
+import org.density.action.search.SearchContextId;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.StreamSearchAction;
+import org.density.action.support.IndicesOptions;
+import org.density.common.Booleans;
+import org.density.common.util.FeatureFlags;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.query.QueryBuilder;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestActions;
+import org.density.rest.action.RestCancellableNodeClient;
+import org.density.rest.action.RestStatusToXContentListener;
+import org.density.search.Scroll;
+import org.density.search.SearchService;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.sort.SortOrder;
+import org.density.search.suggest.SuggestBuilder;
+import org.density.search.suggest.term.TermSuggestionBuilder.SuggestMode;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -71,16 +71,16 @@ import java.util.function.IntConsumer;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.opensearch.action.ValidateActions.addValidationError;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.rest.RestRequest.Method.GET;
-import static org.opensearch.rest.RestRequest.Method.POST;
-import static org.opensearch.search.suggest.SuggestBuilders.termSuggestion;
+import static org.density.action.ValidateActions.addValidationError;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.rest.RestRequest.Method.GET;
+import static org.density.rest.RestRequest.Method.POST;
+import static org.density.search.suggest.SuggestBuilders.termSuggestion;
 
 /**
  * Transport action to perform a search
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestSearchAction extends BaseRestHandler {
     /**

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.common.io.stream;
+package org.density.core.common.io.stream;
 
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexFormatTooNewException;
@@ -40,21 +40,21 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.BitUtil;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefBuilder;
-import org.opensearch.Build;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.CharArrays;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.Writeable.WriteableRegistry;
-import org.opensearch.core.common.io.stream.Writeable.Writer;
-import org.opensearch.core.common.settings.SecureString;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.semver.SemverRange;
+import org.density.Build;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.CharArrays;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.unit.TimeValue;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.Writeable.WriteableRegistry;
+import org.density.core.common.io.stream.Writeable.Writer;
+import org.density.core.common.settings.SecureString;
+import org.density.core.common.text.Text;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.semver.SemverRange;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
@@ -98,7 +98,7 @@ import java.util.function.IntFunction;
  * lists, either by storing {@code List}s internally or just converting to and from a {@code List} when calling. This comment is repeated
  * on {@link StreamInput}.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class StreamOutput extends OutputStream {
@@ -1081,19 +1081,19 @@ public abstract class StreamOutput extends OutputStream {
                 writeCause = false;
             } else if (throwable instanceof IOException) {
                 writeVInt(17);
-            } else if (throwable instanceof OpenSearchRejectedExecutionException) {
+            } else if (throwable instanceof DensityRejectedExecutionException) {
                 writeVInt(18);
-                writeBoolean(((OpenSearchRejectedExecutionException) throwable).isExecutorShutdown());
+                writeBoolean(((DensityRejectedExecutionException) throwable).isExecutorShutdown());
                 writeCause = false;
             } else {
-                final OpenSearchException ex;
-                if (throwable instanceof OpenSearchException && OpenSearchException.isRegistered(throwable.getClass(), version)) {
-                    ex = (OpenSearchException) throwable;
+                final DensityException ex;
+                if (throwable instanceof DensityException && DensityException.isRegistered(throwable.getClass(), version)) {
+                    ex = (DensityException) throwable;
                 } else {
                     ex = new NotSerializableExceptionWrapper(throwable);
                 }
                 writeVInt(0);
-                writeVInt(OpenSearchException.getId(ex.getClass()));
+                writeVInt(DensityException.getId(ex.getClass()));
                 ex.writeTo(this);
                 return;
             }
@@ -1103,11 +1103,11 @@ public abstract class StreamOutput extends OutputStream {
             if (writeCause) {
                 writeException(rootException, throwable.getCause(), nestedLevel + 1);
             }
-            OpenSearchException.writeStackTraces(throwable, this, (o, t) -> o.writeException(rootException, t, nestedLevel + 1));
+            DensityException.writeStackTraces(throwable, this, (o, t) -> o.writeException(rootException, t, nestedLevel + 1));
         }
     }
 
-    /** Writes the OpenSearch {@link Version} to the output stream */
+    /** Writes the Density {@link Version} to the output stream */
     public void writeVersion(final Version version) throws IOException {
         writeVInt(version.id);
     }
@@ -1116,9 +1116,9 @@ public abstract class StreamOutput extends OutputStream {
         writeString(range.toString());
     }
 
-    /** Writes the OpenSearch {@link Build} informn to the output stream */
+    /** Writes the Density {@link Build} informn to the output stream */
     public void writeBuild(final Build build) throws IOException {
-        // the following is new for opensearch: we write the distribution name to support any "forks" of the code
+        // the following is new for density: we write the distribution name to support any "forks" of the code
         writeString(build.getDistribution());
 
         final Build.Type buildType = build.type();

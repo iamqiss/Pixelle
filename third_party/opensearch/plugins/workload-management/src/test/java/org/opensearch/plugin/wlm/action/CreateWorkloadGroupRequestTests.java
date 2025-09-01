@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.action;
+package org.density.plugin.wlm.action;
 
-import org.opensearch.cluster.metadata.WorkloadGroup;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.WorkloadGroup;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.assertEqualWorkloadGroups;
-import static org.opensearch.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.assertEqualWorkloadGroups;
+import static org.density.plugin.wlm.WorkloadManagementTestUtils.workloadGroupOne;
 
-public class CreateWorkloadGroupRequestTests extends OpenSearchTestCase {
+public class CreateWorkloadGroupRequestTests extends DensityTestCase {
 
     /**
      * Test case to verify the serialization and deserialization of CreateWorkloadGroupRequest.

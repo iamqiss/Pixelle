@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.settings;
+package org.density.common.settings;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.cluster.routing.allocation.decider.FilterAllocationDecider;
-import org.opensearch.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.logging.Loggers;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.index.IndexModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportSettings;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.cluster.routing.allocation.decider.FilterAllocationDecider;
+import org.density.cluster.routing.allocation.decider.ShardsLimitAllocationDecider;
+import org.density.common.collect.Tuple;
+import org.density.common.logging.Loggers;
+import org.density.common.settings.Setting.Property;
+import org.density.index.IndexModule;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportSettings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,16 +61,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class ScopedSettingsTests extends OpenSearchTestCase {
+public class ScopedSettingsTests extends DensityTestCase {
 
     public void testResetSetting() {
         Setting<Integer> dynamicSetting = Setting.intSetting("some.dyn.setting", 1, Property.Dynamic, Property.NodeScope);
@@ -1280,7 +1280,7 @@ public class ScopedSettingsTests extends OpenSearchTestCase {
             final Settings settings = Settings.builder().put("index.private", "private").build();
             indexScopedSettings.validate(settings, false, /* validateInternalOrPrivateIndex */ true);
         });
-        final String message = "can not update private setting [index.private]; this setting is managed by OpenSearch";
+        final String message = "can not update private setting [index.private]; this setting is managed by Density";
         assertThat(e, hasToString(containsString(message)));
     }
 

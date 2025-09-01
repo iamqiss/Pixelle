@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.missing;
+package org.density.search.aggregations.bucket.missing;
 
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.search.aggregations.bucket.ParsedSingleBucketAggregation;
+import org.density.core.xcontent.XContentParser;
+import org.density.search.aggregations.bucket.ParsedSingleBucketAggregation;
 
 import java.io.IOException;
 
 /**
  * A missing agg result parsed between nodes
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ParsedMissing extends ParsedSingleBucketAggregation implements Missing {
 

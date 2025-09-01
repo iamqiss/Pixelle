@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.analysis.AnalysisTestsHelper;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.analysis.AnalysisTestsHelper;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class LimitTokenCountFilterFactoryTests extends OpenSearchTokenStreamTestCase {
+public class LimitTokenCountFilterFactoryTests extends DensityTokenStreamTestCase {
     public void testDefault() throws IOException {
         Settings settings = Settings.builder()
             .put("index.analysis.filter.limit_default.type", "limit")
             .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
             .build();
-        OpenSearchTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
+        DensityTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
         {
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("limit_default");
             String source = "the quick brown fox";
@@ -77,7 +77,7 @@ public class LimitTokenCountFilterFactoryTests extends OpenSearchTokenStreamTest
                 .put("index.analysis.filter.limit_1.consume_all_tokens", true)
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
-            OpenSearchTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
+            DensityTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("limit_1");
             String source = "the quick brown fox";
             String[] expected = new String[] { "the", "quick", "brown" };
@@ -92,7 +92,7 @@ public class LimitTokenCountFilterFactoryTests extends OpenSearchTokenStreamTest
                 .put("index.analysis.filter.limit_1.consume_all_tokens", false)
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
-            OpenSearchTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
+            DensityTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("limit_1");
             String source = "the quick brown fox";
             String[] expected = new String[] { "the", "quick", "brown" };
@@ -108,7 +108,7 @@ public class LimitTokenCountFilterFactoryTests extends OpenSearchTokenStreamTest
                 .put("index.analysis.filter.limit_1.consume_all_tokens", true)
                 .put(Environment.PATH_HOME_SETTING.getKey(), createTempDir().toString())
                 .build();
-            OpenSearchTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
+            DensityTestCase.TestAnalysis analysis = createTestAnalysisFromSettings(settings);
             TokenFilterFactory tokenFilter = analysis.tokenFilter.get("limit_1");
             String source = "the quick brown fox";
             String[] expected = new String[] { "the", "quick", "brown", "fox" };
@@ -118,7 +118,7 @@ public class LimitTokenCountFilterFactoryTests extends OpenSearchTokenStreamTest
         }
     }
 
-    private static OpenSearchTestCase.TestAnalysis createTestAnalysisFromSettings(Settings settings) throws IOException {
+    private static DensityTestCase.TestAnalysis createTestAnalysisFromSettings(Settings settings) throws IOException {
         return AnalysisTestsHelper.createTestAnalysisFromSettings(settings, new CommonAnalysisModulePlugin());
     }
 

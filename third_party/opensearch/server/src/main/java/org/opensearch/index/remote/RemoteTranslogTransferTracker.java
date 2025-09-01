@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.remote;
+package org.density.index.remote;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.util.MovingAverage;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.index.shard.ShardId;
+import org.density.common.annotation.PublicApi;
+import org.density.common.util.MovingAverage;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.index.shard.ShardId;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Stores Remote Translog Store-related stats for a given IndexShard.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.10.0")
 public class RemoteTranslogTransferTracker extends RemoteTransferTracker {
@@ -294,7 +294,7 @@ public class RemoteTranslogTransferTracker extends RemoteTransferTracker {
     /**
      * Represents the tracker's state as seen in the stats API.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "2.10.0")
     public static class Stats implements Writeable {

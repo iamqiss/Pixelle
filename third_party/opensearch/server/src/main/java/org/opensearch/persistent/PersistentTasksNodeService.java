@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,30 +25,30 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
-import org.opensearch.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.gateway.GatewayService;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.tasks.Task;
-import org.opensearch.tasks.TaskAwareRequest;
-import org.opensearch.tasks.TaskManager;
+import org.density.action.admin.cluster.node.tasks.cancel.CancelTasksResponse;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.core.action.ActionListener;
+import org.density.core.common.Strings;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.tasks.TaskId;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.gateway.GatewayService;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.tasks.Task;
+import org.density.tasks.TaskAwareRequest;
+import org.density.tasks.TaskManager;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ import static java.util.Objects.requireNonNull;
  * This component is responsible for coordination of execution of persistent tasks on individual nodes. It runs on all
  * nodes in the cluster and monitors cluster state changes to detect started commands.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class PersistentTasksNodeService implements ClusterStateListener {
 
@@ -328,7 +328,7 @@ public class PersistentTasksNodeService implements ClusterStateListener {
     /**
      * The executor status.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Status implements Task.Status {
 

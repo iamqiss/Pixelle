@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -38,14 +38,14 @@ import org.apache.lucene.search.SortedNumericSelector;
 import org.apache.lucene.search.SortedNumericSortField;
 import org.apache.lucene.search.SortedSetSelector;
 import org.apache.lucene.search.SortedSetSortField;
-import org.opensearch.Version;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.Version;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.lucene.Lucene;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.common.unit.ByteSizeValue;
 
 import java.io.IOException;
 import java.util.Map;
@@ -54,7 +54,7 @@ import java.util.Objects;
 /**
  * A segment in the engine
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class Segment implements Writeable {
@@ -86,7 +86,7 @@ public class Segment implements Writeable {
         compound = in.readOptionalBoolean();
         mergeId = in.readOptionalString();
         // the following was removed in Lucene 9 (https://issues.apache.org/jira/browse/LUCENE-9387)
-        // retain for bwc only (todo: remove in OpenSearch 3)
+        // retain for bwc only (todo: remove in Density 3)
         if (in.getVersion().before(Version.V_2_0_0)) {
             in.readLong();  // estimated memory
         }
@@ -153,7 +153,7 @@ public class Segment implements Writeable {
 
     /**
      * Estimation of the memory usage was removed in Lucene 9 (https://issues.apache.org/jira/browse/LUCENE-9387)
-     * retain for bwc only (todo: remove in OpenSearch 3).
+     * retain for bwc only (todo: remove in Density 3).
      * @deprecated
      */
     @Deprecated
@@ -204,7 +204,7 @@ public class Segment implements Writeable {
         out.writeOptionalBoolean(compound);
         out.writeOptionalString(mergeId);
         // the following was removed in Lucene 9 (https://issues.apache.org/jira/browse/LUCENE-9387)
-        // retain for bwc only (todo: remove in OpenSearch 3)
+        // retain for bwc only (todo: remove in Density 3)
         if (out.getVersion().before(Version.V_2_0_0)) {
             out.writeLong(0L);
         }

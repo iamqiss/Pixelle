@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster;
+package org.density.cluster;
 
-import org.opensearch.core.common.io.stream.Writeable;
+import org.density.core.common.io.stream.Writeable;
 
 /**
  * Cluster state part, changes in which can be serialized
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface Diffable<T> extends Writeable {
 

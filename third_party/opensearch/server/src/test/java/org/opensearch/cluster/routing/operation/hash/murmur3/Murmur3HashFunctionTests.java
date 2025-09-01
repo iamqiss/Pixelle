@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.routing.operation.hash.murmur3;
+package org.density.cluster.routing.operation.hash.murmur3;
 
-import org.opensearch.cluster.routing.Murmur3HashFunction;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.routing.Murmur3HashFunction;
+import org.density.test.DensityTestCase;
 
-public class Murmur3HashFunctionTests extends OpenSearchTestCase {
+public class Murmur3HashFunctionTests extends DensityTestCase {
 
     public void testKnownValues() {
         assertHash(0x5a0cb7c3, "hell");

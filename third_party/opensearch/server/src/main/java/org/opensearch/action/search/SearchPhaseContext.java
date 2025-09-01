@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,31 +25,31 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.OriginalIndices;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.InternalSearchResponse;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.transport.Transport;
+import org.density.action.OriginalIndices;
+import org.density.common.Nullable;
+import org.density.common.annotation.InternalApi;
+import org.density.common.lease.Releasable;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.InternalSearchResponse;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.transport.Transport;
 
 import java.util.concurrent.Executor;
 
 /**
  * This class provide contextual state and access to resources across multiple search phases.
  *
- * @opensearch.internal
+ * @density.internal
  */
 @InternalApi
 public interface SearchPhaseContext extends Executor {
@@ -108,7 +108,7 @@ public interface SearchPhaseContext extends Executor {
     void onShardFailure(int shardIndex, @Nullable SearchShardTarget shardTarget, Exception e);
 
     /**
-     * Returns a connection to the node if connected otherwise and {@link org.opensearch.transport.ConnectTransportException} will be
+     * Returns a connection to the node if connected otherwise and {@link org.density.transport.ConnectTransportException} will be
      * thrown.
      */
     Transport.Connection getConnection(String clusterAlias, String nodeId);
@@ -120,8 +120,8 @@ public interface SearchPhaseContext extends Executor {
 
     /**
      * Releases a search context with the given context ID on the node the given connection is connected to.
-     * @see org.opensearch.search.query.QuerySearchResult#getContextId()
-     * @see org.opensearch.search.fetch.FetchSearchResult#getContextId()
+     * @see org.density.search.query.QuerySearchResult#getContextId()
+     * @see org.density.search.fetch.FetchSearchResult#getContextId()
      *
      */
     default void sendReleaseSearchContext(

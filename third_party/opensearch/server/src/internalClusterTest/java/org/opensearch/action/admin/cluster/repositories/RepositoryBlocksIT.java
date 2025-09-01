@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.repositories;
+package org.density.action.admin.cluster.repositories;
 
-import org.opensearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.opensearch.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchIntegTestCase.ClusterScope;
+import org.density.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.density.action.admin.cluster.repositories.verify.VerifyRepositoryResponse;
+import org.density.cluster.metadata.Metadata;
+import org.density.common.settings.Settings;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityIntegTestCase.ClusterScope;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertBlocked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertBlocked;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -49,15 +49,15 @@ import static org.hamcrest.Matchers.hasSize;
  * <p>
  * The @NodeScope TEST is needed because this class updates the cluster setting "cluster.blocks.read_only".
  */
-@ClusterScope(scope = OpenSearchIntegTestCase.Scope.TEST)
-public class RepositoryBlocksIT extends OpenSearchIntegTestCase {
+@ClusterScope(scope = DensityIntegTestCase.Scope.TEST)
+public class RepositoryBlocksIT extends DensityIntegTestCase {
     public void testPutRepositoryWithBlocks() {
         logger.info("-->  registering a repository is blocked when the cluster is read only");
         try {
             setClusterReadOnly(true);
             Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
             assertBlocked(
-                OpenSearchIntegTestCase.putRepositoryRequestBuilder(
+                DensityIntegTestCase.putRepositoryRequestBuilder(
                     client().admin().cluster(),
                     "test-repo-blocks",
                     "fs",
@@ -74,12 +74,12 @@ public class RepositoryBlocksIT extends OpenSearchIntegTestCase {
 
         logger.info("-->  registering a repository is allowed when the cluster is not read only");
         Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
     }
 
     public void testVerifyRepositoryWithBlocks() {
         Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
 
         // This test checks that the Get Repository operation is never blocked, even if the cluster is read only.
         try {
@@ -97,7 +97,7 @@ public class RepositoryBlocksIT extends OpenSearchIntegTestCase {
 
     public void testDeleteRepositoryWithBlocks() {
         Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
 
         logger.info("-->  deleting a repository is blocked when the cluster is read only");
         try {
@@ -113,7 +113,7 @@ public class RepositoryBlocksIT extends OpenSearchIntegTestCase {
 
     public void testGetRepositoryWithBlocks() {
         Settings.Builder settings = Settings.builder().put("location", randomRepoPath());
-        OpenSearchIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
+        DensityIntegTestCase.putRepository(client().admin().cluster(), "test-repo-blocks", "fs", false, settings);
 
         // This test checks that the Get Repository operation is never blocked, even if the cluster is read only.
         try {

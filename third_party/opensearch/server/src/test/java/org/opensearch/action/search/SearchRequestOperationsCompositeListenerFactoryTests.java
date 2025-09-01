@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryBuilders;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.DensityTestCase;
 
 import java.util.List;
 
-public class SearchRequestOperationsCompositeListenerFactoryTests extends OpenSearchTestCase {
+public class SearchRequestOperationsCompositeListenerFactoryTests extends DensityTestCase {
     public void testAddAndGetListeners() {
         SearchRequestOperationsListener testListener = createTestSearchRequestOperationsListener();
         SearchRequestOperationsCompositeListenerFactory requestListeners = new SearchRequestOperationsCompositeListenerFactory(

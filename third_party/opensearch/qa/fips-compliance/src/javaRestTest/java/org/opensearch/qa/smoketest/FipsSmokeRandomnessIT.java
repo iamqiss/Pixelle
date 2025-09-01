@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.qa.smoketest;
+package org.density.qa.smoketest;
 
-import org.opensearch.client.Request;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.test.rest.OpenSearchRestTestCase;
+import org.density.client.Request;
+import org.density.common.xcontent.XContentHelper;
+import org.density.common.xcontent.XContentType;
+import org.density.test.rest.DensityRestTestCase;
 
 import java.io.InputStream;
 import java.util.Map;
 
-public class FipsSmokeRandomnessIT extends OpenSearchRestTestCase {
+public class FipsSmokeRandomnessIT extends DensityRestTestCase {
 
     public void testGetRandomness() throws Exception {
         var response = client().performRequest(new Request("GET", "/_randomness/provider_name"));

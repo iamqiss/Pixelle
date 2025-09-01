@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,25 +26,25 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Query;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.lucene.queries.ExtendedCommonTermsQuery;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.core.common.ParsingException;
+import org.density.lucene.queries.ExtendedCommonTermsQuery;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.index.query.QueryBuilders.commonTermsQuery;
-import static org.opensearch.test.StreamsUtils.copyToStringFromClasspath;
+import static org.density.index.query.QueryBuilders.commonTermsQuery;
+import static org.density.test.StreamsUtils.copyToStringFromClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.nullValue;
@@ -190,7 +190,7 @@ public class CommonTermsQueryBuilderTests extends AbstractQueryTestCase<CommonTe
     }
 
     public void testCommonTermsQuery1() throws IOException {
-        String query = copyToStringFromClasspath("/org/opensearch/index/query/commonTerms-query1.json");
+        String query = copyToStringFromClasspath("/org/density/index/query/commonTerms-query1.json");
         Query parsedQuery = parseQuery(query).toQuery(createShardContext());
         assertThat(parsedQuery, instanceOf(ExtendedCommonTermsQuery.class));
         ExtendedCommonTermsQuery ectQuery = (ExtendedCommonTermsQuery) parsedQuery;
@@ -201,7 +201,7 @@ public class CommonTermsQueryBuilderTests extends AbstractQueryTestCase<CommonTe
     }
 
     public void testCommonTermsQuery2() throws IOException {
-        String query = copyToStringFromClasspath("/org/opensearch/index/query/commonTerms-query2.json");
+        String query = copyToStringFromClasspath("/org/density/index/query/commonTerms-query2.json");
         Query parsedQuery = parseQuery(query).toQuery(createShardContext());
         assertThat(parsedQuery, instanceOf(ExtendedCommonTermsQuery.class));
         ExtendedCommonTermsQuery ectQuery = (ExtendedCommonTermsQuery) parsedQuery;
@@ -212,7 +212,7 @@ public class CommonTermsQueryBuilderTests extends AbstractQueryTestCase<CommonTe
     }
 
     public void testCommonTermsQuery3() throws IOException {
-        String query = copyToStringFromClasspath("/org/opensearch/index/query/commonTerms-query3.json");
+        String query = copyToStringFromClasspath("/org/density/index/query/commonTerms-query3.json");
         Query parsedQuery = parseQuery(query).toQuery(createShardContext());
         assertThat(parsedQuery, instanceOf(ExtendedCommonTermsQuery.class));
         ExtendedCommonTermsQuery ectQuery = (ExtendedCommonTermsQuery) parsedQuery;

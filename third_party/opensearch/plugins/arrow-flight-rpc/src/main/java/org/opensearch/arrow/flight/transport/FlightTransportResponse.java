@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.arrow.flight.transport;
+package org.density.arrow.flight.transport;
 
 import org.apache.arrow.flight.FlightCallHeaders;
 import org.apache.arrow.flight.FlightClient;
@@ -17,18 +17,18 @@ import org.apache.arrow.flight.Ticket;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.transport.Header;
-import org.opensearch.transport.TransportResponseHandler;
-import org.opensearch.transport.stream.StreamErrorCode;
-import org.opensearch.transport.stream.StreamException;
-import org.opensearch.transport.stream.StreamTransportResponse;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.transport.TransportResponse;
+import org.density.transport.Header;
+import org.density.transport.TransportResponseHandler;
+import org.density.transport.stream.StreamErrorCode;
+import org.density.transport.stream.StreamException;
+import org.density.transport.stream.StreamTransportResponse;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.arrow.flight.transport.ClientHeaderMiddleware.CORRELATION_ID_KEY;
+import static org.density.arrow.flight.transport.ClientHeaderMiddleware.CORRELATION_ID_KEY;
 
 /**
  * Arrow Flight implementation of streaming transport responses.

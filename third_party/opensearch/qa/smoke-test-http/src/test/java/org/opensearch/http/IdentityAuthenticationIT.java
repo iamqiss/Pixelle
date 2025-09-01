@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.http;
+package org.density.http;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Assert;
-import org.opensearch.client.Request;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.Response;
-import org.opensearch.client.ResponseException;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.identity.shiro.ShiroIdentityPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.core.rest.RestStatus;
+import org.density.client.Request;
+import org.density.client.RequestOptions;
+import org.density.client.Response;
+import org.density.client.ResponseException;
+import org.density.common.settings.Settings;
+import org.density.identity.shiro.ShiroIdentityPlugin;
+import org.density.plugins.Plugin;
+import org.density.core.rest.RestStatus;
 
-import org.opensearch.test.OpenSearchIntegTestCase;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.Netty4ModulePlugin;
-import org.opensearch.transport.reactor.ReactorNetty4Plugin;
+import org.density.test.DensityIntegTestCase;
+import org.density.test.DensityTestCase;
+import org.density.transport.Netty4ModulePlugin;
+import org.density.transport.reactor.ReactorNetty4Plugin;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 
-@OpenSearchIntegTestCase.ClusterScope(scope = OpenSearchIntegTestCase.Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 1)
+@DensityIntegTestCase.ClusterScope(scope = DensityIntegTestCase.Scope.SUITE, supportsDedicatedMasters = false, numDataNodes = 1)
 public class IdentityAuthenticationIT extends HttpSmokeTestCase {
 
     @Override
@@ -41,7 +41,7 @@ public class IdentityAuthenticationIT extends HttpSmokeTestCase {
 
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
-        return Arrays.asList(OpenSearchTestCase.getTestTransportPlugin(), Netty4ModulePlugin.class, ReactorNetty4Plugin.class, ShiroIdentityPlugin.class);
+        return Arrays.asList(DensityTestCase.getTestTransportPlugin(), Netty4ModulePlugin.class, ReactorNetty4Plugin.class, ShiroIdentityPlugin.class);
     }
 
 
@@ -81,7 +81,7 @@ public class IdentityAuthenticationIT extends HttpSmokeTestCase {
         request.setOptions(options);
 
         try {
-            final Response response = OpenSearchIntegTestCase.getRestClient().performRequest(request);
+            final Response response = DensityIntegTestCase.getRestClient().performRequest(request);
             return response;
         } catch (final ResponseException re) {
             return re.getResponse();

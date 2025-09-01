@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.hashing;
+package org.density.common.hashing;
 
-import org.opensearch.common.hash.MurmurHash3;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.hash.MurmurHash3;
+import org.density.test.DensityTestCase;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-public class MurmurHash3Tests extends OpenSearchTestCase {
+public class MurmurHash3Tests extends DensityTestCase {
     public void testKnownValues() throws UnsupportedEncodingException {
         assertHash(0x629942693e10f867L, 0x92db0b82baeb5347L, "hell", 0);
         assertHash(0xa78ddff5adae8d10L, 0x128900ef20900135L, "hello", 1);

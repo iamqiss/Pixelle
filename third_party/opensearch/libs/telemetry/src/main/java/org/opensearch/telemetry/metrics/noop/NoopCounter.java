@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.metrics.noop;
+package org.density.telemetry.metrics.noop;
 
-import org.opensearch.common.annotation.InternalApi;
-import org.opensearch.telemetry.metrics.Counter;
-import org.opensearch.telemetry.metrics.tags.Tags;
+import org.density.common.annotation.InternalApi;
+import org.density.telemetry.metrics.Counter;
+import org.density.telemetry.metrics.tags.Tags;
 
 /**
  * No-op {@link Counter}
- * {@opensearch.internal}
+ * {@density.internal}
  */
 @InternalApi
 public class NoopCounter implements Counter {

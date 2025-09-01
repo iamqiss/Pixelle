@@ -1,22 +1,22 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.cluster.routing.allocation;
+package org.density.cluster.routing.allocation;
 
-import org.opensearch.cluster.DiskUsage;
-import org.opensearch.core.common.unit.ByteSizeValue;
+import org.density.cluster.DiskUsage;
+import org.density.core.common.unit.ByteSizeValue;
 
 /**
  * DiskThresholdEvaluator implementation for hot data nodes.
  * This evaluator uses standard disk usage metrics and thresholds
  * for determining if a node exceeds watermarks.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class HotNodeDiskThresholdEvaluator implements DiskThresholdEvaluator {
 

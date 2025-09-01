@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.test;
+package org.density.packaging.test;
 
 import org.apache.http.client.fluent.Request;
-import org.opensearch.packaging.util.FileUtils;
-import org.opensearch.packaging.util.Packages;
-import org.opensearch.packaging.util.Shell.Result;
+import org.density.packaging.util.FileUtils;
+import org.density.packaging.util.Packages;
+import org.density.packaging.util.Shell.Result;
 import org.junit.BeforeClass;
 
 import java.nio.file.Files;
@@ -46,26 +46,26 @@ import java.util.regex.Pattern;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.util.Collections.singletonList;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileDoesNotExist;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
-import static org.opensearch.packaging.util.FileUtils.append;
-import static org.opensearch.packaging.util.FileUtils.assertPathsDoNotExist;
-import static org.opensearch.packaging.util.FileUtils.assertPathsExist;
-import static org.opensearch.packaging.util.FileUtils.fileWithGlobExist;
-import static org.opensearch.packaging.util.FileUtils.mv;
-import static org.opensearch.packaging.util.FileUtils.rm;
-import static org.opensearch.packaging.util.FileUtils.slurp;
-import static org.opensearch.packaging.util.Packages.SYSTEMD_SERVICE;
-import static org.opensearch.packaging.util.Packages.assertInstalled;
-import static org.opensearch.packaging.util.Packages.assertRemoved;
-import static org.opensearch.packaging.util.Packages.installPackage;
-import static org.opensearch.packaging.util.Packages.remove;
-import static org.opensearch.packaging.util.Packages.restartOpenSearch;
-import static org.opensearch.packaging.util.Packages.verifyPackageInstallation;
-import static org.opensearch.packaging.util.Platforms.getOsRelease;
-import static org.opensearch.packaging.util.Platforms.isSystemd;
-import static org.opensearch.packaging.util.ServerUtils.makeRequest;
-import static org.opensearch.packaging.util.ServerUtils.runOpenSearchTests;
+import static org.density.packaging.util.FileExistenceMatchers.fileDoesNotExist;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.util.FileUtils.append;
+import static org.density.packaging.util.FileUtils.assertPathsDoNotExist;
+import static org.density.packaging.util.FileUtils.assertPathsExist;
+import static org.density.packaging.util.FileUtils.fileWithGlobExist;
+import static org.density.packaging.util.FileUtils.mv;
+import static org.density.packaging.util.FileUtils.rm;
+import static org.density.packaging.util.FileUtils.slurp;
+import static org.density.packaging.util.Packages.SYSTEMD_SERVICE;
+import static org.density.packaging.util.Packages.assertInstalled;
+import static org.density.packaging.util.Packages.assertRemoved;
+import static org.density.packaging.util.Packages.installPackage;
+import static org.density.packaging.util.Packages.remove;
+import static org.density.packaging.util.Packages.restartDensity;
+import static org.density.packaging.util.Packages.verifyPackageInstallation;
+import static org.density.packaging.util.Platforms.getOsRelease;
+import static org.density.packaging.util.Platforms.isSystemd;
+import static org.density.packaging.util.ServerUtils.makeRequest;
+import static org.density.packaging.util.ServerUtils.runDensityTests;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
@@ -89,33 +89,33 @@ public class PackageTests extends PackagingTestCase {
     }
 
     public void test20PluginsCommandWhenNoPlugins() {
-        assertThat(sh.run(installation.bin("opensearch-plugin") + " list").stdout, is(emptyString()));
+        assertThat(sh.run(installation.bin("density-plugin") + " list").stdout, is(emptyString()));
     }
 
     public void test30DaemonIsNotEnabledOnRestart() {
         if (isSystemd()) {
             sh.run("systemctl daemon-reload");
-            String isEnabledOutput = sh.runIgnoreExitCode("systemctl is-enabled opensearch.service").stdout.trim();
+            String isEnabledOutput = sh.runIgnoreExitCode("systemctl is-enabled density.service").stdout.trim();
             assertThat(isEnabledOutput, equalTo("disabled"));
         }
     }
 
     public void test31InstallDoesNotStartServer() {
-        assertThat(sh.run("ps aux").stdout, not(containsString("org.opensearch.bootstrap.OpenSearch")));
+        assertThat(sh.run("ps aux").stdout, not(containsString("org.density.bootstrap.Density")));
     }
 
     private void assertRunsWithJavaHome() throws Exception {
         byte[] originalEnvFile = Files.readAllBytes(installation.envFile);
         try {
             Files.write(installation.envFile, singletonList("JAVA_HOME=" + systemJavaHome), APPEND);
-            startOpenSearch();
-            runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            runDensityTests();
+            stopDensity();
         } finally {
             Files.write(installation.envFile, originalEnvFile);
         }
 
-        assertThat(FileUtils.slurpAllLogs(installation.logs, "opensearch.log", "opensearch*.log.gz"), containsString(systemJavaHome));
+        assertThat(FileUtils.slurpAllLogs(installation.logs, "density.log", "density*.log.gz"), containsString(systemJavaHome));
     }
 
     public void test32JavaHomeOverride() throws Exception {
@@ -135,9 +135,9 @@ public class PackageTests extends PackagingTestCase {
         }
 
         try {
-            startOpenSearch();
-            runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            runDensityTests();
+            stopDensity();
         } finally {
             if (Files.exists(Paths.get(backupPath))) {
                 sh.run("sudo mv " + backupPath + " /usr/bin/java");
@@ -150,12 +150,12 @@ public class PackageTests extends PackagingTestCase {
         try {
             append(heapOptions, "-Xms512m\n-Xmx512m\n");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":536870912"));
 
-            stopOpenSearch();
+            stopDensity();
         } finally {
             rm(heapOptions);
         }
@@ -175,22 +175,22 @@ public class PackageTests extends PackagingTestCase {
 
     public void test40StartServer() throws Exception {
         String start = sh.runIgnoreExitCode("date ").stdout.trim();
-        startOpenSearch();
+        startDensity();
 
         String journalEntries = sh.runIgnoreExitCode(
-            "journalctl _SYSTEMD_UNIT=opensearch.service "
+            "journalctl _SYSTEMD_UNIT=density.service "
                 + "--since \""
                 + start
-                + "\" --output cat | grep -v \"future versions of OpenSearch will require Java 11\" | wc -l"
+                + "\" --output cat | grep -v \"future versions of Density will require Java 11\" | wc -l"
         ).stdout.trim();
         assertThat(journalEntries, equalTo("0"));
 
-        assertPathsExist(installation.pidDir.resolve("opensearch.pid"));
-        assertPathsExist(installation.logs.resolve("opensearch_server.json"));
+        assertPathsExist(installation.pidDir.resolve("density.pid"));
+        assertPathsExist(installation.logs.resolve("density_server.json"));
 
-        runOpenSearchTests();
+        runDensityTests();
         verifyPackageInstallation(installation, distribution(), sh); // check startup script didn't change permissions
-        stopOpenSearch();
+        stopDensity();
     }
 
     public void test50Remove() throws Exception {
@@ -200,7 +200,7 @@ public class PackageTests extends PackagingTestCase {
         remove(distribution());
 
         // removing must stop the service
-        assertThat(sh.run("ps aux").stdout, not(containsString("org.opensearch.bootstrap.OpenSearch")));
+        assertThat(sh.run("ps aux").stdout, not(containsString("org.density.bootstrap.Density")));
 
         if (isSystemd()) {
 
@@ -225,8 +225,8 @@ public class PackageTests extends PackagingTestCase {
                 statusExitCode = version < 231 ? 3 : 4;
             }
 
-            assertThat(sh.runIgnoreExitCode("systemctl status opensearch.service").exitCode, is(statusExitCode));
-            assertThat(sh.runIgnoreExitCode("systemctl is-enabled opensearch.service").exitCode, is(1));
+            assertThat(sh.runIgnoreExitCode("systemctl status density.service").exitCode, is(statusExitCode));
+            assertThat(sh.runIgnoreExitCode("systemctl is-enabled density.service").exitCode, is(1));
 
         }
 
@@ -256,10 +256,10 @@ public class PackageTests extends PackagingTestCase {
             install();
             assertInstalled(distribution());
 
-            startOpenSearch();
-            restartOpenSearch(sh, installation);
-            runOpenSearchTests();
-            stopOpenSearch();
+            startDensity();
+            restartDensity(sh, installation);
+            runDensityTests();
+            stopDensity();
         } finally {
             cleanup();
         }
@@ -269,9 +269,9 @@ public class PackageTests extends PackagingTestCase {
         try {
             install();
             FileUtils.rm(installation.pidDir);
-            startOpenSearch();
+            startDensity();
             assertPathsExist(installation.pidDir);
-            stopOpenSearch();
+            stopDensity();
         } finally {
             cleanup();
         }
@@ -279,10 +279,10 @@ public class PackageTests extends PackagingTestCase {
 
     public void test73gcLogsExist() throws Exception {
         install();
-        startOpenSearch();
+        startDensity();
         // it can be gc.log or gc.log.0.current
         assertThat(installation.logs, fileWithGlobExist("gc.log*"));
-        stopOpenSearch();
+        stopDensity();
     }
 
     // TEST CASES FOR SYSTEMD ONLY
@@ -300,31 +300,31 @@ public class PackageTests extends PackagingTestCase {
 
         sh.run("systemd-tmpfiles --create");
 
-        startOpenSearch();
+        startDensity();
 
-        final Path pidFile = installation.pidDir.resolve("opensearch.pid");
+        final Path pidFile = installation.pidDir.resolve("density.pid");
 
         assertThat(pidFile, fileExists());
 
-        stopOpenSearch();
+        stopDensity();
     }
 
     public void test81CustomPathConfAndJvmOptions() throws Exception {
         assumeTrue(isSystemd());
 
         assertPathsExist(installation.envFile);
-        stopOpenSearch();
+        stopDensity();
 
         withCustomConfig(tempConf -> {
-            append(installation.envFile, "OPENSEARCH_JAVA_OPTS=-XX:-UseCompressedOops");
+            append(installation.envFile, "DENSITY_JAVA_OPTS=-XX:-UseCompressedOops");
 
-            startOpenSearch();
+            startDensity();
 
             final String nodesResponse = makeRequest(Request.Get("http://localhost:9200/_nodes"));
             assertThat(nodesResponse, containsString("\"heap_init_in_bytes\":1073741824"));
             assertThat(nodesResponse, containsString("\"using_compressed_ordinary_object_pointers\":\"false\""));
 
-            stopOpenSearch();
+            stopDensity();
         });
 
         cleanup();
@@ -349,9 +349,9 @@ public class PackageTests extends PackagingTestCase {
 
         install();
 
-        startOpenSearch();
+        startDensity();
 
-        final Path pidFile = installation.pidDir.resolve("opensearch.pid");
+        final Path pidFile = installation.pidDir.resolve("density.pid");
         assertThat(pidFile, fileExists());
         String pid = slurp(pidFile).trim();
         String maxFileSize = sh.run("cat /proc/%s/limits | grep \"Max file size\" | awk '{ print $4 }'", pid).stdout.trim();
@@ -366,25 +366,25 @@ public class PackageTests extends PackagingTestCase {
         String maxAddressSpace = sh.run("cat /proc/%s/limits | grep \"Max address space\" | awk '{ print $4 }'", pid).stdout.trim();
         assertThat(maxAddressSpace, equalTo("unlimited"));
 
-        stopOpenSearch();
+        stopDensity();
     }
 
     public void test90DoNotCloseStderrWhenQuiet() throws Exception {
         assumeTrue(isSystemd());
 
         assertPathsExist(installation.envFile);
-        stopOpenSearch();
+        stopDensity();
 
         withCustomConfig(tempConf -> {
             // Create a startup problem by adding an invalid YAML line to the config
-            append(tempConf.resolve("opensearch.yml"), "discovery.zen.ping.unicast.hosts:15172.30.5.3416172.30.5.35, 172.30.5.17]\n");
+            append(tempConf.resolve("density.yml"), "discovery.zen.ping.unicast.hosts:15172.30.5.3416172.30.5.35, 172.30.5.17]\n");
 
             // Make sure we don't pick up the journal entries for previous ES instances.
             Packages.JournaldWrapper journald = new Packages.JournaldWrapper(sh);
-            runOpenSearchStartCommand(null, true, false);
+            runDensityStartCommand(null, true, false);
             final Result logs = journald.getLogs();
 
-            assertThat(logs.stdout, containsString("Failed to load settings from [opensearch.yml]"));
+            assertThat(logs.stdout, containsString("Failed to load settings from [density.yml]"));
         });
     }
 }

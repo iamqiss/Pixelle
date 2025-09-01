@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.hash;
+package org.density.common.hash;
 
-import org.opensearch.common.util.ByteUtils;
+import org.density.common.util.ByteUtils;
 
 import java.util.Objects;
 
 /**
  * MurmurHash3 hashing functions.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum MurmurHash3 {
     ;
@@ -47,7 +47,7 @@ public enum MurmurHash3 {
     /**
      * A 128-bits hash.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Hash128 {
         /** lower 64 bits part **/

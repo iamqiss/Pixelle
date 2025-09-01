@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.mustache;
+package org.density.script.mustache;
 
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.script.ScriptType;
-import org.opensearch.search.RandomSearchRequestGenerator;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.action.search.SearchRequest;
+import org.density.core.common.io.stream.Writeable;
+import org.density.script.ScriptType;
+import org.density.search.RandomSearchRequestGenerator;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;

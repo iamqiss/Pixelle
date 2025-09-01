@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.explain;
+package org.density.action.explain;
 
-import org.opensearch.action.ActionRequestValidationException;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.indices.IndicesModule;
-import org.opensearch.search.SearchModule;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.internal.AliasFilter;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.action.ActionRequestValidationException;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.settings.Settings;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.index.query.QueryBuilders;
+import org.density.indices.IndicesModule;
+import org.density.search.SearchModule;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.internal.AliasFilter;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class ExplainRequestTests extends OpenSearchTestCase {
+public class ExplainRequestTests extends DensityTestCase {
     private NamedWriteableRegistry namedWriteableRegistry;
 
     public void setUp() throws Exception {

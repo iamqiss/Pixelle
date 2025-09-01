@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,33 +26,33 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.cluster.snapshots.restore;
+package org.density.action.admin.cluster.snapshots.restore;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.ClusterChangedEvent;
-import org.opensearch.cluster.ClusterStateListener;
-import org.opensearch.cluster.RestoreInProgress;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.snapshots.RestoreInfo;
-import org.opensearch.snapshots.RestoreService;
+import org.density.cluster.ClusterChangedEvent;
+import org.density.cluster.ClusterStateListener;
+import org.density.cluster.RestoreInProgress;
+import org.density.cluster.service.ClusterService;
+import org.density.core.action.ActionListener;
+import org.density.core.action.ActionResponse;
+import org.density.core.index.shard.ShardId;
+import org.density.snapshots.RestoreInfo;
+import org.density.snapshots.RestoreService;
 
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.snapshots.RestoreService.restoreInProgress;
+import static org.density.snapshots.RestoreService.restoreInProgress;
 
 /**
  * Transport listener for cluster state updates
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RestoreClusterStateListener<T extends ActionResponse> implements ClusterStateListener {
 

@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.util;
+package org.density.common.util;
 
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,11 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * - Feature flags are static settings.
  * - Feature flags are globally available.
  * - Feature flags are configurable by JVM system properties with setting key.
- * @opensearch.internal
+ * @density.internal
  */
 public class FeatureFlags {
     // Prefixes public for testing
-    private static final String OS_EXPERIMENTAL_PREFIX = "opensearch.experimental.";
+    private static final String OS_EXPERIMENTAL_PREFIX = "density.experimental.";
     static final String FEATURE_FLAG_PREFIX = OS_EXPERIMENTAL_PREFIX + "feature.";
 
     /**
@@ -56,7 +56,7 @@ public class FeatureFlags {
      * Gates the functionality of warm index having the capability to store data remotely.
      * Once the feature is ready for release, this feature flag can be removed.
      */
-    public static final String WRITABLE_WARM_INDEX_EXPERIMENTAL_FLAG = "opensearch.experimental.feature.writable_warm_index.enabled";
+    public static final String WRITABLE_WARM_INDEX_EXPERIMENTAL_FLAG = "density.experimental.feature.writable_warm_index.enabled";
 
     /**
      * Gates the functionality of background task execution.
@@ -67,7 +67,7 @@ public class FeatureFlags {
      * Gates the functionality of merged segment warmer in local/remote segment replication.
      * Once the feature is ready for release, this feature flag can be removed.
      */
-    public static final String MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG = "opensearch.experimental.feature.merged_segment_warmer.enabled";
+    public static final String MERGED_SEGMENT_WARMER_EXPERIMENTAL_FLAG = "density.experimental.feature.merged_segment_warmer.enabled";
 
     public static final Setting<Boolean> REMOTE_STORE_MIGRATION_EXPERIMENTAL_SETTING = Setting.boolSetting(
         REMOTE_STORE_MIGRATION_EXPERIMENTAL,
@@ -166,7 +166,7 @@ public class FeatureFlags {
          * - Set from setting default
          * - Set from JVM system property if flag exists
          * - Set from provided settings if flag exists
-         * @param openSearchSettings The settings stored in opensearch.yml.
+         * @param openSearchSettings The settings stored in density.yml.
          */
         void initializeFeatureFlags(Settings openSearchSettings) {
             initFromDefaults();

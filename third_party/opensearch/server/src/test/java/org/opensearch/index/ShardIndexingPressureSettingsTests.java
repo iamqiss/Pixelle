@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.test.ClusterServiceUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.test.ClusterServiceUtils;
+import org.density.test.DensityTestCase;
 
-public class ShardIndexingPressureSettingsTests extends OpenSearchTestCase {
+public class ShardIndexingPressureSettingsTests extends DensityTestCase {
 
     private final Settings settings = Settings.builder()
         .put(IndexingPressure.MAX_INDEXING_BYTES.getKey(), "10MB")

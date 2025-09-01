@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,42 +26,42 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.update;
+package org.density.action.update;
 
-import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.support.ActiveShardCount;
-import org.opensearch.action.support.WriteRequestBuilder;
-import org.opensearch.action.support.replication.ReplicationRequest;
-import org.opensearch.action.support.single.instance.InstanceShardOperationRequestBuilder;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.VersionType;
-import org.opensearch.script.Script;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.index.IndexRequest;
+import org.density.action.support.ActiveShardCount;
+import org.density.action.support.WriteRequestBuilder;
+import org.density.action.support.replication.ReplicationRequest;
+import org.density.action.support.single.instance.InstanceShardOperationRequestBuilder;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.VersionType;
+import org.density.script.Script;
+import org.density.transport.client.DensityClient;
 
 import java.util.Map;
 
 /**
  * Transport request builder for updating an index
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class UpdateRequestBuilder extends InstanceShardOperationRequestBuilder<UpdateRequest, UpdateResponse, UpdateRequestBuilder>
     implements
         WriteRequestBuilder<UpdateRequestBuilder> {
 
-    public UpdateRequestBuilder(OpenSearchClient client, UpdateAction action) {
+    public UpdateRequestBuilder(DensityClient client, UpdateAction action) {
         super(client, action, new UpdateRequest());
     }
 
-    public UpdateRequestBuilder(OpenSearchClient client, UpdateAction action, String index, String id) {
+    public UpdateRequestBuilder(DensityClient client, UpdateAction action, String index, String id) {
         super(client, action, new UpdateRequest(index, id));
     }
 
@@ -156,7 +156,7 @@ public class UpdateRequestBuilder extends InstanceShardOperationRequestBuilder<U
     }
 
     /**
-     * Sets the versioning type. Defaults to {@link org.opensearch.index.VersionType#INTERNAL}.
+     * Sets the versioning type. Defaults to {@link org.density.index.VersionType#INTERNAL}.
      */
     public UpdateRequestBuilder setVersionType(VersionType versionType) {
         request.versionType(versionType);
@@ -168,7 +168,7 @@ public class UpdateRequestBuilder extends InstanceShardOperationRequestBuilder<U
      * sequence number. Must be used in combination with {@link #setIfPrimaryTerm(long)}
      *
      * If the document last modification was assigned a different sequence number a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public UpdateRequestBuilder setIfSeqNo(long seqNo) {
         request.setIfSeqNo(seqNo);
@@ -180,7 +180,7 @@ public class UpdateRequestBuilder extends InstanceShardOperationRequestBuilder<U
      * primary term. Must be used in combination with {@link #setIfSeqNo(long)}
      *
      * If the document last modification was assigned a different term a
-     * {@link org.opensearch.index.engine.VersionConflictEngineException} will be thrown.
+     * {@link org.density.index.engine.VersionConflictEngineException} will be thrown.
      */
     public UpdateRequestBuilder setIfPrimaryTerm(long term) {
         request.setIfPrimaryTerm(term);
@@ -281,7 +281,7 @@ public class UpdateRequestBuilder extends InstanceShardOperationRequestBuilder<U
 
     /**
      * Sets the index request to be used if the document does not exists. Otherwise, a
-     * {@link org.opensearch.index.engine.DocumentMissingException} is thrown.
+     * {@link org.density.index.engine.DocumentMissingException} is thrown.
      */
     public UpdateRequestBuilder setUpsert(IndexRequest indexRequest) {
         request.upsert(indexRequest);

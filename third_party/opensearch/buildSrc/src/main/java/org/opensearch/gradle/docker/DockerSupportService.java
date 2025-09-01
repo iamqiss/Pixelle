@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.gradle.docker;
+package org.density.gradle.docker;
 
 import org.apache.tools.ant.taskdefs.condition.Os;
-import org.opensearch.gradle.Version;
-import org.opensearch.gradle.info.BuildParams;
+import org.density.gradle.Version;
+import org.density.gradle.info.BuildParams;
 import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -60,7 +60,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Build service for detecting available Docker installation and checking for compatibility with OpenSearch Docker image build
+ * Build service for detecting available Docker installation and checking for compatibility with Density Docker image build
  * requirements. This includes a minimum version requirement, as well as the ability to run privileged commands.
  */
 public abstract class DockerSupportService implements BuildService<DockerSupportService.Parameters> {

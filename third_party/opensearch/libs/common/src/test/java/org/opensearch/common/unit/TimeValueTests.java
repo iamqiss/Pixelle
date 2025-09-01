@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,13 +26,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.unit;
+package org.density.common.unit;
 
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.object.HasToString.hasToString;
 
-public class TimeValueTests extends OpenSearchTestCase {
+public class TimeValueTests extends DensityTestCase {
 
     public void testSimple() {
         assertThat(TimeUnit.MILLISECONDS.toMillis(10), equalTo(new TimeValue(10, TimeUnit.MILLISECONDS).millis()));
@@ -161,7 +161,7 @@ public class TimeValueTests extends OpenSearchTestCase {
     public void testFailOnUnknownUnits() {
         try {
             TimeValue.parseTimeValue("23tw", null, "test");
-            fail("Expected OpenSearchParseException");
+            fail("Expected DensityParseException");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("failed to parse"));
         }
@@ -170,7 +170,7 @@ public class TimeValueTests extends OpenSearchTestCase {
     public void testFailOnMissingUnits() {
         try {
             TimeValue.parseTimeValue("42", null, "test");
-            fail("Expected OpenSearchParseException");
+            fail("Expected DensityParseException");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("failed to parse"));
         }
@@ -179,7 +179,7 @@ public class TimeValueTests extends OpenSearchTestCase {
     public void testNoDotsAllowed() {
         try {
             TimeValue.parseTimeValue("42ms.", null, "test");
-            fail("Expected OpenSearchParseException");
+            fail("Expected DensityParseException");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("failed to parse"));
         }
@@ -205,7 +205,7 @@ public class TimeValueTests extends OpenSearchTestCase {
 
     public void testCompareValue() {
         long firstRandom = randomNonNegativeLong();
-        long secondRandom = randomValueOtherThan(firstRandom, OpenSearchTestCase::randomNonNegativeLong);
+        long secondRandom = randomValueOtherThan(firstRandom, DensityTestCase::randomNonNegativeLong);
         TimeUnit unit = randomFrom(TimeUnit.values());
         TimeValue firstValue = new TimeValue(firstRandom, unit);
         TimeValue secondValue = new TimeValue(secondRandom, unit);

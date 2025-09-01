@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.Version;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.util.concurrent.AtomicArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.BytesStreamInput;
-import org.opensearch.search.SearchPhaseResult;
-import org.opensearch.search.SearchShardTarget;
-import org.opensearch.search.internal.InternalScrollSearchRequest;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.transport.RemoteClusterAware;
+import org.density.Version;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.util.concurrent.AtomicArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.BytesStreamInput;
+import org.density.search.SearchPhaseResult;
+import org.density.search.SearchShardTarget;
+import org.density.search.internal.InternalScrollSearchRequest;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.transport.RemoteClusterAware;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -50,7 +50,7 @@ import java.util.Base64;
 /**
  * Helper class for the search transport
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class TransportSearchHelper {
 

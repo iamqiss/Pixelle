@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,20 +25,20 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.search.suggest.document.CompletionQuery;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.SuggestionSearchContext;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextMappings;
+import org.density.common.unit.Fuzziness;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.SuggestionSearchContext;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.ContextMappings;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * Context used for the completion suggester
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompletionSuggestionContext extends SuggestionSearchContext.SuggestionContext {
 

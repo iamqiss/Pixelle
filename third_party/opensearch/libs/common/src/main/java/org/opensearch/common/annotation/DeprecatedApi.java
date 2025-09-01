@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.common.annotation;
+package org.density.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * Marks the public APIs as deprecated and scheduled for removal in one of the upcoming
  * major releases. The types marked with this annotations could only be other {@link PublicApi}s.
  *
- * @opensearch.api
+ * @density.api
  */
 @Documented
 @Target({

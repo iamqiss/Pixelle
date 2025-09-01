@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.network;
+package org.density.common.network;
 
-import org.opensearch.common.transport.PortsRange;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.transport.PortsRange;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.net.Inet6Address;
@@ -44,7 +44,7 @@ import java.util.Random;
 /**
  * Tests for network address formatting. Please avoid using any methods that cause DNS lookups!
  */
-public class NetworkAddressTests extends OpenSearchTestCase {
+public class NetworkAddressTests extends DensityTestCase {
 
     public void testFormatV4() throws Exception {
         assertEquals("127.0.0.1", NetworkAddress.format(forge("localhost", "127.0.0.1")));

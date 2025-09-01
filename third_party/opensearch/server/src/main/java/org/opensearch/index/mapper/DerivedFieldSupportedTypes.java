@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
@@ -18,16 +18,16 @@ import org.apache.lucene.document.LongField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.OpenSearchException;
-import org.opensearch.Version;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.TriFunction;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.index.analysis.IndexAnalyzers;
+import org.density.DensityException;
+import org.density.Version;
+import org.density.common.Booleans;
+import org.density.common.TriFunction;
+import org.density.common.collect.Tuple;
+import org.density.common.geo.GeoPoint;
+import org.density.common.lucene.Lucene;
+import org.density.common.network.InetAddresses;
+import org.density.common.time.DateFormatter;
+import org.density.index.analysis.IndexAnalyzers;
 
 import java.net.InetAddress;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 /**
  * Contains logic to get the FieldMapper for a given type of derived field. Also, for a given type of derived field,
  * it is used to create an IndexableField for the provided type and object. It is useful when indexing into
- * lucene MemoryIndex in {@link org.opensearch.index.query.DerivedFieldQuery}.
+ * lucene MemoryIndex in {@link org.density.index.query.DerivedFieldQuery}.
  */
 public enum DerivedFieldSupportedTypes {
 
@@ -141,7 +141,7 @@ public enum DerivedFieldSupportedTypes {
             keywordBuilder
         );
     },
-        name -> o -> { throw new OpenSearchException("Cannot create IndexableField to execute queries on object derived field"); },
+        name -> o -> { throw new DensityException("Cannot create IndexableField to execute queries on object derived field"); },
         formatter -> o -> o
     );
 

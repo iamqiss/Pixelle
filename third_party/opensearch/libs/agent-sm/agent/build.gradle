@@ -1,8 +1,8 @@
-apply plugin: 'opensearch.build'
-apply plugin: 'opensearch.publish'
+apply plugin: 'density.build'
+apply plugin: 'density.publish'
 
 base {
-  archivesName = 'opensearch-agent'
+  archivesName = 'density-agent'
 }
 
 configurations {
@@ -28,8 +28,8 @@ jar {
     attributes(
       "Can-Redefine-Classes": "true",
       "Can-Retransform-Classes": "true",
-      "Agent-Class": "org.opensearch.javaagent.Agent",
-      "Premain-Class": "org.opensearch.javaagent.Agent",
+      "Agent-Class": "org.density.javaagent.Agent",
+      "Premain-Class": "org.density.javaagent.Agent",
       "Boot-Class-Path":  bootClasspath.join(' ')
     )
   }

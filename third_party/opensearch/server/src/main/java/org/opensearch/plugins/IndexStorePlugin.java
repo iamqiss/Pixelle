@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins;
+package org.density.plugins;
 
 import org.apache.lucene.store.Directory;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.routing.ShardRouting;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.ExperimentalApi;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.env.ShardLock;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.shard.ShardPath;
-import org.opensearch.index.store.IndexStoreListener;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.store.remote.filecache.FileCache;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.routing.ShardRouting;
+import org.density.common.Nullable;
+import org.density.common.annotation.ExperimentalApi;
+import org.density.common.annotation.PublicApi;
+import org.density.core.index.shard.ShardId;
+import org.density.env.ShardLock;
+import org.density.index.IndexSettings;
+import org.density.index.shard.ShardPath;
+import org.density.index.store.IndexStoreListener;
+import org.density.index.store.Store;
+import org.density.index.store.remote.filecache.FileCache;
+import org.density.indices.recovery.RecoveryState;
+import org.density.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -56,7 +56,7 @@ import java.util.Optional;
 /**
  * A plugin that provides alternative directory implementations.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public interface IndexStorePlugin {
@@ -64,7 +64,7 @@ public interface IndexStorePlugin {
     /**
      * An interface that describes how to create a new directory instance per shard.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -81,7 +81,7 @@ public interface IndexStorePlugin {
 
     /**
      * The {@link DirectoryFactory} mappings for this plugin. When an index is created the store type setting
-     * {@link org.opensearch.index.IndexModule#INDEX_STORE_TYPE_SETTING} on the index will be examined and either use the default or a
+     * {@link org.density.index.IndexModule#INDEX_STORE_TYPE_SETTING} on the index will be examined and either use the default or a
      * built-in type, or looked up among all the directory factories from {@link IndexStorePlugin} plugins.
      *
      * @return a map from store type to an directory factory
@@ -93,7 +93,7 @@ public interface IndexStorePlugin {
     /**
      * An interface that describes how to create a new composite directory instance per shard.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @ExperimentalApi
@@ -117,7 +117,7 @@ public interface IndexStorePlugin {
 
     /**
      * The {@link CompositeDirectoryFactory} mappings for this plugin. When an index is created the composite store type setting
-     * {@link org.opensearch.index.IndexModule#INDEX_COMPOSITE_STORE_TYPE_SETTING} on the index will be examined and either use the default or a
+     * {@link org.density.index.IndexModule#INDEX_COMPOSITE_STORE_TYPE_SETTING} on the index will be examined and either use the default or a
      * built-in type, or looked up among all the composite directory factories from {@link IndexStorePlugin} plugins.
      *
      * @return a map from composite store type to a composite directory factory
@@ -129,7 +129,7 @@ public interface IndexStorePlugin {
     /**
      * An interface that allows to create a new {@link RecoveryState} per shard.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @PublicApi(since = "1.0.0")
@@ -143,7 +143,7 @@ public interface IndexStorePlugin {
 
     /**
      * The {@link RecoveryStateFactory} mappings for this plugin. When an index is created the recovery type setting
-     * {@link org.opensearch.index.IndexModule#INDEX_RECOVERY_TYPE_SETTING} on the index will be examined and either use the default
+     * {@link org.density.index.IndexModule#INDEX_RECOVERY_TYPE_SETTING} on the index will be examined and either use the default
      * or looked up among all the recovery state factories from {@link IndexStorePlugin} plugins.
      *
      * @return a map from recovery type to an recovery state factory
@@ -162,7 +162,7 @@ public interface IndexStorePlugin {
     /**
      * An interface that describes how to create a new Store instance per shard.
      *
-     * @opensearch.api
+     * @density.api
      */
     @FunctionalInterface
     @ExperimentalApi

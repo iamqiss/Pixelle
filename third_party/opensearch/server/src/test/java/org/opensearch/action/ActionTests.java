@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.core.action.ActionResponse;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.action.ActionResponse;
+import org.density.test.DensityTestCase;
 
-public class ActionTests extends OpenSearchTestCase {
+public class ActionTests extends DensityTestCase {
 
     public void testEquals() {
         class FakeAction extends ActionType<ActionResponse> {

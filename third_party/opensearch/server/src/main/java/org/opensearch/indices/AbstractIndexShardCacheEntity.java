@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,23 +26,23 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices;
+package org.density.indices;
 
-import org.opensearch.common.cache.ICacheKey;
-import org.opensearch.common.cache.RemovalNotification;
-import org.opensearch.common.cache.RemovalReason;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.cache.request.ShardRequestCache;
-import org.opensearch.index.shard.IndexShard;
+import org.density.common.cache.ICacheKey;
+import org.density.common.cache.RemovalNotification;
+import org.density.common.cache.RemovalReason;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.cache.request.ShardRequestCache;
+import org.density.index.shard.IndexShard;
 
 /**
  * Abstract base class for the an {@link IndexShard} level {@linkplain IndicesRequestCache.CacheEntity}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class AbstractIndexShardCacheEntity implements IndicesRequestCache.CacheEntity {
 

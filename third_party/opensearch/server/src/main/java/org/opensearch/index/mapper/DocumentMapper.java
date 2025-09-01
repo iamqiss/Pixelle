@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,35 +26,35 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.BitSet;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchGenerationException;
-import org.opensearch.Version;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.IndexSortConfig;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.mapper.MapperService.MergeReason;
-import org.opensearch.index.mapper.MetadataFieldMapper.TypeParser;
-import org.opensearch.index.query.NestedQueryBuilder;
-import org.opensearch.search.internal.SearchContext;
+import org.density.DensityGenerationException;
+import org.density.Version;
+import org.density.common.annotation.PublicApi;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.settings.Settings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.text.Text;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexSettings;
+import org.density.index.IndexSortConfig;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.mapper.MapperService.MergeReason;
+import org.density.index.mapper.MetadataFieldMapper.TypeParser;
+import org.density.index.query.NestedQueryBuilder;
+import org.density.search.internal.SearchContext;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -66,9 +66,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * The OpenSearch DocumentMapper
+ * The Density DocumentMapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class DocumentMapper implements ToXContentFragment {
@@ -76,7 +76,7 @@ public class DocumentMapper implements ToXContentFragment {
     /**
      * Builder for the Document Field Mapper
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public static class Builder {
@@ -165,7 +165,7 @@ public class DocumentMapper implements ToXContentFragment {
         try {
             mappingSource = new CompressedXContent(this, ToXContent.EMPTY_PARAMS);
         } catch (Exception e) {
-            throw new OpenSearchGenerationException("failed to serialize source for type [" + type + "]", e);
+            throw new DensityGenerationException("failed to serialize source for type [" + type + "]", e);
         }
 
         final Collection<String> deleteTombstoneMetadataFields = Arrays.asList(

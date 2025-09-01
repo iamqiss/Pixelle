@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
-import org.opensearch.index.fielddata.ScriptDocValues.Longs;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.fielddata.ScriptDocValues.Longs;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 
-public class ScriptDocValuesLongsTests extends OpenSearchTestCase {
+public class ScriptDocValuesLongsTests extends DensityTestCase {
     public void testLongs() throws IOException {
         long[][] values = new long[between(3, 10)][];
         for (int d = 0; d < values.length; d++) {

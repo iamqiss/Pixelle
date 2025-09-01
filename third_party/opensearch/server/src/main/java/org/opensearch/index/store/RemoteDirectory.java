@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store;
+package org.density.index.store;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,21 +17,21 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.Lock;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.LatchedActionListener;
-import org.opensearch.common.blobstore.AsyncMultiStreamBlobContainer;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.exception.CorruptFileException;
-import org.opensearch.common.blobstore.stream.write.WriteContext;
-import org.opensearch.common.blobstore.stream.write.WritePriority;
-import org.opensearch.common.blobstore.transfer.RemoteTransferContainer;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
-import org.opensearch.common.blobstore.transfer.stream.OffsetRangeInputStream;
-import org.opensearch.common.lucene.store.ByteArrayIndexInput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.unit.ByteSizeUnit;
-import org.opensearch.index.store.exception.ChecksumCombinationException;
+import org.density.ExceptionsHelper;
+import org.density.action.LatchedActionListener;
+import org.density.common.blobstore.AsyncMultiStreamBlobContainer;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.exception.CorruptFileException;
+import org.density.common.blobstore.stream.write.WriteContext;
+import org.density.common.blobstore.stream.write.WritePriority;
+import org.density.common.blobstore.transfer.RemoteTransferContainer;
+import org.density.common.blobstore.transfer.stream.OffsetRangeIndexInputStream;
+import org.density.common.blobstore.transfer.stream.OffsetRangeInputStream;
+import org.density.common.lucene.store.ByteArrayIndexInput;
+import org.density.core.action.ActionListener;
+import org.density.core.common.unit.ByteSizeUnit;
+import org.density.index.store.exception.ChecksumCombinationException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,7 +48,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
+import static org.density.common.blobstore.transfer.RemoteTransferContainer.checksumOfChecksum;
 
 /**
  * A {@code RemoteDirectory} provides an abstraction layer for storing a list of files to a remote store.
@@ -57,7 +57,7 @@ import static org.opensearch.common.blobstore.transfer.RemoteTransferContainer.c
  * the remote store. Implementation of remaining methods will be added as remote store is integrated with
  * replication, peer recovery etc.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RemoteDirectory extends Directory {
 
@@ -72,7 +72,7 @@ public class RemoteDirectory extends Directory {
 
     /**
      * Map containing the mapping of segment files that are pending download as part of the pre-copy (warm) phase of
-     * {@link org.opensearch.index.engine.MergedSegmentWarmer}. The key is the local filename and value is the remote filename.
+     * {@link org.density.index.engine.MergedSegmentWarmer}. The key is the local filename and value is the remote filename.
      */
     final Map<String, String> pendingDownloadMergedSegments;
 
@@ -512,7 +512,7 @@ public class RemoteDirectory extends Directory {
     /**
      * DownloadRateLimiterProvider returns a low-priority rate limited stream if the segment
      * being downloaded is a merged segment as part of the pre-copy (warm) phase of
-     * {@link org.opensearch.index.engine.MergedSegmentWarmer}.
+     * {@link org.density.index.engine.MergedSegmentWarmer}.
      */
     private class DownloadRateLimiterProvider {
         private final UnaryOperator<InputStream> downloadRateLimiter;

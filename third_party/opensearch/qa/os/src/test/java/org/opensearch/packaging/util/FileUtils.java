@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.packaging.util;
+package org.density.packaging.util;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.util.io.IOUtils;
+import org.density.common.util.io.IOUtils;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
@@ -68,9 +68,9 @@ import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipException;
 
-import static org.opensearch.packaging.test.PackagingTestCase.getRootTempDir;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileDoesNotExist;
-import static org.opensearch.packaging.util.FileExistenceMatchers.fileExists;
+import static org.density.packaging.test.PackagingTestCase.getRootTempDir;
+import static org.density.packaging.util.FileExistenceMatchers.fileDoesNotExist;
+import static org.density.packaging.util.FileExistenceMatchers.fileExists;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
@@ -317,7 +317,7 @@ public class FileUtils {
     }
 
     public static Path getDefaultArchiveInstallPath() {
-        return getRootTempDir().resolve("opensearch");
+        return getRootTempDir().resolve("density");
     }
 
     private static final Pattern VERSION_REGEX = Pattern.compile("(\\d+\\.\\d+\\.\\d+(-SNAPSHOT)?)");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.index.IndexReader;
@@ -49,23 +49,23 @@ import org.apache.lucene.search.TermInSetQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.BytesRefIterator;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.index.analysis.NamedAnalyzer;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.query.DistanceFeatureQueryBuilder;
-import org.opensearch.index.query.IntervalMode;
-import org.opensearch.index.query.QueryRewriteContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.query.QueryShardException;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.fetch.subphase.FetchFieldsPhase;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.ExceptionsHelper;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.time.DateMathParser;
+import org.density.common.unit.Fuzziness;
+import org.density.index.analysis.NamedAnalyzer;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.query.DistanceFeatureQueryBuilder;
+import org.density.index.query.IntervalMode;
+import org.density.index.query.QueryRewriteContext;
+import org.density.index.query.QueryShardContext;
+import org.density.index.query.QueryShardException;
+import org.density.search.DocValueFormat;
+import org.density.search.fetch.subphase.FetchFieldsPhase;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -78,7 +78,7 @@ import java.util.function.Supplier;
 /**
  * This defines the core properties and functions to operate on a field.
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public abstract class MappedFieldType {
@@ -213,7 +213,7 @@ public abstract class MappedFieldType {
      *  boosted by {@link #boost()}.
      *  @throws IllegalArgumentException if {@code value} cannot be converted to the expected data type or if the field is not searchable
      *      due to the way it is configured (eg. not indexed)
-     *  @throws OpenSearchParseException if {@code value} cannot be converted to the expected data type
+     *  @throws DensityParseException if {@code value} cannot be converted to the expected data type
      *  @throws UnsupportedOperationException if the field is not searchable regardless of options
      *  @throws QueryShardException if the field is not searchable regardless of options
      */
@@ -400,7 +400,7 @@ public abstract class MappedFieldType {
      * An enum used to describe the relation between the range of terms in a
      * shard when compared with a query range
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Relation {

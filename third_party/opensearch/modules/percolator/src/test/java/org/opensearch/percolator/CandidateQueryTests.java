@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.percolator;
+package org.density.percolator;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -91,28 +91,28 @@ import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.CheckedFunction;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.lucene.search.function.FunctionScoreQuery;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.mapper.DocumentMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.index.mapper.ParseContext;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.lucene.queries.BlendedTermQuery;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.CheckedFunction;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.lucene.search.function.FunctionScoreQuery;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.mapper.DocumentMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.index.mapper.ParseContext;
+import org.density.index.query.QueryShardContext;
+import org.density.lucene.queries.BlendedTermQuery;
+import org.density.plugins.Plugin;
+import org.density.test.DensitySingleNodeTestCase;
+import org.density.test.VersionUtils;
 import org.junit.After;
 import org.junit.Before;
 
@@ -128,11 +128,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.network.InetAddresses.forString;
+import static org.density.common.network.InetAddresses.forString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class CandidateQueryTests extends OpenSearchSingleNodeTestCase {
+public class CandidateQueryTests extends DensitySingleNodeTestCase {
 
     private Directory directory;
     private IndexWriter indexWriter;

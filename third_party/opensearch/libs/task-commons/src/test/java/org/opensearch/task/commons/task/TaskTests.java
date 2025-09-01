@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.task.commons.task;
+package org.density.task.commons.task;
 
-import org.opensearch.task.commons.mocks.MockTaskParams;
-import org.opensearch.task.commons.worker.WorkerNode;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.task.commons.mocks.MockTaskParams;
+import org.density.task.commons.worker.WorkerNode;
+import org.density.test.DensityTestCase;
 
 /**
  * Test for {@link Task}
  */
-public class TaskTests extends OpenSearchTestCase {
+public class TaskTests extends DensityTestCase {
 
     public void testTaskConstructorAndGetters() {
         TaskId taskId = new TaskId("123");

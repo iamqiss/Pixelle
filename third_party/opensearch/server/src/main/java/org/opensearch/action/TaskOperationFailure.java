@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,34 +26,34 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.ToXContentFragment;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.ExceptionsHelper;
+import org.density.DensityException;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.ToXContentFragment;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.constructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.constructorArg;
 
 /**
  * Information about task operation failures
  * <p>
  * The class is final due to serialization limitations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class TaskOperationFailure implements Writeable, ToXContentFragment {
     private static final String TASK_ID = "task_id";
@@ -75,7 +75,7 @@ public final class TaskOperationFailure implements Writeable, ToXContentFragment
             int i = 0;
             String nodeId = (String) constructorObjects[i++];
             long taskId = (long) constructorObjects[i++];
-            OpenSearchException reason = (OpenSearchException) constructorObjects[i];
+            DensityException reason = (DensityException) constructorObjects[i];
             return new TaskOperationFailure(nodeId, taskId, reason);
         }
     );
@@ -83,7 +83,7 @@ public final class TaskOperationFailure implements Writeable, ToXContentFragment
     static {
         PARSER.declareString(constructorArg(), new ParseField(NODE_ID));
         PARSER.declareLong(constructorArg(), new ParseField(TASK_ID));
-        PARSER.declareObject(constructorArg(), (parser, c) -> OpenSearchException.fromXContent(parser), new ParseField(REASON));
+        PARSER.declareObject(constructorArg(), (parser, c) -> DensityException.fromXContent(parser), new ParseField(REASON));
     }
 
     public TaskOperationFailure(String nodeId, long taskId, Exception e) {
@@ -144,7 +144,7 @@ public final class TaskOperationFailure implements Writeable, ToXContentFragment
         if (reason != null) {
             builder.field(REASON);
             builder.startObject();
-            OpenSearchException.generateThrowableXContent(builder, params, reason);
+            DensityException.generateThrowableXContent(builder, params, reason);
             builder.endObject();
         }
         return builder;

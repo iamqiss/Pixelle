@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.support.replication.ReplicationResponse.ShardInfo;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.breaker.CircuitBreaker;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.RandomObjects;
+import org.density.DensityException;
+import org.density.action.support.replication.ReplicationResponse.ShardInfo;
+import org.density.common.collect.Tuple;
+import org.density.common.xcontent.XContentType;
+import org.density.core.common.Strings;
+import org.density.core.common.breaker.CircuitBreaker;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.index.shard.ShardId;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.test.DensityTestCase;
+import org.density.test.RandomObjects;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.opensearch.OpenSearchExceptionTests.assertDeepEquals;
-import static org.opensearch.core.xcontent.XContentHelper.toXContent;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertToXContentEquivalent;
+import static org.density.DensityExceptionTests.assertDeepEquals;
+import static org.density.core.xcontent.XContentHelper.toXContent;
+import static org.density.test.hamcrest.DensityAssertions.assertToXContentEquivalent;
 
-public class ReplicationResponseTests extends OpenSearchTestCase {
+public class ReplicationResponseTests extends DensityTestCase {
 
     public void testShardInfoToString() {
         final int total = 5;
@@ -152,8 +152,8 @@ public class ReplicationResponseTests extends OpenSearchTestCase {
                 assertEquals(expectedFailure.nodeId(), actualFailure.nodeId());
                 assertEquals(expectedFailure.primary(), actualFailure.primary());
 
-                OpenSearchException expectedCause = (OpenSearchException) expectedFailure.getCause();
-                OpenSearchException actualCause = (OpenSearchException) actualFailure.getCause();
+                DensityException expectedCause = (DensityException) expectedFailure.getCause();
+                DensityException actualCause = (DensityException) actualFailure.getCause();
                 assertDeepEquals(expectedCause, actualCause);
             }
         }

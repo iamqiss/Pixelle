@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline.common;
+package org.density.search.pipeline.common;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.plugins.SearchPipelinePlugin;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.settings.Settings;
+import org.density.env.TestEnvironment;
+import org.density.plugins.SearchPipelinePlugin;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public class SearchPipelineCommonModulePluginTests extends OpenSearchTestCase {
+public class SearchPipelineCommonModulePluginTests extends DensityTestCase {
 
     public void testRequestProcessorAllowlist() throws IOException {
         final String key = SearchPipelineCommonModulePlugin.REQUEST_PROCESSORS_ALLOWLIST_SETTING.getKey();

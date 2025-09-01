@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.ingest.TestTemplateService;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityException;
+import org.density.DensityParseException;
+import org.density.ingest.TestTemplateService;
+import org.density.test.DensityTestCase;
 import org.junit.Before;
 
 import java.util.Arrays;
@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class RemoveProcessorFactoryTests extends OpenSearchTestCase {
+public class RemoveProcessorFactoryTests extends DensityTestCase {
 
     private RemoveProcessor.Factory factory;
 
@@ -85,16 +85,16 @@ public class RemoveProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config = new HashMap<>();
         config.put("field", "{{field1}}");
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(OpenSearchException.class, () -> factory.create(null, processorTag, null, config));
+        DensityException exception = expectThrows(DensityException.class, () -> factory.create(null, processorTag, null, config));
         assertThat(exception.getMessage(), equalTo("java.lang.RuntimeException: could not compile script"));
-        assertThat(exception.getMetadata("opensearch.processor_tag").get(0), equalTo(processorTag));
+        assertThat(exception.getMetadata("density.processor_tag").get(0), equalTo(processorTag));
     }
 
     public void testCreateWithExcludeField() throws Exception {
         Map<String, Object> config = new HashMap<>();
         String processorTag = randomAlphaOfLength(10);
-        OpenSearchException exception = expectThrows(
-            OpenSearchParseException.class,
+        DensityException exception = expectThrows(
+            DensityParseException.class,
             () -> factory.create(null, processorTag, null, config)
         );
         assertThat(exception.getMessage(), equalTo("[field] either field or exclude_field must be set"));
@@ -102,7 +102,7 @@ public class RemoveProcessorFactoryTests extends OpenSearchTestCase {
         Map<String, Object> config2 = new HashMap<>();
         config2.put("field", "field1");
         config2.put("exclude_field", "field2");
-        exception = expectThrows(OpenSearchParseException.class, () -> factory.create(null, processorTag, null, config2));
+        exception = expectThrows(DensityParseException.class, () -> factory.create(null, processorTag, null, config2));
         assertThat(exception.getMessage(), equalTo("[field] either field or exclude_field must be set"));
 
         Map<String, Object> config6 = new HashMap<>();

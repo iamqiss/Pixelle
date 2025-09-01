@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,11 +25,11 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.BulkScorer;
@@ -42,10 +42,10 @@ import org.apache.lucene.search.suggest.document.CompletionQuery;
 import org.apache.lucene.search.suggest.document.TopSuggestDocs;
 import org.apache.lucene.search.suggest.document.TopSuggestDocsCollector;
 import org.apache.lucene.util.CharsRefBuilder;
-import org.opensearch.core.common.text.Text;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.Suggester;
+import org.density.core.common.text.Text;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.Suggester;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -56,7 +56,7 @@ import java.util.Set;
 /**
  * The completion suggester implementation
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompletionSuggester extends Suggester<CompletionSuggestionContext> {
 

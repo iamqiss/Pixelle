@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,22 +26,22 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.reindex;
+package org.density.index.reindex;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.admin.cluster.node.tasks.list.ListTasksResponse;
-import org.opensearch.action.support.tasks.TasksRequestBuilder;
-import org.opensearch.transport.client.OpenSearchClient;
+import org.density.action.ActionType;
+import org.density.action.admin.cluster.node.tasks.list.ListTasksResponse;
+import org.density.action.support.tasks.TasksRequestBuilder;
+import org.density.transport.client.DensityClient;
 
 /**
  * Java API support for changing the throttle on reindex tasks while they are running.
  */
 public class RethrottleRequestBuilder extends TasksRequestBuilder<RethrottleRequest, ListTasksResponse, RethrottleRequestBuilder> {
-    public RethrottleRequestBuilder(OpenSearchClient client, ActionType<ListTasksResponse> action) {
+    public RethrottleRequestBuilder(DensityClient client, ActionType<ListTasksResponse> action) {
         super(client, action, new RethrottleRequest());
     }
 

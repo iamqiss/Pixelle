@@ -1,18 +1,18 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.inject.Singleton;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.protobufs.QueryContainer;
+import org.density.common.inject.Inject;
+import org.density.common.inject.Singleton;
+import org.density.index.query.QueryBuilder;
+import org.density.protobufs.QueryContainer;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -81,10 +81,10 @@ public class QueryBuilderProtoConverterRegistry {
     }
 
     /**
-     * Converts a protobuf query container to an OpenSearch QueryBuilder.
+     * Converts a protobuf query container to an Density QueryBuilder.
      *
      * @param queryContainer The protobuf query container
-     * @return The corresponding OpenSearch QueryBuilder
+     * @return The corresponding Density QueryBuilder
      * @throws IllegalArgumentException if no converter can handle the query
      */
     public QueryBuilder fromProto(QueryContainer queryContainer) {

@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.fielddata;
+package org.density.index.fielddata;
 
 import org.apache.lucene.document.LatLonShapeDocValuesField;
 import org.apache.lucene.index.BinaryDocValues;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.common.geo.GeoShapeDocValue;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.index.mapper.GeoShapeFieldMapper;
+import org.density.common.geo.GeoShapeDocValue;
+import org.density.geometry.Geometry;
+import org.density.index.mapper.GeoShapeFieldMapper;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
  * {@link LatLonShapeDocValuesField} from Lucene per document. Check {@link GeoShapeFieldMapper} for details how we
  * converted the {@link Geometry} to {@link LatLonShapeDocValuesField}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class GeoShapeValue {
     /**

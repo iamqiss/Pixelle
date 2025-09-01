@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.search;
+package org.density.action.search;
 
-import org.opensearch.common.MemoizedSupplier;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.tasks.TaskId;
-import org.opensearch.search.fetch.ShardFetchSearchRequest;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.tasks.SearchBackpressureTask;
-import org.opensearch.wlm.WorkloadGroupTask;
+import org.density.common.MemoizedSupplier;
+import org.density.common.annotation.PublicApi;
+import org.density.core.tasks.TaskId;
+import org.density.search.fetch.ShardFetchSearchRequest;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.tasks.SearchBackpressureTask;
+import org.density.wlm.WorkloadGroupTask;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -47,7 +47,7 @@ import java.util.function.Supplier;
  * Task storing information about a currently running search shard request.
  * See {@link ShardSearchRequest}, {@link ShardFetchSearchRequest}, ...
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class SearchShardTask extends WorkloadGroupTask implements SearchBackpressureTask {

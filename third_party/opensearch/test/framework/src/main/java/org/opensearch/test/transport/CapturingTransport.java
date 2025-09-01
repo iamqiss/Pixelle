@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.test.transport;
+package org.density.test.transport;
 
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.transport.Transport;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.transport.Transport;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.spi;
+package org.density.common.inject.spi;
 
-import org.opensearch.common.inject.Provider;
+import org.density.common.inject.Provider;
 
 /**
  * A provider with dependencies on other injected types. If a {@link Provider} has dependencies that
@@ -37,6 +37,6 @@ import org.opensearch.common.inject.Provider;
  *
  * @since 2.0
  *
- * @opensearch.internal
+ * @density.internal
  */
 public interface ProviderWithDependencies<T> extends Provider<T>, HasDependencies {}

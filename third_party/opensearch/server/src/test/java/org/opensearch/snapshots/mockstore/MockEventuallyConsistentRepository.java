@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.snapshots.mockstore;
+package org.density.snapshots.mockstore;
 
-import org.opensearch.cluster.metadata.RepositoryMetadata;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.blobstore.BlobContainer;
-import org.opensearch.common.blobstore.BlobMetadata;
-import org.opensearch.common.blobstore.BlobPath;
-import org.opensearch.common.blobstore.BlobStore;
-import org.opensearch.common.blobstore.DeleteResult;
-import org.opensearch.common.blobstore.support.PlainBlobMetadata;
-import org.opensearch.common.io.Streams;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.indices.recovery.RecoverySettings;
-import org.opensearch.repositories.blobstore.BlobStoreRepository;
-import org.opensearch.snapshots.SnapshotInfo;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.cluster.metadata.RepositoryMetadata;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.blobstore.BlobContainer;
+import org.density.common.blobstore.BlobMetadata;
+import org.density.common.blobstore.BlobPath;
+import org.density.common.blobstore.BlobStore;
+import org.density.common.blobstore.DeleteResult;
+import org.density.common.blobstore.support.PlainBlobMetadata;
+import org.density.common.io.Streams;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.indices.recovery.RecoverySettings;
+import org.density.repositories.blobstore.BlobStoreRepository;
+import org.density.snapshots.SnapshotInfo;
+import org.density.test.DensityTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -402,7 +402,7 @@ public class MockEventuallyConsistentRepository extends BlobStoreRepository {
                         }
                     } else {
                         if (hasConsistentContent) {
-                            OpenSearchTestCase.assertArrayEquals(
+                            DensityTestCase.assertArrayEquals(
                                 "Tried to overwrite blob [" + blobName + "]",
                                 relevantActions.get(0).data,
                                 data

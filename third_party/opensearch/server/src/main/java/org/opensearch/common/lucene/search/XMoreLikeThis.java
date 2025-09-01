@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -41,11 +41,11 @@
  * limitations under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.lucene.search;
+package org.density.common.lucene.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -73,7 +73,7 @@ import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRefBuilder;
 import org.apache.lucene.util.PriorityQueue;
-import org.opensearch.common.Nullable;
+import org.density.common.Nullable;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -169,7 +169,7 @@ import java.util.Set;
  * - optimise: when no termvector support available - used maxNumTermsParsed to limit amount of tokenization
  * </pre>
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class XMoreLikeThis {
 
@@ -1024,7 +1024,7 @@ public final class XMoreLikeThis {
     /**
      * PriorityQueue that orders words by score.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class FreqQ extends PriorityQueue<ScoreTerm> {
         FreqQ(int maxSize) {
@@ -1040,7 +1040,7 @@ public final class XMoreLikeThis {
     /**
      * A scored term
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class ScoreTerm {
         String word;
@@ -1063,7 +1063,7 @@ public final class XMoreLikeThis {
     /**
      * Use for frequencies and to avoid renewing Integers.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class Int {
         int x;

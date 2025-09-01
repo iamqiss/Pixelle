@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest;
+package org.density.rest;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.action.pagination.PageParams;
-import org.opensearch.common.Booleans;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.unit.ByteSizeValue;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.http.HttpChannel;
-import org.opensearch.http.HttpRequest;
+import org.density.DensityParseException;
+import org.density.action.pagination.PageParams;
+import org.density.common.Booleans;
+import org.density.common.CheckedConsumer;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.annotation.PublicApi;
+import org.density.common.collect.Tuple;
+import org.density.common.unit.TimeValue;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.core.common.Strings;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.unit.ByteSizeValue;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentParser;
+import org.density.http.HttpChannel;
+import org.density.http.HttpRequest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,16 +66,16 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.opensearch.action.pagination.PageParams.PARAM_NEXT_TOKEN;
-import static org.opensearch.action.pagination.PageParams.PARAM_SIZE;
-import static org.opensearch.action.pagination.PageParams.PARAM_SORT;
-import static org.opensearch.common.unit.TimeValue.parseTimeValue;
-import static org.opensearch.core.common.unit.ByteSizeValue.parseBytesSizeValue;
+import static org.density.action.pagination.PageParams.PARAM_NEXT_TOKEN;
+import static org.density.action.pagination.PageParams.PARAM_SIZE;
+import static org.density.action.pagination.PageParams.PARAM_SORT;
+import static org.density.common.unit.TimeValue.parseTimeValue;
+import static org.density.core.common.unit.ByteSizeValue.parseBytesSizeValue;
 
 /**
  * REST Request
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public class RestRequest implements ToXContent.Params {
@@ -237,7 +237,7 @@ public class RestRequest implements ToXContent.Params {
     /**
      * The method used.
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public enum Method {
@@ -301,7 +301,7 @@ public class RestRequest implements ToXContent.Params {
      */
     public final BytesReference requiredContent() {
         if (hasContent() == false) {
-            throw new OpenSearchParseException("request body is required");
+            throw new DensityParseException("request body is required");
         } else if (mediaType.get() == null) {
             throw new IllegalStateException("unknown content type");
         }
@@ -487,7 +487,7 @@ public class RestRequest implements ToXContent.Params {
     }
 
     /**
-     * A parser for the contents of this request if there is a body, otherwise throws an {@link OpenSearchParseException}. Use
+     * A parser for the contents of this request if there is a body, otherwise throws an {@link DensityParseException}. Use
      * {@link #applyContentParser(CheckedConsumer)} if you want to gracefully handle when the request doesn't have any contents. Use
      * {@link #contentOrSourceParamParser()} for requests that support specifying the request body in the {@code source} param.
      */
@@ -517,7 +517,7 @@ public class RestRequest implements ToXContent.Params {
 
     /**
      * A parser for the contents of this request if it has contents, otherwise a parser for the {@code source} parameter if there is one,
-     * otherwise throws an {@link OpenSearchParseException}. Use {@link #withContentOrSourceParamParserOrNull(CheckedConsumer)} instead
+     * otherwise throws an {@link DensityParseException}. Use {@link #withContentOrSourceParamParserOrNull(CheckedConsumer)} instead
      * if you need to handle the absence request content gracefully.
      */
     public final XContentParser contentOrSourceParamParser() throws IOException {
@@ -552,7 +552,7 @@ public class RestRequest implements ToXContent.Params {
      */
     public final Tuple<MediaType, BytesReference> contentOrSourceParam() {
         if (hasContentOrSourceParam() == false) {
-            throw new OpenSearchParseException("request body or source parameter is required");
+            throw new DensityParseException("request body or source parameter is required");
         } else if (hasContent()) {
             return new Tuple<>(mediaType.get(), requiredContent());
         }
@@ -602,7 +602,7 @@ public class RestRequest implements ToXContent.Params {
     /**
      * Thrown if there is an error in the content type header.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class ContentTypeHeaderException extends RuntimeException {
 
@@ -615,7 +615,7 @@ public class RestRequest implements ToXContent.Params {
     /**
      * Thrown if there is a bad parameter.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class BadParameterException extends RuntimeException {
 

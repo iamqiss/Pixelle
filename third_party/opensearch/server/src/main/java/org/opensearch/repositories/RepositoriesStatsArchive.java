@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,15 +26,15 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.repositories;
+package org.density.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.common.unit.TimeValue;
+import org.density.common.unit.TimeValue;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 /**
  * Archive of repository stats
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RepositoriesStatsArchive {
     private static final Logger logger = LogManager.getLogger(RepositoriesStatsArchive.class);

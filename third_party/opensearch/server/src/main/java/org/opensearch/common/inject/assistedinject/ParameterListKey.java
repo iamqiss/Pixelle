@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -23,13 +23,13 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.inject.assistedinject;
+package org.density.common.inject.assistedinject;
 
-import org.opensearch.common.inject.TypeLiteral;
+import org.density.common.inject.TypeLiteral;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.List;
  * @author jmourits@google.com (Jerome Mourits)
  * @author jessewilson@google.com (Jesse Wilson)
  *
- * @opensearch.internal
+ * @density.internal
  */
 class ParameterListKey {
 

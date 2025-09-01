@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.collect;
+package org.density.common.collect;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
 /**
  * Iterators utility class.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class Iterators {
 
@@ -62,7 +62,7 @@ public class Iterators {
     /**
      * Concat iterators
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class ConcatenatedIterator<T> implements Iterator<T> {
         private final Iterator<? extends T>[] iterators;

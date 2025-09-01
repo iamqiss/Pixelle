@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,24 +25,24 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo.parsers;
+package org.density.common.geo.parsers;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Explicit;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.geo.GeoShapeType;
-import org.opensearch.common.geo.builders.CircleBuilder;
-import org.opensearch.common.geo.builders.GeometryCollectionBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder;
-import org.opensearch.common.geo.builders.ShapeBuilder.Orientation;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentSubParser;
-import org.opensearch.index.mapper.AbstractShapeGeometryFieldMapper;
+import org.density.DensityParseException;
+import org.density.common.Explicit;
+import org.density.common.geo.GeoPoint;
+import org.density.common.geo.GeoShapeType;
+import org.density.common.geo.builders.CircleBuilder;
+import org.density.common.geo.builders.GeometryCollectionBuilder;
+import org.density.common.geo.builders.ShapeBuilder;
+import org.density.common.geo.builders.ShapeBuilder.Orientation;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentSubParser;
+import org.density.index.mapper.AbstractShapeGeometryFieldMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import org.locationtech.jts.geom.Coordinate;
  * <p>
  * complies with geojson specification: https://tools.ietf.org/html/rfc7946
  *
- * @opensearch.internal
+ * @density.internal
  */
 abstract class GeoJsonParser {
     protected static ShapeBuilder parse(XContentParser parser, AbstractShapeGeometryFieldMapper shapeMapper) throws IOException {
@@ -97,7 +97,7 @@ abstract class GeoJsonParser {
                         subParser.nextToken();
                         CoordinateNode tempNode = parseCoordinates(subParser, ignoreZValue.value());
                         if (coordinateNode != null && tempNode.numDimensions() != coordinateNode.numDimensions()) {
-                            throw new OpenSearchParseException("Exception parsing coordinates: " + "number of dimensions do not match");
+                            throw new DensityParseException("Exception parsing coordinates: " + "number of dimensions do not match");
                         }
                         coordinateNode = tempNode;
                     } else if (ShapeParser.FIELD_GEOMETRIES.match(fieldName, subParser.getDeprecationHandler())) {
@@ -132,15 +132,15 @@ abstract class GeoJsonParser {
         }
 
         if (malformedException != null) {
-            throw new OpenSearchParseException(malformedException);
+            throw new DensityParseException(malformedException);
         } else if (shapeType == null) {
-            throw new OpenSearchParseException("shape type not included");
+            throw new DensityParseException("shape type not included");
         } else if (coordinateNode == null && GeoShapeType.GEOMETRYCOLLECTION != shapeType) {
-            throw new OpenSearchParseException("coordinates not included");
+            throw new DensityParseException("coordinates not included");
         } else if (geometryCollections == null && GeoShapeType.GEOMETRYCOLLECTION == shapeType) {
-            throw new OpenSearchParseException("geometries not included");
+            throw new DensityParseException("geometries not included");
         } else if (radius != null && GeoShapeType.CIRCLE != shapeType) {
-            throw new OpenSearchParseException("field [{}] is supported for [{}] only", CircleBuilder.FIELD_RADIUS, CircleBuilder.TYPE);
+            throw new DensityParseException("field [{}] is supported for [{}] only", CircleBuilder.FIELD_RADIUS, CircleBuilder.TYPE);
         }
 
         if (shapeType.equals(GeoShapeType.GEOMETRYCOLLECTION)) {
@@ -165,7 +165,7 @@ abstract class GeoJsonParser {
         if (parser.currentToken() == XContentParser.Token.START_OBJECT) {
             parser.skipChildren();
             parser.nextToken();
-            throw new OpenSearchParseException("coordinates cannot be specified as objects");
+            throw new DensityParseException("coordinates cannot be specified as objects");
         }
 
         XContentParser.Token token = parser.nextToken();
@@ -182,7 +182,7 @@ abstract class GeoJsonParser {
         while (token != XContentParser.Token.END_ARRAY) {
             CoordinateNode node = parseCoordinates(parser, ignoreZValue);
             if (nodes.isEmpty() == false && nodes.get(0).numDimensions() != node.numDimensions()) {
-                throw new OpenSearchParseException("Exception parsing coordinates: number of dimensions do not match");
+                throw new DensityParseException("Exception parsing coordinates: number of dimensions do not match");
             }
             nodes.add(node);
             token = parser.nextToken();
@@ -193,11 +193,11 @@ abstract class GeoJsonParser {
 
     private static Coordinate parseCoordinate(XContentParser parser, boolean ignoreZValue) throws IOException {
         if (parser.currentToken() != XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates must be numbers");
+            throw new DensityParseException("geo coordinates must be numbers");
         }
         double lon = parser.doubleValue();
         if (parser.nextToken() != XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates must be numbers");
+            throw new DensityParseException("geo coordinates must be numbers");
         }
         double lat = parser.doubleValue();
         XContentParser.Token token = parser.nextToken();
@@ -209,7 +209,7 @@ abstract class GeoJsonParser {
         }
         // do not support > 3 dimensions
         if (parser.currentToken() == XContentParser.Token.VALUE_NUMBER) {
-            throw new OpenSearchParseException("geo coordinates greater than 3 dimensions are not supported");
+            throw new DensityParseException("geo coordinates greater than 3 dimensions are not supported");
         }
         return new Coordinate(lon, lat, alt);
     }
@@ -223,7 +223,7 @@ abstract class GeoJsonParser {
      */
     static GeometryCollectionBuilder parseGeometries(XContentParser parser, AbstractShapeGeometryFieldMapper mapper) throws IOException {
         if (parser.currentToken() != XContentParser.Token.START_ARRAY) {
-            throw new OpenSearchParseException("geometries must be an array of geojson objects");
+            throw new DensityParseException("geometries must be an array of geojson objects");
         }
 
         XContentParser.Token token = parser.nextToken();

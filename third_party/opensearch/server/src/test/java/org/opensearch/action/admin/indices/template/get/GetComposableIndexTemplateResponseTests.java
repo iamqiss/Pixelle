@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.template.get;
+package org.density.action.admin.indices.template.get;
 
-import org.opensearch.cluster.metadata.ComposableIndexTemplate;
-import org.opensearch.cluster.metadata.ComposableIndexTemplateTests;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.test.AbstractWireSerializingTestCase;
+import org.density.cluster.metadata.ComposableIndexTemplate;
+import org.density.cluster.metadata.ComposableIndexTemplateTests;
+import org.density.core.common.io.stream.Writeable;
+import org.density.test.AbstractWireSerializingTestCase;
 
 import java.io.IOException;
 import java.util.Collections;

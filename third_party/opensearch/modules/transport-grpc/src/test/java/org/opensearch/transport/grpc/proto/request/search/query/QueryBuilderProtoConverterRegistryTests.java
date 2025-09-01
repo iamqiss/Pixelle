@@ -1,23 +1,23 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
-package org.opensearch.transport.grpc.proto.request.search.query;
+package org.density.transport.grpc.proto.request.search.query;
 
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.protobufs.FieldValue;
-import org.opensearch.protobufs.MatchAllQuery;
-import org.opensearch.protobufs.QueryContainer;
-import org.opensearch.protobufs.TermQuery;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.query.QueryBuilder;
+import org.density.protobufs.FieldValue;
+import org.density.protobufs.MatchAllQuery;
+import org.density.protobufs.QueryContainer;
+import org.density.protobufs.TermQuery;
+import org.density.test.DensityTestCase;
 
 /**
  * Test class for QueryBuilderProtoConverterRegistry to verify the map-based optimization.
  */
-public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase {
+public class QueryBuilderProtoConverterRegistryTests extends DensityTestCase {
 
     private QueryBuilderProtoConverterRegistry registry;
 
@@ -38,7 +38,7 @@ public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase 
         assertNotNull("QueryBuilder should not be null", queryBuilder);
         assertEquals(
             "Should be a MatchAllQueryBuilder",
-            "org.opensearch.index.query.MatchAllQueryBuilder",
+            "org.density.index.query.MatchAllQueryBuilder",
             queryBuilder.getClass().getName()
         );
     }
@@ -56,7 +56,7 @@ public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase 
 
         // Verify the result
         assertNotNull("QueryBuilder should not be null", queryBuilder);
-        assertEquals("Should be a TermQueryBuilder", "org.opensearch.index.query.TermQueryBuilder", queryBuilder.getClass().getName());
+        assertEquals("Should be a TermQueryBuilder", "org.density.index.query.TermQueryBuilder", queryBuilder.getClass().getName());
     }
 
     public void testNullQueryContainer() {
@@ -80,7 +80,7 @@ public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase 
             @Override
             public QueryBuilder fromProto(QueryContainer queryContainer) {
                 // Return a mock QueryBuilder for testing
-                return new org.opensearch.index.query.MatchAllQueryBuilder();
+                return new org.density.index.query.MatchAllQueryBuilder();
             }
         };
 
@@ -108,7 +108,7 @@ public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase 
 
             @Override
             public QueryBuilder fromProto(QueryContainer queryContainer) {
-                return new org.opensearch.index.query.MatchAllQueryBuilder();
+                return new org.density.index.query.MatchAllQueryBuilder();
             }
         };
 
@@ -125,7 +125,7 @@ public class QueryBuilderProtoConverterRegistryTests extends OpenSearchTestCase 
 
             @Override
             public QueryBuilder fromProto(QueryContainer queryContainer) {
-                return new org.opensearch.index.query.MatchAllQueryBuilder();
+                return new org.density.index.query.MatchAllQueryBuilder();
             }
         };
 

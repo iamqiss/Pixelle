@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.terms.heuristic;
+package org.density.search.aggregations.bucket.terms.heuristic;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.ConstructingObjectParser;
-import org.opensearch.core.xcontent.XContentBuilder;
+import org.density.core.ParseField;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.ConstructingObjectParser;
+import org.density.core.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.opensearch.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
+import static org.density.core.xcontent.ConstructingObjectParser.optionalConstructorArg;
 
 /**
  * NXY significance heuristic for significant terms agg
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class NXYSignificanceHeuristic extends SignificanceHeuristic {
 
@@ -109,7 +109,7 @@ public abstract class NXYSignificanceHeuristic extends SignificanceHeuristic {
     /**
      * Frequencies for an NXY significance heuristic
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected static class Frequencies {
         double N00, N01, N10, N11, N0_, N1_, N_0, N_1, N;
@@ -202,7 +202,7 @@ public abstract class NXYSignificanceHeuristic extends SignificanceHeuristic {
     /**
      * Builder for a NXY Significance heuristic
      *
-     * @opensearch.internal
+     * @density.internal
      */
     protected abstract static class NXYBuilder implements SignificanceHeuristicBuilder {
         protected boolean includeNegatives = true;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,16 +26,16 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import org.apache.lucene.analysis.Tokenizer;
-import org.opensearch.Version;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory;
-import org.opensearch.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
+import org.density.Version;
+import org.density.indices.analysis.PreBuiltCacheFactory;
+import org.density.indices.analysis.PreBuiltCacheFactory.CachingStrategy;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -43,7 +43,7 @@ import java.util.function.Supplier;
 /**
  * Provides pre-configured, shared {@link Tokenizer}s.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class PreConfiguredTokenizer extends PreConfiguredAnalysisComponent<TokenizerFactory> {
     /**
@@ -67,13 +67,13 @@ public final class PreConfiguredTokenizer extends PreConfiguredAnalysisComponent
     }
 
     /**
-     * Create a pre-configured tokenizer that may vary based on the OpenSearch version.
+     * Create a pre-configured tokenizer that may vary based on the Density version.
      *
      * @param name the name of the tokenizer in the api
      * @param create builds the tokenizer
      */
-    public static PreConfiguredTokenizer openSearchVersion(String name, Function<org.opensearch.Version, Tokenizer> create) {
-        return new PreConfiguredTokenizer(name, CachingStrategy.OPENSEARCH, create);
+    public static PreConfiguredTokenizer openSearchVersion(String name, Function<org.density.Version, Tokenizer> create) {
+        return new PreConfiguredTokenizer(name, CachingStrategy.DENSITY, create);
     }
 
     private final Function<Version, Tokenizer> create;

@@ -1,40 +1,40 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
 import org.apache.logging.log4j.Logger;
-import org.opensearch.ExceptionsHelper;
-import org.opensearch.action.ActionListenerResponseHandler;
-import org.opensearch.action.support.RetryableAction;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.CancellableThreads;
-import org.opensearch.common.util.concurrent.ConcurrentCollections;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.breaker.CircuitBreakingException;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.ConnectTransportException;
-import org.opensearch.transport.RemoteTransportException;
-import org.opensearch.transport.SendRequestTransportException;
-import org.opensearch.transport.TransportRequest;
-import org.opensearch.transport.TransportRequestOptions;
-import org.opensearch.transport.TransportService;
+import org.density.ExceptionsHelper;
+import org.density.action.ActionListenerResponseHandler;
+import org.density.action.support.RetryableAction;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.CancellableThreads;
+import org.density.common.util.concurrent.ConcurrentCollections;
+import org.density.core.action.ActionListener;
+import org.density.core.common.breaker.CircuitBreakingException;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.core.transport.TransportResponse;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.ConnectTransportException;
+import org.density.transport.RemoteTransportException;
+import org.density.transport.SendRequestTransportException;
+import org.density.transport.TransportRequest;
+import org.density.transport.TransportRequestOptions;
+import org.density.transport.TransportService;
 
 import java.util.Map;
 
 /**
  * Client that implements retry functionality for transport layer requests.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class RetryableTransportClient {
 
@@ -131,7 +131,7 @@ public final class RetryableTransportClient {
             return cause instanceof ConnectTransportException;
         } else if (e instanceof RemoteTransportException) {
             final Throwable cause = ExceptionsHelper.unwrapCause(e);
-            return cause instanceof CircuitBreakingException || cause instanceof OpenSearchRejectedExecutionException;
+            return cause instanceof CircuitBreakingException || cause instanceof DensityRejectedExecutionException;
         }
         return false;
     }

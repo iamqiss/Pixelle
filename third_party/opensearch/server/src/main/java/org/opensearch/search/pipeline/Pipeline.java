@@ -1,26 +1,26 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.pipeline;
+package org.density.search.pipeline;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.action.search.SearchPhaseContext;
-import org.opensearch.action.search.SearchPhaseResults;
-import org.opensearch.action.search.SearchRequest;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.SearchPhaseResult;
+import org.density.action.search.SearchPhaseContext;
+import org.density.action.search.SearchPhaseResults;
+import org.density.action.search.SearchRequest;
+import org.density.action.search.SearchResponse;
+import org.density.common.Nullable;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.core.action.ActionListener;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.SearchPhaseResult;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -43,7 +43,7 @@ class Pipeline {
     private final String description;
     private final Integer version;
 
-    // TODO: Refactor org.opensearch.ingest.CompoundProcessor to implement our generic Processor interface
+    // TODO: Refactor org.density.ingest.CompoundProcessor to implement our generic Processor interface
     // Then these can be CompoundProcessors instead of lists.
     private final List<SearchRequestProcessor> searchRequestProcessors;
     private final List<SearchResponseProcessor> searchResponseProcessors;

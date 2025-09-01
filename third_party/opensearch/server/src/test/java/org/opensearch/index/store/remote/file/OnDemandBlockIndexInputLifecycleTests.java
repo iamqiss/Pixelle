@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.store.remote.file;
+package org.density.index.store.remote.file;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakFilters;
 
 import org.apache.lucene.store.IndexInput;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.test.DensityTestCase;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 
@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.hasSize;
  * relies on this behavior.
  */
 @ThreadLeakFilters(filters = CleanerDaemonThreadLeakFilter.class)
-public class OnDemandBlockIndexInputLifecycleTests extends OpenSearchTestCase {
+public class OnDemandBlockIndexInputLifecycleTests extends DensityTestCase {
     private static final int ONE_MB_SHIFT = 20;
     private static final int ONE_MB = 1 << ONE_MB_SHIFT;
     private static final int TWO_MB = ONE_MB * 2;

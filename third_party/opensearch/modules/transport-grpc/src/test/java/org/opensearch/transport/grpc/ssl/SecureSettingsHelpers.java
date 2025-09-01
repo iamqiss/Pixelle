@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.transport.grpc.ssl;
+package org.density.transport.grpc.ssl;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.plugins.SecureAuxTransportSettingsProvider;
+import org.density.common.settings.Settings;
+import org.density.plugins.SecureAuxTransportSettingsProvider;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -32,7 +32,7 @@ import java.util.Optional;
 import io.grpc.netty.shaded.io.netty.handler.ssl.ClientAuth;
 import io.grpc.netty.shaded.io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
-import static org.opensearch.test.OpenSearchTestCase.randomFrom;
+import static org.density.test.DensityTestCase.randomFrom;
 
 public class SecureSettingsHelpers {
     private static final String TEST_PASS = "password"; // used for all keystores

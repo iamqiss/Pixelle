@@ -1,15 +1,15 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.admin.indices.scale.searchonly;
+package org.density.action.admin.indices.scale.searchonly;
 
-import org.opensearch.action.ActionType;
-import org.opensearch.action.support.clustermanager.AcknowledgedResponse;
+import org.density.action.ActionType;
+import org.density.action.support.clustermanager.AcknowledgedResponse;
 
 /**
  * Action type for search-only scale operations on indices.
@@ -31,7 +31,7 @@ public class ScaleIndexAction extends ActionType<AcknowledgedResponse> {
     /**
      * The name of this action, used for transport action registration and routing.
      * <p>
-     * This action name follows the OpenSearch convention of prefixing administrative
+     * This action name follows the Density convention of prefixing administrative
      * index actions with "indices:admin/".
      */
     public static final String NAME = "indices:admin/scale/search_only";

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.fetch.subphase.highlight;
+package org.density.search.fetch.subphase.highlight;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -55,23 +55,23 @@ import org.apache.lucene.search.uhighlight.SplittingBreakIterator;
 import org.apache.lucene.search.uhighlight.UnifiedHighlighter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.tests.index.RandomIndexWriter;
-import org.opensearch.core.common.Strings;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedHighlighterAnalyzer;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
-import org.opensearch.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotationAnalyzerWrapper;
-import org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter;
-import org.opensearch.lucene.search.uhighlight.Snippet;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.Strings;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedHighlighterAnalyzer;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotatedText;
+import org.density.index.mapper.annotatedtext.AnnotatedTextFieldMapper.AnnotationAnalyzerWrapper;
+import org.density.lucene.search.uhighlight.CustomUnifiedHighlighter;
+import org.density.lucene.search.uhighlight.Snippet;
+import org.density.test.DensityTestCase;
 
 import java.net.URLEncoder;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static org.opensearch.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
+import static org.density.lucene.search.uhighlight.CustomUnifiedHighlighter.MULTIVAL_SEP_CHAR;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class AnnotatedTextHighlighterTests extends OpenSearchTestCase {
+public class AnnotatedTextHighlighterTests extends DensityTestCase {
 
     private void assertHighlightOneDoc(
         String fieldName,

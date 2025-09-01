@@ -1,24 +1,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.telemetry.tracing;
+package org.density.telemetry.tracing;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.util.concurrent.ThreadContext;
-import org.opensearch.common.util.concurrent.ThreadContext.StoredContext;
-import org.opensearch.common.util.concurrent.ThreadContextAccess;
-import org.opensearch.telemetry.Telemetry;
-import org.opensearch.telemetry.TelemetrySettings;
-import org.opensearch.telemetry.metrics.MetricsTelemetry;
-import org.opensearch.telemetry.tracing.noop.NoopTracer;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.telemetry.tracing.MockTracingTelemetry;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.util.concurrent.ThreadContext;
+import org.density.common.util.concurrent.ThreadContext.StoredContext;
+import org.density.common.util.concurrent.ThreadContextAccess;
+import org.density.telemetry.Telemetry;
+import org.density.telemetry.TelemetrySettings;
+import org.density.telemetry.metrics.MetricsTelemetry;
+import org.density.telemetry.tracing.noop.NoopTracer;
+import org.density.test.DensityTestCase;
+import org.density.test.telemetry.tracing.MockTracingTelemetry;
 import org.junit.After;
 import org.junit.Before;
 
@@ -30,15 +30,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.opensearch.telemetry.TelemetrySettings.TRACER_ENABLED_SETTING;
-import static org.opensearch.telemetry.TelemetrySettings.TRACER_FEATURE_ENABLED_SETTING;
-import static org.opensearch.telemetry.TelemetrySettings.TRACER_SAMPLER_PROBABILITY;
+import static org.density.telemetry.TelemetrySettings.TRACER_ENABLED_SETTING;
+import static org.density.telemetry.TelemetrySettings.TRACER_FEATURE_ENABLED_SETTING;
+import static org.density.telemetry.TelemetrySettings.TRACER_SAMPLER_PROBABILITY;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class ThreadContextBasedTracerContextStorageTests extends OpenSearchTestCase {
+public class ThreadContextBasedTracerContextStorageTests extends DensityTestCase {
     private Tracer tracer;
     private ThreadContext threadContext;
     private TracerContextStorage<String, Span> threadContextStorage;

@@ -1,35 +1,35 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.plugin.wlm.rule.sync;
+package org.density.plugin.wlm.rule.sync;
 
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.index.IndexNotFoundException;
-import org.opensearch.plugin.wlm.AutoTaggingActionFilterTests;
-import org.opensearch.plugin.wlm.WlmClusterSettingValuesProvider;
-import org.opensearch.plugin.wlm.WorkloadManagementPlugin;
-import org.opensearch.plugin.wlm.rule.sync.detect.RuleEventClassifier;
-import org.opensearch.rule.InMemoryRuleProcessingService;
-import org.opensearch.rule.RulePersistenceService;
-import org.opensearch.rule.action.GetRuleRequest;
-import org.opensearch.rule.action.GetRuleResponse;
-import org.opensearch.rule.autotagging.Attribute;
-import org.opensearch.rule.autotagging.FeatureType;
-import org.opensearch.rule.autotagging.Rule;
-import org.opensearch.rule.storage.AttributeValueStoreFactory;
-import org.opensearch.rule.storage.DefaultAttributeValueStore;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.Scheduler;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.transport.client.Client;
-import org.opensearch.wlm.WorkloadManagementSettings;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.core.action.ActionListener;
+import org.density.index.IndexNotFoundException;
+import org.density.plugin.wlm.AutoTaggingActionFilterTests;
+import org.density.plugin.wlm.WlmClusterSettingValuesProvider;
+import org.density.plugin.wlm.WorkloadManagementPlugin;
+import org.density.plugin.wlm.rule.sync.detect.RuleEventClassifier;
+import org.density.rule.InMemoryRuleProcessingService;
+import org.density.rule.RulePersistenceService;
+import org.density.rule.action.GetRuleRequest;
+import org.density.rule.action.GetRuleResponse;
+import org.density.rule.autotagging.Attribute;
+import org.density.rule.autotagging.FeatureType;
+import org.density.rule.autotagging.Rule;
+import org.density.rule.storage.AttributeValueStoreFactory;
+import org.density.rule.storage.DefaultAttributeValueStore;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.Scheduler;
+import org.density.threadpool.ThreadPool;
+import org.density.transport.client.Client;
+import org.density.wlm.WorkloadManagementSettings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.plugin.wlm.rule.sync.detect.RuleEventClassifierTests.getRandomRule;
+import static org.density.plugin.wlm.rule.sync.detect.RuleEventClassifierTests.getRandomRule;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RefreshBasedSyncMechanismTests extends OpenSearchTestCase {
+public class RefreshBasedSyncMechanismTests extends DensityTestCase {
     RefreshBasedSyncMechanism sut;
 
     Client mockClient;

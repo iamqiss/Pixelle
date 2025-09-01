@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,45 +25,45 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.persistent;
+package org.density.persistent;
 
-import org.opensearch.ResourceNotFoundException;
-import org.opensearch.Version;
-import org.opensearch.cluster.ClusterName;
-import org.opensearch.cluster.ClusterState;
-import org.opensearch.cluster.Diff;
-import org.opensearch.cluster.NamedDiff;
-import org.opensearch.cluster.metadata.Metadata;
-import org.opensearch.cluster.metadata.Metadata.Custom;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.cluster.node.DiscoveryNodes;
-import org.opensearch.common.UUIDs;
-import org.opensearch.common.io.stream.BytesStreamOutput;
-import org.opensearch.common.xcontent.XContentType;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.NamedWriteableAwareStreamInput;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry;
-import org.opensearch.core.common.io.stream.NamedWriteableRegistry.Entry;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Assignment;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.Builder;
-import org.opensearch.persistent.PersistentTasksCustomMetadata.PersistentTask;
-import org.opensearch.persistent.TestPersistentTasksPlugin.State;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestParams;
-import org.opensearch.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
-import org.opensearch.test.AbstractDiffableSerializationTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.ResourceNotFoundException;
+import org.density.Version;
+import org.density.cluster.ClusterName;
+import org.density.cluster.ClusterState;
+import org.density.cluster.Diff;
+import org.density.cluster.NamedDiff;
+import org.density.cluster.metadata.Metadata;
+import org.density.cluster.metadata.Metadata.Custom;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.cluster.node.DiscoveryNodes;
+import org.density.common.UUIDs;
+import org.density.common.io.stream.BytesStreamOutput;
+import org.density.common.xcontent.XContentType;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.NamedWriteableAwareStreamInput;
+import org.density.core.common.io.stream.NamedWriteableRegistry;
+import org.density.core.common.io.stream.NamedWriteableRegistry.Entry;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.persistent.PersistentTasksCustomMetadata.Assignment;
+import org.density.persistent.PersistentTasksCustomMetadata.Builder;
+import org.density.persistent.PersistentTasksCustomMetadata.PersistentTask;
+import org.density.persistent.TestPersistentTasksPlugin.State;
+import org.density.persistent.TestPersistentTasksPlugin.TestParams;
+import org.density.persistent.TestPersistentTasksPlugin.TestPersistentTasksExecutor;
+import org.density.test.AbstractDiffableSerializationTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,12 +74,12 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.opensearch.cluster.metadata.Metadata.CONTEXT_MODE_GATEWAY;
-import static org.opensearch.cluster.metadata.Metadata.CONTEXT_MODE_SNAPSHOT;
-import static org.opensearch.persistent.PersistentTasksExecutor.NO_NODE_FOUND;
-import static org.opensearch.test.VersionUtils.allReleasedVersions;
-import static org.opensearch.test.VersionUtils.compatibleFutureVersion;
-import static org.opensearch.test.VersionUtils.randomVersionBetween;
+import static org.density.cluster.metadata.Metadata.CONTEXT_MODE_GATEWAY;
+import static org.density.cluster.metadata.Metadata.CONTEXT_MODE_SNAPSHOT;
+import static org.density.persistent.PersistentTasksExecutor.NO_NODE_FOUND;
+import static org.density.test.VersionUtils.allReleasedVersions;
+import static org.density.test.VersionUtils.compatibleFutureVersion;
+import static org.density.test.VersionUtils.randomVersionBetween;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.analysis;
+package org.density.index.analysis;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope.Scope;
@@ -39,10 +39,10 @@ import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.lucene.analysis.miscellaneous.DisableGraphAttribute;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.OpenSearchTokenStreamTestCase;
+import org.density.index.IndexSettings;
+import org.density.lucene.analysis.miscellaneous.DisableGraphAttribute;
+import org.density.test.DensityTestCase;
+import org.density.test.DensityTokenStreamTestCase;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -50,11 +50,11 @@ import java.io.StringReader;
 import static org.hamcrest.Matchers.instanceOf;
 
 @ThreadLeakScope(Scope.NONE)
-public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCase {
-    private static final String RESOURCE = "/org/opensearch/index/analysis/shingle_analysis.json";
+public class ShingleTokenFilterFactoryTests extends DensityTokenStreamTestCase {
+    private static final String RESOURCE = "/org/density/index/analysis/shingle_analysis.json";
 
     public void testDefault() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("shingle");
         String source = "the quick brown fox";
         String[] expected = new String[] { "the", "the quick", "quick", "quick brown", "brown", "brown fox", "fox" };
@@ -64,7 +64,7 @@ public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
     }
 
     public void testInverseMapping() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("shingle_inverse");
         assertThat(tokenFilter, instanceOf(ShingleTokenFilterFactory.class));
         String source = "the quick brown fox";
@@ -75,7 +75,7 @@ public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
     }
 
     public void testInverseMappingNoShingles() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("shingle_inverse");
         assertThat(tokenFilter, instanceOf(ShingleTokenFilterFactory.class));
         String source = "the quick";
@@ -86,7 +86,7 @@ public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
     }
 
     public void testFillerToken() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
         TokenFilterFactory tokenFilter = analysis.tokenFilter.get("shingle_filler");
         String source = "simon the sorcerer";
         String[] expected = new String[] { "simon FILLER", "simon FILLER sorcerer", "FILLER sorcerer" };
@@ -97,7 +97,7 @@ public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
     }
 
     public void testDisableGraph() throws IOException {
-        OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
+        DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE);
         TokenFilterFactory shingleFiller = analysis.tokenFilter.get("shingle_filler");
         TokenFilterFactory shingleInverse = analysis.tokenFilter.get("shingle_inverse");
 
@@ -122,11 +122,11 @@ public class ShingleTokenFilterFactoryTests extends OpenSearchTokenStreamTestCas
     * is greater than the allowed value of max_shingle_diff
      */
     public void testMaxShingleDiffException() throws Exception {
-        String RESOURCE2 = "/org/opensearch/index/analysis/shingle_analysis2.json";
+        String RESOURCE2 = "/org/density/index/analysis/shingle_analysis2.json";
         int maxAllowedShingleDiff = 3;
         int shingleDiff = 8;
         try {
-            OpenSearchTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE2);
+            DensityTestCase.TestAnalysis analysis = AnalysisTestsHelper.createTestAnalysisFromClassPath(createTempDir(), RESOURCE2);
             analysis.tokenFilter.get("shingle");
             fail();
         } catch (IllegalArgumentException ex) {

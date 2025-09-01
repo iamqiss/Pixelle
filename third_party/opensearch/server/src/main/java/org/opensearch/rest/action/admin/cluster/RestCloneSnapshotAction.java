@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.rest.action.admin.cluster;
+package org.density.rest.action.admin.cluster;
 
-import org.opensearch.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
-import org.opensearch.action.support.IndicesOptions;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.xcontent.support.XContentMapValues;
-import org.opensearch.rest.BaseRestHandler;
-import org.opensearch.rest.RestRequest;
-import org.opensearch.rest.action.RestToXContentListener;
-import org.opensearch.transport.client.node.NodeClient;
+import org.density.action.admin.cluster.snapshots.clone.CloneSnapshotRequest;
+import org.density.action.support.IndicesOptions;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.xcontent.support.XContentMapValues;
+import org.density.rest.BaseRestHandler;
+import org.density.rest.RestRequest;
+import org.density.rest.action.RestToXContentListener;
+import org.density.transport.client.node.NodeClient;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.rest.RestRequest.Method.PUT;
+import static org.density.rest.RestRequest.Method.PUT;
 
 /**
  * Clones indices from one snapshot into another snapshot in the same repository
  *
- * @opensearch.api
+ * @density.api
  */
 public class RestCloneSnapshotAction extends BaseRestHandler {
 

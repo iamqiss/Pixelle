@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,31 +26,31 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.action.index;
+package org.density.cluster.action.index;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.action.admin.indices.mapping.put.AutoPutMappingAction;
-import org.opensearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.opensearch.action.support.clustermanager.ClusterManagerNodeRequest;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.inject.Inject;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Setting.Property;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.concurrent.RunOnce;
-import org.opensearch.common.util.concurrent.UncategorizedExecutionException;
-import org.opensearch.core.action.ActionListener;
-import org.opensearch.core.index.Index;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.index.mapper.Mapping;
-import org.opensearch.transport.client.Client;
-import org.opensearch.transport.client.IndicesAdminClient;
+import org.density.DensityException;
+import org.density.action.admin.indices.mapping.put.AutoPutMappingAction;
+import org.density.action.admin.indices.mapping.put.PutMappingRequest;
+import org.density.action.support.clustermanager.ClusterManagerNodeRequest;
+import org.density.cluster.service.ClusterService;
+import org.density.common.inject.Inject;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Setting.Property;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.concurrent.RunOnce;
+import org.density.common.util.concurrent.UncategorizedExecutionException;
+import org.density.core.action.ActionListener;
+import org.density.core.index.Index;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.index.mapper.Mapping;
+import org.density.transport.client.Client;
+import org.density.transport.client.IndicesAdminClient;
 
 import java.util.concurrent.Semaphore;
 
@@ -58,7 +58,7 @@ import java.util.concurrent.Semaphore;
  * Called by shards in the cluster when their mapping was dynamically updated and it needs to be updated
  * in the cluster state meta data (and broadcast to all members).
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class MappingUpdatedAction {
 
@@ -152,10 +152,10 @@ public class MappingUpdatedAction {
 
     // todo: this explicit unwrap should not be necessary, but is until guessRootCause is fixed to allow wrapped non-es exception.
     private static Exception unwrapException(Exception cause) {
-        return cause instanceof OpenSearchException ? unwrapEsException((OpenSearchException) cause) : cause;
+        return cause instanceof DensityException ? unwrapEsException((DensityException) cause) : cause;
     }
 
-    private static RuntimeException unwrapEsException(OpenSearchException esEx) {
+    private static RuntimeException unwrapEsException(DensityException esEx) {
         Throwable root = esEx.unwrapCause();
         if (root instanceof RuntimeException) {
             return (RuntimeException) root;
@@ -166,7 +166,7 @@ public class MappingUpdatedAction {
     /**
      * An adjustable semaphore
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class AdjustableSemaphore extends Semaphore {
 

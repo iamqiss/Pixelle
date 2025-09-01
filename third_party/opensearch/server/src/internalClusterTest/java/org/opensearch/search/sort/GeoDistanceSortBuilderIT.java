@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,28 +26,28 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.sort;
+package org.density.search.sort;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.geo.GeoDistance;
-import org.opensearch.common.geo.GeoPoint;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.DistanceUnit;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.GeoValidationMethod;
-import org.opensearch.index.query.MatchAllQueryBuilder;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.action.search.SearchResponse;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.geo.GeoDistance;
+import org.density.common.geo.GeoPoint;
+import org.density.common.settings.Settings;
+import org.density.common.unit.DistanceUnit;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.GeoValidationMethod;
+import org.density.index.query.MatchAllQueryBuilder;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.VersionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,18 +57,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.existsQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.sort.SortBuilders.fieldSort;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertOrderedSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSortValues;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.existsQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.sort.SortBuilders.fieldSort;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertOrderedSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSortValues;
 import static org.hamcrest.Matchers.closeTo;
 
-public class GeoDistanceSortBuilderIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class GeoDistanceSortBuilderIT extends ParameterizedStaticSettingsDensityIntegTestCase {
     public GeoDistanceSortBuilderIT(Settings settings) {
         super(settings);
     }

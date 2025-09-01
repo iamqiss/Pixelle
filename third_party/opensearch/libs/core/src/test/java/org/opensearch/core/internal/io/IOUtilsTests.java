@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -24,19 +24,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core.internal.io;
+package org.density.core.internal.io;
 
 import org.apache.lucene.tests.mockfile.FilterFileSystemProvider;
 import org.apache.lucene.tests.mockfile.FilterPath;
 import org.apache.lucene.util.Constants;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.io.PathUtils;
-import org.opensearch.common.util.io.IOUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedConsumer;
+import org.density.common.io.PathUtils;
+import org.density.common.util.io.IOUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -66,7 +66,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-public class IOUtilsTests extends OpenSearchTestCase {
+public class IOUtilsTests extends DensityTestCase {
 
     public void testCloseArray() throws IOException {
         runTestClose(Function.identity(), IOUtils::close);

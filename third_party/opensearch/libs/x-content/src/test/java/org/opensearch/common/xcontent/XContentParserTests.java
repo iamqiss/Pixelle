@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,27 +26,27 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.xcontent;
+package org.density.common.xcontent;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.exc.StreamConstraintsException;
 import com.fasterxml.jackson.dataformat.yaml.JacksonYAMLParseException;
 
-import org.opensearch.common.CheckedSupplier;
-import org.opensearch.common.xcontent.cbor.CborXContent;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.common.xcontent.smile.SmileXContent;
-import org.opensearch.common.xcontent.yaml.YamlXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.core.xcontent.XContentSubParser;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.CheckedSupplier;
+import org.density.common.xcontent.cbor.CborXContent;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.common.xcontent.smile.SmileXContent;
+import org.density.common.xcontent.yaml.YamlXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
+import org.density.core.xcontent.XContentSubParser;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,7 +75,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assume.assumeThat;
 import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
 
-public class XContentParserTests extends OpenSearchTestCase {
+public class XContentParserTests extends DensityTestCase {
     private static final Map<XContentType, Supplier<String>> GENERATORS = Map.of(
         XContentType.JSON,
         () -> randomAlphaOfLengthBetween(1, JsonXContent.DEFAULT_MAX_STRING_LEN),

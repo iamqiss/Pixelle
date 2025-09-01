@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,24 +26,24 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index;
+package org.density.index;
 
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSortField;
 import org.apache.lucene.search.SortedSetSortField;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.search.MultiValueMode;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.sort.SortOrder;
+import org.density.common.annotation.PublicApi;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.mapper.MappedFieldType;
+import org.density.search.MultiValueMode;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.sort.SortOrder;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -71,7 +71,7 @@ import java.util.function.Supplier;
  * </ul>
  *
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "1.0.0")
 public final class IndexSortConfig {
@@ -254,7 +254,7 @@ public final class IndexSortConfig {
     /**
      * Field sort specification
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class FieldSortSpec {
         final String field;

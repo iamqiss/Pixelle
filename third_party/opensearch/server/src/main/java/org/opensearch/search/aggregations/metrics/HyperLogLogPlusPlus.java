@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.metrics;
+package org.density.search.aggregations.metrics;
 
 import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.packed.PackedInts;
-import org.opensearch.common.lease.Releasable;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.common.util.BitArray;
-import org.opensearch.common.util.ByteUtils;
-import org.opensearch.common.util.IntArray;
-import org.opensearch.core.common.util.ByteArray;
+import org.density.common.lease.Releasable;
+import org.density.common.lease.Releasables;
+import org.density.common.util.BigArrays;
+import org.density.common.util.BitArray;
+import org.density.common.util.ByteUtils;
+import org.density.common.util.IntArray;
+import org.density.core.common.util.ByteArray;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -61,7 +61,7 @@ import java.nio.ByteOrder;
  * <p>
  * It supports storing several HyperLogLogPlusPlus structures which are identified by a bucket number.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class HyperLogLogPlusPlus extends AbstractHyperLogLogPlusPlus {
 
@@ -228,7 +228,7 @@ public final class HyperLogLogPlusPlus extends AbstractHyperLogLogPlusPlus {
     /**
      * The hyper log log
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class HyperLogLog extends AbstractHyperLogLog implements Releasable {
         private final BigArrays bigArrays;
@@ -276,7 +276,7 @@ public final class HyperLogLogPlusPlus extends AbstractHyperLogLogPlusPlus {
     /**
      * Iterator for hyper log log
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class HyperLogLogIterator implements AbstractHyperLogLog.RunLenIterator {
 
@@ -316,7 +316,7 @@ public final class HyperLogLogPlusPlus extends AbstractHyperLogLogPlusPlus {
     /**
      * The plus plus
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinearCounting extends AbstractLinearCounting implements Releasable {
 
@@ -414,7 +414,7 @@ public final class HyperLogLogPlusPlus extends AbstractHyperLogLogPlusPlus {
     /**
      * The plus plus iterator
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private static class LinearCountingIterator implements AbstractLinearCounting.HashesIterator {
 

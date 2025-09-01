@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,44 +26,44 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.geo;
+package org.density.common.geo;
 
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.geo.GeometryTestUtils;
-import org.opensearch.geometry.Geometry;
-import org.opensearch.geometry.utils.GeographyValidator;
-import org.opensearch.test.AbstractXContentTestCase;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.geo.GeometryTestUtils;
+import org.density.geometry.Geometry;
+import org.density.geometry.utils.GeographyValidator;
+import org.density.test.AbstractXContentTestCase;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static org.opensearch.geo.GeometryTestUtils.randomCircle;
-import static org.opensearch.geo.GeometryTestUtils.randomGeometryCollection;
-import static org.opensearch.geo.GeometryTestUtils.randomLine;
-import static org.opensearch.geo.GeometryTestUtils.randomMultiLine;
-import static org.opensearch.geo.GeometryTestUtils.randomMultiPoint;
-import static org.opensearch.geo.GeometryTestUtils.randomMultiPolygon;
-import static org.opensearch.geo.GeometryTestUtils.randomPoint;
-import static org.opensearch.geo.GeometryTestUtils.randomPolygon;
+import static org.density.geo.GeometryTestUtils.randomCircle;
+import static org.density.geo.GeometryTestUtils.randomGeometryCollection;
+import static org.density.geo.GeometryTestUtils.randomLine;
+import static org.density.geo.GeometryTestUtils.randomMultiLine;
+import static org.density.geo.GeometryTestUtils.randomMultiPoint;
+import static org.density.geo.GeometryTestUtils.randomMultiPolygon;
+import static org.density.geo.GeometryTestUtils.randomPoint;
+import static org.density.geo.GeometryTestUtils.randomPolygon;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GeoJsonSerializationTests extends OpenSearchTestCase {
+public class GeoJsonSerializationTests extends DensityTestCase {
 
     private static class GeometryWrapper implements ToXContentObject {
 

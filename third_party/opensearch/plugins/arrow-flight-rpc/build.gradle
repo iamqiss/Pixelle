@@ -1,20 +1,20 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  *
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-apply plugin: 'opensearch.internal-cluster-test'
+apply plugin: 'density.internal-cluster-test'
 
-opensearchplugin {
+densityplugin {
   description = 'Arrow flight based transport and stream implementation. It also provides Arrow vector and memory dependencies as' +
     'an extended-plugin at runtime; consumers should take a compile time dependency and not runtime on this project.\'\n'
-  classname = 'org.opensearch.arrow.flight.transport.FlightStreamPlugin'
+  classname = 'org.density.arrow.flight.transport.FlightStreamPlugin'
 }
 
 dependencies {
@@ -38,7 +38,7 @@ dependencies {
   // arrow flight dependencies.
   implementation "org.apache.arrow:flight-core:${versions.arrow}"
 
-  // since netty-common will be added by opensearch-arrow-core at runtime, so declaring them as compileOnly
+  // since netty-common will be added by density-arrow-core at runtime, so declaring them as compileOnly
   // compileOnly "io.netty:netty-common:${versions.netty}"
   implementation "io.netty:netty-codec:${versions.netty}"
   implementation "io.netty:netty-codec-http:${versions.netty}"
@@ -117,10 +117,10 @@ tasks.named('forbiddenApisMain').configure {
   excludes = [
     'org/apache/arrow/flight/OSFlightServer$Builder.class',
     'org/apache/arrow/flight/OSFlightClient$Builder.class',
-    'org/opensearch/flight/bootstrap/server/ServerConfig$Netty4Configs.class',
-    'org/opensearch/flight/bootstrap/server/ServerConfig.class',
-    'org/opensearch/flight/bootstrap/tls/DefaultSslContextProvider.class',
-    'org/apache/arrow/flight/OpenSearchFlightClient$Builder.class'
+    'org/density/flight/bootstrap/server/ServerConfig$Netty4Configs.class',
+    'org/density/flight/bootstrap/server/ServerConfig.class',
+    'org/density/flight/bootstrap/tls/DefaultSslContextProvider.class',
+    'org/apache/arrow/flight/DensityFlightClient$Builder.class'
   ]
 }
 

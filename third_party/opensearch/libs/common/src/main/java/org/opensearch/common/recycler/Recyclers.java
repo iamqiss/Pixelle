@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.recycler;
+package org.density.common.recycler;
 
-import org.opensearch.common.util.BitMixer;
+import org.density.common.util.BitMixer;
 
 import java.util.ArrayDeque;
 
 /**
  * Utility class of recyclers.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public enum Recyclers {
     ;
@@ -76,7 +76,7 @@ public enum Recyclers {
      * Wrap the provided recycler so that calls to {@link Recycler#obtain()} and {@link Recycler.V#close()} are protected by
      * a lock.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static <T> Recycler<T> locked(final Recycler<T> recycler) {
         return new FilterRecycler<T>() {

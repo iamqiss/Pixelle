@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,32 +26,32 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.analysis.common;
+package org.density.analysis.common;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.env.TestEnvironment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.IndexAnalyzers;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.indices.analysis.AnalysisModule;
-import org.opensearch.test.IndexSettingsModule;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.test.VersionUtils;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.env.TestEnvironment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.IndexAnalyzers;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.indices.analysis.AnalysisModule;
+import org.density.test.IndexSettingsModule;
+import org.density.test.DensityTestCase;
+import org.density.test.VersionUtils;
 import org.hamcrest.MatcherAssert;
 
 import java.io.IOException;
@@ -68,7 +68,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.startsWith;
 import static org.apache.lucene.tests.analysis.BaseTokenStreamTestCase.assertTokenStreamContents;
 
-public class SynonymsAnalysisTests extends OpenSearchTestCase {
+public class SynonymsAnalysisTests extends DensityTestCase {
     private IndexAnalyzers indexAnalyzers;
 
     public void testSynonymsAnalysis() throws IOException {
@@ -80,7 +80,7 @@ public class SynonymsAnalysisTests extends OpenSearchTestCase {
         Files.copy(synonyms, config.resolve("synonyms.txt"));
         Files.copy(synonymsWordnet, config.resolve("synonyms_wordnet.txt"));
 
-        String json = "/org/opensearch/analysis/common/synonyms.json";
+        String json = "/org/density/analysis/common/synonyms.json";
         Settings settings = Settings.builder()
             .loadFromStream(json, getClass().getResourceAsStream(json), false)
             .put(Environment.PATH_HOME_SETTING.getKey(), home)
@@ -90,15 +90,15 @@ public class SynonymsAnalysisTests extends OpenSearchTestCase {
         IndexSettings idxSettings = IndexSettingsModule.newIndexSettings("index", settings);
         indexAnalyzers = createTestAnalysis(idxSettings, settings, new CommonAnalysisModulePlugin()).indexAnalyzers;
 
-        match("synonymAnalyzer", "foobar is the dude abides", "fred is the opensearch man!");
-        match("synonymAnalyzer_file", "foobar is the dude abides", "fred is the opensearch man!");
+        match("synonymAnalyzer", "foobar is the dude abides", "fred is the density man!");
+        match("synonymAnalyzer_file", "foobar is the dude abides", "fred is the density man!");
         match("synonymAnalyzerWordnet", "abstain", "abstain refrain desist");
         match("synonymAnalyzerWordnet_file", "abstain", "abstain refrain desist");
         match("synonymAnalyzerWithsettings", "foobar", "fre red");
-        match("synonymAnalyzerWithStopAfterSynonym", "foobar is the dude abides , stop", "fred is the opensearch man! ,");
-        match("synonymAnalyzerWithStopBeforeSynonym", "foobar is the dude abides , stop", "fred is the opensearch man! ,");
+        match("synonymAnalyzerWithStopAfterSynonym", "foobar is the dude abides , stop", "fred is the density man! ,");
+        match("synonymAnalyzerWithStopBeforeSynonym", "foobar is the dude abides , stop", "fred is the density man! ,");
         match("synonymAnalyzerWithStopSynonymAfterSynonym", "foobar is the dude abides", "fred is the man!");
-        match("synonymAnalyzerExpand", "foobar is the dude abides", "foobar fred is the dude opensearch abides man!");
+        match("synonymAnalyzerExpand", "foobar is the dude abides", "foobar fred is the dude density abides man!");
         match("synonymAnalyzerExpandWithStopAfterSynonym", "foobar is the dude abides", "fred is the dude abides man!");
 
     }
@@ -108,9 +108,9 @@ public class SynonymsAnalysisTests extends OpenSearchTestCase {
             .put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT)
             .put("path.home", createTempDir().toString())
             .put("index.analysis.filter.synonym.type", "synonym")
-            .putList("index.analysis.filter.synonym.synonyms", "foobar => fred", "dude => opensearch", "abides => man!")
+            .putList("index.analysis.filter.synonym.synonyms", "foobar => fred", "dude => density", "abides => man!")
             .put("index.analysis.filter.stop_within_synonym.type", "stop")
-            .putList("index.analysis.filter.stop_within_synonym.stopwords", "foobar", "opensearch")
+            .putList("index.analysis.filter.stop_within_synonym.stopwords", "foobar", "density")
             .put("index.analysis.analyzer.synonymAnalyzerWithStopSynonymBeforeSynonym.tokenizer", "whitespace")
             .putList("index.analysis.analyzer.synonymAnalyzerWithStopSynonymBeforeSynonym.filter", "stop_within_synonym", "synonym")
             .build();
@@ -129,9 +129,9 @@ public class SynonymsAnalysisTests extends OpenSearchTestCase {
             .put(IndexMetadata.SETTING_VERSION_CREATED, Version.CURRENT)
             .put("path.home", createTempDir().toString())
             .put("index.analysis.filter.synonym_expand.type", "synonym")
-            .putList("index.analysis.filter.synonym_expand.synonyms", "foobar, fred", "dude, opensearch", "abides, man!")
+            .putList("index.analysis.filter.synonym_expand.synonyms", "foobar, fred", "dude, density", "abides, man!")
             .put("index.analysis.filter.stop_within_synonym.type", "stop")
-            .putList("index.analysis.filter.stop_within_synonym.stopwords", "foobar", "opensearch")
+            .putList("index.analysis.filter.stop_within_synonym.stopwords", "foobar", "density")
             .put("index.analysis.analyzer.synonymAnalyzerExpandWithStopBeforeSynonym.tokenizer", "whitespace")
             .putList("index.analysis.analyzer.synonymAnalyzerExpandWithStopBeforeSynonym.filter", "stop_within_synonym", "synonym_expand")
             .build();
@@ -379,7 +379,7 @@ public class SynonymsAnalysisTests extends OpenSearchTestCase {
      * 2. Multi-word synonyms (e.g., "mobile phone" → ["smartphone"])
      * 3. Single word synonyms (e.g., "laptop" → ["notebook"])
      *
-     * @see <a href="https://github.com/opensearch-project/OpenSearch/issues/16263">Issue #16263</a>
+     * @see <a href="https://github.com/density-project/Density/issues/16263">Issue #16263</a>
      */
     public void testSynonymAnalyzerWithWordDelimiter() throws IOException {
         Settings settings = Settings.builder()

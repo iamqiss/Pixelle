@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,14 +26,14 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.ingest.common;
+package org.density.ingest.common;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.DensityParseException;
+import org.density.test.DensityTestCase;
 import org.hamcrest.Matchers;
 
 import java.util.HashMap;
@@ -43,7 +43,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
-public class ConvertProcessorFactoryTests extends OpenSearchTestCase {
+public class ConvertProcessorFactoryTests extends DensityTestCase {
 
     public void testCreate() throws Exception {
         ConvertProcessor.Factory factory = new ConvertProcessor.Factory();
@@ -69,11 +69,11 @@ public class ConvertProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), Matchers.equalTo("[type] type [" + type + "] not supported, cannot convert field."));
-            assertThat(e.getMetadata("opensearch.processor_type").get(0), equalTo(ConvertProcessor.TYPE));
-            assertThat(e.getMetadata("opensearch.property_name").get(0), equalTo("type"));
-            assertThat(e.getMetadata("opensearch.processor_tag"), nullValue());
+            assertThat(e.getMetadata("density.processor_type").get(0), equalTo(ConvertProcessor.TYPE));
+            assertThat(e.getMetadata("density.property_name").get(0), equalTo("type"));
+            assertThat(e.getMetadata("density.processor_tag"), nullValue());
         }
     }
 
@@ -85,7 +85,7 @@ public class ConvertProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), Matchers.equalTo("[field] required property is missing"));
         }
     }
@@ -97,7 +97,7 @@ public class ConvertProcessorFactoryTests extends OpenSearchTestCase {
         try {
             factory.create(null, null, null, config);
             fail("factory create should have failed");
-        } catch (OpenSearchParseException e) {
+        } catch (DensityParseException e) {
             assertThat(e.getMessage(), Matchers.equalTo("[type] required property is missing"));
         }
     }

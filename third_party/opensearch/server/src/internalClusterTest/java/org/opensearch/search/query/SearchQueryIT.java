@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.query;
+package org.density.search.query;
 
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 
@@ -41,48 +41,48 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.apache.lucene.tests.analysis.MockTokenizer;
 import org.apache.lucene.tests.util.English;
 import org.apache.lucene.util.AttributeSource;
-import org.opensearch.action.index.IndexRequestBuilder;
-import org.opensearch.action.search.SearchPhaseExecutionException;
-import org.opensearch.action.search.SearchResponse;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.common.document.DocumentField;
-import org.opensearch.common.lucene.search.SpanBooleanQueryRewriteWithMaxClause;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.time.DateFormatter;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.common.bytes.BytesArray;
-import org.opensearch.core.rest.RestStatus;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.NormalizingCharFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.query.BoolQueryBuilder;
-import org.opensearch.index.query.MatchQueryBuilder;
-import org.opensearch.index.query.MultiMatchQueryBuilder;
-import org.opensearch.index.query.Operator;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryBuilders;
-import org.opensearch.index.query.RangeQueryBuilder;
-import org.opensearch.index.query.TermQueryBuilder;
-import org.opensearch.index.query.TermsQueryBuilder;
-import org.opensearch.index.query.WildcardQueryBuilder;
-import org.opensearch.index.query.WrapperQueryBuilder;
-import org.opensearch.index.query.functionscore.ScoreFunctionBuilders;
-import org.opensearch.index.search.MatchQuery;
-import org.opensearch.indices.IndicesService;
-import org.opensearch.indices.TermsLookup;
-import org.opensearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.opensearch.plugins.AnalysisPlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.search.SearchHit;
-import org.opensearch.search.SearchHits;
-import org.opensearch.search.aggregations.AggregationBuilders;
-import org.opensearch.test.InternalSettingsPlugin;
-import org.opensearch.test.ParameterizedStaticSettingsOpenSearchIntegTestCase;
-import org.opensearch.test.junit.annotations.TestIssueLogging;
+import org.density.action.index.IndexRequestBuilder;
+import org.density.action.search.SearchPhaseExecutionException;
+import org.density.action.search.SearchResponse;
+import org.density.action.search.SearchType;
+import org.density.common.document.DocumentField;
+import org.density.common.lucene.search.SpanBooleanQueryRewriteWithMaxClause;
+import org.density.common.regex.Regex;
+import org.density.common.settings.Settings;
+import org.density.common.time.DateFormatter;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.common.bytes.BytesArray;
+import org.density.core.rest.RestStatus;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.NormalizingCharFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.query.BoolQueryBuilder;
+import org.density.index.query.MatchQueryBuilder;
+import org.density.index.query.MultiMatchQueryBuilder;
+import org.density.index.query.Operator;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryBuilders;
+import org.density.index.query.RangeQueryBuilder;
+import org.density.index.query.TermQueryBuilder;
+import org.density.index.query.TermsQueryBuilder;
+import org.density.index.query.WildcardQueryBuilder;
+import org.density.index.query.WrapperQueryBuilder;
+import org.density.index.query.functionscore.ScoreFunctionBuilders;
+import org.density.index.search.MatchQuery;
+import org.density.indices.IndicesService;
+import org.density.indices.TermsLookup;
+import org.density.indices.analysis.AnalysisModule.AnalysisProvider;
+import org.density.plugins.AnalysisPlugin;
+import org.density.plugins.Plugin;
+import org.density.search.SearchHit;
+import org.density.search.SearchHits;
+import org.density.search.aggregations.AggregationBuilders;
+import org.density.test.InternalSettingsPlugin;
+import org.density.test.ParameterizedStaticSettingsDensityIntegTestCase;
+import org.density.test.junit.annotations.TestIssueLogging;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -104,54 +104,54 @@ import java.util.regex.Pattern;
 import org.roaringbitmap.RoaringBitmap;
 
 import static java.util.Collections.singletonMap;
-import static org.opensearch.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
-import static org.opensearch.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
-import static org.opensearch.common.xcontent.XContentFactory.jsonBuilder;
-import static org.opensearch.index.query.QueryBuilders.boolQuery;
-import static org.opensearch.index.query.QueryBuilders.commonTermsQuery;
-import static org.opensearch.index.query.QueryBuilders.constantScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.existsQuery;
-import static org.opensearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.opensearch.index.query.QueryBuilders.fuzzyQuery;
-import static org.opensearch.index.query.QueryBuilders.idsQuery;
-import static org.opensearch.index.query.QueryBuilders.matchAllQuery;
-import static org.opensearch.index.query.QueryBuilders.matchPhrasePrefixQuery;
-import static org.opensearch.index.query.QueryBuilders.matchPhraseQuery;
-import static org.opensearch.index.query.QueryBuilders.matchQuery;
-import static org.opensearch.index.query.QueryBuilders.multiMatchQuery;
-import static org.opensearch.index.query.QueryBuilders.prefixQuery;
-import static org.opensearch.index.query.QueryBuilders.queryStringQuery;
-import static org.opensearch.index.query.QueryBuilders.rangeQuery;
-import static org.opensearch.index.query.QueryBuilders.regexpQuery;
-import static org.opensearch.index.query.QueryBuilders.spanMultiTermQueryBuilder;
-import static org.opensearch.index.query.QueryBuilders.spanNearQuery;
-import static org.opensearch.index.query.QueryBuilders.spanNotQuery;
-import static org.opensearch.index.query.QueryBuilders.spanOrQuery;
-import static org.opensearch.index.query.QueryBuilders.spanTermQuery;
-import static org.opensearch.index.query.QueryBuilders.termQuery;
-import static org.opensearch.index.query.QueryBuilders.termsLookupQuery;
-import static org.opensearch.index.query.QueryBuilders.termsQuery;
-import static org.opensearch.index.query.QueryBuilders.wildcardQuery;
-import static org.opensearch.index.query.QueryBuilders.wrapperQuery;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertFirstHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertHitCount;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertNoFailures;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchHits;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSearchResponse;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertSecondHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertThirdHit;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasId;
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.hasScore;
+import static org.density.action.support.WriteRequest.RefreshPolicy.IMMEDIATE;
+import static org.density.cluster.metadata.IndexMetadata.SETTING_NUMBER_OF_SHARDS;
+import static org.density.common.xcontent.XContentFactory.jsonBuilder;
+import static org.density.index.query.QueryBuilders.boolQuery;
+import static org.density.index.query.QueryBuilders.commonTermsQuery;
+import static org.density.index.query.QueryBuilders.constantScoreQuery;
+import static org.density.index.query.QueryBuilders.existsQuery;
+import static org.density.index.query.QueryBuilders.functionScoreQuery;
+import static org.density.index.query.QueryBuilders.fuzzyQuery;
+import static org.density.index.query.QueryBuilders.idsQuery;
+import static org.density.index.query.QueryBuilders.matchAllQuery;
+import static org.density.index.query.QueryBuilders.matchPhrasePrefixQuery;
+import static org.density.index.query.QueryBuilders.matchPhraseQuery;
+import static org.density.index.query.QueryBuilders.matchQuery;
+import static org.density.index.query.QueryBuilders.multiMatchQuery;
+import static org.density.index.query.QueryBuilders.prefixQuery;
+import static org.density.index.query.QueryBuilders.queryStringQuery;
+import static org.density.index.query.QueryBuilders.rangeQuery;
+import static org.density.index.query.QueryBuilders.regexpQuery;
+import static org.density.index.query.QueryBuilders.spanMultiTermQueryBuilder;
+import static org.density.index.query.QueryBuilders.spanNearQuery;
+import static org.density.index.query.QueryBuilders.spanNotQuery;
+import static org.density.index.query.QueryBuilders.spanOrQuery;
+import static org.density.index.query.QueryBuilders.spanTermQuery;
+import static org.density.index.query.QueryBuilders.termQuery;
+import static org.density.index.query.QueryBuilders.termsLookupQuery;
+import static org.density.index.query.QueryBuilders.termsQuery;
+import static org.density.index.query.QueryBuilders.wildcardQuery;
+import static org.density.index.query.QueryBuilders.wrapperQuery;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertFirstHit;
+import static org.density.test.hamcrest.DensityAssertions.assertHitCount;
+import static org.density.test.hamcrest.DensityAssertions.assertNoFailures;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchHits;
+import static org.density.test.hamcrest.DensityAssertions.assertSearchResponse;
+import static org.density.test.hamcrest.DensityAssertions.assertSecondHit;
+import static org.density.test.hamcrest.DensityAssertions.assertThirdHit;
+import static org.density.test.hamcrest.DensityAssertions.hasId;
+import static org.density.test.hamcrest.DensityAssertions.hasScore;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class SearchQueryIT extends ParameterizedStaticSettingsOpenSearchIntegTestCase {
+public class SearchQueryIT extends ParameterizedStaticSettingsDensityIntegTestCase {
 
     public SearchQueryIT(Settings staticSettings) {
         super(staticSettings);
@@ -1028,7 +1028,7 @@ public class SearchQueryIT extends ParameterizedStaticSettingsOpenSearchIntegTes
         assertFirstHit(searchResponse, hasId("1"));
     }
 
-    @TestIssueLogging(value = "org.opensearch.search.query.SearchQueryIT:DEBUG", issueUrl = "https://github.com/elastic/elasticsearch/issues/43144")
+    @TestIssueLogging(value = "org.density.search.query.SearchQueryIT:DEBUG", issueUrl = "https://github.com/elastic/elasticsearch/issues/43144")
     public void testQuotedQueryStringWithBoost() throws InterruptedException {
         float boost = 10.0f;
         assertAcked(prepareCreate("test").setSettings(Settings.builder().put(SETTING_NUMBER_OF_SHARDS, 1)));
@@ -2005,7 +2005,7 @@ public class SearchQueryIT extends ParameterizedStaticSettingsOpenSearchIntegTes
         indexRandom(
             true,
             client().prepareIndex("test1").setId("1").setSource("field", "Johnnie Walker Black Label"),
-            client().prepareIndex("test1").setId("2").setSource("field", "trying out OpenSearch")
+            client().prepareIndex("test1").setId("2").setSource("field", "trying out Density")
         );
 
         SearchResponse searchResponse = client().prepareSearch()

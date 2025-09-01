@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,19 +26,19 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.query;
+package org.density.index.query;
 
 import org.apache.lucene.search.Query;
-import org.opensearch.OpenSearchException;
-import org.opensearch.core.common.ParsingException;
-import org.opensearch.script.MockScriptEngine;
-import org.opensearch.script.Script;
-import org.opensearch.script.ScriptType;
-import org.opensearch.test.AbstractQueryTestCase;
+import org.density.DensityException;
+import org.density.core.common.ParsingException;
+import org.density.script.MockScriptEngine;
+import org.density.script.Script;
+import org.density.script.ScriptType;
+import org.density.test.AbstractQueryTestCase;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -146,7 +146,7 @@ public class ScriptQueryBuilderTests extends AbstractQueryTestCase<ScriptQueryBu
         when(queryShardContext.allowExpensiveQueries()).thenReturn(false);
 
         ScriptQueryBuilder queryBuilder = doCreateTestQueryBuilder();
-        OpenSearchException e = expectThrows(OpenSearchException.class, () -> queryBuilder.toQuery(queryShardContext));
+        DensityException e = expectThrows(DensityException.class, () -> queryBuilder.toQuery(queryShardContext));
         assertEquals("[script] queries cannot be executed when 'search.allow_expensive_queries' is set to false.", e.getMessage());
     }
 }

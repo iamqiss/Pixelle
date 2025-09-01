@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.engine;
+package org.density.index.engine;
 
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexCommit;
@@ -39,19 +39,19 @@ import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.SegmentReader;
 import org.apache.lucene.store.Directory;
-import org.opensearch.common.lucene.Lucene;
-import org.opensearch.common.util.concurrent.ReleasableLock;
-import org.opensearch.index.seqno.SequenceNumbers;
-import org.opensearch.index.shard.DocsStats;
-import org.opensearch.index.store.Store;
-import org.opensearch.index.translog.DefaultTranslogDeletionPolicy;
-import org.opensearch.index.translog.NoOpTranslogManager;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.index.translog.TranslogConfig;
-import org.opensearch.index.translog.TranslogDeletionPolicy;
-import org.opensearch.index.translog.TranslogException;
-import org.opensearch.index.translog.TranslogManager;
-import org.opensearch.index.translog.TranslogOperationHelper;
+import org.density.common.lucene.Lucene;
+import org.density.common.util.concurrent.ReleasableLock;
+import org.density.index.seqno.SequenceNumbers;
+import org.density.index.shard.DocsStats;
+import org.density.index.store.Store;
+import org.density.index.translog.DefaultTranslogDeletionPolicy;
+import org.density.index.translog.NoOpTranslogManager;
+import org.density.index.translog.Translog;
+import org.density.index.translog.TranslogConfig;
+import org.density.index.translog.TranslogDeletionPolicy;
+import org.density.index.translog.TranslogException;
+import org.density.index.translog.TranslogManager;
+import org.density.index.translog.TranslogOperationHelper;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
+import static org.density.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
 
 /**
  * NoOpEngine is an engine implementation that does nothing but the bare minimum
@@ -68,7 +68,7 @@ import static org.opensearch.index.translog.Translog.EMPTY_TRANSLOG_SNAPSHOT;
  * allows to trim any existing translog files through the usage of the
  * {{@link TranslogManager#trimUnreferencedTranslogFiles()}} method.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class NoOpEngine extends ReadOnlyEngine {
 

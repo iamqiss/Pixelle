@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,16 +25,16 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.watcher;
+package org.density.watcher;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.core.common.util.CollectionUtils;
-import org.opensearch.core.util.FileSystemUtils;
+import org.density.core.common.util.CollectionUtils;
+import org.density.core.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,7 +47,7 @@ import java.util.Arrays;
  * <p>
  * The file watcher checks directory and all its subdirectories for file changes and notifies its listeners accordingly
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class FileWatcher extends AbstractResourceWatcher<FileChangesListener> {
 

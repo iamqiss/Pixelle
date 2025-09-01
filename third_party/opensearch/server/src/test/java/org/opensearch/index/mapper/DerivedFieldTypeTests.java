@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
@@ -18,15 +18,15 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.memory.MemoryIndex;
 import org.apache.lucene.queries.spans.SpanMultiTermQueryWrapper;
 import org.apache.lucene.util.BytesRef;
-import org.opensearch.OpenSearchException;
-import org.opensearch.common.collect.Tuple;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.script.AggregationScript;
-import org.opensearch.script.Script;
-import org.opensearch.search.lookup.LeafSearchLookup;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.DensityException;
+import org.density.common.collect.Tuple;
+import org.density.common.network.InetAddresses;
+import org.density.index.query.QueryShardContext;
+import org.density.script.AggregationScript;
+import org.density.script.Script;
+import org.density.search.lookup.LeafSearchLookup;
+import org.density.search.lookup.SearchLookup;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.List;
@@ -111,7 +111,7 @@ public class DerivedFieldTypeTests extends FieldTypeTestCase {
         DerivedFieldType dft = createDerivedFieldType("object");
         assertTrue(dft.getFieldMapper() instanceof KeywordFieldMapper);
         assertEquals(dft.getFieldMapper().fieldType.indexOptions(), NONE);
-        assertThrows(OpenSearchException.class, () -> dft.getIndexableFieldGenerator().apply(""));
+        assertThrows(DensityException.class, () -> dft.getIndexableFieldGenerator().apply(""));
     }
 
     public void testUnsupportedType() {

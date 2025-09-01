@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search;
+package org.density.search;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,68 +42,68 @@ import org.apache.lucene.search.CollectorManager;
 import org.apache.lucene.search.FieldDoc;
 import org.apache.lucene.search.MatchNoDocsQuery;
 import org.apache.lucene.search.Query;
-import org.opensearch.Version;
-import org.opensearch.action.search.SearchShardTask;
-import org.opensearch.action.search.SearchType;
-import org.opensearch.action.support.StreamSearchChannelListener;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.SetOnce;
-import org.opensearch.common.lease.Releasables;
-import org.opensearch.common.lucene.search.Queries;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.common.util.BigArrays;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.cache.bitset.BitsetFilterCache;
-import org.opensearch.index.compositeindex.CompositeIndexSettings;
-import org.opensearch.index.compositeindex.datacube.startree.StarTreeIndexSettings;
-import org.opensearch.index.engine.Engine;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.ObjectMapper;
-import org.opensearch.index.query.AbstractQueryBuilder;
-import org.opensearch.index.query.ParsedQuery;
-import org.opensearch.index.query.QueryBuilder;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.index.search.NestedHelper;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.similarity.SimilarityService;
-import org.opensearch.search.aggregations.BucketCollectorProcessor;
-import org.opensearch.search.aggregations.InternalAggregation;
-import org.opensearch.search.aggregations.SearchContextAggregations;
-import org.opensearch.search.builder.SearchSourceBuilder;
-import org.opensearch.search.collapse.CollapseContext;
-import org.opensearch.search.deciders.ConcurrentSearchDecision;
-import org.opensearch.search.deciders.ConcurrentSearchRequestDecider;
-import org.opensearch.search.deciders.ConcurrentSearchVisitor;
-import org.opensearch.search.dfs.DfsSearchResult;
-import org.opensearch.search.fetch.FetchPhase;
-import org.opensearch.search.fetch.FetchSearchResult;
-import org.opensearch.search.fetch.StoredFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchDocValuesContext;
-import org.opensearch.search.fetch.subphase.FetchFieldsContext;
-import org.opensearch.search.fetch.subphase.FetchSourceContext;
-import org.opensearch.search.fetch.subphase.ScriptFieldsContext;
-import org.opensearch.search.fetch.subphase.highlight.SearchHighlightContext;
-import org.opensearch.search.internal.ContextIndexSearcher;
-import org.opensearch.search.internal.PitReaderContext;
-import org.opensearch.search.internal.ReaderContext;
-import org.opensearch.search.internal.ScrollContext;
-import org.opensearch.search.internal.SearchContext;
-import org.opensearch.search.internal.ShardSearchContextId;
-import org.opensearch.search.internal.ShardSearchRequest;
-import org.opensearch.search.profile.Profilers;
-import org.opensearch.search.query.QueryPhaseExecutionException;
-import org.opensearch.search.query.QuerySearchResult;
-import org.opensearch.search.query.ReduceableSearchResult;
-import org.opensearch.search.rescore.RescoreContext;
-import org.opensearch.search.slice.SliceBuilder;
-import org.opensearch.search.sort.SortAndFormats;
-import org.opensearch.search.suggest.SuggestionSearchContext;
+import org.density.Version;
+import org.density.action.search.SearchShardTask;
+import org.density.action.search.SearchType;
+import org.density.action.support.StreamSearchChannelListener;
+import org.density.cluster.service.ClusterService;
+import org.density.common.Nullable;
+import org.density.common.SetOnce;
+import org.density.common.lease.Releasables;
+import org.density.common.lucene.search.Queries;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.common.util.BigArrays;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.index.IndexService;
+import org.density.index.IndexSettings;
+import org.density.index.cache.bitset.BitsetFilterCache;
+import org.density.index.compositeindex.CompositeIndexSettings;
+import org.density.index.compositeindex.datacube.startree.StarTreeIndexSettings;
+import org.density.index.engine.Engine;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.ObjectMapper;
+import org.density.index.query.AbstractQueryBuilder;
+import org.density.index.query.ParsedQuery;
+import org.density.index.query.QueryBuilder;
+import org.density.index.query.QueryShardContext;
+import org.density.index.search.NestedHelper;
+import org.density.index.shard.IndexShard;
+import org.density.index.similarity.SimilarityService;
+import org.density.search.aggregations.BucketCollectorProcessor;
+import org.density.search.aggregations.InternalAggregation;
+import org.density.search.aggregations.SearchContextAggregations;
+import org.density.search.builder.SearchSourceBuilder;
+import org.density.search.collapse.CollapseContext;
+import org.density.search.deciders.ConcurrentSearchDecision;
+import org.density.search.deciders.ConcurrentSearchRequestDecider;
+import org.density.search.deciders.ConcurrentSearchVisitor;
+import org.density.search.dfs.DfsSearchResult;
+import org.density.search.fetch.FetchPhase;
+import org.density.search.fetch.FetchSearchResult;
+import org.density.search.fetch.StoredFieldsContext;
+import org.density.search.fetch.subphase.FetchDocValuesContext;
+import org.density.search.fetch.subphase.FetchFieldsContext;
+import org.density.search.fetch.subphase.FetchSourceContext;
+import org.density.search.fetch.subphase.ScriptFieldsContext;
+import org.density.search.fetch.subphase.highlight.SearchHighlightContext;
+import org.density.search.internal.ContextIndexSearcher;
+import org.density.search.internal.PitReaderContext;
+import org.density.search.internal.ReaderContext;
+import org.density.search.internal.ScrollContext;
+import org.density.search.internal.SearchContext;
+import org.density.search.internal.ShardSearchContextId;
+import org.density.search.internal.ShardSearchRequest;
+import org.density.search.profile.Profilers;
+import org.density.search.query.QueryPhaseExecutionException;
+import org.density.search.query.QuerySearchResult;
+import org.density.search.query.ReduceableSearchResult;
+import org.density.search.rescore.RescoreContext;
+import org.density.search.slice.SliceBuilder;
+import org.density.search.sort.SortAndFormats;
+import org.density.search.suggest.SuggestionSearchContext;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -120,21 +120,21 @@ import java.util.concurrent.Executor;
 import java.util.function.Function;
 import java.util.function.LongSupplier;
 
-import static org.opensearch.search.SearchService.AGGREGATION_REWRITE_FILTER_SEGMENT_THRESHOLD;
-import static org.opensearch.search.SearchService.BUCKET_SELECTION_STRATEGY_FACTOR_SETTING;
-import static org.opensearch.search.SearchService.CARDINALITY_AGGREGATION_PRUNING_THRESHOLD;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
-import static org.opensearch.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
-import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
-import static org.opensearch.search.SearchService.KEYWORD_INDEX_OR_DOC_VALUES_ENABLED;
-import static org.opensearch.search.SearchService.MAX_AGGREGATION_REWRITE_FILTERS;
+import static org.density.search.SearchService.AGGREGATION_REWRITE_FILTER_SEGMENT_THRESHOLD;
+import static org.density.search.SearchService.BUCKET_SELECTION_STRATEGY_FACTOR_SETTING;
+import static org.density.search.SearchService.CARDINALITY_AGGREGATION_PRUNING_THRESHOLD;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_MODE;
+import static org.density.search.SearchService.CLUSTER_CONCURRENT_SEGMENT_SEARCH_SETTING;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_ALL;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_AUTO;
+import static org.density.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+import static org.density.search.SearchService.KEYWORD_INDEX_OR_DOC_VALUES_ENABLED;
+import static org.density.search.SearchService.MAX_AGGREGATION_REWRITE_FILTERS;
 
 /**
  * The main search context used during search phase
  *
- * @opensearch.internal
+ * @density.internal
  */
 final class DefaultSearchContext extends SearchContext {
 
@@ -407,7 +407,7 @@ final class DefaultSearchContext extends SearchContext {
             int sliceLimit = indexService.getIndexSettings().getMaxSlicesPerPit();
             int numSlices = sliceBuilder.getMax();
             if (numSlices > sliceLimit) {
-                throw new OpenSearchRejectedExecutionException(
+                throw new DensityRejectedExecutionException(
                     "The number of slices ["
                         + numSlices
                         + "] is too large. It must "

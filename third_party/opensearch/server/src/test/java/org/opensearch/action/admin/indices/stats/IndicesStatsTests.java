@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,36 +26,36 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.action.admin.indices.stats;
+package org.density.action.admin.indices.stats;
 
-import org.opensearch.action.index.IndexResponse;
-import org.opensearch.action.support.WriteRequest.RefreshPolicy;
-import org.opensearch.common.action.ActionFuture;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.core.action.support.DefaultShardOperationFailedException;
-import org.opensearch.core.common.Strings;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexModule;
-import org.opensearch.index.engine.CommitStats;
-import org.opensearch.index.engine.SegmentsStats;
-import org.opensearch.index.translog.Translog;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.action.index.IndexResponse;
+import org.density.action.support.WriteRequest.RefreshPolicy;
+import org.density.common.action.ActionFuture;
+import org.density.common.settings.Settings;
+import org.density.common.xcontent.XContentFactory;
+import org.density.core.action.support.DefaultShardOperationFailedException;
+import org.density.core.common.Strings;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexModule;
+import org.density.index.engine.CommitStats;
+import org.density.index.engine.SegmentsStats;
+import org.density.index.translog.Translog;
+import org.density.test.DensitySingleNodeTestCase;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.opensearch.test.hamcrest.OpenSearchAssertions.assertAcked;
+import static org.density.test.hamcrest.DensityAssertions.assertAcked;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class IndicesStatsTests extends OpenSearchSingleNodeTestCase {
+public class IndicesStatsTests extends DensitySingleNodeTestCase {
 
     public void testSegmentStatsEmptyIndex() {
         createIndex("test");

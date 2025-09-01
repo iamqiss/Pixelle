@@ -4,7 +4,7 @@ plugins {
   // expect some warning like the following:
   // "Multiple publications with coordinates 'org.custom.group:sample-plugin:2.0.0.0' are published to repository 'mavenLocal'."
   id 'java-gradle-plugin'
-  id 'opensearch.pluginzip'
+  id 'density.pluginzip'
 }
 
 group="org.custom.group"

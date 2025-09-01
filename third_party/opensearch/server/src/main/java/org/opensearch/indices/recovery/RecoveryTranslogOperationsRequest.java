@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,17 +26,17 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.recovery;
+package org.density.indices.recovery;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.seqno.RetentionLeases;
-import org.opensearch.index.translog.Translog;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.index.shard.ShardId;
+import org.density.index.seqno.RetentionLeases;
+import org.density.index.translog.Translog;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Request for recovery translog operations
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class RecoveryTranslogOperationsRequest extends RecoveryTransportRequest {
 
@@ -110,7 +110,7 @@ public class RecoveryTranslogOperationsRequest extends RecoveryTransportRequest 
     /**
      * Returns the mapping version which is at least as up to date as the mapping version that the primary used to index
      * the translog operations in this request. If the mapping version on the replica is not older this version, we should not
-     * retry on {@link org.opensearch.index.mapper.MapperException}; otherwise we should wait for a new mapping then retry.
+     * retry on {@link org.density.index.mapper.MapperException}; otherwise we should wait for a new mapping then retry.
      */
     long mappingVersionOnPrimary() {
         return mappingVersionOnPrimary;

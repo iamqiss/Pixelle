@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,18 +25,18 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.aggregations.bucket.range;
+package org.density.search.aggregations.bucket.range;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.aggregations.InternalAggregations;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.aggregations.support.ValueType;
-import org.opensearch.search.aggregations.support.ValuesSourceType;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.search.DocValueFormat;
+import org.density.search.aggregations.InternalAggregations;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.aggregations.support.ValueType;
+import org.density.search.aggregations.support.ValuesSourceType;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Implementation of geo_distance bucket
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class InternalGeoDistance extends InternalRange<InternalGeoDistance.Bucket, InternalGeoDistance> {
     public static final Factory FACTORY = new Factory();
@@ -53,7 +53,7 @@ public class InternalGeoDistance extends InternalRange<InternalGeoDistance.Bucke
     /**
      * Bucket for a geo distance range
      *
-     * @opensearch.internal
+     * @density.internal
      */
     static class Bucket extends InternalRange.Bucket {
 
@@ -74,7 +74,7 @@ public class InternalGeoDistance extends InternalRange<InternalGeoDistance.Bucke
     /**
      * Factory for a geo distance bucket
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Factory extends InternalRange.Factory<InternalGeoDistance.Bucket, InternalGeoDistance> {
         @Override

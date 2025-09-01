@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.identity.noop;
+package org.density.identity.noop;
 
-import org.opensearch.common.settings.Settings;
-import org.opensearch.identity.IdentityService;
-import org.opensearch.identity.NamedPrincipal;
-import org.opensearch.identity.PluginSubject;
-import org.opensearch.plugins.IdentityAwarePlugin;
-import org.opensearch.plugins.Plugin;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.threadpool.TestThreadPool;
-import org.opensearch.threadpool.ThreadPool;
+import org.density.common.settings.Settings;
+import org.density.identity.IdentityService;
+import org.density.identity.NamedPrincipal;
+import org.density.identity.PluginSubject;
+import org.density.plugins.IdentityAwarePlugin;
+import org.density.plugins.Plugin;
+import org.density.test.DensityTestCase;
+import org.density.threadpool.TestThreadPool;
+import org.density.threadpool.ThreadPool;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class NoopPluginSubjectTests extends OpenSearchTestCase {
+public class NoopPluginSubjectTests extends DensityTestCase {
     public static class TestPlugin extends Plugin implements IdentityAwarePlugin {
         private PluginSubject subject;
 

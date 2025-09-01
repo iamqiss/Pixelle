@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,15 +25,15 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.core;
+package org.density.core;
 
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.core.xcontent.DeprecationHandler;
-import org.opensearch.core.xcontent.XContentLocation;
+import org.density.common.annotation.PublicApi;
+import org.density.core.xcontent.DeprecationHandler;
+import org.density.core.xcontent.XContentLocation;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,7 +45,7 @@ import java.util.function.Supplier;
  * Holds a field that can be found in a request while parsing and its different
  * variants, which may be deprecated.
  *
- * @opensearch.api
+ * @density.api
  *
  */
 @PublicApi(since = "1.0.0")
@@ -201,7 +201,7 @@ public class ParseField {
     /**
      * Common fields shared throughout the project
      *
-     * @opensearch.internal
+     * @density.internal
      **/
     public static class CommonFields {
         public static final ParseField FIELD = new ParseField("field");

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,18 +26,18 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch;
+package org.density;
 
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.common.io.stream.Writeable;
-import org.opensearch.core.util.FileSystemUtils;
-import org.opensearch.test.EqualsHashCodeTestUtils;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.common.io.stream.Writeable;
+import org.density.core.util.FileSystemUtils;
+import org.density.test.EqualsHashCodeTestUtils;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,11 +53,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.sameInstance;
 
-public class BuildTests extends OpenSearchTestCase {
+public class BuildTests extends DensityTestCase {
 
     /** Asking for the jar metadata should not throw exception in tests, no matter how configured */
     public void testJarMetadata() throws IOException {
-        URL url = Build.getOpenSearchCodeSourceLocation();
+        URL url = Build.getDensityCodeSourceLocation();
         // throws exception if does not exist, or we cannot access it
         try (InputStream ignored = FileSystemUtils.openFileURLStream(url)) {}
         // these should never be null or "unknown"
@@ -303,15 +303,15 @@ public class BuildTests extends OpenSearchTestCase {
 
         final List<Version> versions = Version.getDeclaredVersions(Version.class);
 
-        final Version post10OpenSearchVersion = randomFrom(versions.stream().collect(Collectors.toList()));
-        final WriteableBuild post10OpenSearch = copyWriteable(
+        final Version post10DensityVersion = randomFrom(versions.stream().collect(Collectors.toList()));
+        final WriteableBuild post10Density = copyWriteable(
             dockerBuild,
             writableRegistry(),
             WriteableBuild::new,
-            post10OpenSearchVersion
+            post10DensityVersion
         );
-        assertThat(post10OpenSearch.build.getQualifiedVersion(), equalTo(dockerBuild.build.getQualifiedVersion()));
-        assertThat(post10OpenSearch.build.getDistribution(), equalTo(dockerBuild.build.getDistribution()));
+        assertThat(post10Density.build.getQualifiedVersion(), equalTo(dockerBuild.build.getQualifiedVersion()));
+        assertThat(post10Density.build.getDistribution(), equalTo(dockerBuild.build.getDistribution()));
     }
 
     public void testTypeParsing() {

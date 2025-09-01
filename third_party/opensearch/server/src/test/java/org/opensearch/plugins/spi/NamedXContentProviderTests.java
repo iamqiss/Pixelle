@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,20 +26,20 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.plugins.spi;
+package org.density.plugins.spi;
 
-import org.opensearch.common.io.Streams;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.search.aggregations.Aggregation;
-import org.opensearch.search.aggregations.pipeline.ParsedSimpleValue;
-import org.opensearch.search.suggest.Suggest;
-import org.opensearch.search.suggest.term.TermSuggestion;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.common.io.Streams;
+import org.density.core.ParseField;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.search.aggregations.Aggregation;
+import org.density.search.aggregations.pipeline.ParsedSimpleValue;
+import org.density.search.suggest.Suggest;
+import org.density.search.suggest.term.TermSuggestion;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +49,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Predicate;
 
-public class NamedXContentProviderTests extends OpenSearchTestCase {
+public class NamedXContentProviderTests extends DensityTestCase {
 
     public void testSpiFileExists() throws IOException {
         String serviceFile = "/META-INF/services/" + NamedXContentProvider.class.getName();

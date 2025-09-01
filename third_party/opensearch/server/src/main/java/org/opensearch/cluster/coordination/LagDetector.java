@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,21 +25,21 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.cluster.coordination;
+package org.density.cluster.coordination;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.settings.ClusterSettings;
-import org.opensearch.common.settings.Setting;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.threadpool.ThreadPool;
-import org.opensearch.threadpool.ThreadPool.Names;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.settings.ClusterSettings;
+import org.density.common.settings.Setting;
+import org.density.common.settings.Settings;
+import org.density.common.unit.TimeValue;
+import org.density.threadpool.ThreadPool;
+import org.density.threadpool.ThreadPool.Names;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -51,14 +51,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.opensearch.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
+import static org.density.common.util.concurrent.ConcurrentCollections.newConcurrentMap;
 
 /**
  * A publication can succeed and complete before all nodes have applied the published state and acknowledged it; however we need every node
  * eventually either to apply the published state (or a later state) or be removed from the cluster. This component achieves this by
  * removing any lagging nodes from the cluster after a timeout.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class LagDetector {
 
@@ -162,7 +162,7 @@ public class LagDetector {
     /**
      * A tracker that the node applied state.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     private class NodeAppliedStateTracker {
         private final DiscoveryNode discoveryNode;

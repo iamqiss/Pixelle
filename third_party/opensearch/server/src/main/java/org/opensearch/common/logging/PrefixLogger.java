@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,11 +26,11 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.common.logging;
+package org.density.common.logging;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -46,7 +46,7 @@ import java.util.WeakHashMap;
  * A logger that prefixes all messages with a fixed prefix specified during construction. The prefix mechanism uses the marker construct, so
  * for the prefixes to appear, the logging layout pattern must include the marker in its pattern.
  *
- * @opensearch.internal
+ * @density.internal
  */
 class PrefixLogger extends ExtendedLoggerWrapper {
 

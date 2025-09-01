@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,28 +25,28 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.recovery;
+package org.density.recovery;
 
-import org.opensearch.OpenSearchException;
-import org.opensearch.cluster.node.DiscoveryNode;
-import org.opensearch.common.unit.TimeValue;
-import org.opensearch.core.index.shard.ShardId;
-import org.opensearch.index.replication.OpenSearchIndexLevelReplicationTestCase;
-import org.opensearch.index.shard.IndexShard;
-import org.opensearch.index.store.Store;
-import org.opensearch.indices.recovery.RecoveryState;
-import org.opensearch.indices.recovery.RecoveryTarget;
-import org.opensearch.indices.replication.SegmentReplicationSource;
-import org.opensearch.indices.replication.SegmentReplicationTarget;
-import org.opensearch.indices.replication.common.ReplicationCollection;
-import org.opensearch.indices.replication.common.ReplicationFailedException;
-import org.opensearch.indices.replication.common.ReplicationListener;
-import org.opensearch.indices.replication.common.ReplicationState;
-import org.opensearch.indices.replication.common.ReplicationTarget;
+import org.density.DensityException;
+import org.density.cluster.node.DiscoveryNode;
+import org.density.common.unit.TimeValue;
+import org.density.core.index.shard.ShardId;
+import org.density.index.replication.DensityIndexLevelReplicationTestCase;
+import org.density.index.shard.IndexShard;
+import org.density.index.store.Store;
+import org.density.indices.recovery.RecoveryState;
+import org.density.indices.recovery.RecoveryTarget;
+import org.density.indices.replication.SegmentReplicationSource;
+import org.density.indices.replication.SegmentReplicationTarget;
+import org.density.indices.replication.common.ReplicationCollection;
+import org.density.indices.replication.common.ReplicationFailedException;
+import org.density.indices.replication.common.ReplicationListener;
+import org.density.indices.replication.common.ReplicationState;
+import org.density.indices.replication.common.ReplicationTarget;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +56,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.mock;
 
-public class ReplicationCollectionTests extends OpenSearchIndexLevelReplicationTestCase {
+public class ReplicationCollectionTests extends DensityIndexLevelReplicationTestCase {
     static final ReplicationListener listener = new ReplicationListener() {
         @Override
         public void onDone(ReplicationState state) {
@@ -196,8 +196,8 @@ public class ReplicationCollectionTests extends OpenSearchIndexLevelReplicationT
             assertEquals(referencesToStore, resetRecovery.store().refCount());
             assertEquals(currentAsTarget, shard.recoveryStats().currentAsTarget());
             assertEquals(recoveryTarget.refCount(), 0);
-            expectThrows(OpenSearchException.class, () -> recoveryTarget.store());
-            expectThrows(OpenSearchException.class, () -> recoveryTarget.indexShard());
+            expectThrows(DensityException.class, () -> recoveryTarget.store());
+            expectThrows(DensityException.class, () -> recoveryTarget.indexShard());
             String resetTempFileName = resetRecovery.getTempNameForFile("foobar");
             assertNotEquals(tempFileName, resetTempFileName);
             assertEquals(currentAsTarget, shard.recoveryStats().currentAsTarget());

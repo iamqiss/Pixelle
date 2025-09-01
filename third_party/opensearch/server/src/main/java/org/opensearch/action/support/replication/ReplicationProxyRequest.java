@@ -1,21 +1,21 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action.support.replication;
+package org.density.action.support.replication;
 
-import org.opensearch.cluster.routing.ShardRouting;
+import org.density.cluster.routing.ShardRouting;
 
 import java.util.Objects;
 
 /**
  * This is proxy wrapper over the replication request whose object can be created using the Builder present inside.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class ReplicationProxyRequest<ReplicaRequest> {
 
@@ -82,7 +82,7 @@ public class ReplicationProxyRequest<ReplicaRequest> {
     /**
      * Builder of ReplicationProxyRequest.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder<ReplicaRequest> {
 

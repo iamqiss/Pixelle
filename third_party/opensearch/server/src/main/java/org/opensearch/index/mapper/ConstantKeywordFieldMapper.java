@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -19,19 +19,19 @@ import org.apache.lucene.util.automaton.Automaton;
 import org.apache.lucene.util.automaton.ByteRunAutomaton;
 import org.apache.lucene.util.automaton.Operations;
 import org.apache.lucene.util.automaton.RegExp;
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.Nullable;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.common.geo.ShapeRelation;
-import org.opensearch.common.lucene.BytesRefs;
-import org.opensearch.common.regex.Regex;
-import org.opensearch.common.time.DateMathParser;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.index.fielddata.plain.ConstantIndexFieldData;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.aggregations.support.CoreValuesSourceType;
-import org.opensearch.search.lookup.SearchLookup;
+import org.density.DensityParseException;
+import org.density.common.Nullable;
+import org.density.common.annotation.PublicApi;
+import org.density.common.geo.ShapeRelation;
+import org.density.common.lucene.BytesRefs;
+import org.density.common.regex.Regex;
+import org.density.common.time.DateMathParser;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.index.fielddata.plain.ConstantIndexFieldData;
+import org.density.index.query.QueryShardContext;
+import org.density.search.aggregations.support.CoreValuesSourceType;
+import org.density.search.lookup.SearchLookup;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -44,7 +44,7 @@ import java.util.function.Supplier;
 /**
  * Index specific field mapper
  *
- * @opensearch.api
+ * @density.api
  */
 @PublicApi(since = "2.14.0")
 public class ConstantKeywordFieldMapper extends ParametrizedFieldMapper {
@@ -56,17 +56,17 @@ public class ConstantKeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * A {@link Mapper.TypeParser} for the constant keyword field.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class TypeParser implements Mapper.TypeParser {
         @Override
         public Mapper.Builder parse(String name, Map<String, Object> node, ParserContext parserContext) throws MapperParsingException {
             if (!node.containsKey(valuePropertyName)) {
-                throw new OpenSearchParseException("Field [" + name + "] is missing required parameter [value]");
+                throw new DensityParseException("Field [" + name + "] is missing required parameter [value]");
             }
             Object value = node.remove(valuePropertyName);
             if (!(value instanceof String)) {
-                throw new OpenSearchParseException("Field [" + name + "] is expected to be a string value");
+                throw new DensityParseException("Field [" + name + "] is expected to be a string value");
             }
             return new Builder(name, (String) value);
         }
@@ -99,7 +99,7 @@ public class ConstantKeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * Builder for the binary field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder extends ParametrizedFieldMapper.Builder {
 
@@ -130,7 +130,7 @@ public class ConstantKeywordFieldMapper extends ParametrizedFieldMapper {
     /**
      * Field type for Index field mapper
      *
-     * @opensearch.internal
+     * @density.internal
      */
     @PublicApi(since = "2.14.0")
     protected static final class ConstantKeywordFieldType extends ConstantFieldType {

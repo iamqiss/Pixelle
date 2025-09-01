@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.codec.composite;
+package org.density.index.codec.composite;
 
 import org.apache.lucene.codecs.DocValuesProducer;
 import org.apache.lucene.codecs.lucene90.Lucene90DocValuesProducerWrapper;
 import org.apache.lucene.index.SegmentReadState;
-import org.opensearch.index.codec.composite.composite912.Composite912Codec;
+import org.density.index.codec.composite.composite912.Composite912Codec;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
  * <p>
  * This design ensures backward compatibility for reads across different codec versions.
  *
- * @opensearch.experimental
+ * @density.experimental
  */
 public class LuceneDocValuesProducerFactory {
 

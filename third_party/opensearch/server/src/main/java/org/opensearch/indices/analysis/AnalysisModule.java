@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,40 +26,40 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.indices.analysis;
+package org.density.indices.analysis;
 
 import org.apache.lucene.analysis.LowerCaseFilter;
-import org.opensearch.Version;
-import org.opensearch.cluster.metadata.IndexMetadata;
-import org.opensearch.common.NamedRegistry;
-import org.opensearch.common.logging.DeprecationLogger;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.env.Environment;
-import org.opensearch.index.IndexSettings;
-import org.opensearch.index.analysis.AnalysisRegistry;
-import org.opensearch.index.analysis.AnalyzerProvider;
-import org.opensearch.index.analysis.CharFilterFactory;
-import org.opensearch.index.analysis.HunspellTokenFilterFactory;
-import org.opensearch.index.analysis.KeywordAnalyzerProvider;
-import org.opensearch.index.analysis.LowercaseNormalizerProvider;
-import org.opensearch.index.analysis.PreBuiltAnalyzerProviderFactory;
-import org.opensearch.index.analysis.PreConfiguredCharFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenFilter;
-import org.opensearch.index.analysis.PreConfiguredTokenizer;
-import org.opensearch.index.analysis.ShingleTokenFilterFactory;
-import org.opensearch.index.analysis.SimpleAnalyzerProvider;
-import org.opensearch.index.analysis.StandardAnalyzerProvider;
-import org.opensearch.index.analysis.StandardTokenizerFactory;
-import org.opensearch.index.analysis.StopAnalyzerProvider;
-import org.opensearch.index.analysis.StopTokenFilterFactory;
-import org.opensearch.index.analysis.TokenFilterFactory;
-import org.opensearch.index.analysis.TokenizerFactory;
-import org.opensearch.index.analysis.WhitespaceAnalyzerProvider;
-import org.opensearch.plugins.AnalysisPlugin;
+import org.density.Version;
+import org.density.cluster.metadata.IndexMetadata;
+import org.density.common.NamedRegistry;
+import org.density.common.logging.DeprecationLogger;
+import org.density.common.settings.Settings;
+import org.density.env.Environment;
+import org.density.index.IndexSettings;
+import org.density.index.analysis.AnalysisRegistry;
+import org.density.index.analysis.AnalyzerProvider;
+import org.density.index.analysis.CharFilterFactory;
+import org.density.index.analysis.HunspellTokenFilterFactory;
+import org.density.index.analysis.KeywordAnalyzerProvider;
+import org.density.index.analysis.LowercaseNormalizerProvider;
+import org.density.index.analysis.PreBuiltAnalyzerProviderFactory;
+import org.density.index.analysis.PreConfiguredCharFilter;
+import org.density.index.analysis.PreConfiguredTokenFilter;
+import org.density.index.analysis.PreConfiguredTokenizer;
+import org.density.index.analysis.ShingleTokenFilterFactory;
+import org.density.index.analysis.SimpleAnalyzerProvider;
+import org.density.index.analysis.StandardAnalyzerProvider;
+import org.density.index.analysis.StandardTokenizerFactory;
+import org.density.index.analysis.StopAnalyzerProvider;
+import org.density.index.analysis.StopTokenFilterFactory;
+import org.density.index.analysis.TokenFilterFactory;
+import org.density.index.analysis.TokenizerFactory;
+import org.density.index.analysis.WhitespaceAnalyzerProvider;
+import org.density.plugins.AnalysisPlugin;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,12 +67,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import static java.util.Collections.unmodifiableMap;
-import static org.opensearch.plugins.AnalysisPlugin.requiresAnalysisSettings;
+import static org.density.plugins.AnalysisPlugin.requiresAnalysisSettings;
 
 /**
  * Sets up {@link AnalysisRegistry}.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class AnalysisModule {
     static {
@@ -187,7 +187,7 @@ public final class AnalysisModule {
     static Map<String, PreConfiguredCharFilter> setupPreConfiguredCharFilters(List<AnalysisPlugin> plugins) {
         NamedRegistry<PreConfiguredCharFilter> preConfiguredCharFilters = new NamedRegistry<>("pre-configured char_filter");
 
-        // No char filter are available in lucene-core so none are built in to OpenSearch core
+        // No char filter are available in lucene-core so none are built in to Density core
 
         for (AnalysisPlugin plugin : plugins) {
             for (PreConfiguredCharFilter filter : plugin.getPreConfiguredCharFilters()) {

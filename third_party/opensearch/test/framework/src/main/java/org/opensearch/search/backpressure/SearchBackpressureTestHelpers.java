@@ -1,16 +1,16 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.search.backpressure;
+package org.density.search.backpressure;
 
-import org.opensearch.core.tasks.resourcetracker.TaskResourceUsage;
-import org.opensearch.tasks.CancellableTask;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.core.tasks.resourcetracker.TaskResourceUsage;
+import org.density.tasks.CancellableTask;
+import org.density.test.DensityTestCase;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SearchBackpressureTestHelpers extends OpenSearchTestCase {
+public class SearchBackpressureTestHelpers extends DensityTestCase {
 
     public static <T extends CancellableTask> T createMockTaskWithResourceStats(Class<T> type, long cpuUsage, long heapUsage, long taskId) {
         return createMockTaskWithResourceStats(type, cpuUsage, heapUsage, 0, taskId);

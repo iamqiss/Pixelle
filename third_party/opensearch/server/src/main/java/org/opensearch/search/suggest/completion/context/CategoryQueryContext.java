@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,30 +26,30 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion.context;
+package org.density.search.suggest.completion.context;
 
-import org.opensearch.core.ParseField;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContentObject;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParseException;
-import org.opensearch.core.xcontent.XContentParser;
+import org.density.core.ParseField;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContentObject;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParseException;
+import org.density.core.xcontent.XContentParser;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.opensearch.search.suggest.completion.context.CategoryContextMapping.CONTEXT_BOOST;
-import static org.opensearch.search.suggest.completion.context.CategoryContextMapping.CONTEXT_PREFIX;
-import static org.opensearch.search.suggest.completion.context.CategoryContextMapping.CONTEXT_VALUE;
+import static org.density.search.suggest.completion.context.CategoryContextMapping.CONTEXT_BOOST;
+import static org.density.search.suggest.completion.context.CategoryContextMapping.CONTEXT_PREFIX;
+import static org.density.search.suggest.completion.context.CategoryContextMapping.CONTEXT_VALUE;
 
 /**
  * Defines the query context for {@link CategoryContextMapping}
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class CategoryQueryContext implements ToXContentObject {
     public static final String NAME = "category";
@@ -154,7 +154,7 @@ public final class CategoryQueryContext implements ToXContentObject {
     /**
      * Builder for the category query context
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public static class Builder {
         private String category;

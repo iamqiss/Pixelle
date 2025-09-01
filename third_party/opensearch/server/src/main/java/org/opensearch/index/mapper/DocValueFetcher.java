@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,29 +26,29 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.LeafReaderContext;
-import org.opensearch.common.annotation.PublicApi;
-import org.opensearch.index.fielddata.IndexFieldData;
-import org.opensearch.search.DocValueFormat;
-import org.opensearch.search.lookup.SourceLookup;
+import org.density.common.annotation.PublicApi;
+import org.density.index.fielddata.IndexFieldData;
+import org.density.search.DocValueFormat;
+import org.density.search.lookup.SourceLookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.opensearch.index.mapper.FlatObjectFieldMapper.DOC_VALUE_NO_MATCH;
+import static org.density.index.mapper.FlatObjectFieldMapper.DOC_VALUE_NO_MATCH;
 
 /**
  * Value fetcher that loads from doc values.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public final class DocValueFetcher implements ValueFetcher {
     private final DocValueFormat format;
@@ -82,7 +82,7 @@ public final class DocValueFetcher implements ValueFetcher {
     /**
      * Leaf interface
      *
-     * @opensearch.api
+     * @density.api
      */
     @PublicApi(since = "1.0.0")
     public interface Leaf {

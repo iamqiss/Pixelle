@@ -1,28 +1,28 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ratelimitting.admissioncontrol.controllers;
+package org.density.ratelimitting.admissioncontrol.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.opensearch.cluster.service.ClusterService;
-import org.opensearch.common.settings.Settings;
-import org.opensearch.core.concurrency.OpenSearchRejectedExecutionException;
-import org.opensearch.node.NodeResourceUsageStats;
-import org.opensearch.node.ResourceUsageCollectorService;
-import org.opensearch.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
-import org.opensearch.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
+import org.density.cluster.service.ClusterService;
+import org.density.common.settings.Settings;
+import org.density.core.concurrency.DensityRejectedExecutionException;
+import org.density.node.NodeResourceUsageStats;
+import org.density.node.ResourceUsageCollectorService;
+import org.density.ratelimitting.admissioncontrol.enums.AdmissionControlActionType;
+import org.density.ratelimitting.admissioncontrol.settings.IoBasedAdmissionControllerSettings;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- *  Class for IO Based Admission Controller in OpenSearch, which aims to provide IO utilisation admission control.
+ *  Class for IO Based Admission Controller in Density, which aims to provide IO utilisation admission control.
  *  It provides methods to apply admission control if configured limit has been reached
  */
 public class IoBasedAdmissionController extends AdmissionController {
@@ -65,7 +65,7 @@ public class IoBasedAdmissionController extends AdmissionController {
         if (isLimitsBreached(actionName, admissionControlActionType)) {
             this.addRejectionCount(admissionControlActionType.getType(), 1);
             if (this.isAdmissionControllerEnforced(this.settings.getTransportLayerAdmissionControllerMode())) {
-                throw new OpenSearchRejectedExecutionException(
+                throw new DensityRejectedExecutionException(
                     String.format(
                         Locale.ROOT,
                         "IO usage admission controller rejected the request for action [%s] as IO limit reached for action-type [%s]",

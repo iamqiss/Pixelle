@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,25 +25,25 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.index.mapper;
+package org.density.index.mapper;
 
 import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexableField;
-import org.opensearch.common.CheckedConsumer;
-import org.opensearch.common.compress.CompressedXContent;
-import org.opensearch.common.network.InetAddresses;
-import org.opensearch.common.xcontent.XContentFactory;
-import org.opensearch.common.xcontent.json.JsonXContent;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.index.IndexService;
-import org.opensearch.index.termvectors.TermVectorsService;
-import org.opensearch.test.OpenSearchSingleNodeTestCase;
+import org.density.common.CheckedConsumer;
+import org.density.common.compress.CompressedXContent;
+import org.density.common.network.InetAddresses;
+import org.density.common.xcontent.XContentFactory;
+import org.density.common.xcontent.json.JsonXContent;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.index.IndexService;
+import org.density.index.termvectors.TermVectorsService;
+import org.density.test.DensitySingleNodeTestCase;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 
-public class IpRangeFieldMapperTests extends OpenSearchSingleNodeTestCase {
+public class IpRangeFieldMapperTests extends DensitySingleNodeTestCase {
 
     private IndexService indexService;
     private DocumentMapperParser parser;

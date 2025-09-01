@@ -1,17 +1,17 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.index.shard;
+package org.density.index.shard;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.search.ReferenceManager;
-import org.opensearch.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
+import org.density.indices.replication.checkpoint.SegmentReplicationCheckpointPublisher;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
  * A {@link ReferenceManager.RefreshListener} that publishes a checkpoint to be consumed by replicas.
  * This class is only used with Segment Replication enabled.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CheckpointRefreshListener extends ReleasableRetryableRefreshListener {
 

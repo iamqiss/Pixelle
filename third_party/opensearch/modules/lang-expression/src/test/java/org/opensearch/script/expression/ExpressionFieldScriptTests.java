@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -26,21 +26,21 @@
  */
 
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.script.expression;
+package org.density.script.expression;
 
-import org.opensearch.index.fielddata.IndexNumericFieldData;
-import org.opensearch.index.fielddata.LeafNumericFieldData;
-import org.opensearch.index.fielddata.SortedNumericDoubleValues;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.mapper.NumberFieldMapper;
-import org.opensearch.script.FieldScript;
-import org.opensearch.script.ScriptException;
-import org.opensearch.search.lookup.SearchLookup;
-import org.opensearch.test.OpenSearchTestCase;
+import org.density.index.fielddata.IndexNumericFieldData;
+import org.density.index.fielddata.LeafNumericFieldData;
+import org.density.index.fielddata.SortedNumericDoubleValues;
+import org.density.index.mapper.MapperService;
+import org.density.index.mapper.NumberFieldMapper;
+import org.density.script.FieldScript;
+import org.density.script.ScriptException;
+import org.density.search.lookup.SearchLookup;
+import org.density.test.DensityTestCase;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -52,7 +52,7 @@ import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ExpressionFieldScriptTests extends OpenSearchTestCase {
+public class ExpressionFieldScriptTests extends DensityTestCase {
     private ExpressionScriptEngine service;
     private SearchLookup lookup;
 

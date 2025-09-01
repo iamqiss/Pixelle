@@ -1,19 +1,19 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.action;
+package org.density.action;
 
-import org.opensearch.action.support.StreamSearchChannelListener;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.transport.TransportResponse;
-import org.opensearch.test.OpenSearchTestCase;
-import org.opensearch.transport.TransportChannel;
-import org.opensearch.transport.TransportRequest;
+import org.density.action.support.StreamSearchChannelListener;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.transport.TransportResponse;
+import org.density.test.DensityTestCase;
+import org.density.transport.TransportChannel;
+import org.density.transport.TransportRequest;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 /**
  * Tests for StreamChannelActionListener streaming functionality
  */
-public class StreamSearchChannelListenerTests extends OpenSearchTestCase {
+public class StreamSearchChannelListenerTests extends DensityTestCase {
 
     @Mock
     private TransportChannel channel;

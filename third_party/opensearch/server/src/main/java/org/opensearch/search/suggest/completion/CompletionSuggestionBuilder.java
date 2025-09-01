@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
@@ -25,35 +25,35 @@
  * under the License.
  */
 /*
- * Modifications Copyright OpenSearch Contributors. See
+ * Modifications Copyright Density Contributors. See
  * GitHub history for details.
  */
 
-package org.opensearch.search.suggest.completion;
+package org.density.search.suggest.completion;
 
-import org.opensearch.OpenSearchParseException;
-import org.opensearch.common.unit.Fuzziness;
-import org.opensearch.common.xcontent.LoggingDeprecationHandler;
-import org.opensearch.common.xcontent.XContentHelper;
-import org.opensearch.core.ParseField;
-import org.opensearch.core.common.bytes.BytesReference;
-import org.opensearch.core.common.io.stream.StreamInput;
-import org.opensearch.core.common.io.stream.StreamOutput;
-import org.opensearch.core.xcontent.MediaType;
-import org.opensearch.core.xcontent.MediaTypeRegistry;
-import org.opensearch.core.xcontent.NamedXContentRegistry;
-import org.opensearch.core.xcontent.ObjectParser;
-import org.opensearch.core.xcontent.ToXContent;
-import org.opensearch.core.xcontent.XContentBuilder;
-import org.opensearch.core.xcontent.XContentParser;
-import org.opensearch.index.mapper.CompletionFieldMapper;
-import org.opensearch.index.mapper.MappedFieldType;
-import org.opensearch.index.mapper.MapperService;
-import org.opensearch.index.query.QueryShardContext;
-import org.opensearch.search.suggest.SuggestionBuilder;
-import org.opensearch.search.suggest.SuggestionSearchContext.SuggestionContext;
-import org.opensearch.search.suggest.completion.context.ContextMapping;
-import org.opensearch.search.suggest.completion.context.ContextMappings;
+import org.density.DensityParseException;
+import org.density.common.unit.Fuzziness;
+import org.density.common.xcontent.LoggingDeprecationHandler;
+import org.density.common.xcontent.XContentHelper;
+import org.density.core.ParseField;
+import org.density.core.common.bytes.BytesReference;
+import org.density.core.common.io.stream.StreamInput;
+import org.density.core.common.io.stream.StreamOutput;
+import org.density.core.xcontent.MediaType;
+import org.density.core.xcontent.MediaTypeRegistry;
+import org.density.core.xcontent.NamedXContentRegistry;
+import org.density.core.xcontent.ObjectParser;
+import org.density.core.xcontent.ToXContent;
+import org.density.core.xcontent.XContentBuilder;
+import org.density.core.xcontent.XContentParser;
+import org.density.index.mapper.CompletionFieldMapper;
+import org.density.index.mapper.MappedFieldType;
+import org.density.index.mapper.MapperService;
+import org.density.index.query.QueryShardContext;
+import org.density.search.suggest.SuggestionBuilder;
+import org.density.search.suggest.SuggestionSearchContext.SuggestionContext;
+import org.density.search.suggest.completion.context.ContextMapping;
+import org.density.search.suggest.completion.context.ContextMappings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +68,7 @@ import java.util.Objects;
  * are created at index-time and so must be defined in the mapping with the type "completion" before
  * indexing.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSuggestionBuilder> {
 
@@ -210,8 +210,8 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
     /**
      * Sets query contexts for completion
      * @param queryContexts named query contexts
-     *                      see {@link org.opensearch.search.suggest.completion.context.CategoryQueryContext}
-     *                      and {@link org.opensearch.search.suggest.completion.context.GeoQueryContext}
+     *                      see {@link org.density.search.suggest.completion.context.CategoryQueryContext}
+     *                      and {@link org.density.search.suggest.completion.context.GeoQueryContext}
      */
     public CompletionSuggestionBuilder contexts(Map<String, List<? extends ToXContent>> queryContexts) {
         Objects.requireNonNull(queryContexts, "contexts must not be null");
@@ -290,7 +290,7 @@ public class CompletionSuggestionBuilder extends SuggestionBuilder<CompletionSug
         String field = builder.field;
         // now we should have field name, check and copy fields over to the suggestion builder we return
         if (field == null) {
-            throw new OpenSearchParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
+            throw new DensityParseException("the required field option [" + FIELDNAME_FIELD.getPreferredName() + "] is missing");
         }
         return new CompletionSuggestionBuilder(field, builder);
     }

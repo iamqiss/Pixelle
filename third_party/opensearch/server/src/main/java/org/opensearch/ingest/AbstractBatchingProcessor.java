@@ -1,12 +1,12 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * The OpenSearch Contributors require contributions made to
+ * The Density Contributors require contributions made to
  * this file be licensed under the Apache-2.0 license or a
  * compatible open source license.
  */
 
-package org.opensearch.ingest;
+package org.density.ingest;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,12 +15,12 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-import static org.opensearch.ingest.ConfigurationUtils.newConfigurationException;
+import static org.density.ingest.ConfigurationUtils.newConfigurationException;
 
 /**
  * Abstract base class for batch processors.
  *
- * @opensearch.internal
+ * @density.internal
  */
 public abstract class AbstractBatchingProcessor extends AbstractProcessor {
 
@@ -84,7 +84,7 @@ public abstract class AbstractBatchingProcessor extends AbstractProcessor {
     /**
      * Factory class for creating {@link AbstractBatchingProcessor} instances.
      *
-     * @opensearch.internal
+     * @density.internal
      */
     public abstract static class Factory implements Processor.Factory {
         final String processorType;
